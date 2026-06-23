@@ -6,7 +6,7 @@
                 <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
-                Back to Jobs
+                Kembali ke Daftar Lowongan
             </a>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -66,15 +66,15 @@
                             <div class="grid grid-cols-3 gap-4 mb-8">
                                 <div class="text-center p-4 bg-blue-50 rounded-xl">
                                     <p class="text-2xl font-bold text-blue-600">{{ $job->applications->count() }}</p>
-                                    <p class="text-sm text-gray-600 mt-1">Applicants</p>
+                                    <p class="text-sm text-gray-600 mt-1">Pelamar</p>
                                 </div>
                                 <div class="text-center p-4 bg-green-50 rounded-xl">
                                     <p class="text-2xl font-bold text-green-600">{{ $job->created_at->diffForHumans() }}</p>
-                                    <p class="text-sm text-gray-600 mt-1">Posted</p>
+                                    <p class="text-sm text-gray-600 mt-1">Diposting</p>
                                 </div>
                                 <div class="text-center p-4 bg-red-50 rounded-xl">
                                     <p class="text-2xl font-bold text-red-600">{{ $job->deadline->diffForHumans() }}</p>
-                                    <p class="text-sm text-gray-600 mt-1">Deadline</p>
+                                    <p class="text-sm text-gray-600 mt-1">Tenggat</p>
                                 </div>
                             </div>
 
@@ -86,7 +86,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
                                         </svg>
                                     </div>
-                                    Job Description
+                                    Deskripsi Pekerjaan
                                 </h2>
                                 <div class="prose max-w-none text-gray-700">
                                     {!! nl2br(e($job->description)) !!}
@@ -101,7 +101,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
                                     </div>
-                                    Qualifications
+                                    Kualifikasi
                                 </h2>
                                 <div class="prose max-w-none text-gray-700">
                                     {!! nl2br(e($job->qualifications)) !!}
@@ -117,7 +117,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
                                         </svg>
                                     </div>
-                                    Benefits
+                                    Benefit
                                 </h2>
                                 <div class="prose max-w-none text-gray-700">
                                     {!! nl2br(e($job->benefits)) !!}
@@ -130,12 +130,12 @@
                     <!-- Similar Jobs -->
                     @if($similarJobs->count() > 0)
                     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-                        <h2 class="text-xl font-bold text-gray-900 mb-6">Similar Jobs</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-6">Lowongan Serupa</h2>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             @foreach($similarJobs as $similar)
                             <a href="{{ route('jobs.show', $similar->id) }}" class="block p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-300">
                                 <h4 class="font-semibold text-gray-900 mb-1">{{ $similar->title }}</h4>
-                                <p class="text-sm text-gray-600 mb-2">{{ $similar->company->name ?? 'Company' }}</p>
+                                <p class="text-sm text-gray-600 mb-2">{{ $similar->company->name ?? 'Perusahaan' }}</p>
                                 <div class="flex items-center gap-2 text-xs text-gray-500">
                                     <span>{{ $similar->location }}</span>
                                     <span>•</span>
@@ -161,48 +161,48 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                             </div>
-                            <h3 class="text-lg font-bold text-gray-900 mb-2">Application Submitted</h3>
-                            <p class="text-sm text-gray-600 mb-4">You have already applied to this position</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Lamaran Terkirim</h3>
+                            <p class="text-sm text-gray-600 mb-4">Anda sudah melamar pada posisi ini</p>
                             <a href="{{ route('applications.index') }}" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
-                                View My Applications
+                                Lihat Lamaran Saya
                             </a>
                         </div>
                         @else
                         <!-- Apply Form -->
-                        <h3 class="text-lg font-bold text-gray-900 mb-4">Apply for this position</h3>
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">Lamar posisi ini</h3>
                         
                         <form action="{{ route('jobs.apply', $job->id) }}" method="POST" id="applicationForm">
                             @csrf
                             
                             <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Cover Letter</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Surat Lamaran</label>
                                 <textarea name="cover_letter" rows="6" required
                                           class="w-full px-4 py-3 rounded-xl border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                                          placeholder="Tell us why you're a great fit for this role..."></textarea>
-                                <p class="text-xs text-gray-500 mt-1">Minimum 100 characters</p>
+                                          placeholder="Ceritakan mengapa Anda cocok untuk posisi ini..."></textarea>
+                                <p class="text-xs text-gray-500 mt-1">Minimal 100 karakter</p>
                             </div>
 
                             <!-- Profile Check -->
                             <div class="mb-6 p-4 bg-blue-50 rounded-xl">
-                                <h4 class="text-sm font-semibold text-gray-900 mb-2">Before you apply:</h4>
+                                <h4 class="text-sm font-semibold text-gray-900 mb-2">Sebelum melamar:</h4>
                                 <ul class="space-y-2 text-sm text-gray-600">
                                     <li class="flex items-center gap-2">
                                         <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
-                                        Complete profile
+                                        Lengkapi profil
                                     </li>
                                     <li class="flex items-center gap-2">
                                         <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
-                                        Upload CV
+                                        Unggah CV
                                     </li>
                                     <li class="flex items-center gap-2">
                                         <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
-                                        Review job requirements
+                                        Tinjau persyaratan pekerjaan
                                     </li>
                                 </ul>
                             </div>
@@ -211,7 +211,7 @@
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                                 </svg>
-                                Submit Application
+                                Kirim Lamaran
                             </button>
                         </form>
                         @endif
@@ -223,14 +223,14 @@
                                 <svg class="w-5 h-5" fill="{{ $isBookmarked ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                                 </svg>
-                                <span class="font-medium text-gray-700">{{ $isBookmarked ? 'Saved' : 'Save' }}</span>
+                                <span class="font-medium text-gray-700">{{ $isBookmarked ? 'Tersimpan' : 'Simpan' }}</span>
                             </button>
 
                             <button class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-colors flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
                                 </svg>
-                                <span class="font-medium text-gray-700">Share</span>
+                                <span class="font-medium text-gray-700">Bagikan</span>
                             </button>
                         </div>
                     </div>
@@ -243,14 +243,14 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                 </svg>
                             </div>
-                            <h3 class="text-lg font-bold text-gray-900 mb-2">Sign in to apply</h3>
-                            <p class="text-sm text-gray-600 mb-6">Create an account or sign in to apply for this position</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Masuk untuk melamar</h3>
+                            <p class="text-sm text-gray-600 mb-6">Buat akun atau masuk untuk melamar posisi ini</p>
                             <div class="space-y-3">
                                 <a href="{{ route('login') }}" class="block w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
-                                    Sign In
+                                    Masuk
                                 </a>
                                 <a href="{{ route('register') }}" class="block w-full px-6 py-3 border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors">
-                                    Create Account
+                                    Buat Akun
                                 </a>
                             </div>
                         </div>
@@ -259,7 +259,7 @@
 
                     <!-- Company Info -->
                     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-                        <h3 class="text-lg font-bold text-gray-900 mb-4">About Company</h3>
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">Tentang Perusahaan</h3>
                         
                         <div class="text-center mb-4">
                             @if($job->company->user->avatar ?? null)
@@ -283,14 +283,14 @@
 
                         @if($job->company->website ?? null)
                         <a href="{{ $job->company->website }}" target="_blank" class="block w-full px-4 py-3 border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors text-center">
-                            Visit Website
+                            Kunjungi Website
                         </a>
                         @endif
                     </div>
 
                     <!-- Job Details -->
                     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-                        <h3 class="text-lg font-bold text-gray-900 mb-4">Job Details</h3>
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">Detail Pekerjaan</h3>
                         
                         <div class="space-y-3">
                             <div class="flex items-center gap-3">
@@ -300,7 +300,7 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500">Posted</p>
+                                    <p class="text-xs text-gray-500">Diposting</p>
                                     <p class="font-semibold text-gray-900">{{ $job->created_at->format('M d, Y') }}</p>
                                 </div>
                             </div>
@@ -312,7 +312,7 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500">Deadline</p>
+                                    <p class="text-xs text-gray-500">Tenggat Waktu</p>
                                     <p class="font-semibold text-gray-900">{{ $job->deadline->format('M d, Y') }}</p>
                                 </div>
                             </div>
@@ -324,8 +324,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-500">Applicants</p>
-                                    <p class="font-semibold text-gray-900">{{ $job->applications->count() }} people</p>
+                                    <p class="text-xs text-gray-500">Pelamar</p>
+                                    <p class="font-semibold text-gray-900">{{ $job->applications->count() }} orang</p>
                                 </div>
                             </div>
                         </div>

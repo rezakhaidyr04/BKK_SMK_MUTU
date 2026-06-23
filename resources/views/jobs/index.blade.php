@@ -4,8 +4,8 @@
     <div class="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 shadow-2xl">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div class="text-center mb-8">
-                    <h1 class="text-4xl font-bold text-white mb-3">Find Your Dream Job</h1>
-                    <p class="text-blue-100 text-lg">Discover {{ $jobs->total() }} opportunities waiting for you</p>
+                    <h1 class="text-4xl font-bold text-white mb-3">Temukan Pekerjaan Impian Anda</h1>
+                    <p class="text-blue-100 text-lg">Temukan {{ $jobs->total() }} peluang yang menunggu Anda</p>
                 </div>
 
                 <!-- Advanced Search Form -->
@@ -14,10 +14,10 @@
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                             <!-- Search Input -->
                             <div class="md:col-span-2">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Keywords</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Kata Kunci</label>
                                 <div class="relative">
                                     <input type="text" name="search" value="{{ request('search') }}" 
-                                           placeholder="Job title, position, company..."
+                                           placeholder="Judul pekerjaan, posisi, perusahaan..."
                                            class="w-full pl-10 pr-4 py-3 rounded-xl border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200">
                                     <svg class="absolute left-3 top-3.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -27,9 +27,9 @@
 
                             <!-- Location -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi</label>
                                 <select name="location" class="w-full py-3 px-4 rounded-xl border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200">
-                                    <option value="">All Locations</option>
+                                    <option value="">Semua Lokasi</option>
                                     @foreach($locations as $location)
                                     <option value="{{ $location }}" {{ request('location') == $location ? 'selected' : '' }}>
                                         {{ $location }}
@@ -40,26 +40,26 @@
 
                             <!-- Job Type -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Job Type</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Pekerjaan</label>
                                 <select name="job_type" class="w-full py-3 px-4 rounded-xl border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200">
-                                    <option value="">All Types</option>
-                                    <option value="full_time" {{ request('job_type') == 'full_time' ? 'selected' : '' }}>Full Time</option>
-                                    <option value="part_time" {{ request('job_type') == 'part_time' ? 'selected' : '' }}>Part Time</option>
-                                    <option value="internship" {{ request('job_type') == 'internship' ? 'selected' : '' }}>Internship</option>
-                                    <option value="contract" {{ request('job_type') == 'contract' ? 'selected' : '' }}>Contract</option>
+                                    <option value="">Semua Jenis</option>
+                                    <option value="full_time" {{ request('job_type') == 'full_time' ? 'selected' : '' }}>Penuh Waktu</option>
+                                    <option value="part_time" {{ request('job_type') == 'part_time' ? 'selected' : '' }}>Paruh Waktu</option>
+                                    <option value="internship" {{ request('job_type') == 'internship' ? 'selected' : '' }}>Magang</option>
+                                    <option value="contract" {{ request('job_type') == 'contract' ? 'selected' : '' }}>Kontrak</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="flex items-center justify-between mt-6">
                             <a href="{{ route('jobs.index') }}" class="text-sm text-gray-600 hover:text-gray-900 font-medium">
-                                Clear Filters
+                                Hapus Filter
                             </a>
                             <button type="submit" class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                 </svg>
-                                Search Jobs
+                                Cari Lowongan
                             </button>
                         </div>
                     </div>
@@ -71,19 +71,19 @@
             <!-- Results Header -->
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900">Available Positions</h2>
-                    <p class="text-gray-600 mt-1">Showing {{ $jobs->firstItem() }}-{{ $jobs->lastItem() }} of {{ $jobs->total() }} jobs</p>
+                    <h2 class="text-2xl font-bold text-gray-900">Posisi Tersedia</h2>
+                    <p class="text-gray-600 mt-1">Menampilkan {{ $jobs->firstItem() }}-{{ $jobs->lastItem() }} dari {{ $jobs->total() }} lowongan</p>
                 </div>
 
                 <!-- Sort Options -->
                 <div class="flex items-center gap-3">
-                    <label class="text-sm font-medium text-gray-700">Sort by:</label>
+                    <label class="text-sm font-medium text-gray-700">Urutkan:</label>
                     <select name="sort" onchange="window.location.href = updateQueryParam('sort', this.value)" 
                             class="py-2 px-4 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200">
-                        <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Latest</option>
-                        <option value="salary_high" {{ request('sort') == 'salary_high' ? 'selected' : '' }}>Salary: High to Low</option>
-                        <option value="salary_low" {{ request('sort') == 'salary_low' ? 'selected' : '' }}>Salary: Low to High</option>
-                        <option value="deadline" {{ request('sort') == 'deadline' ? 'selected' : '' }}>Deadline</option>
+                        <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Terbaru</option>
+                        <option value="salary_high" {{ request('sort') == 'salary_high' ? 'selected' : '' }}>Gaji: Tertinggi</option>
+                        <option value="salary_low" {{ request('sort') == 'salary_low' ? 'selected' : '' }}>Gaji: Terendah</option>
+                        <option value="deadline" {{ request('sort') == 'deadline' ? 'selected' : '' }}>Tenggat Waktu</option>
                     </select>
                 </div>
             </div>
@@ -162,7 +162,7 @@
                                 <div class="flex items-center gap-3">
                                     <a href="{{ route('jobs.show', $job->id) }}" 
                                        class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition text-center">
-                                        View Details
+                                        Lihat Detail
                                     </a>
                                     
                                     @auth
@@ -180,10 +180,10 @@
                         <!-- Bottom Stats -->
                         <div class="flex items-center justify-between pt-4 border-t border-gray-100">
                             <span class="text-sm text-gray-500">
-                                Posted {{ $job->created_at->diffForHumans() }}
+                                Diposting {{ $job->created_at->diffForHumans() }}
                             </span>
                             <span class="text-sm font-medium text-gray-700">
-                                {{ $job->applications_count ?? 0 }} applicants
+                                {{ $job->applications_count ?? 0 }} pelamar
                             </span>
                         </div>
                     </div>
@@ -203,10 +203,10 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-2">No jobs found</h3>
-                <p class="text-gray-600 mb-6">Try adjusting your search criteria or filters</p>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Tidak ada lowongan ditemukan</h3>
+                <p class="text-gray-600 mb-6">Coba sesuaikan kriteria pencarian atau filter Anda</p>
                 <a href="{{ route('jobs.index') }}" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
-                    Clear All Filters
+                    Hapus Semua Filter
                 </a>
             </div>
             @endif

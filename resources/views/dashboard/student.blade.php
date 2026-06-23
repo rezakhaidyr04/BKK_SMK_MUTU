@@ -15,8 +15,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <h1 class="text-3xl font-bold text-white">Welcome back, {{ Auth::user()->name }}!</h1>
-                                <p class="text-blue-100 mt-1">Let's find your dream job today</p>
+                                <h1 class="text-3xl font-bold text-white">Selamat datang kembali, {{ Auth::user()->name }}!</h1>
+                                <p class="text-blue-100 mt-1">Mari temukan pekerjaan impian Anda hari ini</p>
                             </div>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                     <!-- Profile Completion Card -->
                     <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 min-w-[280px]">
                         <div class="flex items-center justify-between mb-2">
-                            <span class="text-white font-medium">Profile Completion</span>
+                            <span class="text-white font-medium">Kelengkapan Profil</span>
                             <span class="text-white font-bold">{{ $stats['profile_completion'] }}%</span>
                         </div>
                         <div class="w-full bg-white/20 rounded-full h-2.5">
@@ -32,7 +32,7 @@
                         </div>
                         @if($stats['profile_completion'] < 100)
                         <a href="{{ route('profile.edit') }}" class="mt-3 inline-block text-sm text-white hover:text-blue-100 underline">
-                            Complete your profile →
+                            Lengkapi profil Anda →
                         </a>
                         @endif
                     </div>
@@ -47,7 +47,7 @@
                 <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-blue-200 group">
                     <div class="flex items-center justify-between">
                         <div class="flex-1">
-                            <p class="text-sm font-medium text-gray-600 mb-1">Active Applications</p>
+                            <p class="text-sm font-medium text-gray-600 mb-1">Lamaran Aktif</p>
                             <p class="text-3xl font-bold text-gray-900">{{ $stats['active_applications'] }}</p>
                         </div>
                         <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -62,7 +62,7 @@
                 <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-purple-200 group">
                     <div class="flex items-center justify-between">
                         <div class="flex-1">
-                            <p class="text-sm font-medium text-gray-600 mb-1">Interviews</p>
+                            <p class="text-sm font-medium text-gray-600 mb-1">Wawancara</p>
                             <p class="text-3xl font-bold text-gray-900">{{ $stats['interview_count'] }}</p>
                         </div>
                         <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -77,7 +77,7 @@
                 <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-green-200 group">
                     <div class="flex items-center justify-between">
                         <div class="flex-1">
-                            <p class="text-sm font-medium text-gray-600 mb-1">Accepted</p>
+                            <p class="text-sm font-medium text-gray-600 mb-1">Diterima</p>
                             <p class="text-3xl font-bold text-gray-900">{{ $stats['accepted_count'] }}</p>
                         </div>
                         <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -92,7 +92,7 @@
                 <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-yellow-200 group">
                     <div class="flex items-center justify-between">
                         <div class="flex-1">
-                            <p class="text-sm font-medium text-gray-600 mb-1">Bookmarks</p>
+                            <p class="text-sm font-medium text-gray-600 mb-1">Disimpan</p>
                             <p class="text-3xl font-bold text-gray-900">{{ $stats['bookmarked_jobs'] }}</p>
                         </div>
                         <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -107,7 +107,7 @@
                 <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-red-200 group">
                     <div class="flex items-center justify-between">
                         <div class="flex-1">
-                            <p class="text-sm font-medium text-gray-600 mb-1">Messages</p>
+                            <p class="text-sm font-medium text-gray-600 mb-1">Pesan</p>
                             <p class="text-3xl font-bold text-gray-900">{{ $stats['unread_messages'] }}</p>
                         </div>
                         <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">

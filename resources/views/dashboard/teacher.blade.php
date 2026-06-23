@@ -17,11 +17,11 @@
             <div class="text-2xl font-semibold">{{ $stats['total_alumni'] ?? 0 }}</div>
         </div>
         <div class="p-4 bg-white rounded-lg shadow-soft-modern">
-            <div class="text-sm text-gray-500">Placed Students</div>
+            <div class="text-sm text-gray-500">Siswa Ditempatkan</div>
             <div class="text-2xl font-semibold">{{ $stats['placed_students'] ?? 0 }}</div>
         </div>
         <div class="p-4 bg-white rounded-lg shadow-soft-modern">
-            <div class="text-sm text-gray-500">Active Jobs</div>
+            <div class="text-sm text-gray-500">Lowongan Aktif</div>
             <div class="text-2xl font-semibold">{{ $stats['active_jobs'] ?? 0 }}</div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-8">Career Events</h1>
+            <h1 class="text-3xl font-bold text-gray-900 mb-8">Acara Karir</h1>
             
             @if($events->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -37,7 +37,7 @@
             {{ $events->links() }}
             @else
             <div class="bg-white rounded-xl shadow-lg p-12 text-center">
-                <p class="text-gray-600">No events available</p>
+                <p class="text-gray-600">Belum ada acara tersedia</p>
             </div>
             @endif
         </div>

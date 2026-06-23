@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Dasbor') }}
         </h2>
     </x-slot>
 
@@ -34,7 +34,7 @@
                 </div>
                 <!-- Card 3 -->
                 <div class="bg-white overflow-hidden shadow-soft-modern rounded-xl p-6 border-l-4 border-warning">
-                    <div class="text-gray-500 text-sm font-medium uppercase tracking-wider mb-1">Menunggu Interview</div>
+                    <div class="text-gray-500 text-sm font-medium uppercase tracking-wider mb-1">Menunggu Wawancara</div>
                     <div class="text-3xl font-bold text-gray-900">3</div>
                 </div>
                 <!-- Card 4 -->

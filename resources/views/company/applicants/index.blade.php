@@ -11,11 +11,11 @@
         <form action="{{ route('company.applicants.index') }}" method="GET" class="flex flex-wrap gap-3 items-center">
             <select name="status" class="px-4 py-3 border border-gray-300 rounded-xl focus:border-blue-500 focus:ring-blue-200 focus:ring-opacity-50">
                 <option value="">Semua Status</option>
-                <option value="submitted" {{ request('status') == 'submitted' ? 'selected' : '' }}>Submitted</option>
-                <option value="under_review" {{ request('status') == 'under_review' ? 'selected' : '' }}>Under Review</option>
-                <option value="interviewed" {{ request('status') == 'interviewed' ? 'selected' : '' }}>Interview</option>
-                <option value="accepted" {{ request('status') == 'accepted' ? 'selected' : '' }}>Accepted</option>
-                <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                <option value="submitted" {{ request('status') == 'submitted' ? 'selected' : '' }}>Terkirim</option>
+                <option value="under_review" {{ request('status') == 'under_review' ? 'selected' : '' }}>Ditinjau</option>
+                <option value="interviewed" {{ request('status') == 'interviewed' ? 'selected' : '' }}>Wawancara</option>
+                <option value="accepted" {{ request('status') == 'accepted' ? 'selected' : '' }}>Diterima</option>
+                <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Ditolak</option>
             </select>
             <button type="submit" class="px-4 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition">Filter</button>
         </form>
@@ -83,23 +83,23 @@
                     <span>{{ $stats['total'] ?? 0 }}</span>
                 </div>
                 <div class="flex justify-between border-b border-gray-200 pb-3">
-                    <span>Submitted</span>
+                    <span>Terkirim</span>
                     <span>{{ $stats['submitted'] ?? 0 }}</span>
                 </div>
                 <div class="flex justify-between border-b border-gray-200 pb-3">
-                    <span>Under Review</span>
+                    <span>Ditinjau</span>
                     <span>{{ $stats['under_review'] ?? 0 }}</span>
                 </div>
                 <div class="flex justify-between border-b border-gray-200 pb-3">
-                    <span>Interview</span>
+                    <span>Wawancara</span>
                     <span>{{ $stats['interviewed'] ?? 0 }}</span>
                 </div>
                 <div class="flex justify-between border-b border-gray-200 pb-3">
-                    <span>Accepted</span>
+                    <span>Diterima</span>
                     <span>{{ $stats['accepted'] ?? 0 }}</span>
                 </div>
                 <div class="flex justify-between">
-                    <span>Rejected</span>
+                    <span>Ditolak</span>
                     <span>{{ $stats['rejected'] ?? 0 }}</span>
                 </div>
             </div>

@@ -3,8 +3,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- Header -->
             <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">My Applications</h1>
-                <p class="text-gray-600">Track and manage your job applications</p>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Lamaran Saya</h1>
+                <p class="text-gray-600">Lacak dan kelola lamaran pekerjaan Anda</p>
             </div>
 
             <!-- Stats Cards -->
@@ -15,40 +15,40 @@
                 </div>
                 <div class="bg-white rounded-xl shadow-md p-4 border-l-4 border-blue-400">
                     <p class="text-2xl font-bold text-blue-600">{{ $stats['submitted'] }}</p>
-                    <p class="text-xs text-gray-600">Submitted</p>
+                    <p class="text-xs text-gray-600">Terkirim</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-md p-4 border-l-4 border-yellow-400">
                     <p class="text-2xl font-bold text-yellow-600">{{ $stats['under_review'] }}</p>
-                    <p class="text-xs text-gray-600">Under Review</p>
+                    <p class="text-xs text-gray-600">Ditinjau</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-md p-4 border-l-4 border-purple-400">
                     <p class="text-2xl font-bold text-purple-600">{{ $stats['interviewed'] }}</p>
-                    <p class="text-xs text-gray-600">Interview</p>
+                    <p class="text-xs text-gray-600">Wawancara</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-md p-4 border-l-4 border-green-400">
                     <p class="text-2xl font-bold text-green-600">{{ $stats['accepted'] }}</p>
-                    <p class="text-xs text-gray-600">Accepted</p>
+                    <p class="text-xs text-gray-600">Diterima</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-md p-4 border-l-4 border-red-400">
                     <p class="text-2xl font-bold text-red-600">{{ $stats['rejected'] }}</p>
-                    <p class="text-xs text-gray-600">Rejected</p>
+                    <p class="text-xs text-gray-600">Ditolak</p>
                 </div>
             </div>
 
             <!-- Filter -->
             <div class="bg-white rounded-xl shadow-lg p-4 mb-6">
                 <form action="{{ route('applications.index') }}" method="GET" class="flex flex-wrap gap-3 items-center">
-                    <label class="text-sm font-medium text-gray-700">Filter by Status:</label>
+                    <label class="text-sm font-medium text-gray-700">Filter berdasarkan Status:</label>
                     <select name="status" class="px-4 py-2 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200" onchange="this.form.submit()">
-                        <option value="">All Applications</option>
-                        <option value="submitted" {{ request('status') == 'submitted' ? 'selected' : '' }}>Submitted</option>
-                        <option value="under_review" {{ request('status') == 'under_review' ? 'selected' : '' }}>Under Review</option>
-                        <option value="interviewed" {{ request('status') == 'interviewed' ? 'selected' : '' }}>Interview</option>
-                        <option value="accepted" {{ request('status') == 'accepted' ? 'selected' : '' }}>Accepted</option>
-                        <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                        <option value="">Semua Lamaran</option>
+                        <option value="submitted" {{ request('status') == 'submitted' ? 'selected' : '' }}>Terkirim</option>
+                        <option value="under_review" {{ request('status') == 'under_review' ? 'selected' : '' }}>Ditinjau</option>
+                        <option value="interviewed" {{ request('status') == 'interviewed' ? 'selected' : '' }}>Wawancara</option>
+                        <option value="accepted" {{ request('status') == 'accepted' ? 'selected' : '' }}>Diterima</option>
+                        <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Ditolak</option>
                     </select>
                     @if(request('status'))
-                    <a href="{{ route('applications.index') }}" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Clear Filter</a>
+                    <a href="{{ route('applications.index') }}" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Hapus Filter</a>
                     @endif
                 </form>
             </div>
@@ -85,13 +85,13 @@
 
                                     @php
                                         $statusConfig = [
-                                            'submitted' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-700', 'label' => 'Submitted'],
-                                            'under_review' => ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-700', 'label' => 'Under Review'],
-                                            'interviewed' => ['bg' => 'bg-purple-100', 'text' => 'text-purple-700', 'label' => 'Interview'],
-                                            'accepted' => ['bg' => 'bg-green-100', 'text' => 'text-green-700', 'label' => 'Accepted'],
-                                            'rejected' => ['bg' => 'bg-red-100', 'text' => 'text-red-700', 'label' => 'Rejected'],
+                                            'submitted' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-700', 'label' => 'Terkirim'],
+                                            'under_review' => ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-700', 'label' => 'Ditinjau'],
+                                            'interviewed' => ['bg' => 'bg-purple-100', 'text' => 'text-purple-700', 'label' => 'Wawancara'],
+                                            'accepted' => ['bg' => 'bg-green-100', 'text' => 'text-green-700', 'label' => 'Diterima'],
+                                            'rejected' => ['bg' => 'bg-red-100', 'text' => 'text-red-700', 'label' => 'Ditolak'],
                                         ];
-                                        $status = $statusConfig[$application->status] ?? ['bg' => 'bg-gray-100', 'text' => 'text-gray-700', 'label' => 'Unknown'];
+                                        $status = $statusConfig[$application->status] ?? ['bg' => 'bg-gray-100', 'text' => 'text-gray-700', 'label' => 'Tidak Diketahui'];
                                     @endphp
                                     <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold {{ $status['bg'] }} {{ $status['text'] }}">
                                         {{ $status['label'] }}
@@ -110,27 +110,27 @@
                                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                         </svg>
-                                        Applied {{ $application->created_at->diffForHumans() }}
+                                        Melamar {{ $application->created_at->diffForHumans() }}
                                     </span>
                                 </div>
 
                                 <div class="flex items-center gap-3">
                                     <a href="{{ route('applications.show', $application->id) }}" 
                                        class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors">
-                                        View Details
+                                        Lihat Detail
                                     </a>
                                     
                                     <a href="{{ route('jobs.show', $application->job->id) }}" 
                                        class="px-4 py-2 border-2 border-gray-300 text-gray-700 text-sm font-semibold rounded-lg hover:border-gray-400 transition-colors">
-                                        View Job
+                                        Lihat Lowongan
                                     </a>
 
                                     @if(!in_array($application->status, ['accepted', 'rejected']))
-                                    <form action="{{ route('applications.destroy', $application->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to withdraw this application?')">
+                                    <form action="{{ route('applications.destroy', $application->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menarik lamaran ini?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="px-4 py-2 text-red-600 text-sm font-semibold rounded-lg hover:bg-red-50 transition-colors">
-                                            Withdraw
+                                            Tarik Lamaran
                                         </button>
                                     </form>
                                     @endif
@@ -154,10 +154,10 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-2">No applications yet</h3>
-                <p class="text-gray-600 mb-6">Start applying to jobs that match your skills and interests</p>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Belum ada lamaran</h3>
+                <p class="text-gray-600 mb-6">Mulai melamar pekerjaan yang sesuai dengan keahlian dan minat Anda</p>
                 <a href="{{ route('jobs.index') }}" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
-                    Browse Jobs
+                    Cari Lowongan
                 </a>
             </div>
             @endif

@@ -61,20 +61,20 @@
                 </div>
 
                 <div class="md:col-span-2">
-                    <x-input-label for="benefits" value="Benefits" />
+                    <x-input-label for="benefits" value="Benefit" />
                     <textarea id="benefits" name="benefits" rows="3" class="w-full mt-1 rounded-lg border border-gray-200 bg-white px-4 py-3 min-h-[80px] resize-y focus:outline-none focus:ring-2 focus:ring-blue-200">{{ old('benefits') }}</textarea>
                 </div>
 
                 <div>
-                    <x-input-label for="deadline" value="Deadline" />
+                    <x-input-label for="deadline" value="Tenggat Waktu" />
                     <input id="deadline" name="deadline" type="date" value="{{ old('deadline') }}" class="w-full mt-1 rounded-lg border border-gray-200 bg-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200" />
                 </div>
 
                 <div>
                     <x-input-label for="status" value="Status" />
                     <select id="status" name="status" class="w-full mt-1 rounded-lg border border-gray-200 bg-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200">
-                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
-                        <option value="closed" {{ old('status') == 'closed' ? 'selected' : '' }}>Closed</option>
+                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Aktif</option>
+                        <option value="closed" {{ old('status') == 'closed' ? 'selected' : '' }}>Ditutup</option>
                         <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draft</option>
                     </select>
                 </div>

@@ -8,13 +8,13 @@
             <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h1 class="text-3xl font-bold text-white mb-2">Admin Dashboard</h1>
-                        <p class="text-blue-100">Complete system overview and analytics</p>
+                        <h1 class="text-3xl font-bold text-white mb-2">Dasbor Admin</h1>
+                        <p class="text-blue-100">Ringkasan lengkap sistem dan analitik</p>
                     </div>
                     <div class="hidden md:block">
                         <div class="flex items-center gap-3">
                             <div class="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg text-white">
-                                <p class="text-sm">Today</p>
+                                <p class="text-sm">Hari Ini</p>
                                 <p class="font-semibold">{{ now()->format('d M Y') }}</p>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                 <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-blue-500 hover:shadow-xl transition-all">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-gray-600 mb-1">Total Students</p>
+                            <p class="text-sm font-medium text-gray-600 mb-1">Total Siswa</p>
                             <p class="text-4xl font-bold text-gray-900">{{ $stats['total_students'] }}</p>
                         </div>
                         <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center">
@@ -41,7 +41,7 @@
                     </div>
                     <div class="mt-4 flex items-center text-sm">
                         <span class="text-green-600 font-semibold">+5.2%</span>
-                        <span class="text-gray-600 ml-2">from last month</span>
+                        <span class="text-gray-600 ml-2">dari bulan lalu</span>
                     </div>
                 </div>
 
@@ -60,7 +60,7 @@
                     </div>
                     <div class="mt-4 flex items-center text-sm">
                         <span class="text-green-600 font-semibold">+12.5%</span>
-                        <span class="text-gray-600 ml-2">from last month</span>
+                        <span class="text-gray-600 ml-2">dari bulan lalu</span>
                     </div>
                 </div>
 
@@ -68,7 +68,7 @@
                 <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-purple-500 hover:shadow-xl transition-all">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-gray-600 mb-1">Companies</p>
+                            <p class="text-sm font-medium text-gray-600 mb-1">Perusahaan</p>
                             <p class="text-4xl font-bold text-gray-900">{{ $stats['total_companies'] }}</p>
                         </div>
                         <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center">
@@ -79,7 +79,7 @@
                     </div>
                     <div class="mt-4 flex items-center text-sm">
                         <span class="text-green-600 font-semibold">+3</span>
-                        <span class="text-gray-600 ml-2">new this month</span>
+                        <span class="text-gray-600 ml-2">baru bulan ini</span>
                     </div>
                 </div>
 
@@ -87,7 +87,7 @@
                 <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-orange-500 hover:shadow-xl transition-all">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-gray-600 mb-1">Active Jobs</p>
+                            <p class="text-sm font-medium text-gray-600 mb-1">Lowongan Aktif</p>
                             <p class="text-4xl font-bold text-gray-900">{{ $stats['total_jobs'] }}</p>
                         </div>
                         <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center">
@@ -98,7 +98,7 @@
                     </div>
                     <div class="mt-4 flex items-center text-sm">
                         <span class="text-green-600 font-semibold">+8</span>
-                        <span class="text-gray-600 ml-2">new postings</span>
+                        <span class="text-gray-600 ml-2">posting baru</span>
                     </div>
                 </div>
             </div>
@@ -107,19 +107,19 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                 <div class="bg-white rounded-xl shadow-md p-5 text-center">
                     <p class="text-3xl font-bold text-blue-600">{{ $stats['total_applications'] }}</p>
-                    <p class="text-sm text-gray-600 mt-1">Total Applications</p>
+                    <p class="text-sm text-gray-600 mt-1">Total Lamaran</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-md p-5 text-center">
                     <p class="text-3xl font-bold text-yellow-600">{{ $stats['pending_applications'] }}</p>
-                    <p class="text-sm text-gray-600 mt-1">Pending Review</p>
+                    <p class="text-sm text-gray-600 mt-1">Menunggu Tinjauan</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-md p-5 text-center">
                     <p class="text-3xl font-bold text-purple-600">{{ $stats['interviews_scheduled'] }}</p>
-                    <p class="text-sm text-gray-600 mt-1">Interviews</p>
+                    <p class="text-sm text-gray-600 mt-1">Wawancara</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-md p-5 text-center">
                     <p class="text-3xl font-bold text-green-600">{{ $stats['accepted_applications'] }}</p>
-                    <p class="text-sm text-gray-600 mt-1">Accepted</p>
+                    <p class="text-sm text-gray-600 mt-1">Diterima</p>
                 </div>
             </div>
 
@@ -127,7 +127,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                 <!-- Application Chart -->
                 <div class="bg-white rounded-2xl shadow-lg p-6">
-                    <h3 class="text-lg font-bold text-gray-900 mb-4">Application Trends</h3>
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Tren Lamaran</h3>
                     <div class="h-64 flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl">
                         <p class="text-gray-500">Chart akan ditampilkan di sini (Chart.js)</p>
                     </div>
@@ -135,7 +135,7 @@
 
                 <!-- Job Posting Chart -->
                 <div class="bg-white rounded-2xl shadow-lg p-6">
-                    <h3 class="text-lg font-bold text-gray-900 mb-4">Job Posting Trends</h3>
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Tren Posting Lowongan</h3>
                     <div class="h-64 flex items-center justify-center bg-gradient-to-br from-green-50 to-teal-50 rounded-xl">
                         <p class="text-gray-500">Chart akan ditampilkan di sini (Chart.js)</p>
                     </div>
@@ -146,7 +146,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Recent Applications -->
                 <div class="bg-white rounded-2xl shadow-lg p-6">
-                    <h3 class="text-lg font-bold text-gray-900 mb-6">Recent Applications</h3>
+                    <h3 class="text-lg font-bold text-gray-900 mb-6">Lamaran Terbaru</h3>
                     <div class="space-y-4">
                         @foreach($recentApplications->take(5) as $app)
                         <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
@@ -167,7 +167,7 @@
 
                 <!-- Top Companies -->
                 <div class="bg-white rounded-2xl shadow-lg p-6">
-                    <h3 class="text-lg font-bold text-gray-900 mb-6">Top Companies</h3>
+                    <h3 class="text-lg font-bold text-gray-900 mb-6">Perusahaan Teratas</h3>
                     <div class="space-y-4">
                         @foreach($topCompanies as $company)
                         <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
@@ -177,7 +177,7 @@
                                 </div>
                                 <div>
                                     <p class="font-semibold text-gray-900">{{ $company->name }}</p>
-                                    <p class="text-sm text-gray-600">{{ $company->job_count }} jobs posted</p>
+                                    <p class="text-sm text-gray-600">{{ $company->job_count }} lowongan diposting</p>
                                 </div>
                             </div>
                             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
