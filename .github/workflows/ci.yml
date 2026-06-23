@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: bkk_smk_mutu
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, intl, pdo_mysql
+
+      - name: Get Composer Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.composer/cache
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install Dependencies
+        run: composer install --no-progress --prefer-dist --no-interaction
+
+      - name: Copy env
+        run: |
+          cp .env.example .env || true
+          php -r "file_exists('.env') || copy('.env.example', '.env');"
+          php artisan key:generate --ansi
+
+      - name: Wait for MySQL
+        run: |
+          for i in {1..30}; do mysql -h127.0.0.1 -uroot -proot -e 'select 1' && break || sleep 2; done
+
+      - name: Configure env for CI
+        run: |
+          php -r "file_put_contents('.env', str_replace('DB_DATABASE=', 'DB_DATABASE=bkk_smk_mutu', file_get_contents('.env')));"
+          php -r "file_put_contents('.env', str_replace('DB_USERNAME=', 'DB_USERNAME=root', file_get_contents('.env')));"
+          php -r "file_put_contents('.env', str_replace('DB_PASSWORD=', 'DB_PASSWORD=root', file_get_contents('.env')));"
+          php -r "file_put_contents('.env', str_replace('QUEUE_CONNECTION=sync', 'QUEUE_CONNECTION=database', file_get_contents('.env')));"
+
+      - name: Create database and migrate
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: bkk_smk_mutu
+          DB_USERNAME: root
+          DB_PASSWORD: root
+        run: |
+          php artisan migrate --force
+
+      - name: Run Tests
+        run: php artisan test --stop-on-failure
