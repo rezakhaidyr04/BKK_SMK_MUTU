@@ -47,12 +47,12 @@
             <!-- Recent Activity & Recommendations -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 bg-white shadow-soft-modern rounded-xl p-6">
-                    <h4 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Rekomendasi Lowongan (Job Match)</h4>
+                    <h4 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Rekomendasi Lowongan (Kecocokan Kerja)</h4>
                     <div class="space-y-4">
                         <!-- Empty State Example -->
                         <div class="text-center py-8 text-gray-500">
                             <svg class="mx-auto h-12 w-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                            <p>Lengkapi profil dan keahlian (Skill) Anda untuk mendapatkan rekomendasi lowongan yang sesuai!</p>
+                            <p>Lengkapi profil dan keahlian Anda untuk mendapatkan rekomendasi lowongan yang sesuai!</p>
                             <button class="mt-4 px-4 py-2 bg-primary text-white rounded-xl hover:bg-blue-700 transition">Lengkapi Profil</button>
                         </div>
                     </div>
@@ -62,11 +62,11 @@
                     <ul class="space-y-4">
                         <li class="flex items-start space-x-3 text-sm">
                             <span class="flex-shrink-0 w-2 h-2 mt-1.5 rounded-full bg-secondary"></span>
-                            <p class="text-gray-600">Melamar posisi <span class="font-semibold text-gray-800">Frontend Developer</span> di PT Teknologi Bangsa</p>
+                            <p class="text-gray-600">Melamar posisi <span class="font-semibold text-gray-800">Pengembang Frontend</span> di PT Teknologi Bangsa</p>
                         </li>
                         <li class="flex items-start space-x-3 text-sm">
                             <span class="flex-shrink-0 w-2 h-2 mt-1.5 rounded-full bg-warning"></span>
-                            <p class="text-gray-600">Memperbarui CV ATS Friendly</p>
+                            <p class="text-gray-600">Memperbarui CV Ramah ATS</p>
                         </li>
                     </ul>
                 </div>

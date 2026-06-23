@@ -10,7 +10,7 @@
                     <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600"></div>
                     <div class="p-6">
                         <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full mb-2">
-                            {{ ucfirst($article->category) }}
+                            {{ \App\Support\Label::newsCategory($article->category) }}
                         </span>
                         <h3 class="font-bold text-lg text-gray-900 mb-2">{{ $article->title }}</h3>
                         <p class="text-sm text-gray-600 mb-4">{{ Str::limit(strip_tags($article->content), 120) }}</p>

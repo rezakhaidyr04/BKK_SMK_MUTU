@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use App\Models\Application;
+use App\Support\Label;
 use App\Models\Event;
 use App\Models\Bookmark;
 use App\Models\Message;
@@ -174,7 +175,7 @@ class DashboardController extends Controller
 
         if (!$company) {
             return redirect()->route('company.setup')
-                ->with('error', 'Please complete your company profile first.');
+                ->with('error', 'Silakan lengkapi profil perusahaan Anda terlebih dahulu.');
         }
 
         $stats = [
@@ -321,8 +322,8 @@ class DashboardController extends Controller
         foreach ($applications as $app) {
             $activities[] = [
                 'type' => 'application',
-                'title' => 'Applied to ' . $app->job->title,
-                'description' => 'Status: ' . ucfirst($app->status),
+                'title' => 'Melamar ke ' . $app->job->title,
+                'description' => 'Status: ' . Label::applicationStatus($app->status),
                 'timestamp' => $app->created_at,
                 'icon' => 'briefcase',
                 'color' => $this->getStatusColor($app->status),
@@ -338,8 +339,8 @@ class DashboardController extends Controller
         foreach ($bookmarks as $bookmark) {
             $activities[] = [
                 'type' => 'bookmark',
-                'title' => 'Bookmarked ' . $bookmark->job->title,
-                'description' => $bookmark->job->company->name ?? 'Company',
+                'title' => 'Menyimpan ' . $bookmark->job->title,
+                'description' => $bookmark->job->company->name ?? __('bkk.fallback.company'),
                 'timestamp' => $bookmark->created_at,
                 'icon' => 'bookmark',
                 'color' => 'blue',

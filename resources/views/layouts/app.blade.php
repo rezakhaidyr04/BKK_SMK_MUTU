@@ -62,7 +62,7 @@
                                 <div>
 
                                     <h3 class="text-lg font-semibold text-white">BKK SMK MUTU</h3>
-                                    <p class="text-sm leading-7 text-slate-400">Career Development Center yang membantu siswa dan alumni menemukan peluang kerja berkualitas.</p>
+                                    <p class="text-sm leading-7 text-slate-400">Pusat Pengembangan Karir yang membantu siswa dan alumni menemukan peluang kerja berkualitas.</p>
                                 </div>
                             </div>
                             <div class="flex flex-wrap gap-3">

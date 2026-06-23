@@ -25,8 +25,8 @@
                         </select>
                     </div>
                     <div class="flex items-end gap-2">
-                        <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-700">Filter</button>
-                        <a href="{{ route('admin.companies.index') }}" class="inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50">Reset</a>
+                        <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-700">Saring</button>
+                        <a href="{{ route('admin.companies.index') }}" class="inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50">Atur Ulang</a>
                     </div>
                 </form>
             </div>
@@ -56,7 +56,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                                     <a href="{{ route('admin.companies.show', $company) }}" class="text-blue-600 hover:text-blue-900">Lihat</a>
-                                    <a href="{{ route('admin.companies.edit', $company) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                    <a href="{{ route('admin.companies.edit', $company) }}" class="text-indigo-600 hover:text-indigo-900">Ubah</a>
                                     <form action="{{ route('admin.companies.destroy', $company) }}" method="POST" class="inline" onsubmit="return confirm('Hapus perusahaan ini?');">
                                         @csrf
                                         @method('DELETE')

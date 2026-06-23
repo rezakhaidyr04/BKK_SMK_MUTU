@@ -5,7 +5,7 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">Detail Lowongan</h2>
                 <p class="text-sm text-gray-500">Detail lengkap lowongan dan pelamar.</p>
             </div>
-            <a href="{{ route('admin.jobs.edit', $job) }}" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700">Edit</a>
+            <a href="{{ route('admin.jobs.edit', $job) }}" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700">Ubah</a>
         </div>
     </x-slot>
 
@@ -21,7 +21,7 @@
                             <p><strong>Perusahaan:</strong> {{ optional($job->company)->name ?? '-' }}</p>
                             <p><strong>Lokasi:</strong> {{ $job->location }}</p>
                             <p><strong>Tipe:</strong> {{ ucwords(str_replace('_', ' ', $job->job_type)) }}</p>
-                            <p><strong>Status:</strong> {{ ucfirst($job->status) }}</p>
+                            <p><strong>Status:</strong> {{ \App\Support\Label::jobStatus($job->status) }}</p>
                         </div>
                     </div>
                     <div>
@@ -47,7 +47,7 @@
                     @foreach($job->applications as $application)
                     <div class="rounded-2xl border border-gray-200 p-4">
                         <p class="font-semibold text-gray-900">{{ optional($application->user)->name ?? 'Pengguna tidak tersedia' }}</p>
-                        <p class="text-sm text-gray-600">{{ ucfirst($application->status) }} • {{ $application->created_at->diffForHumans() }}</p>
+                        <p class="text-sm text-gray-600">{{ \App\Support\Label::applicationStatus($application->status) }} • {{ $application->created_at->diffForHumans() }}</p>
                     </div>
                     @endforeach
                 </div>

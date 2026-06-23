@@ -27,6 +27,6 @@ class BookmarkController extends Controller
 
         $bookmark->delete();
 
-        return back()->with('success', 'Bookmark removed successfully.');
+        return back()->with('success', 'Lowongan tersimpan berhasil dihapus.');
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use App\Models\Application;
+use App\Support\Label;
 
 class ApplicationStatusChanged extends Notification implements ShouldQueue
 {
@@ -30,7 +31,7 @@ class ApplicationStatusChanged extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         $job = $this->application->job;
-        $status = ucfirst($this->application->status);
+        $status = Label::applicationStatus($this->application->status);
 
         $mail = (new MailMessage)
                     ->subject("Status Aplikasi: {$job->title} - {$status}")

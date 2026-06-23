@@ -80,7 +80,7 @@
                                         <h3 class="text-xl font-bold text-gray-900 mb-1">
                                             {{ $application->job->title }}
                                         </h3>
-                                        <p class="text-gray-600 font-medium mb-2">{{ $application->job->company->name ?? 'Company' }}</p>
+                                        <p class="text-gray-600 font-medium mb-2">{{ $application->job->company->name ?? __('bkk.fallback.company') }}</p>
                                     </div>
 
                                     @php

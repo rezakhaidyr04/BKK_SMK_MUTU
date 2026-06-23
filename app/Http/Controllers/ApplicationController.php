@@ -89,12 +89,12 @@ class ApplicationController extends Controller
 
         // Can only withdraw if not yet accepted/rejected
         if (in_array($application->status, ['accepted', 'rejected'])) {
-            return back()->with('error', 'Cannot withdraw this application.');
+            return back()->with('error', 'Lamaran ini tidak dapat ditarik.');
         }
 
         $application->delete();
 
         return redirect()->route('applications.index')
-            ->with('success', 'Application withdrawn successfully.');
+            ->with('success', 'Lamaran berhasil ditarik.');
     }
 }

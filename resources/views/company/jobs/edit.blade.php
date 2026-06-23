@@ -3,7 +3,7 @@
 @section('content')
 <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
     <div class="mb-6">
-        <h1 class="text-2xl font-bold">Edit Lowongan</h1>
+        <h1 class="text-2xl font-bold">Ubah Lowongan</h1>
         <p class="text-sm text-gray-600">Perbarui informasi lowongan.</p>
     </div>
 
@@ -33,10 +33,10 @@
                 <div>
                     <x-input-label for="job_type" value="Tipe Pekerjaan" />
                     <select name="job_type" id="job_type" class="w-full mt-1 rounded-lg border border-gray-200 bg-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200">
-                        <option value="full_time" {{ old('job_type', $job->job_type) == 'full_time' ? 'selected' : '' }}>Full Time</option>
-                        <option value="part_time" {{ old('job_type', $job->job_type) == 'part_time' ? 'selected' : '' }}>Part Time</option>
-                        <option value="internship" {{ old('job_type', $job->job_type) == 'internship' ? 'selected' : '' }}>Internship</option>
-                        <option value="contract" {{ old('job_type', $job->job_type) == 'contract' ? 'selected' : '' }}>Contract</option>
+                        <option value="full_time" {{ old('job_type', $job->job_type) == 'full_time' ? 'selected' : '' }}>Penuh Waktu</option>
+                        <option value="part_time" {{ old('job_type', $job->job_type) == 'part_time' ? 'selected' : '' }}>Paruh Waktu</option>
+                        <option value="internship" {{ old('job_type', $job->job_type) == 'internship' ? 'selected' : '' }}>Magang</option>
+                        <option value="contract" {{ old('job_type', $job->job_type) == 'contract' ? 'selected' : '' }}>Kontrak</option>
                     </select>
                 </div>
 
@@ -76,7 +76,7 @@
                     <select id="status" name="status" class="w-full mt-1 rounded-lg border border-gray-200 bg-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200">
                         <option value="active" {{ old('status', $job->status) == 'active' ? 'selected' : '' }}>Aktif</option>
                         <option value="closed" {{ old('status', $job->status) == 'closed' ? 'selected' : '' }}>Ditutup</option>
-                        <option value="draft" {{ old('status', $job->status) == 'draft' ? 'selected' : '' }}>Draft</option>
+                        <option value="draft" {{ old('status', $job->status) == 'draft' ? 'selected' : '' }}>Draf</option>
                     </select>
                 </div>
             </div>

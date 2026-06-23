@@ -17,7 +17,7 @@
                 <option value="accepted" {{ request('status') == 'accepted' ? 'selected' : '' }}>Diterima</option>
                 <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Ditolak</option>
             </select>
-            <button type="submit" class="px-4 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition">Filter</button>
+            <button type="submit" class="px-4 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition">Saring</button>
         </form>
     </div>
 
@@ -33,7 +33,7 @@
                     </div>
                     <div class="text-right">
                         <p class="text-sm text-gray-500">Tanggal: {{ $application->created_at->format('d M Y') }}</p>
-                        <span class="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 mt-2">{{ ucfirst($application->status) }}</span>
+                        <span class="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 mt-2">{{ \App\Support\Label::applicationStatus($application->status) }}</span>
                     </div>
                 </div>
 

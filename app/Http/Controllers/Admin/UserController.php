@@ -61,7 +61,7 @@ class UserController extends Controller
         ]);
 
         if ($user->id === auth()->id() && $validated['role'] !== $user->role) {
-            return back()->with('error', 'You cannot change your own role.');
+            return back()->with('error', 'Anda tidak dapat mengubah peran akun sendiri.');
         }
 
         $user->fill([
@@ -84,7 +84,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         if ($user->id === auth()->id()) {
-            return back()->with('error', 'You cannot delete your own account.');
+            return back()->with('error', 'Anda tidak dapat menghapus akun sendiri.');
         }
 
         $user->delete();

@@ -143,12 +143,12 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 class="text-lg font-bold text-gray-900">Job Recommendations</h3>
-                                        <p class="text-sm text-gray-600">Matched to your skills and profile</p>
+                                        <h3 class="text-lg font-bold text-gray-900">Rekomendasi Lowongan</h3>
+                                        <p class="text-sm text-gray-600">Disesuaikan dengan keahlian dan profil Anda</p>
                                     </div>
                                 </div>
                                 <a href="{{ route('jobs.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                                    View All
+                                    Lihat Semua
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                     </svg>
@@ -176,7 +176,7 @@
                                                 <h4 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
                                                     {{ $job->title }}
                                                 </h4>
-                                                <p class="text-sm text-gray-600 mb-2">{{ $job->company->name ?? 'Company Name' }}</p>
+                                                <p class="text-sm text-gray-600 mb-2">{{ $job->company->name ?? __('bkk.fallback.company') }}</p>
                                                 
                                                 <div class="flex flex-wrap items-center gap-2 mb-3">
                                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
@@ -190,7 +190,7 @@
                                                         <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                                         </svg>
-                                                        {{ ucfirst(str_replace('_', ' ', $job->job_type)) }}
+                                                        {{ \App\Support\Label::jobType($job->job_type) }}
                                                     </span>
                                                     @if($job->salary_min && $job->salary_max)
                                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
@@ -204,7 +204,7 @@
                                                 
                                                 <div class="flex items-center gap-2">
                                                     <a href="{{ route('jobs.show', $job->id) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                                                        View Details
+                                                        Lihat Detail
                                                     </a>
                                                     <button class="p-2 text-gray-400 hover:text-red-500 transition-colors">
                                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -226,7 +226,7 @@
                                                 @php $badgeBg = 'bg-gray-200'; $text = 'text-gray-700'; @endphp
                                             @endif
                                             <div class="px-3 py-1 {{ $badgeBg }} {{ $text }} text-xs font-bold rounded-full shadow-lg">
-                                                {{ $score }}% Match
+                                                {{ $score }}% Kecocokan
                                             </div>
                                         </div>
                                     </div>
@@ -240,10 +240,10 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                         </svg>
                                     </div>
-                                    <h4 class="text-lg font-semibold text-gray-900 mb-2">No recommendations yet</h4>
-                                    <p class="text-gray-600 mb-4">Complete your profile and add skills to get personalized job recommendations</p>
+                                    <h4 class="text-lg font-semibold text-gray-900 mb-2">Belum ada rekomendasi</h4>
+                                    <p class="text-gray-600 mb-4">Lengkapi profil dan tambahkan keahlian untuk mendapatkan rekomendasi lowongan</p>
                                     <a href="{{ route('profile.edit') }}" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                                        Complete Profile
+                                        Lengkapi Profil
                                     </a>
                                 </div>
                             @endif
@@ -261,12 +261,12 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 class="text-lg font-bold text-gray-900">My Applications</h3>
-                                        <p class="text-sm text-gray-600">Track your application status</p>
+                                        <h3 class="text-lg font-bold text-gray-900">Lamaran Saya</h3>
+                                        <p class="text-sm text-gray-600">Lacak status lamaran Anda</p>
                                     </div>
                                 </div>
                                 <a href="{{ route('applications.index') }}" class="text-sm font-medium text-purple-600 hover:text-purple-700 flex items-center gap-1">
-                                    View All
+                                    Lihat Semua
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                     </svg>
@@ -282,17 +282,17 @@
                                         <div class="flex items-start justify-between mb-3">
                                             <div class="flex-1">
                                                 <h4 class="text-base font-bold text-gray-900 mb-1">{{ $application->job->title }}</h4>
-                                                <p class="text-sm text-gray-600">{{ $application->job->company->name ?? 'Company' }}</p>
+                                                <p class="text-sm text-gray-600">{{ $application->job->company->name ?? __('bkk.fallback.company') }}</p>
                                             </div>
                                             @php
                                                 $statusConfig = [
-                                                    'submitted' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-700', 'label' => 'Submitted'],
-                                                    'under_review' => ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-700', 'label' => 'Under Review'],
-                                                    'interviewed' => ['bg' => 'bg-purple-100', 'text' => 'text-purple-700', 'label' => 'Interview'],
-                                                    'accepted' => ['bg' => 'bg-green-100', 'text' => 'text-green-700', 'label' => 'Accepted'],
-                                                    'rejected' => ['bg' => 'bg-red-100', 'text' => 'text-red-700', 'label' => 'Rejected'],
+                                                    'submitted' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-700', 'label' => 'Terkirim'],
+                                                    'under_review' => ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-700', 'label' => 'Sedang Ditinjau'],
+                                                    'interviewed' => ['bg' => 'bg-purple-100', 'text' => 'text-purple-700', 'label' => 'Wawancara'],
+                                                    'accepted' => ['bg' => 'bg-green-100', 'text' => 'text-green-700', 'label' => 'Diterima'],
+                                                    'rejected' => ['bg' => 'bg-red-100', 'text' => 'text-red-700', 'label' => 'Ditolak'],
                                                 ];
-                                                $status = $statusConfig[$application->status] ?? ['bg' => 'bg-gray-100', 'text' => 'text-gray-700', 'label' => 'Unknown'];
+                                                $status = $statusConfig[$application->status] ?? ['bg' => 'bg-gray-100', 'text' => 'text-gray-700', 'label' => 'Tidak Diketahui'];
                                             @endphp
                                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $status['bg'] }} {{ $status['text'] }}">
                                                 {{ $status['label'] }}
@@ -300,9 +300,9 @@
                                         </div>
                                         
                                         <div class="flex items-center justify-between text-sm">
-                                            <span class="text-gray-500">Applied {{ $application->created_at->diffForHumans() }}</span>
+                                            <span class="text-gray-500">Melamar {{ $application->created_at->diffForHumans() }}</span>
                                             <a href="{{ route('applications.show', $application->id) }}" class="text-purple-600 hover:text-purple-700 font-medium">
-                                                View Details →
+                                                Lihat Detail →
                                             </a>
                                         </div>
                                     </div>
@@ -315,10 +315,10 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
                                     </div>
-                                    <h4 class="text-lg font-semibold text-gray-900 mb-2">No applications yet</h4>
-                                    <p class="text-gray-600 mb-4">Start applying to jobs that match your skills</p>
+                                    <h4 class="text-lg font-semibold text-gray-900 mb-2">Belum ada lamaran</h4>
+                                    <p class="text-gray-600 mb-4">Mulai melamar lowongan yang sesuai keahlian Anda</p>
                                     <a href="{{ route('jobs.index') }}" class="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 transition-colors">
-                                        Browse Jobs
+                                        Jelajahi Lowongan
                                     </a>
                                 </div>
                             @endif
@@ -338,8 +338,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-lg font-bold text-gray-900">Recent Activity</h3>
-                                    <p class="text-sm text-gray-600">Your latest actions</p>
+                                    <h3 class="text-lg font-bold text-gray-900">Aktivitas Terbaru</h3>
+                                    <p class="text-sm text-gray-600">Tindakan terbaru Anda</p>
                                 </div>
                             </div>
                         </div>
@@ -390,7 +390,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
                                     </div>
-                                    <p class="text-sm text-gray-600">No recent activity</p>
+                                    <p class="text-sm text-gray-600">Belum ada aktivitas</p>
                                 </div>
                             @endif
                         </div>
@@ -406,8 +406,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-lg font-bold text-gray-900">Upcoming Events</h3>
-                                    <p class="text-sm text-gray-600">Career opportunities</p>
+                                    <h3 class="text-lg font-bold text-gray-900">Acara Mendatang</h3>
+                                    <p class="text-sm text-gray-600">Peluang karir</p>
                                 </div>
                             </div>
                         </div>
@@ -427,7 +427,7 @@
                                             
                                             <div class="flex-1 min-w-0">
                                                 <h4 class="text-sm font-bold text-gray-900 mb-1">{{ $event->title }}</h4>
-                                                <p class="text-xs text-gray-600 mb-2">{{ ucfirst(str_replace('_', ' ', $event->type)) }}</p>
+                                                <p class="text-xs text-gray-600 mb-2">{{ \App\Support\Label::eventType($event->type) }}</p>
                                                 <div class="flex items-center gap-2 text-xs text-gray-500">
                                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -446,7 +446,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                         </svg>
                                     </div>
-                                    <p class="text-sm text-gray-600">No upcoming events</p>
+                                    <p class="text-sm text-gray-600">Belum ada acara mendatang</p>
                                 </div>
                             @endif
                         </div>
@@ -455,7 +455,7 @@
                     <!-- Quick Actions -->
                     <div class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl shadow-lg overflow-hidden">
                         <div class="p-6">
-                            <h3 class="text-lg font-bold text-white mb-4">Quick Actions</h3>
+                            <h3 class="text-lg font-bold text-white mb-4">Aksi Cepat</h3>
                             <div class="space-y-2">
                                 <a href="{{ route('jobs.index') }}" class="flex items-center gap-3 p-3 bg-white/10 backdrop-blur-sm rounded-xl hover:bg-white/20 transition-all duration-300 text-white group">
                                     <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -463,7 +463,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                         </svg>
                                     </div>
-                                    <span class="font-medium">Browse Jobs</span>
+                                    <span class="font-medium">Jelajahi Lowongan</span>
                                 </a>
                                 
                                 <a href="{{ route('cv.builder') }}" class="flex items-center gap-3 p-3 bg-white/10 backdrop-blur-sm rounded-xl hover:bg-white/20 transition-all duration-300 text-white group">
@@ -472,7 +472,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
                                     </div>
-                                    <span class="font-medium">Build CV</span>
+                                    <span class="font-medium">Buat CV</span>
                                 </a>
                                 
                                 <a href="{{ route('events.index') }}" class="flex items-center gap-3 p-3 bg-white/10 backdrop-blur-sm rounded-xl hover:bg-white/20 transition-all duration-300 text-white group">
@@ -481,7 +481,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                         </svg>
                                     </div>
-                                    <span class="font-medium">View Events</span>
+                                    <span class="font-medium">Lihat Acara</span>
                                 </a>
                             </div>
                         </div>

@@ -31,7 +31,7 @@
 
                                 <div class="flex-1">
                                     <h1 class="text-3xl font-bold mb-2">{{ $job->title }}</h1>
-                                    <p class="text-xl text-blue-100 mb-4">{{ $job->company->name ?? 'Company' }}</p>
+                                    <p class="text-xl text-blue-100 mb-4">{{ $job->company->name ?? __('bkk.fallback.company') }}</p>
                                     
                                     <div class="flex flex-wrap items-center gap-3">
                                         <span class="inline-flex items-center px-4 py-2 rounded-lg bg-white/20 backdrop-blur-sm">
@@ -45,7 +45,7 @@
                                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                             </svg>
-                                            {{ ucfirst(str_replace('_', ' ', $job->job_type)) }}
+                                            {{ \App\Support\Label::jobType($job->job_type) }}
                                         </span>
 
                                         @if($job->salary_min && $job->salary_max)
@@ -139,7 +139,7 @@
                                 <div class="flex items-center gap-2 text-xs text-gray-500">
                                     <span>{{ $similar->location }}</span>
                                     <span>•</span>
-                                    <span>{{ ucfirst(str_replace('_', ' ', $similar->job_type)) }}</span>
+                                    <span>{{ \App\Support\Label::jobType($similar->job_type) }}</span>
                                 </div>
                             </a>
                             @endforeach
@@ -271,7 +271,7 @@
                                 {{ substr($job->company->name ?? 'C', 0, 1) }}
                             </div>
                             @endif
-                            <h4 class="font-bold text-gray-900 mt-3">{{ $job->company->name ?? 'Company' }}</h4>
+                            <h4 class="font-bold text-gray-900 mt-3">{{ $job->company->name ?? __('bkk.fallback.company') }}</h4>
                             @if($job->company->industry ?? null)
                             <p class="text-sm text-gray-600">{{ $job->company->industry }}</p>
                             @endif

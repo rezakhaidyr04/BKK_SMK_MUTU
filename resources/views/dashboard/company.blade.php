@@ -3,7 +3,7 @@
 @section('content')
 <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold">Dashboard Perusahaan</h1>
+        <h1 class="text-2xl font-bold">Dasbor Perusahaan</h1>
         <p class="text-sm text-gray-600">Ringkasan lowongan dan pelamar</p>
     </div>
 
@@ -36,8 +36,8 @@
                     @foreach($recentApplicants as $app)
                         <li class="flex items-start gap-3">
                             <div class="flex-1">
-                                <div class="font-medium">{{ $app->user->name ?? 'N/A' }} — {{ $app->job->title ?? 'Lowongan' }}</div>
-                                <div class="text-xs text-gray-500">{{ $app->created_at->format('d M Y') }} · Status: {{ ucfirst($app->status) }}</div>
+                                <div class="font-medium">{{ $app->user->name ?? __('bkk.fallback.not_available') }} — {{ $app->job->title ?? 'Lowongan' }}</div>
+                                <div class="text-xs text-gray-500">{{ $app->created_at->format('d M Y') }} · Status: {{ \App\Support\Label::applicationStatus($app->status) }}</div>
                             </div>
                             <a href="{{ route('applications.show', $app) }}" class="text-sm text-blue-600">Lihat</a>
                         </li>

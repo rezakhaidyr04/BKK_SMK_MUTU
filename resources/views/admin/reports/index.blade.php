@@ -58,7 +58,7 @@
                     @foreach($recentUsers as $user)
                     <div class="rounded-2xl border border-gray-200 p-4">
                         <p class="font-semibold text-gray-900">{{ $user->name }}</p>
-                        <p class="text-sm text-gray-500">{{ $user->email }} • {{ ucfirst($user->role) }}</p>
+                        <p class="text-sm text-gray-500">{{ $user->email }} • {{ \App\Support\Label::role($user->role) }}</p>
                     </div>
                     @endforeach
                 </div>
@@ -82,7 +82,7 @@
                         @foreach($recentJobs as $job)
                         <div class="rounded-2xl border border-gray-200 p-4">
                             <p class="font-semibold text-gray-900">{{ $job->title }}</p>
-                            <p class="text-sm text-gray-500">{{ optional($job->company)->name ?? '-' }} • {{ ucfirst($job->status) }}</p>
+                            <p class="text-sm text-gray-500">{{ optional($job->company)->name ?? '-' }} • {{ \App\Support\Label::jobStatus($job->status) }}</p>
                         </div>
                         @endforeach
                     </div>

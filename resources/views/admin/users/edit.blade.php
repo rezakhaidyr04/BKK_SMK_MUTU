@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Edit Pengguna</h2>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Ubah Pengguna</h2>
                 <p class="text-sm text-gray-500">Perbarui data dan kontrol akses pengguna.</p>
             </div>
         </div>

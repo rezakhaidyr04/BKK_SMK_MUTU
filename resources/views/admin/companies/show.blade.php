@@ -5,7 +5,7 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">Detail Perusahaan</h2>
                 <p class="text-sm text-gray-500">Informasi lengkap perusahaan employer.</p>
             </div>
-            <a href="{{ route('admin.companies.edit', $company) }}" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700">Edit</a>
+            <a href="{{ route('admin.companies.edit', $company) }}" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700">Ubah</a>
         </div>
     </x-slot>
 
@@ -40,7 +40,7 @@
                     @forelse($company->jobs as $job)
                     <div class="rounded-2xl border border-gray-200 p-4">
                         <p class="font-semibold text-gray-900">{{ $job->title }}</p>
-                        <p class="text-gray-600 text-sm">{{ ucfirst($job->status) }} • {{ $job->location }}</p>
+                        <p class="text-gray-600 text-sm">{{ \App\Support\Label::jobStatus($job->status) }} • {{ $job->location }}</p>
                         <p class="text-gray-500 text-sm mt-2">{{ \Illuminate\Support\Str::limit($job->description, 120) }}</p>
                     </div>
                     @empty

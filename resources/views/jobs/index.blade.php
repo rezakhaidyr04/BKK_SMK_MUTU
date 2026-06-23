@@ -113,7 +113,7 @@
                                 <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
                                     <a href="{{ route('jobs.show', $job->id) }}">{{ $job->title }}</a>
                                 </h3>
-                                <p class="text-gray-600 font-medium mb-2">{{ $job->company->name ?? 'Company' }}</p>
+                                <p class="text-gray-600 font-medium mb-2">{{ $job->company->name ?? __('bkk.fallback.company') }}</p>
                                 
                                 <div class="flex flex-wrap items-center gap-2 mb-3">
                                     <!-- Location -->
@@ -129,7 +129,7 @@
                                         <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                         </svg>
-                                        {{ ucfirst(str_replace('_', ' ', $job->job_type)) }}
+                                        {{ \App\Support\Label::jobType($job->job_type) }}
                                     </span>
 
                                     <!-- Deadline -->

@@ -66,7 +66,7 @@ class CvBuilderController extends Controller
         }
 
         if (!Storage::disk('public')->exists($cvFile->file_path)) {
-            return back()->with('error', 'CV file not found.');
+            return back()->with('error', 'File CV tidak ditemukan.');
         }
 
         return Storage::disk('public')->download($cvFile->file_path);

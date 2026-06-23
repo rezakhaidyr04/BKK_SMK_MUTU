@@ -111,7 +111,7 @@ class JobController extends Controller
             ->first();
 
         if ($existingApplication) {
-            return back()->with('error', 'You have already applied to this job.');
+            return back()->with('error', 'Anda sudah melamar lowongan ini.');
         }
 
         // Create application
@@ -125,7 +125,7 @@ class JobController extends Controller
         // TODO: Send notification to company
 
         return redirect()->route('jobs.show', $job)
-            ->with('success', 'Your application has been submitted successfully!');
+            ->with('success', 'Lamaran Anda berhasil dikirim!');
     }
 
     public function bookmark(Job $job)
@@ -136,13 +136,13 @@ class JobController extends Controller
 
         if ($bookmark) {
             $bookmark->delete();
-            return response()->json(['bookmarked' => false, 'message' => 'Bookmark removed']);
+            return response()->json(['bookmarked' => false, 'message' => 'Lowongan tersimpan dihapus']);
         } else {
             Bookmark::create([
                 'job_id' => $job->id,
                 'user_id' => Auth::id(),
             ]);
-            return response()->json(['bookmarked' => true, 'message' => 'Job bookmarked']);
+            return response()->json(['bookmarked' => true, 'message' => 'Lowongan berhasil disimpan']);
         }
     }
 }

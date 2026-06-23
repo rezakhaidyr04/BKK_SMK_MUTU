@@ -37,7 +37,7 @@ class CertificateController extends Controller
             'file_path' => $filePath,
         ]);
 
-        return back()->with('success', 'Certificate uploaded successfully.');
+        return back()->with('success', 'Sertifikat berhasil diunggah.');
     }
 
     public function destroy(Certificate $certificate)
@@ -54,6 +54,6 @@ class CertificateController extends Controller
 
         $certificate->delete();
 
-        return back()->with('success', 'Certificate deleted successfully.');
+        return back()->with('success', 'Sertifikat berhasil dihapus.');
     }
 }

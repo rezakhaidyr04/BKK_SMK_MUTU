@@ -72,6 +72,6 @@ class MessageController extends Controller
             // ignore broadcast failures; message still persisted
         }
 
-        return back()->with('success', 'Message sent successfully.');
+        return back()->with('success', 'Pesan berhasil dikirim.');
     }
 }

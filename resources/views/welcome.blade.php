@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BKK SMK MUTU Karawang - Career Development Platform</title>
+    <title>BKK SMK MUTU Karawang - Platform Pengembangan Karir</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,7 +57,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
                     <h1 class="text-5xl font-bold mb-6 leading-tight">
-                        Find Your Dream Career with BKK SMK MUTU
+                        Temukan Karir Impian Anda bersama BKK SMK MUTU
                     </h1>
                     <p class="text-xl text-blue-100 mb-8">
                         Platform karir modern yang menghubungkan siswa dan alumni SMK dengan peluang kerja terbaik.
@@ -65,20 +65,20 @@
                     <div class="flex gap-4">
                         @auth
                             <a href="{{ route('jobs.index') }}" class="px-8 py-4 bg-white text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl">
-                                Browse Jobs
+                                Jelajahi Lowongan
                             </a>
                         @else
                             <a href="{{ route('register') }}" class="px-8 py-4 bg-white text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl">
-                                Get Started Free
+                                Mulai Gratis
                             </a>
                             <a href="{{ route('login') }}" class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl hover:bg-white/20 transition-all border border-white/20">
-                                Sign In
+                                Masuk
                             </a>
                         @endauth
                     </div>
                     @guest
                         <p class="mt-4 text-sm text-blue-100 max-w-xl">
-                            Admin? Gunakan tombol "Sign In" di atas untuk masuk sebagai admin. Pengguna biasa hanya perlu Daftar atau Browse Jobs.
+                            Admin? Gunakan tombol "Masuk" di atas untuk masuk sebagai admin. Pengguna biasa hanya perlu Daftar atau Jelajahi Lowongan.
                         </p>
                     @endguest
                     
@@ -116,7 +116,7 @@
     <section class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Choose BKK SMK MUTU?</h2>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Mengapa Memilih BKK SMK MUTU?</h2>
                 <p class="text-xl text-gray-600">Platform terlengkap untuk pengembangan karir Anda</p>
             </div>
             
@@ -127,8 +127,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Job Matching</h3>
-                    <p class="text-gray-600">Sistem rekomendasi pekerjaan berdasarkan skills dan minat Anda</p>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Pencocokan Lowongan</h3>
+                    <p class="text-gray-600">Sistem rekomendasi pekerjaan berdasarkan keahlian dan minat Anda</p>
                 </div>
                 
                 <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all">
@@ -137,8 +137,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">ATS-Friendly CV</h3>
-                    <p class="text-gray-600">Buat CV profesional yang optimize untuk Applicant Tracking System</p>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">CV Ramah ATS</h3>
+                    <p class="text-gray-600">Buat CV profesional yang dioptimalkan untuk Applicant Tracking System</p>
                 </div>
                 
                 <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all">
@@ -147,7 +147,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Application Tracking</h3>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Pelacakan Lamaran</h3>
                     <p class="text-gray-600">Monitor status lamaran Anda secara real-time dengan timeline</p>
                 </div>
             </div>
@@ -159,7 +159,7 @@
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Latest Job Opportunities</h2>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Peluang Lowongan Terbaru</h2>
                 <p class="text-xl text-gray-600">Peluang karir terbaru untuk Anda</p>
             </div>
             
@@ -167,17 +167,17 @@
                 @foreach($jobs->take(6) as $job)
                 <div class="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-blue-300 hover:shadow-lg transition-all">
                     <h3 class="font-bold text-lg text-gray-900 mb-2">{{ $job->title }}</h3>
-                    <p class="text-gray-600 text-sm mb-4">{{ $job->company->name ?? 'Company' }}</p>
+                    <p class="text-gray-600 text-sm mb-4">{{ $job->company->name ?? __('bkk.fallback.company') }}</p>
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
                             {{ $job->location }}
                         </span>
                         <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
-                            {{ ucfirst(str_replace('_', ' ', $job->job_type)) }}
+                            {{ \App\Support\Label::jobType($job->job_type) }}
                         </span>
                     </div>
                     <a href="{{ route('jobs.show', $job->id) }}" class="text-blue-600 text-sm font-medium hover:text-blue-700">
-                        View Details →
+                        Lihat Detail →
                     </a>
                 </div>
                 @endforeach
@@ -185,7 +185,7 @@
             
             <div class="text-center">
                 <a href="{{ route('jobs.index') }}" class="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
-                    View All Jobs
+                    Lihat Semua Lowongan
                 </a>
             </div>
         </div>
@@ -195,17 +195,17 @@
     <!-- CTA Section -->
     <section class="py-20 bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-bold mb-6">Ready to Start Your Career Journey?</h2>
+            <h2 class="text-4xl font-bold mb-6">Siap Memulai Perjalanan Karir Anda?</h2>
             <p class="text-xl text-blue-100 mb-8">
                 Bergabung dengan ribuan siswa dan alumni yang sudah menemukan pekerjaan impian mereka
             </p>
             @guest
                 <a href="{{ route('register') }}" class="inline-block px-8 py-4 bg-white text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl">
-                    Get Started Free
+                    Mulai Gratis
                 </a>
             @else
                 <a href="{{ route('jobs.index') }}" class="inline-block px-8 py-4 bg-white text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl">
-                    Browse All Jobs
+                    Jelajahi Semua Lowongan
                 </a>
             @endguest
         </div>
@@ -220,7 +220,7 @@
                         <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-12 h-12 rounded-xl object-cover">
                         <div>
                             <h3 class="text-lg font-bold">BKK SMK MUTU</h3>
-                            <p class="text-sm text-gray-400">Career Development Center</p>
+                            <p class="text-sm text-gray-400">Pusat Pengembangan Karir</p>
                         </div>
                     </div>
                     <p class="text-gray-400 text-sm">
@@ -229,16 +229,16 @@
                 </div>
                 
                 <div>
-                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <h4 class="font-semibold mb-4">Tautan Cepat</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="{{ route('jobs.index') }}" class="hover:text-white">Browse Jobs</a></li>
-                        <li><a href="{{ route('events.index') }}" class="hover:text-white">Events</a></li>
-                        <li><a href="{{ route('news.index') }}" class="hover:text-white">Career News</a></li>
+                        <li><a href="{{ route('jobs.index') }}" class="hover:text-white">Jelajahi Lowongan</a></li>
+                        <li><a href="{{ route('events.index') }}" class="hover:text-white">Acara</a></li>
+                        <li><a href="{{ route('news.index') }}" class="hover:text-white">Berita Karir</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="font-semibold mb-4">Contact</h4>
+                    <h4 class="font-semibold mb-4">Kontak</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
                         <li>SMK MUTU Karawang</li>
                         <li>Karawang, Jawa Barat</li>
@@ -248,7 +248,7 @@
             </div>
             
             <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-                &copy; {{ date('Y') }} BKK SMK MUTU KARAWANG. All rights reserved.
+                &copy; {{ date('Y') }} BKK SMK MUTU KARAWANG. Hak cipta dilindungi.
             </div>
         </div>
     </footer>

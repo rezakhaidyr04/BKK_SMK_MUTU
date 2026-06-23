@@ -3,7 +3,7 @@
 @section('content')
 <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold">Dashboard Guru</h1>
+        <h1 class="text-2xl font-bold">Dasbor Guru</h1>
         <p class="text-sm text-gray-600">Ringkasan penempatan dan monitoring siswa</p>
     </div>
 
@@ -36,7 +36,7 @@
                     @foreach($recentPlacements as $app)
                         <li class="flex items-start gap-3">
                             <div class="flex-1">
-                                <div class="font-medium">{{ $app->user->name ?? 'N/A' }} — {{ $app->job->title ?? 'Lowongan' }}</div>
+                                <div class="font-medium">{{ $app->user->name ?? __('bkk.fallback.not_available') }} — {{ $app->job->title ?? 'Lowongan' }}</div>
                                 <div class="text-xs text-gray-500">{{ $app->job->company->name ?? 'Perusahaan' }} · {{ $app->created_at->format('d M Y') }}</div>
                             </div>
                             <div class="text-sm text-green-600 font-semibold">Diterima</div>

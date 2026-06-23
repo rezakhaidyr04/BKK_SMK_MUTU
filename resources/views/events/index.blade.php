@@ -14,7 +14,7 @@
                     </div>
                     <div class="p-6">
                         <span class="inline-block px-3 py-1 bg-orange-100 text-orange-700 text-xs font-semibold rounded-full mb-2">
-                            {{ ucfirst(str_replace('_', ' ', $event->type)) }}
+                            {{ \App\Support\Label::eventType($event->type) }}
                         </span>
                         <h3 class="font-bold text-lg text-gray-900 mb-2">{{ $event->title }}</h3>
                         <p class="text-sm text-gray-600 mb-4">{{ Str::limit($event->description, 100) }}</p>

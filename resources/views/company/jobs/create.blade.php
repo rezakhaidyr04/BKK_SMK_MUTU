@@ -32,10 +32,10 @@
                 <div>
                     <x-input-label for="job_type" value="Tipe Pekerjaan" />
                     <select name="job_type" id="job_type" class="w-full mt-1 rounded-lg border border-gray-200 bg-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200">
-                        <option value="full_time" {{ old('job_type') == 'full_time' ? 'selected' : '' }}>Full Time</option>
-                        <option value="part_time" {{ old('job_type') == 'part_time' ? 'selected' : '' }}>Part Time</option>
-                        <option value="internship" {{ old('job_type') == 'internship' ? 'selected' : '' }}>Internship</option>
-                        <option value="contract" {{ old('job_type') == 'contract' ? 'selected' : '' }}>Contract</option>
+                        <option value="full_time" {{ old('job_type') == 'full_time' ? 'selected' : '' }}>Penuh Waktu</option>
+                        <option value="part_time" {{ old('job_type') == 'part_time' ? 'selected' : '' }}>Paruh Waktu</option>
+                        <option value="internship" {{ old('job_type') == 'internship' ? 'selected' : '' }}>Magang</option>
+                        <option value="contract" {{ old('job_type') == 'contract' ? 'selected' : '' }}>Kontrak</option>
                     </select>
                 </div>
 
@@ -75,7 +75,7 @@
                     <select id="status" name="status" class="w-full mt-1 rounded-lg border border-gray-200 bg-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200">
                         <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Aktif</option>
                         <option value="closed" {{ old('status') == 'closed' ? 'selected' : '' }}>Ditutup</option>
-                        <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draft</option>
+                        <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draf</option>
                     </select>
                 </div>
             </div>

@@ -158,7 +158,7 @@
                                 <p class="text-sm text-gray-600 truncate">{{ $app->job->title }}</p>
                             </div>
                             <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
-                                {{ ucfirst($app->status) }}
+                                {{ \App\Support\Label::applicationStatus($app->status) }}
                             </span>
                         </div>
                         @endforeach

@@ -5,7 +5,7 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">Detail Pengguna</h2>
                 <p class="text-sm text-gray-500">Informasi lengkap akun pengguna.</p>
             </div>
-            <a href="{{ route('admin.users.edit', $user) }}" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700">Edit</a>
+            <a href="{{ route('admin.users.edit', $user) }}" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700">Ubah</a>
         </div>
     </x-slot>
 
@@ -18,7 +18,7 @@
                         <div class="mt-4 space-y-3 text-sm text-gray-600">
                             <p><strong>Nama:</strong> {{ $user->name }}</p>
                             <p><strong>Email:</strong> {{ $user->email }}</p>
-                            <p><strong>Role:</strong> {{ ucfirst($user->role) }}</p>
+                            <p><strong>Peran:</strong> {{ \App\Support\Label::role($user->role) }}</p>
                             <p><strong>Status:</strong> {{ $user->is_active ? 'Aktif' : 'Nonaktif' }}</p>
                             <p><strong>Terdaftar:</strong> {{ $user->created_at->format('d M Y H:i') }}</p>
                         </div>
@@ -42,7 +42,7 @@
                         @forelse($user->applications->take(5) as $application)
                         <div class="rounded-2xl border border-gray-200 p-4">
                             <p class="text-sm font-semibold text-gray-900">{{ $application->job->title ?? 'Lowongan tidak tersedia' }}</p>
-                            <p class="text-sm text-gray-600">{{ ucfirst($application->status) }} - {{ $application->created_at->diffForHumans() }}</p>
+                            <p class="text-sm text-gray-600">{{ \App\Support\Label::applicationStatus($application->status) }} - {{ $application->created_at->diffForHumans() }}</p>
                         </div>
                         @empty
                         <p class="text-sm text-gray-500">Belum ada aplikasi.</p>

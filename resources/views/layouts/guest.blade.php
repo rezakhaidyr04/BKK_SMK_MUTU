@@ -37,16 +37,16 @@
                             </div>
                             <div>
                                 <h1 class="text-3xl font-bold text-white">BKK SMK MUTU</h1>
-                                <p class="text-blue-100">Career Development Center</p>
+                                <p class="text-blue-100">Pusat Pengembangan Karir</p>
                             </div>
                         </div>
                         
                         <h2 class="text-4xl font-bold text-white mb-4 leading-tight">
-                            Connecting Talent<br>
-                            with Opportunity
+                            Menghubungkan Talenta<br>
+                            dengan Peluang
                         </h2>
                         <p class="text-xl text-blue-100 leading-relaxed">
-                            Join thousands of students and alumni who have found their dream careers through our platform.
+                            Bergabunglah dengan ribuan siswa dan alumni yang menemukan karir impian melalui platform kami.
                         </p>
                     </div>
                     
@@ -54,15 +54,15 @@
                     <div class="grid grid-cols-3 gap-6">
                         <div class="text-center">
                             <div class="text-3xl font-bold text-white">500+</div>
-                            <div class="text-blue-200 text-sm">Students Placed</div>
+                            <div class="text-blue-200 text-sm">Siswa Ditempatkan</div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-white">150+</div>
-                            <div class="text-blue-200 text-sm">Partner Companies</div>
+                            <div class="text-blue-200 text-sm">Perusahaan Mitra</div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-white">95%</div>
-                            <div class="text-blue-200 text-sm">Success Rate</div>
+                            <div class="text-blue-200 text-sm">Tingkat Keberhasilan</div>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                             </svg>
-                            Back to Homepage
+                            Kembali ke Beranda
                         </a>
                     </div>
                 </div>
