@@ -34,15 +34,15 @@ class ReportController extends Controller
     public function export()
     {
         $rows = [
-            ['Metrik', 'Nilai'],
-            ['Total Siswa', User::where('role', 'student')->count()],
+            ['Metric', 'Nilai'],
+            ['Total Students', User::where('role', 'student')->count()],
             ['Total Alumni', User::where('role', 'alumni')->count()],
-            ['Total Perusahaan', Company::count()],
-            ['Total Lowongan', Job::count()],
-            ['Lowongan Aktif', Job::where('status', 'active')->count()],
-            ['Total Lamaran', Application::count()],
-            ['Lamaran Terkirim', Application::where('status', 'submitted')->count()],
-            ['Lamaran Diterima', Application::where('status', 'accepted')->count()],
+            ['Total Companies', Company::count()],
+            ['Total Jobs', Job::count()],
+            ['Active Jobs', Job::where('status', 'active')->count()],
+            ['Total Applications', Application::count()],
+            ['Submitted Applications', Application::where('status', 'submitted')->count()],
+            ['Accepted Applications', Application::where('status', 'accepted')->count()],
         ];
 
         $filename = 'admin-report-' . now()->format('YmdHis') . '.csv';

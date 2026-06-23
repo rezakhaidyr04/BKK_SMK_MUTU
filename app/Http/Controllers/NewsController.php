@@ -9,7 +9,7 @@ class NewsController extends Controller
 {
     public function index(Request $request)
     {
-        $query = News::with('user')
+        $query = News::with('author')
             ->where('is_published', true);
 
         // Filter by category
@@ -37,6 +37,8 @@ class NewsController extends Controller
         if (!$news->is_published) {
             abort(404);
         }
+
+        $news->load('author');
 
         // Get related news
         $relatedNews = News::where('is_published', true)

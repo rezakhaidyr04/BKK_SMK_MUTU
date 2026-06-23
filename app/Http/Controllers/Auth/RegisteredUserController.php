@@ -41,7 +41,7 @@ class RegisteredUserController extends Controller
                 "unique:" . User::class,
             ],
             "password" => ["required", "confirmed", Rules\Password::defaults()],
-            "role" => ["required", "string", "in:student,alumni,company"],
+            "role" => ["nullable", "string", "in:student,alumni,company"],
             "nis" => ["nullable", "string", "max:20", "unique:students,nisn"],
             "graduation_year" => [
                 "nullable",
@@ -52,24 +52,26 @@ class RegisteredUserController extends Controller
             // 'terms' => ['required', 'accepted'], // Tidak dipakai di form registrasi saat ini
         ]);
 
+        $role = $request->input("role", "student");
+
         $user = User::create([
             "name" => $request->name,
             "email" => $request->email,
             "password" => Hash::make($request->password),
-            "role" => $request->role,
+            "role" => $role,
             "is_active" => true,
         ]);
 
         // Create student record if role is student or alumni
-        if (in_array($request->role, ["student", "alumni"])) {
+        if (in_array($role, ["student", "alumni"])) {
             $user->student()->create([
-                "nisn" => $request->role === "student" ? $request->nis : null,
+                "nisn" => $role === "student" ? $request->nis : null,
                 "graduation_year" => $request->graduation_year,
             ]);
         }
 
         // Create company record if role is company
-        if ($request->role === "company") {
+        if ($role === "company") {
             $user->company()->create([
                 "name" => $request->name,
             ]);

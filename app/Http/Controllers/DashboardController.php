@@ -266,7 +266,7 @@ class DashboardController extends Controller
 
         if (!$company) {
             return redirect()
-                ->route("company.setup")
+                ->route("company.profile.edit")
                 ->with(
                     "error",
                     "Silakan lengkapi profil perusahaan Anda terlebih dahulu.",

@@ -103,7 +103,7 @@ class ProfileController extends Controller
             Storage::disk("public")->delete($user->avatar);
         }
 
-        $user->delete();
+        $user->forceDelete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

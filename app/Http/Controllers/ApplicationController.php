@@ -36,12 +36,8 @@ class ApplicationController extends Controller
 
     public function show(Application $application)
     {
-        // Authorization check
-        if ($application->user_id !== Auth::id()) {
-            abort(403);
-        }
-
         $application->load(['job.company.user']);
+        $this->authorize('view', $application);
 
         // Timeline for status tracking
         $timeline = [
@@ -82,10 +78,7 @@ class ApplicationController extends Controller
 
     public function destroy(Application $application)
     {
-        // Authorization check
-        if ($application->user_id !== Auth::id()) {
-            abort(403);
-        }
+        abort_unless($application->user_id === Auth::id(), 403);
 
         // Can only withdraw if not yet accepted/rejected
         if (in_array($application->status, ['accepted', 'rejected'])) {
