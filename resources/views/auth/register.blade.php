@@ -1,8 +1,8 @@
 <x-guest-layout>
     <!-- Header -->
     <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-2">Join BKK SMK MUTU</h2>
-        <p class="text-gray-600">Start your career journey today</p>
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Bergabung dengan BKK SMK MUTU</h2>
+        <p class="text-gray-600">Mulai perjalanan karir Anda hari ini</p>
     </div>
 
     @php $selectedRole = old('role', 'student'); @endphp
@@ -23,7 +23,7 @@
 
         <!-- Role Selection -->
         <div>
-            <x-input-label for="role" :value="__('Account Type')" class="text-gray-700 font-medium mb-3" />
+            <x-input-label for="role" :value="__('Jenis Akun')" class="text-gray-700 font-medium mb-3" />
             <div class="grid grid-cols-2 gap-4">
                 <label class="relative">
                     <input type="radio" name="role" value="student" x-model="role" class="sr-only" {{ $selectedRole === 'student' ? 'checked' : '' }}>
@@ -36,8 +36,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="font-semibold text-gray-900">Student/Alumni</div>
-                                <div class="text-xs text-gray-600">Find jobs & build career</div>
+                                <div class="font-semibold text-gray-900">Siswa/Alumni</div>
+                                <div class="text-xs text-gray-600">Cari kerja & bangun karir</div>
                             </div>
                         </div>
                     </div>
@@ -54,8 +54,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="font-semibold text-gray-900">Company</div>
-                                <div class="text-xs text-gray-600">Post jobs & hire talent</div>
+                                <div class="font-semibold text-gray-900">Perusahaan</div>
+                                <div class="text-xs text-gray-600">Pasang lowongan & rekrut talenta</div>
                             </div>
                         </div>
                     </div>
@@ -66,9 +66,9 @@
 
         <!-- Name -->
         <div>
-            <x-input-label for="name" x-text="role === 'company' ? 'Company Name' : 'Full Name'" class="text-gray-700 font-medium mb-2" />
+            <x-input-label for="name" x-text="role === 'company' ? 'Nama Perusahaan' : 'Nama Lengkap'" class="text-gray-700 font-medium mb-2" />
             <div class="relative">
-                <x-text-input id="name" class="form-input pl-12" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" x-bind:placeholder="role === 'company' ? 'Enter company name' : 'Enter your full name'" />
+                <x-text-input id="name" class="form-input pl-12" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" x-bind:placeholder="role === 'company' ? 'Masukkan nama perusahaan' : 'Masukkan nama lengkap Anda'" />
                 <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" x-show="role === 'student'">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
@@ -83,9 +83,9 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email Address')" class="text-gray-700 font-medium mb-2" />
+            <x-input-label for="email" :value="__('Alamat Email')" class="text-gray-700 font-medium mb-2" />
             <div class="relative">
-                <x-text-input id="email" class="form-input pl-12" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="Enter email address" />
+                <x-text-input id="email" class="form-input pl-12" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="Masukkan alamat email" />
                 <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
@@ -99,9 +99,9 @@
         <div x-show="role === 'student'" x-transition class="space-y-6">
             <!-- NIS -->
             <div>
-                <x-input-label for="nis" :value="__('NIS (Student ID)')" class="text-gray-700 font-medium mb-2" />
+                <x-input-label for="nis" :value="__('NIS (Nomor Induk Siswa)')" class="text-gray-700 font-medium mb-2" />
                 <div class="relative">
-                    <x-text-input id="nis" class="form-input pl-12" type="text" name="nis" :value="old('nis')" placeholder="Enter your NIS" />
+                    <x-text-input id="nis" class="form-input pl-12" type="text" name="nis" :value="old('nis')" placeholder="Masukkan NIS Anda" />
                     <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
                         <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
@@ -113,10 +113,10 @@
 
             <!-- Graduation Year -->
             <div>
-                <x-input-label for="graduation_year" :value="__('Graduation Year')" class="text-gray-700 font-medium mb-2" />
+                <x-input-label for="graduation_year" :value="__('Tahun Lulus')" class="text-gray-700 font-medium mb-2" />
                 <div class="relative">
                     <select id="graduation_year" name="graduation_year" class="form-select pl-12">
-                        <option value="">Select graduation year</option>
+                        <option value="">Pilih tahun lulus</option>
                         @for($year = date('Y') + 2; $year >= date('Y') - 10; $year--)
                             <option value="{{ $year }}" {{ old('graduation_year') == $year ? 'selected' : '' }}>{{ $year }}</option>
                         @endfor
@@ -133,9 +133,9 @@
 
         <!-- Password -->
         <div>
-            <x-input-label for="password" :value="__('Password')" class="text-gray-700 font-medium mb-2" />
+            <x-input-label for="password" :value="__('Kata Sandi')" class="text-gray-700 font-medium mb-2" />
             <div class="relative">
-                <x-text-input id="password" class="form-input pl-12" type="password" name="password" required autocomplete="new-password" placeholder="Create a strong password" />
+                <x-text-input id="password" class="form-input pl-12" type="password" name="password" required autocomplete="new-password" placeholder="Buat kata sandi yang kuat" />
                 <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
@@ -147,9 +147,9 @@
 
         <!-- Confirm Password -->
         <div>
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" class="text-gray-700 font-medium mb-2" />
+            <x-input-label for="password_confirmation" :value="__('Konfirmasi Kata Sandi')" class="text-gray-700 font-medium mb-2" />
             <div class="relative">
-                <x-text-input id="password_confirmation" class="form-input pl-12" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm your password" />
+                <x-text-input id="password_confirmation" class="form-input pl-12" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Konfirmasi kata sandi Anda" />
                 <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -164,8 +164,8 @@
             <label class="flex items-start gap-3">
                 <input type="checkbox" class="mt-1 rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500 focus:ring-offset-0" name="terms" required>
                 <span class="text-sm text-gray-600">
-                    I agree to the <a href="{{ route('home') }}#terms" class="text-blue-600 hover:text-blue-800 font-medium">Terms of Service</a> 
-                    and <a href="{{ route('home') }}#privacy" class="text-blue-600 hover:text-blue-800 font-medium">Privacy Policy</a>
+                    Saya setuju dengan <a href="{{ route('home') }}#terms" class="text-blue-600 hover:text-blue-800 font-medium">Syarat Layanan</a> 
+                    dan <a href="{{ route('home') }}#privacy" class="text-blue-600 hover:text-blue-800 font-medium">Kebijakan Privasi</a>
                 </span>
             </label>
         </div>
@@ -174,7 +174,7 @@
         <div class="space-y-4">
             <button type="submit" class="w-full btn-primary py-4 text-base">
                 <span class="flex items-center justify-center gap-2">
-                    Create Account
+                    Buat Akun
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                     </svg>
@@ -186,9 +186,9 @@
     <!-- Login Link -->
     <div class="mt-8 text-center">
         <p class="text-gray-600">
-            Already have an account? 
+            Sudah punya akun? 
             <a href="{{ route('login') }}" class="font-medium text-blue-600 hover:text-blue-800 transition-colors">
-                Sign in here
+                Masuk di sini
             </a>
         </p>
     </div>

@@ -78,16 +78,16 @@
                             </div>
                         </div>
                         <div>
-                            <h4 class="text-sm font-semibold uppercase tracking-[0.14em] text-slate-400 mb-4">Quick Links</h4>
+                            <h4 class="text-sm font-semibold uppercase tracking-[0.14em] text-slate-400 mb-4">Tautan Cepat</h4>
                             <ul class="space-y-3 text-sm text-slate-300">
-                                <li><a href="{{ route('jobs.index') }}" class="hover:text-white transition-colors">Browse Jobs</a></li>
-                                <li><a href="{{ route('events.index') }}" class="hover:text-white transition-colors">Events</a></li>
-                                <li><a href="{{ route('news.index') }}" class="hover:text-white transition-colors">Career News</a></li>
-                                <li><a href="{{ route('home') }}#about" class="hover:text-white transition-colors">About Us</a></li>
+                                <li><a href="{{ route('jobs.index') }}" class="hover:text-white transition-colors">Cari Lowongan</a></li>
+                                <li><a href="{{ route('events.index') }}" class="hover:text-white transition-colors">Acara</a></li>
+                                <li><a href="{{ route('news.index') }}" class="hover:text-white transition-colors">Berita Karir</a></li>
+                                <li><a href="{{ route('home') }}#about" class="hover:text-white transition-colors">Tentang Kami</a></li>
                             </ul>
                         </div>
                         <div>
-                            <h4 class="text-sm font-semibold uppercase tracking-[0.14em] text-slate-400 mb-4">Contact</h4>
+                            <h4 class="text-sm font-semibold uppercase tracking-[0.14em] text-slate-400 mb-4">Kontak</h4>
                             <ul class="space-y-3 text-sm text-slate-300">
                                 <li>SMK MUTU Karawang</li>
                                 <li>Jl. Pendidikan No. 123</li>
@@ -99,7 +99,7 @@
                     </div>
                     </div>
                     <div class="border-t border-slate-800 px-4 py-5 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-                    &copy; {{ date('Y') }} BKK SMK MUTU KARAWANG. All rights reserved.
+                    &copy; {{ date('Y') }} BKK SMK MUTU KARAWANG. Hak cipta dilindungi.
                     </div>
                 </footer>
             </div>
