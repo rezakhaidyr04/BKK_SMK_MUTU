@@ -479,6 +479,8 @@ Ketika diminta membuat fitur:
 6. Jangan membuat kode setengah jadi.
 7. Gunakan best practice Laravel terbaru.
 8. Berikan hasil yang siap deploy.
+9. WAJIB selalu menggunakan Bahasa Indonesia dalam memberikan penjelasan, dokumentasi, dan komentar kode.
+10. Jika mendeteksi adanya teks, instruksi, atau template UI berbahasa Inggris, langsung ubah/terjemahkan ke Bahasa Indonesia (Kecuali untuk sintaks koding/keyword bawaan bahasa pemrograman seperti PHP/JavaScript).
 
 ---
 
