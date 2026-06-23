@@ -14,24 +14,22 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles;
 
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'avatar',
-        'phone',
-        'role',
-        'is_active',
+        "name",
+        "email",
+        "password",
+        "avatar",
+        "phone",
+        "bio",
+        "role",
+        "is_active",
     ];
 
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ["password", "remember_token"];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-        'is_active' => 'boolean',
+        "email_verified_at" => "datetime",
+        "password" => "hashed",
+        "is_active" => "boolean",
     ];
 
     public function student()
@@ -66,11 +64,13 @@ class User extends Authenticatable
 
     public function bookmarks()
     {
-        return $this->belongsToMany(Job::class, 'bookmarks')->withTimestamps();
+        return $this->belongsToMany(Job::class, "bookmarks")->withTimestamps();
     }
 
     public function skills()
     {
-        return $this->belongsToMany(Skill::class, 'user_skills')->withPivot('proficiency')->withTimestamps();
+        return $this->belongsToMany(Skill::class, "user_skills")
+            ->withPivot("proficiency")
+            ->withTimestamps();
     }
 }

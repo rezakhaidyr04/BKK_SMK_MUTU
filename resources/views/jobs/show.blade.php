@@ -19,8 +19,8 @@
                                 <!-- Company Logo -->
                                 <div class="flex-shrink-0">
                                     @if($job->company->user->avatar ?? null)
-                                    <img src="{{ asset('storage/' . $job->company->user->avatar) }}" 
-                                         alt="{{ $job->company->name }}" 
+                                    <img src="{{ asset('storage/' . $job->company->user->avatar) }}"
+                                         alt="{{ $job->company->name }}"
                                          class="w-24 h-24 rounded-2xl object-cover border-4 border-white shadow-xl">
                                     @else
                                     <div class="w-24 h-24 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-bold text-3xl border-4 border-white shadow-xl">
@@ -32,7 +32,7 @@
                                 <div class="flex-1">
                                     <h1 class="text-3xl font-bold mb-2">{{ $job->title }}</h1>
                                     <p class="text-xl text-blue-100 mb-4">{{ $job->company->name ?? __('bkk.fallback.company') }}</p>
-                                    
+
                                     <div class="flex flex-wrap items-center gap-3">
                                         <span class="inline-flex items-center px-4 py-2 rounded-lg bg-white/20 backdrop-blur-sm">
                                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,10 +170,10 @@
                         @else
                         <!-- Apply Form -->
                         <h3 class="text-lg font-bold text-gray-900 mb-4">Lamar posisi ini</h3>
-                        
+
                         <form action="{{ route('jobs.apply', $job->id) }}" method="POST" id="applicationForm">
                             @csrf
-                            
+
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Surat Lamaran</label>
                                 <textarea name="cover_letter" rows="6" required
@@ -183,26 +183,49 @@
                             </div>
 
                             <!-- Profile Check -->
+                            @php
+                                $profileOk = auth()->user()->name && auth()->user()->email && auth()->user()->phone;
+                                $cvOk      = auth()->user()->cvFiles()->exists();
+                            @endphp
                             <div class="mb-6 p-4 bg-blue-50 rounded-xl">
-                                <h4 class="text-sm font-semibold text-gray-900 mb-2">Sebelum melamar:</h4>
-                                <ul class="space-y-2 text-sm text-gray-600">
-                                    <li class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                        Lengkapi profil
+                                <h4 class="text-sm font-semibold text-gray-900 mb-2">Persiapan lamaran:</h4>
+                                <ul class="space-y-2 text-sm">
+                                    {{-- Cek profil lengkap --}}
+                                    <li class="flex items-center gap-2 {{ $profileOk ? 'text-gray-700' : 'text-gray-500' }}">
+                                        @if($profileOk)
+                                            <svg class="w-4 h-4 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                            Profil sudah dilengkapi
+                                        @else
+                                            <svg class="w-4 h-4 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                            </svg>
+                                            <a href="{{ route('profile.edit') }}" class="hover:text-blue-600 hover:underline">Lengkapi profil Anda (nama, no. HP)</a>
+                                        @endif
                                     </li>
-                                    <li class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                        Unggah CV
+
+                                    {{-- Cek CV --}}
+                                    <li class="flex items-center gap-2 {{ $cvOk ? 'text-gray-700' : 'text-gray-500' }}">
+                                        @if($cvOk)
+                                            <svg class="w-4 h-4 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                            CV sudah diunggah
+                                        @else
+                                            <svg class="w-4 h-4 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                            </svg>
+                                            <a href="{{ route('cv.builder') }}" class="hover:text-blue-600 hover:underline">Buat CV terlebih dahulu</a>
+                                        @endif
                                     </li>
-                                    <li class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+
+                                    {{-- Selalu tampil --}}
+                                    <li class="flex items-center gap-2 text-gray-600">
+                                        <svg class="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
-                                        Tinjau persyaratan pekerjaan
+                                        Baca persyaratan di bawah sebelum melamar
                                     </li>
                                 </ul>
                             </div>
@@ -218,7 +241,7 @@
 
                         <!-- Action Buttons -->
                         <div class="flex gap-2 mt-4">
-                            <button onclick="toggleBookmark({{ $job->id }})" 
+                            <button onclick="toggleBookmark({{ $job->id }})"
                                     class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-xl hover:border-red-500 hover:bg-red-50 transition-colors flex items-center justify-center gap-2 bookmark-btn">
                                 <svg class="w-5 h-5" fill="{{ $isBookmarked ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
@@ -226,7 +249,7 @@
                                 <span class="font-medium text-gray-700">{{ $isBookmarked ? 'Tersimpan' : 'Simpan' }}</span>
                             </button>
 
-                            <button class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-colors flex items-center justify-center gap-2">
+                            <button onclick="shareJob()" id="shareBtn" class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-colors flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
                                 </svg>
@@ -260,11 +283,11 @@
                     <!-- Company Info -->
                     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
                         <h3 class="text-lg font-bold text-gray-900 mb-4">Tentang Perusahaan</h3>
-                        
+
                         <div class="text-center mb-4">
                             @if($job->company->user->avatar ?? null)
-                            <img src="{{ asset('storage/' . $job->company->user->avatar) }}" 
-                                 alt="{{ $job->company->name }}" 
+                            <img src="{{ asset('storage/' . $job->company->user->avatar) }}"
+                                 alt="{{ $job->company->name }}"
                                  class="w-20 h-20 mx-auto rounded-xl object-cover border-2 border-gray-200 shadow-md">
                             @else
                             <div class="w-20 h-20 mx-auto rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-2xl shadow-md">
@@ -291,7 +314,7 @@
                     <!-- Job Details -->
                     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
                         <h3 class="text-lg font-bold text-gray-900 mb-4">Detail Pekerjaan</h3>
-                        
+
                         <div class="space-y-3">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -337,6 +360,27 @@
 
     @push('scripts')
     <script>
+        function shareJob() {
+            const title = {{ Js::from($job->title) }};
+            const text  = 'Lowongan: ' + title + ' di ' + {{ Js::from($job->company->name ?? 'Perusahaan') }};
+            const url   = window.location.href;
+
+            if (navigator.share) {
+                navigator.share({ title, text, url }).catch(() => {});
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(url).then(() => {
+                    const btn = document.getElementById('shareBtn');
+                    const span = btn.querySelector('span');
+                    const original = span.textContent;
+                    span.textContent = 'Link tersalin!';
+                    setTimeout(() => { span.textContent = original; }, 2000);
+                }).catch(() => {
+                    prompt('Salin link ini:', url);
+                });
+            }
+        }
+
         function toggleBookmark(jobId) {
             fetch(`/jobs/${jobId}/bookmark`, {
                 method: 'POST',

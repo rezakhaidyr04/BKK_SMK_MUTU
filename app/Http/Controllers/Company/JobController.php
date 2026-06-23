@@ -15,59 +15,99 @@ class JobController extends Controller
         $company = Auth::user()->company;
 
         if (!$company) {
-            return redirect()->route('dashboard')
-                ->with('error', 'Profil perusahaan belum lengkap. Silakan lengkapi profil perusahaan Anda.');
+            return redirect()
+                ->route("dashboard")
+                ->with(
+                    "error",
+                    "Profil perusahaan belum lengkap. Silakan lengkapi profil perusahaan Anda.",
+                );
         }
 
-        $query = Job::where('company_id', $company->id)->withCount('applications');
+        $query = Job::where("company_id", $company->id)->withCount(
+            "applications",
+        );
 
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
+        if ($request->filled("status")) {
+            $query->where("status", $request->status);
         }
 
-        if ($request->filled('search')) {
+        if ($request->filled("search")) {
             $query->where(function ($query) use ($request) {
-                $query->where('title', 'like', '%' . $request->search . '%')
-                    ->orWhere('position', 'like', '%' . $request->search . '%');
+                $query
+                    ->where("title", "like", "%" . $request->search . "%")
+                    ->orWhere("position", "like", "%" . $request->search . "%");
             });
         }
 
         $jobs = $query->latest()->paginate(10)->withQueryString();
 
-        return view('company.jobs.index', compact('jobs'));
+        return view("company.jobs.index", compact("jobs"));
     }
 
     public function create()
     {
-        return view('company.jobs.create');
+        $company = Auth::user()->company;
+        if (!$company) {
+            return redirect()
+                ->route("dashboard")
+                ->with(
+                    "error",
+                    "Profil perusahaan belum lengkap. Silakan lengkapi profil perusahaan Anda.",
+                );
+        }
+
+        if (!$company->is_verified) {
+            return redirect()
+                ->route("company.profile.edit")
+                ->with(
+                    "error",
+                    "Akun perusahaan Anda belum diverifikasi oleh admin. Lengkapi profil perusahaan dan tunggu verifikasi untuk mulai memposting lowongan.",
+                );
+        }
+
+        return view("company.jobs.create");
     }
 
     public function store(Request $request)
     {
         $company = Auth::user()->company;
         if (!$company) {
-            return redirect()->route('dashboard')->with('error', 'Profil perusahaan belum lengkap.');
+            return redirect()
+                ->route("dashboard")
+                ->with("error", "Profil perusahaan belum lengkap.");
+        }
+
+        if (!$company->is_verified) {
+            return redirect()
+                ->route("company.profile.edit")
+                ->with(
+                    "error",
+                    "Akun perusahaan belum diverifikasi. Lengkapi profil dan tunggu verifikasi admin.",
+                );
         }
 
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'position' => 'nullable|string|max:255',
-            'location' => 'nullable|string|max:255',
-            'job_type' => 'nullable|string|in:full_time,part_time,internship,contract',
-            'salary_min' => 'nullable|numeric',
-            'salary_max' => 'nullable|numeric|gte:salary_min',
-            'description' => 'required|string',
-            'qualifications' => 'nullable|string',
-            'benefits' => 'nullable|string',
-            'deadline' => 'nullable|date',
-            'status' => 'nullable|in:active,closed,draft',
+            "title" => "required|string|max:255",
+            "position" => "nullable|string|max:255",
+            "location" => "nullable|string|max:255",
+            "job_type" =>
+                "nullable|string|in:full_time,part_time,internship,contract",
+            "salary_min" => "nullable|numeric",
+            "salary_max" => "nullable|numeric|gte:salary_min",
+            "description" => "required|string",
+            "qualifications" => "nullable|string",
+            "benefits" => "nullable|string",
+            "deadline" => "nullable|date",
+            "status" => "nullable|in:active,closed,draft",
         ]);
 
-        $validated['company_id'] = $company->id;
+        $validated["company_id"] = $company->id;
 
         Job::create($validated);
 
-        return redirect()->route('company.jobs.index')->with('success', 'Lowongan berhasil dibuat.');
+        return redirect()
+            ->route("company.jobs.index")
+            ->with("success", "Lowongan berhasil dibuat.");
     }
 
     public function edit(Job $job)
@@ -77,7 +117,7 @@ class JobController extends Controller
             abort(403);
         }
 
-        return view('company.jobs.edit', compact('job'));
+        return view("company.jobs.edit", compact("job"));
     }
 
     public function update(Request $request, Job $job)
@@ -88,22 +128,25 @@ class JobController extends Controller
         }
 
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'position' => 'nullable|string|max:255',
-            'location' => 'nullable|string|max:255',
-            'job_type' => 'nullable|string|in:full_time,part_time,internship,contract',
-            'salary_min' => 'nullable|numeric',
-            'salary_max' => 'nullable|numeric|gte:salary_min',
-            'description' => 'required|string',
-            'qualifications' => 'nullable|string',
-            'benefits' => 'nullable|string',
-            'deadline' => 'nullable|date',
-            'status' => 'nullable|in:active,closed,draft',
+            "title" => "required|string|max:255",
+            "position" => "nullable|string|max:255",
+            "location" => "nullable|string|max:255",
+            "job_type" =>
+                "nullable|string|in:full_time,part_time,internship,contract",
+            "salary_min" => "nullable|numeric",
+            "salary_max" => "nullable|numeric|gte:salary_min",
+            "description" => "required|string",
+            "qualifications" => "nullable|string",
+            "benefits" => "nullable|string",
+            "deadline" => "nullable|date",
+            "status" => "nullable|in:active,closed,draft",
         ]);
 
         $job->update($validated);
 
-        return redirect()->route('company.jobs.index')->with('success', 'Lowongan berhasil diperbarui.');
+        return redirect()
+            ->route("company.jobs.index")
+            ->with("success", "Lowongan berhasil diperbarui.");
     }
 
     public function destroy(Job $job)
@@ -115,6 +158,8 @@ class JobController extends Controller
 
         $job->delete();
 
-        return redirect()->route('company.jobs.index')->with('success', 'Lowongan berhasil dihapus.');
+        return redirect()
+            ->route("company.jobs.index")
+            ->with("success", "Lowongan berhasil dihapus.");
     }
 }

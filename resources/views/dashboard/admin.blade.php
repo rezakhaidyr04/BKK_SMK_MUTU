@@ -4,7 +4,7 @@
     <div class="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-2xl">
             <div class="absolute inset-0 bg-black opacity-10"></div>
             <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-            
+
             <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="flex items-center justify-between">
                     <div>
@@ -40,7 +40,11 @@
                         </div>
                     </div>
                     <div class="mt-4 flex items-center text-sm">
-                        <span class="text-green-600 font-semibold">+5.2%</span>
+                        @if($growth['students'] >= 0)
+                            <span class="text-green-600 font-semibold">+{{ $growth['students'] }}%</span>
+                        @else
+                            <span class="text-red-500 font-semibold">{{ $growth['students'] }}%</span>
+                        @endif
                         <span class="text-gray-600 ml-2">dari bulan lalu</span>
                     </div>
                 </div>
@@ -59,7 +63,11 @@
                         </div>
                     </div>
                     <div class="mt-4 flex items-center text-sm">
-                        <span class="text-green-600 font-semibold">+12.5%</span>
+                        @if($growth['alumni'] >= 0)
+                            <span class="text-green-600 font-semibold">+{{ $growth['alumni'] }}%</span>
+                        @else
+                            <span class="text-red-500 font-semibold">{{ $growth['alumni'] }}%</span>
+                        @endif
                         <span class="text-gray-600 ml-2">dari bulan lalu</span>
                     </div>
                 </div>
@@ -78,7 +86,7 @@
                         </div>
                     </div>
                     <div class="mt-4 flex items-center text-sm">
-                        <span class="text-green-600 font-semibold">+3</span>
+                        <span class="text-green-600 font-semibold">+{{ $growth['companies_new'] }}</span>
                         <span class="text-gray-600 ml-2">baru bulan ini</span>
                     </div>
                 </div>
@@ -97,8 +105,8 @@
                         </div>
                     </div>
                     <div class="mt-4 flex items-center text-sm">
-                        <span class="text-green-600 font-semibold">+8</span>
-                        <span class="text-gray-600 ml-2">posting baru</span>
+                        <span class="text-green-600 font-semibold">+{{ $growth['jobs_new'] }}</span>
+                        <span class="text-gray-600 ml-2">posting baru bulan ini</span>
                     </div>
                 </div>
             </div>
@@ -127,17 +135,17 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                 <!-- Application Chart -->
                 <div class="bg-white rounded-2xl shadow-lg p-6">
-                    <h3 class="text-lg font-bold text-gray-900 mb-4">Tren Lamaran</h3>
-                    <div class="h-64 flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl">
-                        <p class="text-gray-500">Chart akan ditampilkan di sini (Chart.js)</p>
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Tren Lamaran (6 Bulan Terakhir)</h3>
+                    <div class="h-64">
+                        <canvas id="applicationChart"></canvas>
                     </div>
                 </div>
 
                 <!-- Job Posting Chart -->
                 <div class="bg-white rounded-2xl shadow-lg p-6">
-                    <h3 class="text-lg font-bold text-gray-900 mb-4">Tren Posting Lowongan</h3>
-                    <div class="h-64 flex items-center justify-center bg-gradient-to-br from-green-50 to-teal-50 rounded-xl">
-                        <p class="text-gray-500">Chart akan ditampilkan di sini (Chart.js)</p>
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Tren Posting Lowongan (6 Bulan Terakhir)</h3>
+                    <div class="h-64">
+                        <canvas id="jobChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -190,4 +198,74 @@
             </div>
         </div>
     </div>
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+(function() {
+    // Application chart data dari controller
+    const appLabels = @json($applicationChart->pluck('month'));
+    const appData   = @json($applicationChart->pluck('count'));
+
+    // Job chart data dari controller
+    const jobLabels = @json($jobChart->pluck('month'));
+    const jobData   = @json($jobChart->pluck('count'));
+
+    // Format label "YYYY-MM" -> "Jan 2025"
+    function formatMonth(ym) {
+        if (!ym) return '';
+        const [y, m] = ym.split('-');
+        const names = ['','Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+        return names[parseInt(m)] + ' ' + y;
+    }
+
+    new Chart(document.getElementById('applicationChart'), {
+        type: 'bar',
+        data: {
+            labels: appLabels.map(formatMonth),
+            datasets: [{
+                label: 'Jumlah Lamaran',
+                data: appData,
+                backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                borderColor: 'rgba(59, 130, 246, 1)',
+                borderWidth: 1,
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, ticks: { stepSize: 1 } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('jobChart'), {
+        type: 'line',
+        data: {
+            labels: jobLabels.map(formatMonth),
+            datasets: [{
+                label: 'Lowongan Diposting',
+                data: jobData,
+                borderColor: 'rgba(16, 185, 129, 1)',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(16, 185, 129, 1)',
+                tension: 0.4,
+                fill: true,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, ticks: { stepSize: 1 } }
+            }
+        }
+    });
+})();
+</script>
+@endpush
 </x-app-layout>

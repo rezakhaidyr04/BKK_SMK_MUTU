@@ -11,18 +11,20 @@ class Company extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id',
-        'name',
-        'industry',
-        'description',
-        'logo',
-        'website',
-        'address',
-        'is_verified',
+        "user_id",
+        "name",
+        "industry",
+        "description",
+        "logo",
+        "website",
+        "address",
+        "is_verified",
+        "verification_status",
+        "rejection_reason",
     ];
 
     protected $casts = [
-        'is_verified' => 'boolean',
+        "is_verified" => "boolean",
     ];
 
     public function user()

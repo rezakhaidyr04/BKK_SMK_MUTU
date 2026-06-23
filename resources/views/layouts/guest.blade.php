@@ -1,102 +1,217 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'BKK SMK MUTU') }}</title>
 
-        <title>{{ config('app.name', 'BKK SMK MUTU') }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/tailwind-local.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}">
 
-        <!-- Scripts -->
-        <link rel="stylesheet" href="{{ asset('css/tailwind-local.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}">
-    </head>
-    <body class="font-sans antialiased bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-        <!-- Background Pattern -->
-        <div class="absolute inset-0 bg-white/40 backdrop-blur-3xl"></div>
-        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(147, 51, 234, 0.1) 0%, transparent 50%);"></div>
-        
-        <div class="min-h-screen flex">
-            <!-- Left Side - Branding -->
-            <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 relative overflow-hidden">
-                <!-- Background Pattern -->
-                <div class="absolute inset-0 bg-blue-900/20"></div>
-                <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);"></div>
-                
-                <!-- Content -->
-                <div class="relative z-10 flex flex-col justify-center px-12">
-                    <div class="mb-8">
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="w-16 h-16 rounded-2xl overflow-hidden border border-white/20">
-                                <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-16 h-16 object-cover">
-                            </div>
-                            <div>
-                                <h1 class="text-3xl font-bold text-white">BKK SMK MUTU</h1>
-                                <p class="text-blue-100">Pusat Pengembangan Karir</p>
-                            </div>
-                        </div>
-                        
-                        <h2 class="text-4xl font-bold text-white mb-4 leading-tight">
-                            Menghubungkan Talenta<br>
-                            dengan Peluang
-                        </h2>
-                        <p class="text-xl text-blue-100 leading-relaxed">
-                            Bergabunglah dengan ribuan siswa dan alumni yang menemukan karir impian melalui platform kami.
-                        </p>
-                    </div>
-                    
-                    <!-- Stats -->
-                    <div class="grid grid-cols-3 gap-6">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-white">500+</div>
-                            <div class="text-blue-200 text-sm">Siswa Ditempatkan</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-white">150+</div>
-                            <div class="text-blue-200 text-sm">Perusahaan Mitra</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-white">95%</div>
-                            <div class="text-blue-200 text-sm">Tingkat Keberhasilan</div>
-                        </div>
+    <style>
+        /* Layout utama */
+        .auth-wrap {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Panel kiri — branding */
+        .auth-left {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 42%;
+            flex-shrink: 0;
+            padding: 3rem;
+            background-color: #1d4ed8; /* blue-700 */
+            color: #fff;
+        }
+        @media (min-width: 1024px) {
+            .auth-left { display: flex; }
+        }
+
+        .auth-left h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 1.5rem 0 1rem;
+            color: #fff;
+        }
+        .auth-left p {
+            color: #bfdbfe; /* blue-200 */
+            font-size: 0.95rem;
+            line-height: 1.7;
+            max-width: 280px;
+        }
+        .auth-logo-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 3rem;
+        }
+        .auth-logo-row img {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+        .auth-logo-row .brand-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+        }
+        .auth-logo-row .brand-sub {
+            font-size: 0.8rem;
+            color: #93c5fd; /* blue-300 */
+        }
+        .auth-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            margin-top: auto;
+        }
+        .auth-stats .stat-num {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .auth-stats .stat-label {
+            font-size: 0.72rem;
+            color: #93c5fd;
+            margin-top: 2px;
+        }
+
+        /* Panel kanan — form */
+        .auth-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f3f4f6; /* gray-100 */
+            padding: 2.5rem 1.5rem;
+            overflow-y: auto;
+        }
+
+        /* Mobile logo */
+        .auth-mobile-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            margin-bottom: 2rem;
+        }
+        @media (min-width: 1024px) {
+            .auth-mobile-logo { display: none; }
+        }
+        .auth-mobile-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        .auth-mobile-logo span {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        /* Form card */
+        .auth-card {
+            width: 100%;
+            max-width: 440px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+            padding: 2rem;
+        }
+
+        /* Back link */
+        .auth-back {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        .auth-back a {
+            font-size: 0.85rem;
+            color: #6b7280;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.15s;
+        }
+        .auth-back a:hover { color: #111827; }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <div class="auth-wrap">
+
+        {{-- Panel Kiri --}}
+        <div class="auth-left">
+            <div>
+                <div class="auth-logo-row">
+                    <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU">
+                    <div>
+                        <div class="brand-name">BKK SMK MUTU</div>
+                        <div class="brand-sub">Pusat Pengembangan Karir</div>
                     </div>
                 </div>
+
+                <h2>Menghubungkan<br>Talenta dengan<br>Peluang</h2>
+                <p>Platform karir untuk siswa dan alumni SMK MUTU Karawang menemukan pekerjaan terbaik mereka.</p>
             </div>
 
-            <!-- Right Side - Form -->
-            <div class="w-full lg:w-1/2 flex items-center justify-center p-8">
-                <div class="w-full max-w-md relative">
-                    <!-- Mobile Logo -->
-                    <div class="lg:hidden text-center mb-8">
-                            <div class="inline-flex items-center gap-3 mb-4">
-                            <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-12 h-12 rounded-xl object-cover">
-                            <div>
-                                <h1 class="text-2xl font-bold text-gray-900">BKK SMK MUTU</h1>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Form Card -->
-                    <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl p-8 border border-white/20">
-                        {{ $slot }}
-                    </div>
-
-                    <!-- Back to Home -->
-                    <div class="text-center mt-6">
-                        <a href="{{ route('home') }}" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                            </svg>
-                            Kembali ke Beranda
-                        </a>
-                    </div>
+            <div class="auth-stats">
+                <div class="text-center">
+                    <div class="stat-num">500+</div>
+                    <div class="stat-label">Siswa Ditempatkan</div>
+                </div>
+                <div class="text-center">
+                    <div class="stat-num">150+</div>
+                    <div class="stat-label">Perusahaan Mitra</div>
+                </div>
+                <div class="text-center">
+                    <div class="stat-num">95%</div>
+                    <div class="stat-label">Keberhasilan</div>
                 </div>
             </div>
         </div>
-    </body>
+
+        {{-- Panel Kanan --}}
+        <div class="auth-right">
+
+            {{-- Logo mobile --}}
+            <div class="auth-mobile-logo">
+                <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU">
+                <span>BKK SMK MUTU</span>
+            </div>
+
+            {{-- Card --}}
+            <div class="auth-card">
+                {{ $slot }}
+            </div>
+
+            {{-- Back link --}}
+            <div class="auth-back">
+                <a href="{{ route('home') }}">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    Kembali ke Beranda
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</body>
 </html>

@@ -24,23 +24,12 @@
                 <!-- Right Side Navigation -->
                 <div class="flex items-center gap-3">
                     @auth
-                    <!-- Search Bar -->
-                    <div class="hidden md:block">
-                        <div class="relative">
-                            <input type="text" placeholder="Cari lowongan, perusahaan..." class="w-64 pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all">
-                            <svg class="absolute left-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                            </svg>
-                        </div>
-                    </div>
-
                     <!-- Notifications -->
                     <div class="relative" x-data="{ notifOpen: false }">
                         <button @click="notifOpen = !notifOpen" class="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors relative">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
                             </svg>
-                            <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                         </button>
                     </div>
 
@@ -66,14 +55,14 @@
                                 <p class="text-sm font-semibold text-gray-900">{{ Auth::user()->name }}</p>
                                 <p class="text-xs text-gray-600 mt-1">{{ Auth::user()->email }}</p>
                             </div>
-                            
+
                             <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                                 <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                 </svg>
                                 Pengaturan Profil
                             </a>
-                            
+
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors">
@@ -116,7 +105,7 @@
             <!-- Jobs Section -->
             <div class="mt-6">
                 <h3 class="nav-section-title">Pencarian Kerja</h3>
-                
+
                 <a href="{{ route('jobs.index') }}" class="nav-link {{ request()->routeIs('jobs.*') ? 'active' : '' }} flex items-center gap-3">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -142,7 +131,7 @@
             <!-- Career Tools -->
             <div class="mt-6">
                 <h3 class="nav-section-title">Alat Karir</h3>
-                
+
                 <a href="{{ route('cv.builder') }}" class="nav-link {{ request()->routeIs('cv.*') ? 'active' : '' }} flex items-center gap-3">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -161,7 +150,7 @@
             <!-- Community -->
             <div class="mt-6">
                 <h3 class="nav-section-title">Komunitas</h3>
-                
+
                 <a href="{{ route('events.index') }}" class="nav-link {{ request()->routeIs('events.*') ? 'active' : '' }} flex items-center gap-3">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -181,7 +170,6 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
                     </svg>
                     <span class="font-medium">Pesan</span>
-                    <span class="nav-badge red ml-auto">3</span>
                 </a>
             </div>
             @endif
@@ -190,7 +178,7 @@
             <!-- Company Section -->
             <div class="mt-6">
                 <h3 class="nav-section-title">Rekrutmen</h3>
-                
+
                 <a href="{{ route('company.jobs.index') }}" class="nav-link flex items-center gap-3">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -204,6 +192,13 @@
                     </svg>
                     <span class="font-medium">Pelamar</span>
                 </a>
+
+                <a href="{{ route('company.profile.edit') }}" class="nav-link {{ request()->routeIs('company.profile.*') ? 'active' : '' }} flex items-center gap-3">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                    </svg>
+                    <span class="font-medium">Profil Perusahaan</span>
+                </a>
             </div>
             @endif
 
@@ -211,7 +206,7 @@
             <!-- Admin Section -->
             <div class="mt-6">
                 <h3 class="nav-section-title">Administrasi</h3>
-                
+
                 <a href="{{ route('admin.users.index') }}" class="nav-link flex items-center gap-3">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
@@ -219,11 +214,22 @@
                     <span class="font-medium">Pengguna</span>
                 </a>
 
+                <a href="{{ route('admin.users.create') }}" class="nav-link {{ request()->routeIs('admin.users.create') ? 'active' : '' }} flex items-center gap-3">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                    </svg>
+                    <span class="font-medium">Tambah Pengguna</span>
+                </a>
+
+                @php $_pendingCompanies = \App\Models\Company::where('verification_status', 'pending')->count(); @endphp
                 <a href="{{ route('admin.companies.index') }}" class="nav-link flex items-center gap-3">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                     </svg>
                     <span class="font-medium">Perusahaan</span>
+                    @if($_pendingCompanies > 0)
+                    <span class="ml-auto inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white rounded-full" style="background:#dc2626;">{{ $_pendingCompanies }}</span>
+                    @endif
                 </a>
 
                 <a href="{{ route('admin.jobs.index') }}" class="nav-link flex items-center gap-3">
@@ -239,6 +245,49 @@
                     </svg>
                     <span class="font-medium">Laporan</span>
                 </a>
+                <a href="{{ route('admin.news.index') }}" class="nav-link {{ request()->routeIs('admin.news.*') ? 'active' : '' }} flex items-center gap-3">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                    </svg>
+                    <span class="font-medium">Berita</span>
+                </a>
+
+                <a href="{{ route('admin.events.index') }}" class="nav-link {{ request()->routeIs('admin.events.*') ? 'active' : '' }} flex items-center gap-3">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    <span class="font-medium">Acara</span>
+                </a>
+            </div>
+            @endif
+
+            @if(Auth::user()->role === 'teacher')
+            <!-- Teacher Section -->
+            <div class="mt-6">
+                <h3 class="nav-section-title">Monitoring</h3>
+
+                <a href="{{ route('events.index') }}" class="nav-link {{ request()->routeIs('events.*') ? 'active' : '' }} flex items-center gap-3">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    <span class="font-medium">Acara</span>
+                </a>
+
+                <a href="{{ route('news.index') }}" class="nav-link {{ request()->routeIs('news.*') ? 'active' : '' }} flex items-center gap-3">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                    </svg>
+                    <span class="font-medium">Berita Karir</span>
+                </a>
+
+                <h3 class="nav-section-title mt-4">Lowongan</h3>
+
+                <a href="{{ route('jobs.index') }}" class="nav-link {{ request()->routeIs('jobs.*') ? 'active' : '' }} flex items-center gap-3">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    <span class="font-medium">Semua Lowongan</span>
+                </a>
             </div>
             @endif
 
@@ -246,8 +295,8 @@
             <div class="help-card">
                 <h4 class="text-sm font-semibold text-gray-900 mb-1">Butuh Bantuan?</h4>
                 <p class="text-xs text-gray-600 mb-3">Hubungi tim support kami</p>
-                    <a href="{{ route('home') }}#contact" class="inline-block text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors">
-                    Dapatkan Bantuan →
+                    <a href="mailto:bkk@smkmutu.sch.id" class="inline-block text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors">
+                    bkk@smkmutu.sch.id →
                     </a>
             </div>
         </div>
@@ -256,9 +305,9 @@
     <div x-show="sidebarOpen" x-cloak class="fixed inset-0 z-50 lg:hidden">
         <!-- Overlay -->
         <div class="mobile-sidebar-overlay" @click="sidebarOpen = false"></div>
-        
+
         <!-- Sidebar -->
-        <div x-show="sidebarOpen" 
+        <div x-show="sidebarOpen"
              @click.away="sidebarOpen = false"
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="-translate-x-full"
@@ -280,7 +329,7 @@
                 <!-- Jobs Section -->
                 <div class="mt-6">
                     <h3 class="nav-section-title">Pencarian Kerja</h3>
-                    
+
                     <a href="{{ route('jobs.index') }}" class="nav-link {{ request()->routeIs('jobs.*') ? 'active' : '' }} flex items-center gap-3">
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -306,7 +355,7 @@
                 <!-- Career Tools -->
                 <div class="mt-6">
                     <h3 class="nav-section-title">Alat Karir</h3>
-                    
+
                     <a href="{{ route('cv.builder') }}" class="nav-link {{ request()->routeIs('cv.*') ? 'active' : '' }} flex items-center gap-3">
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -326,7 +375,7 @@
                 <!-- Community -->
                 <div class="mt-6">
                     <h3 class="nav-section-title">Komunitas</h3>
-                    
+
                     <a href="{{ route('events.index') }}" class="nav-link {{ request()->routeIs('events.*') ? 'active' : '' }} flex items-center gap-3">
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -346,7 +395,119 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
                         </svg>
                         <span class="font-medium">Pesan</span>
-                        <span class="nav-badge red ml-auto">3</span>
+                    </a>
+                </div>
+                @endif
+
+                @if(Auth::user()->role === 'company')
+                <!-- Company Section -->
+                <div class="mt-6">
+                    <h3 class="nav-section-title">Rekrutmen</h3>
+
+                    <a href="{{ route('company.jobs.index') }}" class="nav-link flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        <span class="font-medium">Lowongan Saya</span>
+                    </a>
+
+                    <a href="{{ route('company.applicants.index') }}" class="nav-link flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                        <span class="font-medium">Pelamar</span>
+                    </a>
+
+                    <a href="{{ route('company.profile.edit') }}" class="nav-link {{ request()->routeIs('company.profile.*') ? 'active' : '' }} flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                        <span class="font-medium">Profil Perusahaan</span>
+                    </a>
+                </div>
+                @endif
+
+                @if(Auth::user()->role === 'admin')
+                <!-- Admin Section -->
+                <div class="mt-6">
+                    <h3 class="nav-section-title">Administrasi</h3>
+
+                    <a href="{{ route('admin.users.index') }}" class="nav-link flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                        <span class="font-medium">Pengguna</span>
+                    </a>
+
+                    <a href="{{ route('admin.users.create') }}" class="nav-link {{ request()->routeIs('admin.users.create') ? 'active' : '' }} flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                        </svg>
+                        <span class="font-medium">Tambah Pengguna</span>
+                    </a>
+
+                    <a href="{{ route('admin.companies.index') }}" class="nav-link flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                        <span class="font-medium">Perusahaan</span>
+                    </a>
+
+                    <a href="{{ route('admin.jobs.index') }}" class="nav-link flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        <span class="font-medium">Lowongan Kerja</span>
+                    </a>
+
+                    <a href="{{ route('admin.reports.index') }}" class="nav-link flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        <span class="font-medium">Laporan</span>
+                    </a>
+                    <a href="{{ route('admin.news.index') }}" class="nav-link {{ request()->routeIs('admin.news.*') ? 'active' : '' }} flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                        </svg>
+                        <span class="font-medium">Berita</span>
+                    </a>
+
+                    <a href="{{ route('admin.events.index') }}" class="nav-link {{ request()->routeIs('admin.events.*') ? 'active' : '' }} flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        <span class="font-medium">Acara</span>
+                    </a>
+                </div>
+                @endif
+
+                @if(Auth::user()->role === 'teacher')
+                <!-- Teacher Section -->
+                <div class="mt-6">
+                    <h3 class="nav-section-title">Monitoring</h3>
+
+                    <a href="{{ route('events.index') }}" class="nav-link {{ request()->routeIs('events.*') ? 'active' : '' }} flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        <span class="font-medium">Acara</span>
+                    </a>
+
+                    <a href="{{ route('news.index') }}" class="nav-link {{ request()->routeIs('news.*') ? 'active' : '' }} flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                        </svg>
+                        <span class="font-medium">Berita Karir</span>
+                    </a>
+
+                    <h3 class="nav-section-title mt-4">Lowongan</h3>
+
+                    <a href="{{ route('jobs.index') }}" class="nav-link {{ request()->routeIs('jobs.*') ? 'active' : '' }} flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        <span class="font-medium">Semua Lowongan</span>
                     </a>
                 </div>
                 @endif
@@ -355,8 +516,8 @@
                 <div class="help-card">
                     <h4 class="text-sm font-semibold text-gray-900 mb-1">Butuh Bantuan?</h4>
                     <p class="text-xs text-gray-600 mb-3">Hubungi tim support kami</p>
-                    <a href="{{ route('home') }}#contact" class="inline-block text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors">
-                        Dapatkan Bantuan →
+                    <a href="mailto:bkk@smkmutu.sch.id" class="inline-block text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors">
+                        bkk@smkmutu.sch.id →
                     </a>
                 </div>
             </div>

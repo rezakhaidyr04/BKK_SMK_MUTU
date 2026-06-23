@@ -20,7 +20,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        return view("auth.register");
     }
 
     /**
@@ -31,35 +31,47 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'string', 'in:student,company'],
-            'nis' => ['nullable', 'string', 'max:20', 'unique:students,nisn'],
-            'graduation_year' => ['nullable', 'integer', 'min:2000', 'max:' . (date('Y') + 5)],
-            'terms' => ['required', 'accepted'],
+            "name" => ["required", "string", "max:255"],
+            "email" => [
+                "required",
+                "string",
+                "lowercase",
+                "email",
+                "max:255",
+                "unique:" . User::class,
+            ],
+            "password" => ["required", "confirmed", Rules\Password::defaults()],
+            "role" => ["required", "string", "in:student,alumni,company"],
+            "nis" => ["nullable", "string", "max:20", "unique:students,nisn"],
+            "graduation_year" => [
+                "nullable",
+                "integer",
+                "min:2000",
+                "max:" . (date("Y") + 5),
+            ],
+            // 'terms' => ['required', 'accepted'], // Tidak dipakai di form registrasi saat ini
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-            'is_active' => true,
+            "name" => $request->name,
+            "email" => $request->email,
+            "password" => Hash::make($request->password),
+            "role" => $request->role,
+            "is_active" => true,
         ]);
 
-        // Create student record if role is student
-        if ($request->role === 'student') {
+        // Create student record if role is student or alumni
+        if (in_array($request->role, ["student", "alumni"])) {
             $user->student()->create([
-                'nisn' => $request->nis,
-                'graduation_year' => $request->graduation_year,
+                "nisn" => $request->role === "student" ? $request->nis : null,
+                "graduation_year" => $request->graduation_year,
             ]);
         }
 
         // Create company record if role is company
-        if ($request->role === 'company') {
+        if ($request->role === "company") {
             $user->company()->create([
-                'name' => $request->name,
+                "name" => $request->name,
             ]);
         }
 
