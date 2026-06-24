@@ -23,4 +23,21 @@ class Event extends Model
         'start_time' => 'datetime',
         'end_time' => 'datetime',
     ];
+
+    public function registrations()
+    {
+        return $this->hasMany(EventRegistration::class);
+    }
+
+    public function registeredUsers()
+    {
+        return $this->belongsToMany(User::class, 'event_registrations')
+            ->withPivot('status', 'notes', 'registered_at')
+            ->withTimestamps();
+    }
+
+    public function isRegisteredBy($userId): bool
+    {
+        return $this->registrations()->where('user_id', $userId)->exists();
+    }
 }

@@ -48,9 +48,7 @@ Route::get("/jobs/{job}", [JobController::class, "show"])->name("jobs.show");
 
 // Events (Public)
 Route::get("/events", [EventController::class, "index"])->name("events.index");
-Route::get("/events/{event}", [EventController::class, "show"])->name(
-    "events.show",
-);
+Route::get("/events/{event}", [EventController::class, "show"])->name("events.show");
 
 // News (Public)
 Route::get("/news", [NewsController::class, "index"])->name("news.index");
@@ -65,6 +63,11 @@ Route::middleware(["auth", "verified"])->group(function () {
     Route::get("/dashboard", [DashboardController::class, "index"])->name(
         "dashboard",
     );
+
+    // Event Registration (auth required)
+    Route::post("/events/{event}/register", [EventController::class, "register"])->name("events.register");
+    Route::delete("/events/{event}/register", [EventController::class, "cancel"])->name("events.cancel");
+    Route::get("/my-events", [EventController::class, "myEvents"])->name("events.my");
 
     // Profile
     Route::get("/profile", [ProfileController::class, "edit"])->name(
@@ -221,10 +224,18 @@ Route::middleware(["auth", "verified"])->group(function () {
                 "news",
                 App\Http\Controllers\Admin\NewsController::class,
             )->except(["show"]);
+            Route::post("/news/upload-image", [
+                App\Http\Controllers\Admin\NewsController::class,
+                "uploadImage",
+            ])->name("news.upload-image");
             Route::resource(
                 "events",
                 App\Http\Controllers\Admin\EventController::class,
             )->except(["show"]);
+            Route::get("events/{event}/registrants", [
+                App\Http\Controllers\Admin\EventController::class,
+                "registrants",
+            ])->name("events.registrants");
             Route::get("/reports", [
                 App\Http\Controllers\Admin\ReportController::class,
                 "index",

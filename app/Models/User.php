@@ -67,6 +67,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Job::class, "bookmarks")->withTimestamps();
     }
 
+    public function eventRegistrations()
+    {
+        return $this->hasMany(EventRegistration::class);
+    }
+
     public function skills()
     {
         return $this->belongsToMany(Skill::class, "user_skills")

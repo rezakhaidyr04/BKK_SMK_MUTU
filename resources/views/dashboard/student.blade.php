@@ -44,87 +44,92 @@
             <!-- Stats Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
                 <!-- Stat Card 1 -->
-                <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-blue-200 group">
+                <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-blue-500 hover:shadow-xl transition-all">
                     <div class="flex items-center justify-between">
-                        <div class="flex-1">
+                        <div>
                             <p class="text-sm font-medium text-gray-600 mb-1">Lamaran Aktif</p>
-                            <p class="text-3xl font-bold text-gray-900">{{ $stats['active_applications'] }}</p>
+                            <p class="text-4xl font-bold text-gray-900">{{ $stats['active_applications'] }}</p>
                         </div>
-                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                         </div>
                     </div>
+                    <div class="mt-4 text-sm text-gray-500">Sedang diproses</div>
                 </div>
 
                 <!-- Stat Card 2 -->
-                <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-purple-200 group">
+                <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-purple-500 hover:shadow-xl transition-all">
                     <div class="flex items-center justify-between">
-                        <div class="flex-1">
+                        <div>
                             <p class="text-sm font-medium text-gray-600 mb-1">Wawancara</p>
-                            <p class="text-3xl font-bold text-gray-900">{{ $stats['interview_count'] }}</p>
+                            <p class="text-4xl font-bold text-gray-900">{{ $stats['interview_count'] }}</p>
                         </div>
-                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center">
+                            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
                         </div>
                     </div>
+                    <div class="mt-4 text-sm text-gray-500">Terjadwal</div>
                 </div>
 
                 <!-- Stat Card 3 -->
-                <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-green-200 group">
+                <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-green-500 hover:shadow-xl transition-all">
                     <div class="flex items-center justify-between">
-                        <div class="flex-1">
+                        <div>
                             <p class="text-sm font-medium text-gray-600 mb-1">Diterima</p>
-                            <p class="text-3xl font-bold text-gray-900">{{ $stats['accepted_count'] }}</p>
+                            <p class="text-4xl font-bold text-green-600">{{ $stats['accepted_count'] }}</p>
                         </div>
-                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
+                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                         </div>
                     </div>
+                    <div class="mt-4 text-sm text-gray-500">Berhasil diterima</div>
                 </div>
 
                 <!-- Stat Card 4 -->
-                <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-yellow-200 group">
+                <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-yellow-500 hover:shadow-xl transition-all">
                     <div class="flex items-center justify-between">
-                        <div class="flex-1">
+                        <div>
                             <p class="text-sm font-medium text-gray-600 mb-1">Disimpan</p>
-                            <p class="text-3xl font-bold text-gray-900">{{ $stats['bookmarked_jobs'] }}</p>
+                            <p class="text-4xl font-bold text-gray-900">{{ $stats['bookmarked_jobs'] }}</p>
                         </div>
-                        <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center">
+                            <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                             </svg>
                         </div>
                     </div>
+                    <div class="mt-4 text-sm text-gray-500">Lowongan tersimpan</div>
                 </div>
 
                 <!-- Stat Card 5 -->
-                <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-red-200 group">
+                <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-red-500 hover:shadow-xl transition-all">
                     <div class="flex items-center justify-between">
-                        <div class="flex-1">
+                        <div>
                             <p class="text-sm font-medium text-gray-600 mb-1">Pesan</p>
-                            <p class="text-3xl font-bold text-gray-900">{{ $stats['unread_messages'] }}</p>
+                            <p class="text-4xl font-bold text-gray-900">{{ $stats['unread_messages'] }}</p>
                         </div>
-                        <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center">
                             @if($stats['unread_messages'] > 0)
                             <div class="relative">
-                                <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                 </svg>
                                 <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
                             </div>
                             @else
-                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
                             @endif
                         </div>
                     </div>
+                    <div class="mt-4 text-sm text-gray-500">Pesan belum dibaca</div>
                 </div>
             </div>
 

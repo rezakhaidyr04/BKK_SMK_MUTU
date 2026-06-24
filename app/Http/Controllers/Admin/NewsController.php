@@ -120,4 +120,17 @@ class NewsController extends Controller
         return redirect()->route('admin.news.index')
             ->with('success', 'Berita berhasil dihapus.');
     }
+
+    public function uploadImage(Request $request)
+    {
+        $request->validate([
+            'image' => ['required', 'image', 'max:2048', 'mimes:jpg,jpeg,png,webp,gif'],
+        ]);
+
+        $path = $request->file('image')->store('news-images', 'public');
+
+        return response()->json([
+            'url' => asset('storage/' . $path),
+        ]);
+    }
 }

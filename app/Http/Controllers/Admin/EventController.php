@@ -95,4 +95,14 @@ class EventController extends Controller
         return redirect()->route('admin.events.index')
             ->with('success', 'Acara berhasil dihapus.');
     }
+
+    public function registrants(Event $event)
+    {
+        $registrations = $event->registrations()
+            ->with('user')
+            ->orderByDesc('registered_at')
+            ->paginate(20);
+
+        return view('admin.events.registrants', compact('event', 'registrations'));
+    }
 }
