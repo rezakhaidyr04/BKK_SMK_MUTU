@@ -166,7 +166,7 @@
                 </div>
 
                 <h2>Menghubungkan<br>Talenta dengan<br>Peluang</h2>
-                <p>Platform karir untuk siswa dan alumni SMK MUTU Karawang menemukan pekerjaan terbaik mereka.</p>
+                <p>Platform karir untuk siswa dan alumni SMK MUTU Cikampek menemukan pekerjaan terbaik mereka.</p>
             </div>
 
             <div class="auth-stats">

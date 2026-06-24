@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BKK SMK MUTU Karawang - Platform Pengembangan Karir</title>
+    <title>BKK SMK MUTU Cikampek - Platform Pengembangan Karir</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -238,15 +238,15 @@
                 <div>
                     <h4 class="font-semibold mb-4">Kontak</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li>SMK MUTU Karawang</li>
-                        <li>Karawang, Jawa Barat</li>
+                        <li>SMK MUTU Cikampek</li>
+                        <li>Cikampek, Jawa Barat</li>
                         <li>bkk@smkmutu.sch.id</li>
                     </ul>
                 </div>
             </div>
             
             <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-                &copy; {{ date('Y') }} BKK SMK MUTU KARAWANG. Hak cipta dilindungi.
+                &copy; {{ date('Y') }} BKK SMK MUTU CIKAMPEK. Hak cipta dilindungi.
             </div>
         </div>
     </footer>

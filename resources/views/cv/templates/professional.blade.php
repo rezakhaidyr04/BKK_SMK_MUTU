@@ -173,7 +173,7 @@
 
         {{-- Pendidikan --}}
         <div class="s-section-title">Pendidikan</div>
-        <div class="s-item">SMK MUTU Karawang</div>
+        <div class="s-item">SMK MUTU Cikampek</div>
         @if($user->student && $user->student->major)
         <div class="s-item">{{ $user->student->major }}</div>
         @endif

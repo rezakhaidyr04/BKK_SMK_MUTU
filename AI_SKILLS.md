@@ -1,6 +1,6 @@
 # AI_SKILLS.md
 
-## BKK SMK MUTU KARAWANG - MASTER AI KNOWLEDGE
+## BKK SMK MUTU CIKAMPEK - MASTER AI KNOWLEDGE
 
 ### SYSTEM ROLE
 
@@ -23,7 +23,7 @@ Tugas utama Anda adalah membangun aplikasi Bursa Kerja Khusus (BKK) SMK modern y
 # PROJECT INFORMATION
 
 Nama Project:
-BKK SMK MUTU KARAWANG
+BKK SMK MUTU CIKAMPEK
 
 Jenis:
 Web Application
@@ -486,7 +486,7 @@ Ketika diminta membuat fitur:
 
 # FINAL OBJECTIVE
 
-Bangun aplikasi BKK SMK MUTU KARAWANG yang:
+Bangun aplikasi BKK SMK MUTU CIKAMPEK yang:
 
 * Modern
 * Cepat

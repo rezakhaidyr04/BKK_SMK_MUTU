@@ -103,9 +103,9 @@
                         <div>
                             <h4 class="text-sm font-semibold uppercase tracking-[0.14em] text-slate-400 mb-4">Kontak</h4>
                             <ul class="space-y-3 text-sm text-slate-300">
-                                <li>SMK MUTU Karawang</li>
+                                <li>SMK MUTU Cikampek</li>
                                 <li>Jl. Pendidikan No. 123</li>
-                                <li>Karawang, Jawa Barat</li>
+                                <li>Cikampek, Jawa Barat</li>
                                 <li><a href="mailto:bkk@smkmutu.sch.id" class="hover:text-white transition-colors">bkk@smkmutu.sch.id</a></li>
                                 <li><a href="tel:+622671234567" class="hover:text-white transition-colors">(0267) 123-4567</a></li>
                             </ul>
@@ -113,7 +113,7 @@
                     </div>
                     </div>
                     <div class="border-t border-slate-800 px-4 py-5 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-                    &copy; {{ date('Y') }} BKK SMK MUTU KARAWANG. Hak cipta dilindungi.
+                    &copy; {{ date('Y') }} BKK SMK MUTU CIKAMPEK. Hak cipta dilindungi.
                     </div>
                 </footer>
             </div>
