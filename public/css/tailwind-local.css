@@ -352,7 +352,7 @@ hr { height: 0; color: inherit; border-top-width: 1px; }
 .bg-yellow-600 { background-color: #ca8a04; }
 .bg-slate-800 { background-color: #1e293b; }
 .bg-slate-950 { background-color: #020617; }
-.bg-background { background-color: #F8FAFC; }
+.bg-background { background-color: #f1f5f9; }
 .bg-primary { background-color: #2563EB; }
 .bg-secondary { background-color: #10B981; }
 .bg-warning { background-color: #F59E0B; }

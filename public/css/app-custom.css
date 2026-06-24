@@ -35,7 +35,7 @@ body {
 /* Page Structure */
 .page-shell {
     min-height: calc(100vh - 4rem);
-    background: linear-gradient(160deg, #f8fafc 0%, #eff6ff 45%, #f8fafc 100%);
+    background-color: #f1f5f9;
 }
 
 .page-container {
