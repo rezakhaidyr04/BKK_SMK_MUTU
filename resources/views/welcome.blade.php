@@ -11,9 +11,7 @@
     
     {{-- Local Tailwind CSS (no internet required) --}}
     <link rel="stylesheet" href="{{ asset('css/tailwind-local.css') }}">
-    
-    {{-- When Node.js is installed, replace above with: --}}
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}">
 </head>
 <body class="font-sans antialiased">
     <!-- Navigation -->
@@ -39,10 +37,10 @@
                             </button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors border border-gray-300 rounded-lg">
+                        <a href="{{ route('login') }}" class="ui-btn ui-btn-secondary ui-btn-sm">
                             Masuk
                         </a>
-                        <a href="{{ route('register') }}" class="px-6 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-md">
+                        <a href="{{ route('register') }}" class="ui-btn ui-btn-primary ui-btn-sm">
                             Daftar
                         </a>
                     @endif
@@ -64,14 +62,14 @@
                     </p>
                     <div class="flex gap-4">
                         @auth
-                            <a href="{{ route('jobs.index') }}" class="px-8 py-4 bg-white text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl">
+                            <a href="{{ route('jobs.index') }}" class="ui-btn ui-btn-white ui-btn-lg">
                                 Jelajahi Lowongan
                             </a>
                         @else
-                            <a href="{{ route('register') }}" class="px-8 py-4 bg-white text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl">
+                            <a href="{{ route('register') }}" class="ui-btn ui-btn-white ui-btn-lg">
                                 Mulai Gratis
                             </a>
-                            <a href="{{ route('login') }}" class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl hover:bg-white/20 transition-all border border-white/20">
+                            <a href="{{ route('login') }}" class="ui-btn ui-btn-lg" style="background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.25); backdrop-filter: blur(8px);">
                                 Masuk
                             </a>
                         @endauth

@@ -1,5 +1,5 @@
-<x-app-layout>
-    <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
     <!-- Admin Header -->
     <div class="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-2xl">
             <div class="absolute inset-0 bg-black opacity-10"></div>
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="page-container page-section">
             <!-- Main Stats Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <!-- Students Card -->

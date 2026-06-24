@@ -1,112 +1,99 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Daftar Pengguna</h2>
-                <p class="text-sm text-gray-500">Kelola semua akun pengguna di sistem.</p>
-            </div>
-            <a href="{{ route('admin.users.create') }}"
-               class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
-                </svg>
-                Tambah Pengguna
-            </a>
-        </div>
+        <x-ui.page-header title="Daftar Pengguna" subtitle="Kelola semua akun pengguna di sistem.">
+            <x-slot:actions>
+                <x-ui.btn href="{{ route('admin.users.create') }}" size="sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                    </svg>
+                    Tambah Pengguna
+                </x-ui.btn>
+            </x-slot:actions>
+        </x-ui.page-header>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            @if(session('success'))
-            <div class="rounded-xl bg-green-50 border border-green-200 p-4 text-green-700">
-                {{ session('success') }}
+    <div class="ui-filter-bar">
+        <form method="GET" action="{{ route('admin.users.index') }}" class="grid gap-4 md:grid-cols-4 w-full">
+            <div class="ui-filter-field">
+                <label class="ui-label">Cari</label>
+                <input type="text" name="search" value="{{ request('search') }}" class="ui-input" placeholder="Nama, email, role" />
             </div>
-            @endif
-            @if(session('error'))
-            <div class="rounded-xl bg-red-50 border border-red-200 p-4 text-red-700">
-                {{ session('error') }}
+            <div class="ui-filter-field">
+                <label class="ui-label">Role</label>
+                <select name="role" class="ui-select">
+                    <option value="">Semua</option>
+                    <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                    <option value="company" {{ request('role') == 'company' ? 'selected' : '' }}>Perusahaan</option>
+                    <option value="student" {{ request('role') == 'student' ? 'selected' : '' }}>Mahasiswa</option>
+                    <option value="alumni" {{ request('role') == 'alumni' ? 'selected' : '' }}>Alumni</option>
+                    <option value="teacher" {{ request('role') == 'teacher' ? 'selected' : '' }}>Guru</option>
+                </select>
             </div>
-            @endif
-
-            <div class="bg-white shadow sm:rounded-lg p-6">
-                <form method="GET" action="{{ route('admin.users.index') }}" class="grid gap-4 md:grid-cols-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Cari</label>
-                        <input type="text" name="search" value="{{ request('search') }}" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Nama, email, role" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Role</label>
-                        <select name="role" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                            <option value="">Semua</option>
-                            <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                            <option value="company" {{ request('role') == 'company' ? 'selected' : '' }}>Perusahaan</option>
-                            <option value="student" {{ request('role') == 'student' ? 'selected' : '' }}>Mahasiswa</option>
-                            <option value="alumni" {{ request('role') == 'alumni' ? 'selected' : '' }}>Alumni</option>
-                            <option value="teacher" {{ request('role') == 'teacher' ? 'selected' : '' }}>Guru</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Status</label>
-                        <select name="status" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                            <option value="">Semua</option>
-                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Aktif</option>
-                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Nonaktif</option>
-                        </select>
-                    </div>
-                    <div class="flex items-end gap-2">
-                        <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-700">Saring</button>
-                        <a href="{{ route('admin.users.index') }}" class="inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50">Atur Ulang</a>
-                    </div>
-                </form>
+            <div class="ui-filter-field">
+                <label class="ui-label">Status</label>
+                <select name="status" class="ui-select">
+                    <option value="">Semua</option>
+                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Aktif</option>
+                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Nonaktif</option>
+                </select>
             </div>
-
-            <div class="bg-white shadow sm:rounded-lg overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Nama</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Email</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Role</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Perusahaan</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Status</th>
-                                <th class="px-6 py-3 text-right text-xs font-medium uppercase text-gray-500">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @forelse($users as $user)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $user->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->email }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 capitalize">{{ $user->role }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ optional($user->company)->name ?? '-' }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    <span class="inline-flex rounded-full px-3 py-1 text-xs font-semibold {{ $user->is_active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700' }}">
-                                        {{ $user->is_active ? 'Aktif' : 'Nonaktif' }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                    <a href="{{ route('admin.users.show', $user) }}" class="text-blue-600 hover:text-blue-900">Lihat</a>
-                                    <a href="{{ route('admin.users.edit', $user) }}" class="text-indigo-600 hover:text-indigo-900">Ubah</a>
-                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline" onsubmit="return confirm('Hapus pengguna ini?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Hapus</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="6" class="px-6 py-12 text-center text-sm text-gray-500">Tidak ada pengguna ditemukan.</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-                <div class="bg-white px-6 py-4">
-                    {{ $users->links() }}
-                </div>
+            <div class="flex items-end gap-2">
+                <x-ui.btn type="submit">Saring</x-ui.btn>
+                <x-ui.btn variant="secondary" href="{{ route('admin.users.index') }}">Atur Ulang</x-ui.btn>
             </div>
-        </div>
+        </form>
     </div>
+
+    <x-ui.panel>
+        <div class="ui-table-wrap -mx-6 -mt-6">
+            <table class="ui-table">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Perusahaan</th>
+                        <th>Status</th>
+                        <th class="text-right">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($users as $user)
+                    <tr>
+                        <td class="font-semibold text-slate-900">{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td class="capitalize">{{ $user->role }}</td>
+                        <td>{{ optional($user->company)->name ?? '-' }}</td>
+                        <td>
+                            <x-ui.status-badge :status="$user->is_active ? 'active' : 'inactive'" />
+                        </td>
+                        <td>
+                            <div class="ui-table-actions">
+                                <a href="{{ route('admin.users.show', $user) }}" class="text-blue-600 hover:text-blue-800">Lihat</a>
+                                <a href="{{ route('admin.users.edit', $user) }}" class="text-indigo-600 hover:text-indigo-800">Ubah</a>
+                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline" onsubmit="return confirm('Hapus pengguna ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-800 font-semibold text-sm">Hapus</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6">
+                            <x-ui.empty-state
+                                title="Tidak ada pengguna ditemukan"
+                                description="Coba ubah filter pencarian atau tambahkan pengguna baru."
+                            />
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-100">
+            {{ $users->links() }}
+        </div>
+    </x-ui.panel>
 </x-app-layout>

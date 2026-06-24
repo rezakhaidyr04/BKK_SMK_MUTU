@@ -14,6 +14,10 @@ class Application extends Model
         'job_id',
         'user_id',
         'cover_letter',
+        'attachment_path',
+        'attachment_name',
+        'attachment_mime',
+        'attachment_size',
         'status',
     ];
 

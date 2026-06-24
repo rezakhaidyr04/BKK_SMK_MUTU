@@ -1,25 +1,20 @@
-<x-app-layout>
-    <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
     <!-- Hero Search Section -->
-    <div class="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 shadow-2xl">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div class="text-center mb-8">
-                    <h1 class="text-4xl font-bold text-white mb-3">Temukan Pekerjaan Impian Anda</h1>
-                    <p class="text-blue-100 text-lg">Temukan {{ $jobs->total() }} peluang yang menunggu Anda</p>
-                </div>
-
+    <x-ui.page-hero title="Temukan Pekerjaan Impian Anda" :subtitle="'Temukan ' . $jobs->total() . ' peluang yang menunggu Anda'">
+        <x-slot:extra>
                 <!-- Advanced Search Form -->
-                <form action="{{ route('jobs.index') }}" method="GET" class="max-w-5xl mx-auto">
+                <form action="{{ route('jobs.index') }}" method="GET" class="max-w-5xl">
                     <div class="bg-white rounded-2xl shadow-2xl p-6">
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                             <!-- Search Input -->
                             <div class="md:col-span-2">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Kata Kunci</label>
+                                <label class="ui-label text-slate-700">Kata Kunci</label>
                                 <div class="relative">
                                     <input type="text" name="search" value="{{ request('search') }}" 
                                            placeholder="Judul pekerjaan, posisi, perusahaan..."
-                                           class="w-full pl-10 pr-4 py-3 rounded-xl border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200">
-                                    <svg class="absolute left-3 top-3.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                           class="ui-input pl-10">
+                                    <svg class="absolute left-3 top-3 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                     </svg>
                                 </div>
@@ -27,8 +22,8 @@
 
                             <!-- Location -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi</label>
-                                <select name="location" class="w-full py-3 px-4 rounded-xl border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200">
+                                <label class="ui-label text-slate-700">Lokasi</label>
+                                <select name="location" class="ui-select">
                                     <option value="">Semua Lokasi</option>
                                     @foreach($locations as $location)
                                     <option value="{{ $location }}" {{ request('location') == $location ? 'selected' : '' }}>
@@ -40,8 +35,8 @@
 
                             <!-- Job Type -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Pekerjaan</label>
-                                <select name="job_type" class="w-full py-3 px-4 rounded-xl border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200">
+                                <label class="ui-label text-slate-700">Jenis Pekerjaan</label>
+                                <select name="job_type" class="ui-select">
                                     <option value="">Semua Jenis</option>
                                     <option value="full_time" {{ request('job_type') == 'full_time' ? 'selected' : '' }}>Penuh Waktu</option>
                                     <option value="part_time" {{ request('job_type') == 'part_time' ? 'selected' : '' }}>Paruh Waktu</option>
@@ -52,22 +47,22 @@
                         </div>
 
                         <div class="flex items-center justify-between mt-6">
-                            <a href="{{ route('jobs.index') }}" class="text-sm text-gray-600 hover:text-gray-900 font-medium">
+                            <a href="{{ route('jobs.index') }}" class="text-sm text-slate-500 hover:text-slate-800 font-medium">
                                 Hapus Filter
                             </a>
-                            <button type="submit" class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2">
+                            <x-ui.btn type="submit">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                 </svg>
                                 Cari Lowongan
-                            </button>
+                            </x-ui.btn>
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
+        </x-slot:extra>
+    </x-ui.page-hero>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="page-container page-section">
             <!-- Results Header -->
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                 <div>
@@ -197,18 +192,16 @@
             </div>
             @else
             <!-- Empty State -->
-            <div class="bg-white rounded-2xl shadow-lg p-12 text-center">
-                <div class="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
-                    <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-2">Tidak ada lowongan ditemukan</h3>
-                <p class="text-gray-600 mb-6">Coba sesuaikan kriteria pencarian atau filter Anda</p>
-                <a href="{{ route('jobs.index') }}" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
-                    Hapus Semua Filter
-                </a>
-            </div>
+            <x-ui.panel>
+                <x-ui.empty-state
+                    title="Tidak ada lowongan ditemukan"
+                    description="Coba sesuaikan kriteria pencarian atau filter Anda."
+                >
+                    <x-slot:action>
+                        <x-ui.btn href="{{ route('jobs.index') }}">Hapus Semua Filter</x-ui.btn>
+                    </x-slot:action>
+                </x-ui.empty-state>
+            </x-ui.panel>
             @endif
         </div>
     </div>

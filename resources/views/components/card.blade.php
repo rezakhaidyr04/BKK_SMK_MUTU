@@ -1,3 +1,3 @@
-<div {{ $attributes->merge(['class' => 'bg-white rounded-2xl shadow p-6 border border-gray-200']) }}>
+<div {{ $attributes->merge(['class' => 'ui-panel']) }}>
     {{ $slot }}
 </div>

@@ -1,60 +1,54 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Detail Lowongan</h2>
-                <p class="text-sm text-gray-500">Detail lengkap lowongan dan pelamar.</p>
-            </div>
-            <a href="{{ route('admin.jobs.edit', $job) }}" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700">Ubah</a>
-        </div>
+        <x-ui.page-header title="Detail Lowongan" subtitle="Detail lengkap lowongan dan pelamar.">
+            <x-slot:actions>
+                <x-ui.btn href="{{ route('admin.jobs.edit', $job) }}" size="sm">Ubah</x-ui.btn>
+            </x-slot:actions>
+        </x-ui.page-header>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="bg-white shadow sm:rounded-lg p-6">
-                <div class="grid gap-6 md:grid-cols-2">
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-900">Informasi Lowongan</h3>
-                        <div class="mt-4 space-y-3 text-sm text-gray-600">
-                            <p><strong>Judul:</strong> {{ $job->title }}</p>
-                            <p><strong>Posisi:</strong> {{ $job->position }}</p>
-                            <p><strong>Perusahaan:</strong> {{ optional($job->company)->name ?? '-' }}</p>
-                            <p><strong>Lokasi:</strong> {{ $job->location }}</p>
-                            <p><strong>Tipe:</strong> {{ ucwords(str_replace('_', ' ', $job->job_type)) }}</p>
-                            <p><strong>Status:</strong> {{ \App\Support\Label::jobStatus($job->status) }}</p>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-900">Detail Administratif</h3>
-                        <div class="mt-4 space-y-3 text-sm text-gray-600">
-                            <p><strong>Deadline:</strong> {{ optional($job->deadline)->format('d M Y') ?? '-' }}</p>
-                            <p><strong>Gaji:</strong> {{ $job->salary_min ? 'Rp ' . number_format($job->salary_min, 0, ',', '.') : '-' }} - {{ $job->salary_max ? 'Rp ' . number_format($job->salary_max, 0, ',', '.') : '-' }}</p>
-                            <p><strong>Diposting:</strong> {{ $job->created_at->diffForHumans() }}</p>
-                        </div>
-                    </div>
-                </div>
+    <x-ui.panel title="Informasi Lowongan" class="mb-6">
+        <div class="grid gap-6 md:grid-cols-2 text-sm">
+            <div class="space-y-3">
+                <p><span class="font-semibold text-slate-700">Judul:</span> {{ $job->title }}</p>
+                <p><span class="font-semibold text-slate-700">Posisi:</span> {{ $job->position ?? '-' }}</p>
+                <p><span class="font-semibold text-slate-700">Perusahaan:</span> {{ optional($job->company)->name ?? '-' }}</p>
+                <p><span class="font-semibold text-slate-700">Lokasi:</span> {{ $job->location }}</p>
+                <p><span class="font-semibold text-slate-700">Tipe:</span> {{ ucwords(str_replace('_', ' ', $job->job_type ?? '-')) }}</p>
+                <p><span class="font-semibold text-slate-700">Status:</span>
+                    <x-ui.status-badge :status="$job->status">{{ \App\Support\Label::jobStatus($job->status) }}</x-ui.status-badge>
+                </p>
             </div>
-
-            <div class="bg-white shadow sm:rounded-lg p-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Deskripsi</h3>
-                <div class="prose prose-sm text-gray-700">{!! nl2br(e($job->description)) !!}</div>
-            </div>
-
-            <div class="bg-white shadow sm:rounded-lg p-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Pelamar</h3>
-                @if($job->applications->count() > 0)
-                <div class="space-y-4">
-                    @foreach($job->applications as $application)
-                    <div class="rounded-2xl border border-gray-200 p-4">
-                        <p class="font-semibold text-gray-900">{{ optional($application->user)->name ?? 'Pengguna tidak tersedia' }}</p>
-                        <p class="text-sm text-gray-600">{{ \App\Support\Label::applicationStatus($application->status) }} • {{ $application->created_at->diffForHumans() }}</p>
-                    </div>
-                    @endforeach
-                </div>
-                @else
-                <p class="text-sm text-gray-500">Belum ada pelamar untuk lowongan ini.</p>
-                @endif
+            <div class="space-y-3">
+                <p><span class="font-semibold text-slate-700">Deadline:</span> {{ optional($job->deadline)->format('d M Y') ?? '-' }}</p>
+                <p><span class="font-semibold text-slate-700">Gaji:</span>
+                    {{ $job->salary_min ? 'Rp ' . number_format($job->salary_min, 0, ',', '.') : '-' }}
+                    –
+                    {{ $job->salary_max ? 'Rp ' . number_format($job->salary_max, 0, ',', '.') : '-' }}
+                </p>
+                <p><span class="font-semibold text-slate-700">Diposting:</span> {{ $job->created_at->diffForHumans() }}</p>
             </div>
         </div>
-    </div>
+    </x-ui.panel>
+
+    <x-ui.panel title="Deskripsi" class="mb-6">
+        <div class="text-sm text-slate-700 leading-relaxed whitespace-pre-line">{{ $job->description }}</div>
+    </x-ui.panel>
+
+    <x-ui.panel title="Pelamar">
+        @if($job->applications->count() > 0)
+        <div class="space-y-4">
+            @foreach($job->applications as $application)
+            <div class="rounded-xl border border-slate-200 p-4">
+                <p class="font-semibold text-slate-900">{{ optional($application->user)->name ?? 'Pengguna tidak tersedia' }}</p>
+                <p class="text-sm text-slate-600">
+                    {{ \App\Support\Label::applicationStatus($application->status) }} · {{ $application->created_at->diffForHumans() }}
+                </p>
+            </div>
+            @endforeach
+        </div>
+        @else
+        <x-ui.empty-state title="Belum ada pelamar" description="Lowongan ini belum menerima lamaran." />
+        @endif
+    </x-ui.panel>
 </x-app-layout>

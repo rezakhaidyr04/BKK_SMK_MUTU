@@ -28,27 +28,41 @@
                 <!-- Main Content with proper margin for sidebar and top nav -->
                 <main class="main-content pt-16 flex-1">
                     <div class="fade-in">
+                    @if(session('success') || session('error') || session('status'))
+                        <div class="page-container pt-4">
+                            @if(session('success'))
+                                <x-ui.alert type="success">{{ session('success') }}</x-ui.alert>
+                            @endif
+                            @if(session('error'))
+                                <x-ui.alert type="error">{{ session('error') }}</x-ui.alert>
+                            @endif
+                            @if(session('status') && !session('success'))
+                                <x-ui.alert type="info">{{ session('status') }}</x-ui.alert>
+                            @endif
+                        </div>
+                    @endif
+
                     @isset($header)
-                        <header class="bg-white border-b border-gray-200 shadow-sm">
-                            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        <header class="bg-white border-b border-gray-200/80 shadow-sm">
+                            <div class="page-container py-5">
                                 {{ $header }}
                             </div>
                         </header>
                     @elseif(View::hasSection('header'))
-                        <header class="bg-white border-b border-gray-200 shadow-sm">
-                            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        <header class="bg-white border-b border-gray-200/80 shadow-sm">
+                            <div class="page-container py-5">
                                 @yield('header')
                             </div>
                         </header>
                     @endif
 
-                    <div class="py-6">
-                        @hasSection('content')
-                            @yield('content')
-                        @else
+                    @hasSection('content')
+                        @yield('content')
+                    @else
+                        <div class="@if($fullBleed ?? false) @else page-container page-section @endif">
                             {{ $slot ?? '' }}
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                 </div>
                 </main>
 

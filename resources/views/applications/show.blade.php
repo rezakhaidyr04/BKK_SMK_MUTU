@@ -60,6 +60,15 @@
                         <h2 class="text-lg font-bold text-gray-900 mb-3">Surat Lamaran</h2>
                         <div class="prose max-w-none text-gray-700 whitespace-pre-line">{{ $application->cover_letter ?: 'Tidak ada surat lamaran.' }}</div>
                     </div>
+
+                    @if($application->attachment_path)
+                    <div class="rounded-xl bg-white p-6 shadow-lg border border-gray-100">
+                        <h2 class="text-lg font-bold text-gray-900 mb-3">Lampiran</h2>
+                        <a href="{{ asset('storage/' . $application->attachment_path) }}" target="_blank" class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+                            Buka {{ $application->attachment_name ?? 'Lampiran' }}
+                        </a>
+                    </div>
+                    @endif
                 </div>
 
                 <aside class="rounded-xl bg-white p-6 shadow-lg border border-gray-100 h-fit">

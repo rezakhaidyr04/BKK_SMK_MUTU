@@ -13,7 +13,7 @@ class RoleAndAdminSeeder extends Seeder
     {
         $roles = [
             'admin',
-            'guru_bk',
+            'teacher',
             'student',
             'alumni',
             'company',
@@ -30,9 +30,31 @@ class RoleAndAdminSeeder extends Seeder
                 'password' => Hash::make('password123'),
                 'role' => 'admin',
                 'is_active' => true,
+                'email_verified_at' => now(),
             ]
         );
 
         $admin->assignRole('admin');
+
+        $company = User::firstOrCreate(
+            ['email' => 'company@bkk.com'],
+            [
+                'name' => 'PT Contoh BKK',
+                'password' => Hash::make('password123'),
+                'role' => 'company',
+                'is_active' => true,
+                'email_verified_at' => now(),
+            ]
+        );
+
+        $company->assignRole('company');
+        $company->company()->firstOrCreate(
+            ['user_id' => $company->id],
+            [
+                'name' => 'PT Contoh BKK',
+                'is_verified' => true,
+                'verification_status' => 'verified',
+            ]
+        );
     }
 }

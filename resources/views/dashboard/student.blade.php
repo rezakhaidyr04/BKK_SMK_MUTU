@@ -1,5 +1,5 @@
-<x-app-layout>
-    <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
 <!-- Hero Header with Glassmorphism -->
     <div class="relative overflow-hidden bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 shadow-2xl">
             <div class="absolute inset-0 bg-black opacity-10"></div>
@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="page-container page-section">
             <!-- Stats Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
                 <!-- Stat Card 1 -->

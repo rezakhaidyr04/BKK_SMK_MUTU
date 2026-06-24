@@ -1,29 +1,36 @@
-<x-app-layout>
-    <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-8">Berita Karir</h1>
-            
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-hero title="Berita Karir" subtitle="Informasi terbaru seputar dunia kerja, tips karir, dan pengumuman dari BKK SMK MUTU." />
+
+        <div class="page-container page-section">
             @if($news->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($news as $article)
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
-                    <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600"></div>
-                    <div class="p-6">
-                        <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full mb-2">
+                <article class="ui-panel group hover:shadow-lg transition-all duration-300">
+                    <div class="h-44 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+                    </div>
+                    <div class="ui-panel-body">
+                        <span class="ui-badge ui-badge-blue mb-3">
                             {{ \App\Support\Label::newsCategory($article->category) }}
                         </span>
-                        <h3 class="font-bold text-lg text-gray-900 mb-2">{{ $article->title }}</h3>
-                        <p class="text-sm text-gray-600 mb-4">{{ Str::limit(strip_tags($article->content), 120) }}</p>
-                        <p class="text-xs text-gray-500">{{ $article->created_at->diffForHumans() }}</p>
+                        <h3 class="font-bold text-lg text-slate-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                            <a href="{{ route('news.show', $article) }}">{{ $article->title }}</a>
+                        </h3>
+                        <p class="text-sm text-slate-600 mb-4 line-clamp-3">{{ Str::limit(strip_tags($article->content), 120) }}</p>
+                        <p class="text-xs text-slate-400">{{ $article->created_at->diffForHumans() }}</p>
                     </div>
-                </div>
+                </article>
                 @endforeach
             </div>
-            {{ $news->links() }}
+            <div class="mt-8">{{ $news->links() }}</div>
             @else
-            <div class="bg-white rounded-xl shadow-lg p-12 text-center">
-                <p class="text-gray-600">Belum ada berita tersedia</p>
-            </div>
+            <x-ui.panel>
+                <x-ui.empty-state
+                    title="Belum ada berita"
+                    description="Berita karir akan ditampilkan di sini setelah dipublikasikan."
+                />
+            </x-ui.panel>
             @endif
         </div>
     </div>

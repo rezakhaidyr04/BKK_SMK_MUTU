@@ -22,12 +22,14 @@
 
                 <div>
                     <x-input-label for="position" value="Posisi" />
-                    <x-text-input id="position" name="position" value="{{ old('position', $job->position) }}" class="w-full mt-1" />
+                    <x-text-input id="position" name="position" value="{{ old('position', $job->position) }}" required class="w-full mt-1" />
+                    <x-input-error :messages="$errors->get('position')" class="mt-2" />
                 </div>
 
                 <div>
                     <x-input-label for="location" value="Lokasi" />
-                    <x-text-input id="location" name="location" value="{{ old('location', $job->location) }}" class="w-full mt-1" />
+                    <x-text-input id="location" name="location" value="{{ old('location', $job->location) }}" required class="w-full mt-1" />
+                    <x-input-error :messages="$errors->get('location')" class="mt-2" />
                 </div>
 
                 <div>
@@ -38,16 +40,19 @@
                         <option value="internship" {{ old('job_type', $job->job_type) == 'internship' ? 'selected' : '' }}>Magang</option>
                         <option value="contract" {{ old('job_type', $job->job_type) == 'contract' ? 'selected' : '' }}>Kontrak</option>
                     </select>
+                    <x-input-error :messages="$errors->get('job_type')" class="mt-2" />
                 </div>
 
                 <div>
                     <x-input-label for="salary_min" value="Gaji Minimum" />
                     <input id="salary_min" name="salary_min" value="{{ old('salary_min', $job->salary_min) }}" class="w-full mt-1 rounded-lg border border-gray-200 bg-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200" />
+                    <x-input-error :messages="$errors->get('salary_min')" class="mt-2" />
                 </div>
 
                 <div>
                     <x-input-label for="salary_max" value="Gaji Maximum" />
                     <input id="salary_max" name="salary_max" value="{{ old('salary_max', $job->salary_max) }}" class="w-full mt-1 rounded-lg border border-gray-200 bg-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200" />
+                    <x-input-error :messages="$errors->get('salary_max')" class="mt-2" />
                 </div>
 
                 <div class="md:col-span-2">
@@ -58,17 +63,20 @@
 
                 <div class="md:col-span-2">
                     <x-input-label for="qualifications" value="Kualifikasi" />
-                    <textarea id="qualifications" name="qualifications" rows="4" class="w-full mt-1 rounded-lg border border-gray-200 bg-white px-4 py-3 min-h-[120px] resize-y focus:outline-none focus:ring-2 focus:ring-blue-200">{{ old('qualifications', $job->qualifications) }}</textarea>
+                    <textarea id="qualifications" name="qualifications" rows="4" required class="w-full mt-1 rounded-lg border border-gray-200 bg-white px-4 py-3 min-h-[120px] resize-y focus:outline-none focus:ring-2 focus:ring-blue-200">{{ old('qualifications', $job->qualifications) }}</textarea>
+                    <x-input-error :messages="$errors->get('qualifications')" class="mt-2" />
                 </div>
 
                 <div class="md:col-span-2">
                     <x-input-label for="benefits" value="Benefit" />
                     <textarea id="benefits" name="benefits" rows="3" class="w-full mt-1 rounded-lg border border-gray-200 bg-white px-4 py-3 min-h-[80px] resize-y focus:outline-none focus:ring-2 focus:ring-blue-200">{{ old('benefits', $job->benefits) }}</textarea>
+                    <x-input-error :messages="$errors->get('benefits')" class="mt-2" />
                 </div>
 
                 <div>
                     <x-input-label for="deadline" value="Tenggat Waktu" />
                     <input id="deadline" name="deadline" type="date" value="{{ old('deadline', optional($job->deadline)->format('Y-m-d')) }}" class="w-full mt-1 rounded-lg border border-gray-200 bg-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200" />
+                    <x-input-error :messages="$errors->get('deadline')" class="mt-2" />
                 </div>
 
                 <div>
@@ -78,6 +86,7 @@
                         <option value="closed" {{ old('status', $job->status) == 'closed' ? 'selected' : '' }}>Ditutup</option>
                         <option value="draft" {{ old('status', $job->status) == 'draft' ? 'selected' : '' }}>Draf</option>
                     </select>
+                    <x-input-error :messages="$errors->get('status')" class="mt-2" />
                 </div>
             </div>
 

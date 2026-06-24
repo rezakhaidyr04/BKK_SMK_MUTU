@@ -81,6 +81,12 @@ class UserController extends Controller
             "role" => $validated["role"],
             "password" => bcrypt($validated["password"]),
             "is_active" => $validated["is_active"] ?? true,
+            "email_verified_at" => in_array($validated["role"], [
+                "admin",
+                "company",
+            ])
+                ? now()
+                : null,
         ]);
 
         return redirect()
@@ -119,6 +125,10 @@ class UserController extends Controller
             "role" => $validated["role"],
             "is_active" => $validated["is_active"] ?? false,
         ]);
+
+        if (in_array($validated["role"], ["admin", "company"])) {
+            $user->email_verified_at ??= now();
+        }
 
         if (!empty($validated["password"])) {
             $user->password = bcrypt($validated["password"]);

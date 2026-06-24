@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use App\Models\Bookmark;
 use App\Models\Application;
+use App\Http\Requests\ApplicationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class JobController extends Controller
 {
@@ -131,11 +133,9 @@ class JobController extends Controller
         );
     }
 
-    public function apply(Request $request, Job $job)
+    public function apply(ApplicationRequest $request, Job $job)
     {
-        $request->validate([
-            "cover_letter" => "required|string|min:100",
-        ]);
+        abort_unless(in_array(Auth::user()?->role, ["student", "alumni"], true), 403);
 
         // Check if already applied
         $existingApplication = Application::where("job_id", $job->id)
@@ -146,11 +146,27 @@ class JobController extends Controller
             return back()->with("error", "Anda sudah melamar lowongan ini.");
         }
 
-        // Create application
+        $attachment = $request->file("attachment");
+        $attachmentPath = null;
+        $attachmentName = null;
+        $attachmentMime = null;
+        $attachmentSize = null;
+
+        if ($attachment) {
+            $attachmentPath = $attachment->store("applications", "public");
+            $attachmentName = $attachment->getClientOriginalName();
+            $attachmentMime = $attachment->getClientMimeType();
+            $attachmentSize = $attachment->getSize();
+        }
+
         Application::create([
             "job_id" => $job->id,
             "user_id" => Auth::id(),
             "cover_letter" => $request->cover_letter,
+            "attachment_path" => $attachmentPath,
+            "attachment_name" => $attachmentName,
+            "attachment_mime" => $attachmentMime,
+            "attachment_size" => $attachmentSize,
             "status" => "submitted",
         ]);
 

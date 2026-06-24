@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Company;
 
 use App\Http\Controllers\Controller;
 use App\Models\Job;
+use App\Http\Requests\JobRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class JobController extends Controller
 {
@@ -68,7 +68,7 @@ class JobController extends Controller
         return view("company.jobs.create");
     }
 
-    public function store(Request $request)
+    public function store(JobRequest $request)
     {
         $company = Auth::user()->company;
         if (!$company) {
@@ -86,20 +86,7 @@ class JobController extends Controller
                 );
         }
 
-        $validated = $request->validate([
-            "title" => "required|string|max:255",
-            "position" => "nullable|string|max:255",
-            "location" => "nullable|string|max:255",
-            "job_type" =>
-                "nullable|string|in:full_time,part_time,internship,contract",
-            "salary_min" => "nullable|numeric",
-            "salary_max" => "nullable|numeric|gte:salary_min",
-            "description" => "required|string",
-            "qualifications" => "nullable|string",
-            "benefits" => "nullable|string",
-            "deadline" => "nullable|date",
-            "status" => "nullable|in:active,closed,draft",
-        ]);
+        $validated = $request->validated();
 
         $validated["company_id"] = $company->id;
 
@@ -120,27 +107,14 @@ class JobController extends Controller
         return view("company.jobs.edit", compact("job"));
     }
 
-    public function update(Request $request, Job $job)
+    public function update(JobRequest $request, Job $job)
     {
         $company = Auth::user()->company;
         if (!$company || $job->company_id !== $company->id) {
             abort(403);
         }
 
-        $validated = $request->validate([
-            "title" => "required|string|max:255",
-            "position" => "nullable|string|max:255",
-            "location" => "nullable|string|max:255",
-            "job_type" =>
-                "nullable|string|in:full_time,part_time,internship,contract",
-            "salary_min" => "nullable|numeric",
-            "salary_max" => "nullable|numeric|gte:salary_min",
-            "description" => "required|string",
-            "qualifications" => "nullable|string",
-            "benefits" => "nullable|string",
-            "deadline" => "nullable|date",
-            "status" => "nullable|in:active,closed,draft",
-        ]);
+        $validated = $request->validated();
 
         $job->update($validated);
 

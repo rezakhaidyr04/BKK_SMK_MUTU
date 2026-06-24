@@ -18,8 +18,12 @@ class OfferController extends Controller
             abort(403);
         }
 
-        // send offer mail (queued)
-        Mail::to($application->user->email)->queue(new OfferLetter($application));
+        // Send offer mail, but do not fail the action if mail transport is unavailable.
+        try {
+            Mail::to($application->user->email)->queue(new OfferLetter($application));
+        } catch (\Throwable $e) {
+            report($e);
+        }
 
         return redirect()->route('company.applicants.index')->with('success', 'Offer letter dikirim ke pelamar.');
     }

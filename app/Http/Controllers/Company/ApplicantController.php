@@ -72,8 +72,12 @@ class ApplicantController extends Controller
             $job->save();
         }
 
-        // Kirim notifikasi ke pelamar
-        Notification::send($application->user, new ApplicationStatusChanged($application, $old));
+        // Kirim notifikasi ke pelamar, tapi jangan gagalkan update status kalau mail bermasalah
+        try {
+            Notification::send($application->user, new ApplicationStatusChanged($application, $old));
+        } catch (\Throwable $e) {
+            report($e);
+        }
 
         // Log activity
         \App\Models\ActivityLog::create([

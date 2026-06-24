@@ -9,14 +9,19 @@ class ApplicationRequest extends FormRequest
     public function authorize(): bool
     {
         // Students and Alumni can apply
-        return $this->user()->hasAnyRole(['student', 'alumni']);
+        return in_array($this->user()?->role, ['student', 'alumni'], true);
     }
 
     public function rules(): array
     {
         return [
-            'job_id' => 'required|exists:jobs,id',
-            'cover_letter' => 'nullable|string|max:2000',
+            'cover_letter' => ['required', 'string', 'min:100', 'max:2000'],
+            'attachment' => [
+                'nullable',
+                'file',
+                'mimes:pdf,doc,docx,jpg,jpeg,png',
+                'max:5120',
+            ],
         ];
     }
 }

@@ -1,14 +1,14 @@
-<x-app-layout>
-    <div class="min-h-screen bg-gray-50">
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
         {{-- Header --}}
         <div class="bg-gradient-to-r from-blue-700 to-blue-600 shadow">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="page-container py-8">
                 <h1 class="text-2xl font-bold text-white">Dasbor Guru</h1>
                 <p class="text-blue-100 mt-1 text-sm">Monitoring penempatan kerja siswa & alumni</p>
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="page-container page-section">
             {{-- Stats --}}
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">

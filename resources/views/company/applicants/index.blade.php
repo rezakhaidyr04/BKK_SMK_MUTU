@@ -2,12 +2,11 @@
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Pelamar</h2>
-                <p class="text-sm text-gray-500 mt-1">Kelola semua pelamar untuk lowongan perusahaan Anda.</p>
+                <h2 class="page-title text-xl sm:text-2xl">Pelamar</h2>
+                <p class="page-subtitle text-sm">Kelola semua pelamar untuk lowongan perusahaan Anda.</p>
             </div>
             <form action="{{ route('company.applicants.index') }}" method="GET" class="flex gap-2 items-center">
-                <select name="status"
-                        class="rounded-lg border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+                <select name="status" class="ui-select ui-btn-sm" style="padding-top:0.5rem;padding-bottom:0.5rem;">
                     <option value="">Semua Status</option>
                     <option value="submitted"    {{ request('status') === 'submitted'    ? 'selected' : '' }}>Terkirim</option>
                     <option value="under_review" {{ request('status') === 'under_review' ? 'selected' : '' }}>Ditinjau</option>
@@ -15,27 +14,14 @@
                     <option value="accepted"     {{ request('status') === 'accepted'     ? 'selected' : '' }}>Diterima</option>
                     <option value="rejected"     {{ request('status') === 'rejected'     ? 'selected' : '' }}>Ditolak</option>
                 </select>
-                <button type="submit"
-                        class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition">
-                    Saring
-                </button>
+                <x-ui.btn type="submit" size="sm">Saring</x-ui.btn>
             </form>
         </div>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-            @if(session('success'))
-            <div class="mb-6 rounded-xl bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
-                {{ session('success') }}
-            </div>
-            @endif
-
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-
-                {{-- Daftar Pelamar --}}
-                <div class="lg:col-span-3 space-y-4">
+    <div class="py-2">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <div class="lg:col-span-3 space-y-4">
                     @forelse($applications as $application)
                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition">
                         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
@@ -49,6 +35,11 @@
                                 @if($application->cover_letter)
                                 <p class="text-sm text-gray-500 mt-2 line-clamp-2">
                                     {{ \Illuminate\Support\Str::limit($application->cover_letter, 150) }}
+                                </p>
+                                @endif
+                                @if($application->attachment_path)
+                                <p class="text-sm text-blue-600 mt-2">
+                                    Lampiran: <a href="{{ asset('storage/' . $application->attachment_path) }}" target="_blank" class="font-semibold hover:underline">{{ $application->attachment_name ?? 'Buka berkas' }}</a>
                                 </p>
                                 @endif
                             </div>

@@ -153,7 +153,17 @@
                     <!-- Application Card -->
                     @auth
                     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 sticky top-24">
-                        @if($hasApplied)
+                        @if(!in_array(auth()->user()->role, ['student', 'alumni']))
+                        <div class="text-center py-6">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                                <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0-6L3 9m18 0l-9 5"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Aksi lamaran tidak tersedia</h3>
+                            <p class="text-sm text-gray-600">Menu ini hanya untuk siswa dan alumni.</p>
+                        </div>
+                        @elseif($hasApplied)
                         <!-- Already Applied -->
                         <div class="text-center py-8">
                             <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
@@ -171,7 +181,7 @@
                         <!-- Apply Form -->
                         <h3 class="text-lg font-bold text-gray-900 mb-4">Lamar posisi ini</h3>
 
-                        <form action="{{ route('jobs.apply', $job->id) }}" method="POST" id="applicationForm">
+                        <form action="{{ route('jobs.apply', $job->id) }}" method="POST" enctype="multipart/form-data" id="applicationForm">
                             @csrf
 
                             <div class="mb-4">
@@ -180,6 +190,19 @@
                                           class="w-full px-4 py-3 rounded-xl border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                                           placeholder="Ceritakan mengapa Anda cocok untuk posisi ini..."></textarea>
                                 <p class="text-xs text-gray-500 mt-1">Minimal 100 karakter</p>
+                                @error('cover_letter')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Lampiran CV / Berkas Pendukung</label>
+                                <input type="file" name="attachment" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                                       class="block w-full text-sm text-gray-700 file:mr-4 file:rounded-lg file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-blue-700">
+                                <p class="text-xs text-gray-500 mt-1">Opsional. PDF, DOC, DOCX, JPG, atau PNG. Maksimal 5 MB.</p>
+                                @error('attachment')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <!-- Profile Check -->

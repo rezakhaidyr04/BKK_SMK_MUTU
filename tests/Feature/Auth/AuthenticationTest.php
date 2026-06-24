@@ -43,6 +43,32 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
+    public function test_inactive_users_can_not_authenticate(): void
+    {
+        $user = User::factory()->create(['is_active' => false]);
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertGuest();
+    }
+
+    public function test_company_users_can_access_the_app_after_registration(): void
+    {
+        $this->post('/register', [
+            'name' => 'PT Contoh',
+            'email' => 'company@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+            'role' => 'company',
+        ]);
+
+        $this->assertAuthenticated();
+        $this->get('/dashboard')->assertStatus(200);
+    }
+
     public function test_users_can_logout(): void
     {
         $user = User::factory()->create();

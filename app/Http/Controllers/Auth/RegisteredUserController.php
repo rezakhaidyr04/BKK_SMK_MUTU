@@ -60,6 +60,7 @@ class RegisteredUserController extends Controller
             "password" => Hash::make($request->password),
             "role" => $role,
             "is_active" => true,
+            "email_verified_at" => $role === "company" ? now() : null,
         ]);
 
         // Create student record if role is student or alumni

@@ -79,7 +79,7 @@
                    autofocus
                    autocomplete="name"
                    x-bind:placeholder="role === 'company' ? 'Nama perusahaan Anda' : 'Nama lengkap Anda'"
-                   class="block w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                   class="ui-input">
             <x-input-error :messages="$errors->get('name')" class="mt-1.5" />
         </div>
 
@@ -93,7 +93,7 @@
                    required
                    autocomplete="username"
                    placeholder="email@contoh.com"
-                   class="block w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                   class="ui-input">
             <x-input-error :messages="$errors->get('email')" class="mt-1.5" />
         </div>
 
@@ -108,7 +108,7 @@
                        name="nis"
                        value="{{ old('nis') }}"
                        placeholder="Nomor Induk Siswa"
-                       class="block w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                       class="ui-input">
                 <x-input-error :messages="$errors->get('nis')" class="mt-1.5" />
             </div>
 
@@ -117,7 +117,7 @@
                     Tahun Lulus <span class="text-gray-400 font-normal">(opsional)</span>
                 </label>
                 <select id="graduation_year" name="graduation_year"
-                        class="block w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                        class="ui-select">
                     <option value="">Pilih tahun lulus</option>
                     @for($year = date('Y') + 2; $year >= date('Y') - 10; $year--)
                         <option value="{{ $year }}" {{ old('graduation_year') == $year ? 'selected' : '' }}>
@@ -138,7 +138,7 @@
                    required
                    autocomplete="new-password"
                    placeholder="Minimal 8 karakter"
-                   class="block w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                   class="ui-input">
             <x-input-error :messages="$errors->get('password')" class="mt-1.5" />
         </div>
 
@@ -153,13 +153,12 @@
                    required
                    autocomplete="new-password"
                    placeholder="Ulangi kata sandi"
-                   class="block w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                   class="ui-input">
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1.5" />
         </div>
 
         {{-- Submit --}}
-        <button type="submit"
-                class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors text-sm mt-2">
+        <button type="submit" class="w-full ui-btn ui-btn-primary mt-2">
             Buat Akun
         </button>
     </form>
