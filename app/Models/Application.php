@@ -19,6 +19,15 @@ class Application extends Model
         'attachment_mime',
         'attachment_size',
         'status',
+        'interview_date',
+        'interview_location',
+        'interview_type',
+        'interview_link',
+        'interview_notes',
+    ];
+
+    protected $casts = [
+        'interview_date' => 'datetime',
     ];
 
     public function job()

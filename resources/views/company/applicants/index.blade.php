@@ -78,14 +78,17 @@
                                 </button>
                             </form>
 
-                            <form action="{{ route('company.applicants.updateStatus', $application) }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="status" value="interviewed">
-                                <button type="submit"
-                                        class="px-3 py-1.5 bg-purple-600 text-white text-xs font-semibold rounded-lg hover:bg-purple-700 transition">
-                                    Jadwalkan Interview
-                                </button>
-                            </form>
+                            <a href="{{ route('company.applicants.interview.form', $application) }}"
+                               class="px-3 py-1.5 bg-purple-600 text-white text-xs font-semibold rounded-lg hover:bg-purple-700 transition flex items-center gap-1">
+                                📅 Jadwalkan Wawancara
+                            </a>
+                            @endif
+
+                            @if($application->status === 'interviewed')
+                            <a href="{{ route('company.applicants.interview.form', $application) }}"
+                               class="px-3 py-1.5 bg-purple-100 text-purple-700 border border-purple-300 text-xs font-semibold rounded-lg hover:bg-purple-200 transition flex items-center gap-1">
+                                📅 Ubah Jadwal
+                            </a>
                             @endif
 
                             @if(in_array($application->status, ['submitted', 'under_review', 'interviewed']))

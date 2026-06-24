@@ -162,6 +162,14 @@ Route::middleware(["auth", "verified"])->group(function () {
                 App\Http\Controllers\Company\OfferController::class,
                 "send",
             ])->name("applicants.sendOffer");
+            Route::get("applications/{application}/interview", [
+                App\Http\Controllers\Company\ApplicantController::class,
+                "showInterviewForm",
+            ])->name("applicants.interview.form");
+            Route::post("applications/{application}/interview", [
+                App\Http\Controllers\Company\ApplicantController::class,
+                "scheduleInterview",
+            ])->name("applicants.interview.schedule");
             Route::get("/applicants", [
                 App\Http\Controllers\Company\ApplicantController::class,
                 "index",

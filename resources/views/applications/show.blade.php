@@ -69,6 +69,63 @@
                         </a>
                     </div>
                     @endif
+
+                    {{-- Info Jadwal Wawancara --}}
+                    @if($application->interview_date)
+                    <div class="rounded-xl border-2 border-purple-200 bg-purple-50 p-6 shadow-sm">
+                        <h2 class="text-lg font-bold text-purple-800 mb-4 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            📅 Jadwal Wawancara
+                        </h2>
+                        <dl class="space-y-3 text-sm">
+                            <div class="flex items-start gap-3">
+                                <dt class="text-purple-600 font-semibold w-28 flex-shrink-0">Tanggal</dt>
+                                <dd class="text-purple-900 font-bold">
+                                    {{ $application->interview_date->locale('id')->translatedFormat('l, d F Y') }}
+                                </dd>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <dt class="text-purple-600 font-semibold w-28 flex-shrink-0">Jam</dt>
+                                <dd class="text-purple-900 font-bold">
+                                    {{ $application->interview_date->format('H:i') }} WIB
+                                </dd>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <dt class="text-purple-600 font-semibold w-28 flex-shrink-0">Tempat</dt>
+                                <dd class="text-purple-900">{{ $application->interview_location }}</dd>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <dt class="text-purple-600 font-semibold w-28 flex-shrink-0">Tipe</dt>
+                                <dd class="text-purple-900">
+                                    {{ $application->interview_type === 'online' ? '💻 Online' : '🏢 Tatap Muka' }}
+                                </dd>
+                            </div>
+                            @if($application->interview_type === 'online' && $application->interview_link)
+                            <div class="flex items-start gap-3">
+                                <dt class="text-purple-600 font-semibold w-28 flex-shrink-0">Link</dt>
+                                <dd>
+                                    <a href="{{ $application->interview_link }}" target="_blank"
+                                       class="text-blue-600 hover:underline break-all">
+                                        {{ $application->interview_link }}
+                                    </a>
+                                </dd>
+                            </div>
+                            @endif
+                            @if($application->interview_notes)
+                            <div class="flex items-start gap-3">
+                                <dt class="text-purple-600 font-semibold w-28 flex-shrink-0">Catatan</dt>
+                                <dd class="text-purple-900">{{ $application->interview_notes }}</dd>
+                            </div>
+                            @endif
+                        </dl>
+                        <div class="mt-4 p-3 bg-white rounded-lg border border-purple-200 text-xs text-purple-700">
+                            💡 Hadir tepat waktu, bawa dokumen pendukung (CV, KTP, Ijazah), dan berpakaian rapi.
+                        </div>
+                    </div>
+                    @endif
                 </div>
 
                 <aside class="rounded-xl bg-white p-6 shadow-lg border border-gray-100 h-fit">
