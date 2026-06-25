@@ -151,11 +151,22 @@
             <div class="mt-6">
                 <h3 class="nav-section-title">Komunitas</h3>
 
-                <a href="{{ route('events.index') }}" class="nav-link {{ request()->routeIs('events.*') ? 'active' : '' }} flex items-center gap-3">
+                <a href="{{ route('events.index') }}" class="nav-link {{ request()->routeIs('events.index') || request()->routeIs('events.show') ? 'active' : '' }} flex items-center gap-3">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                     </svg>
                     <span class="font-medium">Acara</span>
+                </a>
+
+                <a href="{{ route('events.my') }}" class="nav-link {{ request()->routeIs('events.my') ? 'active' : '' }} flex items-center gap-3">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                    <span class="font-medium">Acara Saya</span>
+                    @php $myEventCount = \App\Models\EventRegistration::where('user_id', Auth::id())->where('status','registered')->count(); @endphp
+                    @if($myEventCount > 0)
+                    <span class="ml-auto nav-badge green">{{ $myEventCount }}</span>
+                    @endif
                 </a>
 
                 <a href="{{ route('news.index') }}" class="nav-link {{ request()->routeIs('news.*') ? 'active' : '' }} flex items-center gap-3">
@@ -376,11 +387,18 @@
                 <div class="mt-6">
                     <h3 class="nav-section-title">Komunitas</h3>
 
-                    <a href="{{ route('events.index') }}" class="nav-link {{ request()->routeIs('events.*') ? 'active' : '' }} flex items-center gap-3">
+                    <a href="{{ route('events.index') }}" class="nav-link {{ request()->routeIs('events.index') || request()->routeIs('events.show') ? 'active' : '' }} flex items-center gap-3">
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
                         <span class="font-medium">Acara</span>
+                    </a>
+
+                    <a href="{{ route('events.my') }}" class="nav-link {{ request()->routeIs('events.my') ? 'active' : '' }} flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                        <span class="font-medium">Acara Saya</span>
                     </a>
 
                     <a href="{{ route('news.index') }}" class="nav-link {{ request()->routeIs('news.*') ? 'active' : '' }} flex items-center gap-3">
