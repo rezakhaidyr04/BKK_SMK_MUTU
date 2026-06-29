@@ -114,6 +114,8 @@ class JobController extends Controller
                 ->exists();
         }
 
+        $savedCount = Bookmark::where("job_id", $job->id)->count();
+
         // Similar jobs
         $similarJobs = Job::with(["company.user"])
             ->where("id", "!=", $job->id)
@@ -129,7 +131,7 @@ class JobController extends Controller
 
         return view(
             "jobs.show",
-            compact("job", "hasApplied", "isBookmarked", "similarJobs"),
+            compact("job", "hasApplied", "isBookmarked", "savedCount", "similarJobs"),
         );
     }
 
