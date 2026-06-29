@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" x-bind:class="{ 'dark': darkMode }" x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,9 +18,15 @@
         <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}">
         
         @stack('styles')
+        {{-- Prevent flash of light mode when dark mode is saved --}}
+        <script>
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.documentElement.classList.add('dark');
+            }
+        </script>
     </head>
-    <body x-data="{ sidebarOpen: window.innerWidth >= 1024 }" class="font-sans antialiased bg-background text-gray-900 @auth authenticated @endauth">
-        <div class="min-h-screen bg-background flex flex-col">
+    <body x-data="{ sidebarOpen: window.innerWidth >= 1024 }" class="font-sans antialiased bg-background text-gray-900 dark:bg-gray-950 dark:text-gray-100 @auth authenticated @endauth">
+        <div class="min-h-screen bg-background dark:bg-gray-950 flex flex-col">
             @include('layouts.navigation')
 
             <!-- Wrapper that shifts when sidebar toggles so main+footer stay aligned -->
@@ -43,7 +49,7 @@
                     @endif
 
                     @isset($header)
-                        <header class="bg-white border-b border-gray-200/80 shadow-sm">
+                        <header class="bg-white dark:bg-gray-800 border-b border-gray-200/80 dark:border-gray-700 shadow-sm">
                             <div class="page-container py-5">
                                 {{ $header }}
                             </div>
@@ -67,7 +73,7 @@
                 </main>
 
                 <!-- Footer -->
-                <footer class="mt-auto bg-gray-900 text-white border-t border-gray-800">
+                <footer class="mt-auto bg-gray-900 dark:bg-gray-950 text-white border-t border-gray-800 dark:border-gray-700">
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div>
