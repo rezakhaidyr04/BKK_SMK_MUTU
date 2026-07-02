@@ -29,17 +29,14 @@
                 <!-- Main Content (Left Column) -->
                 <div class="lg:col-span-2 space-y-6">
                     <!-- ONE BIG CARD FOR EVERYTHING -->
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                         
                         <!-- Header Section -->
-                        <div class="p-8 pb-0">
+                        <div class="p-6 sm:p-8 pb-0">
                             <div class="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-6">
                                 <div class="flex gap-6 items-start">
                                     <!-- Company Logo -->
                                     <div class="relative flex-shrink-0">
-                                        <div class="absolute -top-3 -left-3 bg-yellow-400 text-white text-[10px] font-bold px-2 py-1 rounded-md z-10 shadow-sm">
-                                            NEW
-                                        </div>
                                         @if($job->company->user->avatar ?? null)
                                         <img src="{{ asset('storage/' . $job->company->user->avatar) }}" alt="{{ $job->company->name }}" class="w-24 h-24 rounded-2xl object-cover border border-gray-100 shadow-sm">
                                         @else
@@ -59,16 +56,18 @@
                                             <span class="text-blue-600 font-semibold">Perusahaan Terverifikasi</span>
                                             @endif
                                         </div>
-                                        <!-- Fake Data for Ratings & Employees to match design -->
+                                        <!-- Ringkasan data yang memang tersedia -->
                                         <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                                            @if(!is_null($matchScore))
                                             <span class="flex items-center gap-1">
-                                                <span class="text-yellow-400">⭐</span> <span class="font-semibold text-gray-700">4.8</span> (120 ulasan)
+                                                <span class="text-blue-500">◎</span> <span class="font-semibold text-gray-700">Kecocokan {{ $matchScore }}%</span>
                                             </span>
+                                            @endif
                                             <span class="flex items-center gap-1">
                                                 <span class="text-gray-400">🏢</span> {{ $job->company->industry ?? 'Manufaktur' }}
                                             </span>
                                             <span class="flex items-center gap-1">
-                                                <span class="text-gray-400">👥</span> 150 - 200 Karyawan
+                                                <span class="text-gray-400">✓</span> {{ optional($job->company)->is_verified ? 'Terverifikasi' : 'Belum terverifikasi' }}
                                             </span>
                                         </div>
                                     </div>
@@ -129,9 +128,8 @@
                                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
                                     </div>
                                     <div>
-                                        <!-- Fake view count to match design -->
-                                        <div class="text-xl font-bold text-gray-900">520</div>
-                                        <div class="text-sm text-gray-500">Dilihat</div>
+                                        <div class="text-xl font-bold text-gray-900">{{ $job->company->industry ?? 'N/A' }}</div>
+                                        <div class="text-sm text-gray-500">Industri</div>
                                     </div>
                                 </div>
                                 <div class="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-center gap-4 hover:shadow-md transition-shadow">
@@ -139,7 +137,7 @@
                                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg>
                                     </div>
                                     <div>
-                                        <div class="text-xl font-bold text-gray-900">{{ $savedCount > 0 ? $savedCount : '80' }}</div>
+                                        <div class="text-xl font-bold text-gray-900">{{ $savedCount }}</div>
                                         <div class="text-sm text-gray-500">Disimpan</div>
                                     </div>
                                 </div>
@@ -156,30 +154,32 @@
                         </div>
 
                         <!-- Tabs Header -->
-                        <div class="flex overflow-x-auto border-b border-gray-200 no-scrollbar px-8">
-                            <button @click="activeTab = 'deskripsi'" :class="{'text-blue-600 border-b-2 border-blue-600': activeTab === 'deskripsi', 'text-gray-500 hover:text-gray-700': activeTab !== 'deskripsi'}" class="pb-3 pt-2 mr-8 font-semibold text-sm whitespace-nowrap outline-none transition-colors">
+                        <div class="px-6 sm:px-8 pt-2">
+                            <div class="flex gap-2 overflow-x-auto no-scrollbar rounded-2xl bg-slate-50 p-2 border border-slate-200">
+                            <button @click="activeTab = 'deskripsi'" :class="activeTab === 'deskripsi' ? 'bg-white text-blue-600 shadow-sm border-blue-200' : 'text-slate-600 hover:text-slate-900 hover:bg-white/70 border-transparent'" class="shrink-0 px-4 py-2 rounded-xl border text-sm font-semibold whitespace-nowrap outline-none transition-all">
                                 Deskripsi
                             </button>
-                            <button @click="activeTab = 'kualifikasi'" :class="{'text-blue-600 border-b-2 border-blue-600': activeTab === 'kualifikasi', 'text-gray-500 hover:text-gray-700': activeTab !== 'kualifikasi'}" class="pb-3 pt-2 mr-8 font-semibold text-sm whitespace-nowrap outline-none transition-colors">
+                            <button @click="activeTab = 'kualifikasi'" :class="activeTab === 'kualifikasi' ? 'bg-white text-blue-600 shadow-sm border-blue-200' : 'text-slate-600 hover:text-slate-900 hover:bg-white/70 border-transparent'" class="shrink-0 px-4 py-2 rounded-xl border text-sm font-semibold whitespace-nowrap outline-none transition-all">
                                 Kualifikasi
                             </button>
-                            <button @click="activeTab = 'benefit'" :class="{'text-blue-600 border-b-2 border-blue-600': activeTab === 'benefit', 'text-gray-500 hover:text-gray-700': activeTab !== 'benefit'}" class="pb-3 pt-2 mr-8 font-semibold text-sm whitespace-nowrap outline-none transition-colors">
+                            <button @click="activeTab = 'benefit'" :class="activeTab === 'benefit' ? 'bg-white text-blue-600 shadow-sm border-blue-200' : 'text-slate-600 hover:text-slate-900 hover:bg-white/70 border-transparent'" class="shrink-0 px-4 py-2 rounded-xl border text-sm font-semibold whitespace-nowrap outline-none transition-all">
                                 Benefit
                             </button>
-                            <button @click="activeTab = 'tentang'" :class="{'text-blue-600 border-b-2 border-blue-600': activeTab === 'tentang', 'text-gray-500 hover:text-gray-700': activeTab !== 'tentang'}" class="pb-3 pt-2 mr-8 font-semibold text-sm whitespace-nowrap outline-none transition-colors">
+                            <button @click="activeTab = 'tentang'" :class="activeTab === 'tentang' ? 'bg-white text-blue-600 shadow-sm border-blue-200' : 'text-slate-600 hover:text-slate-900 hover:bg-white/70 border-transparent'" class="shrink-0 px-4 py-2 rounded-xl border text-sm font-semibold whitespace-nowrap outline-none transition-all">
                                 Tentang Perusahaan
                             </button>
-                            <button @click="activeTab = 'lokasi'" :class="{'text-blue-600 border-b-2 border-blue-600': activeTab === 'lokasi', 'text-gray-500 hover:text-gray-700': activeTab !== 'lokasi'}" class="pb-3 pt-2 mr-8 font-semibold text-sm whitespace-nowrap outline-none transition-colors">
+                            <button @click="activeTab = 'lokasi'" :class="activeTab === 'lokasi' ? 'bg-white text-blue-600 shadow-sm border-blue-200' : 'text-slate-600 hover:text-slate-900 hover:bg-white/70 border-transparent'" class="shrink-0 px-4 py-2 rounded-xl border text-sm font-semibold whitespace-nowrap outline-none transition-all">
                                 Lokasi
                             </button>
+                            </div>
                         </div>
 
                         <!-- Tabs Content -->
-                        <div class="p-8">
+                        <div class="p-6 sm:p-8">
                             <!-- Deskripsi Tab -->
                             <div x-show="activeTab === 'deskripsi'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
                                 
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <!-- Left Text Content -->
                                     <div class="md:col-span-2">
                                         <h3 class="font-bold text-gray-900 mb-2">Deskripsi</h3>
@@ -204,14 +204,12 @@
                                     <!-- Right Box Content -->
                                     <div class="md:col-span-1">
                                         <div class="bg-[#F8FAFC] border border-gray-100 rounded-xl p-5 mb-4">
-                                            <h3 class="text-sm font-bold text-gray-900 mb-3">Skill yang Dibutuhkan</h3>
+                                            <h3 class="text-sm font-bold text-gray-900 mb-3">Info Kecocokan</h3>
                                             <div class="flex flex-wrap gap-2">
-                                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded border border-blue-100">Produksi</span>
-                                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded border border-blue-100">Mesin</span>
-                                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded border border-blue-100">SOP</span>
-                                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded border border-blue-100">QC</span>
-                                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded border border-blue-100">Teamwork</span>
-                                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded border border-blue-100">Disiplin</span>
+                                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded border border-blue-100">Profil</span>
+                                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded border border-blue-100">Lokasi</span>
+                                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded border border-blue-100">Pengalaman</span>
+                                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded border border-blue-100">CV</span>
                                             </div>
                                         </div>
 
@@ -222,23 +220,26 @@
                                                 <div class="relative w-16 h-16">
                                                     <svg class="w-full h-full" viewBox="0 0 36 36">
                                                         <path class="text-gray-200" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.8"/>
-                                                        <path class="text-blue-600" stroke-dasharray="85, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.8"/>
+                                                        <path class="text-blue-600" stroke-dasharray="{{ $matchScore ?? 0 }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.8"/>
                                                     </svg>
-                                                    <div class="absolute inset-0 flex items-center justify-center font-bold text-lg text-blue-600">85%</div>
+                                                    <div class="absolute inset-0 flex items-center justify-center font-bold text-lg text-blue-600">{{ $matchScore ?? 0 }}%</div>
                                                 </div>
-                                                <ul class="text-[11px] text-gray-600 space-y-1.5 flex-1">
-                                                    <li class="flex items-center gap-1.5"><svg class="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Jurusan sesuai</li>
-                                                    <li class="flex items-center gap-1.5"><svg class="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Domisili dekat</li>
-                                                    <li class="flex items-center gap-1.5"><svg class="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Usia sesuai</li>
-                                                    <li class="flex items-center gap-1.5"><svg class="w-3 h-3 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Belum punya CV</li>
-                                                </ul>
+                                                <div class="flex-1 text-[11px] text-gray-600 space-y-1.5">
+                                                    @if(!is_null($matchScore))
+                                                        <p class="font-medium text-gray-700">Skor dihitung dari profil, lokasi, pengalaman, dan skill yang tersimpan di akun Anda.</p>
+                                                        <p>Lengkapi profil dan unggah CV untuk menaikkan skor kecocokan.</p>
+                                                    @else
+                                                        <p class="font-medium text-gray-700">Masuk sebagai siswa atau alumni untuk melihat skor kecocokan personal.</p>
+                                                        <p>Detail ini tidak ditampilkan ke tamu agar tidak menyesatkan.</p>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Info Grid (Pendidikan, Pengalaman, dll) -->
-                                <div class="bg-[#FFF9E6] border border-yellow-200 rounded-xl p-5 mb-8">
+                                <div class="bg-[#FFF9E6] border border-yellow-200 rounded-2xl p-5 mb-8">
                                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                         <div class="flex items-center gap-3">
                                             <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-700">
@@ -334,23 +335,23 @@
                                 </div>
                             </div>
 
-                            <!-- Other Tabs Placeholder Content -->
+                            <!-- Other Tabs -->
                             <div x-show="activeTab === 'kualifikasi'" style="display: none;">
                                 <h3 class="font-bold text-gray-900 mb-3">Kualifikasi</h3>
                                 <div class="text-sm text-gray-700 leading-relaxed">
-                                    {!! nl2br(e($job->qualifications ?? 'Detail kualifikasi belum tersedia.')) !!}
+                                    {!! nl2br(e($job->qualifications ?? 'Detail kualifikasi belum diisi oleh perusahaan.')) !!}
                                 </div>
                             </div>
                             <div x-show="activeTab === 'benefit'" style="display: none;">
                                 <h3 class="font-bold text-gray-900 mb-3">Benefit Tambahan</h3>
                                 <div class="text-sm text-gray-700 leading-relaxed">
-                                    {!! nl2br(e($job->benefits ?? 'Detail benefit belum tersedia.')) !!}
+                                    {!! nl2br(e($job->benefits ?? 'Benefit belum diisi oleh perusahaan.')) !!}
                                 </div>
                             </div>
                             <div x-show="activeTab === 'tentang'" style="display: none;">
                                 <h3 class="font-bold text-gray-900 mb-3">Tentang Perusahaan</h3>
                                 <div class="text-sm text-gray-700 leading-relaxed">
-                                    {{ $job->company->description ?? 'Deskripsi perusahaan belum tersedia.' }}
+                                    {{ $job->company->description ?? 'Profil perusahaan belum diisi.' }}
                                 </div>
                             </div>
                             <div x-show="activeTab === 'lokasi'" style="display: none;">
@@ -394,20 +395,18 @@
                                     $hasAvatar = $user->avatar !== null;
                                     $hasCv = $user->cvFiles()->exists();
                                     
-                                    $score = 0;
-                                    if ($hasNameAndEmail) $score += 35;
-                                    if ($hasAvatar) $score += 15;
-                                    if ($hasCv) $score += 20; // makes it 70% matching the design screenshot
                                 @endphp
 
                                 <div class="mb-6">
                                     <div class="text-sm font-semibold mb-2 text-gray-700">Persiapan Lamaran</div>
                                     <div class="flex items-center gap-3 mb-4">
                                         <div class="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
-                                            <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: 70%"></div>
+                                            <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: {{ $matchScore ?? 0 }}%"></div>
                                         </div>
-                                        <span class="text-sm font-bold text-gray-900">70%</span>
+                                        <span class="text-sm font-bold text-gray-900">{{ $matchScore ?? 0 }}%</span>
                                     </div>
+
+                                    <p class="text-xs text-gray-500 mb-4">Skor dihitung dari kecocokan profil, lokasi, pengalaman, dan skill yang tersedia di akun Anda.</p>
 
                                     <ul class="space-y-3 text-sm">
                                         <li class="flex items-center justify-between">
@@ -509,7 +508,7 @@
                                 <div>
                                     <h4 class="font-bold text-gray-900 leading-tight mb-1">{{ $job->company->name ?? 'Perusahaan' }}</h4>
                                     <div class="flex items-center gap-1 text-[11px] text-gray-500 mb-2">
-                                        <span class="text-yellow-400">⭐</span> 4.8 (120 ulasan)
+                                        <span class="text-yellow-400">⭐</span> Data ulasan belum tersedia
                                     </div>
                                 </div>
                             </div>

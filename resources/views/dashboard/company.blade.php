@@ -17,6 +17,22 @@
             </x-slot:actions>
         </x-ui.dashboard-hero>
 
+        <div class="page-container pt-6">
+            <div class="rounded-2xl border border-purple-100 bg-purple-50 px-5 py-4 shadow-sm">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <div>
+                        <p class="text-sm font-semibold text-purple-800">Fokus utama perusahaan</p>
+                        <p class="text-sm text-purple-700 mt-1">Posting lowongan, tinjau pelamar, dan lakukan tindak lanjut secara cepat.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs font-semibold text-purple-700">
+                        <span class="px-3 py-1 rounded-full bg-white border border-purple-100">Posting lowongan</span>
+                        <span class="px-3 py-1 rounded-full bg-white border border-purple-100">Kelola pelamar</span>
+                        <span class="px-3 py-1 rounded-full bg-white border border-purple-100">Interview</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {{-- Verification Banner --}}
         @if($company->verification_status === 'rejected')
         <div style="background:#fef2f2; border-left:4px solid #dc2626;" class="px-6 py-5" role="alert">

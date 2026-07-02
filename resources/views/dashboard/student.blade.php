@@ -25,6 +25,22 @@
             </x-slot:actions>
         </x-ui.dashboard-hero>
 
+        <div class="page-container pt-6">
+            <div class="rounded-2xl border border-blue-100 bg-blue-50 px-5 py-4 shadow-sm">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <div>
+                        <p class="text-sm font-semibold text-blue-800">Fokus utama siswa dan alumni</p>
+                        <p class="text-sm text-blue-700 mt-1">Cari lowongan, simpan yang cocok, lamar, lalu pantau status sampai selesai.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs font-semibold text-blue-700">
+                        <span class="px-3 py-1 rounded-full bg-white border border-blue-100">Cari lowongan</span>
+                        <span class="px-3 py-1 rounded-full bg-white border border-blue-100">Kelola CV</span>
+                        <span class="px-3 py-1 rounded-full bg-white border border-blue-100">Pantau lamaran</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="page-container page-section">
             {{-- Stats Grid (Refactored using reusable component) --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">

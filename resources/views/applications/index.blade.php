@@ -3,6 +3,16 @@
         <x-ui.page-hero title="Lamaran Saya" subtitle="Lacak dan kelola semua lamaran pekerjaan Anda dalam satu tempat." />
 
         <div class="page-container page-section">
+            <div class="mb-6 rounded-2xl border border-blue-100 bg-blue-50 p-5">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <div>
+                        <p class="text-sm font-semibold text-blue-800">Alur pantau lamaran</p>
+                        <p class="text-sm text-blue-700 mt-1">Setelah melamar, cek status di sini: terkirim, ditinjau, interview, diterima, atau ditolak.</p>
+                    </div>
+                    <x-ui.btn href="{{ route('jobs.index') }}" variant="secondary" size="sm">Cari Lowongan Baru</x-ui.btn>
+                </div>
+            </div>
+
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
                 <x-ui.stat-card label="Total" :value="$stats['total']" color="gray" />
                 <x-ui.stat-card label="Terkirim" :value="$stats['submitted']" color="blue" />
@@ -64,10 +74,13 @@
             <x-ui.panel>
                 <x-ui.empty-state
                     title="Belum ada lamaran"
-                    description="Mulai melamar lowongan yang sesuai dengan keahlian Anda."
+                    description="Belum ada riwayat lamaran. Mulai dari halaman lowongan untuk mencari posisi yang cocok lalu kirim aplikasi pertama Anda."
                 >
                     <x-slot:action>
-                        <x-ui.btn href="{{ route('jobs.index') }}">Jelajahi Lowongan</x-ui.btn>
+                        <div class="flex flex-wrap items-center justify-center gap-3">
+                            <x-ui.btn href="{{ route('jobs.index') }}">Jelajahi Lowongan</x-ui.btn>
+                            <x-ui.btn href="{{ route('dashboard') }}" variant="secondary">Kembali ke Dasbor</x-ui.btn>
+                        </div>
                     </x-slot:action>
                 </x-ui.empty-state>
             </x-ui.panel>

@@ -51,7 +51,7 @@ class ApplicationReceived extends Notification implements ShouldQueue
             ->greeting('Halo ' . ($notifiable->name ?? ''))
             ->line('Anda menerima lamaran baru dari ' . $applicantName . '.')
             ->line('Lowongan: ' . ($job->title ?? __('bkk.fallback.not_available')))
-            ->action('Lihat Lamaran', url('/admin/applications/' . $this->application->id))
+            ->action('Lihat Pelamar', url(route('company.applicants.index')))
             ->line('Terima kasih telah menggunakan platform kami!');
     }
 }

@@ -6,6 +6,8 @@ use App\Models\Job;
 use App\Models\Bookmark;
 use App\Models\Application;
 use App\Http\Requests\ApplicationRequest;
+use App\Notifications\ApplicationReceived;
+use App\Services\JobMatchingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -115,6 +117,11 @@ class JobController extends Controller
         }
 
         $savedCount = Bookmark::where("job_id", $job->id)->count();
+        $matchScore = null;
+
+        if (Auth::check() && in_array(Auth::user()->role, ["student", "alumni"], true)) {
+            $matchScore = (new JobMatchingService())->score($job, Auth::user());
+        }
 
         // Similar jobs
         $similarJobs = Job::with(["company.user"])
@@ -131,7 +138,7 @@ class JobController extends Controller
 
         return view(
             "jobs.show",
-            compact("job", "hasApplied", "isBookmarked", "savedCount", "similarJobs"),
+            compact("job", "hasApplied", "isBookmarked", "savedCount", "similarJobs", "matchScore"),
         );
     }
 
@@ -161,7 +168,7 @@ class JobController extends Controller
             $attachmentSize = $attachment->getSize();
         }
 
-        Application::create([
+        $application = Application::create([
             "job_id" => $job->id,
             "user_id" => Auth::id(),
             "cover_letter" => $request->cover_letter,
@@ -172,7 +179,10 @@ class JobController extends Controller
             "status" => "submitted",
         ]);
 
-        // TODO: Send notification to company
+        $job->loadMissing(["company.user", "company"]);
+        if ($job->company?->user) {
+            $job->company->user->notify(new ApplicationReceived($application));
+        }
 
         return redirect()
             ->route("jobs.show", $job)

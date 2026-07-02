@@ -47,9 +47,10 @@ $linkColor = match($color) {
 @endphp
 
 <div {{ $attributes->merge([
-    'class' => "bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border-l-4 {$borderColor}
-                hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+    'class' => "bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-700 border-l-4 {$borderColor}
+                hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
 ]) }}>
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-15" aria-hidden="true"></div>
     <div class="flex items-center justify-between">
         <div>
             <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">{{ $label }}</p>

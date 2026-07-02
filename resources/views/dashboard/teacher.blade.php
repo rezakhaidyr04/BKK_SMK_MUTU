@@ -7,6 +7,22 @@
             gradient="from-blue-600 via-teal-600 to-green-600"
         />
 
+        <div class="page-container pt-6">
+            <div class="rounded-2xl border border-teal-100 bg-teal-50 px-5 py-4 shadow-sm">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <div>
+                        <p class="text-sm font-semibold text-teal-800">Fokus utama guru</p>
+                        <p class="text-sm text-teal-700 mt-1">Pantau penempatan, lihat distribusi status, dan awasi siswa/alumni yang sudah terserap kerja.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs font-semibold text-teal-700">
+                        <span class="px-3 py-1 rounded-full bg-white border border-teal-100">Penempatan</span>
+                        <span class="px-3 py-1 rounded-full bg-white border border-teal-100">Status lamaran</span>
+                        <span class="px-3 py-1 rounded-full bg-white border border-teal-100">Monitoring</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="page-container page-section">
             {{-- Stats Grid (Refactored using reusable component) --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

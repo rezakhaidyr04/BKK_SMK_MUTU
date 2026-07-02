@@ -49,7 +49,7 @@
                 </div>
 
                 <div>
-                    <x-input-label for="salary_max" value="Gaji Maximum" />
+                    <x-input-label for="salary_max" value="Gaji Maksimum" />
                     <input id="salary_max" name="salary_max" value="{{ old('salary_max') }}" class="w-full mt-1 rounded-lg border border-gray-200 bg-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200" />
                     <x-input-error :messages="$errors->get('salary_max')" class="mt-2" />
                 </div>

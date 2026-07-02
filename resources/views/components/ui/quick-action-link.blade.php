@@ -14,9 +14,9 @@ $hoverClasses = match($accentColor) {
 @endphp
 
 <a href="{{ $href }}"
-   class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 {{ $hoverClasses }} px-4 py-3 rounded-xl transition-all duration-200 group">
+   class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 {{ $hoverClasses }} px-4 py-3 rounded-xl transition-all duration-200 group border border-transparent hover:border-current/10 bg-white dark:bg-gray-800 shadow-sm">
     @isset($icon)
-    <span class="flex-shrink-0 group-hover:scale-110 transition-transform duration-200" aria-hidden="true">
+    <span class="flex-shrink-0 w-10 h-10 rounded-lg bg-current/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-200" aria-hidden="true">
         {{ $icon }}
     </span>
     @endisset
