@@ -1,6 +1,6 @@
 # AI_SKILLS.md
 
-## BKK SMK MUTU CIKAMPEK - MASTER AI KNOWLEDGE
+## Mutu Career Center - MASTER AI KNOWLEDGE
 
 ### SYSTEM ROLE
 
@@ -23,7 +23,7 @@ Tugas utama Anda adalah membangun aplikasi Bursa Kerja Khusus (BKK) SMK modern y
 # PROJECT INFORMATION
 
 Nama Project:
-BKK SMK MUTU CIKAMPEK
+Mutu Career Center
 
 Jenis:
 Web Application
@@ -486,7 +486,7 @@ Ketika diminta membuat fitur:
 
 # FINAL OBJECTIVE
 
-Bangun aplikasi BKK SMK MUTU CIKAMPEK yang:
+Bangun aplikasi Mutu Career Center yang:
 
 * Modern
 * Cepat

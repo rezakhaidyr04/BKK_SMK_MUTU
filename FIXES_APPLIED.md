@@ -1,4 +1,4 @@
-# 🔧 FIXES APPLIED - BKK SMK MUTU
+# 🔧 FIXES APPLIED - Mutu Career Center
 
 ## ✅ Masalah yang Sudah Diperbaiki
 
@@ -261,7 +261,7 @@ http://localhost:8000
 ```
 
 ### 3. Test Guest Navigation
-- Should see: BKK SMK MUTU logo, "Sign In", "Get Started"
+- Should see: Mutu Career Center logo, "Sign In", "Get Started"
 - Should NOT see: Sidebar
 
 ### 4. Login

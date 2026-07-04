@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\ApplicationController;
@@ -19,28 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Public Routes
-Route::get("/", function () {
-    $jobs = App\Models\Job::with("company.user")
-        ->where("status", "active")
-        ->where("deadline", ">=", now())
-        ->latest()
-        ->take(12)
-        ->get();
-    $activeJobsCount = App\Models\Job::where("status", "active")
-        ->where("deadline", ">=", now())
-        ->count();
-
-    $studentsCount = App\Models\User::whereIn("role", [
-        "student",
-        "alumni",
-    ])->count();
-
-    $companiesCount = App\Models\Company::count();
-    return view(
-        "welcome",
-        compact("jobs", "activeJobsCount", "studentsCount", "companiesCount"),
-    );
-})->name("home");
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Job Routes (Public)
 Route::get("/jobs", [JobController::class, "index"])->name("jobs.index");

@@ -1,4 +1,4 @@
-# 🔍 Review Jujur Project BKK SMK MUTU
+# 🔍 Review Jujur Project Mutu Career Center
 
 > Review dilakukan pada: 21 Juni 2026
 > Stack: Laravel, Blade, Tailwind CSS (CDN), Alpine.js

@@ -99,10 +99,10 @@
     @endif
 
     {{-- Pendidikan --}}
-    @if($user->student)
+        @if($user->student)
     <div class="section-title">Pendidikan</div>
     <div class="section-body">
-        <strong>SMK MUTU Cikampek</strong>
+        <strong>SMK MUTU Karawang</strong>
         @if($user->student->major) — {{ $user->student->major }} @endif
         @if($user->student->graduation_year)
             <br><span style="color:#444;">Tahun Lulus: {{ $user->student->graduation_year }}</span>
@@ -117,27 +117,33 @@
     @endif
 
     {{-- Sertifikat --}}
-    @if($include_certificates && $user->certificates->isNotEmpty())
-    <div class="section-title">Sertifikat & Penghargaan</div>
+        @if($custom_summary || $user->bio)
     <div class="section-body">
-        @foreach($user->certificates as $c)
-        <div class="cert-item">
-            <span class="cert-title">{{ $c->title ?? $c->name ?? '-' }}</span>
-            <span class="cert-meta">
-                @if(isset($c->issuer) && $c->issuer) — {{ $c->issuer }} @endif
-                @if(isset($c->issue_date) && $c->issue_date) ({{ \Carbon\Carbon::parse($c->issue_date)->format('M Y') }}) @endif
-            </span>
-        </div>
-        @endforeach
+        <div class="section-body">{{ $custom_summary ?: $user->bio }}</div>
+            @foreach($user->certificates as $c)
+            <div class="cert-item">
+                <span class="cert-title">{{ $c->title ?? $c->name ?? '-' }}</span>
+                <span class="cert-meta">
+                    @if(isset($c->issuer) && $c->issuer) — {{ $c->issuer }} @endif
+                    @if(isset($c->issue_date) && $c->issue_date) ({{ \Carbon\Carbon::parse($c->issue_date)->format('M Y') }}) @endif
+                </span>
+            </div>
+            @endforeach
+        @else
+            Belum ada sertifikat yang ditampilkan.
+        @endif
     </div>
-    @endif
 
     {{-- Foto hanya tampil jika diminta (bawah untuk ATS) --}}
     @if($include_photo && $user->avatar)
     <div style="text-align:center; margin-top:16px;">
         <img src="{{ public_path('storage/' . $user->avatar) }}" alt="Foto" width="80" height="80" style="object-fit:cover; border-radius:4px;">
-    </div>
-    @endif
+        {{-- Pencapaian --}}
+        <div class="section-title">Pencapaian Utama</div>
+        <div class="section-body">{{ $custom_achievement ?: 'Contoh: menyelesaikan proyek kelas, pengalaman magang, kepanitiaan, atau penghargaan yang relevan.' }}</div>
 
-</body>
+        {{-- Pengalaman --}}
+        @if($custom_experience || ($user->student && $user->student->experience))
+
+        <div class="section-body">{!! nl2br(e($custom_experience ?: $user->student->experience)) !!}</div>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BKK SMK MUTU Cikampek - Platform Pengembangan Karir</title>
+    <title>Mutu Career Center - Platform Pengembangan Karir</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,8 +20,8 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <a href="{{ route('home') }}" class="flex items-center">
-                        <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-10 h-10 rounded-xl object-cover">
-                        <span class="ml-3 text-xl font-bold text-gray-900">BKK SMK MUTU</span>
+                        <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Mutu Career Center" class="w-10 h-10 rounded-xl object-cover">
+                        <span class="ml-3 text-xl font-bold text-gray-900">Mutu Career Center</span>
                     </a>
                 </div>
                 
@@ -55,7 +55,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
                     <h1 class="text-5xl font-bold mb-6 leading-tight">
-                        Temukan Karir Impian Anda bersama BKK SMK MUTU
+                        Temukan Karir Impian Anda bersama Mutu Career Center
                     </h1>
                     <p class="text-xl text-blue-100 mb-8">
                         Platform karir modern yang menghubungkan siswa dan alumni SMK dengan peluang kerja terbaik.
@@ -204,7 +204,7 @@
     <section class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Mengapa Memilih BKK SMK MUTU?</h2>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Mengapa Memilih Mutu Career Center?</h2>
                 <p class="text-xl text-gray-600">Platform terlengkap untuk pengembangan karir Anda</p>
             </div>
             
@@ -305,9 +305,9 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="col-span-2">
                     <div class="flex items-center gap-3 mb-4">
-                        <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-12 h-12 rounded-xl object-cover">
+                        <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Mutu Career Center" class="w-12 h-12 rounded-xl object-cover">
                         <div>
-                            <h3 class="text-lg font-bold">BKK SMK MUTU</h3>
+                            <h3 class="text-lg font-bold">Mutu Career Center</h3>
                             <p class="text-sm text-gray-400">Pusat Pengembangan Karir</p>
                         </div>
                     </div>
@@ -328,15 +328,15 @@
                 <div>
                     <h4 class="font-semibold mb-4">Kontak</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li>SMK MUTU Cikampek</li>
-                        <li>Cikampek, Jawa Barat</li>
+                        <li>SMK MUTU Karawang</li>
+                        <li>Karawang, Jawa Barat</li>
                         <li>bkk@smkmutu.sch.id</li>
                     </ul>
                 </div>
             </div>
             
             <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-                &copy; {{ date('Y') }} BKK SMK MUTU CIKAMPEK. Hak cipta dilindungi.
+                &copy; {{ date('Y') }} Mutu Career Center. Hak cipta dilindungi.
             </div>
         </div>
     </footer>

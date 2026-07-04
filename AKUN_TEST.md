@@ -1,4 +1,4 @@
-# 🔐 Daftar Akun BKK SMK MUTU CIKAMPEK
+# 🔐 Daftar Akun Mutu Career Center
 
 > File ini berisi semua akun default dan akun test untuk keperluan development.
 > **JANGAN upload file ini ke GitHub / server production!**
@@ -87,4 +87,4 @@ php artisan migrate:fresh --seed
 
 ---
 
-*Dibuat: Juni 2026 | Proyek: BKK SMK MUTU CIKAMPEK*
+*Dibuat: Juni 2026 | Proyek: Mutu Career Center*

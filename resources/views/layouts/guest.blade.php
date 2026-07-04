@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'BKK SMK MUTU') }}</title>
+    <title>{{ config('app.name', 'Mutu Career Center') }}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -158,28 +158,28 @@
         <div class="auth-left">
             <div>
                 <div class="auth-logo-row">
-                    <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU">
+                    <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Mutu Career Center">
                     <div>
-                        <div class="brand-name">BKK SMK MUTU</div>
+                        <div class="brand-name">Mutu Career Center</div>
                         <div class="brand-sub">Pusat Pengembangan Karir</div>
                     </div>
                 </div>
 
                 <h2>Menghubungkan<br>Talenta dengan<br>Peluang</h2>
-                <p>Platform karir untuk siswa dan alumni SMK MUTU Cikampek menemukan pekerjaan terbaik mereka.</p>
+                <p>Platform karir untuk siswa dan alumni SMK MUTU Karawang menemukan pekerjaan terbaik mereka.</p>
             </div>
 
             <div class="auth-stats">
                 <div class="text-center">
-                    <div class="stat-num">500+</div>
+                    <div class="stat-num">{{ number_format(\App\Models\Job::where('status', 'active')->where('deadline', '>=', now())->count()) }}</div>
                     <div class="stat-label">Siswa Ditempatkan</div>
                 </div>
                 <div class="text-center">
-                    <div class="stat-num">150+</div>
+                    <div class="stat-num">{{ number_format(\App\Models\User::whereIn('role', ['student', 'alumni'])->count()) }}</div>
                     <div class="stat-label">Perusahaan Mitra</div>
                 </div>
                 <div class="text-center">
-                    <div class="stat-num">95%</div>
+                    <div class="stat-num">{{ number_format(\App\Models\Company::count()) }}</div>
                     <div class="stat-label">Keberhasilan</div>
                 </div>
             </div>
@@ -190,8 +190,8 @@
 
             {{-- Logo mobile --}}
             <div class="auth-mobile-logo">
-                <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU">
-                <span>BKK SMK MUTU</span>
+                <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Mutu Career Center">
+                <span>Mutu Career Center</span>
             </div>
 
             {{-- Card --}}

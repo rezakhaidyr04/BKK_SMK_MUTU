@@ -1,4 +1,4 @@
-# ⚡ QUICK START GUIDE - BKK SMK MUTU
+# ⚡ QUICK START GUIDE - Mutu Career Center
 
 ## 🎯 Cara Cepat Menjalankan Project
 

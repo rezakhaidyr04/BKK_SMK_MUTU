@@ -70,7 +70,7 @@
                 <div>
                     <p class="text-sm font-bold" style="color:#92400e">Menunggu Verifikasi Admin</p>
                     <p class="text-sm mt-0.5" style="color:#78350f">
-                        Akun Anda sedang ditinjau oleh admin BKK SMK MUTU.
+                        Akun Anda sedang ditinjau oleh admin Mutu Career Center.
                         <a href="{{ route('company.profile.edit') }}" class="font-semibold underline" style="color:#92400e">Cek profil →</a>
                     </p>
                 </div>

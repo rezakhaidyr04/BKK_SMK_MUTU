@@ -16,8 +16,8 @@
 
                     <!-- Logo -->
                     <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="flex items-center ml-4">
-<img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-10 h-10 rounded-xl object-cover">
-                        <span class="ml-3 text-xl font-bold text-gray-900 hidden sm:block">BKK SMK MUTU</span>
+<img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Mutu Career Center" class="w-10 h-10 rounded-xl object-cover">
+                        <span class="ml-3 text-xl font-bold text-gray-900 hidden sm:block">Mutu Career Center</span>
                     </a>
                 </div>
 

@@ -173,7 +173,7 @@
 
         {{-- Pendidikan --}}
         <div class="s-section-title">Pendidikan</div>
-        <div class="s-item">SMK MUTU Cikampek</div>
+        <div class="s-item">SMK MUTU Karawang</div>
         @if($user->student && $user->student->major)
         <div class="s-item">{{ $user->student->major }}</div>
         @endif
@@ -208,10 +208,8 @@
         </div>
 
         {{-- Ringkasan --}}
-        @if($user->bio)
         <div class="section-title">Tentang Saya</div>
-        <div class="section-body">{{ $user->bio }}</div>
-        @endif
+        <div class="section-body">{{ $user->bio ?? 'Ringkasan profil belum diisi. Tambahkan 2-3 kalimat tentang minat kerja, kekuatan utama, dan target karir agar sisi kanan CV ini tidak terasa kosong.' }}</div>
 
         {{-- Pengalaman --}}
         @if($user->student && $user->student->experience)
@@ -220,17 +218,24 @@
         @endif
 
         {{-- Sertifikat --}}
-        @if($include_certificates && $user->certificates->isNotEmpty())
         <div class="section-title">Sertifikat</div>
-        @foreach($user->certificates as $c)
-        <div class="cert-item">
-            <div class="cert-title">{{ $c->title ?? $c->name ?? '-' }}</div>
-            <div class="cert-meta">
-                @if(isset($c->issuer) && $c->issuer) {{ $c->issuer }} @endif
-                @if(isset($c->issue_date) && $c->issue_date) · {{ \Carbon\Carbon::parse($c->issue_date)->format('M Y') }} @endif
+        @if($include_certificates && $user->certificates->isNotEmpty())
+            @foreach($user->certificates as $c)
+            <div class="cert-item">
+                <div class="cert-title">{{ $c->title ?? $c->name ?? '-' }}</div>
+                <div class="cert-meta">
+                    @if(isset($c->issuer) && $c->issuer) {{ $c->issuer }} @endif
+            @if($custom_experience || ($user->student && $user->student->experience))
+                </div>
+            <div class="section-body">{!! nl2br(e($custom_experience ?: $user->student->experience)) !!}</div>
+            @endforeach
+        @else
+            <div class="section-title">Pencapaian</div>
+            <div class="section-body">{{ $custom_achievement ?: 'Tambahkan satu pencapaian utama agar CV terlihat lebih meyakinkan.' }}</div>
+            <div class="cert-item">
+                <div class="cert-title">Belum ada sertifikat ditampilkan</div>
+                <div class="cert-meta">Tambahkan sertifikat di profil untuk memperkuat CV.</div>
             </div>
-        </div>
-        @endforeach
         @endif
     </div>
 

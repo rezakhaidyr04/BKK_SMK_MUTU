@@ -1,4 +1,4 @@
-# 🚀 BKK SMK MUTU - DEPLOYMENT GUIDE
+# 🚀 Mutu Career Center - DEPLOYMENT GUIDE
 
 ## 📋 PREREQUISITES
 
@@ -15,7 +15,7 @@
 ```bash
 # Clone repository (jika dari git)
 git clone [repository-url]
-cd "BKK SMK MUTU"
+cd "Mutu Career Center"
 
 # Copy environment file
 copy .env.example .env
@@ -74,9 +74,9 @@ chmod -R 775 storage bootstrap/cache
 ```apache
 <VirtualHost *:80>
     ServerName bkk.smkmutu.local
-    DocumentRoot "D:/BKK SMK MUTU/public"
+    DocumentRoot "D:/Mutu Career Center/public"
     
-    <Directory "D:/BKK SMK MUTU/public">
+    <Directory "D:/Mutu Career Center/public">
         AllowOverride All
         Require all granted
     </Directory>
@@ -88,7 +88,7 @@ chmod -R 775 storage bootstrap/cache
 server {
     listen 80;
     server_name bkk.smkmutu.local;
-    root /path/to/BKK SMK MUTU/public;
+    root /path/to/Mutu Career Center/public;
 
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-Content-Type-Options "nosniff";

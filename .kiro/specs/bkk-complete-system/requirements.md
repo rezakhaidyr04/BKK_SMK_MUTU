@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Sistem BKK SMK MUTU Karawang adalah platform digital komprehensif yang dirancang untuk memfasilitasi koneksi antara siswa, alumni, dan perusahaan dalam proses pencarian kerja. Sistem ini akan menggantikan sistem manual dengan solusi digital modern yang lebih efisien, aman, dan user-friendly dibandingkan BKKBISA.
+Sistem Mutu Career Center adalah platform digital komprehensif yang dirancang untuk memfasilitasi koneksi antara siswa, alumni, dan perusahaan dalam proses pencarian kerja. Sistem ini akan menggantikan sistem manual dengan solusi digital modern yang lebih efisien, aman, dan user-friendly dibandingkan BKKBISA.
 
 ## Glossary
 

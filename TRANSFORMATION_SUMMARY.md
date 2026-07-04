@@ -1,4 +1,4 @@
-# 🚀 BKK SMK MUTU - TRANSFORMASI LENGKAP KE PLATFORM MODERN 2026
+# 🚀 Mutu Career Center - TRANSFORMASI LENGKAP KE PLATFORM MODERN 2026
 
 ## ✅ IMPLEMENTASI YANG TELAH SELESAI
 
@@ -355,7 +355,7 @@ Semua halaman sudah **fully responsive**:
 
 ## 🎉 HASIL AKHIR
 
-Platform BKK SMK MUTU sekarang memiliki:
+Platform Mutu Career Center sekarang memiliki:
 
 ### ✨ **UI/UX Level Startup 2026**
 - Modern, clean, professional
