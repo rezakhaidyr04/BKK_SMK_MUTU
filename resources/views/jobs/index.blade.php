@@ -173,7 +173,7 @@
                                     <span class="text-sm font-semibold text-emerald-700 uppercase tracking-wide">Estimasi gaji</span>
                                     </div>
                                     <span class="text-lg font-bold text-gray-900">
-                                        Rp {{ number_format($job->salary_min / 1000000, 1) }}M - {{ number_format($job->salary_max / 1000000, 1) }}M
+                                        Rp {{ number_format($job->salary_min, 0, ',', '.') }} - {{ number_format($job->salary_max, 0, ',', '.') }}
                                     </span>
                                 </div>
                                 @endif
