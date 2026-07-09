@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -188,10 +188,13 @@
         {{-- Panel Kanan --}}
         <div class="auth-right">
 
-            {{-- Logo mobile --}}
+            {{-- Logo mobile: tampil di layar kecil, tersembunyi di desktop --}}
             <div class="auth-mobile-logo">
                 <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU">
-                <span>BKK SMK MUTU</span>
+                <div>
+                    <span style="display:block; font-size:1.1rem; font-weight:700; color:#111827; line-height:1.2;">BKK SMK MUTU</span>
+                    <span style="display:block; font-size:0.75rem; color:#6b7280; margin-top:2px;">Pusat Pengembangan Karir</span>
+                </div>
             </div>
 
             {{-- Card --}}

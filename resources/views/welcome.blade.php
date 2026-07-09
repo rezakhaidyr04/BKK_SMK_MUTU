@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -20,8 +20,10 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <a href="{{ route('home') }}" class="flex items-center">
-                        <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-10 h-10 rounded-xl object-cover">
-                        <span class="ml-3 text-xl font-bold text-gray-900">BKK SMK MUTU</span>
+                        <div class="flex items-center gap-3">
+                            <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-10 h-10 rounded-xl object-cover">
+                            <span class="text-xl font-bold text-gray-900">BKK SMK MUTU</span>
+                        </div>
                     </a>
                 </div>
                 
@@ -74,12 +76,7 @@
                             </a>
                         @endauth
                     </div>
-                    @guest
-                        <p class="mt-4 text-sm text-blue-100 max-w-xl">
-                            Admin? Gunakan tombol "Masuk" di atas untuk masuk sebagai admin. Pengguna biasa hanya perlu Daftar atau Jelajahi Lowongan.
-                        </p>
-                    @endguest
-                    
+
                     <!-- Stats -->
                     <div class="grid grid-cols-3 gap-6 mt-12">
                         <div>
@@ -254,8 +251,16 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 @foreach($jobs->take(6) as $job)
                 <div class="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-blue-300 hover:shadow-lg transition-all">
-                    <h3 class="font-bold text-lg text-gray-900 mb-2">{{ $job->title }}</h3>
-                    <p class="text-gray-600 text-sm mb-4">{{ $job->company->name ?? __('bkk.fallback.company') }}</p>
+                    <div class="flex items-start gap-4 mb-3">
+                        {{-- Logo Perusahaan --}}
+                        <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 flex items-center justify-center text-blue-600 font-bold text-lg">
+                            {{ strtoupper(substr($job->company->name ?? 'P', 0, 1)) }}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-lg text-gray-900 truncate">{{ $job->title }}</h3>
+                            <p class="text-gray-600 text-sm">{{ $job->company->name ?? __('bkk.fallback.company') }}</p>
+                        </div>
+                    </div>
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
                             {{ $job->location }}
@@ -265,7 +270,7 @@
                         </span>
                     </div>
                     <a href="{{ route('jobs.show', $job->id) }}" class="text-blue-600 text-sm font-medium hover:text-blue-700">
-                        Lihat Detail →
+                        Lihat Detail &rarr;
                     </a>
                 </div>
                 @endforeach
@@ -275,6 +280,24 @@
                 <a href="{{ route('jobs.index') }}" class="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
                     Lihat Semua Lowongan
                 </a>
+            </div>
+        </div>
+    </section>
+    @else
+    {{-- Empty State: Belum ada lowongan --}}
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Peluang Lowongan Terbaru</h2>
+            </div>
+            <div class="flex flex-col items-center justify-center py-16 text-center">
+                <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-6">
+                    <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">Belum ada lowongan tersedia saat ini</h3>
+                <p class="text-gray-500 text-sm max-w-sm">Pantau terus platform kami. Lowongan kerja baru akan segera hadir dari perusahaan-perusahaan mitra kami.</p>
             </div>
         </div>
     </section>
@@ -331,6 +354,9 @@
                         <li>SMK MUTU Karawang</li>
                         <li>Karawang, Jawa Barat</li>
                         <li>bkk@smkmutu.sch.id</li>
+                        <li>
+                            <a href="tel:+62267123456" class="hover:text-white">(0267) 123-456</a>
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" x-bind:class="{ 'dark': darkMode }" x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))">
     <head>
         <meta charset="utf-8">
@@ -25,7 +25,7 @@
             }
         </script>
     </head>
-    <body x-data="{ sidebarOpen: window.innerWidth >= 1024 }" class="font-sans antialiased bg-background text-gray-900 dark:bg-gray-950 dark:text-gray-100 @auth authenticated @endauth">
+    <body x-data="{ sidebarOpen: window.innerWidth >= 1024 }" @resize.window="sidebarOpen = window.innerWidth >= 1024 ? sidebarOpen : false" class="font-sans antialiased bg-background text-gray-900 dark:bg-gray-950 dark:text-gray-100 @auth authenticated @endauth">
         <div class="min-h-screen bg-background dark:bg-gray-950 flex flex-col">
             @include('layouts.navigation')
 

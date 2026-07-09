@@ -1,4 +1,4 @@
-﻿<!-- Modern Enterprise Navigation -->
+<!-- Modern Enterprise Navigation -->
 <!-- Custom Sidebar Styling -->
 <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 
@@ -16,8 +16,10 @@
 
                     <!-- Logo -->
                     <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="flex items-center ml-4">
-<img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-10 h-10 rounded-xl object-cover">
-                        <span class="ml-3 text-xl font-bold text-gray-900 hidden sm:block">BKK SMK MUTU</span>
+                        <div class="flex items-center gap-3">
+                            <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-10 h-10 rounded-xl object-cover">
+                            <span class="text-xl font-bold text-gray-900 hidden sm:block">BKK SMK MUTU</span>
+                        </div>
                     </a>
                 </div>
 
