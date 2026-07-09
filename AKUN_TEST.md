@@ -33,7 +33,7 @@
 |------|-------|----------|---------|
 | Siswa Demo BKK *(default)* | siswa@bkk.com | password123 | - |
 | Budi Santoso | budi.santoso@siswa.bkk.com | password123 | Teknik Mesin |
-| Siti Rahayu | siti.rahayu@siswa.bkk.com | password123 | [[Akuntansi |
+| Siti Rahayu | siti.rahayu@siswa.bkk.com | password123 | Akuntansi |
 | Rizky Pratama | rizky.pratama@siswa.bkk.com | password123 | Rekayasa Perangkat Lunak |
 | Dewi Anggraini | dewi.anggraini@siswa.bkk.com | password123 | Perhotelan |
 | Andi Kurniawan | andi.kurniawan@siswa.bkk.com | password123 | Teknik Komputer & Jaringan |
