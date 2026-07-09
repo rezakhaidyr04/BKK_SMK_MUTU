@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Mutu Career Center'),
+    'name' => env('APP_NAME', 'BKK SMK MUTU'),
 
     /*
     |--------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">Profil Perusahaan</h2>
     </x-slot>
@@ -67,7 +67,7 @@
                 <div>
                     <p class="text-sm font-bold text-yellow-800">Menunggu Verifikasi Admin</p>
                     <p class="text-sm text-yellow-700 mt-0.5">
-                        Profil Anda sedang ditinjau oleh admin Mutu Career Center. Lengkapi semua informasi di bawah agar verifikasi lebih cepat diproses.
+                        Profil Anda sedang ditinjau oleh admin BKK SMK MUTU. Lengkapi semua informasi di bawah agar verifikasi lebih cepat diproses.
                     </p>
                 </div>
             </div>
@@ -220,7 +220,7 @@
                     <li class="flex items-start gap-2.5">
                         <span class="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold
                             {{ $status === 'pending' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500' }}">2</span>
-                        <span>Admin Mutu Career Center akan meninjau profil Anda</span>
+                        <span>Admin BKK SMK MUTU akan meninjau profil Anda</span>
                     </li>
                     <li class="flex items-start gap-2.5">
                         <span class="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold bg-gray-200 text-gray-500">3</span>

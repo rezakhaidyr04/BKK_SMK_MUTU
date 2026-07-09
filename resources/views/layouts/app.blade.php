@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" x-bind:class="{ 'dark': darkMode }" x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Mutu Career Center') }}</title>
+        <title>{{ config('app.name', 'BKK SMK MUTU') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,9 +78,9 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div>
                                 <div class="flex items-center gap-2 mb-2">
-                                    <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Mutu Career Center" class="w-8 h-8 rounded-xl object-cover">
+                                    <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-8 h-8 rounded-xl object-cover">
                                     <div>
-                                        <h3 class="text-sm font-bold">Mutu Career Center</h3>
+                                        <h3 class="text-sm font-bold">BKK SMK MUTU</h3>
                                         <p class="text-xs text-gray-400">Pusat Pengembangan Karir</p>
                                     </div>
                                 </div>
@@ -104,7 +104,7 @@
                             </div>
                         </div>
                         <div class="border-t border-gray-800 mt-4 pt-4 text-center text-xs text-gray-400">
-                            &copy; {{ date('Y') }} Mutu Career Center. Hak cipta dilindungi.
+                            &copy; {{ date('Y') }} BKK SMK MUTU. Hak cipta dilindungi.
                         </div>
                     </div>
                 </footer>

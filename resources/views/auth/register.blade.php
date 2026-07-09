@@ -1,7 +1,7 @@
-<x-guest-layout>
+﻿<x-guest-layout>
     <div class="mb-6">
         <h2 class="text-2xl font-bold text-gray-900">Buat Akun</h2>
-        <p class="text-sm text-gray-500 mt-1">Mulai perjalanan karir Anda bersama Mutu Career Center</p>
+        <p class="text-sm text-gray-500 mt-1">Mulai perjalanan karir Anda bersama BKK SMK MUTU</p>
     </div>
 
     @if($errors->any())

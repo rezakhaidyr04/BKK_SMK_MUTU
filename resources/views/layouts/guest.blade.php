@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Mutu Career Center') }}</title>
+    <title>{{ config('app.name', 'BKK SMK MUTU') }}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -158,9 +158,9 @@
         <div class="auth-left">
             <div>
                 <div class="auth-logo-row">
-                    <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Mutu Career Center">
+                    <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU">
                     <div>
-                        <div class="brand-name">Mutu Career Center</div>
+                        <div class="brand-name">BKK SMK MUTU</div>
                         <div class="brand-sub">Pusat Pengembangan Karir</div>
                     </div>
                 </div>
@@ -190,8 +190,8 @@
 
             {{-- Logo mobile --}}
             <div class="auth-mobile-logo">
-                <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Mutu Career Center">
-                <span>Mutu Career Center</span>
+                <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU">
+                <span>BKK SMK MUTU</span>
             </div>
 
             {{-- Card --}}
