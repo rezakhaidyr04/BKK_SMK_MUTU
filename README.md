@@ -1,4 +1,4 @@
-# 🎓 BKK SMK MUTU Karawang
+# 🎓 BKK SMK MUTU Cikampek
 
 <div align="center">
 
@@ -8,7 +8,7 @@
 ![Status](https://img.shields.io/badge/status-production%20ready-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-**Platform Bursa Kerja Khusus (BKK) modern untuk siswa & alumni SMK MUTU Karawang**
+**Platform Bursa Kerja Khusus (BKK) modern untuk siswa & alumni SMK MUTU Cikampek**
 
 [Fitur](#-fitur-utama) • [Instalasi](#-instalasi) • [Dokumentasi](#-dokumentasi) • [Tim](#-tim)
 
@@ -18,7 +18,7 @@
 
 ## 📖 Tentang Project
 
-**BKK SMK MUTU** adalah platform digital modern yang menghubungkan siswa dan alumni SMK MUTU Karawang dengan peluang karir terbaik. Dibangun dengan teknologi terkini dan desain UI/UX setara platform profesional seperti LinkedIn, Glints, dan JobStreet.
+**BKK SMK MUTU** adalah platform digital modern yang menghubungkan siswa dan alumni SMK MUTU Cikampek dengan peluang karir terbaik. Dibangun dengan teknologi terkini dan desain UI/UX setara platform profesional seperti LinkedIn, Glints, dan JobStreet.
 
 ### 🎯 Tujuan
 
@@ -208,11 +208,11 @@ BKK SMK MUTU/
 
 ## 👥 Tim
 
-**BKK SMK MUTU Karawang**
+**BKK SMK MUTU Cikampek**
 
 - 🌐 Website: https://bkksmkmutu.sch.id
 - 📧 Email: bkk@smkmutu.sch.id
-- 📍 Alamat: Karawang, Jawa Barat
+- 📍 Alamat: Cikampek, Jawa Barat
 
 ---
 
@@ -226,10 +226,10 @@ BKK SMK MUTU/
 
 <div align="center">
 
-**Dibuat dengan ❤️ untuk Siswa & Alumni SMK MUTU Karawang**
+**Dibuat dengan ❤️ untuk Siswa & Alumni SMK MUTU Cikampek**
 
 **v1.0.0 • 2026 • Production Ready**
 
-[⬆ Kembali ke Atas](#-bkk-smk-mutu-karawang)
+[⬆ Kembali ke Atas](#-bkk-smk-mutu-cikampek)
 
 </div>

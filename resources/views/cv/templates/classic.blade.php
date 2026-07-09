@@ -102,7 +102,7 @@
         @if($user->student)
     <div class="section-title">Pendidikan</div>
     <div class="section-body">
-        <strong>SMK MUTU Karawang</strong>
+        <strong>SMK MUTU Cikampek</strong>
         @if($user->student->major) — {{ $user->student->major }} @endif
         @if($user->student->graduation_year)
             <br><span style="color:#444;">Tahun Lulus: {{ $user->student->graduation_year }}</span>

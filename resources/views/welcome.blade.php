@@ -351,8 +351,8 @@
                 <div>
                     <h4 class="font-semibold mb-4">Kontak</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li>SMK MUTU Karawang</li>
-                        <li>Karawang, Jawa Barat</li>
+                        <li>SMK MUTU Cikampek</li>
+                        <li>Cikampek, Jawa Barat</li>
                         <li>bkk@smkmutu.sch.id</li>
                         <li>
                             <a href="tel:+62267123456" class="hover:text-white">(0267) 123-456</a>

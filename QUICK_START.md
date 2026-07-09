@@ -123,7 +123,7 @@ $user = \App\Models\User::create([
     'nisn' => '0012345678',
     'major' => 'Teknik Komputer dan Jaringan',
     'graduation_year' => 2024,
-    'address' => 'Karawang, Jawa Barat',
+    'address' => 'Cikampek, Jawa Barat',
 ]);
 exit
 ```

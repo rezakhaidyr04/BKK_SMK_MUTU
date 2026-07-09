@@ -93,9 +93,9 @@ class CvBuilderController extends Controller
             'summary' => $user->bio ?: 'Ringkasan belum diisi. Gunakan area ini untuk memperkenalkan diri, keahlian utama, dan target karir yang kamu kejar.',
             'phone' => $user->phone ?: '08xxxxxxxxxx',
             'email' => $user->email,
-            'address' => $user->student?->address ?: 'Karawang, Jawa Barat',
+            'address' => $user->student?->address ?: 'Cikampek, Jawa Barat',
             'education' => [
-                'school' => 'SMK MUTU Karawang',
+                'school' => 'SMK MUTU Cikampek',
                 'major' => $user->student?->major ?: 'Jurusan belum diisi',
                 'year' => $user->student?->graduation_year ?: 'Tahun lulus belum diisi',
             ],

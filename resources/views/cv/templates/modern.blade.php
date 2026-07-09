@@ -124,7 +124,7 @@
                     <div class="section card">
                         <div class="section-title" style="margin-top:0;">Pendidikan</div>
                         <div class="section-body">
-                            <strong>SMK MUTU Karawang</strong><br>
+                            <strong>SMK MUTU Cikampek</strong><br>
                             {{ $user->student->major ?? 'Jurusan belum diisi' }}<br>
                             {{ $user->student->graduation_year ? 'Lulus ' . $user->student->graduation_year : 'Tahun lulus belum diisi' }}
                         </div>
