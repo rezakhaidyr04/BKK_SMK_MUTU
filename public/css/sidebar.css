@@ -119,3 +119,12 @@
     height: 20px;
     flex-shrink: 0;
 }
+/* Dark Mode Support for Sidebar */
+.dark .nav-link:hover:not(.active) { background-color: #1e293b; color: #f1f5f9; }
+.dark .nav-link { color: #cbd5e1; }
+.dark .nav-link.active { background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%); color: #fff; border-color: rgba(255,255,255,0.1); box-shadow: none; }
+.dark .nav-section-title { color: #94a3b8; }
+.dark .help-card { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-color: #334155; }
+.dark .help-card h4 { color: #f1f5f9; }
+.dark .help-card p { color: #94a3b8; }
+.dark .help-card a { color: #60a5fa; }

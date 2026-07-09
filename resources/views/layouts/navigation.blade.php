@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 
 <!-- Top Navigation Bar -->
-<nav class="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 z-50 shadow-sm">
+<nav class="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 fixed top-0 left-0 right-0 z-50 shadow-sm">
         <div class="mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
@@ -18,7 +18,7 @@
                     <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="flex items-center ml-4">
                         <div class="flex items-center gap-3">
                             <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-10 h-10 rounded-xl object-cover">
-                            <span class="text-xl font-bold text-gray-900 hidden sm:block">BKK SMK MUTU</span>
+                            <span class="text-xl font-bold text-gray-900 dark:text-white hidden sm:block">BKK SMK MUTU</span>
                         </div>
                     </a>
                 </div>
@@ -45,14 +45,14 @@
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
                         @endif
-                        <span class="hidden sm:block text-sm font-medium text-gray-700">{{ Auth::user()->name }}</span>
+                        <span class="hidden sm:block text-sm font-medium text-gray-700 dark:text-gray-200">{{ Auth::user()->name }}</span>
                             <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                             </svg>
                         </button>
 
                         <!-- Dropdown Menu -->
-                        <div x-show="userOpen" @click.away="userOpen = false" x-transition class="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-gray-200 py-2 z-50">
+                        <div x-show="userOpen" @click.away="userOpen = false" x-transition class="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-gray-200 dark:border-slate-700 py-2 z-50">
                             <div class="px-4 py-3 border-b border-gray-100">
                                 <p class="text-sm font-semibold text-gray-900">{{ Auth::user()->name }}</p>
                                 <p class="text-xs text-gray-600 mt-1">{{ Auth::user()->email }}</p>
@@ -93,7 +93,7 @@
     </nav>
     @auth
     <!-- Desktop Sidebar -->
-    <aside x-show="sidebarOpen" x-cloak class="sidebar-container fixed left-0 top-16 w-64 bg-white border-r border-gray-200 shadow-sm z-40 hidden lg:block">
+    <aside x-show="sidebarOpen" x-cloak class="sidebar-container fixed left-0 top-16 w-64 bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-800 shadow-sm z-40 hidden lg:block">
         <div class="sidebar-content sidebar-scroll">
             <!-- Dashboard -->
             <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} flex items-center gap-3">
@@ -328,7 +328,7 @@
              x-transition:leave="transition ease-in duration-300"
              x-transition:leave-start="translate-x-0"
              x-transition:leave-end="-translate-x-full"
-             class="sidebar-container absolute left-0 top-0 w-64 bg-white shadow-2xl">
+             class="sidebar-container absolute left-0 top-0 w-64 bg-white dark:bg-slate-900 shadow-2xl">
             <div class="sidebar-content sidebar-scroll">
                 <!-- Dashboard -->
                 <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} flex items-center gap-3">

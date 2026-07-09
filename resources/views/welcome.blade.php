@@ -104,7 +104,7 @@
                                     <p class="text-xs uppercase tracking-[0.24em] text-white/70">Dashboard ringkas</p>
                                     <h3 class="text-2xl font-bold mt-1">Alur kerja yang jelas</h3>
                                 </div>
-                                <div class="px-3 py-1 rounded-full bg-white/15 text-xs font-semibold border border-white/20">Live Preview</div>
+                                <div class="px-3 py-1 rounded-full bg-white/20 text-xs font-semibold border border-white/20">Live Preview</div>
                             </div>
 
                             <div class="space-y-4">
@@ -114,12 +114,12 @@
                                         <p class="text-2xl font-bold mt-1">{{ number_format($activeJobsCount) }}</p>
                                         <p class="text-xs text-slate-500 mt-1">Siap dilihat</p>
                                     </div>
-                                    <div class="rounded-2xl bg-white/15 border border-white/15 p-4 text-white">
+                                    <div class="rounded-2xl bg-white/20 border border-white/15 p-4 text-white">
                                         <p class="text-xs text-white/70">Siswa & Alumni</p>
                                         <p class="text-2xl font-bold mt-1">{{ number_format($studentsCount) }}</p>
                                         <p class="text-xs text-white/70 mt-1">Mencari peluang</p>
                                     </div>
-                                    <div class="rounded-2xl bg-white/15 border border-white/15 p-4 text-white">
+                                    <div class="rounded-2xl bg-white/20 border border-white/15 p-4 text-white">
                                         <p class="text-xs text-white/70">Perusahaan</p>
                                         <p class="text-2xl font-bold mt-1">{{ number_format($companiesCount) }}</p>
                                         <p class="text-xs text-white/70 mt-1">Sedang membuka posisi</p>
@@ -149,7 +149,7 @@
                                             <span class="text-sm font-semibold">Lamaran terbaru</span>
                                             <span class="text-xs text-white/70">Realtime</span>
                                         </div>
-                                        <div class="h-2 w-full rounded-full bg-white/15 overflow-hidden">
+                                        <div class="h-2 w-full rounded-full bg-white/20 overflow-hidden">
                                             <div class="h-full w-3/4 rounded-full bg-gradient-to-r from-cyan-300 to-emerald-300"></div>
                                         </div>
                                         <p class="text-xs text-white/70 mt-2">Status pengajuan bisa dipantau dari dasbor.</p>
@@ -160,8 +160,8 @@
                                             <span class="text-xs text-white/70">ATS ready</span>
                                         </div>
                                         <div class="space-y-2">
-                                            <div class="h-2 rounded-full bg-white/15"></div>
-                                            <div class="h-2 rounded-full bg-white/15 w-4/5"></div>
+                                            <div class="h-2 rounded-full bg-white/20"></div>
+                                            <div class="h-2 rounded-full bg-white/20 w-4/5"></div>
                                         </div>
                                         <p class="text-xs text-white/70 mt-2">Buat CV lebih rapi sebelum melamar.</p>
                                     </div>

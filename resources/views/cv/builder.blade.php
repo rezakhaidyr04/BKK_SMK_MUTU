@@ -40,15 +40,15 @@
                             @csrf
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
                                 <label class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm">
-                                    <input type="checkbox" name="include_photo" value="1" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <input type="checkbox" name="include_photo" value="1" checked class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
                                     Foto profil
                                 </label>
                                 <label class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm">
-                                    <input type="checkbox" name="include_skills" value="1" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <input type="checkbox" name="include_skills" value="1" checked class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
                                     Tampilkan skill
                                 </label>
                                 <label class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm">
-                                    <input type="checkbox" name="include_certificates" value="1" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <input type="checkbox" name="include_certificates" value="1" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
                                     Tampilkan sertifikat
                                 </label>
                             </div>
@@ -61,8 +61,8 @@
                                             <div class="h-2 w-32 bg-blue-200 rounded-full mb-2"></div>
                                             <div class="h-2 w-24 bg-blue-200 rounded-full mb-6"></div>
                                             <div class="grid grid-cols-2 gap-2">
-                                                <div class="h-8 rounded-lg bg-white/85"></div>
-                                                <div class="h-8 rounded-lg bg-white/65"></div>
+                                                <div class="h-8 rounded-lg bg-white/80"></div>
+                                                <div class="h-8 rounded-lg bg-white/60"></div>
                                             </div>
                                         </div>
                                         <p class="font-semibold text-gray-900">Modern</p>
@@ -204,7 +204,7 @@
                         <div x-show="template === 'modern'" x-cloak class="rounded-3xl bg-slate-900 text-white overflow-hidden shadow-lg">
                             <div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-5">
                                 <div class="flex items-center gap-4">
-                                    <div class="w-14 h-14 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-xl font-bold">{{ strtoupper(substr($previewData['name'], 0, 1)) }}</div>
+                                    <div class="w-14 h-14 rounded-2xl bg-white/20 border border-white/20 flex items-center justify-center text-xl font-bold">{{ strtoupper(substr($previewData['name'], 0, 1)) }}</div>
                                     <div>
                                         <p class="font-bold text-lg leading-tight">{{ $previewData['name'] }}</p>
                                         <p class="text-sm text-blue-100">{{ $previewData['headline'] }}</p>
