@@ -140,6 +140,23 @@ class DashboardController extends Controller
             ->orderBy("month")
             ->get();
 
+        // Application status distribution (Doughnut Chart)
+        $applicationStatusChart = Application::select(
+            "status",
+            DB::raw("COUNT(*) as count"),
+        )
+            ->groupBy("status")
+            ->get();
+
+        // User role distribution (Pie Chart)
+        $userRoleChart = User::select(
+            "role",
+            DB::raw("COUNT(*) as count"),
+        )
+            ->whereIn("role", ["student", "alumni", "company"])
+            ->groupBy("role")
+            ->get();
+
         // Recent activities
         $recentApplications = Application::with(["user", "job.company"])
             ->latest()
@@ -166,6 +183,8 @@ class DashboardController extends Controller
                 "stats",
                 "applicationChart",
                 "jobChart",
+                "applicationStatusChart",
+                "userRoleChart",
                 "recentApplications",
                 "topCompanies",
                 "growth",

@@ -60,6 +60,11 @@ Route::middleware(["auth", "verified"])->group(function () {
         "profile.destroy",
     );
 
+    Route::get('/notifications/mark-read', function () {
+        auth()->user()->unreadNotifications->markAsRead();
+        return back();
+    })->name('notifications.markAllRead');
+
     // Job Applications
     Route::post("/jobs/{job}/apply", [JobController::class, "apply"])->name(
         "jobs.apply",
@@ -123,6 +128,10 @@ Route::middleware(["auth", "verified"])->group(function () {
         MessageController::class,
         "show",
     ])->name("messages.show");
+    Route::get("/messages/{conversation}/fetch", [
+        MessageController::class,
+        "fetch",
+    ])->name("messages.fetch");
     Route::post("/messages/{conversation}", [
         MessageController::class,
         "send",

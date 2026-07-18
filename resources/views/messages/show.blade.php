@@ -13,47 +13,133 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden"
+                 x-data="chat({{ $conversation->id }}, {{ Auth::id() }})"
+                 x-init="initChat()">
                 <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
                     <p class="text-sm text-gray-600">Riwayat pesan di percakapan ini.</p>
                 </div>
 
-                <div class="p-6 space-y-4 max-h-[32rem] overflow-y-auto">
-                    @forelse($messages as $message)
-                        <div class="flex {{ $message->sender_id === Auth::id() ? 'justify-end' : 'justify-start' }}">
-                            <div class="max-w-2xl rounded-2xl px-4 py-3 {{ $message->sender_id === Auth::id() ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-900' }}">
+                <div class="p-6 space-y-4 max-h-[32rem] overflow-y-auto" x-ref="messagesContainer">
+                    <template x-for="message in messages" :key="message.id">
+                        <div class="flex" :class="message.sender_id === authId ? 'justify-end' : 'justify-start'">
+                            <div class="max-w-2xl rounded-2xl px-4 py-3" :class="message.sender_id === authId ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-900'">
                                 <div class="flex items-center justify-between gap-4 mb-1">
-                                    <p class="text-xs font-semibold {{ $message->sender_id === Auth::id() ? 'text-blue-100' : 'text-gray-500' }}">{{ $message->sender->name ?? 'Pengguna' }}</p>
-                                    <p class="text-xs {{ $message->sender_id === Auth::id() ? 'text-blue-100' : 'text-gray-500' }}">{{ $message->created_at->format('d M Y, H:i') }}</p>
+                                    <p class="text-xs font-semibold" :class="message.sender_id === authId ? 'text-blue-100' : 'text-gray-500'" x-text="message.sender_name"></p>
+                                    <p class="text-xs" :class="message.sender_id === authId ? 'text-blue-100' : 'text-gray-500'" x-text="message.created_at_formatted"></p>
                                 </div>
-                                <p class="text-sm leading-relaxed">{{ $message->body }}</p>
+                                <p class="text-sm leading-relaxed" x-text="message.body"></p>
                             </div>
                         </div>
-                    @empty
-                        <div class="text-center py-12">
-                            <div class="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
-                                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
-                                </svg>
-                            </div>
-                            <h3 class="text-lg font-bold text-gray-900 mb-2">Belum ada pesan</h3>
-                            <p class="text-sm text-gray-600">Mulai percakapan dengan mengirim pesan pertama.</p>
+                    </template>
+                    
+                    <div x-show="messages.length === 0" class="text-center py-12">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                            </svg>
                         </div>
-                    @endforelse
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Belum ada pesan</h3>
+                        <p class="text-sm text-gray-600">Mulai percakapan dengan mengirim pesan pertama.</p>
+                    </div>
                 </div>
 
                 <div class="p-6 border-t border-gray-100 bg-gray-50">
-                    <form method="POST" action="{{ route('messages.send', $conversation) }}" class="space-y-4">
-                        @csrf
+                    <form @submit.prevent="sendMessage" class="space-y-4">
                         <label class="block text-sm font-medium text-gray-700">Tulis pesan</label>
-                        <textarea name="body" rows="4" class="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring-blue-200" placeholder="Ketik pesan Anda..." required></textarea>
+                        <textarea x-model="newMessage" @keydown.enter.prevent="sendMessage" rows="3" class="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring-blue-200" placeholder="Ketik pesan Anda lalu tekan Enter..." required></textarea>
                         <div class="flex items-center justify-between">
-                            <p class="text-xs text-gray-500">Pesan akan disimpan dan dikirim ke percakapan ini.</p>
-                            <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors">Kirim Pesan</button>
+                            <p class="text-xs text-gray-500">Pesan akan dikirim seketika.</p>
+                            <button type="submit" :disabled="isSending" class="px-5 py-2.5 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50">
+                                <span x-show="!isSending">Kirim Pesan</span>
+                                <span x-show="isSending">Mengirim...</span>
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    
+    @push('scripts')
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('chat', (conversationId, authId) => ({
+                messages: @json($messages->map(fn($m) => [
+                    'id' => $m->id, 
+                    'body' => $m->body, 
+                    'sender_id' => $m->sender_id, 
+                    'sender_name' => $m->sender->name ?? 'Pengguna', 
+                    'created_at_formatted' => $m->created_at->format('d M Y, H:i')
+                ])),
+                newMessage: '',
+                authId: authId,
+                isSending: false,
+                interval: null,
+
+                initChat() {
+                    this.scrollToBottom();
+                    this.interval = setInterval(() => {
+                        this.fetchMessages();
+                    }, 3000);
+                },
+
+                async fetchMessages() {
+                    try {
+                        const response = await fetch(`/messages/${conversationId}/fetch`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.messages.length > this.messages.length) {
+                                this.messages = data.messages;
+                                this.scrollToBottom();
+                            }
+                        }
+                    } catch (error) {
+                        console.error("Error fetching messages:", error);
+                    }
+                },
+
+                async sendMessage() {
+                    if (!this.newMessage.trim() || this.isSending) return;
+                    this.isSending = true;
+
+                    try {
+                        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+                        const response = await fetch(`/messages/${conversationId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken,
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({ body: this.newMessage })
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.success) {
+                                this.messages.push(data.message);
+                                this.newMessage = '';
+                                this.scrollToBottom();
+                            }
+                        }
+                    } catch (error) {
+                        console.error("Error sending message:", error);
+                    } finally {
+                        this.isSending = false;
+                    }
+                },
+
+                scrollToBottom() {
+                    setTimeout(() => {
+                        const container = this.$refs.messagesContainer;
+                        if(container) {
+                            container.scrollTop = container.scrollHeight;
+                        }
+                    }, 50);
+                }
+            }));
+        });
+    </script>
+    @endpush
 </x-app-layout>

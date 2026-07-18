@@ -146,6 +146,20 @@
                         <canvas id="jobChart"></canvas>
                     </div>
                 </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Sebaran Status Lamaran</h3>
+                    <div class="h-64">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Statistik Role Pengguna</h3>
+                    <div class="h-64">
+                        <canvas id="userRoleChart"></canvas>
+                    </div>
+                </div>
             </div>
 
             {{-- Recent Applications & Top Companies --}}
