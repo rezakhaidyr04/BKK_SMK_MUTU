@@ -69,8 +69,9 @@ body {
 
 /* Page Hero */
 .ui-page-hero {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #4338ca 100%);
-    color: #fff;
+    /* lighter hero background to match mock */
+    background: linear-gradient(180deg, #f8fbff 0%, #ffffff 60%);
+    color: #0f172a;
     position: relative;
     overflow: hidden;
 }
@@ -79,8 +80,9 @@ body {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.12) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 40%);
+    /* subtle decorative glow for light hero */
+    background: radial-gradient(circle at 10% 30%, rgba(59,130,246,0.06) 0%, transparent 28%),
+                radial-gradient(circle at 85% 20%, rgba(14,165,233,0.04) 0%, transparent 40%);
     pointer-events: none;
 }
 
@@ -177,10 +179,9 @@ body {
 }
 
 .hero-bg {
-    background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.25), transparent 28%),
-                radial-gradient(circle at bottom right, rgba(99, 102, 241, 0.18), transparent 22%),
-                linear-gradient(180deg, rgba(59, 130, 246, 0.85), rgba(15, 23, 42, 0.95));
-    background-blend-mode: screen, normal;
+    /* gentle blue decorative blobs on light background */
+    background: radial-gradient(circle at 10% 40%, rgba(59,130,246,0.10) 0%, transparent 30%),
+                radial-gradient(circle at 85% 10%, rgba(14,165,233,0.06) 0%, transparent 28%);
 }
 
 .hero-circle,
@@ -326,10 +327,12 @@ body {
 .hero-illustration {
     border-radius: 1rem;
     overflow: hidden;
-    background: transparent;
-    box-shadow: 0 18px 50px rgba(2,6,23,0.15);
+    background: #fff;
+    padding: 1rem;
+    box-shadow: 0 18px 50px rgba(2,6,23,0.06);
+    border: 1px solid rgba(15,23,42,0.04);
 }
-.hero-illustration img { display:block; width:100%; height:auto; object-fit:cover; }
+.hero-illustration img { display:block; width:100%; height:auto; object-fit:cover; border-radius: 0.5rem; }
 
 /* Floating decorative shapes */
 .hero-deco-circle { position:absolute; border-radius:999px; filter:blur(36px); opacity:0.6; }
@@ -686,6 +689,16 @@ body {
     .ui-page-hero-title, .hero h1, .hero-hero-title {
         font-size: 3.25rem;
     }
+}
+
+/* Increase right spacing on hero for large screens */
+@media (min-width: 1024px) {
+    .ui-page-hero-inner {
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+    /* give the illustration a bit more breathing room from the right edge */
+    .hero-illustration-wrap { margin-right: 1.5rem; }
 }
 
 /* Trusted logos sizing */
