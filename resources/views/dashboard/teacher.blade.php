@@ -169,8 +169,8 @@
                                 <span class="text-gray-700 dark:text-gray-300 font-medium">{{ $statusLabel }}</span>
                                 <span class="text-gray-900 dark:text-white font-bold">{{ $p->count }} <span class="text-gray-400 font-normal">({{ $pct }}%)</span></span>
                             </div>
-                            <div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2.5">
-                                <div class="{{ $bar }} h-2.5 rounded-full animate-progress-fill" style="width: {{ $pct }}%"></div>
+                            <div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
+                                <div class="ui-progress-fill {{ $bar }} h-2.5 rounded-full" style="--progress: {{ $pct }}%;"></div>
                             </div>
                         </div>
                         @empty

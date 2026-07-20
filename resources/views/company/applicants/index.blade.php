@@ -3,7 +3,7 @@
         <x-ui.page-header title="Pelamar" subtitle="Kelola semua pelamar untuk lowongan perusahaan Anda.">
             <x-slot:actions>
                 <form action="{{ route('company.applicants.index') }}" method="GET" class="flex gap-2 items-center">
-                    <select name="status" class="ui-select ui-btn-sm" style="padding-top:0.5rem;padding-bottom:0.5rem;" onchange="this.form.submit()">
+                    <select name="status" class="ui-select ui-btn-sm" onchange="this.form.submit()">
                         <option value="">Semua Status</option>
                         <option value="submitted"    {{ request('status') === 'submitted'    ? 'selected' : '' }}>Terkirim</option>
                         <option value="under_review" {{ request('status') === 'under_review' ? 'selected' : '' }}>Ditinjau</option>

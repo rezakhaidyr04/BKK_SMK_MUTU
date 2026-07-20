@@ -98,9 +98,9 @@
         <h2 class="page-title">Bursa Kerja Khusus (BKK)</h2>
         
         <!-- Form Pencarian Native -->
-        <form action="{{ route('lowongan.index') ?? '#' }}" method="GET" class="d-flex gap-sm">
-            <input type="search" name="q" class="form-control" placeholder="Cari posisi / lokasi..." value="{{ request('q') }}" style="min-width: 250px;">
-            <button type="submit" class="btn btn-primary">
+        <form action="{{ route('lowongan.index') ?? '#' }}" method="GET" class="flex flex-wrap gap-3 items-center w-full">
+            <input type="search" name="q" class="ui-input flex-1 min-w-[250px]" placeholder="Cari posisi / lokasi..." value="{{ request('q') }}">
+            <button type="submit" class="ui-btn ui-btn-primary">
                 🔍 Cari
             </button>
         </form>
@@ -114,8 +114,8 @@
                     <div class="job-header">
                         <img src="{{ $job->perusahaan->logo_path ? asset('storage/'.$job->perusahaan->logo_path) : 'https://ui-avatars.com/api/?name='.urlencode($job->perusahaan->nama_perusahaan).'&background=e6f0fa&color=0056b3' }}" alt="Logo" class="company-logo">
                         <div>
-                            <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--clr-text-main); margin-bottom: 0.2rem;">{{ $job->judul }}</h3>
-                            <div style="font-weight: 500; color: var(--clr-primary);">{{ $job->perusahaan->nama_perusahaan }}</div>
+                            <h3 class="job-title">{{ $job->judul }}</h3>
+                            <div class="job-company">{{ $job->perusahaan->nama_perusahaan }}</div>
                         </div>
                     </div>
                     
@@ -131,14 +131,14 @@
                         </div>
                     </div>
                     
-                    <p style="margin-bottom: 1.5rem; font-size: 0.95rem; color: var(--clr-text-muted); line-height: 1.5;">
+                    <p class="job-description">
                         {{ Str::limit($job->deskripsi, 100) }}
                     </p>
                     
                     <div class="job-footer">
                         <form action="{{ Route::has('lamaran.store') ? route('lamaran.store', $job->id) : '#' }}" method="POST" id="form-lamar-{{ $job->id }}">
                             @csrf
-                            <button type="button" class="btn btn-primary" style="width: 100%;" onclick="confirmLamar('{{ $job->judul }}', 'form-lamar-{{ $job->id }}')">
+                            <button type="button" class="ui-btn ui-btn-primary w-full" onclick="confirmLamar('{{ $job->judul }}', 'form-lamar-{{ $job->id }}')">
                                 Lamar Sekarang 🚀
                             </button>
                         </form>
@@ -146,16 +146,16 @@
                 </article>
             @endforeach
         @else
-            <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
-                <div style="font-size: 4rem; margin-bottom: 1rem;">📭</div>
-                <h3 style="color: var(--clr-text-main); font-size: 1.5rem; margin-bottom: 0.5rem;">Belum ada lowongan</h3>
-                <p style="color: var(--clr-text-muted);">Saat ini belum ada lowongan pekerjaan yang tersedia. Silakan cek kembali nanti.</p>
-            </div>
+            <article class="ui-panel empty-state ui-panel-center">
+                <div class="text-6xl mb-4">📭</div>
+                <h3 class="text-2xl font-semibold text-slate-900 mb-3">Belum ada lowongan</h3>
+                <p class="text-slate-500">Saat ini belum ada lowongan pekerjaan yang tersedia. Silakan cek kembali nanti.</p>
+            </article>
         @endif
     </div>
 
     @if(isset($lowongans) && method_exists($lowongans, 'links'))
-    <div style="margin-top: 2rem;">
+    <div class="mt-8">
         {{ $lowongans->links() }}
     </div>
     @endif

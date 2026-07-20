@@ -144,35 +144,37 @@
         </div>
     </section>
 
-    <!-- Trusted Companies -->
+    <!-- Trusted Companies (static assets) -->
     <section id="trusted" class="py-16 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <p class="text-sm uppercase tracking-[0.32em] text-slate-400">Dipercaya oleh Perusahaan Terkemuka</p>
                 <h2 class="mt-4 text-3xl font-semibold text-slate-900 sm:text-4xl">Jaringan mitra yang terus berkembang</h2>
+                <p class="mt-3 text-base text-slate-500">Lebih dari <span class="font-semibold text-slate-900">6</span> perusahaan mitra aktif mendukung lulusan SMK MUTU.</p>
             </div>
-            <div class="logo-marquee-wrapper overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
-                <div class="logo-marquee-track flex items-center gap-6 px-6 py-6">
-                    <img src="{{ asset('images/companies/Pt.Astra.png') }}" alt="PT Astra" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/Samsung.png') }}" alt="PT Samsung" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/Pt_pupuk_kujang.png') }}" alt="PT Pupuk Kujang" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/toyota.png') }}" alt="PT Toyota" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/telkom.png') }}" alt="PT Telkom" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/Alice_international.png') }}" alt="PT Alice" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/honda.png') }}" alt="PT Denso" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/diametral.png') }}" alt="PT Diametral" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/bank_mega_syariah.png') }}" alt="PT Bank Mega Syariah" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/indibiz.png') }}" alt="PT Indibiz" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/cucas.png') }}" alt="Cucas" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/Kidi_iot_antares_indonesia.png') }}" alt="PT Kidi Iot Antares_indonesia" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/chemco.png') }}" alt="PT Chemco" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/lpk_ori.png') }}" alt="Lpk Ori Ryousen" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/bansu.png') }}" alt="PT Banshu Bumber" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                    <img src="{{ asset('images/companies/astra.png') }}" alt="PT Astra" class="h-10 w-auto rounded-2xl bg-slate-100 p-3" />
-                </div>
-                </div>
-                </div>
-                </div>
+
+            <div class="logo-marquee-wrapper overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm py-8">
+                @if(!empty($partnerLogos))
+                    <div class="logo-marquee-wrapper px-6">
+                        <div class="logo-marquee-track" aria-hidden="true">
+                            @foreach($partnerLogos as $logo)
+                                <img src="{{ asset($logo) }}" alt="" class="partner-small" onerror="this.style.display='none'" />
+                            @endforeach
+                        </div>
+                        <div class="logo-marquee-track" aria-hidden="true">
+                            @foreach($partnerLogos as $logo)
+                                <img src="{{ asset($logo) }}" alt="" class="partner-small" onerror="this.style.display='none'" />
+                            @endforeach
+                        </div>
+                    </div>
+                @else
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 px-6">
+                        <div class="rounded-2xl bg-slate-100 p-6 text-center text-slate-500">Logo mitra belum tersedia</div>
+                        <div class="rounded-2xl bg-slate-100 p-6 text-center text-slate-500">Logo mitra belum tersedia</div>
+                        <div class="rounded-2xl bg-slate-100 p-6 text-center text-slate-500">Logo mitra belum tersedia</div>
+                        <div class="rounded-2xl bg-slate-100 p-6 text-center text-slate-500">Logo mitra belum tersedia</div>
+                    </div>
+                @endif
             </div>
         </div>
     </section>

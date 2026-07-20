@@ -171,16 +171,16 @@
 
             <div class="auth-stats">
                 <div class="text-center">
-                    <div class="stat-num">{{ number_format(\App\Models\Job::where('status', 'active')->where('deadline', '>=', now())->count()) }}</div>
-                    <div class="stat-label">Siswa Ditempatkan</div>
-                </div>
-                <div class="text-center">
-                    <div class="stat-num">{{ number_format(\App\Models\User::whereIn('role', ['student', 'alumni'])->count()) }}</div>
+                    <div class="stat-num">{{ number_format(\App\Models\Company::count()) }}</div>
                     <div class="stat-label">Perusahaan Mitra</div>
                 </div>
                 <div class="text-center">
-                    <div class="stat-num">{{ number_format(\App\Models\Company::count()) }}</div>
-                    <div class="stat-label">Keberhasilan</div>
+                    <div class="stat-num">{{ number_format(\App\Models\User::whereIn('role', ['student', 'alumni'])->count()) }}</div>
+                    <div class="stat-label">Pengguna Terdaftar</div>
+                </div>
+                <div class="text-center">
+                    <div class="stat-num">{{ number_format(\App\Models\Job::where('status', 'active')->where('deadline', '>=', now())->count()) }}</div>
+                    <div class="stat-label">Lowongan Aktif</div>
                 </div>
             </div>
         </div>
@@ -192,8 +192,8 @@
             <div class="auth-mobile-logo">
                 <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU">
                 <div>
-                    <span style="display:block; font-size:1.1rem; font-weight:700; color:#111827; line-height:1.2;">BKK SMK MUTU</span>
-                    <span style="display:block; font-size:0.75rem; color:#6b7280; margin-top:2px;">Pusat Pengembangan Karir</span>
+                    <span class="auth-mobile-title">BKK SMK MUTU</span>
+                    <span class="auth-mobile-subtitle">Pusat Pengembangan Karir</span>
                 </div>
             </div>
 

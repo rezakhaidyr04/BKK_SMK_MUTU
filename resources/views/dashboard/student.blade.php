@@ -13,8 +13,8 @@
                         <span class="text-white text-sm font-medium">Kelengkapan Profil</span>
                         <span class="text-white text-sm font-bold">{{ $stats['profile_completion'] }}%</span>
                     </div>
-                    <div class="w-full bg-white/20 rounded-full h-2.5">
-                        <div class="bg-green-400 h-2.5 rounded-full animate-progress-fill" style="width: {{ $stats['profile_completion'] }}%"></div>
+                    <div class="w-full bg-white/20 rounded-full h-2.5 overflow-hidden">
+                        <div class="ui-progress-fill bg-green-400 h-2.5 rounded-full" style="--progress: {{ $stats['profile_completion'] }}%;"></div>
                     </div>
                     @if($stats['profile_completion'] < 100)
                     <a href="{{ route('profile.edit') }}" class="mt-3 inline-block text-sm text-white hover:text-blue-100 underline">

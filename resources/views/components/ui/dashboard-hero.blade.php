@@ -11,7 +11,7 @@
 
     {{-- Animated floating circles for visual depth --}}
     <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-2xl animate-pulse" aria-hidden="true"></div>
-    <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-white/5 rounded-full blur-xl animate-pulse" style="animation-delay: 1s;" aria-hidden="true"></div>
+    <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-white/5 rounded-full blur-xl animate-pulse ui-hero-pulse-delay-1" aria-hidden="true"></div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

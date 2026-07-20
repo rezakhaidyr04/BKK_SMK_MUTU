@@ -35,43 +35,43 @@
 
         {{-- Verification Banner --}}
         @if($company->verification_status === 'rejected')
-        <div style="background:#fef2f2; border-left:4px solid #dc2626;" class="px-6 py-5" role="alert">
+        <div class="ui-alert ui-alert-red px-6 py-5" role="alert">
             <div class="max-w-7xl mx-auto flex items-start gap-3">
-                <svg class="w-5 h-5 mt-0.5 flex-shrink-0" style="color:#dc2626" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <svg class="ui-alert-icon w-5 h-5 mt-0.5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 <div>
-                    <p class="text-sm font-bold" style="color:#991b1b">Verifikasi Ditolak</p>
+                    <p class="ui-alert-title">Verifikasi Ditolak</p>
                     @if($company->rejection_reason)
-                    <p class="text-sm mt-1" style="color:#7f1d1d"><span class="font-semibold">Alasan:</span> {{ $company->rejection_reason }}</p>
+                    <p class="ui-alert-text"><span class="font-semibold">Alasan:</span> {{ $company->rejection_reason }}</p>
                     @endif
-                    <p class="text-sm mt-2" style="color:#991b1b">
+                    <p class="ui-alert-text">
                         Perbaiki profil perusahaan Anda, lalu hubungi admin.
-                        <a href="{{ route('company.profile.edit') }}" class="font-semibold underline">Perbaiki profil →</a>
+                        <a href="{{ route('company.profile.edit') }}" class="ui-alert-link">Perbaiki profil →</a>
                     </p>
                 </div>
             </div>
         </div>
         @elseif($company->verification_status === 'verified')
-        <div style="background:#f0fdf4; border-left:4px solid #16a34a;" class="px-6 py-3" role="status">
+        <div class="ui-alert ui-alert-green px-6 py-3" role="status">
             <div class="max-w-7xl mx-auto flex items-center gap-2">
-                <svg class="w-4 h-4 flex-shrink-0" style="color:#16a34a" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <svg class="ui-alert-icon w-4 h-4 flex-shrink-0 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-                <p class="text-sm font-semibold" style="color:#14532d">Akun terverifikasi &mdash; Anda dapat memposting lowongan</p>
+                <p class="ui-alert-text font-semibold">Akun terverifikasi &mdash; Anda dapat memposting lowongan</p>
             </div>
         </div>
         @else
-        <div style="background:#fefce8; border-left:4px solid #ca8a04;" class="px-6 py-5" role="alert">
+        <div class="ui-alert ui-alert-yellow px-6 py-5" role="alert">
             <div class="max-w-7xl mx-auto flex items-start gap-3">
-                <svg class="w-5 h-5 mt-0.5 flex-shrink-0" style="color:#ca8a04" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <svg class="ui-alert-icon w-5 h-5 mt-0.5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 <div>
-                    <p class="text-sm font-bold" style="color:#92400e">Menunggu Verifikasi Admin</p>
-                    <p class="text-sm mt-0.5" style="color:#78350f">
+                    <p class="ui-alert-title">Menunggu Verifikasi Admin</p>
+                    <p class="ui-alert-text">
                         Akun Anda sedang ditinjau oleh admin BKK SMK MUTU.
-                        <a href="{{ route('company.profile.edit') }}" class="font-semibold underline" style="color:#92400e">Cek profil →</a>
+                        <a href="{{ route('company.profile.edit') }}" class="ui-alert-link text-amber-700">Cek profil →</a>
                     </p>
                 </div>
             </div>
@@ -199,8 +199,8 @@
                                 <span class="text-gray-700 dark:text-gray-300 font-medium truncate flex-1 mr-2">{{ $job->title }}</span>
                                 <span class="text-gray-900 dark:text-white font-bold flex-shrink-0">{{ $job->applications_count }}</span>
                             </div>
-                            <div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2.5">
-                                <div class="bg-purple-500 h-2.5 rounded-full animate-progress-fill" style="width: {{ ($job->applications_count / $maxApps) * 100 }}%"></div>
+                            <div class="ui-progress bg-gray-100 dark:bg-gray-700 rounded-full h-2.5">
+                                <div class="ui-progress-fill bg-purple-500 h-2.5 rounded-full" style="--progress: {{ ($job->applications_count / $maxApps) * 100 }}%;"></div>
                             </div>
                         </div>
                         @empty

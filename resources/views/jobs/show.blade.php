@@ -336,25 +336,25 @@
                             </div>
 
                             <!-- Other Tabs -->
-                            <div x-show="activeTab === 'kualifikasi'" style="display: none;">
+                            <div x-show="activeTab === 'kualifikasi'" x-cloak>
                                 <h3 class="font-bold text-gray-900 mb-3">Kualifikasi</h3>
                                 <div class="text-sm text-gray-700 leading-relaxed">
                                     {!! nl2br(e($job->qualifications ?? 'Detail kualifikasi belum diisi oleh perusahaan.')) !!}
                                 </div>
                             </div>
-                            <div x-show="activeTab === 'benefit'" style="display: none;">
+                            <div x-show="activeTab === 'benefit'" x-cloak>
                                 <h3 class="font-bold text-gray-900 mb-3">Benefit Tambahan</h3>
                                 <div class="text-sm text-gray-700 leading-relaxed">
                                     {!! nl2br(e($job->benefits ?? 'Benefit belum diisi oleh perusahaan.')) !!}
                                 </div>
                             </div>
-                            <div x-show="activeTab === 'tentang'" style="display: none;">
+                            <div x-show="activeTab === 'tentang'" x-cloak>
                                 <h3 class="font-bold text-gray-900 mb-3">Tentang Perusahaan</h3>
                                 <div class="text-sm text-gray-700 leading-relaxed">
                                     {{ $job->company->description ?? 'Profil perusahaan belum diisi.' }}
                                 </div>
                             </div>
-                            <div x-show="activeTab === 'lokasi'" style="display: none;">
+                            <div x-show="activeTab === 'lokasi'" x-cloak>
                                 <h3 class="font-bold text-gray-900 mb-3">Lokasi Lengkap</h3>
                                 <div class="text-sm text-gray-700 leading-relaxed">
                                     {{ $job->company->address ?? $job->location }}
@@ -401,7 +401,7 @@
                                     <div class="text-sm font-semibold mb-2 text-gray-700">Persiapan Lamaran</div>
                                     <div class="flex items-center gap-3 mb-4">
                                         <div class="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
-                                            <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: {{ $matchScore ?? 0 }}%"></div>
+                                            <div class="ui-progress-fill bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="--progress: {{ $matchScore ?? 0 }}%;"></div>
                                         </div>
                                         <span class="text-sm font-bold text-gray-900">{{ $matchScore ?? 0 }}%</span>
                                     </div>
@@ -456,7 +456,7 @@
                                         Lamar Sekarang
                                     </button>
 
-                                    <form action="{{ route('jobs.apply', $job->id) }}" method="POST" enctype="multipart/form-data" x-show="showForm" x-transition style="display: none;">
+                                    <form action="{{ route('jobs.apply', $job->id) }}" method="POST" enctype="multipart/form-data" x-show="showForm" x-cloak x-transition>
                                         @csrf
                                         <div class="mb-4 mt-2">
                                             <label class="block text-sm font-medium text-gray-700 mb-1">Surat Lamaran</label>

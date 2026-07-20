@@ -94,6 +94,14 @@
             border-radius: 3px;
         }
 
+        @if($include_skills && $user->skills->isNotEmpty())
+            @foreach($user->skills as $skill)
+                .skill-width-{{ $loop->iteration }} {
+                    width: {{ ($skill->pivot->proficiency ?? 3) * 20 }}%;
+                }
+            @endforeach
+        @endif
+
         /* Main content kanan */
         .main {
             flex: 1;
@@ -188,8 +196,7 @@
         <div class="skill-bar-wrap">
             <div class="skill-name">{{ $skill->name }}</div>
             <div class="skill-bar">
-                @php $pct = ($skill->pivot->proficiency ?? 3) * 20; @endphp
-                <div class="skill-fill" style="width:{{ $pct }}%;"></div>
+                <div class="skill-fill skill-width-{{ $loop->iteration }}"></div>
             </div>
         </div>
         @endforeach

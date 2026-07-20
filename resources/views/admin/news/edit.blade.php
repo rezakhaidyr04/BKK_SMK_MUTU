@@ -55,7 +55,7 @@
                                 <input type="file" id="inlineImageInput" accept="image/jpeg,image/png,image/webp,image/gif" class="hidden">
                                 <span id="uploadStatus" class="text-xs text-blue-600 hidden">Mengupload...</span>
                             </div>
-                            <div id="editor" contenteditable="true" class="min-h-64 w-full px-4 py-3 border border-slate-200 border-t-0 rounded-b-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition prose max-w-none" style="min-height: 300px;">
+                            <div id="editor" contenteditable="true" class="min-h-[300px] w-full px-4 py-3 border border-slate-200 border-t-0 rounded-b-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition prose max-w-none">
                                 {!! old('content', $news->content) !!}
                             </div>
                             <textarea name="content" id="contentInput" class="hidden" required>{{ old('content', $news->content) }}</textarea>
@@ -161,7 +161,7 @@
             if (data.url) {
                 restoreSelection();
                 document.getElementById('editor').focus();
-                document.execCommand('insertHTML', false, `<img src="${data.url}" alt="Gambar" style="max-width:100%;height:auto;border-radius:8px;margin:8px 0;" />`);
+                document.execCommand('insertHTML', false, `<img src="${data.url}" alt="Gambar" class="inline-rich-img" />`);
             }
             status.classList.add('hidden');
             e.target.value = '';

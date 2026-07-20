@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
 use App\Models\Job;
 use App\Models\User;
+use Illuminate\Support\Facades\File;
 
 class HomeController extends Controller
 {
@@ -23,13 +23,21 @@ class HomeController extends Controller
 
         $studentsCount = User::whereIn('role', ['student', 'alumni'])->count();
 
-        $companiesCount = Company::count();
+        // collect static partner logos from public/images/companies
+        $partnerLogos = [];
+        $dir = public_path('images/companies');
+        if (File::exists($dir)) {
+            $files = File::files($dir);
+            foreach ($files as $f) {
+                $partnerLogos[] = 'images/companies/' . $f->getFilename();
+            }
+        }
 
         return view('welcome', compact(
             'jobs',
             'activeJobsCount',
             'studentsCount',
-            'companiesCount'
+            'partnerLogos'
         ));
     }
 }

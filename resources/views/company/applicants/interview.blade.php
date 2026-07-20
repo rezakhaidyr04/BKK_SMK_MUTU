@@ -88,7 +88,7 @@
                     @enderror
                 </div>
 
-                <div id="online_fields" style="{{ old('interview_type', $application->interview_type) == 'online' ? '' : 'display:none' }}">
+                <div id="online_fields" x-cloak class="ui-hidden" x-bind:class="{ 'ui-hidden': {{ old('interview_type', $application->interview_type) != 'online' ? 'true' : 'false' }} }">
                     <label class="ui-label" for="interview_link">
                         🔗 Link Wawancara Online <span class="text-red-500">*</span>
                         <span class="text-slate-400 font-normal ml-1">(Zoom / Google Meet)</span>

@@ -3,8 +3,8 @@
 <div align="center">
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
-![Laravel](https://img.shields.io/badge/Laravel-12-red.svg)
-![PHP](https://img.shields.io/badge/PHP-8.2%2B-purple.svg)
+![Laravel](https://img.shields.io/badge/Laravel-10-blue.svg)
+![PHP](https://img.shields.io/badge/PHP-8.1%2B-purple.svg)
 ![Status](https://img.shields.io/badge/status-production%20ready-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
@@ -74,9 +74,10 @@
 
 ### Prasyarat
 
-- PHP 8.2+
+- PHP 8.1+
 - MySQL 8.0+
 - Composer 2.x
+- Node.js 18+ (untuk Vite/Tailwind)
 
 ### Langkah Instalasi
 
@@ -84,29 +85,41 @@
 # 1. Masuk ke folder project
 cd "BKK SMK MUTU"
 
-# 2. Install dependencies
+# 2. Install dependencies backend
 composer install
 
-# 3. Setup environment
+# 3. Install dependencies frontend
+npm install
+
+# 4. Setup environment
 copy .env.example .env
 php artisan key:generate
 
-# 4. Konfigurasi database di .env
+# 5. Konfigurasi database di .env
 DB_DATABASE=bkk_smk_mutu
 DB_USERNAME=root
 DB_PASSWORD=your_password
 
-# 5. Buat database & jalankan migrasi
+# 6. Buat database & jalankan migrasi
 mysql -u root -p -e "CREATE DATABASE bkk_smk_mutu;"
 php artisan migrate --seed
 
-# 6. Jalankan server
+# 7. Build asset untuk development
+npm run dev
+
+# 8. Jalankan server
 php artisan serve
 ```
 
 **Buka browser:** `http://localhost:8000`
 
 **Login Admin:** `admin@bkk.com` / `admin123`
+
+### Menjalankan test
+
+```bash
+php artisan test
+```
 
 > 📚 Panduan lengkap tersedia di [QUICK_START.md](QUICK_START.md)
 

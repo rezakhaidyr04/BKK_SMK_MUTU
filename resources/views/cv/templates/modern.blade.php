@@ -27,6 +27,8 @@
         .skill { display:inline-block; background:#eff6ff; color:#1d4ed8; border:1px solid #dbeafe; padding:5px 10px; border-radius:999px; margin:3px 4px 0 0; font-size:12px; font-weight:600; }
         .skill-empty { display:inline-block; background:#f3f4f6; color:#6b7280; padding:5px 10px; border-radius:999px; margin-top:4px; font-size:12px; }
         .list { margin: 0; padding-left: 18px; }
+        .hero-contact { text-align: right; font-size: 11px; opacity: .9; line-height: 1.6; }
+        .section-title.no-top-margin { margin-top: 0; }
     </style>
 </head>
 <body>
@@ -47,7 +49,7 @@
                         </div>
                     </div>
                 </div>
-                <div style="text-align:right; font-size:11px; opacity:.9; line-height:1.6;">
+                <div class="hero-contact">
                     <div>{{ $user->email }}</div>
                     <div>{{ $user->phone ?? '-' }}</div>
                 </div>
@@ -100,7 +102,7 @@
 
                 <div>
                     <div class="card">
-                        <div class="section-title" style="margin-top:0;">Kontak</div>
+                        <div class="section-title no-top-margin">Kontak</div>
                         <div class="section-body">
                             <div>{{ $user->email }}</div>
                             <div>{{ $user->phone ?? '-' }}</div>
@@ -109,7 +111,7 @@
                     </div>
 
                     <div class="section card">
-                        <div class="section-title" style="margin-top:0;">Keahlian</div>
+                        <div class="section-title no-top-margin">Keahlian</div>
                         <div>
                             @if($include_skills && $user->skills->isNotEmpty())
                                 @foreach($user->skills as $skill)
@@ -122,7 +124,7 @@
                     </div>
 
                     <div class="section card">
-                        <div class="section-title" style="margin-top:0;">Pendidikan</div>
+                        <div class="section-title no-top-margin">Pendidikan</div>
                         <div class="section-body">
                             <strong>SMK MUTU Cikampek</strong><br>
                             {{ $user->student->major ?? 'Jurusan belum diisi' }}<br>

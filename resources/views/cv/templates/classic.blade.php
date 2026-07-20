@@ -62,6 +62,17 @@
             font-size: 10pt;
             color: #444;
         }
+        .cv-note {
+            color: #444;
+        }
+        .cv-photo-wrap {
+            text-align: center;
+            margin-top: 16px;
+        }
+        .cv-avatar-photo {
+            object-fit: cover;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -105,7 +116,7 @@
         <strong>SMK MUTU Cikampek</strong>
         @if($user->student->major) — {{ $user->student->major }} @endif
         @if($user->student->graduation_year)
-            <br><span style="color:#444;">Tahun Lulus: {{ $user->student->graduation_year }}</span>
+            <br><span class="cv-note">Tahun Lulus: {{ $user->student->graduation_year }}</span>
         @endif
     </div>
     @endif
@@ -136,8 +147,8 @@
 
     {{-- Foto hanya tampil jika diminta (bawah untuk ATS) --}}
     @if($include_photo && $user->avatar)
-    <div style="text-align:center; margin-top:16px;">
-        <img src="{{ public_path('storage/' . $user->avatar) }}" alt="Foto" width="80" height="80" style="object-fit:cover; border-radius:4px;">
+    <div class="cv-photo-wrap">
+        <img src="{{ public_path('storage/' . $user->avatar) }}" alt="Foto" width="80" height="80" class="cv-avatar-photo">
         {{-- Pencapaian --}}
         <div class="section-title">Pencapaian Utama</div>
         <div class="section-body">{{ $custom_achievement ?: 'Contoh: menyelesaikan proyek kelas, pengalaman magang, kepanitiaan, atau penghargaan yang relevan.' }}</div>
