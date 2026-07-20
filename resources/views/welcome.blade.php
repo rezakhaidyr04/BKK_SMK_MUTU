@@ -72,14 +72,15 @@
         </div>
 
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid gap-12 lg:grid-cols-2 items-center">
-                <div class="space-y-8">
+            <div class="grid gap-12 lg:grid-cols-12 items-center">
+                <div class="space-y-8 lg:col-span-7">
                     <div id="js-hero-greeting" class="hero-greeting inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/15 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-slate-950/20 backdrop-blur-xl">
                         👋 Selamat Datang di BKK SMK MUTU
                     </div>
                     <div class="space-y-6">
-                        <h1 class="ui-page-hero-title text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl leading-tight">
-                            Temukan Karir Impian<br class="hidden xl:inline" />Anda bersama<br class="hidden xl:inline" />BKK SMK MUTU
+                        <h1 class="ui-page-hero-title text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white">
+                            Temukan Karier Impian Anda
+                            Bersama BKK SMK MUTU
                         </h1>
                         <p class="max-w-2xl text-base text-slate-100 sm:text-lg lg:text-xl">
                             Platform Bursa Kerja Khusus modern yang menghubungkan siswa dan alumni dengan perusahaan terbaik untuk membangun karier masa depan.
@@ -111,32 +112,26 @@
                     </aside>
                 </div>
 
-                <div class="relative flex justify-center lg:justify-end">
-                    <div class="relative isolate w-full max-w-xl">
-                        <div class="absolute -left-8 top-8 h-36 w-36 rounded-full bg-sky-400/20 blur-3xl"></div>
-                        <div class="absolute -right-10 top-1/2 h-24 w-24 rounded-full bg-cyan-300/15 blur-3xl"></div>
-                        <div class="absolute -bottom-12 left-16 h-44 w-44 rounded-full bg-blue-500/10 blur-3xl"></div>
-                        <div class="hero-illustration-card relative overflow-hidden rounded-[2rem] border border-white/15 bg-white/10 p-6 shadow-2xl shadow-slate-950/20 backdrop-blur-xl">
-                            <div class="absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.28),_transparent_65%)]"></div>
-                            <div class="relative z-10">
-                                <div class="flex items-center justify-between mb-6">
-                                    <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm text-white/90">BKK SMK MUTU</span>
-                                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-white/80">★</span>
-                                </div>
-                                <div class="relative mx-auto mb-6 h-[340px] w-full overflow-hidden rounded-[2rem] bg-slate-950/90 border border-white/10 shadow-inner">
-                                    <img src="{{ asset('images/foto_siswa/siswa.png') }}" alt="Ilustrasi siswa BKK SMK MUTU" class="h-full w-full object-contain" />
-                                </div>
-                                <div class="grid grid-cols-2 gap-4 text-white/85 text-sm">
-                                    <div class="rounded-2xl bg-white/6 p-4">
-                                        <span class="block text-xs uppercase tracking-[0.24em] text-slate-300">Persiapan CV</span>
-                                        <p class="mt-2 font-semibold text-base text-white">Tampilan profesional</p>
-                                    </div>
-                                    <div class="rounded-2xl bg-white/6 p-4">
-                                        <span class="block text-xs uppercase tracking-[0.24em] text-slate-300">Interview</span>
-                                        <p class="mt-2 font-semibold text-base text-white">90% alumni dipandu</p>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="relative flex justify-center lg:justify-end lg:col-span-5">
+                    <div class="hero-illustration-wrap">
+                        <div class="hero-illustration" role="img" aria-label="Ilustrasi siswa BKK SMK MUTU">
+                            <img src="{{ asset('images/foto_siswa/siswa.png') }}" alt="Ilustrasi siswa BKK SMK MUTU" loading="lazy">
+                        </div>
+
+                        <!-- decorative circles -->
+                        <div class="hero-deco-circle" style="width:160px;height:160px;left:-40px;top:-20px;background:rgba(59,130,246,0.12);filter:blur(48px);"></div>
+                        <div class="hero-deco-circle" style="width:110px;height:110px;right:-30px;top:40px;background:rgba(34,211,238,0.08);filter:blur(32px);"></div>
+                        <div class="hero-deco-circle" style="width:220px;height:220px;left:30%;bottom:-60px;background:rgba(59,130,246,0.06);filter:blur(64px);"></div>
+
+                        <!-- floating badges -->
+                        <div class="hero-badge" data-index="1" style="right:12%;top:6%;">
+                            <span>💼</span><span>150+ Lowongan Aktif</span>
+                        </div>
+                        <div class="hero-badge" data-index="2" style="left:6%;top:12%;">
+                            <span>📄</span><span>CV ATS Friendly</span>
+                        </div>
+                        <div class="hero-badge" data-index="3" style="right:6%;bottom:6%;">
+                            <span>🏆</span><span>93% Alumni Berhasil</span>
                         </div>
                     </div>
                 </div>
@@ -153,19 +148,21 @@
                 <p class="mt-3 text-base text-slate-500">Lebih dari <span class="font-semibold text-slate-900">6</span> perusahaan mitra aktif mendukung lulusan SMK MUTU.</p>
             </div>
 
-            <div class="logo-marquee-wrapper overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm py-8">
+            <div class="trusted-marquee-card overflow-hidden py-6">
                 @if(!empty($partnerLogos))
-                    <div class="logo-marquee-wrapper px-6">
-                        <div class="logo-marquee-track" aria-hidden="true">
-                            @foreach($partnerLogos as $logo)
-                                <img src="{{ asset($logo) }}" alt="" class="partner-small" onerror="this.style.display='none'" />
-                            @endforeach
-                        </div>
-                        <div class="logo-marquee-track" aria-hidden="true">
-                            @foreach($partnerLogos as $logo)
-                                <img src="{{ asset($logo) }}" alt="" class="partner-small" onerror="this.style.display='none'" />
-                            @endforeach
-                        </div>
+                    <div class="trusted-marquee-track" aria-hidden="true">
+                        @foreach($partnerLogos as $logo)
+                            <div class="trusted-logo">
+                                <img src="{{ asset($logo) }}" alt="" loading="lazy" onerror="this.style.display='none'" />
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="trusted-marquee-track" aria-hidden="true">
+                        @foreach($partnerLogos as $logo)
+                            <div class="trusted-logo">
+                                <img src="{{ asset($logo) }}" alt="" loading="lazy" onerror="this.style.display='none'" />
+                            </div>
+                        @endforeach
                     </div>
                 @else
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 px-6">
@@ -186,7 +183,7 @@
                 <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">Mengapa Memilih BKK SMK MUTU?</h2>
                 <p class="mt-3 text-base text-slate-500">Platform lengkap untuk pengembangan karir Anda</p>
             </div>
-            <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 <!-- Feature 1: Pencocokan Cerdas -->
                 <article class="feature-card-v2 group">
                     <div class="feature-icon-circle bg-blue-50">
@@ -245,9 +242,9 @@
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">Bagaimana Cara Kerjanya?</h2>
             </div>
-            <div class="hiw-steps-grid">
+            <div class="hiw-steps-grid" role="list">
                 <!-- Step 1 -->
-                <div class="hiw-step">
+                <div class="hiw-step" role="listitem" data-reveal>
                     <div class="hiw-step-icon-wrap">
                         <div class="hiw-step-badge">1</div>
                         <div class="hiw-step-circle bg-blue-50">
@@ -259,7 +256,7 @@
                 </div>
                 <div class="hiw-connector" aria-hidden="true"></div>
                 <!-- Step 2 -->
-                <div class="hiw-step">
+                <div class="hiw-step" role="listitem" data-reveal>
                     <div class="hiw-step-icon-wrap">
                         <div class="hiw-step-badge">2</div>
                         <div class="hiw-step-circle bg-blue-50">
@@ -271,7 +268,7 @@
                 </div>
                 <div class="hiw-connector" aria-hidden="true"></div>
                 <!-- Step 3 -->
-                <div class="hiw-step">
+                <div class="hiw-step" role="listitem" data-reveal>
                     <div class="hiw-step-icon-wrap">
                         <div class="hiw-step-badge">3</div>
                         <div class="hiw-step-circle bg-blue-50">
@@ -283,7 +280,7 @@
                 </div>
                 <div class="hiw-connector" aria-hidden="true"></div>
                 <!-- Step 4 -->
-                <div class="hiw-step">
+                <div class="hiw-step" role="listitem" data-reveal>
                     <div class="hiw-step-icon-wrap">
                         <div class="hiw-step-badge">4</div>
                         <div class="hiw-step-circle bg-blue-50">
@@ -295,7 +292,7 @@
                 </div>
                 <div class="hiw-connector" aria-hidden="true"></div>
                 <!-- Step 5 -->
-                <div class="hiw-step">
+                <div class="hiw-step" role="listitem" data-reveal>
                     <div class="hiw-step-icon-wrap">
                         <div class="hiw-step-badge">5</div>
                         <div class="hiw-step-circle bg-blue-50">
@@ -307,7 +304,7 @@
                 </div>
                 <div class="hiw-connector" aria-hidden="true"></div>
                 <!-- Step 6 -->
-                <div class="hiw-step">
+                <div class="hiw-step" role="listitem" data-reveal>
                     <div class="hiw-step-icon-wrap">
                         <div class="hiw-step-badge">6</div>
                         <div class="hiw-step-circle bg-green-50">
@@ -330,7 +327,7 @@
                         <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                     </div>
                     <div>
-                        <p class="text-3xl font-extrabold text-white" data-counter="150" data-suffix="+">0</p>
+                        <p class="text-3xl font-extrabold text-white" data-counter="150" data-suffix="+" aria-live="polite">0</p>
                         <p class="text-sm font-semibold text-blue-100">Perusahaan Mitra</p>
                         <p class="text-xs text-blue-200/70 italic">Bergabung bersama kami</p>
                     </div>
@@ -341,7 +338,7 @@
                         <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     </div>
                     <div>
-                        <p class="text-3xl font-extrabold text-white" data-counter="2500" data-suffix="+">0</p>
+                        <p class="text-3xl font-extrabold text-white" data-counter="2500" data-suffix="+" aria-live="polite">0</p>
                         <p class="text-sm font-semibold text-blue-100">Alumni Terdaftar</p>
                         <p class="text-xs text-blue-200/70 italic">Telah membuat akun</p>
                     </div>
@@ -352,7 +349,7 @@
                         <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     </div>
                     <div>
-                        <p class="text-3xl font-extrabold text-white" data-counter="5000" data-suffix="+">0</p>
+                        <p class="text-3xl font-extrabold text-white" data-counter="5000" data-suffix="+" aria-live="polite">0</p>
                         <p class="text-sm font-semibold text-blue-100">Lowongan Dipublikasikan</p>
                         <p class="text-xs text-blue-200/70 italic">Setiap bulan diperbarui</p>
                     </div>
@@ -363,7 +360,7 @@
                         <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                     </div>
                     <div>
-                        <p class="text-3xl font-extrabold text-white" data-counter="93" data-suffix="%">0</p>
+                        <p class="text-3xl font-extrabold text-white" data-counter="93" data-suffix="%" aria-live="polite">0</p>
                         <p class="text-sm font-semibold text-blue-100">Alumni Berhasil Bekerja</p>
                         <p class="text-xs text-blue-200/70 italic">Dalam 6 bulan terakhir</p>
                     </div>
@@ -680,21 +677,22 @@
             });
 
             function animateCounter(element) {
-                var target = parseInt(element.dataset.counter, 10) || 0;
+                var raw = element.dataset.counter || '0';
+                var target = parseInt(String(raw).replace(/\D/g, ''), 10) || 0;
                 var suffix = element.dataset.suffix || '';
-                var duration = 1600;
+                // duration scales with magnitude but stays within sensible bounds
+                var duration = Math.min(2200, Math.max(900, Math.round(900 + (Math.log10(target + 1) || 0) * 500)));
                 var startTime = null;
-                var initial = 0;
 
                 function step(timestamp) {
                     if (!startTime) startTime = timestamp;
                     var progress = Math.min((timestamp - startTime) / duration, 1);
-                    var current = Math.floor(progress * (target - initial) + initial);
-                    element.textContent = current + suffix;
+                    var current = Math.floor(progress * target);
+                    element.textContent = formatNumber(current) + suffix;
                     if (progress < 1) {
                         window.requestAnimationFrame(step);
                     } else {
-                        element.textContent = target + suffix;
+                        element.textContent = formatNumber(target) + suffix;
                     }
                 }
                 window.requestAnimationFrame(step);
@@ -718,14 +716,10 @@
 
             // Counter formatting with dots (Indonesian style)
             function formatNumber(num) {
-                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                var n = parseInt(num, 10);
+                if (isNaN(n)) return String(num);
+                return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             }
-
-            counters.forEach(function(counter) {
-                var observer = new MutationObserver(function() {
-                    // Format is handled in animateCounter
-                });
-            });
         });
     </script>
 </body>
