@@ -177,389 +177,396 @@
         </div>
     </section>
 
-    <!-- Why Choose BKK -->
+    <!-- Why Choose BKK SMK MUTU -->
     <section id="features" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-14">
-                <p class="text-sm uppercase tracking-[0.32em] text-slate-400">Nilai unggul platform</p>
-                <h2 class="mt-4 text-3xl font-semibold text-slate-900 sm:text-4xl">Mengapa Pilih BKK SMK MUTU?</h2>
+                <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">Mengapa Memilih BKK SMK MUTU?</h2>
+                <p class="mt-3 text-base text-slate-500">Platform lengkap untuk pengembangan karir Anda</p>
             </div>
-            <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                <article class="fade-reveal rounded-[1.75rem] border border-slate-200 bg-slate-50 p-8 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl">
-                    <div class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-blue-500/10 text-blue-600">
-                        <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3v5h6v-5c0-1.657-1.343-3-3-3zM6 20h12" /></svg>
+            <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+                <!-- Feature 1: Pencocokan Cerdas -->
+                <article class="feature-card-v2 group">
+                    <div class="feature-icon-circle bg-blue-50">
+                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-slate-900 mb-3">Smart Job Matching</h3>
-                    <p class="text-slate-600">Rekomendasi karir berdasarkan profil kompetensi dan minat Anda.</p>
+                    <h3 class="text-sm font-bold text-slate-900 mt-4">Pencocokan Cerdas</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">Sistem rekomendasi pekerjaan berdasarkan keahlian dan minat Anda</p>
                 </article>
-                <article class="fade-reveal rounded-[1.75rem] border border-slate-200 bg-slate-50 p-8 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl" style="animation-delay: 100ms;">
-                    <div class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-sky-500/10 text-sky-600">
-                        <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h7a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2h5m1-3v4m0 0L9 9m3-4l3 3"/></svg>
+                <!-- Feature 2: CV Ramah ATS -->
+                <article class="feature-card-v2 group">
+                    <div class="feature-icon-circle bg-blue-50">
+                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-slate-900 mb-3">CV ATS Friendly</h3>
-                    <p class="text-slate-600">Format CV yang mudah terbaca dan diterima oleh sistem perekrutan perusahaan.</p>
+                    <h3 class="text-sm font-bold text-slate-900 mt-4">CV Ramah ATS</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">Buat CV profesional yang dioptimalkan untuk Applicant Tracking System</p>
                 </article>
-                <article class="fade-reveal rounded-[1.75rem] border border-slate-200 bg-slate-50 p-8 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl" style="animation-delay: 200ms;">
-                    <div class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-emerald-500/10 text-emerald-600">
-                        <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m-6 0h6"/></svg>
+                <!-- Feature 3: Pelacakan Lamaran -->
+                <article class="feature-card-v2 group">
+                    <div class="feature-icon-circle bg-blue-50">
+                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-slate-900 mb-3">Application Tracking</h3>
-                    <p class="text-slate-600">Pantau status lamaran secara realtime langsung dari dashboard Anda.</p>
+                    <h3 class="text-sm font-bold text-slate-900 mt-4">Pelacakan Lamaran</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">Monitor status lamaran Anda secara real-time dengan timeline</p>
                 </article>
-                <article class="fade-reveal rounded-[1.75rem] border border-slate-200 bg-slate-50 p-8 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl" style="animation-delay: 300ms;">
-                    <div class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-indigo-500/10 text-indigo-600">
-                        <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12l9-5-9-5-9 5 9 5z"/></svg>
+                <!-- Feature 4: Rekomendasi AI -->
+                <article class="feature-card-v2 group">
+                    <div class="feature-icon-circle bg-orange-50">
+                        <svg class="h-6 w-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-slate-900 mb-3">AI Recommendation</h3>
-                    <p class="text-slate-600">Saran pekerjaan pintar berdasarkan riwayat pencarian dan kemampuan Anda.</p>
+                    <h3 class="text-sm font-bold text-slate-900 mt-4">Rekomendasi AI</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">Dapatkan rekomendasi karir dan pelatihan sesuai profil Anda</p>
                 </article>
-                <article class="fade-reveal rounded-[1.75rem] border border-slate-200 bg-slate-50 p-8 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl" style="animation-delay: 400ms;">
-                    <div class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-cyan-500/10 text-cyan-600">
-                        <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <!-- Feature 5: Terhubung Perusahaan -->
+                <article class="feature-card-v2 group">
+                    <div class="feature-icon-circle bg-blue-50">
+                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-slate-900 mb-3">Trusted Companies</h3>
-                    <p class="text-slate-600">Jaringan perusahaan terpercaya yang sering merekrut lulusan SMK MUTU.</p>
+                    <h3 class="text-sm font-bold text-slate-900 mt-4">Terhubung Perusahaan</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">Akses langsung ke perusahaan terpercaya dan peluang kerja terbaik</p>
                 </article>
-                <article class="fade-reveal rounded-[1.75rem] border border-slate-200 bg-slate-50 p-8 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl" style="animation-delay: 500ms;">
-                    <div class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-slate-800/10 text-slate-900">
-                        <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0-1.105.895-2 2-2h5v9a1 1 0 01-1 1h-9a1 1 0 01-1-1v-2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 7h.01M6 11h.01M6 15h.01M10 7h.01M10 11h.01M10 15h.01"/></svg>
+                <!-- Feature 6: Data Aman -->
+                <article class="feature-card-v2 group">
+                    <div class="feature-icon-circle bg-green-50">
+                        <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-slate-900 mb-3">Secure Data</h3>
-                    <p class="text-slate-600">Keamanan data pribadi dan riwayat lamaran selalu menjadi prioritas.</p>
+                    <h3 class="text-sm font-bold text-slate-900 mt-4">Data Aman</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">Keamanan data Anda adalah prioritas utama kami</p>
                 </article>
             </div>
         </div>
     </section>
 
-    <!-- How It Works -->
+    <!-- Bagaimana Cara Kerjanya? -->
     <section class="py-20 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-14">
-                <p class="text-sm uppercase tracking-[0.32em] text-slate-400">Langkah demi langkah</p>
-                <h2 class="mt-4 text-3xl font-semibold text-slate-900 sm:text-4xl">Bagaimana Cara Kerjanya?</h2>
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">Bagaimana Cara Kerjanya?</h2>
             </div>
-            <div class="steps-wrapper">
-                <div class="step">
-                    <div class="dot step-dot bg-blue-100 text-blue-700">1</div>
-                    <h4 class="text-sm font-semibold text-slate-700 mt-2">Daftar Akun</h4>
-                    <p class="text-xs text-slate-500">Buat akun gratis dengan mudah</p>
+            <div class="hiw-steps-grid">
+                <!-- Step 1 -->
+                <div class="hiw-step">
+                    <div class="hiw-step-icon-wrap">
+                        <div class="hiw-step-badge">1</div>
+                        <div class="hiw-step-circle bg-blue-50">
+                            <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        </div>
+                    </div>
+                    <h4 class="text-base font-bold text-slate-900 mt-5">Daftar Akun</h4>
+                    <p class="text-sm text-slate-500 mt-1">Buat akun gratis<br>dengan mudah</p>
                 </div>
-                <div class="step-connector" aria-hidden></div>
-                <div class="step">
-                    <div class="dot step-dot bg-emerald-100 text-emerald-700">2</div>
-                    <h4 class="text-sm font-semibold text-slate-700 mt-2">Lengkapi Profil</h4>
-                    <p class="text-xs text-slate-500">Isi profil dan unggah CV</p>
+                <div class="hiw-connector" aria-hidden="true"></div>
+                <!-- Step 2 -->
+                <div class="hiw-step">
+                    <div class="hiw-step-icon-wrap">
+                        <div class="hiw-step-badge">2</div>
+                        <div class="hiw-step-circle bg-blue-50">
+                            <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        </div>
+                    </div>
+                    <h4 class="text-base font-bold text-slate-900 mt-5">Lengkapi Profil</h4>
+                    <p class="text-sm text-slate-500 mt-1">Isi profil dan unggah<br>CV terbaik Anda</p>
                 </div>
-                <div class="step-connector" aria-hidden></div>
-                <div class="step">
-                    <div class="dot step-dot bg-cyan-100 text-cyan-700">3</div>
-                    <h4 class="text-sm font-semibold text-slate-700 mt-2">Cari Lowongan</h4>
-                    <p class="text-xs text-slate-500">Temukan pekerjaan sesuai keahlian</p>
+                <div class="hiw-connector" aria-hidden="true"></div>
+                <!-- Step 3 -->
+                <div class="hiw-step">
+                    <div class="hiw-step-icon-wrap">
+                        <div class="hiw-step-badge">3</div>
+                        <div class="hiw-step-circle bg-blue-50">
+                            <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        </div>
+                    </div>
+                    <h4 class="text-base font-bold text-slate-900 mt-5">Cari Lowongan</h4>
+                    <p class="text-sm text-slate-500 mt-1">Temukan lowongan<br>yang sesuai dengan<br>keahlian Anda</p>
                 </div>
-                <div class="step-connector" aria-hidden></div>
-                <div class="step">
-                    <div class="dot step-dot bg-orange-100 text-orange-700">4</div>
-                    <h4 class="text-sm font-semibold text-slate-700 mt-2">Lamar Pekerjaan</h4>
-                    <p class="text-xs text-slate-500">Kirim lamaran dengan satu klik</p>
+                <div class="hiw-connector" aria-hidden="true"></div>
+                <!-- Step 4 -->
+                <div class="hiw-step">
+                    <div class="hiw-step-icon-wrap">
+                        <div class="hiw-step-badge">4</div>
+                        <div class="hiw-step-circle bg-blue-50">
+                            <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                        </div>
+                    </div>
+                    <h4 class="text-base font-bold text-slate-900 mt-5">Lamar Pekerjaan</h4>
+                    <p class="text-sm text-slate-500 mt-1">Kirim lamaran dengan<br>satu klik</p>
                 </div>
-                <div class="step-connector" aria-hidden></div>
-                <div class="step">
-                    <div class="dot step-dot bg-indigo-100 text-indigo-700">5</div>
-                    <h4 class="text-sm font-semibold text-slate-700 mt-2">Interview</h4>
-                    <p class="text-xs text-slate-500">Ikuti proses seleksi</p>
+                <div class="hiw-connector" aria-hidden="true"></div>
+                <!-- Step 5 -->
+                <div class="hiw-step">
+                    <div class="hiw-step-icon-wrap">
+                        <div class="hiw-step-badge">5</div>
+                        <div class="hiw-step-circle bg-blue-50">
+                            <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                    </div>
+                    <h4 class="text-base font-bold text-slate-900 mt-5">Interview</h4>
+                    <p class="text-sm text-slate-500 mt-1">Ikuti proses seleksi<br>dari perusahaan</p>
                 </div>
-                <div class="step-connector" aria-hidden></div>
-                <div class="step">
-                    <div class="dot step-dot bg-green-100 text-green-700">6</div>
-                    <h4 class="text-sm font-semibold text-slate-700 mt-2">Diterima Kerja</h4>
-                    <p class="text-xs text-slate-500">Mulai karir impian Anda</p>
+                <div class="hiw-connector" aria-hidden="true"></div>
+                <!-- Step 6 -->
+                <div class="hiw-step">
+                    <div class="hiw-step-icon-wrap">
+                        <div class="hiw-step-badge">6</div>
+                        <div class="hiw-step-circle bg-green-50">
+                            <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                    </div>
+                    <h4 class="text-base font-bold text-slate-900 mt-5">Diterima Kerja</h4>
+                    <p class="text-sm text-slate-500 mt-1">Selamat! Mulai karir<br>impian Anda</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Statistics -->
-    <section class="py-20 bg-gradient-to-br from-sky-600 via-blue-700 to-indigo-800 text-white">
+    <!-- Statistics Bar -->
+    <section class="py-6 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-14">
-                <p class="text-sm uppercase tracking-[0.32em] text-cyan-200/70">Angka yang berbicara</p>
-                <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">Statistik Keberhasilan Kami</h2>
-            </div>
-            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                <div class="rounded-3xl bg-white/10 p-8 text-center backdrop-blur-xl shadow-lg shadow-slate-950/20">
-                    <p class="text-5xl font-semibold leading-none" data-counter="150">0</p>
-                    <p class="mt-4 text-sm uppercase tracking-[0.24em] text-cyan-200/80">Perusahaan Mitra</p>
+            <div class="stats-bar-v2">
+                <div class="stat-item-v2">
+                    <div class="stat-icon-v2 bg-blue-100">
+                        <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-extrabold text-white" data-counter="150" data-suffix="+">0</p>
+                        <p class="text-sm font-semibold text-blue-100">Perusahaan Mitra</p>
+                        <p class="text-xs text-blue-200/70 italic">Bergabung bersama kami</p>
+                    </div>
                 </div>
-                <div class="rounded-3xl bg-white/10 p-8 text-center backdrop-blur-xl shadow-lg shadow-slate-950/20">
-                    <p class="text-5xl font-semibold leading-none" data-counter="2500">0</p>
-                    <p class="mt-4 text-sm uppercase tracking-[0.24em] text-cyan-200/80">Alumni</p>
+                <div class="stat-divider-v2"></div>
+                <div class="stat-item-v2">
+                    <div class="stat-icon-v2 bg-blue-100">
+                        <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-extrabold text-white" data-counter="2500" data-suffix="+">0</p>
+                        <p class="text-sm font-semibold text-blue-100">Alumni Terdaftar</p>
+                        <p class="text-xs text-blue-200/70 italic">Telah membuat akun</p>
+                    </div>
                 </div>
-                <div class="rounded-3xl bg-white/10 p-8 text-center backdrop-blur-xl shadow-lg shadow-slate-950/20">
-                    <p class="text-5xl font-semibold leading-none" data-counter="5000">0</p>
-                    <p class="mt-4 text-sm uppercase tracking-[0.24em] text-cyan-200/80">Lowongan</p>
+                <div class="stat-divider-v2"></div>
+                <div class="stat-item-v2">
+                    <div class="stat-icon-v2 bg-blue-100">
+                        <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-extrabold text-white" data-counter="5000" data-suffix="+">0</p>
+                        <p class="text-sm font-semibold text-blue-100">Lowongan Dipublikasikan</p>
+                        <p class="text-xs text-blue-200/70 italic">Setiap bulan diperbarui</p>
+                    </div>
                 </div>
-                <div class="rounded-3xl bg-white/10 p-8 text-center backdrop-blur-xl shadow-lg shadow-slate-950/20">
-                    <p class="text-5xl font-semibold leading-none" data-counter="93" data-suffix="%">0</p>
-                    <p class="mt-4 text-sm uppercase tracking-[0.24em] text-cyan-200/80">Berhasil Bekerja</p>
+                <div class="stat-divider-v2"></div>
+                <div class="stat-item-v2">
+                    <div class="stat-icon-v2 bg-blue-100">
+                        <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-extrabold text-white" data-counter="93" data-suffix="%">0</p>
+                        <p class="text-sm font-semibold text-blue-100">Alumni Berhasil Bekerja</p>
+                        <p class="text-xs text-blue-200/70 italic">Dalam 6 bulan terakhir</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Latest Jobs Section -->
+    <!-- Peluang Lowongan Terbaru -->
     @if(isset($jobs) && $jobs->count() > 0)
-    <section class="py-20 bg-white">
+    <section id="jobs" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Peluang Lowongan Terbaru</h2>
-                <p class="text-xl text-gray-600">Lowongan pilihan yang cocok dengan kemampuan anda.</p>
+            <div class="flex items-end justify-between mb-8">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-slate-900">Peluang Lowongan Terbaru</h2>
+                    <p class="text-sm text-slate-500 mt-1">Temukan kesempatan karir terbaik untuk Anda</p>
+                </div>
+                <a href="{{ route('jobs.index') }}" class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition hidden sm:inline-flex items-center gap-1">Lihat Semua Lowongan <span>→</span></a>
             </div>
-            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                @foreach($jobs->take(6) as $job)
-                <article class="group rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
-                    <div class="flex items-start justify-between gap-4">
-                            <div class="flex items-center gap-4">
-                            <div class="job-initials">{{ strtoupper(substr($job->company->name ?? 'BKK', 0, 2)) }}</div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-slate-900">{{ $job->title }}</h3>
-                                <p class="text-sm text-slate-500">{{ $job->company->name ?? 'Perusahaan Mitra' }}</p>
+            <div class="job-carousel-wrapper">
+                <button class="job-carousel-btn job-carousel-prev" aria-label="Previous">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <div class="job-carousel-track">
+                    @foreach($jobs->take(4) as $index => $job)
+                    @php
+                        $colors = ['bg-blue-600', 'bg-teal-600', 'bg-red-500', 'bg-yellow-500'];
+                        $bgColor = $colors[$index % 4];
+                    @endphp
+                    <article class="job-card-v2">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="job-initial-v2 {{ $bgColor }}">{{ strtoupper(substr($job->company->name ?? 'B', 0, 1)) }}</div>
+                                <div>
+                                    <h3 class="text-base font-bold text-slate-900">{{ $job->title }}</h3>
+                                    <p class="text-sm text-slate-500">{{ $job->company->name ?? 'Perusahaan Mitra' }}</p>
+                                </div>
                             </div>
+                            <button type="button" class="text-slate-300 hover:text-blue-600 transition" aria-label="Bookmark">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"/></svg>
+                            </button>
                         </div>
-                        <button type="button" class="text-slate-400 transition hover:text-blue-600" aria-label="Bookmark lowongan {{ $job->title }}">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"/></svg>
-                        </button>
-                    </div>
-                    <div class="mt-6 grid gap-3 text-sm text-slate-500 sm:grid-cols-2">
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Gaji</span>
-                            <span class="mt-2 block font-semibold text-slate-900">{{ $job->salary ? 'Rp ' . number_format($job->salary, 0, ',', '.') : 'Negosiasi' }}</span>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="job-tag-v2 bg-blue-50 text-blue-700">{{ $job->location }}</span>
+                            <span class="job-tag-v2 bg-blue-50 text-blue-700">{{ \App\Support\Label::jobType($job->job_type) ?? 'Penuh Waktu' }}</span>
                         </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Location</span>
-                            <span class="mt-2 block font-semibold text-slate-900">{{ $job->location }}</span>
+                        <div class="mt-4 space-y-1">
+                            <p class="text-sm font-semibold text-slate-900">{{ $job->salary ? 'Rp ' . number_format($job->salary, 0, ',', '.') : 'Negosiasi' }}</p>
+                            <p class="text-xs text-slate-400">Deadline: {{ \Carbon\Carbon::parse($job->deadline)->translatedFormat('j M Y') }}</p>
                         </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Tipe</span>
-                            <span class="mt-2 block font-semibold text-slate-900">{{ \App\Support\Label::jobType($job->job_type) ?? 'Penuh Waktu' }}</span>
-                        </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Deadline</span>
-                            <span class="mt-2 block font-semibold text-slate-900">{{ \Carbon\Carbon::parse($job->deadline)->translatedFormat('j M Y') }}</span>
-                        </div>
-                    </div>
-                    <div class="mt-6 flex items-center justify-between gap-4">
-                        <span class="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-700">#{{ \Illuminate\Support\Str::slug($job->job_type ?? 'job', '-') }}</span>
-                        <a href="{{ route('jobs.show', $job->id) }}" class="text-blue-600 font-semibold transition hover:text-blue-700">Detail</a>
-                    </div>
-                </article>
-                @endforeach
+                        <a href="{{ route('jobs.show', $job->id) }}" class="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 hover:text-blue-700 transition">Lihat Detail <span>→</span></a>
+                    </article>
+                    @endforeach
+                </div>
+                <button class="job-carousel-btn job-carousel-next" aria-label="Next">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+            <div class="text-center mt-10">
+                <a href="{{ route('jobs.index') }}" class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-blue-600 text-white text-sm font-semibold shadow-lg shadow-blue-600/25 hover:bg-blue-700 transition">Lihat Semua Lowongan</a>
             </div>
         </div>
     </section>
     @else
-    <section class="py-20 bg-white">
+    <section id="jobs" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-8">
-                <h2 class="text-4xl font-bold text-gray-900 mb-2">Peluang Lowongan Terbaru</h2>
-                <p class="text-lg text-gray-600">Temukan kesempatan karir terbaik untuk Anda</p>
+            <div class="flex items-end justify-between mb-8">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-slate-900">Peluang Lowongan Terbaru</h2>
+                    <p class="text-sm text-slate-500 mt-1">Temukan kesempatan karir terbaik untuk Anda</p>
+                </div>
+                <a href="{{ route('jobs.index') }}" class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition hidden sm:inline-flex items-center gap-1">Lihat Semua Lowongan <span>→</span></a>
             </div>
-            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                <!-- Sample card 1 -->
-                <article class="group rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
-                    <div class="flex items-start justify-between gap-4">
-                        <div class="flex items-center gap-4">
-                            <div class="job-initials">M</div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-slate-900">Operator Produksi</h3>
-                                <p class="text-sm text-slate-500">PT Maju Bersama</p>
+            <div class="job-carousel-wrapper">
+                <button class="job-carousel-btn job-carousel-prev" aria-label="Previous">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <div class="job-carousel-track">
+                    <!-- Sample Card 1 -->
+                    <article class="job-card-v2">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="job-initial-v2 bg-blue-600">M</div>
+                                <div>
+                                    <h3 class="text-base font-bold text-slate-900">Operator Produksi</h3>
+                                    <p class="text-sm text-slate-500">PT Maju Bersama</p>
+                                </div>
                             </div>
+                            <button type="button" class="text-slate-300 hover:text-blue-600 transition" aria-label="Bookmark">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"/></svg>
+                            </button>
                         </div>
-                        <button type="button" class="text-slate-400 transition hover:text-blue-600" aria-label="Bookmark">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"/></svg>
-                        </button>
-                    </div>
-                    <div class="mt-6 grid gap-3 text-sm text-slate-500 sm:grid-cols-2">
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Gaji</span>
-                            <span class="mt-2 block font-semibold text-slate-900">Rp 4.000.000 - 5.200.000</span>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="job-tag-v2 bg-blue-50 text-blue-700">Karawang Barat</span>
+                            <span class="job-tag-v2 bg-blue-50 text-blue-700">Penuh Waktu</span>
                         </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Location</span>
-                            <span class="mt-2 block font-semibold text-slate-900">Karawang Barat</span>
+                        <div class="mt-4 space-y-1">
+                            <p class="text-sm font-semibold text-slate-900">Rp 4.000.000 - 5.200.000</p>
+                            <p class="text-xs text-slate-400">Deadline: 31 Jul 2026</p>
                         </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Tipe</span>
-                            <span class="mt-2 block font-semibold text-slate-900">Penuh Waktu</span>
-                        </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Deadline</span>
-                            <span class="mt-2 block font-semibold text-slate-900">31 Jul 2026</span>
-                        </div>
-                    </div>
-                    <div class="mt-6 flex items-center justify-between gap-4">
-                        <span class="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-700">#produksi</span>
-                        <a href="#" class="text-blue-600 font-semibold transition hover:text-blue-700">Lihat Detail →</a>
-                    </div>
-                </article>
-                <!-- Sample card 2 -->
-                <article class="group rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
-                    <div class="flex items-start justify-between gap-4">
-                        <div class="flex items-center gap-4">
-                            <div class="job-initials">T</div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-slate-900">Junior Web Developer</h3>
-                                <p class="text-sm text-slate-500">PT Teknologi Nusantara</p>
+                        <a href="#" class="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 hover:text-blue-700 transition">Lihat Detail <span>→</span></a>
+                    </article>
+                    <!-- Sample Card 2 -->
+                    <article class="job-card-v2">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="job-initial-v2 bg-teal-600">T</div>
+                                <div>
+                                    <h3 class="text-base font-bold text-slate-900">Junior Web Developer</h3>
+                                    <p class="text-sm text-slate-500">PT Teknologi Nusantara</p>
+                                </div>
                             </div>
+                            <button type="button" class="text-slate-300 hover:text-blue-600 transition" aria-label="Bookmark">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"/></svg>
+                            </button>
                         </div>
-                        <button type="button" class="text-slate-400 transition hover:text-blue-600" aria-label="Bookmark">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"/></svg>
-                        </button>
-                    </div>
-                    <div class="mt-6 grid gap-3 text-sm text-slate-500 sm:grid-cols-2">
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Gaji</span>
-                            <span class="mt-2 block font-semibold text-slate-900">Rp 4.500.000 - 6.500.000</span>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="job-tag-v2 bg-blue-50 text-blue-700">Karawang Timur</span>
+                            <span class="job-tag-v2 bg-blue-50 text-blue-700">Penuh Waktu</span>
                         </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Location</span>
-                            <span class="mt-2 block font-semibold text-slate-900">Karawang Timur</span>
+                        <div class="mt-4 space-y-1">
+                            <p class="text-sm font-semibold text-slate-900">Rp 4.500.000 - 6.500.000</p>
+                            <p class="text-xs text-slate-400">Deadline: 28 Jul 2026</p>
                         </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Tipe</span>
-                            <span class="mt-2 block font-semibold text-slate-900">Penuh Waktu</span>
-                        </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Deadline</span>
-                            <span class="mt-2 block font-semibold text-slate-900">28 Jul 2026</span>
-                        </div>
-                    </div>
-                    <div class="mt-6 flex items-center justify-between gap-4">
-                        <span class="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-700">#developer</span>
-                        <a href="#" class="text-blue-600 font-semibold transition hover:text-blue-700">Lihat Detail →</a>
-                    </div>
-                </article>
-                <!-- Sample card 3 -->
-                <article class="group rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
-                    <div class="flex items-start justify-between gap-4">
-                        <div class="flex items-center gap-4">
-                            <div class="job-initials">R</div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-slate-900">Staf Administrasi</h3>
-                                <p class="text-sm text-slate-500">PT Ritel Karawang</p>
+                        <a href="#" class="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 hover:text-blue-700 transition">Lihat Detail <span>→</span></a>
+                    </article>
+                    <!-- Sample Card 3 -->
+                    <article class="job-card-v2">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="job-initial-v2 bg-red-500">R</div>
+                                <div>
+                                    <h3 class="text-base font-bold text-slate-900">Staf Administrasi</h3>
+                                    <p class="text-sm text-slate-500">PT Ritel Karawang</p>
+                                </div>
                             </div>
+                            <button type="button" class="text-slate-300 hover:text-blue-600 transition" aria-label="Bookmark">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"/></svg>
+                            </button>
                         </div>
-                        <button type="button" class="text-slate-400 transition hover:text-blue-600" aria-label="Bookmark">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"/></svg>
-                        </button>
-                    </div>
-                    <div class="mt-6 grid gap-3 text-sm text-slate-500 sm:grid-cols-2">
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Gaji</span>
-                            <span class="mt-2 block font-semibold text-slate-900">Rp 3.500.000 - 4.500.000</span>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="job-tag-v2 bg-blue-50 text-blue-700">Karawang</span>
+                            <span class="job-tag-v2 bg-blue-50 text-blue-700">Penuh Waktu</span>
                         </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Location</span>
-                            <span class="mt-2 block font-semibold text-slate-900">Karawang</span>
+                        <div class="mt-4 space-y-1">
+                            <p class="text-sm font-semibold text-slate-900">Rp 3.500.000 - 4.500.000</p>
+                            <p class="text-xs text-slate-400">Deadline: 25 Jul 2026</p>
                         </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Tipe</span>
-                            <span class="mt-2 block font-semibold text-slate-900">Penuh Waktu</span>
-                        </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Deadline</span>
-                            <span class="mt-2 block font-semibold text-slate-900">25 Jul 2026</span>
-                        </div>
-                    </div>
-                    <div class="mt-6 flex items-center justify-between gap-4">
-                        <span class="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-700">#administrasi</span>
-                        <a href="#" class="text-blue-600 font-semibold transition hover:text-blue-700">Lihat Detail →</a>
-                    </div>
-                </article>
-                <!-- Sample card 4 -->
-                <article class="group rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
-                    <div class="flex items-start justify-between gap-4">
-                        <div class="flex items-center gap-4">
-                            <div class="job-initials">K</div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-slate-900">Resepsionis Hotel</h3>
-                                <p class="text-sm text-slate-500">PT Karawang Hospitality</p>
+                        <a href="#" class="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 hover:text-blue-700 transition">Lihat Detail <span>→</span></a>
+                    </article>
+                    <!-- Sample Card 4 -->
+                    <article class="job-card-v2">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="job-initial-v2 bg-yellow-500">K</div>
+                                <div>
+                                    <h3 class="text-base font-bold text-slate-900">Resepsionis Hotel</h3>
+                                    <p class="text-sm text-slate-500">PT Karawang Hospitality</p>
+                                </div>
                             </div>
+                            <button type="button" class="text-slate-300 hover:text-blue-600 transition" aria-label="Bookmark">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"/></svg>
+                            </button>
                         </div>
-                        <button type="button" class="text-slate-400 transition hover:text-blue-600" aria-label="Bookmark">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"/></svg>
-                        </button>
-                    </div>
-                    <div class="mt-6 grid gap-3 text-sm text-slate-500 sm:grid-cols-2">
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Gaji</span>
-                            <span class="mt-2 block font-semibold text-slate-900">Rp 3.800.000 - 4.800.000</span>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="job-tag-v2 bg-blue-50 text-blue-700">Karawang</span>
+                            <span class="job-tag-v2 bg-blue-50 text-blue-700">Penuh Waktu</span>
                         </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Location</span>
-                            <span class="mt-2 block font-semibold text-slate-900">Karawang</span>
+                        <div class="mt-4 space-y-1">
+                            <p class="text-sm font-semibold text-slate-900">Rp 3.800.000 - 4.800.000</p>
+                            <p class="text-xs text-slate-400">Deadline: 30 Jul 2026</p>
                         </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Tipe</span>
-                            <span class="mt-2 block font-semibold text-slate-900">Penuh Waktu</span>
-                        </div>
-                        <div class="rounded-2xl bg-slate-50 p-4">
-                            <span class="block text-xs text-slate-400">Deadline</span>
-                            <span class="mt-2 block font-semibold text-slate-900">30 Jul 2026</span>
-                        </div>
-                    </div>
-                    <div class="mt-6 flex items-center justify-between gap-4">
-                        <span class="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-700">#resepsionis</span>
-                        <a href="#" class="text-blue-600 font-semibold transition hover:text-blue-700">Lihat Detail →</a>
-                    </div>
-                </article>
+                        <a href="#" class="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 hover:text-blue-700 transition">Lihat Detail <span>→</span></a>
+                    </article>
+                </div>
+                <button class="job-carousel-btn job-carousel-next" aria-label="Next">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+            <div class="text-center mt-10">
+                <a href="{{ route('jobs.index') }}" class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-blue-600 text-white text-sm font-semibold shadow-lg shadow-blue-600/25 hover:bg-blue-700 transition">Lihat Semua Lowongan</a>
             </div>
         </div>
     </section>
     @endif
 
-    <!-- Call To Action -->
-    <section class="py-20 bg-slate-50">
+    <!-- Call To Action - Siap Memulai Karir Anda? -->
+    <section class="py-16 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-500 px-6 py-14 shadow-2xl shadow-slate-950/15">
-                <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.18),_transparent_32%)]"></div>
-                <div class="absolute right-0 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-white/10 blur-3xl"></div>
-                <div class="relative grid gap-10 lg:grid-cols-2 items-center">
-                    <div class="space-y-6 text-white">
-                        <p class="text-sm uppercase tracking-[0.32em] text-cyan-100/80">Ayo mulai</p>
-                        <h2 class="text-4xl font-semibold sm:text-5xl">Siap Memulai Karier Anda?</h2>
-                        <p class="max-w-xl text-base text-slate-100/90">Bergabung bersama ribuan alumni yang telah menemukan pekerjaan impian melalui BKK SMK MUTU.</p>
-                        @guest
-                        <a href="{{ route('register') }}" class="inline-flex rounded-full bg-white px-8 py-4 text-base font-semibold text-blue-700 shadow-lg shadow-slate-950/15 transition hover:bg-slate-50">Daftar Sekarang Gratis</a>
-                        @else
-                        <a href="{{ route('jobs.index') }}" class="inline-flex rounded-full bg-white px-8 py-4 text-base font-semibold text-blue-700 shadow-lg shadow-slate-950/15 transition hover:bg-slate-50">Lihat Lowongan</a>
-                        @endguest
-                    </div>
-                    <div class="relative hidden lg:block">
-                        <div class="absolute -left-16 top-10 h-32 w-32 rounded-full bg-white/15 blur-3xl"></div>
-                        <div class="relative mx-auto h-[360px] w-full max-w-lg overflow-hidden rounded-[2rem] bg-slate-950/70 p-6 shadow-2xl">
-                            <svg class="h-full w-full" viewBox="0 0 680 520" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <defs>
-                                    <linearGradient id="cta-grad" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.88" />
-                                        <stop offset="100%" stop-color="#c7d2fe" stop-opacity="0.16" />
-                                    </linearGradient>
-                                </defs>
-                                <rect x="28" y="38" width="624" height="432" rx="48" fill="url(#cta-grad)" opacity="0.1" />
-                                <circle cx="142" cy="120" r="58" fill="#ffffff" opacity="0.08" />
-                                <circle cx="560" cy="92" r="44" fill="#ffffff" opacity="0.08" />
-                                <path d="M168 408c-26 0-48-21-48-47 0-26 22-47 48-47h38l18 36 18-36h38c26 0 48 21 48 47 0 26-22 47-48 47H168Z" fill="#fff" opacity="0.16" />
-                                <path d="M436 386c-24 0-44-19-44-42 0-23 20-42 44-42h32l16 34 16-34h32c24 0 44 19 44 42 0 23-20 42-44 42H436Z" fill="#fff" opacity="0.16" />
-                                <path d="M160 194c0-28 22-50 50-50h2c28 0 50 22 50 50v100c0 28-22 50-50 50h-2c-28 0-50-22-50-50V194Z" fill="#c7d2fe" />
-                                <path d="M438 192c0-26 22-48 48-48h2c26 0 48 22 48 48v102c0 26-22 48-48 48h-2c-26 0-48-22-48-48V192Z" fill="#93c5fd" />
-                                <path d="M208 246c18 0 34-14 34-32v-6c0-18-16-32-34-32s-34 14-34 32v6c0 18 16 32 34 32Z" fill="#fff" />
-                                <path d="M496 252c16 0 30-12 30-28v-4c0-16-14-28-30-28s-30 12-30 28v4c0 16 14 28 30 28Z" fill="#fff" />
-                                <path d="M216 336c0 26-18 46-40 46s-40-20-40-46c0-26 18-46 40-46s40 20 40 46Z" fill="#e2e8f0" />
-                                <path d="M512 342c0 24-18 42-42 42s-42-18-42-42c0-24 18-42 42-42s42 18 42 42Z" fill="#c7d2fe" />
-                                <path d="M138 312c6 0 10-4 10-10v-12c0-6-4-10-10-10s-10 4-10 10v12c0 6 4 10 10 10Z" fill="#ffffff" opacity="0.6" />
-                                <path d="M372 314c8 0 12-6 12-14v-16c0-8-4-14-12-14s-12 6-12 14v16c0 8 4 14 12 14Z" fill="#ffffff" opacity="0.6" />
-                            </svg>
-                        </div>
-                    </div>
+            <div class="cta-banner-v2">
+                <div class="cta-content-v2">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">Siap Memulai Karir Anda?</h2>
+                    <p class="mt-4 text-base text-blue-100/90 max-w-lg">Bergabunglah bersama ribuan alumni yang telah menemukan pekerjaan impian melalui BKK SMK MUTU.</p>
+                    @guest
+                    <a href="{{ route('register') }}" class="inline-flex items-center gap-2 mt-6 px-8 py-3.5 rounded-full bg-white text-blue-700 text-base font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-50 transition">
+                        Daftar Sekarang Gratis <span>→</span>
+                    </a>
+                    @else
+                    <a href="{{ route('jobs.index') }}" class="inline-flex items-center gap-2 mt-6 px-8 py-3.5 rounded-full bg-white text-blue-700 text-base font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-50 transition">
+                        Lihat Lowongan <span>→</span>
+                    </a>
+                    @endguest
+                </div>
+                <div class="cta-illustration-v2">
+                    <img src="{{ asset('images/foto_siswa/siswa.png') }}" alt="Ilustrasi siswa BKK SMK MUTU" class="cta-illustration-img">
                 </div>
             </div>
         </div>
@@ -690,6 +697,33 @@
                 }
                 window.requestAnimationFrame(step);
             }
+
+            // Job carousel navigation
+            document.querySelectorAll('.job-carousel-wrapper').forEach(function(wrapper) {
+                var track = wrapper.querySelector('.job-carousel-track');
+                var prevBtn = wrapper.querySelector('.job-carousel-prev');
+                var nextBtn = wrapper.querySelector('.job-carousel-next');
+                if (track && prevBtn && nextBtn) {
+                    var scrollAmount = 300;
+                    prevBtn.addEventListener('click', function() {
+                        track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                    });
+                    nextBtn.addEventListener('click', function() {
+                        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    });
+                }
+            });
+
+            // Counter formatting with dots (Indonesian style)
+            function formatNumber(num) {
+                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            }
+
+            counters.forEach(function(counter) {
+                var observer = new MutationObserver(function() {
+                    // Format is handled in animateCounter
+                });
+            });
         });
     </script>
 </body>

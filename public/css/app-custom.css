@@ -1427,3 +1427,344 @@ footer {
     color: #fbbf24;
     border-color: #fbbf24;
 }
+
+/* ============================================================
+   V2 REDESIGN — Feature Cards
+   ============================================================ */
+.feature-card-v2 {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.feature-card-v2:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
+    border-color: #3b82f6;
+}
+
+.feature-icon-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+/* ============================================================
+   V2 REDESIGN — How It Works Steps
+   ============================================================ */
+.hiw-steps-grid {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 1rem 0 2rem;
+}
+
+.hiw-steps-grid::-webkit-scrollbar {
+    height: 4px;
+}
+
+.hiw-steps-grid::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.15);
+    border-radius: 999px;
+}
+
+.hiw-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 130px;
+    flex-shrink: 0;
+}
+
+.hiw-step-icon-wrap {
+    position: relative;
+    display: inline-flex;
+}
+
+.hiw-step-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+}
+
+.hiw-step-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hiw-step:hover .hiw-step-circle {
+    transform: scale(1.08);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.18);
+}
+
+.hiw-connector {
+    width: 60px;
+    height: 2px;
+    border-top: 2px dashed #cbd5e1;
+    margin-top: 40px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .hiw-connector { width: 30px; }
+    .hiw-step { min-width: 100px; }
+    .hiw-step-circle { width: 64px; height: 64px; }
+    .hiw-step-circle svg { width: 1.5rem; height: 1.5rem; }
+}
+
+@media (max-width: 480px) {
+    .hiw-connector { width: 16px; }
+    .hiw-step { min-width: 80px; }
+    .hiw-step-circle { width: 52px; height: 52px; }
+}
+
+/* ============================================================
+   V2 REDESIGN — Statistics Bar
+   ============================================================ */
+.stats-bar-v2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+    border-radius: 1.25rem;
+    padding: 1.5rem 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    box-shadow: 0 8px 32px rgba(37, 99, 235, 0.25);
+}
+
+.stat-item-v2 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 180px;
+}
+
+.stat-icon-v2 {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.stat-divider-v2 {
+    width: 1px;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+}
+
+@media (max-width: 1024px) {
+    .stats-bar-v2 {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+    .stat-item-v2 {
+        min-width: 45%;
+        flex: 1 1 45%;
+    }
+    .stat-divider-v2 {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .stat-item-v2 {
+        min-width: 100%;
+        flex: 1 1 100%;
+    }
+}
+
+/* ============================================================
+   V2 REDESIGN — Job Cards Carousel
+   ============================================================ */
+.job-carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.job-carousel-track {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding: 0.5rem 0;
+    flex: 1;
+}
+
+.job-carousel-track::-webkit-scrollbar {
+    display: none;
+}
+
+.job-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    transition: all 0.2s ease;
+}
+
+.job-carousel-btn:hover {
+    background: #3b82f6;
+    color: #fff;
+    border-color: #3b82f6;
+}
+
+.job-carousel-prev { left: -18px; }
+.job-carousel-next { right: -18px; }
+
+.job-card-v2 {
+    min-width: 260px;
+    max-width: 280px;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.job-card-v2:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
+    border-color: #3b82f6;
+}
+
+.job-initial-v2 {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.job-tag-v2 {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.625rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+    .job-carousel-btn { display: none; }
+    .job-card-v2 { min-width: 240px; }
+}
+
+/* ============================================================
+   V2 REDESIGN — CTA Banner
+   ============================================================ */
+.cta-banner-v2 {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 40%, #3b82f6 100%);
+    padding: 3rem 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 16px 48px rgba(37, 99, 235, 0.25);
+}
+
+.cta-banner-v2::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.12), transparent 50%);
+    pointer-events: none;
+}
+
+.cta-content-v2 {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+}
+
+.cta-illustration-v2 {
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+}
+
+.cta-illustration-img {
+    height: 200px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.2));
+}
+
+@media (max-width: 768px) {
+    .cta-banner-v2 {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1.5rem;
+    }
+    .cta-illustration-v2 { order: -1; }
+    .cta-illustration-img { height: 160px; }
+}
+
+/* Carousel JS helper */
+.job-carousel-wrapper .job-carousel-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
