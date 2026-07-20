@@ -1,0 +1,104 @@
+---
+name: bkk-smk-mutu
+description: Panduan pengembangan platform BKK (Bursa Kerja Khusus) SMK MUTU Cikampek — sistem Laravel yang menghubungkan siswa/alumni dengan perusahaan mitra untuk lowongan kerja. WAJIB gunakan skill ini setiap kali mengerjakan proyek ini — membuat fitur baru (controller, model, migration, view, route), memperbaiki bug, review kode, mendesain database, mengatur role/permission (admin, perusahaan, siswa/alumni), atau membahas arsitektur proyek. Trigger juga jika user menyebut "BKK", "SMK MUTU", "lowongan kerja", "job matching", "CV builder", "tracker lamaran", atau nama-nama fitur platform ini, bahkan jika user tidak menyebut nama proyek secara eksplisit.
+---
+
+# Skill: Platform BKK SMK MUTU Cikampek
+
+## Ringkasan Proyek
+
+Platform digital Bursa Kerja Khusus (BKK) untuk SMK MUTU Cikampek. Menghubungkan **siswa/alumni** pencari kerja dengan **perusahaan mitra** yang membuka lowongan, dengan **admin/guru BK** sebagai pengawas dan verifikator.
+
+Tujuan utama:
+- Memudahkan siswa/alumni mencari & melamar kerja
+- Membantu perusahaan menemukan kandidat yang tepat
+- Mendukung monitoring penyaluran kerja oleh sekolah
+- Meningkatkan tingkat penyerapan lulusan
+
+## Tech Stack (WAJIB DIIKUTI — jangan ganti tanpa konfirmasi user)
+
+| Layer | Teknologi |
+|---|---|
+| Backend | Laravel (versi terbaru yang stabil, cek `composer.json` proyek) |
+| Frontend | Blade template + Tailwind CSS |
+| Auth | Laravel Breeze |
+| Role/Permission | Spatie Laravel-Permission |
+| Database | MySQL |
+| Arsitektur | MVC + Repository/Service Layer |
+
+Jangan menyarankan Livewire, Inertia/Vue/React, atau package auth/permission lain kecuali user secara eksplisit memintanya — proyek ini sudah mengunci stack di atas.
+
+## Struktur Folder
+
+```
+app/
+  Http/Controllers/   -> Controller per modul (mis. JobController, ApplicationController)
+  Models/              -> Eloquent model
+  Repositories/         -> Query/DB access layer (interface + implementation)
+  Services/             -> Business logic (mis. JobMatchingService)
+resources/
+  views/                -> Blade template, ikuti struktur folder per role (admin/, company/, student/, auth/, layouts/)
+routes/
+  web.php               -> Semua rute web, dikelompokkan per role dengan middleware & prefix
+public/                 -> Asset (CSS/JS build hasil Tailwind, gambar)
+database/
+  migrations/           -> Migrasi tabel
+  seeders/               -> Seeder (termasuk role & permission default)
+```
+
+Saat membuat fitur baru, **selalu ikuti pola**: Controller (tipis, hanya orchestration) → Service (business logic) → Repository (query DB) → Model. Jangan taruh query Eloquent langsung di controller kalau logikanya kompleks atau reusable.
+
+## Peran & Hak Akses (Spatie Permission)
+
+Tiga role utama — pastikan setiap fitur baru mempertimbangkan ketiganya:
+
+1. **Admin/Guru BK**: verifikasi perusahaan, lihat statistik, buat laporan, kelola semua user
+2. **Perusahaan**: posting lowongan, kelola pelamar, beri tawaran, chat dengan pelamar
+3. **Siswa/Alumni**: cari & lamar lowongan, kelola CV, lihat status lamaran, bookmark, chat dengan perusahaan
+
+Saat membuat controller/route baru, selalu tentukan middleware role (`role:admin`, `role:perusahaan`, `role:siswa`) dan cek apakah perlu policy/gate tambahan (mis. perusahaan hanya boleh edit lowongan miliknya sendiri — cek `->company_id === auth()->user()->company_id` atau via Policy).
+
+## Modul/Fitur Utama (referensi saat membuat fitur baru)
+
+- Landing page pra-login (welcome page publik)
+- Pencarian & daftar lowongan kerja (filter: lokasi, kategori, jenis pekerjaan)
+- Rekomendasi pekerjaan / job matching (cocokkan skill siswa dengan requirement lowongan)
+- Tracker status lamaran (mis. status: submitted → reviewed → interview → accepted/rejected)
+- Upload sertifikat & CV builder
+- Bookmark lowongan
+- Event & berita karir
+- Chat/pesan internal antara siswa/alumni dan perusahaan
+- Manajemen user & role (admin, perusahaan, siswa/alumni), termasuk verifikasi akun perusahaan oleh admin
+
+Kalau user minta fitur baru yang belum ada di daftar ini, tetap ikuti pola arsitektur & pertimbangkan dampaknya ke 3 role di atas — tanyakan role mana yang bisa akses fitur tersebut kalau belum jelas.
+
+## UI / Landing Page
+
+Kalau user minta bikin, perbaiki, atau niru desain **halaman pra-login/landing page** (dari gambar mockup, Figma, atau screenshot), baca `references/landing-page.md` SEBELUM mulai coding — file itu berisi struktur section lengkap, konvensi Tailwind, dan daftar penyebab paling umum kenapa hasil implementasi jadi berantakan dibanding gambar acuan (teks nempel tanpa spasi, baris badge/logo overflow, logo tanpa card pembungkus).
+
+## Konvensi Coding
+
+- **Naming**: Controller `PascalCase` + suffix `Controller` (mis. `JobApplicationController`), Model singular `PascalCase` (mis. `JobVacancy`, bukan `JobVacancies`), tabel migration snake_case plural (mis. `job_vacancies`)
+- **Route naming**: gunakan named route dengan prefix role, mis. `company.jobs.store`, `student.applications.index`
+- **Blade**: gunakan `@extends`/`@section` dengan layout per role di `resources/views/layouts/`, komponen reusable di `resources/views/components/`
+- **Validasi**: gunakan Form Request class (`php artisan make:request`), jangan validasi inline di controller untuk form yang kompleks
+- **Migration**: selalu tambahkan foreign key constraint yang jelas (mis. `company_id` → `foreignId('company_id')->constrained()`), gunakan `softDeletes()` untuk data yang tidak boleh hilang permanen (lowongan, lamaran)
+- **Tailwind**: gunakan utility class langsung di Blade, hindari CSS custom kecuali benar-benar perlu; konsisten dengan palet warna yang sudah dipakai di proyek (cek `tailwind.config.js` kalau ada)
+
+## Checklist Review Kode
+
+Saat diminta review kode di proyek ini, cek hal-hal berikut:
+
+1. **Otorisasi**: apakah controller/route sudah dibatasi middleware role yang benar? Apakah perusahaan/siswa bisa mengakses/mengubah data milik orang lain (IDOR)?
+2. **Query N+1**: apakah ada `->with()` untuk eager loading relasi yang dipakai di Blade (mis. lowongan dengan perusahaan, lamaran dengan siswa)?
+3. **Validasi input**: apakah semua form pakai Form Request, terutama upload file (CV, sertifikat — cek tipe & ukuran file)?
+4. **Konsistensi layer**: apakah logic bisnis nyasar ke controller/Blade padahal harusnya di Service?
+5. **Status/enum konsisten**: status lamaran dan status verifikasi perusahaan harus pakai constant/enum, bukan string bebas yang beda-beda di tiap file
+6. **Keamanan file upload**: CV/sertifikat harus divalidasi ekstensi & disimpan di storage yang tidak bisa dieksekusi langsung
+
+## Cara Merespons Permintaan di Proyek Ini
+
+- Kalau user minta buat fitur baru: tanyakan role mana yang pakai (kalau belum jelas dari konteks), lalu buatkan urutan lengkap — migration → model → repository → service → controller → route → view — sesuai pola di atas
+- Kalau user minta perbaikan bug/review: jalankan checklist review di atas, jelaskan temuan dengan bahasa yang jelas (user masih mahasiswa Sistem Informasi, bukan senior engineer — jelaskan istilah teknis secukupnya)
+- Kalau user minta desain database baru: pastikan relasi antar tabel jelas (User–Role, Company–JobVacancy, Student–Application–JobVacancy, dst.) dan tanyakan dulu kalau ada ambiguitas relasi
+- Selalu konsisten dengan stack Laravel + Blade + Tailwind + Spatie Permission — jangan alihkan ke framework/tool lain

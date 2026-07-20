@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     
     {{-- Local Tailwind CSS (no internet required) --}}
     <link rel="stylesheet" href="{{ asset('css/tailwind-local.css') }}">
@@ -78,7 +78,7 @@
                         👋 Selamat Datang di BKK SMK MUTU
                     </div>
                     <div class="space-y-6">
-                        <h1 class="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl leading-tight">
+                        <h1 class="ui-page-hero-title text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl leading-tight">
                             Temukan Karir Impian<br class="hidden xl:inline" />Anda bersama<br class="hidden xl:inline" />BKK SMK MUTU
                         </h1>
                         <p class="max-w-2xl text-base text-slate-100 sm:text-lg lg:text-xl">
@@ -87,10 +87,10 @@
                     </div>
 
                     <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
-                        <a href="{{ route('register') }}" class="ui-btn ui-btn-primary ui-btn-lg" aria-label="Mulai Gratis">
+                        <a href="{{ route('register') }}" class="ui-btn ui-btn-primary ui-btn-lg hero-cta" aria-label="Mulai Gratis">
                             Mulai Gratis
                         </a>
-                        <a href="{{ route('jobs.index') }}" class="ui-btn ui-btn-white ui-btn-lg" aria-label="Lihat Lowongan">
+                        <a href="{{ route('jobs.index') }}" class="ui-btn ui-btn-white ui-btn-lg hero-cta secondary" aria-label="Lihat Lowongan">
                             Lihat Lowongan
                         </a>
                     </div>
@@ -124,7 +124,7 @@
                                     <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-white/80">★</span>
                                 </div>
                                 <div class="relative mx-auto mb-6 h-[340px] w-full overflow-hidden rounded-[2rem] bg-slate-950/90 border border-white/10 shadow-inner">
-                                    <img src="{{ asset('images/foto_siswa/siswa.png') }}" alt="Ilustrasi siswa BKK SMK MUTU" class="h-full w-full object-cover" />
+                                    <img src="{{ asset('images/foto_siswa/siswa.png') }}" alt="Ilustrasi siswa BKK SMK MUTU" class="h-full w-full object-contain" />
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 text-white/85 text-sm">
                                     <div class="rounded-2xl bg-white/6 p-4">
@@ -238,22 +238,42 @@
                 <p class="text-sm uppercase tracking-[0.32em] text-slate-400">Langkah demi langkah</p>
                 <h2 class="mt-4 text-3xl font-semibold text-slate-900 sm:text-4xl">Bagaimana Cara Kerjanya?</h2>
             </div>
-            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                <article class="fade-reveal rounded-[1.75rem] border border-slate-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-xl" data-reveal>
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-blue-600 text-xl font-bold">1</div>
-                    <h3 class="mt-6 text-xl font-semibold text-slate-900">Daftar Akun</h3>
-                    <p class="mt-3 text-sm text-slate-500">Buat akun gratis dan masuk ke platform.</p>
-                </article>
-                <article class="fade-reveal rounded-[1.75rem] border border-slate-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-xl" data-reveal>
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 text-xl font-bold">2</div>
-                    <h3 class="mt-6 text-xl font-semibold text-slate-900">Lengkapi Profil</h3>
-                    <p class="mt-3 text-sm text-slate-500">Isi data diri, pendidikan, dan keahlian Anda.</p>
-                </article>
-                <article class="fade-reveal rounded-[1.75rem] border border-slate-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-xl" data-reveal>
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-cyan-100 text-cyan-600 text-xl font-bold">3</div>
-                    <h3 class="mt-6 text-xl font-semibold text-slate-900">Cari dan Lamar</h3>
-                    <p class="mt-3 text-sm text-slate-500">Temukan lowongan terbaik dan ajukan lamaran dengan mudah.</p>
-                </article>
+            <div class="steps-wrapper">
+                <div class="step">
+                    <div class="dot step-dot bg-blue-100 text-blue-700">1</div>
+                    <h4 class="text-sm font-semibold text-slate-700 mt-2">Daftar Akun</h4>
+                    <p class="text-xs text-slate-500">Buat akun gratis dengan mudah</p>
+                </div>
+                <div class="step-connector" aria-hidden></div>
+                <div class="step">
+                    <div class="dot step-dot bg-emerald-100 text-emerald-700">2</div>
+                    <h4 class="text-sm font-semibold text-slate-700 mt-2">Lengkapi Profil</h4>
+                    <p class="text-xs text-slate-500">Isi profil dan unggah CV</p>
+                </div>
+                <div class="step-connector" aria-hidden></div>
+                <div class="step">
+                    <div class="dot step-dot bg-cyan-100 text-cyan-700">3</div>
+                    <h4 class="text-sm font-semibold text-slate-700 mt-2">Cari Lowongan</h4>
+                    <p class="text-xs text-slate-500">Temukan pekerjaan sesuai keahlian</p>
+                </div>
+                <div class="step-connector" aria-hidden></div>
+                <div class="step">
+                    <div class="dot step-dot bg-orange-100 text-orange-700">4</div>
+                    <h4 class="text-sm font-semibold text-slate-700 mt-2">Lamar Pekerjaan</h4>
+                    <p class="text-xs text-slate-500">Kirim lamaran dengan satu klik</p>
+                </div>
+                <div class="step-connector" aria-hidden></div>
+                <div class="step">
+                    <div class="dot step-dot bg-indigo-100 text-indigo-700">5</div>
+                    <h4 class="text-sm font-semibold text-slate-700 mt-2">Interview</h4>
+                    <p class="text-xs text-slate-500">Ikuti proses seleksi</p>
+                </div>
+                <div class="step-connector" aria-hidden></div>
+                <div class="step">
+                    <div class="dot step-dot bg-green-100 text-green-700">6</div>
+                    <h4 class="text-sm font-semibold text-slate-700 mt-2">Diterima Kerja</h4>
+                    <p class="text-xs text-slate-500">Mulai karir impian Anda</p>
+                </div>
             </div>
         </div>
     </section>
@@ -298,8 +318,8 @@
                 @foreach($jobs->take(6) as $job)
                 <article class="group rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
                     <div class="flex items-start justify-between gap-4">
-                        <div class="flex items-center gap-4">
-                            <div class="flex h-14 w-14 items-center justify-center rounded-3xl bg-blue-50 text-blue-600 font-semibold text-xl">{{ strtoupper(substr($job->company->name ?? 'BKK', 0, 2)) }}</div>
+                            <div class="flex items-center gap-4">
+                            <div class="job-initials">{{ strtoupper(substr($job->company->name ?? 'BKK', 0, 2)) }}</div>
                             <div>
                                 <h3 class="text-lg font-semibold text-slate-900">{{ $job->title }}</h3>
                                 <p class="text-sm text-slate-500">{{ $job->company->name ?? 'Perusahaan Mitra' }}</p>
@@ -339,15 +359,159 @@
     @else
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Peluang Lowongan Terbaru</h2>
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-gray-900 mb-2">Peluang Lowongan Terbaru</h2>
+                <p class="text-lg text-gray-600">Temukan kesempatan karir terbaik untuk Anda</p>
             </div>
-            <div class="flex flex-col items-center justify-center py-16 text-center">
-                <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-6">
-                    <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-700 mb-2">Belum ada lowongan tersedia saat ini</h3>
-                <p class="text-gray-500 text-sm max-w-sm">Pantau terus platform kami. Lowongan kerja baru akan segera hadir dari perusahaan-perusahaan mitra kami.</p>
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Sample card 1 -->
+                <article class="group rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="job-initials">M</div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-slate-900">Operator Produksi</h3>
+                                <p class="text-sm text-slate-500">PT Maju Bersama</p>
+                            </div>
+                        </div>
+                        <button type="button" class="text-slate-400 transition hover:text-blue-600" aria-label="Bookmark">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"/></svg>
+                        </button>
+                    </div>
+                    <div class="mt-6 grid gap-3 text-sm text-slate-500 sm:grid-cols-2">
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Gaji</span>
+                            <span class="mt-2 block font-semibold text-slate-900">Rp 4.000.000 - 5.200.000</span>
+                        </div>
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Location</span>
+                            <span class="mt-2 block font-semibold text-slate-900">Karawang Barat</span>
+                        </div>
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Tipe</span>
+                            <span class="mt-2 block font-semibold text-slate-900">Penuh Waktu</span>
+                        </div>
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Deadline</span>
+                            <span class="mt-2 block font-semibold text-slate-900">31 Jul 2026</span>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between gap-4">
+                        <span class="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-700">#produksi</span>
+                        <a href="#" class="text-blue-600 font-semibold transition hover:text-blue-700">Lihat Detail →</a>
+                    </div>
+                </article>
+                <!-- Sample card 2 -->
+                <article class="group rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="job-initials">T</div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-slate-900">Junior Web Developer</h3>
+                                <p class="text-sm text-slate-500">PT Teknologi Nusantara</p>
+                            </div>
+                        </div>
+                        <button type="button" class="text-slate-400 transition hover:text-blue-600" aria-label="Bookmark">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"/></svg>
+                        </button>
+                    </div>
+                    <div class="mt-6 grid gap-3 text-sm text-slate-500 sm:grid-cols-2">
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Gaji</span>
+                            <span class="mt-2 block font-semibold text-slate-900">Rp 4.500.000 - 6.500.000</span>
+                        </div>
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Location</span>
+                            <span class="mt-2 block font-semibold text-slate-900">Karawang Timur</span>
+                        </div>
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Tipe</span>
+                            <span class="mt-2 block font-semibold text-slate-900">Penuh Waktu</span>
+                        </div>
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Deadline</span>
+                            <span class="mt-2 block font-semibold text-slate-900">28 Jul 2026</span>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between gap-4">
+                        <span class="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-700">#developer</span>
+                        <a href="#" class="text-blue-600 font-semibold transition hover:text-blue-700">Lihat Detail →</a>
+                    </div>
+                </article>
+                <!-- Sample card 3 -->
+                <article class="group rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="job-initials">R</div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-slate-900">Staf Administrasi</h3>
+                                <p class="text-sm text-slate-500">PT Ritel Karawang</p>
+                            </div>
+                        </div>
+                        <button type="button" class="text-slate-400 transition hover:text-blue-600" aria-label="Bookmark">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"/></svg>
+                        </button>
+                    </div>
+                    <div class="mt-6 grid gap-3 text-sm text-slate-500 sm:grid-cols-2">
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Gaji</span>
+                            <span class="mt-2 block font-semibold text-slate-900">Rp 3.500.000 - 4.500.000</span>
+                        </div>
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Location</span>
+                            <span class="mt-2 block font-semibold text-slate-900">Karawang</span>
+                        </div>
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Tipe</span>
+                            <span class="mt-2 block font-semibold text-slate-900">Penuh Waktu</span>
+                        </div>
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Deadline</span>
+                            <span class="mt-2 block font-semibold text-slate-900">25 Jul 2026</span>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between gap-4">
+                        <span class="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-700">#administrasi</span>
+                        <a href="#" class="text-blue-600 font-semibold transition hover:text-blue-700">Lihat Detail →</a>
+                    </div>
+                </article>
+                <!-- Sample card 4 -->
+                <article class="group rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="job-initials">K</div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-slate-900">Resepsionis Hotel</h3>
+                                <p class="text-sm text-slate-500">PT Karawang Hospitality</p>
+                            </div>
+                        </div>
+                        <button type="button" class="text-slate-400 transition hover:text-blue-600" aria-label="Bookmark">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5v16l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z"/></svg>
+                        </button>
+                    </div>
+                    <div class="mt-6 grid gap-3 text-sm text-slate-500 sm:grid-cols-2">
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Gaji</span>
+                            <span class="mt-2 block font-semibold text-slate-900">Rp 3.800.000 - 4.800.000</span>
+                        </div>
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Location</span>
+                            <span class="mt-2 block font-semibold text-slate-900">Karawang</span>
+                        </div>
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Tipe</span>
+                            <span class="mt-2 block font-semibold text-slate-900">Penuh Waktu</span>
+                        </div>
+                        <div class="rounded-2xl bg-slate-50 p-4">
+                            <span class="block text-xs text-slate-400">Deadline</span>
+                            <span class="mt-2 block font-semibold text-slate-900">30 Jul 2026</span>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between gap-4">
+                        <span class="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-700">#resepsionis</span>
+                        <a href="#" class="text-blue-600 font-semibold transition hover:text-blue-700">Lihat Detail →</a>
+                    </div>
+                </article>
             </div>
         </div>
     </section>

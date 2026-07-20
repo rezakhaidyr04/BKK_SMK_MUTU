@@ -3,8 +3,9 @@
    ============================================================ */
 
 :root {
-    --color-primary: #2563eb;
-    --color-primary-dark: #1d4ed8;
+    --font-sans: 'Inter', 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    --color-primary: #06b6d4;
+    --color-primary-dark: #2563eb;
     --color-primary-light: #dbeafe;
     --color-secondary: #10b981;
     --color-warning: #f59e0b;
@@ -26,7 +27,7 @@
 
 /* Global Typography */
 body {
-    font-family: 'Poppins', system-ui, sans-serif;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: var(--color-text);
@@ -97,10 +98,14 @@ body {
 }
 
 .ui-page-hero-title {
-    font-size: 1.875rem;
-    font-weight: 700;
-    line-height: 1.2;
+    font-size: 2.25rem;
+    font-weight: 800;
+    line-height: 1.08;
     letter-spacing: -0.02em;
+}
+
+@media (min-width: 1024px) {
+    .ui-page-hero-title { font-size: 3.5rem; }
 }
 
 .ui-page-hero-subtitle {
@@ -460,13 +465,14 @@ body {
 .ui-btn-primary {
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    box-shadow: 0 10px 30px rgba(6,182,212,0.18);
+    border-radius: 999px;
+    padding: 0.95rem 1.8rem;
 }
 
 .ui-btn-primary:hover {
-    background: linear-gradient(135deg, var(--color-primary-dark) 0%, #1e40af 100%);
-    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
-    transform: translateY(-1px);
+    filter: brightness(0.98);
+    transform: translateY(-2px);
 }
 
 .ui-btn-secondary {
@@ -510,13 +516,190 @@ body {
 }
 
 .ui-btn-white {
-    background: #fff;
+    background: rgba(255,255,255,0.95);
+    color: var(--color-primary-dark);
+    box-shadow: var(--shadow-md);
+    border-radius: 999px;
+}
+
+.ui-btn-white:hover { background: rgba(255,255,255,1); }
+
+/* Hero CTA tweaks */
+.hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 700;
+    box-shadow: 0 10px 30px rgba(37,99,235,0.18);
+}
+
+.hero-cta.secondary {
+    background: rgba(255,255,255,0.92);
     color: var(--color-primary);
+    border: 1px solid rgba(37,99,235,0.08);
+}
+
+/* Bigger hero heading on large screens to match mock */
+@media (min-width: 1024px) {
+    .ui-page-hero-title, .hero h1, .hero-hero-title {
+        font-size: 3.25rem;
+    }
+}
+
+/* Trusted logos sizing */
+.logo-marquee-track img {
+    display: inline-block;
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+    background: transparent;
+    padding: 6px 10px;
+}
+
+/* Horizontal marquee animation for trusted logos */
+.logo-marquee-track {
+    animation: marquee-left 28s linear infinite;
+}
+
+@keyframes marquee-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Jobs card polish */
+.group.rounded-[1.75rem] {
+    border-radius: 1.25rem;
+}
+
+/* How it works step number styling */
+.how-step-number {
+    height: 80px;
+    width: 80px;
+    font-size: 1.35rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.how-step-number.primary { background: #e0f2fe; color: #0369a1; }
+.how-step-number.success { background: #ecfdf5; color: #059669; }
+.how-step-number.accent  { background: #ecfeff; color: #0891b2; }
+
+/* Card polish for How It Works */
+.how-card { padding: 2.25rem; border-radius: 1.75rem; }
+
+/* Slightly stronger shadow for feature cards */
+.fade-reveal { box-shadow: 0 8px 24px rgba(15,23,42,0.06); }
+
+/* Consistent card component */
+.ui-card {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: 1.25rem;
     box-shadow: var(--shadow-md);
 }
 
-.ui-btn-white:hover {
-    background: #eff6ff;
+/* Feature card */
+.feature-card {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    text-align: center;
+    border: 1px solid rgba(15,23,42,0.04);
+    box-shadow: 0 8px 24px rgba(2,6,23,0.04);
+}
+.feature-card .icon {
+    height: 56px;
+    width: 56px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(6,182,212,0.08), rgba(37,99,235,0.04));
+    color: var(--color-primary-dark);
+}
+
+/* Steps timeline */
+.steps-wrapper { display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap:nowrap; overflow-x:auto; padding: 1rem 0; }
+.step { display:flex; flex-direction:column; align-items:center; gap:0.75rem; min-width:120px; }
+.step .dot { height:56px; width:56px; border-radius:999px; display:flex; align-items:center; justify-content:center; box-shadow: var(--shadow-sm); font-weight:800; font-size:1.125rem; }
+.step-connector { height:4px; width:120px; background: linear-gradient(90deg, rgba(37,99,235,0.18), rgba(6,182,212,0.12)); border-radius:999px; align-self:center; }
+
+/* hide scrollbar for timeline */
+.steps-wrapper::-webkit-scrollbar { height: 6px; }
+.steps-wrapper::-webkit-scrollbar-thumb { background: rgba(15,23,42,0.06); border-radius: 999px; }
+
+/* hero info pill */
+.hero-info-pill { display:inline-block; background: rgba(255,255,255,0.06); padding: 0.45rem 0.85rem; border-radius:999px; font-weight:600; color:rgba(255,255,255,0.95); }
+
+/* ensure step connector centers properly on small screens */
+@media (max-width: 640px) {
+    .step-connector { width: 64px; }
+    .steps-wrapper { gap: 1rem; padding: 0.5rem 0; }
+    .step { min-width: 100px; }
+}
+
+/* Stats band */
+.stats-band { border-radius: 12px; padding: 1.25rem; display:flex; gap:1rem; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+.stats-band .stat { flex:1; min-width:160px; padding: 1rem; border-radius: 12px; text-align:center; }
+
+/* Big CTA banner */
+.cta-banner { border-radius: 1rem; padding: 2rem; display:flex; gap:1.5rem; align-items:center; justify-content:space-between; background: linear-gradient(90deg, #2563eb, #06b6d4); color: #fff; }
+.cta-banner .cta-actions { max-width:60%; }
+.cta-banner .cta-illust img { max-height: 140px; }
+
+@media (max-width: 768px) {
+    .steps-wrapper .step-connector { width: 80px; }
+    .cta-banner { flex-direction: column; text-align:center; }
+    .cta-banner .cta-actions { max-width:100%; }
+}
+
+/* Standardized headings */
+.ui-section-title { font-size: 1.5rem; font-weight: 700; color: var(--color-text); }
+.ui-subtitle { font-size: 1.125rem; font-weight: 600; color: #334155; }
+
+/* Company initials / avatar used in job cards */
+.job-initials {
+    height: 56px;
+    width: 56px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #eef2ff;
+    color: var(--color-primary-dark);
+    font-weight: 800;
+    font-size: 1rem;
+}
+
+/* Ensure all CTA buttons share visual scale */
+.ui-btn, .hero-cta { border-radius: 999px; font-weight: 700; }
+
+/* Trusted logos card look */
+.logo-marquee-track img { background: #fff; border-radius: 12px; padding: 10px; box-shadow: 0 4px 12px rgba(2,6,23,0.06); }
+
+/* Mobile compacting for various components */
+@media (max-width: 420px) {
+    .ui-page-hero-inner { padding: 1.25rem; }
+    .ui-page-hero-title { font-size: 1.5rem; }
+    .hero-illustration-card img { height: 200px !important; }
+    .logo-marquee-track { gap: 8px; }
+    .job-initials { height: 48px; width: 48px; font-size: 0.95rem; }
+}
+
+/* Mobile refinements */
+@media (max-width: 768px) {
+    .hero-illustration-card img {
+        height: 240px !important;
+    }
+    .ui-page-hero-title, .hero h1 {
+        font-size: 1.75rem;
+    }
+    nav .max-w-7xl { padding-left: 12px; padding-right: 12px; }
 }
 
 /* Legacy aliases */
