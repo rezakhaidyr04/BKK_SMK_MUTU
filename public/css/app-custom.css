@@ -3,26 +3,42 @@
    ============================================================ */
 
 :root {
-    --font-sans: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --color-primary: #06b6d4;
-    --color-primary-dark: #2563eb;
-    --color-primary-light: #dbeafe;
-    --color-secondary: #10b981;
-    --color-warning: #f59e0b;
-    --color-danger: #ef4444;
-    --color-surface: #ffffff;
-    --color-background: #f1f5f9;
-    --color-text: #0f172a;
-    --color-text-muted: #64748b;
-    --color-border: #e2e8f0;
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 20px;
-    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
-    --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.06);
-    --transition: 0.2s ease;
+    --font-sans: 'Poppins', Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --color-primary-50: #EFF6FF;
+    --color-primary-100: #DBEAFE;
+    --color-primary-200: #BFDBFE;
+    --color-primary-300: #93C5FD;
+    --color-primary-400: #60A5FA;
+    --color-primary-500: #3B82F6;
+    --color-primary-600: #2563EB;
+    --color-primary-700: #1D4ED8;
+    --color-primary-800: #1E40AF;
+    --color-primary-900: #1E3A8A;
+    --color-primary: var(--color-primary-600);
+    --color-primary-dark: var(--color-primary-700);
+    --color-primary-light: var(--color-primary-100);
+    --color-success: #22C55E;
+    --color-warning: #F59E0B;
+    --color-danger: #EF4444;
+    --color-info: #0EA5E9;
+    --color-background: #F8FAFC;
+    --color-surface: #FFFFFF;
+    --color-surface-alt: #F1F5F9;
+    --color-heading: #0F172A;
+    --color-subheading: #334155;
+    --color-body: #64748B;
+    --color-muted: #94A3B8;
+    --color-border: #E2E8F0;
+    --color-glass: rgba(255,255,255,0.12);
+    --color-glass-border: rgba(255,255,255,0.18);
+    --radius-button: 16px;
+    --radius-card: 24px;
+    --radius-input: 16px;
+    --radius-pill: 9999px;
+    --shadow-small: 0 4px 12px rgba(15,23,42,0.05);
+    --shadow-medium: 0 10px 30px rgba(15,23,42,0.08);
+    --shadow-large: 0 20px 50px rgba(15,23,42,0.12);
+    --transition: 300ms ease;
 }
 
 /* Global Typography */
@@ -30,13 +46,14 @@ body {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: var(--color-text);
+    color: var(--color-body);
+    background-color: var(--color-background);
 }
 
 /* Page Structure */
 .page-shell {
     min-height: calc(100vh - 4rem);
-    background-color: #f1f5f9;
+    background-color: var(--color-background);
 }
 
 .page-container {
@@ -69,9 +86,8 @@ body {
 
 /* Page Hero */
 .ui-page-hero {
-    /* lighter hero background to match mock */
-    background: linear-gradient(180deg, #f8fbff 0%, #ffffff 60%);
-    color: #0f172a;
+    background: linear-gradient(135deg, #1E40AF 0%, #2563EB 50%, #60A5FA 100%);
+    color: #ffffff;
     position: relative;
     overflow: hidden;
 }
@@ -290,12 +306,12 @@ body {
 }
 
 .hero-greeting {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.18);
     padding: 0.5rem 0.9rem;
     font-weight: 700;
-    color: #fff;
-    backdrop-filter: blur(6px);
+    color: #ffffff;
+    backdrop-filter: blur(18px);
 }
 
 .hero-info-bar {
@@ -305,9 +321,9 @@ body {
     border-radius: 999px;
     padding: 6px 8px;
     gap: 0.75rem;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.06);
-    backdrop-filter: blur(6px);
+    background: var(--color-glass);
+    border: 1px solid var(--color-glass-border);
+    backdrop-filter: blur(18px);
 }
 
 .hero-info-scroll { display:flex; gap:1.25rem; animation: hero-marquee 18s linear infinite; }
@@ -327,10 +343,10 @@ body {
 .hero-illustration {
     border-radius: 1rem;
     overflow: hidden;
-    background: #fff;
+    background: var(--color-surface);
     padding: 1rem;
-    box-shadow: 0 18px 50px rgba(2,6,23,0.06);
-    border: 1px solid rgba(15,23,42,0.04);
+    box-shadow: var(--shadow-medium);
+    border: 1px solid var(--color-border);
 }
 .hero-illustration img { display:block; width:100%; height:auto; object-fit:cover; border-radius: 0.5rem; }
 
@@ -606,28 +622,29 @@ body {
 }
 
 .ui-btn-primary {
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-    color: #fff;
-    box-shadow: 0 10px 30px rgba(6,182,212,0.18);
-    border-radius: 999px;
+    background: var(--color-primary);
+    color: #ffffff;
+    box-shadow: 0 15px 40px rgba(37,99,235,0.35);
+    border-radius: var(--radius-button);
     padding: 0.95rem 1.8rem;
 }
 
 .ui-btn-primary:hover {
-    filter: brightness(0.98);
+    background: var(--color-primary-dark);
     transform: translateY(-2px);
 }
 
 .ui-btn-secondary {
-    background: var(--color-surface);
-    color: #374151;
-    border-color: var(--color-border);
-    box-shadow: var(--shadow-sm);
+    background: #ffffff;
+    color: var(--color-primary);
+    border-color: var(--color-primary-100);
+    box-shadow: var(--shadow-small);
 }
 
 .ui-btn-secondary:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
+    background: var(--color-primary-50);
+    color: var(--color-primary-dark);
+    border-color: var(--color-primary-100);
 }
 
 .ui-btn-ghost {
@@ -659,10 +676,10 @@ body {
 }
 
 .ui-btn-white {
-    background: rgba(255,255,255,0.95);
+    background: #ffffff;
     color: var(--color-primary-dark);
-    box-shadow: var(--shadow-md);
-    border-radius: 999px;
+    box-shadow: var(--shadow-small);
+    border-radius: var(--radius-button);
 }
 
 .ui-btn-white:hover { background: rgba(255,255,255,1); }
@@ -679,9 +696,9 @@ body {
 }
 
 .hero-cta.secondary {
-    background: rgba(255,255,255,0.92);
+    background: #ffffff;
     color: var(--color-primary);
-    border: 1px solid rgba(37,99,235,0.08);
+    border: 1px solid var(--color-primary-100);
 }
 
 /* Bigger hero heading on large screens to match mock */
@@ -1230,7 +1247,7 @@ body {
     gap: 1rem;
     align-items: flex-end;
     padding: 1rem;
-    background: #ffffff;
+    background: var(--color-surface);
     border: 1px solid #e2e8f0;
     border-radius: 1rem;
 }
@@ -1269,7 +1286,7 @@ body {
     padding: 0.6rem 1rem;
     border-radius: 0.85rem;
     border: 1px solid #cbd5e1;
-    background: #ffffff;
+    background: var(--color-surface);
     color: #0f172a;
     text-decoration: none;
     transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
@@ -1289,7 +1306,7 @@ body {
 }
 
 .ui-empty-state {
-    background: #ffffff;
+    background: var(--color-surface);
     border: 1px solid #e2e8f0;
     border-radius: 1.25rem;
     padding: 2rem;
@@ -1314,7 +1331,7 @@ body {
 .ui-textarea {
     width: 100%;
     padding: 0.9rem 1rem;
-    background: #ffffff;
+    background: var(--color-card); /* keep inputs pure white for contrast */
     border: 1.5px solid #e2e8f0;
     border-radius: 1rem;
     color: #0f172a;
@@ -1598,6 +1615,60 @@ body {
     transition: background var(--transition);
 }
 
+/* ── HERO SECTION (welcome page) ───────────────────────────────────────── */
+/* Hero background: gradient biru gelap */
+#hero .hero-bg {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 45%, #4f46e5 100%) !important;
+}
+
+/* Teks hero putih */
+#hero h1,
+#hero p,
+#hero .ui-page-hero-title {
+    color: #ffffff !important;
+}
+
+/* Greeting pill & info bar: semi-transparan putih */
+#hero .hero-greeting,
+#hero .hero-info-bar,
+#hero .hero-info-pill {
+    background: rgba(255,255,255,0.15) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    box-shadow: none !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+/* Tombol sekunder di hero */
+#hero .hero-cta.secondary,
+#hero .ui-btn-white {
+    background: rgba(255,255,255,0.95) !important;
+    color: #1d4ed8 !important;
+    border: none !important;
+}
+
+/* Ilustrasi hero — tanpa kotak, foto transparan */
+#hero .hero-illustration {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+#hero .hero-illustration img { border-radius: 0 !important; }
+
+/* Navbar tetap solid */
+nav {
+    background: #ffffff !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+    border-bottom: 1px solid #e5e7eb !important;
+}
+
+/* Tombol primary tetap biru */
+.ui-btn-primary {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    color: #fff !important;
+}
+
 .ui-table tbody tr:hover {
     background: #f8fafc;
 }
@@ -1802,8 +1873,9 @@ footer {
 }
 
 /* ============================================================
-   DARK MODE
+/* ── DARK MODE
    ============================================================ */
+
 .dark {
     --color-surface: #1e293b;
     --color-background: #0f172a;

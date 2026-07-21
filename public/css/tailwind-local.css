@@ -689,3 +689,35 @@ hr { height: 0; color: inherit; border-top-width: 1px; }
 /* --- TABLE BASE STYLES --- */
 table { width: 100%; }
 th { text-align: left; font-weight: 600; }
+
+/* === WELCOME PAGE ADDITIONS === */
+.text-slate-900 { color: #0f172a; }
+.text-slate-700 { color: #334155; }
+.text-slate-600 { color: #475569; }
+.bg-slate-50  { background-color: #f8fafc; }
+.bg-slate-900 { background-color: #0f172a; }
+.bg-teal-600  { background-color: #0d9488; }
+.bg-yellow-500 { background-color: #eab308; }
+.border-slate-200 { border-color: #e2e8f0; }
+.border-slate-800 { border-color: #1e293b; }
+.shadow-blue-600\/25 { box-shadow: 0 10px 25px rgba(37,99,235,0.25); }
+.shadow-blue-900\/20 { box-shadow: 0 10px 25px rgba(30,58,138,0.2); }
+.rounded-full { border-radius: 9999px; }
+.whitespace-nowrap { white-space: nowrap; }
+
+/* Slate text colors for landing */
+.text-slate-950 { color: #020617; }
+.from-slate-950 { --tw-gradient-from: #020617; --tw-gradient-to: transparent; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+
+/* Hover for footer links */
+.hover\:text-white:hover { color: #ffffff; }
+
+/* Responsive grid for landing */
+@media (min-width: 1280px) {
+  .xl\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* === Z-INDEX NEGATIVE (for hero bg layer) === */
+.-z-10 { z-index: -10; }
+.-z-20 { z-index: -20; }
+.z-0  { z-index: 0; }

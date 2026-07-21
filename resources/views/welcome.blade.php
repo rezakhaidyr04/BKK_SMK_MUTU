@@ -12,6 +12,7 @@
     {{-- Local Tailwind CSS (no internet required) --}}
     <link rel="stylesheet" href="{{ asset('css/tailwind-local.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
 </head>
 <body class="font-sans antialiased">
     <!-- Navigation -->
@@ -60,9 +61,8 @@
 
     <main>
     <!-- Hero Section -->
-    <section id="hero" class="relative overflow-hidden pt-24 pb-20">
-        <div class="hero-bg absolute inset-0 -z-10"></div>
-        <div class="absolute inset-0 -z-10 overflow-hidden">
+    <section id="hero" class="relative overflow-hidden pt-24 pb-20" style="background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 45%, #4f46e5 100%);">
+        <div class="absolute inset-0 overflow-hidden" style="z-index:0; pointer-events:none;">
             <span class="hero-circle hero-circle-1"></span>
             <span class="hero-circle hero-circle-2"></span>
             <span class="hero-circle hero-circle-3"></span>
@@ -112,25 +112,26 @@
                     </aside>
                 </div>
 
-                <div class="relative flex justify-center lg:justify-end lg:col-span-5">
+                <div class="relative flex items-center justify-center lg:justify-end lg:col-span-5" style="min-height:380px;">
                     <div class="hero-illustration-wrap">
-                        <div class="hero-illustration" role="img" aria-label="Ilustrasi siswa BKK SMK MUTU">
-                            <img src="{{ asset('images/foto_siswa/siswa.png') }}" alt="Ilustrasi siswa BKK SMK MUTU" loading="lazy">
-                        </div>
+                        <!-- Foto siswa tanpa kotak, background transparan -->
+                        <img src="{{ asset('images/foto_siswa/siswa.png') }}"
+                             alt="Ilustrasi siswa BKK SMK MUTU"
+                             loading="lazy"
+                             style="max-height:480px; width:auto; object-fit:contain; filter:drop-shadow(0 24px 48px rgba(0,0,0,0.25)); position:relative; z-index:1;">
 
-                        <!-- decorative circles -->
-                        <div class="hero-deco-circle" style="width:160px;height:160px;left:-40px;top:-20px;background:rgba(59,130,246,0.12);filter:blur(48px);"></div>
-                        <div class="hero-deco-circle" style="width:110px;height:110px;right:-30px;top:40px;background:rgba(34,211,238,0.08);filter:blur(32px);"></div>
-                        <div class="hero-deco-circle" style="width:220px;height:220px;left:30%;bottom:-60px;background:rgba(59,130,246,0.06);filter:blur(64px);"></div>
+                        <!-- decorative blobs di belakang foto -->
+                        <div class="hero-deco-circle" style="width:300px;height:300px;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(99,102,241,0.15);filter:blur(60px);z-index:0;"></div>
+                        <div class="hero-deco-circle" style="width:160px;height:160px;right:-20px;top:10%;background:rgba(34,211,238,0.1);filter:blur(40px);z-index:0;"></div>
 
                         <!-- floating badges -->
-                        <div class="hero-badge" data-index="1" style="right:12%;top:6%;">
+                        <div class="hero-badge" data-index="1" style="right:5%;top:8%;z-index:2;">
                             <span>💼</span><span>150+ Lowongan Aktif</span>
                         </div>
-                        <div class="hero-badge" data-index="2" style="left:6%;top:12%;">
+                        <div class="hero-badge" data-index="2" style="left:0%;top:15%;z-index:2;">
                             <span>📄</span><span>CV ATS Friendly</span>
                         </div>
-                        <div class="hero-badge" data-index="3" style="right:6%;bottom:6%;">
+                        <div class="hero-badge" data-index="3" style="right:8%;bottom:8%;z-index:2;">
                             <span>🏆</span><span>93% Alumni Berhasil</span>
                         </div>
                     </div>
