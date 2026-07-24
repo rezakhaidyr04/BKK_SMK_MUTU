@@ -42,6 +42,48 @@
         </div>
 
         <div class="page-container page-section">
+            {{-- Quick Actions --}}
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6 mb-8">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Aksi Cepat</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="{{ route('jobs.index') }}" class="flex flex-col items-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors group">
+                        <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-900 dark:text-white text-center">Cari Lowongan</span>
+                    </a>
+                    
+                    <a href="{{ route('cv.builder') }}" class="flex flex-col items-center p-4 bg-green-50 dark:bg-green-900/20 rounded-xl hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group">
+                        <div class="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-900 dark:text-white text-center">Buat CV</span>
+                    </a>
+                    
+                    <a href="{{ route('bookmarks.index') }}" class="flex flex-col items-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-colors group">
+                        <div class="w-12 h-12 bg-yellow-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                            </svg>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-900 dark:text-white text-center">Tersimpan</span>
+                    </a>
+                    
+                    <a href="{{ route('applications.index') }}" class="flex flex-col items-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors group">
+                        <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-900 dark:text-white text-center">Lamaran Saya</span>
+                    </a>
+                </div>
+            </div>
+
             {{-- Stats Grid (Refactored using reusable component) --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
                 <x-ui.dashboard-stat-card
@@ -127,10 +169,15 @@
             {{-- Main Content Grid --}}
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {{-- Left Column (2/3) --}}
-                <div class="lg:col-span-2 space-y-8">
+                <div class="lg:col-span-2 space-y-8" x-data="{ 
+                    recommendationsOpen: true, 
+                    applicationsOpen: true,
+                    activitiesOpen: false,
+                    eventsOpen: false
+                }">
                     {{-- Job Recommendations Section --}}
                     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
-                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
+                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 cursor-pointer" @click="recommendationsOpen = !recommendationsOpen">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
@@ -143,16 +190,24 @@
                                         <p class="text-sm text-gray-600 dark:text-gray-400">Disesuaikan dengan keahlian dan profil Anda</p>
                                     </div>
                                 </div>
-                                <a href="{{ route('jobs.index') }}" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1 group">
-                                    Lihat Semua
-                                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('jobs.index') }}" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1 group" @click.stop>
+                                        Lihat Semua
+                                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </a>
+                                    <svg x-show="recommendationsOpen" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                     </svg>
-                                </a>
+                                    <svg x-show="!recommendationsOpen" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7-7"/>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="p-6">
+                        <div x-show="recommendationsOpen" x-collapse class="p-6">
                             @if($recommendedJobs->count() > 0)
                                 <div class="grid gap-4">
                                     @foreach($recommendedJobs->take(3) as $job)
@@ -212,7 +267,7 @@
                                         </div>
                                         
                                         <!-- Match Score Badge -->
-                                        <div class="absolute top-3 right-3">
+                                        <div class="absolute top-3 right-3" x-data="{ tooltipOpen: false }">
                                             @php $score = $job->match_score ?? 0; @endphp
                                             @if($score >= 75)
                                                 @php $badgeBg = 'bg-green-500'; $text = 'text-white'; @endphp
@@ -221,8 +276,30 @@
                                             @else
                                                 @php $badgeBg = 'bg-gray-200 dark:bg-gray-700'; $text = 'text-gray-700 dark:text-gray-300'; @endphp
                                             @endif
-                                            <div class="px-3 py-1 {{ $badgeBg }} {{ $text }} text-xs font-bold rounded-full shadow-lg">
-                                                {{ $score }}% Kecocokan
+                                            <div class="relative">
+                                                <div class="px-3 py-1 {{ $badgeBg }} {{ $text }} text-xs font-bold rounded-full shadow-lg cursor-help" 
+                                                     @mouseenter="tooltipOpen = true" 
+                                                     @mouseleave="tooltipOpen = false"
+                                                     aria-label="Kecocokan {{ $score }}%">
+                                                    {{ $score }}% Kecocokan
+                                                </div>
+                                                <!-- Tooltip -->
+                                                <div x-show="tooltipOpen" 
+                                                     x-transition:enter="transition ease-out duration-200"
+                                                     x-transition:enter-start="opacity-0 scale-95"
+                                                     x-transition:enter-end="opacity-100 scale-100"
+                                                     x-transition:leave="transition ease-in duration-150"
+                                                     x-transition:leave-start="opacity-100 scale-100"
+                                                     x-transition:leave-end="opacity-0 scale-95"
+                                                     class="absolute right-0 mt-2 w-64 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-10">
+                                                    <p class="font-semibold mb-1">Tentang Kecocokan</p>
+                                                    <p class="text-gray-300">Skor kecocokan dihitung berdasarkan keahlian, pengalaman, dan preferensi Anda dengan kebutuhan lowongan ini.</p>
+                                                    <div class="mt-2 pt-2 border-t border-gray-700">
+                                                        <p class="text-green-400">75%+ = Sangat Cocok</p>
+                                                        <p class="text-yellow-400">50-74% = Cukup Cocok</p>
+                                                        <p class="text-gray-400">&lt;50% = Perlu Pertimbangan</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -248,7 +325,7 @@
 
                     <!-- My Applications Section -->
                     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
-                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">
+                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 cursor-pointer" @click="applicationsOpen = !applicationsOpen">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center">
@@ -261,16 +338,24 @@
                                         <p class="text-sm text-gray-600 dark:text-gray-400">Lacak status lamaran Anda</p>
                                     </div>
                                 </div>
-                                <a href="{{ route('applications.index') }}" class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 flex items-center gap-1 group">
-                                    Lihat Semua
-                                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('applications.index') }}" class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 flex items-center gap-1 group" @click.stop>
+                                        Lihat Semua
+                                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </a>
+                                    <svg x-show="applicationsOpen" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                     </svg>
-                                </a>
+                                    <svg x-show="!applicationsOpen" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7-7"/>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="p-6">
+                        <div x-show="applicationsOpen" x-collapse class="p-6">
                             @if($myApplications->count() > 0)
                                 <div class="space-y-4">
                                     @foreach($myApplications as $application)
@@ -326,21 +411,29 @@
                 <div class="space-y-6">
                     <!-- Activity Timeline -->
                     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
-                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
+                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 cursor-pointer" @click="activitiesOpen = !activitiesOpen">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Aktivitas Terbaru</h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Tindakan terbaru Anda</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">Aktivitas Terbaru</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Tindakan terbaru Anda</p>
-                                </div>
+                                <svg x-show="activitiesOpen" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                                <svg x-show="!activitiesOpen" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7-7"/>
+                                </svg>
                             </div>
                         </div>
 
-                        <div class="p-6">
+                        <div x-show="activitiesOpen" x-collapse class="p-6">
                             @if(count($activities) > 0)
                                 <div class="relative space-y-4">
                                     @foreach($activities as $activity)
@@ -394,21 +487,29 @@
 
                     <!-- Upcoming Events -->
                     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
-                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-orange-600 rounded-xl flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                    </svg>
+                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 cursor-pointer" @click="eventsOpen = !eventsOpen">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-orange-600 rounded-xl flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Acara Mendatang</h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Peluang karir</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">Acara Mendatang</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Peluang karir</p>
-                                </div>
+                                <svg x-show="eventsOpen" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                                <svg x-show="!eventsOpen" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7-7"/>
+                                </svg>
                             </div>
                         </div>
 
-                        <div class="p-6">
+                        <div x-show="eventsOpen" x-collapse class="p-6">
                             @if($upcomingEvents->count() > 0)
                                 <div class="space-y-4">
                                     @foreach($upcomingEvents as $event)

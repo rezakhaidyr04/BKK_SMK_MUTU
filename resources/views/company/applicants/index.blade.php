@@ -19,26 +19,59 @@
     <div class="py-2">
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div class="lg:col-span-3 space-y-4">
+                {{-- Bulk Actions Bar --}}
+                <div id="bulkActionsBar" class="hidden bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-700 rounded-xl p-4 mb-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" id="selectAll" class="w-4 h-4 text-purple-600 rounded focus:ring-purple-500" onchange="toggleAllCheckboxes()">
+                            <span class="text-sm font-medium text-purple-900 dark:text-purple-100">
+                                <span id="selectedCount">0</span> pelamar dipilih
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <form action="{{ route('company.applicants.bulkUpdate') }}" method="POST" class="inline">
+                                @csrf
+                                <input type="hidden" name="status" value="under_review">
+                                <input type="hidden" name="selected_applications" id="bulkUnderReview">
+                                <button type="button" onclick="submitBulkAction('under_review')" class="px-3 py-1.5 bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-medium rounded-lg transition">
+                                    Tinjau Semua
+                                </button>
+                            </form>
+                            <form action="{{ route('company.applicants.bulkUpdate') }}" method="POST" class="inline">
+                                @csrf
+                                <input type="hidden" name="status" value="rejected">
+                                <input type="hidden" name="selected_applications" id="bulkReject">
+                                <button type="button" onclick="submitBulkAction('rejected')" class="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white text-sm font-medium rounded-lg transition">
+                                    Tolak Semua
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                     @forelse($applications as $application)
                     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition">
                         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                            <div class="flex-1 min-w-0">
-                                <h3 class="text-base font-bold text-slate-900">
-                                    {{ $application->job->title ?? 'Lowongan' }}
-                                </h3>
-                                <p class="text-sm text-slate-600 mt-0.5">
-                                    Pelamar: <span class="font-medium text-slate-800">{{ $application->user->name ?? '-' }}</span>
-                                </p>
-                                @if($application->cover_letter)
-                                <p class="text-sm text-slate-500 mt-2 line-clamp-2">
-                                    {{ \Illuminate\Support\Str::limit($application->cover_letter, 150) }}
-                                </p>
-                                @endif
-                                @if($application->attachment_path)
-                                <p class="text-sm text-blue-600 mt-2">
-                                    Lampiran: <a href="{{ asset('storage/' . $application->attachment_path) }}" target="_blank" class="font-semibold hover:underline">{{ $application->attachment_name ?? 'Buka berkas' }}</a>
-                                </p>
-                                @endif
+                            <div class="flex items-start gap-3 flex-1 min-w-0">
+                                <input type="checkbox" class="applicant-checkbox w-4 h-4 text-purple-600 rounded focus:ring-purple-500 mt-1" value="{{ $application->id }}" onchange="updateBulkActions()">
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="text-base font-bold text-slate-900">
+                                        {{ $application->job->title ?? 'Lowongan' }}
+                                    </h3>
+                                    <p class="text-sm text-slate-600 mt-0.5">
+                                        Pelamar: <span class="font-medium text-slate-800">{{ $application->user->name ?? '-' }}</span>
+                                    </p>
+                                    @if($application->cover_letter)
+                                    <p class="text-sm text-slate-500 mt-2 line-clamp-2">
+                                        {{ \Illuminate\Support\Str::limit($application->cover_letter, 150) }}
+                                    </p>
+                                    @endif
+                                    @if($application->attachment_path)
+                                    <p class="text-sm text-blue-600 mt-2">
+                                        Lampiran: <a href="{{ asset('storage/' . $application->attachment_path) }}" target="_blank" class="font-semibold hover:underline">{{ $application->attachment_name ?? 'Buka berkas' }}</a>
+                                    </p>
+                                    @endif
+                                </div>
                             </div>
                             <div class="flex flex-col items-end gap-1.5 flex-shrink-0">
                                 <span class="text-xs text-slate-400">{{ $application->created_at->format('d M Y') }}</span>
@@ -195,4 +228,45 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function updateBulkActions() {
+            const checkboxes = document.querySelectorAll('.applicant-checkbox');
+            const selected = Array.from(checkboxes).filter(cb => cb.checked);
+            const bulkActionsBar = document.getElementById('bulkActionsBar');
+            const selectedCount = document.getElementById('selectedCount');
+            
+            if (selected.length > 0) {
+                bulkActionsBar.classList.remove('hidden');
+                selectedCount.textContent = selected.length;
+            } else {
+                bulkActionsBar.classList.add('hidden');
+            }
+        }
+
+        function toggleAllCheckboxes() {
+            const selectAll = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('.applicant-checkbox');
+            checkboxes.forEach(cb => cb.checked = selectAll.checked);
+            updateBulkActions();
+        }
+
+        function submitBulkAction(status) {
+            const checkboxes = document.querySelectorAll('.applicant-checkbox:checked');
+            const selectedIds = Array.from(checkboxes).map(cb => cb.value);
+            
+            if (selectedIds.length === 0) {
+                alert('Pilih setidaknya satu pelamar');
+                return;
+            }
+
+            const inputId = status === 'under_review' ? 'bulkUnderReview' : 'bulkReject';
+            document.getElementById(inputId).value = JSON.stringify(selectedIds);
+            
+            const form = document.getElementById(inputId).closest('form');
+            if (confirm(`Apakah Anda yakin ingin mengubah status ${selectedIds.length} pelamar menjadi ${status === 'under_review' ? 'Ditinjau' : 'Ditolak'}?`)) {
+                form.submit();
+            }
+        }
+    </script>
 </x-app-layout>

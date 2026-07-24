@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ mobileMenuOpen: false }">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{{ asset('css/tailwind-local.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}">
     <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
+    
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 <body class="font-sans antialiased">
     <!-- Navigation -->
@@ -28,40 +30,84 @@
                     </a>
                 </div>
                 
+                <!-- Desktop Navigation -->
                 <div class="hidden lg:flex items-center gap-6">
                     <a href="{{ route('home') }}" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Beranda</a>
                     <a href="#jobs" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Lowongan</a>
                     <a href="#trusted" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Perusahaan</a>
                     <a href="#features" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Tentang Kami</a>
-                    <a href="{{ route('news.index') }}" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Blog</a>
                 </div>
+                
                 <div class="flex items-center gap-4">
                     @if(auth()->check())
-                        <a href="{{ route('dashboard') }}" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
+                        <a href="{{ route('dashboard') }}" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors hidden sm:block">
                             Dasbor
                         </a>
-                        <form method="POST" action="{{ route('logout') }}" class="inline">
+                        <form method="POST" action="{{ route('logout') }}" class="hidden sm:inline">
                             @csrf
                             <button type="submit" class="px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 transition-colors">
                                 Keluar
                             </button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="ui-btn ui-btn-secondary ui-btn-sm">
+                        <a href="{{ route('login') }}" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors hidden sm:block">
                             Masuk
                         </a>
-                        <a href="{{ route('register') }}" class="ui-btn ui-btn-primary ui-btn-sm">
+                        <a href="{{ route('register') }}" class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                             Daftar
                         </a>
                     @endif
+                    
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors" aria-label="Toggle menu">
+                        <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                        <svg x-show="mobileMenuOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div x-show="mobileMenuOpen" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="lg:hidden bg-white border-b border-gray-200">
+            <div class="px-4 py-3 space-y-1">
+                <a href="{{ route('home') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors">
+                    Beranda
+                </a>
+                <a href="#jobs" @click="mobileMenuOpen = false" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors">
+                    Lowongan
+                </a>
+                <a href="#trusted" @click="mobileMenuOpen = false" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors">
+                    Perusahaan
+                </a>
+                <a href="#features" @click="mobileMenuOpen = false" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors">
+                    Tentang Kami
+                </a>
+                @if(auth()->check())
+                    <a href="{{ route('dashboard') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors sm:hidden">
+                        Dasbor
+                    </a>
+                    <form method="POST" action="{{ route('logout') }}" class="sm:hidden">
+                        @csrf
+                        <button type="submit" class="block w-full text-left px-3 py-2 text-base font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                            Keluar
+                        </button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors sm:hidden">
+                        Masuk
+                    </a>
+                @endif
             </div>
         </div>
     </nav>
 
     <main>
     <!-- Hero Section -->
-    <section id="hero" class="relative overflow-hidden pt-24 pb-20" style="background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 45%, #4f46e5 100%);">
+    <section id="hero" class="relative overflow-hidden" style="background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #4f46e5 100%); padding-top: 96px; padding-bottom: 0; min-height: 560px;">
         <div class="absolute inset-0 overflow-hidden" style="z-index:0; pointer-events:none;">
             <span class="hero-circle hero-circle-1"></span>
             <span class="hero-circle hero-circle-2"></span>
@@ -71,23 +117,24 @@
             <span class="hero-particle hero-particle-3"></span>
         </div>
 
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid gap-12 lg:grid-cols-12 items-center">
-                <div class="space-y-8 lg:col-span-7">
-                    <div id="js-hero-greeting" class="hero-greeting inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/15 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-slate-950/20 backdrop-blur-xl">
+        <div style="position:relative; z-index:1; max-width:1280px; margin:0 auto; padding:0 32px;">
+            <div class="hero-main-layout">
+
+                {{-- KIRI: teks --}}
+                <div class="hero-text-col">
+                    <div id="js-hero-greeting" class="hero-greeting" style="display:inline-flex; align-items:center; gap:8px; border-radius:9999px; border:1px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.12); padding:8px 20px; font-size:0.85rem; font-weight:600; color:#fff; backdrop-filter:blur(12px); margin-bottom:24px;">
                         👋 Selamat Datang di BKK SMK MUTU
                     </div>
-                    <div class="space-y-6">
-                        <h1 class="ui-page-hero-title text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white">
-                            Temukan Karier Impian Anda
-                            Bersama BKK SMK MUTU
-                        </h1>
-                        <p class="max-w-2xl text-base text-slate-100 sm:text-lg lg:text-xl">
-                            Platform Bursa Kerja Khusus modern yang menghubungkan siswa dan alumni dengan perusahaan terbaik untuk membangun karier masa depan.
-                        </p>
-                    </div>
 
-                    <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+                    <h1 style="font-size:clamp(1.6rem, 2.6vw, 2.6rem); font-weight:800; line-height:1.2; color:#fff; margin:0 0 16px; letter-spacing:-0.02em;">
+                        Temukan Karier Impian Anda<br>Bersama <span style="color:#93c5fd;">BKK SMK MUTU</span>
+                    </h1>
+
+                    <p style="color:rgba(224,231,255,0.9); font-size:1rem; line-height:1.75; max-width:460px; margin:0 0 28px;">
+                        Platform Bursa Kerja Khusus modern yang menghubungkan siswa dan alumni dengan perusahaan terbaik untuk membangun karier masa depan.
+                    </p>
+
+                    <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:32px;">
                         <a href="{{ route('register') }}" class="ui-btn ui-btn-primary ui-btn-lg hero-cta" aria-label="Mulai Gratis">
                             Mulai Gratis
                         </a>
@@ -96,49 +143,59 @@
                         </a>
                     </div>
 
-                    <aside class="hero-info-bar mt-8 rounded-full border border-white/15 bg-white/15 px-3 py-3 shadow-[0_20px_50px_-30px_rgba(15,23,42,0.8)] backdrop-blur-xl" aria-label="Info ringkas BKK SMK MUTU">
-                        <div class="overflow-hidden">
-                            <div class="hero-info-scroll flex items-center gap-8 whitespace-nowrap">
-                                <span class="hero-info-pill">🔥 15 Lowongan Baru Hari Ini</span>
-                                <span class="hero-info-pill">📅 Job Fair 12 Agustus 2026</span>
-                                <span class="hero-info-pill">⭐ 120+ Alumni Diterima Bulan Ini</span>
+                    <aside class="hero-info-bar" aria-label="Info ringkas BKK SMK MUTU">
+                        <div style="overflow:hidden;">
+                            <div class="hero-info-scroll" style="display:inline-flex; align-items:center; gap:24px; white-space:nowrap;">
+                                <span class="hero-info-pill">🔥 5 Lowongan Baru Hari Ini</span>
+                                <span class="hero-info-pill">📅 Job Fair 15 September 2026</span>
+                                <span class="hero-info-pill">⭐ 15+ Alumni Diterima Bulan Ini</span>
                                 <span class="hero-info-pill">📄 CV Builder Kini Tersedia</span>
-                                <span class="hero-info-pill">🔥 15 Lowongan Baru Hari Ini</span>
-                                <span class="hero-info-pill">📅 Job Fair 12 Agustus 2026</span>
-                                <span class="hero-info-pill">⭐ 120+ Alumni Diterima Bulan Ini</span>
+                                <span class="hero-info-pill">🔥 5 Lowongan Baru Hari Ini</span>
+                                <span class="hero-info-pill">📅 Job Fair 15 September 2026</span>
+                                <span class="hero-info-pill">⭐ 15+ Alumni Diterima Bulan Ini</span>
                                 <span class="hero-info-pill">📄 CV Builder Kini Tersedia</span>
                             </div>
                         </div>
                     </aside>
                 </div>
 
-                <div class="relative flex items-center justify-center lg:justify-end lg:col-span-5" style="min-height:380px;">
+                {{-- KANAN: foto siswa --}}
+                <div class="hero-photo-col">
                     <div class="hero-illustration-wrap">
-                        <!-- Foto siswa tanpa kotak, background transparan -->
-                        <img src="{{ asset('images/foto_siswa/siswa.png') }}"
-                             alt="Ilustrasi siswa BKK SMK MUTU"
-                             loading="lazy"
-                             style="max-height:480px; width:auto; object-fit:contain; filter:drop-shadow(0 24px 48px rgba(0,0,0,0.25)); position:relative; z-index:1;">
 
-                        <!-- decorative blobs di belakang foto -->
-                        <div class="hero-deco-circle" style="width:300px;height:300px;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(99,102,241,0.15);filter:blur(60px);z-index:0;"></div>
-                        <div class="hero-deco-circle" style="width:160px;height:160px;right:-20px;top:10%;background:rgba(34,211,238,0.1);filter:blur(40px);z-index:0;"></div>
+                        {{-- Glow lembut di belakang foto --}}
+                        <div style="position:absolute; width:360px; height:360px; border-radius:50%; background:radial-gradient(circle, rgba(96,165,250,0.15) 0%, transparent 65%); bottom:0; left:50%; transform:translateX(-50%); z-index:0; pointer-events:none;"></div>
 
-                        <!-- floating badges -->
-                        <div class="hero-badge" data-index="1" style="right:5%;top:8%;z-index:2;">
+                        {{-- Foto siswa dalam frame modern glassmorphism --}}
+                        <div style="position:relative; z-index:1; width:100%; max-width:440px; margin:0 auto; border-radius:32px; overflow:hidden; border:1px solid rgba(255,255,255,0.4); box-shadow: 0 30px 60px rgba(0,0,0,0.25), inset 0 2px 4px rgba(255,255,255,0.5); background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%); backdrop-filter: blur(16px); transform:translateY(10px);">
+                            <div style="padding: 12px;">
+                                <img src="{{ asset('images/foto_siswa/siswa.png') }}"
+                                     alt="Ilustrasi siswa BKK SMK MUTU"
+                                     loading="eager"
+                                     style="width:100%; height:auto; object-fit:cover; display:block; border-radius: 20px; filter:contrast(1.02) brightness(1.02);">
+                            </div>
+                        </div>
+
+
+                        {{-- Badge kanan atas --}}
+                        <div class="hero-badge" data-index="1" style="position:absolute; top:12%; right:2%; z-index:3;">
                             <span>💼</span><span>150+ Lowongan Aktif</span>
                         </div>
-                        <div class="hero-badge" data-index="2" style="left:0%;top:15%;z-index:2;">
-                            <span>📄</span><span>CV ATS Friendly</span>
+                        {{-- Badge kiri atas --}}
+                        <div class="hero-badge" data-index="2" style="position:absolute; top:28%; left:-4%; z-index:3;">
+                            <span>📄</span><span>CV ATS Profesional</span>
                         </div>
-                        <div class="hero-badge" data-index="3" style="right:8%;bottom:8%;z-index:2;">
+                        {{-- Badge kanan bawah --}}
+                        <div class="hero-badge" data-index="3" style="position:absolute; bottom:16%; right:4%; z-index:3;">
                             <span>🏆</span><span>93% Alumni Berhasil</span>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
+
 
     <!-- Trusted Companies (static assets) -->
     <section id="trusted" class="py-16 bg-slate-50">
@@ -146,7 +203,7 @@
             <div class="text-center mb-12">
                 <p class="text-sm uppercase tracking-[0.32em] text-slate-400">Dipercaya oleh Perusahaan Terkemuka</p>
                 <h2 class="mt-4 text-3xl font-semibold text-slate-900 sm:text-4xl">Jaringan mitra yang terus berkembang</h2>
-                <p class="mt-3 text-base text-slate-500">Lebih dari <span class="font-semibold text-slate-900">6</span> perusahaan mitra aktif mendukung lulusan SMK MUTU.</p>
+                <p class="mt-3 text-base text-slate-500">Lebih dari <span class="font-semibold text-slate-1000">6</span> perusahaan mitra aktif mendukung lulusan SMK MUTU.</p>
             </div>
 
             <div class="trusted-marquee-card overflow-hidden py-6">
@@ -328,9 +385,10 @@
                         <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                     </div>
                     <div>
-                        <p class="text-3xl font-extrabold text-white" data-counter="150" data-suffix="+" aria-live="polite">0</p>
-                        <p class="text-sm font-semibold text-blue-100">Perusahaan Mitra</p>
-                        <p class="text-xs text-blue-200/70 italic">Bergabung bersama kami</p>
+                        <p class="text-3xl font-extrabold text-white" data-counter="25" data-suffix="+" aria-live="polite">0</p>
+                        <p class="text-sm font-semibold text-white">Perusahaan Mitra</p>
+                        <p class="text-xs text-blue-100 italic">Bergabung bersama kami</p>
+                        <p class="text-xs text-blue-100 italic mt-1">6 perusahaan aktif</p>
                     </div>
                 </div>
                 <div class="stat-divider-v2"></div>
@@ -339,9 +397,10 @@
                         <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     </div>
                     <div>
-                        <p class="text-3xl font-extrabold text-white" data-counter="2500" data-suffix="+" aria-live="polite">0</p>
-                        <p class="text-sm font-semibold text-blue-100">Alumni Terdaftar</p>
-                        <p class="text-xs text-blue-200/70 italic">Telah membuat akun</p>
+                        <p class="text-3xl font-extrabold text-white" data-counter="350" data-suffix="+" aria-live="polite">0</p>
+                        <p class="text-sm font-semibold text-white">Alumni Terdaftar</p>
+                        <p class="text-xs text-blue-100 italic">Telah membuat akun</p>
+                        <p class="text-xs text-blue-100 italic mt-1">Siswa & alumni</p>
                     </div>
                 </div>
                 <div class="stat-divider-v2"></div>
@@ -350,9 +409,10 @@
                         <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     </div>
                     <div>
-                        <p class="text-3xl font-extrabold text-white" data-counter="5000" data-suffix="+" aria-live="polite">0</p>
-                        <p class="text-sm font-semibold text-blue-100">Lowongan Dipublikasikan</p>
-                        <p class="text-xs text-blue-200/70 italic">Setiap bulan diperbarui</p>
+                        <p class="text-3xl font-extrabold text-white" data-counter="120" data-suffix="+" aria-live="polite">0</p>
+                        <p class="text-sm font-semibold text-white">Lowongan Dipublikasikan</p>
+                        <p class="text-xs text-blue-100 italic">Setiap bulan diperbarui</p>
+                        <p class="text-xs text-blue-100 italic mt-1">Lowongan aktif</p>
                     </div>
                 </div>
                 <div class="stat-divider-v2"></div>
@@ -362,8 +422,9 @@
                     </div>
                     <div>
                         <p class="text-3xl font-extrabold text-white" data-counter="93" data-suffix="%" aria-live="polite">0</p>
-                        <p class="text-sm font-semibold text-blue-100">Alumni Berhasil Bekerja</p>
-                        <p class="text-xs text-blue-200/70 italic">Dalam 6 bulan terakhir</p>
+                        <p class="text-sm font-semibold text-white">Alumni Berhasil Bekerja</p>
+                        <p class="text-xs text-blue-100 italic">Dalam 6 bulan terakhir</p>
+                        <p class="text-xs text-blue-100 italic mt-1">Tingkat penempatan</p>
                     </div>
                 </div>
             </div>
@@ -431,7 +492,7 @@
             <div class="flex items-end justify-between mb-8">
                 <div>
                     <h2 class="text-2xl font-extrabold text-slate-900">Peluang Lowongan Terbaru</h2>
-                    <p class="text-sm text-slate-500 mt-1">Temukan kesempatan karir terbaik untuk Anda</p>
+                    <p class="text-sm text-slate-500 mt-1">Temukan kesempatan karir terbaik untuk Anda Demi Masa Depan Yang Cerah</p>
                 </div>
                 <a href="{{ route('jobs.index') }}" class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition hidden sm:inline-flex items-center gap-1">Lihat Semua Lowongan <span>→</span></a>
             </div>
@@ -549,18 +610,18 @@
     @endif
 
     <!-- Call To Action - Siap Memulai Karir Anda? -->
-    <section class="py-16 bg-slate-50">
+    <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="cta-banner-v2">
                 <div class="cta-content-v2">
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">Siap Memulai Karir Anda?</h2>
-                    <p class="mt-4 text-base text-blue-100/90 max-w-lg">Bergabunglah bersama ribuan alumni yang telah menemukan pekerjaan impian melalui BKK SMK MUTU.</p>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-6">Siap Memulai Karir Anda?</h2>
+                    <p class="text-lg sm:text-xl text-white max-w-xl leading-relaxed mb-8">Bergabunglah bersama ribuan alumni yang telah menemukan pekerjaan impian melalui BKK SMK MUTU.</p>
                     @guest
-                    <a href="{{ route('register') }}" class="inline-flex items-center gap-2 mt-6 px-8 py-3.5 rounded-full bg-white text-blue-700 text-base font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-50 transition">
+                    <a href="{{ route('register') }}" class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-blue-700 text-base sm:text-lg font-bold shadow-xl shadow-blue-900/30 hover:bg-blue-50 hover:shadow-2xl hover:shadow-blue-900/40 transition-all duration-300 transform hover:-translate-y-1">
                         Daftar Sekarang Gratis <span>→</span>
                     </a>
                     @else
-                    <a href="{{ route('jobs.index') }}" class="inline-flex items-center gap-2 mt-6 px-8 py-3.5 rounded-full bg-white text-blue-700 text-base font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-50 transition">
+                    <a href="{{ route('jobs.index') }}" class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-blue-700 text-base sm:text-lg font-bold shadow-xl shadow-blue-900/30 hover:bg-blue-50 hover:shadow-2xl hover:shadow-blue-900/40 transition-all duration-300 transform hover:-translate-y-1">
                         Lihat Lowongan <span>→</span>
                     </a>
                     @endguest

@@ -36,6 +36,19 @@ class RoleAndAdminSeeder extends Seeder
 
         $admin->assignRole('admin');
 
+        $teacher = User::firstOrCreate(
+            ['email' => 'guru@bkk.com'],
+            [
+                'name' => 'Guru BKK',
+                'password' => Hash::make('password123'),
+                'role' => 'teacher',
+                'is_active' => true,
+                'email_verified_at' => now(),
+            ]
+        );
+
+        $teacher->assignRole('teacher');
+
         $company = User::firstOrCreate(
             ['email' => 'company@bkk.com'],
             [

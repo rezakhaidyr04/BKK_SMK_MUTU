@@ -37,8 +37,8 @@ Route::get("/news/{news}", [NewsController::class, "show"])->name("news.show");
 // Auth Routes
 require __DIR__ . "/auth.php";
 
-// Authenticated Routes
-Route::middleware(["auth", "verified"])->group(function () {
+// Authenticated Routes with rate limiting
+Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
     // Dashboard
     Route::get("/dashboard", [DashboardController::class, "index"])->name(
         "dashboard",
@@ -166,6 +166,10 @@ Route::middleware(["auth", "verified"])->group(function () {
                 App\Http\Controllers\Company\ApplicantController::class,
                 "index",
             ])->name("applicants.index");
+            Route::post("/applicants/bulk-update", [
+                App\Http\Controllers\Company\ApplicantController::class,
+                "bulkUpdate",
+            ])->name("applicants.bulkUpdate");
             Route::get("/profile", [
                 App\Http\Controllers\Company\ProfileController::class,
                 "edit",
@@ -174,6 +178,39 @@ Route::middleware(["auth", "verified"])->group(function () {
                 App\Http\Controllers\Company\ProfileController::class,
                 "update",
             ])->name("profile.update");
+            
+            // Analytics Dashboard
+            Route::get("/analytics", [
+                App\Http\Controllers\Company\AnalyticsController::class,
+                "index",
+            ])->name("analytics.index");
+        });
+
+    // Teacher Routes
+    Route::middleware("role:teacher")
+        ->prefix("teacher")
+        ->name("teacher.")
+        ->group(function () {
+            Route::get("/students", [
+                App\Http\Controllers\Teacher\StudentController::class,
+                "index",
+            ])->name("students.index");
+            Route::get("/student/{student}", [
+                App\Http\Controllers\Teacher\StudentController::class,
+                "show",
+            ])->name("student.show");
+            Route::get("/placements", [
+                App\Http\Controllers\Teacher\PlacementController::class,
+                "index",
+            ])->name("placements.index");
+            Route::get("/reports", [
+                App\Http\Controllers\Teacher\ReportController::class,
+                "index",
+            ])->name("reports.index");
+            Route::get("/events", [
+                App\Http\Controllers\Teacher\EventController::class,
+                "index",
+            ])->name("events.index");
         });
 
     // Admin Routes

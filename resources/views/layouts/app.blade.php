@@ -74,36 +74,42 @@
                 <!-- Footer -->
                 <footer class="mt-auto bg-gray-900 dark:bg-gray-950 text-white border-t border-gray-800 dark:border-gray-700">
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div>
-                                <div class="flex items-center gap-2 mb-2">
-                                    <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-8 h-8 rounded-xl object-cover">
+                        <div class="grid gap-6 md:grid-cols-3">
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-8 h-8 rounded-lg object-cover">
                                     <div>
-                                        <h3 class="text-sm font-bold">BKK SMK MUTU</h3>
-                                        <p class="text-xs text-gray-400">Pusat Pengembangan Karir</p>
+                                        <h3 class="text-lg font-semibold text-white">BKK SMK MUTU</h3>
+                                        <p class="text-xs text-gray-400">Platform karir siswa & alumni SMK</p>
                                     </div>
                                 </div>
-                                <p class="text-xs text-gray-400">Platform karir yang menghubungkan siswa dan alumni SMK dengan peluang kerja terbaik.</p>
+                                <p class="text-xs text-gray-400">Menghubungkan talenta muda dengan perusahaan terpercaya.</p>
                             </div>
                             <div>
-                                <h4 class="text-sm font-semibold mb-2">Tautan Cepat</h4>
-                                <ul class="space-y-1 text-xs text-gray-400">
-                                    <li><a href="{{ route('jobs.index') }}" class="hover:text-white">Jelajahi Lowongan</a></li>
-                                    <li><a href="{{ route('events.index') }}" class="hover:text-white">Acara</a></li>
-                                    <li><a href="{{ route('news.index') }}" class="hover:text-white">Berita Karir</a></li>
+                                <h4 class="mb-3 font-semibold text-white text-sm">Tautan Cepat</h4>
+                                <ul class="space-y-2 text-xs text-gray-400">
+                                    <li><a href="{{ route('jobs.index') }}" class="transition hover:text-white">Lowongan</a></li>
+                                    <li><a href="{{ route('events.index') }}" class="transition hover:text-white">Acara</a></li>
+                                    <li><a href="{{ route('news.index') }}" class="transition hover:text-white">Berita</a></li>
+                                    <li><a href="{{ route('home') }}" class="transition hover:text-white">Beranda</a></li>
                                 </ul>
                             </div>
                             <div>
-                                <h4 class="text-sm font-semibold mb-2">Kontak</h4>
-                                <ul class="space-y-1 text-xs text-gray-400">
+                                <h4 class="mb-3 font-semibold text-white text-sm">Kontak</h4>
+                                <ul class="space-y-2 text-xs text-gray-400">
                                     <li>SMK MUTU Cikampek</li>
                                     <li>Cikampek, Jawa Barat</li>
-                                    <li><a href="mailto:bkk@smkmutu.sch.id" class="hover:text-white">bkk@smkmutu.sch.id</a></li>
+                                    <li><a href="mailto:bkk@smkmutu.sch.id" class="transition hover:text-white">bkk@smkmutu.sch.id</a></li>
+                                    <li><a href="tel:+62267123456" class="transition hover:text-white">(0267) 123-456</a></li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="border-t border-gray-800 mt-4 pt-4 text-center text-xs text-gray-400">
-                            &copy; {{ date('Y') }} BKK SMK MUTU. Hak cipta dilindungi.
+                        <div class="mt-6 border-t border-gray-800 pt-4 text-xs text-gray-500 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                            <p>© {{ date('Y') }} BKK SMK MUTU. Hak cipta dilindungi.</p>
+                            <div class="flex flex-wrap gap-3">
+                                <a href="#" class="transition hover:text-white">Kebijakan Privasi</a>
+                                <a href="#" class="transition hover:text-white">Syarat & Ketentuan</a>
+                            </div>
                         </div>
                     </div>
                 </footer>

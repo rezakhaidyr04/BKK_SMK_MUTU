@@ -144,4 +144,35 @@ class ApplicantController extends Controller
         return redirect()->route('company.applicants.index')
             ->with('success', 'Jadwal wawancara berhasil dikirim ke pelamar!');
     }
+
+    public function bulkUpdate(Request $request)
+    {
+        $validated = $request->validate([
+            'status' => 'required|in:under_review,rejected',
+            'selected_applications' => 'required|array',
+            'selected_applications.*' => 'exists:applications,id',
+        ]);
+
+        $company = Auth::user()->company;
+        $applicationIds = $validated['selected_applications'];
+        $newStatus = $validated['status'];
+
+        $updated = Application::whereHas('job', function ($query) use ($company) {
+            $query->where('company_id', $company->id);
+        })->whereIn('id', $applicationIds)
+            ->update(['status' => $newStatus]);
+
+        // Send notifications for updated applications
+        $applications = Application::whereIn('id', $applicationIds)->get();
+        foreach ($applications as $application) {
+            try {
+                Notification::send($application->user, new ApplicationStatusChanged($application, 'bulk_update'));
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+
+        return redirect()->route('company.applicants.index')
+            ->with('success', "{$updated} pelamar berhasil diperbarui menjadi " . ($newStatus === 'under_review' ? 'Ditinjau' : 'Ditolak') . ".");
+    }
 }
