@@ -171,10 +171,6 @@
 
             <div class="auth-stats">
                 <div class="text-center">
-                    <div class="stat-num">{{ number_format(\App\Models\Company::count()) }}</div>
-                    <div class="stat-label">Perusahaan Mitra</div>
-                </div>
-                <div class="text-center">
                     <div class="stat-num">{{ number_format(\App\Models\User::whereIn('role', ['student', 'alumni'])->count()) }}</div>
                     <div class="stat-label">Pengguna Terdaftar</div>
                 </div>

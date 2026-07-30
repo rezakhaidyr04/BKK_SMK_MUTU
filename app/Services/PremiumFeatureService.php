@@ -19,7 +19,6 @@ class PremiumFeatureService
     {
         $totalStudents    = User::where('role', 'student')->count();
         $totalAlumni      = User::where('role', 'alumni')->count();
-        $totalCompanies   = User::where('role', 'company')->count();
         $totalJobs        = Job::count();
         $totalApplications = Application::count();
 

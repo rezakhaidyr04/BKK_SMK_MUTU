@@ -11,7 +11,7 @@ class PlacementController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Application::with(['user.student', 'job.company'])
+        $query = Application::with(['user.student', 'job'])
             ->where('status', 'accepted');
         
         // Filter by year
@@ -26,10 +26,10 @@ class PlacementController extends Controller
             });
         }
         
-        // Filter by company
+        // Filter by company name
         if ($request->filled('company')) {
-            $query->whereHas('job.company', function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->company . '%');
+            $query->whereHas('job', function ($q) use ($request) {
+                $q->where('company_name', 'like', '%' . $request->company . '%');
             });
         }
         

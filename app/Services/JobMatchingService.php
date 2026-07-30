@@ -89,17 +89,9 @@ class JobMatchingService
         }
         $score += $locScore * $weights['location'];
 
-        // 5) Industry
+        // 5) Industry - removed as companies no longer exist
         $indScore = 0;
-        $companyIndustry = $this->normalize($job->company->industry ?? '');
-        if ($companyIndustry) {
-            $major = $this->normalize($user->student->major ?? '');
-            if ($major && (str_contains($companyIndustry, $major) || str_contains($major, $companyIndustry))) {
-                $indScore = 1;
-            } else {
-                $indScore = $this->jaccardSimilarity($this->tokens($companyIndustry), $this->tokens($major));
-            }
-        }
+        // Industry matching is no longer available since companies are removed
         $score += $indScore * $weights['industry'];
 
         return (int) round(min(1, $score) * 100);

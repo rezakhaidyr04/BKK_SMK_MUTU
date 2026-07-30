@@ -211,23 +211,20 @@
                             @if($recommendedJobs->count() > 0)
                                 <div class="grid gap-4">
                                     @foreach($recommendedJobs->take(3) as $job)
+                                    @if($job)
                                     <div class="group relative bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-750 rounded-xl p-5 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                                         <div class="flex items-start gap-4">
                                             <div class="flex-shrink-0">
-                                                @if($job->company->user->avatar ?? null)
-                                                <img src="{{ asset('storage/' . $job->company->user->avatar) }}" alt="{{ $job->company->name }}" class="w-14 h-14 rounded-xl object-cover border-2 border-white dark:border-gray-700 shadow-md">
-                                                @else
                                                 <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-md" aria-hidden="true">
-                                                    {{ substr($job->company->name ?? 'C', 0, 1) }}
+                                                    {{ substr($job->company_name ?? 'C', 0, 1) }}
                                                 </div>
-                                                @endif
                                             </div>
                                             
                                             <div class="flex-1 min-w-0">
                                                 <h4 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-1">
                                                     {{ $job->title }}
                                                 </h4>
-                                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{{ $job->company->name ?? __('bkk.fallback.company') }}</p>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{{ $job->company_name ?? 'Perusahaan' }}</p>
                                                 
                                                 <div class="flex flex-wrap items-center gap-2 mb-3">
                                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
@@ -303,6 +300,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
                                     @endforeach
                                 </div>
                             @else
@@ -359,11 +357,12 @@
                             @if($myApplications->count() > 0)
                                 <div class="space-y-4">
                                     @foreach($myApplications as $application)
+                                    @if($application->job)
                                     <div class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-750 rounded-xl p-5 border border-gray-200 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-500 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
                                         <div class="flex items-start justify-between mb-3">
                                             <div class="flex-1">
                                                 <h4 class="text-base font-bold text-gray-900 dark:text-white mb-1">{{ $application->job->title }}</h4>
-                                                <p class="text-sm text-gray-600 dark:text-gray-400">{{ $application->job->company->name ?? __('bkk.fallback.company') }}</p>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">{{ $application->job->company_name ?? 'Perusahaan' }}</p>
                                             </div>
                                             @php
                                                 $statusConfig = [
@@ -387,6 +386,7 @@
                                             </a>
                                         </div>
                                     </div>
+                                    @endif
                                     @endforeach
                                 </div>
                             @else

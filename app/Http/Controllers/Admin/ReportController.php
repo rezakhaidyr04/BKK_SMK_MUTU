@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Application;
-use App\Models\Company;
 use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,7 +15,6 @@ class ReportController extends Controller
         $summary = [
             'total_students' => User::where('role', 'student')->count(),
             'total_alumni' => User::where('role', 'alumni')->count(),
-            'total_companies' => Company::count(),
             'total_jobs' => Job::count(),
             'active_jobs' => Job::where('status', 'active')->count(),
             'total_applications' => Application::count(),
@@ -25,10 +23,9 @@ class ReportController extends Controller
         ];
 
         $recentUsers = User::latest()->take(8)->get();
-        $recentCompanies = Company::latest()->take(8)->get();
         $recentJobs = Job::latest()->take(8)->get();
 
-        return view('admin.reports.index', compact('summary', 'recentUsers', 'recentCompanies', 'recentJobs'));
+        return view('admin.reports.index', compact('summary', 'recentUsers', 'recentJobs'));
     }
 
     public function export()
@@ -37,7 +34,6 @@ class ReportController extends Controller
             ['Metric', 'Nilai'],
             ['Total Students', User::where('role', 'student')->count()],
             ['Total Alumni', User::where('role', 'alumni')->count()],
-            ['Total Companies', Company::count()],
             ['Total Jobs', Job::count()],
             ['Active Jobs', Job::where('status', 'active')->count()],
             ['Total Applications', Application::count()],

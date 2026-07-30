@@ -129,34 +129,8 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {{-- Top Companies --}}
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-6">Perusahaan Teratas</h3>
-                    <div class="space-y-4">
-                        @forelse($topCompanies as $company)
-                        <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold">
-                                    {{ substr($company->name, 0, 1) }}
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-gray-900 dark:text-white">{{ $company->name }}</p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ $company->count }} siswa ditempatkan</p>
-                                </div>
-                            </div>
-                        </div>
-                        @empty
-                        <div class="text-center py-8 text-gray-500 dark:text-gray-400">
-                            <p>Belum ada data perusahaan</p>
-                        </div>
-                        @endforelse
-                    </div>
-                </div>
-
-                {{-- Monthly Trends --}}
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-6">Tren Penempatan Bulanan</h3>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-6">Tren Penempatan Bulanan</h3>
                     <div class="space-y-4">
                         @forelse($monthlyTrends as $trend)
                         <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">

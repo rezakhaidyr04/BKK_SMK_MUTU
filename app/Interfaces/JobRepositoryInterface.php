@@ -9,5 +9,4 @@ interface JobRepositoryInterface
     public function deleteJob($jobId);
     public function createJob(array $jobDetails);
     public function updateJob($jobId, array $newDetails);
-    public function getJobsByCompany($companyId);
 }

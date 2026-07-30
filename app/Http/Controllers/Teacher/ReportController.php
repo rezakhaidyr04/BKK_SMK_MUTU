@@ -40,16 +40,6 @@ class ReportController extends Controller
             ->orderBy('month')
             ->get();
         
-        // Get top companies
-        $topCompanies = Application::where('status', 'accepted')
-            ->join('jobs', 'applications.job_id', '=', 'jobs.id')
-            ->join('companies', 'jobs.company_id', '=', 'companies.id')
-            ->selectRaw('companies.name, COUNT(*) as count')
-            ->groupBy('companies.id', 'companies.name')
-            ->orderByDesc('count')
-            ->limit(10)
-            ->get();
-        
         // Get application status distribution
         $statusDistribution = Application::selectRaw('status, COUNT(*) as count')
             ->groupBy('status')
@@ -70,7 +60,6 @@ class ReportController extends Controller
         return view('dashboard.teacher-reports', compact(
             'placementByMajor',
             'monthlyTrends',
-            'topCompanies',
             'statusDistribution',
             'stats'
         ));

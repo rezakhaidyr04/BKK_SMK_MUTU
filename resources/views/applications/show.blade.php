@@ -4,7 +4,7 @@
             <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h1 class="text-3xl font-bold text-gray-900">Detail Lamaran</h1>
-                    <p class="text-gray-600 mt-1">{{ $application->job->title }} - {{ $application->job->company->name ?? __('bkk.fallback.company') }}</p>
+                    <p class="text-gray-600 mt-1">{{ $application->job->title }} - {{ $application->job->company_name ?? 'Perusahaan' }}</p>
                 </div>
                 <a href="{{ auth()->user()->role === 'company' ? route('company.applicants.index') : route('applications.index') }}"
                    class="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">
@@ -29,7 +29,7 @@
                         <div class="flex items-start justify-between gap-4">
                             <div>
                                 <h2 class="text-xl font-bold text-gray-900">{{ $application->job->title }}</h2>
-                                <p class="text-gray-600 mt-1">{{ $application->job->company->name ?? __('bkk.fallback.company') }}</p>
+                                <p class="text-gray-600 mt-1">{{ $application->job->company_name ?? 'Perusahaan' }}</p>
                             </div>
                             <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold {{ $status['bg'] }} {{ $status['text'] }}">
                                 {{ $status['label'] }}

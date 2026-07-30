@@ -19,15 +19,14 @@ class ApplicationPolicy
 
     public function view(User $user, Application $application)
     {
-        // applicant themselves or company owner
+        // applicant themselves or admin
         if ($user->id === $application->user_id) return true;
-        if ($user->company && $user->company->id === $application->job->company_id) return true;
         return false;
     }
 
     public function update(User $user, Application $application)
     {
-        // only company owning the job can change status
-        return $user->company && $user->company->id === $application->job->company_id;
+        // only admin can change application status
+        return $user->role === 'admin';
     }
 }

@@ -19,21 +19,21 @@ class JobPolicy
 
     public function view(User $user, Job $job)
     {
-        return $user->company && $user->company->id === $job->company_id;
+        return true; // Anyone can view jobs
     }
 
     public function create(User $user)
     {
-        return $user->role === 'company' && $user->company !== null;
+        return $user->role === 'admin'; // Only admin can create jobs
     }
 
     public function update(User $user, Job $job)
     {
-        return $user->company && $user->company->id === $job->company_id;
+        return $user->role === 'admin'; // Only admin can update jobs
     }
 
     public function delete(User $user, Job $job)
     {
-        return $user->company && $user->company->id === $job->company_id;
+        return $user->role === 'admin'; // Only admin can delete jobs
     }
 }

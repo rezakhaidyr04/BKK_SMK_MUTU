@@ -11,7 +11,7 @@ class Job extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'company_id',
+        'company_name',
         'title',
         'position',
         'location',
@@ -28,11 +28,6 @@ class Job extends Model
     protected $casts = [
         'deadline' => 'date',
     ];
-
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
 
     public function applications()
     {

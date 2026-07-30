@@ -19,7 +19,7 @@
                 <div class="ui-panel hover:shadow-md transition-shadow">
                     <div class="ui-panel-body">
                         <h3 class="text-lg font-bold text-slate-900">{{ $bookmark->job->title }}</h3>
-                        <p class="text-slate-600 mt-1">{{ $bookmark->job->company->name ?? 'Perusahaan' }}</p>
+                        <p class="text-slate-600 mt-1">{{ $bookmark->job->company_name ?? 'Perusahaan' }}</p>
                         <div class="mt-4 flex flex-wrap gap-2">
                             <x-ui.btn href="{{ route('jobs.show', $bookmark->job->id) }}" size="sm">Lihat Lowongan</x-ui.btn>
                             <form action="{{ route('bookmarks.destroy', $bookmark->id) }}" method="POST">

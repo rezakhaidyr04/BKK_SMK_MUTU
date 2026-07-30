@@ -16,7 +16,6 @@ class RoleAndAdminSeeder extends Seeder
             'teacher',
             'student',
             'alumni',
-            'company',
         ];
 
         foreach ($roles as $role) {
@@ -48,26 +47,5 @@ class RoleAndAdminSeeder extends Seeder
         );
 
         $teacher->assignRole('teacher');
-
-        $company = User::firstOrCreate(
-            ['email' => 'company@bkk.com'],
-            [
-                'name' => 'PT Contoh BKK',
-                'password' => Hash::make('password123'),
-                'role' => 'company',
-                'is_active' => true,
-                'email_verified_at' => now(),
-            ]
-        );
-
-        $company->assignRole('company');
-        $company->company()->firstOrCreate(
-            ['user_id' => $company->id],
-            [
-                'name' => 'PT Contoh BKK',
-                'is_verified' => true,
-                'verification_status' => 'verified',
-            ]
-        );
     }
 }

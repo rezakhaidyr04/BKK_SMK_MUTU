@@ -10,8 +10,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $jobs = Job::with('company.user')
-            ->where('status', 'active')
+        $jobs = Job::where('status', 'active')
             ->where('deadline', '>=', now())
             ->latest()
             ->take(12)

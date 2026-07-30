@@ -16,12 +16,8 @@ class JobController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Job::with(["company.user"])
-            ->where("status", "active")
-            ->where("deadline", ">=", now())
-            ->whereHas("company", function ($q) {
-                $q->where("is_verified", true);
-            });
+        $query = Job::where("status", "active")
+            ->where("deadline", ">=", now());
 
         // Search
         if ($request->filled("search")) {
@@ -30,7 +26,8 @@ class JobController extends Controller
                 $q->where("title", "like", "%{$search}%")
                     ->orWhere("position", "like", "%{$search}%")
                     ->orWhere("description", "like", "%{$search}%")
-                    ->orWhere("location", "like", "%{$search}%");
+                    ->orWhere("location", "like", "%{$search}%")
+                    ->orWhere("company_name", "like", "%{$search}%");
             });
         }
 
@@ -68,18 +65,10 @@ class JobController extends Controller
         $jobs = $query->paginate(12);
 
         // Get filter options
-        $jobTypes = Job::whereHas(
-            "company",
-            fn($q) => $q->where("is_verified", true),
-        )
-            ->select("job_type")
+        $jobTypes = Job::select("job_type")
             ->distinct()
             ->pluck("job_type");
-        $locations = Job::whereHas(
-            "company",
-            fn($q) => $q->where("is_verified", true),
-        )
-            ->select("location")
+        $locations = Job::select("location")
             ->distinct()
             ->pluck("location");
 
@@ -88,19 +77,7 @@ class JobController extends Controller
 
     public function show(Job $job)
     {
-        $job->load(["company.user", "applications"]);
-
-        // Sembunyikan lowongan dari perusahaan yang belum terverifikasi
-        if (!optional($job->company)->is_verified) {
-            // Admin dan pemilik company tetap bisa lihat
-            if (
-                !auth()->check() ||
-                (auth()->user()->role !== "admin" &&
-                    optional(auth()->user()->company)->id !== $job->company_id)
-            ) {
-                abort(404);
-            }
-        }
+        $job->load(["applications"]);
 
         // Check if user has already applied
         $hasApplied = false;
@@ -124,10 +101,8 @@ class JobController extends Controller
         }
 
         // Similar jobs
-        $similarJobs = Job::with(["company.user"])
-            ->where("id", "!=", $job->id)
+        $similarJobs = Job::where("id", "!=", $job->id)
             ->where("status", "active")
-            ->whereHas("company", fn($q) => $q->where("is_verified", true))
             ->where(function ($query) use ($job) {
                 $query
                     ->where("job_type", $job->job_type)
@@ -178,11 +153,6 @@ class JobController extends Controller
             "attachment_size" => $attachmentSize,
             "status" => "submitted",
         ]);
-
-        $job->loadMissing(["company.user", "company"]);
-        if ($job->company?->user) {
-            $job->company->user->notify(new ApplicationReceived($application));
-        }
 
         return redirect()
             ->route("jobs.show", $job)

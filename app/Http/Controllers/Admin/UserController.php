@@ -31,7 +31,6 @@ class UserController extends Controller
         }
 
         $users = $query
-            ->with("company")
             ->orderByDesc("created_at")
             ->paginate(15)
             ->withQueryString();
@@ -42,8 +41,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $user->load(
-            "company",
-            "applications.job.company",
+            "applications.job",
             "certificates",
             "cvFiles",
         );
@@ -68,7 +66,7 @@ class UserController extends Controller
             "email" => ["required", "email", "max:255", "unique:users,email"],
             "role" => [
                 "required",
-                Rule::in(["admin", "company", "student", "alumni", "teacher"]),
+                Rule::in(["admin", "student", "alumni", "teacher"]),
             ],
             "password" => ["required", "string", "min:8", "confirmed"],
             "password_confirmation" => ["required"],
@@ -81,10 +79,7 @@ class UserController extends Controller
             "role" => $validated["role"],
             "password" => bcrypt($validated["password"]),
             "is_active" => $validated["is_active"] ?? true,
-            "email_verified_at" => in_array($validated["role"], [
-                "admin",
-                "company",
-            ])
+            "email_verified_at" => $validated["role"] === "admin"
                 ? now()
                 : null,
         ]);
@@ -106,7 +101,7 @@ class UserController extends Controller
             ],
             "role" => [
                 "required",
-                Rule::in(["admin", "company", "student", "alumni", "teacher"]),
+                Rule::in(["admin", "student", "alumni", "teacher"]),
             ],
             "is_active" => ["nullable", "boolean"],
             "password" => ["nullable", "string", "min:8"],
@@ -126,7 +121,7 @@ class UserController extends Controller
             "is_active" => $validated["is_active"] ?? false,
         ]);
 
-        if (in_array($validated["role"], ["admin", "company"])) {
+        if ($validated["role"] === "admin") {
             $user->email_verified_at ??= now();
         }
 

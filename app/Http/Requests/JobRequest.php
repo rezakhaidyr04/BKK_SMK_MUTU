@@ -8,13 +8,14 @@ class JobRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        // Only companies can create or update jobs
-        return $this->user()?->role === 'company';
+        // Only admin can create or update jobs
+        return $this->user()?->role === 'admin';
     }
 
     public function rules(): array
     {
         return [
+            'company_name' => 'required|string|max:255',
             'title' => 'required|string|max:255',
             'position' => 'required|string|max:255',
             'location' => 'required|string|max:255',

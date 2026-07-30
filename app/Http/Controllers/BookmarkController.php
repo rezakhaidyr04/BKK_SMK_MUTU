@@ -10,7 +10,7 @@ class BookmarkController extends Controller
 {
     public function index()
     {
-        $bookmarks = Bookmark::with(['job.company.user'])
+        $bookmarks = Bookmark::with(['job'])
             ->where('user_id', Auth::id())
             ->latest()
             ->paginate(12);

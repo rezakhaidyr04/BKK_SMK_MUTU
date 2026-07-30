@@ -37,24 +37,16 @@
                                 <div class="flex gap-6 items-start">
                                     <!-- Company Logo -->
                                     <div class="relative flex-shrink-0">
-                                        @if($job->company->user->avatar ?? null)
-                                        <img src="{{ asset('storage/' . $job->company->user->avatar) }}" alt="{{ $job->company->name }}" class="w-24 h-24 rounded-2xl object-cover border border-gray-100 shadow-sm">
-                                        @else
                                         <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 flex items-center justify-center font-bold text-3xl border border-blue-200 shadow-sm">
-                                            {{ substr($job->company->name ?? 'C', 0, 1) }}
+                                            {{ substr($job->company_name ?? 'C', 0, 1) }}
                                         </div>
-                                        @endif
                                     </div>
 
                                     <!-- Title & Company Info -->
                                     <div>
                                         <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{{ $job->title }}</h1>
                                         <div class="flex flex-wrap items-center gap-2 mb-3 text-sm">
-                                            <span class="font-bold text-gray-800 text-base">{{ $job->company->name ?? 'Perusahaan' }}</span>
-                                            @if(optional($job->company)->is_verified)
-                                            <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                                            <span class="text-blue-600 font-semibold">Perusahaan Terverifikasi</span>
-                                            @endif
+                                            <span class="font-bold text-gray-800 text-base">{{ $job->company_name ?? 'Perusahaan' }}</span>
                                         </div>
                                         <!-- Ringkasan data yang memang tersedia -->
                                         <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500">
@@ -63,12 +55,6 @@
                                                 <span class="text-blue-500">◎</span> <span class="font-semibold text-gray-700">Kecocokan {{ $matchScore }}%</span>
                                             </span>
                                             @endif
-                                            <span class="flex items-center gap-1">
-                                                <span class="text-gray-400">🏢</span> {{ $job->company->industry ?? 'Manufaktur' }}
-                                            </span>
-                                            <span class="flex items-center gap-1">
-                                                <span class="text-gray-400">✓</span> {{ optional($job->company)->is_verified ? 'Terverifikasi' : 'Belum terverifikasi' }}
-                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -128,8 +114,8 @@
                                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
                                     </div>
                                     <div>
-                                        <div class="text-xl font-bold text-gray-900">{{ $job->company->industry ?? 'N/A' }}</div>
-                                        <div class="text-sm text-gray-500">Industri</div>
+                                        <div class="text-xl font-bold text-gray-900">{{ $job->company_name ?? 'N/A' }}</div>
+                                        <div class="text-sm text-gray-500">Perusahaan</div>
                                     </div>
                                 </div>
                                 <div class="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-center gap-4 hover:shadow-md transition-shadow">
@@ -351,13 +337,13 @@
                             <div x-show="activeTab === 'tentang'" x-cloak>
                                 <h3 class="font-bold text-gray-900 mb-3">Tentang Perusahaan</h3>
                                 <div class="text-sm text-gray-700 leading-relaxed">
-                                    {{ $job->company->description ?? 'Profil perusahaan belum diisi.' }}
+                                    Informasi perusahaan belum tersedia.
                                 </div>
                             </div>
                             <div x-show="activeTab === 'lokasi'" x-cloak>
                                 <h3 class="font-bold text-gray-900 mb-3">Lokasi Lengkap</h3>
                                 <div class="text-sm text-gray-700 leading-relaxed">
-                                    {{ $job->company->address ?? $job->location }}
+                                    {{ $job->location }}
                                 </div>
                             </div>
                         </div>

@@ -12,10 +12,9 @@
         </x-ui.page-header>
     </x-slot>
 
-    <div class="grid gap-6 lg:grid-cols-3 mb-8">
+    <div class="grid gap-6 lg:grid-cols-2 mb-8">
         <x-ui.stat-card label="Total Siswa" :value="$summary['total_students']" color="blue" />
         <x-ui.stat-card label="Total Alumni" :value="$summary['total_alumni']" color="green" />
-        <x-ui.stat-card label="Total Perusahaan" :value="$summary['total_companies']" color="purple" />
     </div>
 
     <div class="grid gap-6 lg:grid-cols-3 mb-8">
@@ -42,26 +41,12 @@
         </div>
     </x-ui.panel>
 
-    <div class="grid gap-6 lg:grid-cols-2">
-        <x-ui.panel title="Perusahaan Terbaru">
-            <div class="space-y-3">
-                @forelse($recentCompanies as $company)
-                <div class="rounded-xl border border-slate-200 p-4">
-                    <p class="font-semibold text-slate-900">{{ $company->name }}</p>
-                    <p class="text-sm text-slate-500">{{ $company->industry }} · {{ $company->created_at->format('d M Y') }}</p>
-                </div>
-                @empty
-                <p class="text-sm text-slate-500">Belum ada perusahaan terdaftar.</p>
-                @endforelse
-            </div>
-        </x-ui.panel>
-
-        <x-ui.panel title="Lowongan Terbaru">
+    <x-ui.panel title="Lowongan Terbaru">
             <div class="space-y-3">
                 @forelse($recentJobs as $job)
                 <div class="rounded-xl border border-slate-200 p-4">
                     <p class="font-semibold text-slate-900">{{ $job->title }}</p>
-                    <p class="text-sm text-slate-500">{{ optional($job->company)->name ?? '-' }} · {{ \App\Support\Label::jobStatus($job->status) }}</p>
+                    <p class="text-sm text-slate-500">{{ $job->company_name ?? '-' }} · {{ \App\Support\Label::jobStatus($job->status) }}</p>
                 </div>
                 @empty
                 <p class="text-sm text-slate-500">Belum ada lowongan.</p>

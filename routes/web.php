@@ -137,55 +137,6 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
         "send",
     ])->name("messages.send");
 
-    // Company Routes
-    Route::middleware("role:company")
-        ->prefix("company")
-        ->name("company.")
-        ->group(function () {
-            Route::resource(
-                "jobs",
-                App\Http\Controllers\Company\JobController::class,
-            )->except(["show"]);
-            Route::post("applications/{application}/status", [
-                App\Http\Controllers\Company\ApplicantController::class,
-                "updateStatus",
-            ])->name("applicants.updateStatus");
-            Route::post("applications/{application}/offer", [
-                App\Http\Controllers\Company\OfferController::class,
-                "send",
-            ])->name("applicants.sendOffer");
-            Route::get("applications/{application}/interview", [
-                App\Http\Controllers\Company\ApplicantController::class,
-                "showInterviewForm",
-            ])->name("applicants.interview.form");
-            Route::post("applications/{application}/interview", [
-                App\Http\Controllers\Company\ApplicantController::class,
-                "scheduleInterview",
-            ])->name("applicants.interview.schedule");
-            Route::get("/applicants", [
-                App\Http\Controllers\Company\ApplicantController::class,
-                "index",
-            ])->name("applicants.index");
-            Route::post("/applicants/bulk-update", [
-                App\Http\Controllers\Company\ApplicantController::class,
-                "bulkUpdate",
-            ])->name("applicants.bulkUpdate");
-            Route::get("/profile", [
-                App\Http\Controllers\Company\ProfileController::class,
-                "edit",
-            ])->name("profile.edit");
-            Route::put("/profile", [
-                App\Http\Controllers\Company\ProfileController::class,
-                "update",
-            ])->name("profile.update");
-            
-            // Analytics Dashboard
-            Route::get("/analytics", [
-                App\Http\Controllers\Company\AnalyticsController::class,
-                "index",
-            ])->name("analytics.index");
-        });
-
     // Teacher Routes
     Route::middleware("role:teacher")
         ->prefix("teacher")
@@ -231,21 +182,9 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
                 "destroy",
             ]);
             Route::resource(
-                "companies",
-                App\Http\Controllers\Admin\CompanyController::class,
-            )->only(["index", "show", "edit", "update", "destroy"]);
-            Route::post("companies/{company}/approve", [
-                App\Http\Controllers\Admin\CompanyController::class,
-                "approve",
-            ])->name("companies.approve");
-            Route::post("companies/{company}/reject", [
-                App\Http\Controllers\Admin\CompanyController::class,
-                "reject",
-            ])->name("companies.reject");
-            Route::resource(
                 "jobs",
                 App\Http\Controllers\Admin\JobController::class,
-            )->only(["index", "show", "edit", "update", "destroy"]);
+            )->only(["index", "create", "store", "show", "edit", "update", "destroy"]);
             Route::resource(
                 "news",
                 App\Http\Controllers\Admin\NewsController::class,

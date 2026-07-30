@@ -455,10 +455,10 @@
                     <article class="job-card-v2">
                         <div class="flex items-start justify-between gap-3">
                             <div class="flex items-center gap-3">
-                                <div class="job-initial-v2 {{ $bgColor }}">{{ strtoupper(substr($job->company->name ?? 'B', 0, 1)) }}</div>
+                                <div class="job-initial-v2 {{ $bgColor }}">{{ strtoupper(substr($job->company_name ?? 'B', 0, 1)) }}</div>
                                 <div>
                                     <h3 class="text-base font-bold text-slate-900">{{ $job->title }}</h3>
-                                    <p class="text-sm text-slate-500">{{ $job->company->name ?? 'Perusahaan Mitra' }}</p>
+                                    <p class="text-sm text-slate-500">{{ $job->company_name ?? 'Perusahaan Mitra' }}</p>
                                 </div>
                             </div>
                             <button type="button" class="text-slate-300 hover:text-blue-600 transition" aria-label="Bookmark">

@@ -47,7 +47,7 @@
                         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                             <div class="flex-1 min-w-0">
                                 <h3 class="text-lg font-bold text-slate-900">{{ $application->job->title }}</h3>
-                                <p class="text-sm text-slate-600 mt-1">{{ $application->job->company->name ?? __('bkk.fallback.company') }}</p>
+                                <p class="text-sm text-slate-600 mt-1">{{ $application->job->company_name ?? 'Perusahaan' }}</p>
                                 <div class="flex flex-wrap items-center gap-3 mt-3 text-sm text-slate-500">
                                     <span>{{ $application->created_at->diffForHumans() }}</span>
                                     @if($application->job->location)

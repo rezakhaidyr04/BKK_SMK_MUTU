@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
 use App\Models\Job;
 use App\Models\Application;
 use App\Support\Label;
@@ -34,8 +33,6 @@ class DashboardController extends Controller
             case "student":
             case "alumni":
                 return $this->studentAlumniDashboard();
-            case "company":
-                return $this->companyDashboard();
             case "teacher":
                 return $this->teacherDashboard();
             default:
@@ -49,7 +46,6 @@ class DashboardController extends Controller
         $stats = [
             "total_students" => User::where("role", "student")->count(),
             "total_alumni" => User::where("role", "alumni")->count(),
-            "total_companies" => User::where("role", "company")->count(),
             "total_jobs" => Job::where("status", "active")->count(),
             "total_applications" => Application::count(),
             "pending_applications" => Application::where(
@@ -85,16 +81,6 @@ class DashboardController extends Controller
             ->whereBetween("created_at", [$lastMonth, $lastMonthEnd])
             ->count();
 
-        $companiesThisMonth = Company::where(
-            "created_at",
-            ">=",
-            $thisMonth,
-        )->count();
-        $companiesLastMonth = Company::whereBetween("created_at", [
-            $lastMonth,
-            $lastMonthEnd,
-        ])->count();
-
         $jobsThisMonth = Job::where("created_at", ">=", $thisMonth)->count();
         $jobsLastMonth = Job::whereBetween("created_at", [
             $lastMonth,
@@ -124,7 +110,6 @@ class DashboardController extends Controller
                     : ($alumniThisMonth > 0
                         ? 100
                         : 0),
-            "companies_new" => $companiesThisMonth,
             "jobs_new" => $jobsThisMonth,
         ];
 
@@ -161,28 +146,14 @@ class DashboardController extends Controller
             "role",
             DB::raw("COUNT(*) as count"),
         )
-            ->whereIn("role", ["student", "alumni", "company"])
+            ->whereIn("role", ["student", "alumni"])
             ->groupBy("role")
             ->get();
 
         // Recent activities
-        $recentApplications = Application::with(["user", "job.company"])
+        $recentApplications = Application::with(["user", "job"])
             ->latest()
             ->take(10)
-            ->get();
-
-        // Top companies
-        $topCompanies = DB::table("companies")
-            ->join("users", "companies.user_id", "=", "users.id")
-            ->join("jobs", "companies.id", "=", "jobs.company_id")
-            ->select(
-                "companies.*",
-                "users.name",
-                DB::raw("COUNT(jobs.id) as job_count"),
-            )
-            ->groupBy("companies.id")
-            ->orderByDesc("job_count")
-            ->take(5)
             ->get();
 
         return view(
@@ -194,7 +165,6 @@ class DashboardController extends Controller
                 "applicationStatusChart",
                 "userRoleChart",
                 "recentApplications",
-                "topCompanies",
                 "growth",
             ),
         );
@@ -221,12 +191,8 @@ class DashboardController extends Controller
         // Job recommendations based on user skills
         $userSkills = $user->skills()->pluck("skills.id")->toArray();
 
-        $recommendedJobs = Job::with(["company.user"])
-            ->where("status", "active")
+        $recommendedJobs = Job::where("status", "active")
             ->where("deadline", ">=", now())
-            ->whereHas("company", function ($q) {
-                $q->where("is_verified", true);
-            })
             ->whereDoesntHave("applications", function ($query) use ($user) {
                 $query->where("user_id", $user->id);
             })
@@ -247,7 +213,7 @@ class DashboardController extends Controller
             ->take(6);
 
         // Recent applications with timeline
-        $myApplications = Application::with(["job.company.user"])
+        $myApplications = Application::with(["job"])
             ->where("user_id", $user->id)
             ->latest()
             ->take(5)
@@ -286,87 +252,6 @@ class DashboardController extends Controller
         );
     }
 
-    private function companyDashboard()
-    {
-        $user = Auth::user();
-        $company = $user->company;
-
-        if (!$company) {
-            return redirect()
-                ->route("company.profile.edit")
-                ->with(
-                    "error",
-                    "Silakan lengkapi profil perusahaan Anda terlebih dahulu.",
-                );
-        }
-
-        $stats = [
-            "active_jobs" => Job::where("company_id", $company->id)
-                ->where("status", "active")
-                ->count(),
-            "total_applicants" => Application::whereHas("job", function (
-                $query,
-            ) use ($company) {
-                $query->where("company_id", $company->id);
-            })->count(),
-            "new_applicants" => Application::whereHas("job", function (
-                $query,
-            ) use ($company) {
-                $query->where("company_id", $company->id);
-            })
-                ->where("status", "submitted")
-                ->count(),
-            "scheduled_interviews" => Application::whereHas("job", function (
-                $query,
-            ) use ($company) {
-                $query->where("company_id", $company->id);
-            })
-                ->where("status", "interviewed")
-                ->count(),
-        ];
-
-        // Recent applications
-        $recentApplicants = Application::with(["user", "job"])
-            ->whereHas("job", function ($query) use ($company) {
-                $query->where("company_id", $company->id);
-            })
-            ->latest()
-            ->take(10)
-            ->get();
-
-        // Job performance
-        $jobPerformance = Job::where("company_id", $company->id)
-            ->withCount("applications")
-            ->orderByDesc("applications_count")
-            ->take(5)
-            ->get();
-
-        // Application trends
-        $applicationTrends = Application::whereHas("job", function (
-            $query,
-        ) use ($company) {
-            $query->where("company_id", $company->id);
-        })
-            ->select(
-                DB::raw("DATE(created_at) as date"),
-                DB::raw("COUNT(*) as count"),
-            )
-            ->where("created_at", ">=", now()->subDays(30))
-            ->groupBy("date")
-            ->orderBy("date")
-            ->get();
-
-        return view(
-            "dashboard.company",
-            compact(
-                "stats",
-                "recentApplicants",
-                "jobPerformance",
-                "applicationTrends",
-                "company",
-            ),
-        );
-    }
 
     private function teacherDashboard()
     {
@@ -389,7 +274,7 @@ class DashboardController extends Controller
             ->get();
 
         // Recent placements
-        $recentPlacements = Application::with(["user", "job.company.user"])
+        $recentPlacements = Application::with(["user", "job"])
             ->where("status", "accepted")
             ->latest()
             ->take(10)
@@ -474,7 +359,7 @@ class DashboardController extends Controller
                 "type" => "bookmark",
                 "title" => "Menyimpan " . $bookmark->job->title,
                 "description" =>
-                    $bookmark->job->company->name ?? __("bkk.fallback.company"),
+                    $bookmark->job->company_name ?? 'Perusahaan',
                 "timestamp" => $bookmark->created_at,
                 "icon" => "bookmark",
                 "color" => "blue",

@@ -51,7 +51,7 @@ class StudentController extends Controller
         $this->authorize('view', $student);
         
         $applications = Application::where('user_id', $student->user_id)
-            ->with(['job.company'])
+            ->with(['job'])
             ->orderBy('created_at', 'desc')
             ->get();
         

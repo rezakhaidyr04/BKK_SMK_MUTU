@@ -43,7 +43,7 @@ class ApplicationStatusUpdated extends Notification
         return [
             'application_id' => $this->application->id,
             'job_title' => $this->application->job->title,
-            'company_name' => $this->application->job->company->name ?? 'Perusahaan',
+            'company_name' => $this->application->job->company_name ?? 'Perusahaan',
             'status' => $this->application->status,
             'message' => "Status lamaran Anda untuk posisi {$this->application->job->title} diubah menjadi {$this->statusLabel}."
         ];

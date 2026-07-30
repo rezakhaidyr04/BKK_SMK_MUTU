@@ -28,7 +28,7 @@ class InterviewScheduled extends Notification implements ShouldQueue
         $mail = (new MailMessage)
             ->subject("📅 Undangan Wawancara: {$job->title}")
             ->greeting("Halo {$notifiable->name},")
-            ->line("Selamat! Anda diundang untuk mengikuti **wawancara** pada lamaran posisi **{$job->title}** di **{$job->company->name}**.")
+            ->line("Selamat! Anda diundang untuk mengikuti **wawancara** pada lamaran posisi **{$job->title}** di **{$job->company_name}**.")
             ->line("---")
             ->line("**📅 Tanggal & Waktu:** {$date}")
             ->line("**📍 Tempat:** {$app->interview_location}");
@@ -61,7 +61,7 @@ class InterviewScheduled extends Notification implements ShouldQueue
             'application_id'     => $app->id,
             'job_id'             => $app->job_id,
             'job_title'          => $app->job->title,
-            'company_name'       => $app->job->company->name,
+            'company_name'       => $app->job->company_name ?? 'Perusahaan',
             'interview_date'     => $date,
             'interview_location' => $app->interview_location,
             'interview_type'     => $app->interview_type,

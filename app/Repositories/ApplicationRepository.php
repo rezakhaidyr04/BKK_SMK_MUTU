@@ -9,7 +9,7 @@ class ApplicationRepository implements ApplicationRepositoryInterface
 {
     public function getApplicationById($applicationId) 
     {
-        return Application::with(['job.company', 'user'])->findOrFail($applicationId);
+        return Application::with(['job', 'user'])->findOrFail($applicationId);
     }
 
     public function deleteApplication($applicationId) 
@@ -19,20 +19,7 @@ class ApplicationRepository implements ApplicationRepositoryInterface
 
     public function createApplication(array $applicationDetails) 
     {
-        $application = Application::create($applicationDetails);
-
-        // Dispatch notification to the company owner if possible
-        try {
-            $application->load('job.company.user', 'user');
-            $companyUser = $application->job->company->user ?? null;
-            if ($companyUser) {
-                $companyUser->notify(new \App\Notifications\ApplicationReceived($application));
-            }
-        } catch (\Throwable $e) {
-            // fail silently; do not block creation
-        }
-
-        return $application;
+        return Application::create($applicationDetails);
     }
 
     public function updateApplicationStatus($applicationId, $newStatus) 
@@ -42,7 +29,7 @@ class ApplicationRepository implements ApplicationRepositoryInterface
 
     public function getApplicationsByUser($userId)
     {
-        return Application::where('user_id', $userId)->with('job.company')->latest()->paginate(10);
+        return Application::where('user_id', $userId)->with('job')->latest()->paginate(10);
     }
 
     public function getApplicationsByJob($jobId)

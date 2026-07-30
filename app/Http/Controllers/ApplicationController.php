@@ -10,7 +10,7 @@ class ApplicationController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Application::with(['job.company.user'])
+        $query = Application::with(['job'])
             ->where('user_id', Auth::id())
             ->latest();
 
@@ -36,7 +36,7 @@ class ApplicationController extends Controller
 
     public function show(Application $application)
     {
-        $application->load(['job.company.user']);
+        $application->load(['job']);
         $this->authorize('view', $application);
 
         // Timeline for status tracking

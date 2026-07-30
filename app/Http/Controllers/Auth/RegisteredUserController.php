@@ -41,7 +41,7 @@ class RegisteredUserController extends Controller
                 "unique:" . User::class,
             ],
             "password" => ["required", "confirmed", Rules\Password::defaults()],
-            "role" => ["nullable", "string", "in:student,alumni,company"],
+            "role" => ["nullable", "string", "in:student,alumni"],
             "nis" => ["nullable", "string", "max:20", "unique:students,nisn"],
             "graduation_year" => [
                 "nullable",
@@ -60,7 +60,7 @@ class RegisteredUserController extends Controller
             "password" => Hash::make($request->password),
             "role" => $role,
             "is_active" => true,
-            "email_verified_at" => $role === "company" ? now() : null,
+            "email_verified_at" => null,
         ]);
 
         // Create student record if role is student or alumni
@@ -71,12 +71,6 @@ class RegisteredUserController extends Controller
             ]);
         }
 
-        // Create company record if role is company
-        if ($role === "company") {
-            $user->company()->create([
-                "name" => $request->name,
-            ]);
-        }
 
         event(new Registered($user));
 

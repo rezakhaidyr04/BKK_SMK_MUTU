@@ -112,33 +112,33 @@
                 <article class="card job-card">
                     <div class="badge">Terbaru</div>
                     <div class="job-header">
-                        <img src="{{ $job->perusahaan->logo_path ? asset('storage/'.$job->perusahaan->logo_path) : 'https://ui-avatars.com/api/?name='.urlencode($job->perusahaan->nama_perusahaan).'&background=e6f0fa&color=0056b3' }}" alt="Logo" class="company-logo">
+                        <img src="https://ui-avatars.com/api/?name={{ urlencode($job->company_name ?? 'Perusahaan') }}&background=e6f0fa&color=0056b3" alt="Logo" class="company-logo">
                         <div>
-                            <h3 class="job-title">{{ $job->judul }}</h3>
-                            <div class="job-company">{{ $job->perusahaan->nama_perusahaan }}</div>
+                            <h3 class="job-title">{{ $job->title }}</h3>
+                            <div class="job-company">{{ $job->company_name ?? 'Perusahaan' }}</div>
                         </div>
                     </div>
                     
                     <div class="job-meta">
                         <div class="meta-item">
-                            <span>📍</span> {{ $job->lokasi_penempatan }}
+                            <span>📍</span> {{ $job->location }}
                         </div>
                         <div class="meta-item">
-                            <span>💰</span> Rp {{ $job->gaji_min_format }} - Rp {{ $job->gaji_max_format }}
+                            <span>💰</span> Rp {{ number_format($job->salary_min ?? 0) }} - Rp {{ number_format($job->salary_max ?? 0) }}
                         </div>
                         <div class="meta-item">
-                            <span>⏳</span> Ditutup: {{ $job->batas_lamaran->format('d M Y') }}
+                            <span>⏳</span> Ditutup: {{ $job->deadline ? $job->deadline->format('d M Y') : '-' }}
                         </div>
                     </div>
                     
                     <p class="job-description">
-                        {{ Str::limit($job->deskripsi, 100) }}
+                        {{ Str::limit($job->description, 100) }}
                     </p>
                     
                     <div class="job-footer">
                         <form action="{{ Route::has('lamaran.store') ? route('lamaran.store', $job->id) : '#' }}" method="POST" id="form-lamar-{{ $job->id }}">
                             @csrf
-                            <button type="button" class="ui-btn ui-btn-primary w-full" onclick="confirmLamar('{{ $job->judul }}', 'form-lamar-{{ $job->id }}')">
+                            <button type="button" class="ui-btn ui-btn-primary w-full" onclick="confirmLamar('{{ $job->title }}', 'form-lamar-{{ $job->id }}')">
                                 Lamar Sekarang 🚀
                             </button>
                         </form>

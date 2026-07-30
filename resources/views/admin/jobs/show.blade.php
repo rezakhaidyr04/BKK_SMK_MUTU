@@ -7,7 +7,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <h1 class="text-3xl font-bold text-white mb-2">{{ $job->title }}</h1>
-                        <p class="text-purple-100">{{ optional($job->company)->name ?? '-' }}</p>
+                        <p class="text-purple-100">{{ $job->company_name ?? '-' }}</p>
                     </div>
                     <div class="flex items-center gap-3">
                         <a href="{{ route('admin.jobs.edit', $job) }}"

@@ -8,13 +8,22 @@
                     <h1 class="text-3xl font-bold text-white mb-2">Daftar Lowongan</h1>
                     <p class="text-purple-100">Kelola lowongan kerja yang diposting oleh perusahaan.</p>
                 </div>
+                <div>
+                    <a href="{{ route('admin.jobs.create') }}"
+                       class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-purple-700 text-sm font-semibold rounded-xl hover:bg-purple-50 transition shadow-lg">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        Tambah Lowongan
+                    </a>
+                </div>
             </div>
         </div>
 
         <div class="page-container page-section">
             <!-- Filter -->
             <div class="bg-white rounded-2xl shadow-lg p-5 mb-6">
-                <form method="GET" action="{{ route('admin.jobs.index') }}" class="grid gap-4 md:grid-cols-4 w-full">
+                <form method="GET" action="{{ route('admin.jobs.index') }}" class="grid gap-4 md:grid-cols-3 w-full">
                     <div>
                         <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Cari</label>
                         <input type="text" name="search" value="{{ request('search') }}" class="ui-input" placeholder="Judul, posisi, lokasi"/>
@@ -26,15 +35,6 @@
                             <option value="active"   {{ request('status') == 'active'   ? 'selected' : '' }}>Aktif</option>
                             <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Nonaktif</option>
                             <option value="closed"   {{ request('status') == 'closed'   ? 'selected' : '' }}>Ditutup</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Perusahaan</label>
-                        <select name="company_id" class="ui-select">
-                            <option value="">Semua</option>
-                            @foreach($companies as $id => $name)
-                            <option value="{{ $id }}" {{ request('company_id') == $id ? 'selected' : '' }}>{{ $name }}</option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="flex items-end gap-2">
@@ -60,7 +60,7 @@
                             @forelse($jobs as $job)
                             <tr>
                                 <td class="font-semibold text-slate-900">{{ $job->title }}</td>
-                                <td>{{ optional($job->company)->name ?? '-' }}</td>
+                                <td>{{ $job->company_name ?? '-' }}</td>
                                 <td>
                                     <x-ui.status-badge :status="$job->status">
                                         {{ \App\Support\Label::jobStatus($job->status) }}

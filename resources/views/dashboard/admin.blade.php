@@ -27,14 +27,14 @@
             {{-- Quick Actions --}}
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6 mb-8">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Aksi Cepat</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <a href="{{ route('admin.companies.index') }}" class="flex flex-col items-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors group">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <a href="{{ route('admin.jobs.create') }}" class="flex flex-col items-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors group">
                         <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
                         </div>
-                        <span class="text-sm font-semibold text-gray-900 dark:text-white text-center">Kelola Perusahaan</span>
+                        <span class="text-sm font-semibold text-gray-900 dark:text-white text-center">Posting Lowongan</span>
                     </a>
                     
                     <a href="{{ route('admin.users.index') }}" class="flex flex-col items-center p-4 bg-green-50 dark:bg-green-900/20 rounded-xl hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group">
@@ -44,15 +44,6 @@
                             </svg>
                         </div>
                         <span class="text-sm font-semibold text-gray-900 dark:text-white text-center">Kelola User</span>
-                    </a>
-                    
-                    <a href="{{ route('admin.jobs.index') }}" class="flex flex-col items-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-colors group">
-                        <div class="w-12 h-12 bg-yellow-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                            </svg>
-                        </div>
-                        <span class="text-sm font-semibold text-gray-900 dark:text-white text-center">Kelola Lowongan</span>
                     </a>
                     
                     <a href="{{ route('admin.reports.index') }}" class="flex flex-col items-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors group">
@@ -110,25 +101,6 @@
                                 <span class="text-red-500 dark:text-red-400 font-semibold">{{ $growth['alumni'] }}%</span>
                             @endif
                             <span class="text-gray-600 dark:text-gray-400 ml-2">dari bulan lalu</span>
-                        </div>
-                    </x-slot:footer>
-                </x-ui.dashboard-stat-card>
-
-                <x-ui.dashboard-stat-card
-                    label="Perusahaan"
-                    :value="$stats['total_companies']"
-                    color="purple"
-                    class="animate-slide-up animate-slide-up-3"
-                >
-                    <x-slot:icon>
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                        </svg>
-                    </x-slot:icon>
-                    <x-slot:footer>
-                        <div class="flex items-center text-sm">
-                            <span class="text-green-600 dark:text-green-400 font-semibold">+{{ $growth['companies_new'] }}</span>
-                            <span class="text-gray-600 dark:text-gray-400 ml-2">baru bulan ini</span>
                         </div>
                     </x-slot:footer>
                 </x-ui.dashboard-stat-card>
@@ -322,50 +294,6 @@
                             <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-medium rounded-full">
                                 {{ \App\Support\Label::applicationStatus($app->status) }}
                             </span>
-                        </div>
-                        @endforeach
-                    </div>
-                    </div>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
-                    <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 cursor-pointer" @click="companiesOpen = !companiesOpen">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-orange-600 rounded-xl flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">Perusahaan Teratas</h3>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Perusahaan dengan lowongan terbanyak</p>
-                                </div>
-                            </div>
-                            <svg x-show="companiesOpen" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                            </svg>
-                            <svg x-show="!companiesOpen" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7-7"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div x-show="companiesOpen" x-collapse class="p-6">
-                    <div class="space-y-4">
-                        @foreach($topCompanies as $company)
-                        <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 hover:-translate-y-0.5 transition-all duration-200">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold" aria-hidden="true">
-                                    {{ substr($company->name, 0, 1) }}
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-gray-900 dark:text-white">{{ $company->name }}</p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ $company->job_count }} lowongan diposting</p>
-                                </div>
-                            </div>
-                            <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
                         </div>
                         @endforeach
                     </div>

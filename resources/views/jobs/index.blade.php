@@ -117,15 +117,9 @@
                         <div class="flex items-start gap-4 mb-4">
                             <!-- Company Logo -->
                             <div class="flex-shrink-0">
-                                @if($job->company->user->avatar ?? null)
-                                <img src="{{ asset('storage/' . $job->company->user->avatar) }}" 
-                                     alt="{{ $job->company->name }}" 
-                                     class="w-16 h-16 rounded-xl object-cover border-2 border-white shadow-md">
-                                @else
                                 <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md">
-                                    {{ substr($job->company->name ?? 'C', 0, 1) }}
+                                    {{ substr($job->company_name ?? 'C', 0, 1) }}
                                 </div>
-                                @endif
                             </div>
 
                             <!-- Job Info -->
@@ -135,7 +129,7 @@
                                     <a href="{{ route('jobs.show', $job->id) }}">{{ $job->title }}</a>
                                     </h3>
                                 </div>
-                                <p class="text-gray-600 font-medium mb-3">{{ $job->company->name ?? __('bkk.fallback.company') }}</p>
+                                <p class="text-gray-600 font-medium mb-3">{{ $job->company_name ?? 'Perusahaan' }}</p>
                                 
                                 <div class="flex flex-wrap items-center gap-2 mb-4">
                                     <!-- Location -->

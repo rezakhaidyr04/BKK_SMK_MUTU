@@ -42,11 +42,6 @@ class User extends Authenticatable
         return $this->hasOne(Alumni::class);
     }
 
-    public function company()
-    {
-        return $this->hasOne(Company::class);
-    }
-
     public function applications()
     {
         return $this->hasMany(Application::class);

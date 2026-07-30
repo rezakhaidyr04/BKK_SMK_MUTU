@@ -9,7 +9,7 @@ class JobRepository implements JobRepositoryInterface
 {
     public function getAllActiveJobs($search = null) 
     {
-        $query = Job::where('status', 'active')->with('company');
+        $query = Job::where('status', 'active');
         
         if ($search) {
             $query->where('title', 'like', '%' . $search . '%')
@@ -22,7 +22,7 @@ class JobRepository implements JobRepositoryInterface
 
     public function getJobById($jobId) 
     {
-        return Job::with(['company', 'applications'])->findOrFail($jobId);
+        return Job::with(['applications'])->findOrFail($jobId);
     }
 
     public function deleteJob($jobId) 
@@ -42,6 +42,7 @@ class JobRepository implements JobRepositoryInterface
 
     public function getJobsByCompany($companyId)
     {
-        return Job::where('company_id', $companyId)->latest()->paginate(10);
+        // This method is no longer needed as companies are removed
+        return collect();
     }
 }
