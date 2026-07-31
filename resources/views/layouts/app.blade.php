@@ -10,7 +10,34 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+        <!-- Scroll reveal CSS -->
+        <style>
+            [data-reveal] {
+                opacity: 0;
+                transform: translateY(24px);
+                transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1), transform 0.55s cubic-bezier(0.4,0,0.2,1);
+            }
+            [data-reveal].revealed {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            [data-reveal-left] {
+                opacity: 0;
+                transform: translateX(-24px);
+                transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1), transform 0.55s cubic-bezier(0.4,0,0.2,1);
+            }
+            [data-reveal-left].revealed { opacity: 1; transform: translateX(0); }
+            [data-reveal-right] {
+                opacity: 0;
+                transform: translateX(24px);
+                transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1), transform 0.55s cubic-bezier(0.4,0,0.2,1);
+            }
+            [data-reveal-right].revealed { opacity: 1; transform: translateX(0); }
+            /* Stagger children */
+            [data-stagger] > * { transition-delay: calc(var(--stagger-i, 0) * 80ms); }
+        </style>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -24,8 +51,11 @@
             }
         </script>
     </head>
-    <body x-data="{ sidebarOpen: window.innerWidth >= 1024 }" @resize.window="sidebarOpen = window.innerWidth >= 1024 ? sidebarOpen : false" class="font-sans antialiased bg-background text-gray-900 dark:bg-gray-950 dark:text-gray-100 @auth authenticated @endauth">
-        <div class="min-h-screen bg-background dark:bg-gray-950 flex flex-col">
+    <body x-data="{ sidebarOpen: window.innerWidth >= 1024 }" @resize.window="sidebarOpen = window.innerWidth >= 1024 ? sidebarOpen : false" class="font-sans antialiased bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-50 @auth authenticated @endauth">
+        {{-- Toast notification portal --}}
+        <x-ui.toast />
+        
+        <div class="min-h-screen bg-neutral-50 dark:bg-neutral-950 flex flex-col">
             @include('layouts.navigation')
 
             <!-- Wrapper that shifts when sidebar toggles so main+footer stay aligned -->
@@ -33,19 +63,6 @@
                 <!-- Main Content with proper margin for sidebar and top nav -->
                 <main class="main-content pt-16 flex-1">
                     <div class="fade-in">
-                    @if(session('success') || session('error') || session('status'))
-                        <div class="page-container pt-4">
-                            @if(session('success'))
-                                <x-ui.alert type="success">{{ session('success') }}</x-ui.alert>
-                            @endif
-                            @if(session('error'))
-                                <x-ui.alert type="error">{{ session('error') }}</x-ui.alert>
-                            @endif
-                            @if(session('status') && !session('success'))
-                                <x-ui.alert type="info">{{ session('status') }}</x-ui.alert>
-                            @endif
-                        </div>
-                    @endif
 
                     @isset($header)
                         <header class="bg-white dark:bg-gray-800 border-b border-gray-200/80 dark:border-gray-700 shadow-sm">
@@ -117,5 +134,25 @@
         </div>
         
         @stack('scripts')
+        {{-- Scroll Reveal Script --}}
+        <script>
+        (function() {
+            const all = document.querySelectorAll('[data-reveal],[data-reveal-left],[data-reveal-right]');
+            if (!all.length) return;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, i) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => entry.target.classList.add('revealed'), i * 60);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+            all.forEach(el => observer.observe(el));
+            // Stagger children
+            document.querySelectorAll('[data-stagger]').forEach(parent => {
+                [...parent.children].forEach((child, i) => child.style.setProperty('--stagger-i', i));
+            });
+        })();
+        </script>
     </body>
 </html>

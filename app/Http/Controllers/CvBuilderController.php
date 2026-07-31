@@ -82,6 +82,21 @@ class CvBuilderController extends Controller
         return Storage::disk('public')->download($cvFile->file_path);
     }
 
+    public function destroy(CvFile $cvFile)
+    {
+        if ($cvFile->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        if (Storage::disk('public')->exists($cvFile->file_path)) {
+            Storage::disk('public')->delete($cvFile->file_path);
+        }
+        
+        $cvFile->delete();
+
+        return back()->with('success', 'CV berhasil dihapus.');
+    }
+
     private function buildPreviewData($user): array
     {
         $skills = $user->skills->pluck('name')->filter()->values()->all();

@@ -88,10 +88,8 @@
     <hr>
 
     {{-- Ringkasan --}}
-    @if($user->bio)
     <div class="section-title">Ringkasan Profesional</div>
-    <div class="section-body">{{ $user->bio }}</div>
-    @endif
+    <div class="section-body">{{ $custom_summary ?: ($user->bio ?? '') }}</div>
 
     {{-- Keahlian --}}
     @if($include_skills && $user->skills->isNotEmpty())
@@ -110,7 +108,7 @@
     @endif
 
     {{-- Pendidikan --}}
-        @if($user->student)
+    @if($user->student)
     <div class="section-title">Pendidikan</div>
     <div class="section-body">
         <strong>SMK MUTU Cikampek</strong>
@@ -122,39 +120,38 @@
     @endif
 
     {{-- Pengalaman --}}
-    @if($user->student && $user->student->experience)
+    @if($custom_experience || ($user->student && $user->student->experience))
     <div class="section-title">Pengalaman</div>
-    <div class="section-body">{!! nl2br(e($user->student->experience)) !!}</div>
+    <div class="section-body">{!! nl2br(e($custom_experience ?: $user->student->experience)) !!}</div>
+    @endif
+
+    {{-- Pencapaian --}}
+    @if($custom_achievement)
+    <div class="section-title">Pencapaian Utama</div>
+    <div class="section-body">{{ $custom_achievement }}</div>
     @endif
 
     {{-- Sertifikat --}}
-        @if($custom_summary || $user->bio)
+    @if($include_certificates && $user->certificates->isNotEmpty())
+    <div class="section-title">Sertifikat</div>
     <div class="section-body">
-        <div class="section-body">{{ $custom_summary ?: $user->bio }}</div>
-            @foreach($user->certificates as $c)
-            <div class="cert-item">
-                <span class="cert-title">{{ $c->title ?? $c->name ?? '-' }}</span>
-                <span class="cert-meta">
-                    @if(isset($c->issuer) && $c->issuer) — {{ $c->issuer }} @endif
-                    @if(isset($c->issue_date) && $c->issue_date) ({{ \Carbon\Carbon::parse($c->issue_date)->format('M Y') }}) @endif
-                </span>
-            </div>
-            @endforeach
-        @else
-            Belum ada sertifikat yang ditampilkan.
-        @endif
+        @foreach($user->certificates as $c)
+        <div class="cert-item">
+            <span class="cert-title">{{ $c->title ?? $c->name ?? '-' }}</span>
+            <span class="cert-meta">
+                @if(isset($c->issuer) && $c->issuer) — {{ $c->issuer }} @endif
+                @if(isset($c->issue_date) && $c->issue_date) ({{ \Carbon\Carbon::parse($c->issue_date)->format('M Y') }}) @endif
+            </span>
+        </div>
+        @endforeach
     </div>
+    @endif
 
     {{-- Foto hanya tampil jika diminta (bawah untuk ATS) --}}
     @if($include_photo && $user->avatar)
     <div class="cv-photo-wrap">
         <img src="{{ public_path('storage/' . $user->avatar) }}" alt="Foto" width="80" height="80" class="cv-avatar-photo">
-        {{-- Pencapaian --}}
-        <div class="section-title">Pencapaian Utama</div>
-        <div class="section-body">{{ $custom_achievement ?: 'Contoh: menyelesaikan proyek kelas, pengalaman magang, kepanitiaan, atau penghargaan yang relevan.' }}</div>
-
-        {{-- Pengalaman --}}
-        @if($custom_experience || ($user->student && $user->student->experience))
-
-        <div class="section-body">{!! nl2br(e($custom_experience ?: $user->student->experience)) !!}</div>
+    </div>
+    @endif
+</body>
 </html>

@@ -203,7 +203,7 @@
                             </div>
                             <div class="flex-1 min-w-0">
                                 <p class="font-semibold text-gray-900 dark:text-white truncate">{{ $app->user->name ?? '-' }}</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">{{ $app->job->title ?? 'Lowongan' }} · {{ $app->job->company_name ?? '' }}</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">{{ $app->job?->title ?? 'Lowongan' }} · {{ $app->job?->company_name ?? '' }}</p>
                             </div>
                             <div class="text-right flex-shrink-0">
                                 <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium rounded-full">Diterima</span>
@@ -217,7 +217,7 @@
                             </div>
                             <div class="flex-1 min-w-0">
                                 <p class="font-semibold text-gray-900 dark:text-white truncate">{{ $app->user->name ?? '-' }}</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">{{ $app->job->title ?? 'Lowongan' }} · {{ $app->job->company_name ?? '' }}</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">{{ $app->job?->title ?? 'Lowongan' }} · {{ $app->job?->company_name ?? '' }}</p>
                             </div>
                             <div class="text-right flex-shrink-0">
                                 <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium rounded-full">Diterima</span>

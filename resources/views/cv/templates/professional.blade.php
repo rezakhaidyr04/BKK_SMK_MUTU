@@ -216,12 +216,18 @@
 
         {{-- Ringkasan --}}
         <div class="section-title">Tentang Saya</div>
-        <div class="section-body">{{ $user->bio ?? 'Ringkasan profil belum diisi. Tambahkan 2-3 kalimat tentang minat kerja, kekuatan utama, dan target karir agar sisi kanan CV ini tidak terasa kosong.' }}</div>
+        <div class="section-body">{{ $custom_summary ?: ($user->bio ?? 'Ringkasan profil belum diisi. Tambahkan 2-3 kalimat tentang minat kerja, kekuatan utama, dan target karir agar sisi kanan CV ini tidak terasa kosong.') }}</div>
 
         {{-- Pengalaman --}}
-        @if($user->student && $user->student->experience)
+        @if($custom_experience || ($user->student && $user->student->experience))
         <div class="section-title">Pengalaman</div>
-        <div class="section-body">{!! nl2br(e($user->student->experience)) !!}</div>
+        <div class="section-body">{!! nl2br(e($custom_experience ?: $user->student->experience)) !!}</div>
+        @endif
+
+        {{-- Pencapaian --}}
+        @if($custom_achievement)
+        <div class="section-title">Pencapaian Utama</div>
+        <div class="section-body">{{ $custom_achievement }}</div>
         @endif
 
         {{-- Sertifikat --}}
@@ -232,13 +238,11 @@
                 <div class="cert-title">{{ $c->title ?? $c->name ?? '-' }}</div>
                 <div class="cert-meta">
                     @if(isset($c->issuer) && $c->issuer) {{ $c->issuer }} @endif
-            @if($custom_experience || ($user->student && $user->student->experience))
+                    @if(isset($c->issue_date) && $c->issue_date) ({{ \Carbon\Carbon::parse($c->issue_date)->format('M Y') }}) @endif
                 </div>
-            <div class="section-body">{!! nl2br(e($custom_experience ?: $user->student->experience)) !!}</div>
+            </div>
             @endforeach
         @else
-            <div class="section-title">Pencapaian</div>
-            <div class="section-body">{{ $custom_achievement ?: 'Tambahkan satu pencapaian utama agar CV terlihat lebih meyakinkan.' }}</div>
             <div class="cert-item">
                 <div class="cert-title">Belum ada sertifikat ditampilkan</div>
                 <div class="cert-meta">Tambahkan sertifikat di profil untuk memperkuat CV.</div>

@@ -22,6 +22,17 @@ class HomeController extends Controller
 
         $studentsCount = User::whereIn('role', ['student', 'alumni'])->count();
 
+        // Calculate stats for the welcome page
+        $companiesCount = \App\Models\Company::count();
+        
+        $alumniCount = User::where('role', 'alumni')->count();
+        $placedAlumniCount = User::where('role', 'alumni')
+            ->whereHas('applications', function($q) {
+                $q->where('status', 'accepted');
+            })->count();
+            
+        $successRate = $alumniCount > 0 ? round(($placedAlumniCount / $alumniCount) * 100) : 0;
+
         // collect static partner logos from public/images/companies
         $partnerLogos = [];
         $dir = public_path('images/companies');
@@ -36,6 +47,8 @@ class HomeController extends Controller
             'jobs',
             'activeJobsCount',
             'studentsCount',
+            'companiesCount',
+            'successRate',
             'partnerLogos'
         ));
     }

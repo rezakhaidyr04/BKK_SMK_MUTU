@@ -107,6 +107,10 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
         CvBuilderController::class,
         "download",
     ])->name("cv.download");
+    Route::delete("/cv/{cvFile}", [
+        CvBuilderController::class,
+        "destroy",
+    ])->name("cv.destroy");
 
     // Certificates
     Route::get("/certificates", [CertificateController::class, "index"])->name(

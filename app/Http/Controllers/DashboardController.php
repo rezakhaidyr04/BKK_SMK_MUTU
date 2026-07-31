@@ -339,7 +339,7 @@ class DashboardController extends Controller
         foreach ($applications as $app) {
             $activities[] = [
                 "type" => "application",
-                "title" => "Melamar ke " . $app->job->title,
+                "title" => "Melamar ke " . ($app->job?->title ?? 'Lowongan yang sudah dihapus'),
                 "description" =>
                     "Status: " . Label::applicationStatus($app->status),
                 "timestamp" => $app->created_at,
@@ -357,9 +357,9 @@ class DashboardController extends Controller
         foreach ($bookmarks as $bookmark) {
             $activities[] = [
                 "type" => "bookmark",
-                "title" => "Menyimpan " . $bookmark->job->title,
+                "title" => "Menyimpan " . ($bookmark->job?->title ?? 'Lowongan yang sudah dihapus'),
                 "description" =>
-                    $bookmark->job->company_name ?? 'Perusahaan',
+                    $bookmark->job?->company_name ?? 'Perusahaan',
                 "timestamp" => $bookmark->created_at,
                 "icon" => "bookmark",
                 "color" => "blue",
