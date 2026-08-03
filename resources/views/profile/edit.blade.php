@@ -1,66 +1,124 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profil') }}
+        <h2 class="font-bold text-2xl text-gray-900 tracking-tight">
+            {{ __('Pengaturan Akun') }}
         </h2>
     </x-slot>
 
-    <div class="py-10">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            {{-- Header card dengan stats --}}
-            <div class="p-6 sm:p-8 bg-white/80 backdrop-blur-xl shadow sm:rounded-2xl border border-gray-100">
-                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                    <div class="flex items-center gap-4">
-                        @if($user->avatar)
-                            <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $user->name }}"
-                                 class="w-14 h-14 rounded-full object-cover border-2 border-gray-200">
-                        @else
-                            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xl font-bold">
-                                {{ substr($user->name, 0, 1) }}
-                            </div>
-                        @endif
+    <div class="py-10 bg-slate-50/50 min-h-screen" x-data="{ currentTab: 'profile' }">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            
+            {{-- Header card dengan stats & Glassmorphism --}}
+            <div class="relative overflow-hidden p-6 sm:p-8 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.02)] sm:rounded-3xl border border-slate-100/80">
+                {{-- Decorative background gradient glow --}}
+                <div class="absolute -right-10 -top-10 w-44 h-44 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-10 -bottom-10 w-44 h-44 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                    <div class="flex items-center gap-5">
+                        <div class="relative">
+                            @if($user->avatar)
+                                <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $user->name }}"
+                                     class="w-20 h-20 rounded-2xl object-cover border-4 border-white shadow-md ring-1 ring-slate-100">
+                            @else
+                                <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-3xl font-extrabold shadow-md">
+                                    {{ substr($user->name, 0, 1) }}
+                                </div>
+                            @endif
+                            <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full shadow" title="Online"></div>
+                        </div>
                         <div>
-                            <h2 class="text-xl font-bold text-gray-900">{{ $user->name }}</h2>
-                            <p class="text-sm text-gray-500">{{ $user->email }}</p>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">{{ $user->name }}</h2>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-100 uppercase tracking-wider">
+                                    {{ $user->role }}
+                                </span>
+                            </div>
+                            <p class="text-sm text-slate-500 font-medium mt-0.5">{{ $user->email }}</p>
                         </div>
                     </div>
-                    <div class="grid grid-cols-3 gap-3">
-                        <div class="text-center p-3 rounded-xl bg-gray-50 border border-gray-100">
-                            <div class="text-lg font-bold text-gray-900">{{ $user->applications()->count() }}</div>
-                            <div class="text-xs text-gray-500">Lamaran</div>
+
+                    {{-- Mini Stats --}}
+                    <div class="flex items-center gap-4 bg-slate-50/80 backdrop-blur border border-slate-100 p-3 rounded-2xl">
+                        <div class="px-5 py-2 text-center">
+                            <span class="block text-xl font-extrabold text-slate-950">{{ $user->applications()->count() }}</span>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Lamaran</span>
                         </div>
-                        <div class="text-center p-3 rounded-xl bg-gray-50 border border-gray-100">
-                            <div class="text-lg font-bold text-gray-900">{{ $user->bookmarks()->count() }}</div>
-                            <div class="text-xs text-gray-500">Disimpan</div>
+                        <div class="w-px h-8 bg-slate-200"></div>
+                        <div class="px-5 py-2 text-center">
+                            <span class="block text-xl font-extrabold text-slate-950">{{ $user->bookmarks()->count() }}</span>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Disimpan</span>
                         </div>
-                        <div class="text-center p-3 rounded-xl bg-gray-50 border border-gray-100">
-                            <div class="text-lg font-bold text-gray-900">{{ $user->certificates()->count() }}</div>
-                            <div class="text-xs text-gray-500">Sertifikat</div>
+                        <div class="w-px h-8 bg-slate-200"></div>
+                        <div class="px-5 py-2 text-center">
+                            <span class="block text-xl font-extrabold text-slate-950">{{ $user->certificates()->count() }}</span>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Sertifikat</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-                {{-- Kolom kiri: form info profil (lebih lebar) --}}
-                <div class="lg:col-span-3 space-y-6">
-                    <div class="p-6 bg-white shadow sm:rounded-2xl border border-gray-100">
-                        @include('profile.partials.update-profile-information-form')
-                    </div>
-                    <div class="p-6 bg-white shadow sm:rounded-2xl border border-gray-100">
-                        @include('profile.partials.update-password-form')
-                    </div>
+            {{-- Tab Navigasi Premium --}}
+            <div class="border-b border-slate-200/80">
+                <nav class="-mb-px flex gap-6 overflow-x-auto" aria-label="Tabs">
+                    <button @click="currentTab = 'profile'"
+                            :class="currentTab === 'profile' ? 'border-blue-600 text-blue-600 font-bold' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 font-semibold'"
+                            class="whitespace-nowrap pb-4 px-1 border-b-2 text-sm transition-all duration-200 flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        Informasi Diri
+                    </button>
+                    <button @click="currentTab = 'password'"
+                            :class="currentTab === 'password' ? 'border-blue-600 text-blue-600 font-bold' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 font-semibold'"
+                            class="whitespace-nowrap pb-4 px-1 border-b-2 text-sm transition-all duration-200 flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        Keamanan Sandi
+                    </button>
+                    <button @click="currentTab = 'documents'"
+                            :class="currentTab === 'documents' ? 'border-blue-600 text-blue-600 font-bold' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 font-semibold'"
+                            class="whitespace-nowrap pb-4 px-1 border-b-2 text-sm transition-all duration-200 flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        Berkas Pendukung
+                    </button>
+                    <button @click="currentTab = 'danger'"
+                            :class="currentTab === 'danger' ? 'border-red-500 text-red-600 font-bold' : 'border-transparent text-slate-500 hover:text-red-500 hover:border-red-300 font-semibold'"
+                            class="whitespace-nowrap pb-4 px-1 border-b-2 text-sm transition-all duration-200 flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                        Zona Bahaya
+                    </button>
+                </nav>
+            </div>
+
+            {{-- Konten Tab --}}
+            <div class="relative">
+                
+                {{-- Tab 1: Informasi Diri --}}
+                <div x-show="currentTab === 'profile'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-3" x-transition:enter-end="opacity-100 translate-y-0" class="p-6 sm:p-8 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.02)] sm:rounded-3xl border border-slate-100/80">
+                    @include('profile.partials.update-profile-information-form')
                 </div>
 
-                {{-- Kolom kanan: kelengkapan berkas & hapus akun --}}
-                <div class="lg:col-span-2 space-y-6">
-                    <div class="p-6 bg-white shadow sm:rounded-2xl border border-gray-100">
-                        @include('profile.partials.manage-documents-form')
-                    </div>
-                    <div class="p-6 bg-white shadow sm:rounded-2xl border border-gray-100">
-                        @include('profile.partials.delete-user-form')
-                    </div>
+                {{-- Tab 2: Keamanan Sandi --}}
+                <div x-show="currentTab === 'password'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-3" x-transition:enter-end="opacity-100 translate-y-0" class="p-6 sm:p-8 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.02)] sm:rounded-3xl border border-slate-100/80" style="display: none;">
+                    @include('profile.partials.update-password-form')
                 </div>
+
+                {{-- Tab 3: Berkas Pendukung --}}
+                <div x-show="currentTab === 'documents'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-3" x-transition:enter-end="opacity-100 translate-y-0" class="p-6 sm:p-8 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.02)] sm:rounded-3xl border border-slate-100/80" style="display: none;">
+                    @include('profile.partials.manage-documents-form')
+                </div>
+
+                {{-- Tab 4: Zona Bahaya --}}
+                <div x-show="currentTab === 'danger'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-3" x-transition:enter-end="opacity-100 translate-y-0" class="p-6 sm:p-8 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.02)] sm:rounded-3xl border border-red-100/30" style="display: none;">
+                    @include('profile.partials.delete-user-form')
+                </div>
+
             </div>
         </div>
     </div>

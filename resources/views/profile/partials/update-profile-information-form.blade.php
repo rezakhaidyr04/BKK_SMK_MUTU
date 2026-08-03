@@ -1,111 +1,112 @@
 <section>
-    <header>
-        <h2 class="text-base font-semibold text-gray-900">Informasi Profil</h2>
-        <p class="mt-1 text-sm text-gray-600">Perbarui foto, nama, email, nomor HP, dan bio Anda.</p>
+    <header class="border-b border-slate-100 pb-4 mb-6">
+        <h2 class="text-lg font-bold text-slate-900 tracking-tight">Informasi Profil</h2>
+        <p class="mt-1 text-sm text-slate-500">Perbarui foto, nama, email, nomor HP, keahlian, dan info akademik Anda.</p>
     </header>
 
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="mt-6 space-y-5">
+    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="space-y-6">
         @csrf
         @method('patch')
 
-        {{-- Avatar --}}
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Foto Profil</label>
-            <div class="flex items-center gap-4">
-                <div class="relative">
-                    @if($user->avatar)
-                        <img id="avatar-preview" src="{{ asset('storage/' . $user->avatar) }}"
-                             alt="{{ $user->name }}"
-                             class="w-16 h-16 rounded-full object-cover border-2 border-gray-200">
-                    @else
-                        <div id="avatar-preview-placeholder"
-                             class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xl font-bold">
-                            {{ substr($user->name, 0, 1) }}
-                        </div>
-                        <img id="avatar-preview" src="" alt="" class="w-16 h-16 rounded-full object-cover border-2 border-gray-200 hidden">
-                    @endif
-                </div>
-                <div>
-                    <label for="avatar" class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
-                        Ganti Foto
-                    </label>
-                    <input id="avatar" name="avatar" type="file" class="sr-only" accept="image/jpeg,image/png,image/webp"
-                           onchange="previewAvatar(event)">
-                    <p class="text-xs text-gray-400 mt-1">JPG, PNG, WebP &middot; maks. 2MB</p>
-                </div>
+        {{-- Avatar Section --}}
+        <div class="bg-slate-50/50 rounded-2xl p-4 border border-slate-100 flex flex-col sm:flex-row items-center gap-5">
+            <div class="relative group">
+                @if($user->avatar)
+                    <img id="avatar-preview" src="{{ asset('storage/' . $user->avatar) }}"
+                         alt="{{ $user->name }}"
+                         class="w-20 h-20 rounded-2xl object-cover border-2 border-white shadow-md ring-1 ring-slate-200">
+                @else
+                    <div id="avatar-preview-placeholder"
+                         class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-2xl font-extrabold shadow-md">
+                        {{ substr($user->name, 0, 1) }}
+                    </div>
+                    <img id="avatar-preview" src="" alt="" class="w-20 h-20 rounded-2xl object-cover border-2 border-white shadow-md ring-1 ring-slate-200 hidden">
+                @endif
+            </div>
+            
+            <div class="text-center sm:text-left">
+                <label for="avatar" class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 hover:border-slate-300 rounded-xl text-sm font-semibold text-slate-700 hover:text-slate-900 shadow-sm transition">
+                    <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    Pilih Foto Baru
+                </label>
+                <input id="avatar" name="avatar" type="file" class="sr-only" accept="image/jpeg,image/png,image/webp"
+                       onchange="previewAvatar(event)">
+                <p class="text-xs text-slate-400 mt-2">Format JPG, PNG, atau WebP. Maksimal 2MB.</p>
             </div>
             <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
         </div>
 
-        {{-- Nama --}}
-        <div>
-            <x-input-label for="name" :value="__('Nama Lengkap')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
-                          :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
-        </div>
+        {{-- Grid Input Nama & Email --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+                <x-input-label for="name" :value="__('Nama Lengkap')" class="text-slate-700 font-semibold mb-1" />
+                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                              :value="old('name', $user->name)" required autofocus autocomplete="name" />
+                <x-input-error class="mt-1.5" :messages="$errors->get('name')" />
+            </div>
 
-        {{-- Email --}}
-        <div>
-            <x-input-label for="email" :value="__('Alamat Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full"
-                          :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            <div>
+                <x-input-label for="email" :value="__('Alamat Email')" class="text-slate-700 font-semibold mb-1" />
+                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                              :value="old('email', $user->email)" required autocomplete="username" />
+                <x-input-error class="mt-1.5" :messages="$errors->get('email')" />
 
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                <div class="mt-2">
-                    <p class="text-sm text-gray-800">
-                        {{ __('Alamat email Anda belum diverifikasi.') }}
-                        <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            {{ __('Kirim ulang email verifikasi.') }}
-                        </button>
-                    </p>
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600">Link verifikasi baru telah dikirim.</p>
-                    @endif
-                </div>
-            @endif
+                @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
+                    <div class="mt-2">
+                        <p class="text-sm text-slate-800">
+                            {{ __('Alamat email Anda belum diverifikasi.') }}
+                            <button form="send-verification" class="underline text-sm text-slate-600 hover:text-slate-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                {{ __('Kirim ulang email verifikasi.') }}
+                            </button>
+                        </p>
+                        @if (session('status') === 'verification-link-sent')
+                            <p class="mt-2 font-medium text-sm text-green-600">Link verifikasi baru telah dikirim.</p>
+                        @endif
+                    </div>
+                @endif
+            </div>
         </div>
 
         {{-- Nomor HP --}}
         <div>
-            <x-input-label for="phone" value="Nomor HP" />
-            <x-text-input id="phone" name="phone" type="tel" class="mt-1 block w-full"
+            <x-input-label for="phone" value="Nomor Handphone" class="text-slate-700 font-semibold mb-1" />
+            <x-text-input id="phone" name="phone" type="tel" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                           :value="old('phone', $user->phone)" autocomplete="tel" placeholder="Contoh: 08123456789" />
-            <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+            <x-input-error class="mt-1.5" :messages="$errors->get('phone')" />
         </div>
 
         {{-- Bio --}}
         <div>
-            <x-input-label for="bio" value="Bio / Ringkasan Diri" />
+            <x-input-label for="bio" value="Bio / Ringkasan Singkat" class="text-slate-700 font-semibold mb-1" />
             <textarea id="bio" name="bio" rows="3"
-                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
-                      placeholder="Ceritakan singkat tentang diri Anda, minat, dan tujuan karir..."
+                      class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm"
+                      placeholder="Ceritakan singkat mengenai latar belakang, minat, dan tujuan karir Anda..."
                       maxlength="500">{{ old('bio', $user->bio ?? '') }}</textarea>
-            <p class="mt-1 text-xs text-gray-400">Maksimal 500 karakter. Digunakan di CV Anda.</p>
-            <x-input-error class="mt-2" :messages="$errors->get('bio')" />
+            <div class="flex justify-between mt-1.5">
+                <span class="text-xs text-slate-400">Digunakan untuk profil CV lamaran kerja Anda.</span>
+                <span class="text-xs text-slate-400">Maks. 500 karakter</span>
+            </div>
+            <x-input-error class="mt-1.5" :messages="$errors->get('bio')" />
         </div>
 
         {{-- Keahlian --}}
         <div x-data="skillsManager({{ Js::from($user->skills->pluck('name')->toArray()) }})">
-            <x-input-label value="Keahlian" />
-            <p class="text-xs text-gray-400 mb-2">Tekan <kbd class="px-1 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">Enter</kbd> atau <kbd class="px-1 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">,</kbd> untuk menambah. Klik × untuk hapus.</p>
+            <x-input-label value="Keahlian & Kompetensi" class="text-slate-700 font-semibold mb-1" />
+            <p class="text-xs text-slate-400 mb-2">Tulis keahlian lalu tekan <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] font-mono">Enter</kbd> atau tanda koma <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] font-mono">,</kbd></p>
 
-            {{-- Tag container + input dalam satu kotak --}}
-            <div class="flex flex-wrap gap-1.5 p-2.5 border border-gray-300 rounded-md min-h-[44px] bg-white focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent cursor-text"
+            <div class="flex flex-wrap gap-2 p-3 border border-slate-200 rounded-xl min-h-[48px] bg-white focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all cursor-text"
                  @click="$refs.skillInput.focus()">
                 <template x-for="(skill, i) in skills" :key="i">
-                    <span class="inline-flex items-center gap-1 pl-2.5 pr-1 py-0.5 bg-blue-100 text-blue-800 text-sm rounded-full">
+                    <span class="inline-flex items-center gap-1.5 pl-3 pr-1.5 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-lg border border-blue-100">
                         <span x-text="skill"></span>
                         <button type="button" @click.stop="remove(i)"
-                                class="w-4 h-4 rounded-full hover:bg-blue-200 flex items-center justify-center text-blue-600 hover:text-blue-800 transition">
+                                class="w-4 h-4 rounded-md hover:bg-blue-100 flex items-center justify-center text-blue-500 hover:text-blue-700 transition">
                             &times;
                         </button>
                     </span>
@@ -116,11 +117,10 @@
                        @keydown.188.prevent="add()"
                        @keydown.backspace="backspace()"
                        type="text"
-                       placeholder="Contoh: Microsoft Excel, AutoCAD, Desain Grafis..."
-                       class="flex-1 min-w-[180px] outline-none border-none text-sm bg-transparent py-0.5">
+                       placeholder="Tambah keahlian (misal: Excel, Laravel)..."
+                       class="flex-1 min-w-[200px] outline-none border-none text-sm bg-transparent py-0.5 focus:ring-0">
             </div>
 
-            {{-- Hidden inputs untuk dikirim bersama form --}}
             <template x-for="skill in skills" :key="skill">
                 <input type="hidden" name="skills[]" :value="skill">
             </template>
@@ -128,22 +128,22 @@
 
         {{-- Data Akademik (student/alumni only) --}}
         @if(in_array(Auth::user()->role, ['student', 'alumni']))
-        <div class="border-t border-gray-100 pt-5">
-            <h3 class="text-sm font-semibold text-gray-800 mb-4">Data Akademik</h3>
-            <div class="space-y-4">
+        <div class="border-t border-slate-100 pt-6">
+            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4">Informasi Akademik</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                    <x-input-label for="major" value="Jurusan / Program Keahlian" />
-                    <x-text-input id="major" name="major" type="text" class="mt-1 block w-full"
+                    <x-input-label for="major" value="Jurusan / Program Keahlian" class="text-slate-700 font-semibold mb-1" />
+                    <x-text-input id="major" name="major" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                   :value="old('major', $user->student->major ?? '')"
-                                  placeholder="Contoh: Teknik Komputer dan Jaringan" />
+                                  placeholder="Contoh: Teknik Komputer & Jaringan" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('major')" />
                 </div>
 
                 <div>
-                    <x-input-label for="graduation_year" value="Tahun Lulus" />
+                    <x-input-label for="graduation_year" value="Tahun Lulus" class="text-slate-700 font-semibold mb-1" />
                     <select id="graduation_year" name="graduation_year"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-                        <option value="">Pilih tahun lulus</option>
+                            class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm">
+                        <option value="">Pilih Tahun Lulus</option>
                         @for($year = date('Y') + 2; $year >= date('Y') - 15; $year--)
                             <option value="{{ $year }}"
                                 {{ old('graduation_year', $user->student->graduation_year ?? '') == $year ? 'selected' : '' }}>
@@ -153,27 +153,30 @@
                     </select>
                     <x-input-error class="mt-1.5" :messages="$errors->get('graduation_year')" />
                 </div>
+            </div>
 
-                <div>
-                    <x-input-label for="address" value="Alamat Tinggal" />
-                    <textarea id="address" name="address" rows="2"
-                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
-                              placeholder="Kelurahan, Kecamatan, Kota/Kabupaten">{{ old('address', $user->student->address ?? '') }}</textarea>
-                    <x-input-error class="mt-1.5" :messages="$errors->get('address')" />
-                </div>
+            <div class="mt-5">
+                <x-input-label for="address" value="Alamat Tinggal" class="text-slate-700 font-semibold mb-1" />
+                <textarea id="address" name="address" rows="2"
+                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm"
+                          placeholder="Masukkan alamat domisili lengkap Anda...">{{ old('address', $user->student->address ?? '') }}</textarea>
+                <x-input-error class="mt-1.5" :messages="$errors->get('address')" />
             </div>
         </div>
         @endif
 
-        <div class="flex items-center gap-4 pt-2">
-            <x-primary-button>{{ __('Simpan Perubahan') }}</x-primary-button>
+        <div class="flex items-center gap-4 border-t border-slate-100 pt-6">
+            <x-primary-button class="rounded-xl px-5 py-2.5 bg-blue-600 hover:bg-blue-700 shadow-sm transition">{{ __('Simpan Perubahan') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
                 <p x-data="{ show: true }"
                    x-show="show"
                    x-transition
-                   x-init="setTimeout(() => show = false, 2500)"
-                   class="text-sm text-green-600 font-medium">
+                   x-init="setTimeout(() => show = false, 3000)"
+                   class="text-sm text-green-600 font-semibold flex items-center gap-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
                     Profil berhasil diperbarui.
                 </p>
             @endif
@@ -211,7 +214,6 @@ function skillsManager(initial) {
             this.skills.splice(i, 1);
         },
         backspace() {
-            // Jika input kosong dan tekan backspace, hapus tag terakhir
             if (this.input === '' && this.skills.length > 0) {
                 this.skills.pop();
             }

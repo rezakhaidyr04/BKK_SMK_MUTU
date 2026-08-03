@@ -12,7 +12,7 @@
     {{-- Local Tailwind CSS (no internet required) --}}
     <link rel="stylesheet" href="{{ asset('css/tailwind-local.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/welcome.css') }}?v={{ time() }}">
     
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
@@ -160,33 +160,25 @@
                 </div>
 
                 {{-- KANAN: foto siswa --}}
-                <div class="hero-photo-col">
-                    <div class="hero-illustration-wrap">
-
-                        {{-- Glow lembut di belakang foto --}}
-                        <div style="position:absolute; width:360px; height:360px; border-radius:50%; background:radial-gradient(circle, rgba(96,165,250,0.15) 0%, transparent 65%); bottom:0; left:50%; transform:translateX(-50%); z-index:0; pointer-events:none;"></div>
-
-                        {{-- Foto siswa dalam frame modern glassmorphism --}}
-                        <div style="position:relative; z-index:1; width:100%; max-width:440px; margin:0 auto; border-radius:32px; overflow:hidden; border:1px solid rgba(255,255,255,0.4); box-shadow: 0 30px 60px rgba(0,0,0,0.25), inset 0 2px 4px rgba(255,255,255,0.5); background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%); backdrop-filter: blur(16px); transform:translateY(10px);">
-                            <div style="padding: 12px;">
-                                <img src="{{ asset('images/foto_siswa/siswa.png') }}"
-                                     alt="Ilustrasi siswa BKK SMK MUTU"
-                                     loading="eager"
-                                     style="width:100%; height:auto; object-fit:cover; display:block; border-radius: 20px; filter:contrast(1.02) brightness(1.02);">
-                            </div>
-                        </div>
-
+                <div class="hero-photo-col" style="position: relative; display: flex; align-items: flex-end; justify-content: flex-end;">
+                    <div class="hero-illustration-wrap" style="position: relative; width: 100%; display: flex; align-items: flex-end; justify-content: center; min-height: 480px;">
+                        
+                        {{-- Foto siswa tanpa container box kecil agar berukuran besar dan natural --}}
+                        <img src="{{ asset('images/foto_siswa/siswa.png') }}"
+                             alt="Ilustrasi siswa BKK SMK MUTU"
+                             loading="eager"
+                             style="width: 110%; max-width: 580px; height: auto; object-fit: contain; display: block; z-index: 2; margin-bottom: -4px;">
 
                         {{-- Badge kanan atas --}}
-                        <div class="hero-badge" data-index="1" style="position:absolute; top:12%; right:2%; z-index:3;">
+                        <div class="hero-badge" data-index="1" style="position:absolute; top:20%; right:5%; z-index:3;">
                             <span>💼</span><span>150+ Lowongan Aktif</span>
                         </div>
                         {{-- Badge kiri atas --}}
-                        <div class="hero-badge" data-index="2" style="position:absolute; top:28%; left:-4%; z-index:3;">
+                        <div class="hero-badge" data-index="2" style="position:absolute; top:35%; left:-5%; z-index:3;">
                             <span>📄</span><span>CV ATS Profesional</span>
                         </div>
                         {{-- Badge kanan bawah --}}
-                        <div class="hero-badge" data-index="3" style="position:absolute; bottom:16%; right:4%; z-index:3;">
+                        <div class="hero-badge" data-index="3" style="position:absolute; bottom:25%; right:-2%; z-index:3;">
                             <span>🏆</span><span>93% Alumni Berhasil</span>
                         </div>
                     </div>
@@ -377,56 +369,70 @@
     </section>
 
     <!-- Statistics Bar -->
-    <section class="py-6 bg-white">
+    <section class="py-10 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="stats-bar-v2">
+
+                {{-- Kartu 1: Perusahaan Mitra --}}
                 <div class="stat-item-v2">
-                    <div class="stat-icon-v2 bg-blue-100">
-                        <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    <div class="stat-icon-v2" style="background:#eff6ff;">
+                        <svg fill="none" stroke="#2563eb" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
                     </div>
-                    <div>
-                        <p class="text-3xl font-extrabold text-white" data-counter="{{ $companiesCount ?? 0 }}" data-suffix="+" aria-live="polite">0</p>
-                        <p class="text-sm font-semibold text-white">Perusahaan Mitra</p>
-                        <p class="text-xs text-blue-100 italic">Bergabung bersama kami</p>
-                        <p class="text-xs text-blue-100 italic mt-1">{{ $companiesCount ?? 0 }} perusahaan aktif</p>
+                    <div class="stat-texts">
+                        <p data-counter="{{ $companiesCount ?? 0 }}" data-suffix="+" style="color:#1e40af;">0</p>
+                        <p>Perusahaan Mitra</p>
+                        <p>Bergabung bersama kami</p>
                     </div>
                 </div>
-                <div class="stat-divider-v2"></div>
+
+                {{-- Kartu 2: Siswa & Alumni --}}
                 <div class="stat-item-v2">
-                    <div class="stat-icon-v2 bg-blue-100">
-                        <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <div class="stat-icon-v2" style="background:#f0fdf4;">
+                        <svg fill="none" stroke="#16a34a" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
                     </div>
-                    <div>
-                        <p class="text-3xl font-extrabold text-white" data-counter="{{ $studentsCount ?? 0 }}" data-suffix="+" aria-live="polite">0</p>
-                        <p class="text-sm font-semibold text-white">Alumni Terdaftar</p>
-                        <p class="text-xs text-blue-100 italic">Telah membuat akun</p>
-                        <p class="text-xs text-blue-100 italic mt-1">Siswa & alumni</p>
+                    <div class="stat-texts">
+                        <p data-counter="{{ $studentsCount ?? 0 }}" data-suffix="+" style="color:#166534;">0</p>
+                        <p>Siswa &amp; Alumni</p>
+                        <p>Terhubung dengan peluang</p>
                     </div>
                 </div>
-                <div class="stat-divider-v2"></div>
+
+                {{-- Kartu 3: Lowongan Aktif --}}
                 <div class="stat-item-v2">
-                    <div class="stat-icon-v2 bg-blue-100">
-                        <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <div class="stat-icon-v2" style="background:#faf5ff;">
+                        <svg fill="none" stroke="#7c3aed" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
                     </div>
-                    <div>
-                        <p class="text-3xl font-extrabold text-white" data-counter="{{ $activeJobsCount ?? 0 }}" data-suffix="+" aria-live="polite">0</p>
-                        <p class="text-sm font-semibold text-white">Lowongan Dipublikasikan</p>
-                        <p class="text-xs text-blue-100 italic">Setiap bulan diperbarui</p>
-                        <p class="text-xs text-blue-100 italic mt-1">Lowongan aktif</p>
+                    <div class="stat-texts">
+                        <p data-counter="{{ $activeJobsCount ?? 0 }}" data-suffix="+" style="color:#581c87;">0</p>
+                        <p>Lowongan Aktif</p>
+                        <p>Peluang baru setiap hari</p>
                     </div>
                 </div>
-                <div class="stat-divider-v2"></div>
+
+                {{-- Kartu 4: Tingkat Keberhasilan --}}
                 <div class="stat-item-v2">
-                    <div class="stat-icon-v2 bg-blue-100">
-                        <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    <div class="stat-icon-v2" style="background:#fefce8;">
+                        <svg fill="none" stroke="#ca8a04" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
                     </div>
-                    <div>
-                        <p class="text-3xl font-extrabold text-white" data-counter="{{ $successRate ?? 0 }}" data-suffix="%" aria-live="polite">0</p>
-                        <p class="text-sm font-semibold text-white">Alumni Berhasil Bekerja</p>
-                        <p class="text-xs text-blue-100 italic">Dalam 6 bulan terakhir</p>
-                        <p class="text-xs text-blue-100 italic mt-1">Tingkat penempatan</p>
+                    <div class="stat-texts">
+                        <p data-counter="{{ $successRate ?? 0 }}" data-suffix="%" style="color:#854d0e;">0</p>
+                        <p>Tingkat Keberhasilan</p>
+                        <p>Alumni terserap kerja</p>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>

@@ -3,15 +3,15 @@
 @php
 // Color maps
 $colorMap = [
-    'blue'   => ['bg' => '#eff6ff', 'icon' => '#2563eb', 'value' => '#1e40af', 'border' => '#bfdbfe'],
-    'green'  => ['bg' => '#f0fdf4', 'icon' => '#16a34a', 'value' => '#166534', 'border' => '#bbf7d0'],
-    'purple' => ['bg' => '#faf5ff', 'icon' => '#7c3aed', 'value' => '#581c87', 'border' => '#e9d5ff'],
-    'yellow' => ['bg' => '#fefce8', 'icon' => '#ca8a04', 'value' => '#854d0e', 'border' => '#fde68a'],
-    'red'    => ['bg' => '#fef2f2', 'icon' => '#dc2626', 'value' => '#991b1b', 'border' => '#fecaca'],
-    'orange' => ['bg' => '#fff7ed', 'icon' => '#ea580c', 'value' => '#9a3412', 'border' => '#fed7aa'],
-    'indigo' => ['bg' => '#eef2ff', 'icon' => '#4f46e5', 'value' => '#3730a3', 'border' => '#c7d2fe'],
-    'slate'  => ['bg' => '#f8fafc', 'icon' => '#475569', 'value' => '#1e293b', 'border' => '#e2e8f0'],
-    'gray'   => ['bg' => '#f9fafb', 'icon' => '#6b7280', 'value' => '#111827', 'border' => '#e5e7eb'],
+    'blue'   => ['bg' => '#eff6ff', 'icon' => '#2563eb', 'value' => '#1e40af', 'border' => '#bfdbfe', 'accent' => '#3b82f6'],
+    'green'  => ['bg' => '#f0fdf4', 'icon' => '#16a34a', 'value' => '#166534', 'border' => '#bbf7d0', 'accent' => '#22c55e'],
+    'purple' => ['bg' => '#faf5ff', 'icon' => '#7c3aed', 'value' => '#581c87', 'border' => '#e9d5ff', 'accent' => '#a855f7'],
+    'yellow' => ['bg' => '#fefce8', 'icon' => '#ca8a04', 'value' => '#854d0e', 'border' => '#fde68a', 'accent' => '#eab308'],
+    'red'    => ['bg' => '#fef2f2', 'icon' => '#dc2626', 'value' => '#991b1b', 'border' => '#fecaca', 'accent' => '#ef4444'],
+    'orange' => ['bg' => '#fff7ed', 'icon' => '#ea580c', 'value' => '#9a3412', 'border' => '#fed7aa', 'accent' => '#f97316'],
+    'indigo' => ['bg' => '#eef2ff', 'icon' => '#4f46e5', 'value' => '#3730a3', 'border' => '#c7d2fe', 'accent' => '#6366f1'],
+    'slate'  => ['bg' => '#f8fafc', 'icon' => '#475569', 'value' => '#1e293b', 'border' => '#e2e8f0', 'accent' => '#64748b'],
+    'gray'   => ['bg' => '#f9fafb', 'icon' => '#6b7280', 'value' => '#111827', 'border' => '#e5e7eb', 'accent' => '#9ca3af'],
 ];
 $c = $colorMap[$color] ?? $colorMap['blue'];
 
@@ -34,7 +34,7 @@ $icons = [
     'mail'          => '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>',
 ];
 
-// Resolve icon — if it's already an SVG string, use it; if it's a key name, look up; else generic
+// Resolve icon — if already an SVG string, use it; if a key name, look up; else use generic
 $resolvedIcon = null;
 if ($icon) {
     if (str_starts_with(trim($icon), '<svg')) {
@@ -42,31 +42,78 @@ if ($icon) {
     } elseif (isset($icons[$icon])) {
         $resolvedIcon = $icons[$icon];
     } else {
-        // Fallback: generic stat icon
         $resolvedIcon = '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>';
     }
 }
 @endphp
 
 <div {{ $attributes->merge(['class' => '']) }}
-     style="background:#fff;border:1px solid {{ $c['border'] }};border-radius:16px;padding:20px 22px;box-shadow:0 1px 6px rgba(15,23,42,0.06);transition:all 0.2s ease;cursor:default;"
-     onmouseover="this.style.boxShadow='0 6px 24px rgba(15,23,42,0.10)';this.style.transform='translateY(-2px)'"
-     onmouseout="this.style.boxShadow='0 1px 6px rgba(15,23,42,0.06)';this.style.transform='translateY(0)'">
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
-        <div style="min-width:0;flex:1;">
-            <p style="font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">{{ $label }}</p>
-            <p style="font-size:28px;font-weight:800;color:{{ $c['value'] }};line-height:1;">{{ $value }}</p>
+     style="
+         position: relative;
+         background: #ffffff;
+         border: 1px solid {{ $c['border'] }};
+         border-top: 3px solid {{ $c['accent'] }};
+         border-radius: 14px;
+         padding: 20px 22px;
+         box-shadow: 0 2px 8px rgba(15,23,42,0.06);
+         transition: box-shadow 0.2s ease, transform 0.2s ease;
+         cursor: default;
+         overflow: hidden;
+     "
+     onmouseover="this.style.boxShadow='0 8px 28px rgba(15,23,42,0.11)';this.style.transform='translateY(-2px)'"
+     onmouseout="this.style.boxShadow='0 2px 8px rgba(15,23,42,0.06)';this.style.transform='translateY(0)'">
+
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px;">
+
+        {{-- Label & Value --}}
+        <div style="min-width:0; flex:1;">
+            <p style="
+                font-size: 11px;
+                font-weight: 700;
+                color: #94a3b8;
+                text-transform: uppercase;
+                letter-spacing: 0.07em;
+                margin: 0 0 8px 0;
+            ">{{ $label }}</p>
+
+            <p style="
+                font-size: 30px;
+                font-weight: 800;
+                color: {{ $c['value'] }};
+                line-height: 1;
+                margin: 0;
+            ">{{ $value }}</p>
+
             @if($subtitle)
-            <p style="font-size:12px;color:#94a3b8;margin-top:4px;">{{ $subtitle }}</p>
+                <p style="
+                    font-size: 12px;
+                    color: #94a3b8;
+                    margin: 6px 0 0 0;
+                ">{{ $subtitle }}</p>
             @endif
+
             @isset($footer)
-            <div style="margin-top:8px;font-size:12px;">{{ $footer }}</div>
+                <div style="margin-top: 10px; font-size: 12px;">{{ $footer }}</div>
             @endisset
         </div>
+
+        {{-- Icon Badge --}}
         @if($resolvedIcon)
-        <div style="width:44px;height:44px;border-radius:12px;background:{{ $c['bg'] }};color:{{ $c['icon'] }};display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            {!! $resolvedIcon !!}
-        </div>
+            <div style="
+                width: 46px;
+                height: 46px;
+                border-radius: 12px;
+                background: {{ $c['bg'] }};
+                color: {{ $c['icon'] }};
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                border: 1px solid {{ $c['border'] }};
+            ">
+                {!! $resolvedIcon !!}
+            </div>
         @endif
+
     </div>
 </div>
