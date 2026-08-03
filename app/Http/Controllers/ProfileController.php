@@ -15,7 +15,7 @@ class ProfileController extends Controller
     public function edit(Request $request): View
     {
         return view("profile.edit", [
-            "user" => $request->user()->load("student", "skills", "cvFiles"),
+            "user" => $request->user()->load("student", "skills", "cvFiles", "documents"),
         ]);
     }
 

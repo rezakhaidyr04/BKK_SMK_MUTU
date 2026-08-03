@@ -52,8 +52,11 @@
                     </div>
                 </div>
 
-                {{-- Kolom kanan: hapus akun --}}
-                <div class="lg:col-span-2">
+                {{-- Kolom kanan: kelengkapan berkas & hapus akun --}}
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="p-6 bg-white shadow sm:rounded-2xl border border-gray-100">
+                        @include('profile.partials.manage-documents-form')
+                    </div>
                     <div class="p-6 bg-white shadow sm:rounded-2xl border border-gray-100">
                         @include('profile.partials.delete-user-form')
                     </div>

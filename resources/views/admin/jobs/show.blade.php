@@ -68,6 +68,16 @@
                             <span class="font-medium text-gray-900">{{ $job->created_at->diffForHumans() }}</span>
                         </div>
                     </div>
+
+                    <form action="{{ route('admin.jobs.broadcast', $job) }}" method="POST" class="mt-4" onsubmit="return confirm('Yakin ingin membroadcast notifikasi lowongan ini ke semua siswa melalui email?');">
+                        @csrf
+                        <button type="submit" class="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2.5 px-4 rounded-xl shadow-md transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path>
+                            </svg>
+                            Broadcast ke Siswa
+                        </button>
+                    </form>
                 </div>
 
                 <!-- Konten utama -->
@@ -95,22 +105,40 @@
                         @if($job->applications->count() > 0)
                         <div class="divide-y divide-gray-50">
                             @foreach($job->applications as $application)
-                            <div class="px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-semibold text-sm flex-shrink-0">
-                                        {{ substr($application->user->name ?? '?', 0, 1) }}
+                            <div class="px-6 py-4 flex flex-col hover:bg-gray-50 transition border-b border-gray-50 last:border-0">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-semibold text-sm flex-shrink-0">
+                                            {{ substr($application->user->name ?? '?', 0, 1) }}
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-900 text-sm">{{ optional($application->user)->name ?? '-' }}</p>
+                                            <p class="text-xs text-gray-500">{{ $application->created_at->diffForHumans() }}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-900 text-sm">{{ optional($application->user)->name ?? '-' }}</p>
-                                        <p class="text-xs text-gray-500">{{ $application->created_at->diffForHumans() }}</p>
-                                    </div>
+                                    @php
+                                        $sc = ['submitted'=>'bg-blue-100 text-blue-700','under_review'=>'bg-yellow-100 text-yellow-700','interviewed'=>'bg-purple-100 text-purple-700','accepted'=>'bg-green-100 text-green-700','rejected'=>'bg-red-100 text-red-700'];
+                                    @endphp
+                                    <span class="px-2.5 py-1 rounded-full text-xs font-semibold {{ $sc[$application->status] ?? 'bg-gray-100 text-gray-700' }}">
+                                        {{ \App\Support\Label::applicationStatus($application->status) }}
+                                    </span>
                                 </div>
-                                @php
-                                    $sc = ['submitted'=>'bg-blue-100 text-blue-700','under_review'=>'bg-yellow-100 text-yellow-700','interviewed'=>'bg-purple-100 text-purple-700','accepted'=>'bg-green-100 text-green-700','rejected'=>'bg-red-100 text-red-700'];
-                                @endphp
-                                <span class="px-2.5 py-1 rounded-full text-xs font-semibold {{ $sc[$application->status] ?? 'bg-gray-100 text-gray-700' }}">
-                                    {{ \App\Support\Label::applicationStatus($application->status) }}
-                                </span>
+                                
+                                @if(optional($application->user)->documents && $application->user->documents->count() > 0)
+                                    <div class="mt-4 pt-3 border-t border-gray-100">
+                                        <p class="text-xs font-semibold text-gray-600 mb-2">Kelengkapan Berkas:</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            @foreach($application->user->documents as $doc)
+                                                <a href="{{ asset('storage/' . $doc->file_path) }}" target="_blank" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-gray-100 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 text-xs transition">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                                                    </svg>
+                                                    {{ $doc->document_type }}
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                             @endforeach
                         </div>

@@ -11,6 +11,7 @@ use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\SuratPengantarController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,6 +61,10 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
         "profile.destroy",
     );
 
+    // Documents
+    Route::post("/documents", [\App\Http\Controllers\UserDocumentController::class, "store"])->name("documents.store");
+    Route::delete("/documents/{document}", [\App\Http\Controllers\UserDocumentController::class, "destroy"])->name("documents.destroy");
+
     Route::get('/notifications/mark-read', function () {
         auth()->user()->unreadNotifications->markAsRead();
         return back();
@@ -82,6 +87,12 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
         ApplicationController::class,
         "show",
     ])->name("applications.show");
+    
+    Route::get("/applications/{application}/surat-pengantar", [
+        SuratPengantarController::class,
+        "download",
+    ])->name("applications.surat-pengantar");
+
     Route::delete("/applications/{application}", [
         ApplicationController::class,
         "destroy",
@@ -189,6 +200,10 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
                 "jobs",
                 App\Http\Controllers\Admin\JobController::class,
             )->only(["index", "create", "store", "show", "edit", "update", "destroy"]);
+            Route::post("jobs/{job}/broadcast", [
+                App\Http\Controllers\Admin\JobController::class,
+                "broadcast",
+            ])->name("jobs.broadcast");
             Route::resource(
                 "news",
                 App\Http\Controllers\Admin\NewsController::class,
@@ -213,5 +228,9 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
                 App\Http\Controllers\Admin\ReportController::class,
                 "export",
             ])->name("reports.export");
+            Route::get("/reports/export-excel", [
+                App\Http\Controllers\Admin\ReportController::class,
+                "exportExcel",
+            ])->name("reports.export-excel");
         });
 });

@@ -73,4 +73,9 @@ class User extends Authenticatable
             ->withPivot("proficiency")
             ->withTimestamps();
     }
+
+    public function documents()
+    {
+        return $this->hasMany(UserDocument::class);
+    }
 }

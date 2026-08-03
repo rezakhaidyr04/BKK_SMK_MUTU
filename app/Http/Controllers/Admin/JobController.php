@@ -65,7 +65,7 @@ class JobController extends Controller
 
     public function show(Job $job)
     {
-        $job->load('applications.user');
+        $job->load('applications.user.documents');
 
         return view('admin.jobs.show', compact('job'));
     }
@@ -104,5 +104,15 @@ class JobController extends Controller
 
         return redirect()->route('admin.jobs.index')
             ->with('success', 'Lowongan berhasil dihapus.');
+    }
+
+    public function broadcast(Job $job)
+    {
+        $students = \App\Models\User::where('role', 'student')->get();
+        
+        \Illuminate\Support\Facades\Notification::send($students, new \App\Notifications\NewJobNotification($job));
+
+        return redirect()->back()
+            ->with('success', 'Notifikasi lowongan kerja berhasil di-broadcast ke ' . $students->count() . ' siswa melalui email.');
     }
 }
