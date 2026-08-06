@@ -41,7 +41,7 @@ class RegisteredUserController extends Controller
                 "unique:" . User::class,
             ],
             "password" => ["required", "confirmed", Rules\Password::defaults()],
-            "role" => ["nullable", "string", "in:student,alumni"],
+            "role" => ["nullable", "string", "in:student,alumni,company"],
             "nis" => ["nullable", "string", "max:20", "unique:students,nisn"],
             "graduation_year" => [
                 "nullable",
@@ -49,6 +49,10 @@ class RegisteredUserController extends Controller
                 "min:2000",
                 "max:" . (date("Y") + 5),
             ],
+            "company_name" => ["nullable", "string", "max:255"],
+            "company_industry" => ["nullable", "string", "max:255"],
+            "company_address" => ["nullable", "string", "max:255"],
+            "company_website" => ["nullable", "url", "max:255"],
             // 'terms' => ['required', 'accepted'], // Tidak dipakai di form registrasi saat ini
         ]);
 
@@ -71,6 +75,16 @@ class RegisteredUserController extends Controller
             ]);
         }
 
+        if ($role === "company") {
+            $user->company()->create([
+                "name" => $request->input("company_name", $request->name),
+                "industry" => $request->company_industry,
+                "address" => $request->company_address,
+                "website" => $request->company_website,
+                "is_verified" => false,
+                "verification_status" => "pending",
+            ]);
+        }
 
         event(new Registered($user));
 

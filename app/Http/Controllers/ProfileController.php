@@ -12,16 +12,27 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function edit(Request $request): View
+    public function edit(Request $request): View|RedirectResponse
     {
+        $user = $request->user();
+
+        if ($user->role === 'company') {
+            return Redirect::route('company.profile.edit');
+        }
+
         return view("profile.edit", [
-            "user" => $request->user()->load("student", "skills", "cvFiles", "documents"),
+            "user" => $user->load("student", "skills", "cvFiles", "documents"),
         ]);
     }
 
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $user = $request->user();
+
+        if ($user->role === 'company') {
+            return Redirect::route('company.profile.edit')->with('error', 'Silakan kelola profil perusahaan melalui halaman profil perusahaan.');
+        }
+
         $validated = $request->validated();
 
         // Handle avatar upload

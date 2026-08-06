@@ -24,7 +24,16 @@ class JobPolicy
 
     public function create(User $user)
     {
-        return $user->role === 'admin'; // Only admin can create jobs
+        if ($user->role === 'admin') {
+            return true;
+        }
+
+        // Only verified company accounts may create jobs
+        if ($user->role === 'company') {
+            return (bool) ($user->company?->is_verified ?? false);
+        }
+
+        return false;
     }
 
     public function update(User $user, Job $job)

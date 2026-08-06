@@ -92,30 +92,40 @@ class DummyDataSeeder extends Seeder
 
         $companies = [];
         foreach ($data as $d) {
-            $user = User::firstOrCreate(
-                ['email' => $d['email']],
-                [
-                    'name'              => $d['name'],
-                    'password'          => Hash::make('password123'),
-                    'role'              => 'company',
-                    'is_active'         => true,
-                    'email_verified_at' => now(),
-                ]
-            );
+            $user = User::withTrashed()->where('email', $d['email'])->first();
+            if (! $user) {
+                $user = new User();
+                $user->email = $d['email'];
+            }
+            if ($user->trashed()) {
+                $user->restore();
+            }
+            $user->forceFill([
+                'name'              => $d['name'],
+                'password'          => Hash::make('password123'),
+                'role'              => 'company',
+                'is_active'         => true,
+                'email_verified_at' => now(),
+            ])->save();
             $user->syncRoles(['company']);
 
-            $company = Company::firstOrCreate(
-                ['user_id' => $user->id],
-                [
-                    'name'                => $d['name'],
-                    'industry'            => $d['industry'],
-                    'description'         => $d['description'],
-                    'website'             => $d['website'],
-                    'address'             => $d['address'],
-                    'is_verified'         => true,
-                    'verification_status' => 'verified',
-                ]
-            );
+            $company = Company::withTrashed()->where('user_id', $user->id)->first();
+            if (! $company) {
+                $company = new Company();
+                $company->user_id = $user->id;
+            }
+            if ($company->trashed()) {
+                $company->restore();
+            }
+            $company->forceFill([
+                'name'                => $d['name'],
+                'industry'            => $d['industry'],
+                'description'         => $d['description'],
+                'website'             => $d['website'],
+                'address'             => $d['address'],
+                'is_verified'         => true,
+                'verification_status' => 'verified',
+            ])->save();
 
             $companies[] = $company;
         }
@@ -376,29 +386,39 @@ class DummyDataSeeder extends Seeder
 
         $students = [];
         foreach ($data as $d) {
-            $user = User::firstOrCreate(
-                ['email' => $d['email']],
-                [
-                    'name'              => $d['name'],
-                    'password'          => Hash::make('password123'),
-                    'role'              => 'student',
-                    'phone'             => $d['phone'],
-                    'bio'               => $d['bio'],
-                    'is_active'         => true,
-                    'email_verified_at' => now(),
-                ]
-            );
+            $user = User::withTrashed()->where('email', $d['email'])->first();
+            if (! $user) {
+                $user = new User();
+                $user->email = $d['email'];
+            }
+            if ($user->trashed()) {
+                $user->restore();
+            }
+            $user->forceFill([
+                'name'              => $d['name'],
+                'password'          => Hash::make('password123'),
+                'role'              => 'student',
+                'phone'             => $d['phone'],
+                'bio'               => $d['bio'],
+                'is_active'         => true,
+                'email_verified_at' => now(),
+            ])->save();
             $user->syncRoles(['student']);
 
-            Student::firstOrCreate(
-                ['user_id' => $user->id],
-                [
-                    'nisn'            => $d['nisn'],
-                    'major'           => $d['major'],
-                    'graduation_year' => $d['graduation_year'],
-                    'address'         => $d['address'],
-                ]
-            );
+            $student = Student::withTrashed()->where('user_id', $user->id)->first();
+            if (! $student) {
+                $student = new Student();
+                $student->user_id = $user->id;
+            }
+            if ($student->trashed()) {
+                $student->restore();
+            }
+            $student->forceFill([
+                'nisn'            => $d['nisn'],
+                'major'           => $d['major'],
+                'graduation_year' => $d['graduation_year'],
+                'address'         => $d['address'],
+            ])->save();
 
             $students[] = $user;
         }

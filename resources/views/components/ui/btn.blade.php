@@ -23,6 +23,7 @@ $variantClass = match($variant) {
     'success'   => 'bg-success-600 text-white hover:bg-success-700 dark:hover:bg-success-500 shadow-sm',
     'outline'   => 'bg-transparent text-primary-600 dark:text-primary-400 border border-primary-300 dark:border-primary-700 hover:bg-primary-50 dark:hover:bg-primary-900/30',
     'white'     => 'bg-white text-primary-700 hover:bg-primary-50 shadow-sm',
+    'company'   => 'bg-emerald-600 text-white hover:bg-emerald-700 dark:hover:bg-emerald-500 shadow-lg',
     default     => 'bg-primary-600 text-white hover:bg-primary-700 dark:hover:bg-primary-500 shadow-sm',
 };
 

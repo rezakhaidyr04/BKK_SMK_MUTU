@@ -19,7 +19,6 @@ class CompanyFactory extends Factory
             'name' => fake()->company(),
             'industry' => fake()->word(),
             'description' => fake()->paragraph(),
-            'logo' => null,
             'website' => fake()->url(),
             'address' => fake()->address(),
             'is_verified' => false,

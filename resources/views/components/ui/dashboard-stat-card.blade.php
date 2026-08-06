@@ -2,6 +2,7 @@
     'label',
     'value',
     'color' => 'blue',
+    'size' => 'md',
     'footnote' => null,
     'href' => null,
     'hrefLabel' => null,
@@ -53,8 +54,12 @@ $linkColor = match($color) {
     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-15" aria-hidden="true"></div>
     <div class="flex items-center justify-between">
         <div>
-            <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">{{ $label }}</p>
-            <p class="text-4xl font-bold text-gray-900 dark:text-white">{{ $value }}</p>
+            @php
+                $labelClass = $size === 'sm' ? 'text-xs font-medium text-gray-600 dark:text-gray-400 mb-1' : 'text-sm font-medium text-gray-600 dark:text-gray-400 mb-1';
+                $valueClass = $size === 'sm' ? 'text-3xl font-bold text-gray-900 dark:text-white' : 'text-4xl font-bold text-gray-900 dark:text-white';
+            @endphp
+            <p class="{{ $labelClass }}">{{ $label }}</p>
+            <p class="{{ $valueClass }}">{{ $value }}</p>
         </div>
         @isset($icon)
         <div class="w-16 h-16 {{ $iconBg }} rounded-2xl flex items-center justify-center" aria-hidden="true">

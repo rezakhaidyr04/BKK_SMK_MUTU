@@ -1,4 +1,4 @@
-<!-- Modern Enterprise Navigation -->
+                                                               <!-- Modern Enterprise Navigation -->
 <!-- Custom Sidebar Styling -->
 <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 
@@ -82,12 +82,27 @@
                                 <p class="text-xs text-gray-600 mt-1">{{ Auth::user()->email }}</p>
                             </div>
 
-                            <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                </svg>
-                                Pengaturan Profil
-                            </a>
+                            @if(Auth::user()->role === 'company')
+                                <a href="{{ route('company.profile.edit') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                    Profil Perusahaan
+                                </a>
+                                <a href="{{ route('company.profile.edit') }}#verification" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m1-3h.01M12 20v-6m-6 6h12"/>
+                                    </svg>
+                                    Verifikasi Perusahaan
+                                </a>
+                            @else
+                                <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                    Pengaturan Profil
+                                </a>
+                            @endif
 
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -119,13 +134,15 @@
     <!-- Desktop Sidebar -->
     <aside x-show="sidebarOpen" x-cloak class="sidebar-container fixed left-0 top-16 w-64 bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-800 shadow-sm z-40 hidden lg:block">
         <div class="sidebar-content sidebar-scroll">
-            <!-- Dashboard -->
+            <!-- Dashboard (hide global link for company users to avoid duplicate) -->
+            @if(!(Auth::user()->role === 'company'))
             <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} flex items-center gap-3">
                 <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                 </svg>
                 <span class="font-medium">Dasbor</span>
             </a>
+            @endif
 
             @if(Auth::user()->role === 'student' || Auth::user()->role === 'alumni')
             <!-- Jobs Section -->
@@ -230,6 +247,13 @@
                     <span class="font-medium">Tambah Pengguna</span>
                 </a>
 
+                <a href="{{ route('admin.companies.index') }}" class="nav-link {{ request()->routeIs('admin.companies.*') ? 'active' : '' }} flex items-center gap-3">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7v12a2 2 0 002 2h10a2 2 0 002-2V7M5 7l7 5 7-5"/>
+                    </svg>
+                    <span class="font-medium">Perusahaan</span>
+                </a>
+
                 <a href="{{ route('admin.jobs.index') }}" class="nav-link {{ request()->routeIs('admin.jobs.*') ? 'active' : '' }} flex items-center gap-3">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -289,6 +313,54 @@
             </div>
             @endif
 
+            @if(Auth::user()->role === 'company')
+            <!-- Company Section -->
+            <div class="mt-6 company-nav-panel">
+                <h3 class="nav-section-title">Perusahaan</h3>
+                <p class="mb-3 px-2 text-xs text-orange-700">Pusat rekrutmen untuk kelola lowongan dan pelamar</p>
+
+                <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} flex items-center gap-3">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10l9-7 9 7v10a1 1 0 01-1 1h-5a1 1 0 01-1-1v-5H10v5a1 1 0 01-1 1H4a1 1 0 01-1-1V10z"/>
+                    </svg>
+                    <span class="font-medium">Dashboard Perusahaan</span>
+                    <span class="nav-badge orange ml-auto">Utama</span>
+                </a>
+
+                <a href="{{ route('company.jobs.index') }}" class="nav-link {{ request()->routeIs('company.jobs.*') ? 'active' : '' }} flex items-center gap-3">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    <span class="font-medium">Lowongan Saya</span>
+                    <span class="nav-badge blue ml-auto">Daftar</span>
+                </a>
+
+                    <a href="{{ route('company.jobs.create') }}" class="nav-link {{ request()->routeIs('company.jobs.create') ? 'active' : '' }} flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        <span class="font-medium">Publish Lowongan</span>
+                        <span class="nav-badge orange ml-auto">Posting</span>
+                    </a>
+
+                <a href="{{ route('company.applicants.index') }}" class="nav-link {{ request()->routeIs('company.applicants.*') ? 'active' : '' }} flex items-center gap-3">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                    <span class="font-medium">Pelamar</span>
+                    <span class="nav-badge green ml-auto">Baru</span>
+                </a>
+
+                <a href="{{ route('company.profile.edit') }}" class="nav-link {{ request()->routeIs('company.profile.*') ? 'active' : '' }} flex items-center gap-3">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                    </svg>
+                    <span class="font-medium">Profil Perusahaan</span>
+                    <span class="nav-badge gray ml-auto">Edit</span>
+                </a>
+            </div>
+            @endif
+
             <!-- Help Section -->
             <div class="help-card">
                 <h4 class="text-sm font-semibold text-gray-900 mb-1">Butuh Bantuan?</h4>
@@ -316,7 +388,7 @@
              class="absolute left-0 top-0 w-72 h-full bg-white dark:bg-slate-900 shadow-2xl rounded-r-2xl flex flex-col overflow-hidden border-r border-gray-100 dark:border-slate-800">
             
             <!-- Mobile Header -->
-            <div class="p-5 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50">
+            <div class="p-5 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-800">
                 <div class="flex items-center gap-3 overflow-hidden">
                     @if(Auth::user()->avatar)
                         <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm flex-shrink-0">
@@ -338,13 +410,15 @@
             </div>
 
             <div class="sidebar-scroll flex-1 overflow-y-auto p-4 pb-8">
-                <!-- Dashboard -->
+                <!-- Dashboard (hide global link for company users to avoid duplicate) -->
+                @if(!(Auth::user()->role === 'company'))
                 <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} flex items-center gap-3">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                     </svg>
                     <span class="font-medium">Dasbor</span>
                 </a>
+                @endif
 
                 @if(Auth::user()->role === 'student' || Auth::user()->role === 'alumni')
                 <!-- Jobs Section -->
@@ -429,21 +503,50 @@
 
                 @if(Auth::user()->role === 'company')
                 <!-- Company Section -->
-                <div class="mt-6">
-                    <h3 class="nav-section-title">Rekrutmen</h3>
+                <div class="company-nav-panel">
+                    <h3 class="nav-section-title">Perusahaan</h3>
+                    <p class="mb-3 px-2 text-xs text-orange-700">Pusat rekrutmen untuk kelola lowongan dan pelamar</p>
+
+                    <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10l9-7 9 7v10a1 1 0 01-1 1h-5a1 1 0 01-1-1v-5H10v5a1 1 0 01-1 1H4a1 1 0 01-1-1V10z"/>
+                        </svg>
+                        <span class="font-medium">Dashboard Perusahaan</span>
+                        <span class="nav-badge orange ml-auto">Utama</span>
+                    </a>
 
                     <a href="{{ route('company.jobs.index') }}" class="nav-link {{ request()->routeIs('company.jobs.*') ? 'active' : '' }} flex items-center gap-3">
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                         <span class="font-medium">Lowongan Saya</span>
+                        <span class="nav-badge blue ml-auto">Daftar</span>
                     </a>
+
+                    @if(Auth::user()->company?->is_verified)
+                        <a href="{{ route('company.jobs.create') }}" class="nav-link {{ request()->routeIs('company.jobs.create') ? 'active' : '' }} flex items-center gap-3">
+                            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            <span class="font-medium">Publish Lowongan</span>
+                            <span class="nav-badge orange ml-auto">Posting</span>
+                        </a>
+                    @else
+                        <div class="nav-link flex items-center gap-3 opacity-50 cursor-not-allowed">
+                            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            <span class="font-medium">Publish Lowongan</span>
+                            <span class="nav-badge gray ml-auto">Menunggu</span>
+                        </div>
+                    @endif
 
                     <a href="{{ route('company.applicants.index') }}" class="nav-link {{ request()->routeIs('company.applicants.*') ? 'active' : '' }} flex items-center gap-3">
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                         </svg>
                         <span class="font-medium">Pelamar</span>
+                        <span class="nav-badge green ml-auto">Baru</span>
                     </a>
 
                     <a href="{{ route('company.profile.edit') }}" class="nav-link {{ request()->routeIs('company.profile.*') ? 'active' : '' }} flex items-center gap-3">
@@ -451,6 +554,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                         </svg>
                         <span class="font-medium">Profil Perusahaan</span>
+                        <span class="nav-badge gray ml-auto">Edit</span>
                     </a>
                 </div>
                 @endif
@@ -472,6 +576,13 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
                         </svg>
                         <span class="font-medium">Tambah Pengguna</span>
+                    </a>
+
+                    <a href="{{ route('admin.companies.index') }}" class="nav-link {{ request()->routeIs('admin.companies.*') ? 'active' : '' }} flex items-center gap-3">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7v12a2 2 0 002 2h10a2 2 0 002-2V7M5 7l7 5 7-5"/>
+                        </svg>
+                        <span class="font-medium">Perusahaan</span>
                     </a>
 
                     <a href="{{ route('admin.jobs.index') }}" class="nav-link {{ request()->routeIs('admin.jobs.*') ? 'active' : '' }} flex items-center gap-3">

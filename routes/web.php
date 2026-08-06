@@ -79,6 +79,17 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
         "bookmark",
     ])->name("jobs.bookmark");
 
+    // Company Management
+    Route::middleware(["role:company"])->prefix("company")->name("company.")->group(function () {
+        Route::get("/jobs", [App\Http\Controllers\Company\JobController::class, "index"])->name("jobs.index");
+        Route::get("/jobs/create", [App\Http\Controllers\Company\JobController::class, "create"])->name("jobs.create");
+        Route::post("/jobs", [App\Http\Controllers\Company\JobController::class, "store"])->name("jobs.store");
+        Route::get("/applicants", [App\Http\Controllers\Company\ApplicantController::class, "index"])->name("applicants.index");
+        Route::get("/profile", [App\Http\Controllers\Company\ProfileController::class, "edit"])->name("profile.edit");
+        Route::put("/profile", [App\Http\Controllers\Company\ProfileController::class, "update"])->name("profile.update");
+        Route::post("/profile/verify", [App\Http\Controllers\Company\ProfileController::class, "verify"])->name("profile.verify");
+    });
+
     // Applications Management
     Route::get("/applications", [ApplicationController::class, "index"])->name(
         "applications.index",
@@ -184,6 +195,18 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
         ->prefix("admin")
         ->name("admin.")
         ->group(function () {
+            Route::resource(
+                "companies",
+                App\Http\Controllers\Admin\CompanyController::class,
+            )->only(["index", "show", "edit", "update"]);
+            Route::post("companies/{company}/approve", [
+                App\Http\Controllers\Admin\CompanyController::class,
+                "approve",
+            ])->name("companies.approve");
+            Route::post("companies/{company}/reject", [
+                App\Http\Controllers\Admin\CompanyController::class,
+                "reject",
+            ])->name("companies.reject");
             Route::resource(
                 "users",
                 App\Http\Controllers\Admin\UserController::class,
