@@ -302,79 +302,14 @@
     box-shadow: 0 8px 20px rgba(37,99,235,0.12);
 }
 
-/* ── STATS BAR ────────────────────────────────────────────── */
-.stats-bar-v2 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 4px 0;
-}
-.stat-item-v2 {
-    background: #ffffff;
-    border: 1px solid #e8edf5;
-    border-radius: 20px;
-    padding: 28px 24px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    box-shadow: 0 2px 12px rgba(15,23,42,0.06);
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
-    cursor: default;
-    position: relative;
-    overflow: hidden;
-}
-.stat-item-v2::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    border-radius: 20px 20px 0 0;
-    opacity: 0;
-    transition: opacity 0.22s ease;
-}
-.stat-item-v2:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(15,23,42,0.10); }
-.stat-item-v2:hover::before { opacity: 1; }
-.stat-item-v2:nth-child(1)::before { background: #2563eb; }
-.stat-item-v2:nth-child(2)::before { background: #16a34a; }
-.stat-item-v2:nth-child(3)::before { background: #7c3aed; }
-.stat-item-v2:nth-child(4)::before { background: #ca8a04; }
-.stat-icon-v2 {
-    width: 58px;
-    height: 58px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-.stat-icon-v2 svg { width: 26px; height: 26px; }
-.stat-item-v2 .stat-texts p:first-child {
-    font-size: 30px;
-    font-weight: 800;
-    line-height: 1;
-    margin: 0 0 4px 0;
-    letter-spacing: -0.02em;
-}
-.stat-item-v2 .stat-texts p:nth-child(2) {
-    font-size: 13px;
-    font-weight: 600;
-    margin: 0 0 3px 0;
-    color: #1e293b;
-}
-.stat-item-v2 .stat-texts p:nth-child(3) {
-    font-size: 11px;
-    margin: 0;
-    color: #94a3b8;
-}
-.stat-divider-v2 { display: none; }
-@media (max-width: 1024px) {
-    .stats-bar-v2 { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 576px) {
-    .stats-bar-v2 { grid-template-columns: 1fr 1fr; gap: 12px; }
-    .stat-item-v2 { padding: 20px 16px; gap: 12px; }
-    .stat-icon-v2 { width: 46px; height: 46px; }
-}
+/* Stats bar styling moved to `app-custom.css` to avoid duplicate/overriding rules.
+   Keeping this file minimal so only one `.stats-bar-v2` definition is active.
+   If you need responsive tweaks here, add only the small overrides (no blobs/colors).
+*/
+.stats-bar-v2, .stat-item-v2, .stat-icon-v2, .stat-item-v2 .stat-texts { }
+.stats-bar-v2::before,
+.stats-bar-v2::after,
+.stat-item-v2::after { background: transparent !important; display: none !important; }
 
 /* ── JOB CAROUSEL ─────────────────────────────────────────── */
 .job-carousel-wrapper {
@@ -482,24 +417,59 @@
 .cta-content-v2 { position: relative; z-index: 1; flex: 1; }
 .cta-illustration-v2 {
     flex-shrink: 0;
-    width: 280px;
+    width: 320px;
     position: relative;
     z-index: 1;
+    padding: 22px;
+    border-radius: 2rem;
+    background: radial-gradient(circle at top left, rgba(255,255,255,0.32), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(59,130,246,0.2), transparent 32%),
+                rgba(255,255,255,0.08);
+    box-shadow: 0 40px 90px rgba(15,23,42,0.18);
+    overflow: hidden;
+}
+.cta-illustration-v2::before,
+.cta-illustration-v2::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+.cta-illustration-v2::before {
+    width: 180px;
+    height: 180px;
+    top: -60px;
+    right: -50px;
+    background: rgba(255,255,255,0.14);
+}
+.cta-illustration-v2::after {
+    width: 130px;
+    height: 130px;
+    bottom: -50px;
+    left: -40px;
+    background: rgba(59,130,246,0.1);
 }
 .cta-illustration-img {
     width: 100%;
-    max-height: 280px;
-    object-fit: contain;
-    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
-    border-radius: 20px;
-    background: rgba(255,255,255,0.1);
-    padding: 16px;
-    backdrop-filter: blur(10px);
+    max-height: 320px;
+    object-fit: cover;
+    border-radius: 1.75rem;
+    background: rgba(255,255,255,0.12);
+    padding: 18px;
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0 35px 65px rgba(15,23,42,0.14);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.22));
+}
+.cta-illustration-img:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 45px 85px rgba(15,23,42,0.2);
+    filter: drop-shadow(0 24px 48px rgba(0,0,0,0.26));
 }
 @media (max-width: 768px) {
     .cta-banner-v2 { padding: 32px 24px; flex-direction: column; text-align: center; }
-    .cta-illustration-v2 { width: 140px; }
-    .cta-illustration-img { max-height: 180px; }
+    .cta-illustration-v2 { width: 220px; padding: 18px; }
+    .cta-illustration-img { max-height: 240px; }
 }
 
 /* ── FOOTER SOCIAL ────────────────────────────────────────── */

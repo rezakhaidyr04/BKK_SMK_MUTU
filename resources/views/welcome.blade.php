@@ -374,8 +374,8 @@
             <div class="stats-bar-v2">
 
                 {{-- Kartu 1: Perusahaan Mitra --}}
-                <div class="stat-item-v2">
-                    <div class="stat-icon-v2" style="background:#eff6ff;">
+                <div class="stat-item-v2 accent-blue">
+                    <div class="stat-icon-v2">
                         <svg fill="none" stroke="#2563eb" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
@@ -389,8 +389,8 @@
                 </div>
 
                 {{-- Kartu 2: Siswa & Alumni --}}
-                <div class="stat-item-v2">
-                    <div class="stat-icon-v2" style="background:#f0fdf4;">
+                <div class="stat-item-v2 accent-green">
+                    <div class="stat-icon-v2">
                         <svg fill="none" stroke="#16a34a" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -404,8 +404,8 @@
                 </div>
 
                 {{-- Kartu 3: Lowongan Aktif --}}
-                <div class="stat-item-v2">
-                    <div class="stat-icon-v2" style="background:#faf5ff;">
+                <div class="stat-item-v2 accent-purple">
+                    <div class="stat-icon-v2">
                         <svg fill="none" stroke="#7c3aed" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -419,8 +419,8 @@
                 </div>
 
                 {{-- Kartu 4: Tingkat Keberhasilan --}}
-                <div class="stat-item-v2">
-                    <div class="stat-icon-v2" style="background:#fefce8;">
+                <div class="stat-item-v2 accent-yellow">
+                    <div class="stat-icon-v2">
                         <svg fill="none" stroke="#ca8a04" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
