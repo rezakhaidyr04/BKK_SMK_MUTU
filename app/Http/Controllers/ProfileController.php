@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Services\ImageProcessor;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,8 +42,16 @@ class ProfileController extends Controller
             if ($user->avatar) {
                 Storage::disk("public")->delete($user->avatar);
             }
-            $path = $request->file("avatar")->store("avatars", "public");
-            $validated["avatar"] = $path;
+
+            $processor = new ImageProcessor(quality: 82, maxWidth: 320, maxHeight: 320);
+            $avatarName = 'avatar-' . $user->id . '-' . time();
+            $path = $processor->store($request->file("avatar"), 'avatars', $avatarName);
+
+            if ($path) {
+                $validated["avatar"] = $path;
+            } else {
+                unset($validated["avatar"]);
+            }
         } else {
             unset($validated["avatar"]); // Jangan overwrite jika tidak ada upload
         }
@@ -83,6 +92,14 @@ class ProfileController extends Controller
                     "graduation_year" =>
                         $request->input("graduation_year") ?: null,
                     "address" => $request->input("address"),
+                    "linkedin_url" => $request->input("linkedin_url"),
+                    "portfolio_url" => $request->input("portfolio_url"),
+                    "preferred_position" => $request->input("preferred_position"),
+                    "education_history" => $request->input("education_history"),
+                    "experience_organization" => $request->input("experience_organization"),
+                    "birth_place" => $request->input("birth_place"),
+                    "birth_date" => $request->input("birth_date"),
+                    "gender" => $request->input("gender"),
                 ],
                 fn($v) => $v !== null && $v !== "",
             );

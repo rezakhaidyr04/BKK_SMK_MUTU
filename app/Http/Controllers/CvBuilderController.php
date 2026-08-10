@@ -49,6 +49,8 @@ class CvBuilderController extends Controller
             'custom_summary' => trim((string) $request->input('custom_summary', '')),
             'custom_experience' => trim((string) $request->input('custom_experience', '')),
             'custom_achievement' => trim((string) $request->input('custom_achievement', '')),
+            'target_position' => trim((string) $request->input('target_position', '')),
+            'ats_keywords' => trim((string) $request->input('ats_keywords', '')),
         ];
 
         $fileName = 'cv/generated-cv-' . Auth::id() . '-' . time() . '.pdf';
@@ -109,10 +111,15 @@ class CvBuilderController extends Controller
             'phone' => $user->phone ?: '08xxxxxxxxxx',
             'email' => $user->email,
             'address' => $user->student?->address ?: 'Cikampek, Jawa Barat',
+            'linkedin_url' => $user->student?->linkedin_url ?? null,
+            'portfolio_url' => $user->student?->portfolio_url ?? null,
+            'preferred_position' => $user->student?->preferred_position ?: 'Posisi yang diinginkan belum diisi',
+            'target_position' => $user->student?->preferred_position ?: '',
             'education' => [
                 'school' => 'SMK MUTU Cikampek',
                 'major' => $user->student?->major ?: 'Jurusan belum diisi',
                 'year' => $user->student?->graduation_year ?: 'Tahun lulus belum diisi',
+                'history' => $user->student?->education_history ?: 'Riwayat pendidikan belum diisi',
             ],
             'skills' => !empty($skills) ? $skills : [
                 'Komunikasi',
@@ -120,7 +127,7 @@ class CvBuilderController extends Controller
                 'Microsoft Office',
                 'Problem solving',
             ],
-            'experience' => $user->student?->experience ?: "- Magang atau proyek sekolah\n- Kegiatan organisasi\n- Tugas atau pencapaian relevan",
+            'experience' => $user->student?->experience_organization ?: "- Magang atau proyek sekolah\n- Kegiatan organisasi\n- Tugas atau pencapaian relevan",
             'certificates' => !empty($certificates) ? $certificates : [
                 'Belum ada sertifikat ditambahkan',
             ],

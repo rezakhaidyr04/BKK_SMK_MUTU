@@ -18,10 +18,21 @@
                 @foreach($bookmarks as $bookmark)
                 <div class="ui-panel hover:shadow-md transition-shadow">
                     <div class="ui-panel-body">
-                        <h3 class="text-lg font-bold text-slate-900">{{ $bookmark->job->title }}</h3>
-                        <p class="text-slate-600 mt-1">{{ $bookmark->job->company_name ?? 'Perusahaan' }}</p>
+                        @php
+                            $job = $bookmark->job;
+                            $jobIsAvailable = $job && !$job->trashed();
+                            $jobTitle = $jobIsAvailable ? $job->title : 'Lowongan yang sudah dihapus';
+                            $jobCompany = $jobIsAvailable ? ($job->company_name ?? 'Perusahaan') : 'Perusahaan';
+                            $jobUrl = $jobIsAvailable ? route('jobs.show', $job->id) : null;
+                        @endphp
+                        <h3 class="text-lg font-bold text-slate-900">{{ $jobTitle }}</h3>
+                        <p class="text-slate-600 mt-1">{{ $jobCompany }}</p>
                         <div class="mt-4 flex flex-wrap gap-2">
-                            <x-ui.btn href="{{ route('jobs.show', $bookmark->job->id) }}" size="sm">Lihat Lowongan</x-ui.btn>
+                            @if($jobUrl)
+                                <x-ui.btn href="{{ $jobUrl }}" size="sm">Lihat Lowongan</x-ui.btn>
+                            @else
+                                <x-ui.btn variant="secondary" size="sm" disabled>Lowongan Tidak Tersedia</x-ui.btn>
+                            @endif
                             <form action="{{ route('bookmarks.destroy', $bookmark->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')

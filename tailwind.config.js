@@ -13,7 +13,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Inter', ...defaultTheme.fontFamily.sans],
+                sans: ['"Book Antiqua"', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 // Semantic Colors

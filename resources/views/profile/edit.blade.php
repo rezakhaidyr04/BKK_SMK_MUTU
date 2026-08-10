@@ -17,8 +17,11 @@
                 <div class="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                     <div class="flex items-center gap-5">
                         <div class="relative">
-                            @if($user->avatar)
-                                <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $user->name }}"
+                            @php
+                                $avatarUrl = $user->avatar ? asset('storage/' . ltrim($user->avatar, '/')) : null;
+                            @endphp
+                            @if($avatarUrl)
+                                <img src="{{ $avatarUrl }}" alt="{{ $user->name }}"
                                      class="w-20 h-20 rounded-2xl object-cover border-4 border-white shadow-md ring-1 ring-slate-100">
                             @else
                                 <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-3xl font-extrabold shadow-md">
@@ -77,6 +80,7 @@
                         </svg>
                         Keamanan Sandi
                     </button>
+                    @if(in_array(Auth::user()->role, ['student', 'alumni']))
                     <button @click="currentTab = 'documents'"
                             :class="currentTab === 'documents' ? 'border-blue-600 text-blue-600 font-bold' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 font-semibold'"
                             class="whitespace-nowrap pb-4 px-1 border-b-2 text-sm transition-all duration-200 flex items-center gap-2">
@@ -85,6 +89,8 @@
                         </svg>
                         Berkas Pendukung
                     </button>
+                    @endif
+                    @if(!in_array(Auth::user()->role, ['admin']))
                     <button @click="currentTab = 'danger'"
                             :class="currentTab === 'danger' ? 'border-red-500 text-red-600 font-bold' : 'border-transparent text-slate-500 hover:text-red-500 hover:border-red-300 font-semibold'"
                             class="whitespace-nowrap pb-4 px-1 border-b-2 text-sm transition-all duration-200 flex items-center gap-2">
@@ -93,6 +99,7 @@
                         </svg>
                         Zona Bahaya
                     </button>
+                    @endif
                 </nav>
             </div>
 
@@ -110,14 +117,18 @@
                 </div>
 
                 {{-- Tab 3: Berkas Pendukung --}}
+                @if(in_array(Auth::user()->role, ['student', 'alumni']))
                 <div x-show="currentTab === 'documents'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-3" x-transition:enter-end="opacity-100 translate-y-0" class="p-6 sm:p-8 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.02)] sm:rounded-3xl border border-slate-100/80" style="display: none;">
                     @include('profile.partials.manage-documents-form')
                 </div>
+                @endif
 
                 {{-- Tab 4: Zona Bahaya --}}
+                @if(!in_array(Auth::user()->role, ['admin']))
                 <div x-show="currentTab === 'danger'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-3" x-transition:enter-end="opacity-100 translate-y-0" class="p-6 sm:p-8 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.02)] sm:rounded-3xl border border-red-100/30" style="display: none;">
                     @include('profile.partials.delete-user-form')
                 </div>
+                @endif
 
             </div>
         </div>

@@ -82,25 +82,38 @@
                                 <p class="text-xs text-gray-600 mt-1">{{ Auth::user()->email }}</p>
                             </div>
 
+                            @php
+                                $profileRoute = Auth::user()->role === 'company'
+                                    ? route('company.profile.edit')
+                                    : route('profile.edit');
+
+                                $profileLabel = match (Auth::user()->role) {
+                                    'company' => 'Profil Perusahaan',
+                                    'admin' => 'Pengaturan Admin',
+                                    'teacher' => 'Pengaturan Guru',
+                                    default => 'Pengaturan Profil',
+                                };
+                            @endphp
+
                             @if(Auth::user()->role === 'company')
-                                <a href="{{ route('company.profile.edit') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                <a href="{{ $profileRoute }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                     </svg>
-                                    Profil Perusahaan
+                                    {{ $profileLabel }}
                                 </a>
-                                <a href="{{ route('company.profile.edit') }}#verification" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                <a href="{{ $profileRoute }}#verification" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m1-3h.01M12 20v-6m-6 6h12"/>
                                     </svg>
                                     Verifikasi Perusahaan
                                 </a>
                             @else
-                                <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                <a href="{{ $profileRoute }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                     </svg>
-                                    Pengaturan Profil
+                                    {{ $profileLabel }}
                                 </a>
                             @endif
 

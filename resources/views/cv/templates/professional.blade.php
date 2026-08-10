@@ -5,251 +5,131 @@
     <title>CV - {{ $user->name }}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 10pt;
-            color: #1f2937;
-            background: #fff;
+        body { font-family: DejaVu Sans, sans-serif; color: #0f172a; background: #fff; }
+
+        .layout-table { width: 100%; border-collapse: collapse; }
+        .sidebar { width: 32%; background-color: #0f172a; color: #fff; padding: 26px 20px; vertical-align: top; }
+        .main { width: 68%; padding: 26px 34px; vertical-align: top; }
+
+        .avatar { width: 92px; height: 92px; border-radius: 10px; }
+        .avatar-placeholder {
+            width: 92px; height: 92px; text-align: center; vertical-align: middle;
+            background-color: #1e293b; color: #fff; font-size: 32px; font-weight: bold;
+            border-radius: 10px;
         }
-        .layout {
-            display: flex;
-            min-height: 100%;
+        .avatar-wrap-table { width: 100%; border-collapse: collapse; margin-bottom: 4px; }
+        .avatar-wrap-table td { text-align: center; }
+
+        .sidebar-title { font-size: 15px; font-weight: bold; margin-top: 14px; text-align: center; }
+        .sidebar-subtitle { font-size: 11px; color: #cbd5e1; margin-top: 4px; text-align: center; }
+
+        .section-title-dark {
+            font-size: 11px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;
+            margin-bottom: 8px; margin-top: 22px; color: #94a3b8;
         }
-        /* Sidebar kiri */
-        .sidebar {
-            width: 200px;
-            background: #1e3a5f;
-            color: #fff;
-            padding: 24px 16px;
-            flex-shrink: 0;
-        }
-        .sidebar .avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid rgba(255,255,255,0.4);
-            display: block;
-            margin: 0 auto 12px;
-        }
-        .sidebar .avatar-placeholder {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28pt;
-            font-weight: bold;
-            margin: 0 auto 12px;
-            color: #fff;
-        }
-        .sidebar .s-name {
-            font-size: 12pt;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 4px;
-        }
-        .sidebar .s-role {
-            font-size: 8.5pt;
-            text-align: center;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 16px;
-        }
-        .sidebar .s-section-title {
-            font-size: 8pt;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: rgba(255,255,255,0.5);
-            margin-top: 16px;
-            margin-bottom: 6px;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 3px;
-        }
-        .sidebar .s-item {
-            font-size: 9pt;
-            color: rgba(255,255,255,0.85);
-            margin-bottom: 4px;
-            word-break: break-word;
-        }
-        .sidebar .skill-bar-wrap {
-            margin-bottom: 6px;
-        }
-        .sidebar .skill-name {
-            font-size: 9pt;
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 2px;
-        }
-        .sidebar .skill-bar {
-            height: 5px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-        .sidebar .skill-fill {
-            height: 100%;
-            background: #60a5fa;
-            border-radius: 3px;
+        .info-item { font-size: 10.5px; margin-bottom: 7px; color: #e2e8f0; }
+
+        .skill-chip {
+            display: inline-block; margin: 0 5px 5px 0; padding: 4px 9px;
+            color: #0f172a; background-color: #e2e8f0; border-radius: 9px; font-size: 9.5px;
         }
 
-        @if($include_skills && $user->skills->isNotEmpty())
-            @foreach($user->skills as $skill)
-                .skill-width-{{ $loop->iteration }} {
-                    width: {{ ($skill->pivot->proficiency ?? 3) * 20 }}%;
-                }
-            @endforeach
-        @endif
+        .main-title { font-size: 24px; font-weight: bold; }
+        .main-headline { font-size: 12px; color: #475569; margin-top: 6px; }
+        .main-meta { font-size: 10.5px; color: #475569; margin-top: 10px; }
 
-        /* Main content kanan */
-        .main {
-            flex: 1;
-            padding: 24px 24px;
-        }
-        .main-header {
-            border-bottom: 3px solid #1e3a5f;
-            padding-bottom: 12px;
-            margin-bottom: 16px;
-        }
-        .main-name {
-            font-size: 20pt;
-            font-weight: bold;
-            color: #1e3a5f;
-        }
-        .main-role {
-            font-size: 11pt;
-            color: #6b7280;
-            margin-top: 2px;
-        }
-        .section-title {
-            font-size: 11pt;
-            font-weight: bold;
-            color: #1e3a5f;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 16px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #e5e7eb;
-        }
-        .section-body {
-            font-size: 10pt;
-            color: #374151;
-            line-height: 1.6;
-        }
-        .cert-item {
-            margin-bottom: 8px;
-            padding-left: 12px;
-            border-left: 3px solid #60a5fa;
-        }
-        .cert-title { font-weight: bold; }
-        .cert-meta { font-size: 9pt; color: #6b7280; }
+        .section-title { font-size: 11px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; margin-top: 18px; margin-bottom: 8px; color: #163b66; }
+        .section-body { font-size: 10.5px; line-height: 1.6; color: #334155; }
+        .card { background-color: #f8fafc; padding: 14px 16px; }
+
+        ul.list { padding-left: 16px; margin-top: 6px; color: #334155; }
+        ul.list li { margin-bottom: 6px; }
     </style>
 </head>
 <body>
-<div class="layout">
+    <table class="layout-table">
+        <tr>
+            <td class="sidebar">
+                <table class="avatar-wrap-table">
+                    <tr>
+                        <td>
+                            @if(!empty($include_photo) && $user->avatar)
+                                <img src="{{ public_path('storage/' . $user->avatar) }}" alt="Foto" class="avatar">
+                            @else
+                                <div class="avatar-placeholder">{{ strtoupper(substr($user->name, 0, 1)) }}</div>
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+                <div class="sidebar-title">{{ $user->name }}</div>
+                <div class="sidebar-subtitle">{{ $user->student?->preferred_position ?: ($user->student?->major ?? 'Pencari kerja') }}</div>
 
-    {{-- Sidebar Kiri --}}
-    <div class="sidebar">
-        {{-- Foto / Initial --}}
-        @if($include_photo && $user->avatar)
-            <img src="{{ public_path('storage/' . $user->avatar) }}" alt="Foto" class="avatar">
-        @else
-            <div class="avatar-placeholder">{{ substr($user->name, 0, 1) }}</div>
-        @endif
+                <div class="section-title-dark">Kontak</div>
+                <div class="info-item">{{ $user->email }}</div>
+                @if($user->phone)<div class="info-item">{{ $user->phone }}</div>@endif
+                @if($user->student && $user->student->address)<div class="info-item">{{ $user->student->address }}</div>@endif
+                @if($user->student && $user->student->linkedin_url)<div class="info-item">LinkedIn tersedia</div>@endif
+                @if($user->student && $user->student->portfolio_url)<div class="info-item">Portofolio tersedia</div>@endif
 
-        <div class="s-name">{{ $user->name }}</div>
-        @if($user->student && $user->student->major)
-        <div class="s-role">{{ $user->student->major }}</div>
-        @endif
+                @if(!empty($include_skills) && $user->skills->isNotEmpty())
+                    <div class="section-title-dark">Keahlian</div>
+                    <div>
+                        @foreach($user->skills as $skill)
+                            <span class="skill-chip">{{ $skill->name }}</span>
+                        @endforeach
+                    </div>
+                @endif
 
-        {{-- Kontak --}}
-        <div class="s-section-title">Kontak</div>
-        <div class="s-item">{{ $user->email }}</div>
-        @if($user->phone)<div class="s-item">{{ $user->phone }}</div>@endif
-        @if($user->student && $user->student->address)
-        <div class="s-item">{{ $user->student->address }}</div>
-        @endif
+                @if(!empty($include_certificates) && $user->certificates->isNotEmpty())
+                    <div class="section-title-dark">Sertifikat</div>
+                    @foreach($user->certificates as $c)
+                        <div class="info-item">{{ $c->title ?? $c->name }}</div>
+                    @endforeach
+                @endif
+            </td>
 
-        {{-- Pendidikan --}}
-        <div class="s-section-title">Pendidikan</div>
-        <div class="s-item">SMK MUTU Cikampek</div>
-        @if($user->student && $user->student->major)
-        <div class="s-item">{{ $user->student->major }}</div>
-        @endif
-        @if($user->student && $user->student->graduation_year)
-        <div class="s-item">Lulus {{ $user->student->graduation_year }}</div>
-        @endif
-
-        {{-- Keahlian dengan bar --}}
-        @if($include_skills && $user->skills->isNotEmpty())
-        <div class="s-section-title">Keahlian</div>
-        @foreach($user->skills as $skill)
-        <div class="skill-bar-wrap">
-            <div class="skill-name">{{ $skill->name }}</div>
-            <div class="skill-bar">
-                <div class="skill-fill skill-width-{{ $loop->iteration }}"></div>
-            </div>
-        </div>
-        @endforeach
-        @endif
-    </div>
-
-    {{-- Main Content Kanan --}}
-    <div class="main">
-        <div class="main-header">
-            <div class="main-name">{{ $user->name }}</div>
-            @if($user->student && $user->student->major)
-            <div class="main-role">{{ $user->student->major }}
-                @if($user->student->graduation_year) · Lulusan {{ $user->student->graduation_year }} @endif
-            </div>
-            @endif
-        </div>
-
-        {{-- Ringkasan --}}
-        <div class="section-title">Tentang Saya</div>
-        <div class="section-body">{{ $custom_summary ?: ($user->bio ?? 'Ringkasan profil belum diisi. Tambahkan 2-3 kalimat tentang minat kerja, kekuatan utama, dan target karir agar sisi kanan CV ini tidak terasa kosong.') }}</div>
-
-        {{-- Pengalaman --}}
-        @if($custom_experience || ($user->student && $user->student->experience))
-        <div class="section-title">Pengalaman</div>
-        <div class="section-body">{!! nl2br(e($custom_experience ?: $user->student->experience)) !!}</div>
-        @endif
-
-        {{-- Pencapaian --}}
-        @if($custom_achievement)
-        <div class="section-title">Pencapaian Utama</div>
-        <div class="section-body">{{ $custom_achievement }}</div>
-        @endif
-
-        {{-- Sertifikat --}}
-        <div class="section-title">Sertifikat</div>
-        @if($include_certificates && $user->certificates->isNotEmpty())
-            @foreach($user->certificates as $c)
-            <div class="cert-item">
-                <div class="cert-title">{{ $c->title ?? $c->name ?? '-' }}</div>
-                <div class="cert-meta">
-                    @if(isset($c->issuer) && $c->issuer) {{ $c->issuer }} @endif
-                    @if(isset($c->issue_date) && $c->issue_date) ({{ \Carbon\Carbon::parse($c->issue_date)->format('M Y') }}) @endif
+            <td class="main">
+                <div class="main-title">{{ $user->name }}</div>
+                <div class="main-headline">{{ $custom_headline ?: ($user->student?->preferred_position ?: ($user->student?->major ?? 'Pencari kerja dengan motivasi tinggi')) }}</div>
+                <div class="main-meta">
+                    @if($user->student && $user->student->graduation_year)Lulus {{ $user->student->graduation_year }}@endif
+                    @if($user->student && $user->student->major) &middot; {{ $user->student->major }}@endif
                 </div>
-            </div>
-            @endforeach
-        @else
-            <div class="cert-item">
-                <div class="cert-title">Belum ada sertifikat ditampilkan</div>
-                <div class="cert-meta">Tambahkan sertifikat di profil untuk memperkuat CV.</div>
-            </div>
-        @endif
-    </div>
 
-</div>
+                <div class="card" style="margin-top: 18px;">
+                    <div class="section-title" style="margin-top: 0;">Ringkasan Profesional</div>
+                    <div class="section-body">{{ $custom_summary ?: ($user->bio ?? 'Ringkasan profil belum diisi. Tambahkan 2-3 kalimat tentang minat kerja, kekuatan utama, dan tujuan karir.') }}</div>
+                </div>
+
+                <div class="section-title">Pendidikan</div>
+                <div class="section-body">
+                    <strong>SMK MUTU Cikampek</strong><br>
+                    {{ $user->student?->major ?? 'Jurusan belum diisi' }}
+                    @if($user->student && $user->student->graduation_year)<br>Lulus {{ $user->student->graduation_year }}@endif
+                    @if($user->student && $user->student->education_history)
+                        <br><br>{!! nl2br(e($user->student->education_history)) !!}
+                    @endif
+                </div>
+
+                @if($custom_experience || ($user->student && $user->student->experience_organization))
+                    <div class="section-title">Pengalaman &amp; Organisasi</div>
+                    <div class="section-body">{!! nl2br(e($custom_experience ?: $user->student->experience_organization)) !!}</div>
+                @endif
+
+                @if($custom_achievement)
+                    <div class="section-title">Pencapaian Utama</div>
+                    <div class="section-body">{{ $custom_achievement }}</div>
+                @endif
+
+                @if(!empty($target_position) || !empty($ats_keywords))
+                    <div class="section-title">Target &amp; Kata Kunci ATS</div>
+                    <div class="section-body">
+                        @if(!empty($target_position))<div><strong>Posisi:</strong> {{ $target_position }}</div>@endif
+                        @if(!empty($ats_keywords))<div><strong>Keyword:</strong> {{ $ats_keywords }}</div>@endif
+                    </div>
+                @endif
+            </td>
+        </tr>
+    </table>
 </body>
 </html>

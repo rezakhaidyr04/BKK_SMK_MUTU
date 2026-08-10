@@ -144,9 +144,34 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ route('company.profile.update') }}" class="space-y-4">
+        <form method="POST" action="{{ route('company.profile.update') }}" class="space-y-4" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+
+            {{-- Logo Perusahaan --}}
+            <div>
+                <label class="form-label">Logo Perusahaan
+                    <span style="color:#94a3b8; font-weight:400; text-transform:none; letter-spacing:0;">(JPG, PNG, WebP — maks 2MB, otomatis dikompresi)</span>
+                </label>
+                <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
+                    <div id="logo-preview-wrap" style="width:4rem; height:4rem; border-radius:0.75rem; border:1.5px solid #e2e8f0; overflow:hidden; background:#f8fafc; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                        @if($company->logo)
+                            <img id="logo-preview" src="{{ asset('storage/' . $company->logo) }}" alt="Logo" style="width:100%; height:100%; object-fit:contain;" />
+                        @else
+                            <span id="logo-preview" style="font-size:1.5rem; color:#94a3b8;">🏢</span>
+                        @endif
+                    </div>
+                    <div class="file-upload-area" style="flex:1; min-width:12rem;" onclick="document.getElementById('logo-input').click()">
+                        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.25rem; pointer-events:none;">
+                            <svg style="width:1.5rem;height:1.5rem;color:#94a3b8;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+                            <p id="logo-label" style="font-size:0.8rem; font-weight:600; color:#64748b; margin:0;">Klik untuk pilih logo</p>
+                            <p style="font-size:0.7rem; color:#94a3b8; margin:0;">Akan dikompresi otomatis ke WebP</p>
+                        </div>
+                        <input id="logo-input" type="file" name="logo" accept="image/*" style="display:none;" onchange="previewLogo(this)" />
+                    </div>
+                </div>
+                @error('logo')<p style="margin-top:0.375rem; font-size:0.75rem; color:#dc2626;">{{ $message }}</p>@enderror
+            </div>
 
             <div>
                 <label class="form-label">Nama Perusahaan</label>
@@ -352,3 +377,25 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function previewLogo(input) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+    document.getElementById('logo-label').textContent = file.name;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const wrap = document.getElementById('logo-preview-wrap');
+        // Selalu ganti dengan <img> preview
+        wrap.innerHTML = '<img id="logo-preview" src="' + e.target.result + '" alt="Preview" style="width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 0.3s;" />';
+        setTimeout(() => {
+            const img = wrap.querySelector('img');
+            if (img) img.style.opacity = '1';
+        }, 50);
+    };
+    reader.readAsDataURL(file);
+}
+</script>
+@endpush

@@ -1,7 +1,15 @@
 <section>
     <header class="border-b border-slate-100 pb-4 mb-6">
         <h2 class="text-lg font-bold text-slate-900 tracking-tight">Informasi Profil</h2>
-        <p class="mt-1 text-sm text-slate-500">Perbarui foto, nama, email, nomor HP, keahlian, dan info akademik Anda.</p>
+        <p class="mt-1 text-sm text-slate-500">
+            @if(in_array(Auth::user()->role, ['student', 'alumni']))
+                Perbarui foto, nama, email, nomor HP, bio, keahlian, dan info akademik Anda.
+            @elseif(Auth::user()->role === 'company')
+                Perbarui foto, nama, email, nomor HP, dan informasi perusahaan Anda.
+            @else
+                Perbarui foto, nama, email, nomor HP, dan informasi akun Anda.
+            @endif
+        </p>
     </header>
 
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
@@ -15,8 +23,11 @@
         {{-- Avatar Section --}}
         <div class="bg-slate-50/50 rounded-2xl p-4 border border-slate-100 flex flex-col sm:flex-row items-center gap-5">
             <div class="relative group">
-                @if($user->avatar)
-                    <img id="avatar-preview" src="{{ asset('storage/' . $user->avatar) }}"
+                @php
+                    $avatarPreviewUrl = $user->avatar ? asset('storage/' . ltrim($user->avatar, '/')) : null;
+                @endphp
+                @if($avatarPreviewUrl)
+                    <img id="avatar-preview" src="{{ $avatarPreviewUrl }}"
                          alt="{{ $user->name }}"
                          class="w-20 h-20 rounded-2xl object-cover border-2 border-white shadow-md ring-1 ring-slate-200">
                 @else
@@ -35,9 +46,9 @@
                     </svg>
                     Pilih Foto Baru
                 </label>
-                <input id="avatar" name="avatar" type="file" class="sr-only" accept="image/jpeg,image/png,image/webp"
+                <input id="avatar" name="avatar" type="file" class="sr-only" accept="image/webp"
                        onchange="previewAvatar(event)">
-                <p class="text-xs text-slate-400 mt-2">Format JPG, PNG, atau WebP. Maksimal 2MB.</p>
+                <p class="text-xs text-slate-400 mt-2">Format file harus WebP. Maksimal 2MB.</p>
             </div>
             <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
         </div>
@@ -81,7 +92,8 @@
             <x-input-error class="mt-1.5" :messages="$errors->get('phone')" />
         </div>
 
-        {{-- Bio --}}
+        {{-- Bio / Ringkasan Singkat (student/alumni only) --}}
+        @if(in_array(Auth::user()->role, ['student', 'alumni']))
         <div>
             <x-input-label for="bio" value="Bio / Ringkasan Singkat" class="text-slate-700 font-semibold mb-1" />
             <textarea id="bio" name="bio" rows="3"
@@ -95,7 +107,7 @@
             <x-input-error class="mt-1.5" :messages="$errors->get('bio')" />
         </div>
 
-        {{-- Keahlian --}}
+        {{-- Keahlian (student/alumni only) --}}
         <div x-data="skillsManager({{ Js::from($user->skills->pluck('name')->toArray()) }})">
             <x-input-label value="Keahlian & Kompetensi" class="text-slate-700 font-semibold mb-1" />
             <p class="text-xs text-slate-400 mb-2">Tulis keahlian lalu tekan <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] font-mono">Enter</kbd> atau tanda koma <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] font-mono">,</kbd></p>
@@ -125,11 +137,13 @@
                 <input type="hidden" name="skills[]" :value="skill">
             </template>
         </div>
+        @endif
 
-        {{-- Data Akademik (student/alumni only) --}}
+        {{-- Data Akademik & CV (student/alumni only) --}}
         @if(in_array(Auth::user()->role, ['student', 'alumni']))
         <div class="border-t border-slate-100 pt-6">
-            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4">Informasi Akademik</h3>
+            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4">Data Diri & CV</h3>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                     <x-input-label for="major" value="Jurusan / Program Keahlian" class="text-slate-700 font-semibold mb-1" />
@@ -153,6 +167,78 @@
                     </select>
                     <x-input-error class="mt-1.5" :messages="$errors->get('graduation_year')" />
                 </div>
+
+                <div>
+                    <x-input-label for="preferred_position" value="Posisi yang Diinginkan" class="text-slate-700 font-semibold mb-1" />
+                    <x-text-input id="preferred_position" name="preferred_position" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                                  :value="old('preferred_position', $user->student->preferred_position ?? '')"
+                                  placeholder="Contoh: Frontend Developer" />
+                    <x-input-error class="mt-1.5" :messages="$errors->get('preferred_position')" />
+                </div>
+
+                <div>
+                    <x-input-label for="gender" value="Jenis Kelamin" class="text-slate-700 font-semibold mb-1" />
+                    <select id="gender" name="gender" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm">
+                        <option value="">Pilih</option>
+                        <option value="Laki-laki" {{ old('gender', $user->student->gender ?? '') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                        <option value="Perempuan" {{ old('gender', $user->student->gender ?? '') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                    </select>
+                    <x-input-error class="mt-1.5" :messages="$errors->get('gender')" />
+                </div>
+            </div>
+
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                    <x-input-label for="birth_place" value="Tempat Lahir" class="text-slate-700 font-semibold mb-1" />
+                    <x-text-input id="birth_place" name="birth_place" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                                  :value="old('birth_place', $user->student->birth_place ?? '')"
+                                  placeholder="Contoh: Cikampek" />
+                    <x-input-error class="mt-1.5" :messages="$errors->get('birth_place')" />
+                </div>
+
+                <div>
+                    <x-input-label for="birth_date" value="Tanggal Lahir" class="text-slate-700 font-semibold mb-1" />
+                    <x-text-input id="birth_date" name="birth_date" type="date" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                                  :value="old('birth_date', $user->student->birth_date ?? '')" />
+                    <x-input-error class="mt-1.5" :messages="$errors->get('birth_date')" />
+                </div>
+            </div>
+
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                    <x-input-label for="linkedin_url" value="LinkedIn" class="text-slate-700 font-semibold mb-1" />
+                    <x-text-input id="linkedin_url" name="linkedin_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                                  :value="old('linkedin_url', $user->student->linkedin_url ?? '')"
+                                  placeholder="https://linkedin.com/in/namamu" />
+                    <x-input-error class="mt-1.5" :messages="$errors->get('linkedin_url')" />
+                </div>
+
+                <div>
+                    <x-input-label for="portfolio_url" value="Portofolio / Website" class="text-slate-700 font-semibold mb-1" />
+                    <x-text-input id="portfolio_url" name="portfolio_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                                  :value="old('portfolio_url', $user->student->portfolio_url ?? '')"
+                                  placeholder="https://namaportofolio.com" />
+                    <x-input-error class="mt-1.5" :messages="$errors->get('portfolio_url')" />
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <x-input-label for="education_history" value="Riwayat Pendidikan (SD s.d. sekarang)" class="text-slate-700 font-semibold mb-1" />
+                <div class="mb-2 rounded-xl border border-blue-100 bg-blue-50 px-3 py-2 text-sm text-blue-700">
+                    Isi dari tingkat paling rendah sampai saat ini, misalnya SD, SMP, dan SMK. Ini akan muncul di CV Anda.
+                </div>
+                <textarea id="education_history" name="education_history" rows="4"
+                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm"
+                          placeholder="Contoh:&#10;SD Negeri 1 Cikampek (2016-2022)&#10;SMP Negeri 2 Cikampek (2022-2025)&#10;SMK MUTU Cikampek (2025-sekarang)&#10;Jurusan: Akuntansi">{{ old('education_history', $user->student->education_history ?? '') }}</textarea>
+                <x-input-error class="mt-1.5" :messages="$errors->get('education_history')" />
+            </div>
+
+            <div class="mt-5">
+                <x-input-label for="experience_organization" value="Pengalaman / Organisasi" class="text-slate-700 font-semibold mb-1" />
+                <textarea id="experience_organization" name="experience_organization" rows="4"
+                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm"
+                          placeholder="Contoh: Magang di toko online&#10;Ketua OSIS&#10;Anggota Pramuka">{{ old('experience_organization', $user->student->experience_organization ?? '') }}</textarea>
+                <x-input-error class="mt-1.5" :messages="$errors->get('experience_organization')" />
             </div>
 
             <div class="mt-5">

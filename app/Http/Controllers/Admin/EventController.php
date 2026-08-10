@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Services\ImageProcessor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -44,7 +45,12 @@ class EventController extends Controller
         ]);
 
         if ($request->hasFile('poster')) {
-            $validated['poster'] = $request->file('poster')->store('event-posters', 'public');
+            $processor = new ImageProcessor(quality: 82, maxWidth: 1200, maxHeight: 900);
+            $validated['poster'] = $processor->store(
+                $request->file('poster'),
+                'event-posters',
+                'poster-' . time()
+            );
         }
 
         Event::create($validated);
@@ -74,7 +80,12 @@ class EventController extends Controller
             if ($event->poster) {
                 Storage::disk('public')->delete($event->poster);
             }
-            $validated['poster'] = $request->file('poster')->store('event-posters', 'public');
+            $processor = new ImageProcessor(quality: 82, maxWidth: 1200, maxHeight: 900);
+            $validated['poster'] = $processor->store(
+                $request->file('poster'),
+                'event-posters',
+                'poster-' . time()
+            );
         } else {
             unset($validated['poster']);
         }

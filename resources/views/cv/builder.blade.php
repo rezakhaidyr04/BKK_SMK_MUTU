@@ -1,8 +1,31 @@
 <x-app-layout>
     @push('styles')
-    <style>[x-cloak] { display: none !important; }</style>
+    <style>
+        [x-cloak] { display: none !important; }
+        /* Preview styling to match PDF templates */
+        .preview-sheet { border-radius: 12px; overflow: hidden; box-shadow: 0 6px 24px rgba(15,23,42,0.06); border:1px solid #e6eef6; background:#fff }
+        .preview-hero { background: linear-gradient(135deg,#1f4f8a,#163b66 60%); color:#fff; padding:18px }
+        .preview-header { display:flex; gap:12px; align-items:center }
+        .preview-avatar { width:64px; height:64px; border-radius:12px; object-fit:cover; border:2px solid rgba(255,255,255,0.12) }
+        .preview-name { font-weight:800; font-size:15px; margin:0 }
+        .preview-headline { font-size:12px; opacity:0.95 }
+        .preview-pill { display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,0.06); color:#fff; font-weight:700; font-size:11px }
+        .preview-section { padding:12px; }
+        .preview-section-title { font-weight:800; color:#163b66; font-size:11px; text-transform:uppercase; margin-bottom:6px }
+        .preview-section-body { color:#334155; font-size:12px; line-height:1.5 }
+        .preview-card { border-radius:10px; border:1px solid #eef6fb; padding:10px; background:#fff }
+        .preview-skill { display:inline-block; background:#eef2ff; color:#1d4ed8; padding:6px 10px; border-radius:999px; font-weight:700; margin:3px }
+        .preview-hr { height:2px; background:#163b66; border:0; margin:12px 0 }
+        .preview-meta { font-size:11px; color:rgba(255,255,255,0.9) }
+    </style>
     @endpush
-    <div x-data="{ template: 'modern' }" class="min-h-screen bg-[radial-gradient(circle_at_top,_#eff6ff_0,_#f8fafc_35%,_#eef2ff_100%)]">
+    <div x-data="{
+        template: 'modern',
+        headline: @js($previewData['headline']),
+        summary: @js($previewData['summary']),
+        experience: @js($previewData['experience']),
+        achievement: ''
+    }" class="min-h-screen bg-[radial-gradient(circle_at_top,_#eff6ff_0,_#f8fafc_35%,_#eef2ff_100%)]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
             <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between mb-8">
                 <div>
@@ -115,19 +138,27 @@
                             <div class="grid grid-cols-1 gap-4 mb-6">
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Headline CV</label>
-                                    <input type="text" name="custom_headline" maxlength="120" placeholder="Contoh: Admin Office, Operator Produksi, Junior Web Developer" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">
+                                    <input type="text" name="custom_headline" maxlength="120" x-model="headline" placeholder="Contoh: Admin Office, Operator Produksi, Junior Web Developer" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-800 mb-2">Posisi yang dituju</label>
+                                    <input type="text" name="target_position" maxlength="120" value="{{ old('target_position', $previewData['target_position'] ?? '') }}" placeholder="Contoh: Staff Administrasi, Operator Produksi, Junior Web Developer" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-800 mb-2">Kata kunci ATS</label>
+                                    <input type="text" name="ats_keywords" maxlength="300" placeholder="Contoh: administrasi, microsoft excel, komunikasi, kantor" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Ringkasan singkat</label>
-                                    <textarea name="custom_summary" rows="4" maxlength="1200" placeholder="Tulis 2-4 kalimat yang menjelaskan siapa kamu, keahlian utama, dan target kerja." class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                                    <textarea name="custom_summary" rows="4" maxlength="1200" x-model="summary" placeholder="Tulis 2-4 kalimat yang menjelaskan siapa kamu, keahlian utama, dan target kerja." class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-800 mb-2">Pengalaman / proyek paling relevan</label>
+                                    <label class="block text-sm font-semibold text-gray-800 mb-2">Pengalaman / proyek / organisasi paling relevan</label>
                                     <textarea name="custom_experience" rows="5" maxlength="2000" placeholder="Contoh:\n- Magang di toko retail selama 3 bulan\n- Membantu administrasi OSIS\n- Membuat website sekolah sederhana" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Pencapaian utama</label>
-                                    <textarea name="custom_achievement" rows="3" maxlength="500" placeholder="Contoh: Juara 2 lomba desain poster, lulus PKL dengan predikat baik, memimpin proyek kelas." class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                                    <textarea name="custom_achievement" rows="3" maxlength="500" x-model="achievement" placeholder="Contoh: Juara 2 lomba desain poster, lulus PKL dengan predikat baik, memimpin proyek kelas." class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
                                 </div>
                             </div>
 
@@ -210,76 +241,103 @@
 
                     <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
                         <h3 class="text-lg font-bold text-gray-900 mb-4">Preview Cepat</h3>
-                        <div x-show="template === 'modern'" x-cloak class="rounded-3xl bg-slate-900 text-white overflow-hidden shadow-lg">
-                            <div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-5">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-14 h-14 rounded-2xl bg-white/20 border border-white/20 flex items-center justify-center text-xl font-bold">{{ strtoupper(substr($previewData['name'], 0, 1)) }}</div>
+                        <div x-show="template === 'modern'" x-cloak class="preview-sheet preview-modern">
+                            <div class="preview-hero">
+                                <div class="preview-header">
+                                    @if($previewData['name'])
+                                        @if($previewData['name'])
+                                            <div class="preview-avatar">{{ strtoupper(substr($previewData['name'], 0, 1)) }}</div>
+                                        @endif
+                                    @endif
                                     <div>
-                                        <p class="font-bold text-lg leading-tight">{{ $previewData['name'] }}</p>
-                                        <p class="text-sm text-blue-100">{{ $previewData['headline'] }}</p>
+                                        <p class="preview-name">{{ $previewData['name'] }}</p>
+                                        <p class="preview-headline" x-text="headline"></p>
                                     </div>
                                 </div>
-                                <div class="mt-4 flex flex-wrap gap-2 text-xs text-white/90">
-                                    <span class="px-3 py-1 rounded-full bg-white/10 border border-white/15">ATS Friendly</span>
-                                    <span class="px-3 py-1 rounded-full bg-white/10 border border-white/15">Ringkas</span>
-                                    <span class="px-3 py-1 rounded-full bg-white/10 border border-white/15">Siap Kirim</span>
+                                <div class="mt-3">
+                                    <span class="preview-pill">ATS Friendly</span>
+                                    <span class="preview-pill" style="margin-left:6px">Ringkas</span>
                                 </div>
                             </div>
-                            <div class="p-5 space-y-4 text-sm">
-                                <div>
-                                    <p class="text-blue-200 text-xs uppercase tracking-widest mb-2">Ringkasan</p>
-                                    <p class="text-white/90 leading-relaxed">{{ $previewData['summary'] }}</p>
+                            <div class="p-4">
+                                <div class="preview-section">
+                                    <div class="preview-section-title">Ringkasan</div>
+                                    <div class="preview-section-body" x-text="summary"></div>
                                 </div>
-                                <div>
-                                    <p class="text-blue-200 text-xs uppercase tracking-widest mb-2">Skill</p>
-                                    <div class="flex flex-wrap gap-2">
+                                <div class="preview-section" style="margin-top:10px">
+                                    <div class="preview-section-title">Data CV</div>
+                                    <div class="preview-section-body">
+                                        @if($previewData['linkedin_url']) LinkedIn · @endif
+                                        @if($previewData['portfolio_url']) Portofolio · @endif
+                                        <span x-text="headline"></span>
+                                        @if(!empty($previewData['target_position']))
+                                            <div class="mt-1 text-blue-700 font-semibold">Posisi: {{ $previewData['target_position'] }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="preview-section" style="margin-top:10px">
+                                    <div class="preview-section-title">Skill</div>
+                                    <div>
                                         @foreach(array_slice($previewData['skills'], 0, 4) as $skill)
-                                            <span class="px-3 py-1 rounded-full bg-white/10 border border-white/15">{{ $skill }}</span>
+                                            <span class="preview-skill">{{ $skill }}</span>
                                         @endforeach
                                     </div>
+                                    @if(!empty($previewData['target_position']))
+                                        <div class="preview-section-body mt-3">
+                                            <div class="preview-section-title">Kata Kunci ATS</div>
+                                            <div class="text-xs text-gray-600">{{ $previewData['target_position'] }}, administrasi, komunikasi, microsoft excel</div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
 
-                        <div x-show="template === 'classic'" x-cloak class="rounded-3xl bg-white border border-gray-200 overflow-hidden shadow-lg">
-                            <div class="px-5 py-4 text-center border-b border-gray-200">
-                                <p class="text-xl font-bold text-gray-900">{{ strtoupper($previewData['name']) }}</p>
-                                <p class="text-xs tracking-[0.24em] text-gray-500 mt-1">{{ $previewData['headline'] }}</p>
+                        <div x-show="template === 'classic'" x-cloak class="preview-sheet preview-classic">
+                            <div class="px-5 py-4 text-center">
+                                <p class="preview-name">{{ strtoupper($previewData['name']) }}</p>
+                                <p class="preview-headline" x-text="headline"></p>
                             </div>
-                            <div class="p-5 space-y-4 text-sm text-gray-700">
-                                <div>
-                                    <p class="font-semibold text-gray-900 mb-1">Profil Singkat</p>
-                                    <p class="leading-relaxed">{{ $previewData['summary'] }}</p>
+                            <div class="p-4">
+                                <div class="preview-section">
+                                    <div class="preview-section-title">Profil Singkat</div>
+                                    <div class="preview-section-body" x-text="summary"></div>
                                 </div>
-                                <div>
-                                    <p class="font-semibold text-gray-900 mb-2">Pendidikan</p>
-                                    <p>{{ $previewData['education']['school'] }}</p>
-                                    <p>{{ $previewData['education']['major'] }}</p>
-                                    <p>{{ $previewData['education']['year'] }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div x-show="template === 'professional'" x-cloak class="rounded-3xl overflow-hidden shadow-lg border border-slate-200 bg-white">
-                            <div class="grid grid-cols-[110px,1fr] min-h-[220px]">
-                                <div class="bg-slate-900 text-white p-4 flex flex-col justify-between">
-                                    <div class="w-16 h-16 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-xl font-bold">{{ strtoupper(substr($previewData['name'], 0, 1)) }}</div>
-                                    <div>
-                                        <p class="font-semibold leading-tight">{{ $previewData['email'] }}</p>
-                                        <p class="text-xs text-slate-300 mt-2">{{ $previewData['phone'] }}</p>
+                                <div class="preview-section">
+                                    <div class="preview-section-title">Pendidikan</div>
+                                    <div class="preview-section-body">
+                                        <div>{{ $previewData['education']['school'] }}</div>
+                                        <div>{{ $previewData['education']['major'] }}</div>
+                                        <div>{{ $previewData['education']['year'] }}</div>
+                                        <div class="mt-2">{{ Str::limit($previewData['education']['history'], 140) }}</div>
                                     </div>
                                 </div>
-                                <div class="p-5">
-                                    <p class="text-lg font-bold text-slate-900">{{ $previewData['name'] }}</p>
-                                    <p class="text-sm text-slate-500 mt-1">{{ $previewData['headline'] }}</p>
-                                    <div class="mt-4 space-y-3 text-sm text-slate-700">
-                                        <div>
-                                            <p class="font-semibold text-slate-900">Tentang Saya</p>
-                                            <p class="leading-relaxed">{{ $previewData['summary'] }}</p>
+                            </div>
+                        </div>
+
+                        <div x-show="template === 'professional'" x-cloak class="preview-sheet preview-professional">
+                            <div class="grid grid-cols-[90px,1fr] min-h-[180px]">
+                                <div class="preview-hero" style="padding:12px;">
+                                    <div class="preview-header" style="flex-direction:column;align-items:center">
+                                        <div class="preview-avatar">{{ strtoupper(substr($previewData['name'], 0, 1)) }}</div>
+                                        <div style="height:8px"></div>
+                                        <div class="preview-meta">{{ $previewData['email'] }}</div>
+                                        <div class="preview-meta">{{ $previewData['phone'] }}</div>
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <p class="preview-name">{{ $previewData['name'] }}</p>
+                                    <p class="preview-headline" x-text="headline"></p>
+                                    <div class="mt-3">
+                                        <div class="preview-section">
+                                            <div class="preview-section-title">Tentang Saya</div>
+                                            <div class="preview-section-body" x-text="summary"></div>
                                         </div>
-                                        <div>
-                                            <p class="font-semibold text-slate-900">Pendidikan</p>
-                                            <p>{{ $previewData['education']['school'] }} · {{ $previewData['education']['major'] }} · {{ $previewData['education']['year'] }}</p>
+                                        <div class="preview-section" style="margin-top:8px">
+                                            <div class="preview-section-title">Pendidikan</div>
+                                            <div class="preview-section-body">
+                                                <div>{{ $previewData['education']['school'] }} · {{ $previewData['education']['major'] }} · {{ $previewData['education']['year'] }}</div>
+                                                <div class="mt-1">{{ Str::limit($previewData['education']['history'], 140) }}</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

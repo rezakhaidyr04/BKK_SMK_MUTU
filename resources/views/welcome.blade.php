@@ -16,9 +16,9 @@
     
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
-<body class="font-sans antialiased">
-    <!-- Navigation -->
-    <nav class="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 z-50 shadow-sm">
+    <body class="font-sans antialiased">
+        <!-- Navigation -->
+        <nav class="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
@@ -36,6 +36,7 @@
                     <a href="#jobs" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Lowongan</a>
                     <a href="#trusted" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Perusahaan</a>
                     <a href="#features" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Tentang Kami</a>
+                    <a href="{{ route('login') }}" class="text-xs font-medium text-slate-300 hover:text-blue-600 transition" title="Admin Login">Admin</a>
                 </div>
                 
                 <div class="flex items-center gap-4">

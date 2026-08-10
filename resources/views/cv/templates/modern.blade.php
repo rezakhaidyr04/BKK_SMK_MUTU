@@ -2,137 +2,189 @@
 <html lang="id">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CV - {{ $user->name }}</title>
     <style>
-        * { box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; color: #111827; margin: 0; padding: 28px; background: #f8fafc; }
-        .sheet { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 18px; overflow: hidden; }
-        .hero { background: linear-gradient(135deg, #2563eb, #1d4ed8 55%, #0f172a); color: #fff; padding: 28px; }
-        .hero-top { display:flex; align-items:center; justify-content:space-between; gap:16px; }
-        .header { display:flex; align-items:center; gap:16px; }
-        .avatar { width: 76px; height: 76px; border-radius: 16px; object-fit: cover; border: 3px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.12); }
-        .avatar-placeholder { width: 76px; height: 76px; border-radius: 16px; display:flex; align-items:center; justify-content:center; font-size: 28px; font-weight: 700; background: rgba(255,255,255,0.14); border: 3px solid rgba(255,255,255,0.25); }
-        .name { font-size: 24px; font-weight: 700; line-height: 1.1; }
-        .headline { font-size: 13px; opacity: 0.9; margin-top: 4px; }
-        .meta { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
-        .pill { display:inline-block; background: rgba(255,255,255,0.12); color:#fff; border: 1px solid rgba(255,255,255,0.18); padding: 6px 10px; border-radius: 999px; font-size: 11px; }
-        .content { padding: 24px 28px 28px; }
-        .grid { display:grid; grid-template-columns: 1.35fr 0.9fr; gap: 20px; }
-        .section { margin-top: 18px; }
-        .section-title { font-weight:700; font-size:12px; letter-spacing: .08em; text-transform: uppercase; margin-bottom:8px; color:#1d4ed8; }
-        .section-body { font-size: 12px; line-height: 1.7; color:#374151; }
-        .card { border:1px solid #e5e7eb; border-radius: 14px; padding: 14px; background:#fff; }
-        .muted { color:#6B7280; font-size:12px; }
-        .skill { display:inline-block; background:#eff6ff; color:#1d4ed8; border:1px solid #dbeafe; padding:5px 10px; border-radius:999px; margin:3px 4px 0 0; font-size:12px; font-weight:600; }
-        .skill-empty { display:inline-block; background:#f3f4f6; color:#6b7280; padding:5px 10px; border-radius:999px; margin-top:4px; font-size:12px; }
-        .list { margin: 0; padding-left: 18px; }
-        .hero-contact { text-align: right; font-size: 11px; opacity: .9; line-height: 1.6; }
-        .section-title.no-top-margin { margin-top: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: DejaVu Sans, sans-serif; color: #0f172a; background: #ffffff; }
+
+        .sheet { border: 1px solid #e6eef6; }
+
+        /* Hero header - tabel 2 kolom: identitas kiri, kontak kanan */
+        .hero { background-color: #1f4f8a; color: #fff; padding: 22px 26px; }
+        .hero-table { width: 100%; border-collapse: collapse; }
+        .hero-table td { vertical-align: top; }
+        .avatar { width: 72px; height: 72px; border-radius: 8px; }
+        .avatar-placeholder {
+            width: 72px; height: 72px; text-align: center; vertical-align: middle;
+            background-color: #2c5c94; color: #fff; font-size: 26px; font-weight: bold;
+            border-radius: 8px;
+        }
+        .name { font-size: 20px; font-weight: bold; }
+        .headline { font-size: 12px; margin-top: 4px; color: #dbe7f5; }
+        .hero-contact { text-align: right; font-size: 11px; color: #dbe7f5; line-height: 1.6; }
+        .pill {
+            display: inline-block; background-color: #2c5c94; color: #fff;
+            padding: 4px 10px; border-radius: 10px; font-size: 10px; margin-top: 10px; margin-right: 4px;
+        }
+
+        /* Body - tabel 2 kolom untuk layout utama */
+        .content { padding: 20px 26px 26px; }
+        .body-table { width: 100%; border-collapse: collapse; }
+        .col-left { width: 58%; vertical-align: top; padding-right: 20px; }
+        .col-right { width: 42%; vertical-align: top; }
+
+        .section { margin-bottom: 14px; }
+        .section-title {
+            font-weight: bold; font-size: 11px; text-transform: uppercase;
+            letter-spacing: 1px; color: #163b66; margin-bottom: 6px;
+            border-bottom: 1px solid #dbe7f5; padding-bottom: 3px;
+        }
+        .section-body { font-size: 10.5px; line-height: 1.6; color: #334155; }
+        .muted { color: #94a3b8; }
+
+        .card { background-color: #f8fafc; border: 1px solid #eef6fb; padding: 10px 12px; margin-bottom: 12px; }
+
+        .skill {
+            display: inline-block; background-color: #eef2ff; color: #1d4ed8;
+            padding: 4px 9px; border-radius: 10px; font-size: 10px; margin: 0 4px 4px 0;
+        }
+        .skill-empty { color: #94a3b8; font-size: 10px; }
+
+        .list { margin: 0; padding-left: 16px; }
+        .list li { margin-bottom: 4px; }
     </style>
 </head>
 <body>
     <div class="sheet">
         <div class="hero">
-            <div class="hero-top">
-                <div class="header">
-                    @if($include_photo && $user->avatar)
-                        <img src="{{ public_path('storage/' . $user->avatar) }}" alt="avatar" class="avatar">
-                    @else
-                        <div class="avatar-placeholder">{{ strtoupper(substr($user->name, 0, 1)) }}</div>
-                    @endif
-                    <div>
+            <table class="hero-table">
+                <tr>
+                    <td style="width: 76px;">
+                        @if($include_photo && $user->avatar)
+                            <img src="{{ public_path('storage/' . $user->avatar) }}" alt="Foto" class="avatar">
+                        @else
+                            <div class="avatar-placeholder">{{ strtoupper(substr($user->name, 0, 1)) }}</div>
+                        @endif
+                    </td>
+                    <td>
                         <div class="name">{{ $user->name }}</div>
                         <div class="headline">
-                            {{ $custom_headline ?: ($user->student?->major ?? 'Pencari kerja') }}
-                            @if($user->student && $user->student->graduation_year) · Lulusan {{ $user->student->graduation_year }} @endif
+                            {{ $custom_headline ?: ($user->student?->preferred_position ?: ($user->student?->major ?? 'Pencari kerja')) }}
+                            @if($user->student && $user->student->graduation_year) &middot; Lulusan {{ $user->student->graduation_year }} @endif
                         </div>
-                    </div>
-                </div>
-                <div class="hero-contact">
-                    <div>{{ $user->email }}</div>
-                    <div>{{ $user->phone ?? '-' }}</div>
-                </div>
-            </div>
-
-            <div class="meta">
-                <span class="pill">ATS Friendly</span>
-                <span class="pill">Ringkas</span>
-                <span class="pill">Siap Kirim</span>
-            </div>
+                        <div>
+                            <span class="pill">ATS Friendly</span>
+                            <span class="pill">Ringkas</span>
+                        </div>
+                    </td>
+                    <td style="width: 160px;" class="hero-contact">
+                        <div>{{ $user->email }}</div>
+                        <div>{{ $user->phone ?? '-' }}</div>
+                        @if($user->student && $user->student->linkedin_url)<div>LinkedIn tersedia</div>@endif
+                        @if($user->student && $user->student->portfolio_url)<div>Portofolio tersedia</div>@endif
+                    </td>
+                </tr>
+            </table>
         </div>
 
         <div class="content">
-            <div class="grid">
-                <div>
-                    <div class="section">
-                        <div class="section-title">Ringkasan Profesional</div>
-                        <div class="section-body">{{ $custom_summary ?: ($user->bio ?? 'Ringkasan belum diisi. Tambahkan 2-3 kalimat tentang minat, keahlian utama, dan tujuan karir agar CV tidak terlihat kosong.') }}</div>
-                    </div>
-
-                    <div class="section">
-                        <div class="section-title">Pengalaman</div>
-                        @if($custom_experience)
-                            <div class="section-body">{!! nl2br(e($custom_experience)) !!}</div>
-                        @elseif($user->student && $user->student->experience)
-                            <div class="section-body">{!! nl2br(e($user->student->experience)) !!}</div>
-                        @else
-                            <div class="section-body muted">Belum ada pengalaman yang ditambahkan. Isi pengalaman magang, organisasi, atau proyek sekolah agar lebih kuat di mata perekrut.</div>
-                        @endif
-                    </div>
-
-                    <div class="section">
-                        <div class="section-title">Pencapaian Utama</div>
-                        <div class="section-body">{{ $custom_achievement ?: 'Tambahkan satu pencapaian yang paling meyakinkan: prestasi, proyek, peran kepemimpinan, atau hasil kerja yang bisa dibuktikan.' }}</div>
-                    </div>
-
-                    <div class="section">
-                        <div class="section-title">Sertifikat</div>
-                        @if($include_certificates && $user->certificates->isNotEmpty())
-                            <ul class="list section-body">
-                                @foreach($user->certificates as $c)
-                                    <li>{{ $c->name }} @if($c->issued_by) - {{ $c->issued_by }} @endif @if($c->year) ({{ $c->year }}) @endif</li>
-                                @endforeach
-                            </ul>
-                        @else
-                            <div class="section-body muted">Belum ada sertifikat yang ditampilkan.</div>
-                        @endif
-                    </div>
-                </div>
-
-                <div>
-                    <div class="card">
-                        <div class="section-title no-top-margin">Kontak</div>
-                        <div class="section-body">
-                            <div>{{ $user->email }}</div>
-                            <div>{{ $user->phone ?? '-' }}</div>
-                            <div>{{ $user->student?->address ?? 'Alamat belum diisi' }}</div>
+            <table class="body-table">
+                <tr>
+                    <td class="col-left">
+                        <div class="section">
+                            <div class="section-title">Ringkasan Profesional</div>
+                            <div class="section-body">
+                                {{ $custom_summary ?: ($user->bio ?? 'Ringkasan belum diisi. Tambahkan 2-3 kalimat tentang minat, keahlian utama, dan tujuan karir agar CV tidak terlihat kosong.') }}
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="section card">
-                        <div class="section-title no-top-margin">Keahlian</div>
-                        <div>
-                            @if($include_skills && $user->skills->isNotEmpty())
-                                @foreach($user->skills as $skill)
-                                    <span class="skill">{{ $skill->name }}</span>
-                                @endforeach
+                        <div class="section">
+                            <div class="section-title">Pengalaman</div>
+                            @if($custom_experience)
+                                <div class="section-body">{!! nl2br(e($custom_experience)) !!}</div>
+                            @elseif($user->student && $user->student->experience_organization)
+                                <div class="section-body">{!! nl2br(e($user->student->experience_organization)) !!}</div>
                             @else
-                                <span class="skill-empty">Tambah keahlian di profil</span>
+                                <div class="section-body muted">Belum ada pengalaman yang ditambahkan. Isi pengalaman magang, organisasi, atau proyek sekolah agar lebih kuat di mata perekrut.</div>
                             @endif
                         </div>
-                    </div>
 
-                    <div class="section card">
-                        <div class="section-title no-top-margin">Pendidikan</div>
-                        <div class="section-body">
-                            <strong>SMK MUTU Cikampek</strong><br>
-                            {{ $user->student->major ?? 'Jurusan belum diisi' }}<br>
-                            {{ $user->student->graduation_year ? 'Lulus ' . $user->student->graduation_year : 'Tahun lulus belum diisi' }}
+                        <div class="section">
+                            <div class="section-title">Pencapaian Utama</div>
+                            <div class="section-body">
+                                {{ $custom_achievement ?: 'Tambahkan satu pencapaian yang paling meyakinkan: prestasi, proyek, peran kepemimpinan, atau hasil kerja yang bisa dibuktikan.' }}
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+
+                        @if(!empty($target_position) || !empty($ats_keywords))
+                            <div class="section">
+                                <div class="section-title">Target &amp; Kata Kunci ATS</div>
+                                <div class="section-body">
+                                    @if(!empty($target_position))<div><strong>Posisi:</strong> {{ $target_position }}</div>@endif
+                                    @if(!empty($ats_keywords))<div><strong>Keyword:</strong> {{ $ats_keywords }}</div>@endif
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class="section">
+                            <div class="section-title">Sertifikat</div>
+                            @if($include_certificates && $user->certificates->isNotEmpty())
+                                <ul class="list section-body">
+                                    @foreach($user->certificates as $c)
+                                        <li>
+                                            {{ $c->title ?? $c->name ?? '-' }}
+                                            @if($c->issuer ?? false)
+                                                &mdash; {{ $c->issuer }}
+                                            @endif
+                                            @if($c->issue_date ?? false)
+                                                ({{ \Carbon\Carbon::parse($c->issue_date)->format('M Y') }})
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <div class="section-body muted">Belum ada sertifikat yang ditampilkan.</div>
+                            @endif
+                        </div>
+                    </td>
+
+                    <td class="col-right">
+                        <div class="card">
+                            <div class="section-title">Kontak</div>
+                            <div class="section-body">
+                                <div>{{ $user->email }}</div>
+                                <div>{{ $user->phone ?? '-' }}</div>
+                                <div>{{ $user->student?->address ?? 'Alamat belum diisi' }}</div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="section-title">Keahlian</div>
+                            <div>
+                                @if($include_skills && $user->skills->isNotEmpty())
+                                    @foreach($user->skills as $skill)
+                                        <span class="skill">{{ $skill->name }}</span>
+                                    @endforeach
+                                @else
+                                    <span class="skill-empty">Tambah keahlian di profil</span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="section-title">Pendidikan</div>
+                            <div class="section-body">
+                                <strong>SMK MUTU Cikampek</strong><br>
+                                {{ $user->student?->major ?? 'Jurusan belum diisi' }}<br>
+                                {{ $user->student?->graduation_year ? 'Lulus ' . $user->student?->graduation_year : 'Tahun lulus belum diisi' }}
+                                @if($user->student && $user->student->education_history)
+                                    <br><br>{!! nl2br(e($user->student->education_history)) !!}
+                                @endif
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </body>

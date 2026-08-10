@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\News;
+use App\Services\ImageProcessor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -57,7 +58,12 @@ class NewsController extends Controller
 
         $thumbnailPath = null;
         if ($request->hasFile('thumbnail')) {
-            $thumbnailPath = $request->file('thumbnail')->store('news-thumbnails', 'public');
+            $processor = new ImageProcessor(quality: 82, maxWidth: 1200, maxHeight: 800);
+            $thumbnailPath = $processor->store(
+                $request->file('thumbnail'),
+                'news-thumbnails',
+                'thumb-' . Str::slug($validated['title']) . '-' . time()
+            );
         }
 
         News::create([
@@ -93,7 +99,12 @@ class NewsController extends Controller
             if ($news->thumbnail) {
                 Storage::disk('public')->delete($news->thumbnail);
             }
-            $validated['thumbnail'] = $request->file('thumbnail')->store('news-thumbnails', 'public');
+            $processor = new ImageProcessor(quality: 82, maxWidth: 1200, maxHeight: 800);
+            $validated['thumbnail'] = $processor->store(
+                $request->file('thumbnail'),
+                'news-thumbnails',
+                'thumb-' . Str::slug($validated['title']) . '-' . time()
+            );
         } else {
             unset($validated['thumbnail']);
         }
@@ -124,10 +135,19 @@ class NewsController extends Controller
     public function uploadImage(Request $request)
     {
         $request->validate([
-            'image' => ['required', 'image', 'max:2048', 'mimes:jpg,jpeg,png,webp,gif'],
+            'image' => ['required', 'image', 'max:5120', 'mimes:jpg,jpeg,png,webp,gif'],
         ]);
 
-        $path = $request->file('image')->store('news-images', 'public');
+        $processor = new ImageProcessor(quality: 80, maxWidth: 1200, maxHeight: 1200);
+        $path = $processor->store(
+            $request->file('image'),
+            'news-images',
+            'img-' . time() . '-' . Str::random(6)
+        );
+
+        if (! $path) {
+            return response()->json(['error' => 'Gagal memproses gambar.'], 422);
+        }
 
         return response()->json([
             'url' => asset('storage/' . $path),

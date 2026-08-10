@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Company;
 
 use App\Http\Controllers\Controller;
+use App\Services\ImageProcessor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -31,7 +32,26 @@ class ProfileController extends Controller
             'email' => ['nullable', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:50'],
             'address' => ['nullable', 'string', 'max:255'],
+            'logo' => ['nullable', 'image', 'max:2048', 'mimes:jpg,jpeg,png,webp'],
         ]);
+
+        // Handle logo upload
+        if ($request->hasFile('logo')) {
+            if ($company->logo) {
+                Storage::disk('public')->delete($company->logo);
+            }
+            $processor = new ImageProcessor(quality: 85, maxWidth: 400, maxHeight: 400);
+            $logoPath = $processor->store(
+                $request->file('logo'),
+                'company-logos',
+                'logo-' . $company->id . '-' . time()
+            );
+            if ($logoPath) {
+                $validated['logo'] = $logoPath;
+            }
+        } else {
+            unset($validated['logo']);
+        }
 
         $company->update($validated);
 

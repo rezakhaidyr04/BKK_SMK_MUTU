@@ -27,11 +27,19 @@ class ProfileUpdateRequest extends FormRequest
             ],
             "phone" => ["nullable", "string", "max:20"],
             "bio" => ["nullable", "string", "max:500"],
+            "linkedin_url" => ["nullable", "url", "max:255"],
+            "portfolio_url" => ["nullable", "url", "max:255"],
+            "preferred_position" => ["nullable", "string", "max:100"],
+            "education_history" => ["nullable", "string"],
+            "experience_organization" => ["nullable", "string"],
+            "birth_place" => ["nullable", "string", "max:100"],
+            "birth_date" => ["nullable", "date"],
+            "gender" => ["nullable", "string", "max:20"],
             "avatar" => [
                 "nullable",
                 "image",
-                "max:2048",
-                "mimes:jpg,jpeg,png,webp",
+                "max:3072",
+                "mimes:jpg,jpeg,png,webp,gif",
             ],
         ];
     }
@@ -40,10 +48,12 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             "avatar.image" => "File harus berupa gambar.",
-            "avatar.max" => "Ukuran foto maksimal 2MB.",
+            "avatar.max" => "Ukuran foto maksimal 3MB.",
             "avatar.mimes" => "Format foto harus JPG, PNG, atau WebP.",
             "bio.max" => "Bio maksimal 500 karakter.",
             "phone.max" => "Nomor HP maksimal 20 karakter.",
+            "linkedin_url.url" => "Format LinkedIn URL tidak valid.",
+            "portfolio_url.url" => "Format URL portofolio tidak valid.",
         ];
     }
 }

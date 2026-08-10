@@ -16,6 +16,14 @@ class Student extends Model
         'major',
         'graduation_year',
         'address',
+        'linkedin_url',
+        'portfolio_url',
+        'preferred_position',
+        'education_history',
+        'experience_organization',
+        'birth_place',
+        'birth_date',
+        'gender',
     ];
 
     public function user()
