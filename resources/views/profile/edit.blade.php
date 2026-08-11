@@ -133,4 +133,18 @@
             </div>
         </div>
     </div>
+
+    @push('styles')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+    <style>
+        .cropper-view-box,
+        .cropper-face {
+          border-radius: 50%;
+        }
+    </style>
+    @endpush
+
+    @push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    @endpush
 </x-app-layout>

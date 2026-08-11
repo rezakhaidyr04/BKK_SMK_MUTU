@@ -201,10 +201,6 @@
                 </div>
             </div>
 
-            <div>
-                <label class="form-label">NPWP / Tax Number</label>
-                <input type="text" name="tax_number" value="{{ old('tax_number', $company->tax_number ?? '') }}" class="form-input" placeholder="12.345.678.9-012.345" />
-            </div>
 
             <div>
                 <label class="form-label">Alamat</label>
@@ -226,8 +222,8 @@
     <div id="verification" class="profile-card" style="padding: 1.75rem;">
         <div class="section-header flex items-center justify-between">
             <div>
-                <h2 style="font-size: 1.125rem; font-weight: 700; color: #0f172a; margin:0;">Verifikasi Perusahaan</h2>
-                <p style="font-size: 0.8rem; color: #64748b; margin: 0.25rem 0 0;">Lengkapi dokumen legalitas untuk mendapatkan status terverifikasi.</p>
+                <h2 style="font-size: 1.125rem; font-weight: 700; color: #0f172a; margin:0;">Status Akun & Verifikasi</h2>
+                <p style="font-size: 0.8rem; color: #64748b; margin: 0.25rem 0 0;">Informasi status akun dan kerjasama dengan sekolah.</p>
             </div>
             @php
                 $vs = $company->verification_status ?? 'not_submitted';
@@ -247,28 +243,17 @@
             <span class="badge-status {{ $statusClass }}">{{ $statusLabel }}</span>
         </div>
 
-        {{-- Berkas yang sudah diupload --}}
-        @if($company->business_license_path || $company->operating_license_path || $company->npwp_path)
+        {{-- Status Dokumen Kerjasama / MoU --}}
+        @if($company->mou_path)
             <div style="border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 1rem; margin-bottom: 1.5rem;">
-                <p style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; margin: 0 0 0.75rem;">Dokumen yang Sudah Diunggah</p>
-                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                    @if($company->npwp_path)
-                        <a href="{{ asset('storage/' . $company->npwp_path) }}" target="_blank" class="doc-preview-link">
-                            <svg style="width:0.875rem;height:0.875rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                            File NPWP / Sertifikat
-                        </a>
-                    @endif
-                    @if($company->business_license_path)
-                        <a href="{{ asset('storage/' . $company->business_license_path) }}" target="_blank" class="doc-preview-link">
-                            <svg style="width:0.875rem;height:0.875rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                            Business License
-                        </a>
-                    @endif
-                    @if($company->operating_license_path)
-                        <a href="{{ asset('storage/' . $company->operating_license_path) }}" target="_blank" class="doc-preview-link">
-                            <svg style="width:0.875rem;height:0.875rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                            Operating License
-                        </a>
+                <p style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; margin: 0 0 0.75rem;">Dokumen Kerjasama (MoU)</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+                    <a href="#" style="opacity: 0.7; cursor: default;" class="doc-preview-link" title="Silakan hubungi admin jika ingin mengunduh ulang">
+                        <svg style="width:0.875rem;height:0.875rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        Surat MoU Telah Terunggah
+                    </a>
+                    @if($company->mou_number)
+                        <span style="font-size: 0.8rem; color: #475569;">No: {{ $company->mou_number }}</span>
                     @endif
                 </div>
             </div>
@@ -283,7 +268,7 @@
             @if($company->verification_status === 'pending')
                 <div style="border-radius: 12px; background: #fef3c7; border: 1px solid #fcd34d; padding: 1rem; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
                     <svg style="width:1.5rem;height:1.5rem;color:#b45309;flex-shrink:0;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <p style="font-size:0.875rem; font-weight:600; color:#92400e; margin:0;">Permintaan verifikasi sedang ditinjau admin. Anda tetap bisa memperbarui dokumen di bawah ini.</p>
+                    <p style="font-size:0.875rem; font-weight:600; color:#92400e; margin:0;">Akun Anda sedang ditinjau oleh Admin. Silakan tunggu informasi lebih lanjut.</p>
                 </div>
             @endif
 
@@ -293,86 +278,9 @@
                     @if($company->rejection_reason)
                         <p style="font-size:0.8rem; color:#b91c1c; margin:0;">Alasan: {{ $company->rejection_reason }}</p>
                     @endif
-                    <p style="font-size:0.8rem; color:#b91c1c; margin:0.25rem 0 0;">Silakan perbaiki dokumen Anda dan ajukan ulang di bawah.</p>
+                    <p style="font-size:0.8rem; color:#b91c1c; margin:0.25rem 0 0;">Silakan hubungi BKK Sekolah untuk informasi perbaikan dokumen.</p>
                 </div>
             @endif
-
-            {{-- FORM UPLOAD DOKUMEN VERIFIKASI - SELALU TAMPIL KECUALI SUDAH VERIFIED --}}
-            <form method="POST" action="{{ route('company.profile.verify') }}" enctype="multipart/form-data">
-                @csrf
-                <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-
-                    <div>
-                        <label class="form-label">Nomor NPWP</label>
-                        <input type="text" name="tax_number" value="{{ old('tax_number', $company->tax_number ?? '') }}" class="form-input" placeholder="Contoh: 12.345.678.9-012.345" />
-                        @error('tax_number')<p style="margin-top:0.375rem; font-size:0.75rem; color:#dc2626;">{{ $message }}</p>@enderror
-                    </div>
-
-                    <div>
-                        <label class="form-label">
-                            Dokumen NPWP / Sertifikat Perusahaan
-                            <span style="color:#94a3b8; font-weight:400; text-transform:none; letter-spacing:0;">(PDF, JPG, PNG — maks 5MB)</span>
-                        </label>
-                        <div class="file-upload-area" onclick="this.querySelector('input').click()">
-                            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.5rem; pointer-events:none;">
-                                <svg style="width:2rem;height:2rem;color:#94a3b8;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
-                                <p id="npwp-label" style="font-size:0.8rem; font-weight:600; color:#64748b; margin:0;">Klik untuk pilih file NPWP</p>
-                                <p style="font-size:0.7rem; color:#94a3b8; margin:0;">atau drag & drop</p>
-                            </div>
-                            <input type="file" name="npwp_file" accept="application/pdf,image/*" style="display:none;" onchange="document.getElementById('npwp-label').textContent = this.files[0] ? this.files[0].name : 'Klik untuk pilih file NPWP'" />
-                        </div>
-                        @if($company->npwp_path)
-                            <p style="margin-top:0.5rem; font-size:0.75rem; color:#64748b;">File sebelumnya: <a href="{{ asset('storage/' . $company->npwp_path) }}" target="_blank" style="color:#2563eb;">lihat file</a></p>
-                        @endif
-                        @error('npwp_file')<p style="margin-top:0.375rem; font-size:0.75rem; color:#dc2626;">{{ $message }}</p>@enderror
-                    </div>
-
-                    <div>
-                        <label class="form-label">
-                            Business License / Surat Izin Usaha (SIUP / TDP / Akta)
-                            <span style="color:#94a3b8; font-weight:400; text-transform:none; letter-spacing:0;">(PDF, JPG, PNG — maks 5MB)</span>
-                        </label>
-                        <div class="file-upload-area" onclick="this.querySelector('input').click()">
-                            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.5rem; pointer-events:none;">
-                                <svg style="width:2rem;height:2rem;color:#94a3b8;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
-                                <p id="biz-label" style="font-size:0.8rem; font-weight:600; color:#64748b; margin:0;">Klik untuk pilih Business License</p>
-                                <p style="font-size:0.7rem; color:#94a3b8; margin:0;">atau drag & drop</p>
-                            </div>
-                            <input type="file" name="business_license" accept="application/pdf,image/*" style="display:none;" onchange="document.getElementById('biz-label').textContent = this.files[0] ? this.files[0].name : 'Klik untuk pilih Business License'" />
-                        </div>
-                        @if($company->business_license_path)
-                            <p style="margin-top:0.5rem; font-size:0.75rem; color:#64748b;">File sebelumnya: <a href="{{ asset('storage/' . $company->business_license_path) }}" target="_blank" style="color:#2563eb;">lihat file</a></p>
-                        @endif
-                        @error('business_license')<p style="margin-top:0.375rem; font-size:0.75rem; color:#dc2626;">{{ $message }}</p>@enderror
-                    </div>
-
-                    <div>
-                        <label class="form-label">
-                            Operating License / Izin Operasional
-                            <span style="color:#94a3b8; font-weight:400; text-transform:none; letter-spacing:0;">(Opsional)</span>
-                        </label>
-                        <div class="file-upload-area" onclick="this.querySelector('input').click()">
-                            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.5rem; pointer-events:none;">
-                                <svg style="width:2rem;height:2rem;color:#94a3b8;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
-                                <p id="ops-label" style="font-size:0.8rem; font-weight:600; color:#64748b; margin:0;">Klik untuk pilih Operating License</p>
-                                <p style="font-size:0.7rem; color:#94a3b8; margin:0;">atau drag & drop</p>
-                            </div>
-                            <input type="file" name="operating_license" accept="application/pdf,image/*" style="display:none;" onchange="document.getElementById('ops-label').textContent = this.files[0] ? this.files[0].name : 'Klik untuk pilih Operating License'" />
-                        </div>
-                        @if($company->operating_license_path)
-                            <p style="margin-top:0.5rem; font-size:0.75rem; color:#64748b;">File sebelumnya: <a href="{{ asset('storage/' . $company->operating_license_path) }}" target="_blank" style="color:#2563eb;">lihat file</a></p>
-                        @endif
-                        @error('operating_license')<p style="margin-top:0.375rem; font-size:0.75rem; color:#dc2626;">{{ $message }}</p>@enderror
-                    </div>
-
-                    <div style="display:flex; justify-content:flex-end; padding-top:0.5rem; border-top:1px solid #f1f5f9;">
-                        <button type="submit" class="btn-success">
-                            <svg style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                            {{ $company->verification_status === 'pending' ? 'Perbarui Dokumen Verifikasi' : 'Ajukan Verifikasi' }}
-                        </button>
-                    </div>
-                </div>
-            </form>
         @endif
     </div>
 </div>

@@ -1,12 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-ui.page-header title="Daftar Perusahaan" subtitle="Kelola dan verifikasi akun perusahaan.">
+        <x-ui.page-header title="Daftar Perusahaan" subtitle="Kelola dan verifikasi akun perusahaan mitra BKK.">
             <x-slot:actions>
                 @if($pendingCount > 0)
                 <span class="ui-badge ui-badge-yellow">
                     {{ $pendingCount }} menunggu verifikasi
                 </span>
                 @endif
+                <a href="{{ route('admin.companies.create') }}"
+                   class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700 transition shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Tambah Perusahaan
+                </a>
             </x-slot:actions>
         </x-ui.page-header>
     </x-slot>
@@ -53,9 +60,17 @@
                             <p class="text-xs text-slate-400 mt-0.5">Daftar {{ $company->created_at->format('d M Y') }}</p>
                         </td>
                         <td>{{ $company->industry ?? '-' }}</td>
-                        <td>{{ optional($company->user)->email ?? '-' }}</td>
+                        <td>
+                            {{ optional($company->user)->email ?? $company->email ?? '-' }}
+                            @if(!$company->user_id)
+                            <span class="ml-1 text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-medium">No Akun</span>
+                            @endif
+                        </td>
                         <td>
                             <x-ui.status-badge :status="$company->verification_status" />
+                            @if($company->mou_path)
+                            <span class="block mt-1 text-xs text-emerald-600 font-medium">📄 Ada MoU</span>
+                            @endif
                             @if($company->verification_status === 'rejected' && $company->rejection_reason)
                             <p class="text-xs text-red-500 mt-1 max-w-[180px]">{{ Str::limit($company->rejection_reason, 50) }}</p>
                             @endif

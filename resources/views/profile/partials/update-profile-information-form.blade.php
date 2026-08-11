@@ -46,9 +46,9 @@
                     </svg>
                     Pilih Foto Baru
                 </label>
-                <input id="avatar" name="avatar" type="file" class="sr-only" accept="image/webp"
+                <input id="avatar" name="avatar" type="file" class="sr-only" accept="image/jpeg,image/png,image/webp,image/gif"
                        onchange="previewAvatar(event)">
-                <p class="text-xs text-slate-400 mt-2">Format file harus WebP. Maksimal 2MB.</p>
+                <p class="text-xs text-slate-400 mt-2">Format file JPG, PNG, WebP, GIF. Maksimal 3MB.</p>
             </div>
             <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
         </div>
@@ -57,14 +57,14 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
                 <x-input-label for="name" :value="__('Nama Lengkap')" class="text-slate-700 font-semibold mb-1" />
-                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
                               :value="old('name', $user->name)" required autofocus autocomplete="name" />
                 <x-input-error class="mt-1.5" :messages="$errors->get('name')" />
             </div>
 
             <div>
                 <x-input-label for="email" :value="__('Alamat Email')" class="text-slate-700 font-semibold mb-1" />
-                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
                               :value="old('email', $user->email)" required autocomplete="username" />
                 <x-input-error class="mt-1.5" :messages="$errors->get('email')" />
 
@@ -87,7 +87,7 @@
         {{-- Nomor HP --}}
         <div>
             <x-input-label for="phone" value="Nomor Handphone" class="text-slate-700 font-semibold mb-1" />
-            <x-text-input id="phone" name="phone" type="tel" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+            <x-text-input id="phone" name="phone" type="tel" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
                           :value="old('phone', $user->phone)" autocomplete="tel" placeholder="Contoh: 08123456789" />
             <x-input-error class="mt-1.5" :messages="$errors->get('phone')" />
         </div>
@@ -97,7 +97,7 @@
         <div>
             <x-input-label for="bio" value="Bio / Ringkasan Singkat" class="text-slate-700 font-semibold mb-1" />
             <textarea id="bio" name="bio" rows="3"
-                      class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm"
+                      class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm"
                       placeholder="Ceritakan singkat mengenai latar belakang, minat, dan tujuan karir Anda..."
                       maxlength="500">{{ old('bio', $user->bio ?? '') }}</textarea>
             <div class="flex justify-between mt-1.5">
@@ -147,7 +147,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                     <x-input-label for="major" value="Jurusan / Program Keahlian" class="text-slate-700 font-semibold mb-1" />
-                    <x-text-input id="major" name="major" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                    <x-text-input id="major" name="major" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
                                   :value="old('major', $user->student->major ?? '')"
                                   placeholder="Contoh: Teknik Komputer & Jaringan" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('major')" />
@@ -156,7 +156,7 @@
                 <div>
                     <x-input-label for="graduation_year" value="Tahun Lulus" class="text-slate-700 font-semibold mb-1" />
                     <select id="graduation_year" name="graduation_year"
-                            class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm">
+                            class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm">
                         <option value="">Pilih Tahun Lulus</option>
                         @for($year = date('Y') + 2; $year >= date('Y') - 15; $year--)
                             <option value="{{ $year }}"
@@ -170,7 +170,7 @@
 
                 <div>
                     <x-input-label for="preferred_position" value="Posisi yang Diinginkan" class="text-slate-700 font-semibold mb-1" />
-                    <x-text-input id="preferred_position" name="preferred_position" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                    <x-text-input id="preferred_position" name="preferred_position" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
                                   :value="old('preferred_position', $user->student->preferred_position ?? '')"
                                   placeholder="Contoh: Frontend Developer" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('preferred_position')" />
@@ -178,7 +178,7 @@
 
                 <div>
                     <x-input-label for="gender" value="Jenis Kelamin" class="text-slate-700 font-semibold mb-1" />
-                    <select id="gender" name="gender" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm">
+                    <select id="gender" name="gender" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm">
                         <option value="">Pilih</option>
                         <option value="Laki-laki" {{ old('gender', $user->student->gender ?? '') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
                         <option value="Perempuan" {{ old('gender', $user->student->gender ?? '') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
@@ -190,7 +190,7 @@
             <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                     <x-input-label for="birth_place" value="Tempat Lahir" class="text-slate-700 font-semibold mb-1" />
-                    <x-text-input id="birth_place" name="birth_place" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                    <x-text-input id="birth_place" name="birth_place" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
                                   :value="old('birth_place', $user->student->birth_place ?? '')"
                                   placeholder="Contoh: Cikampek" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('birth_place')" />
@@ -198,7 +198,7 @@
 
                 <div>
                     <x-input-label for="birth_date" value="Tanggal Lahir" class="text-slate-700 font-semibold mb-1" />
-                    <x-text-input id="birth_date" name="birth_date" type="date" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                    <x-text-input id="birth_date" name="birth_date" type="date" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
                                   :value="old('birth_date', $user->student->birth_date ?? '')" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('birth_date')" />
                 </div>
@@ -207,7 +207,7 @@
             <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                     <x-input-label for="linkedin_url" value="LinkedIn" class="text-slate-700 font-semibold mb-1" />
-                    <x-text-input id="linkedin_url" name="linkedin_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                    <x-text-input id="linkedin_url" name="linkedin_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
                                   :value="old('linkedin_url', $user->student->linkedin_url ?? '')"
                                   placeholder="https://linkedin.com/in/namamu" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('linkedin_url')" />
@@ -215,7 +215,7 @@
 
                 <div>
                     <x-input-label for="portfolio_url" value="Portofolio / Website" class="text-slate-700 font-semibold mb-1" />
-                    <x-text-input id="portfolio_url" name="portfolio_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                    <x-text-input id="portfolio_url" name="portfolio_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
                                   :value="old('portfolio_url', $user->student->portfolio_url ?? '')"
                                   placeholder="https://namaportofolio.com" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('portfolio_url')" />
@@ -228,7 +228,7 @@
                     Isi dari tingkat paling rendah sampai saat ini, misalnya SD, SMP, dan SMK. Ini akan muncul di CV Anda.
                 </div>
                 <textarea id="education_history" name="education_history" rows="4"
-                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm"
+                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm"
                           placeholder="Contoh:&#10;SD Negeri 1 Cikampek (2016-2022)&#10;SMP Negeri 2 Cikampek (2022-2025)&#10;SMK MUTU Cikampek (2025-sekarang)&#10;Jurusan: Akuntansi">{{ old('education_history', $user->student->education_history ?? '') }}</textarea>
                 <x-input-error class="mt-1.5" :messages="$errors->get('education_history')" />
             </div>
@@ -236,7 +236,7 @@
             <div class="mt-5">
                 <x-input-label for="experience_organization" value="Pengalaman / Organisasi" class="text-slate-700 font-semibold mb-1" />
                 <textarea id="experience_organization" name="experience_organization" rows="4"
-                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm"
+                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm"
                           placeholder="Contoh: Magang di toko online&#10;Ketua OSIS&#10;Anggota Pramuka">{{ old('experience_organization', $user->student->experience_organization ?? '') }}</textarea>
                 <x-input-error class="mt-1.5" :messages="$errors->get('experience_organization')" />
             </div>
@@ -244,7 +244,7 @@
             <div class="mt-5">
                 <x-input-label for="address" value="Alamat Tinggal" class="text-slate-700 font-semibold mb-1" />
                 <textarea id="address" name="address" rows="2"
-                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm"
+                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm"
                           placeholder="Masukkan alamat domisili lengkap Anda...">{{ old('address', $user->student->address ?? '') }}</textarea>
                 <x-input-error class="mt-1.5" :messages="$errors->get('address')" />
             </div>
@@ -270,19 +270,83 @@
     </form>
 </section>
 
+{{-- Cropper Modal --}}
+<div id="cropperModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm">
+    <div class="bg-white p-6 rounded-3xl shadow-2xl w-full max-w-lg mx-4">
+        <h3 class="text-xl font-bold text-slate-800 mb-4">Sesuaikan Foto Profil</h3>
+        <div class="max-h-[60vh] overflow-hidden rounded-xl bg-slate-50 flex items-center justify-center border border-slate-200">
+            <img id="imageToCrop" src="" class="max-w-full hidden">
+        </div>
+        <div class="mt-6 flex justify-end gap-3">
+            <button type="button" onclick="closeCropper()" class="px-5 py-2.5 text-slate-600 font-medium hover:text-slate-800 hover:bg-slate-100 rounded-xl transition">Batal</button>
+            <button type="button" onclick="applyCrop()" class="px-5 py-2.5 bg-indigo-600 text-white font-medium rounded-xl shadow-sm hover:bg-indigo-700 hover:shadow transition">Simpan Potongan</button>
+        </div>
+    </div>
+</div>
+
 <script>
+let cropper = null;
+
 function previewAvatar(event) {
     const file = event.target.files[0];
     if (!file) return;
     const reader = new FileReader();
     reader.onload = function(e) {
-        const img = document.getElementById('avatar-preview');
-        const placeholder = document.getElementById('avatar-preview-placeholder');
+        const modal = document.getElementById('cropperModal');
+        const img = document.getElementById('imageToCrop');
         img.src = e.target.result;
         img.classList.remove('hidden');
-        if (placeholder) placeholder.classList.add('hidden');
+        modal.classList.remove('hidden');
+        
+        if (cropper) {
+            cropper.destroy();
+        }
+        cropper = new Cropper(img, {
+            aspectRatio: 1,
+            viewMode: 1,
+            dragMode: 'move',
+            autoCropArea: 1,
+            cropBoxMovable: false,
+            cropBoxResizable: false,
+            guides: false,
+            center: false,
+            highlight: false,
+        });
     };
     reader.readAsDataURL(file);
+    // Reset file input so picking the same file again triggers change event
+    event.target.value = '';
+}
+
+function closeCropper() {
+    document.getElementById('cropperModal').classList.add('hidden');
+    if (cropper) {
+        cropper.destroy();
+        cropper = null;
+    }
+}
+
+function applyCrop() {
+    if (!cropper) return;
+    cropper.getCroppedCanvas({ width: 400, height: 400 }).toBlob((blob) => {
+        const file = new File([blob], 'avatar_cropped.webp', { type: 'image/webp' });
+        
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        document.getElementById('avatar').files = dt.files;
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imgPreview = document.getElementById('avatar-preview');
+            const placeholder = document.getElementById('avatar-preview-placeholder');
+            imgPreview.src = e.target.result;
+            imgPreview.classList.remove('hidden');
+            if (placeholder) placeholder.classList.add('hidden');
+        };
+        reader.readAsDataURL(file);
+        
+        closeCropper();
+    }, 'image/webp');
 }
 
 function skillsManager(initial) {

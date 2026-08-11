@@ -114,12 +114,12 @@
             @if($jobs->count() > 0)
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                 @foreach($jobs as $job)
-                <div class="bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 overflow-hidden group">
+                <div class="bg-white rounded-3xl shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 border border-gray-100 hover:border-indigo-200 overflow-hidden group hover:-translate-y-1">
                     <div class="p-6">
                         <div class="flex items-start gap-4 mb-4">
                             <!-- Company Logo -->
                             <div class="flex-shrink-0">
-                                <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:scale-105 transition-transform duration-300">
                                     {{ substr($job->company_name ?? 'C', 0, 1) }}
                                 </div>
                             </div>
@@ -127,7 +127,7 @@
                             <!-- Job Info -->
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-start justify-between gap-3">
-                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-1 leading-tight">
+                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors mb-1 leading-tight">
                                     <a href="{{ route('jobs.show', $job->id) }}">{{ $job->title }}</a>
                                     </h3>
                                 </div>

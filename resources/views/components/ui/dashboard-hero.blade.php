@@ -1,103 +1,40 @@
-@props([
-    'title',
-    'subtitle' => null,
-])
+@props(['title', 'subtitle' => null])
 
-<style>
-    .premium-hero {
-        background: linear-gradient(135deg, #1e3a8a, #2563eb, #0ea5e9);
-        border-radius: 24px;
-        box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15);
-        position: relative;
-        overflow: hidden;
-        color: white;
-    }
-    .premium-hero-bg-1 {
-        position: absolute; top: -2rem; right: 20%; width: 16rem; height: 16rem;
-        background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(40px); pointer-events: none;
-    }
-    .premium-hero-bg-2 {
-        position: absolute; bottom: -2rem; left: -5%; width: 12rem; height: 12rem;
-        background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(30px); pointer-events: none;
-    }
-    .glass-badge {
-        background: rgba(255,255,255,0.1);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255,255,255,0.2);
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-        border-radius: 16px;
-        padding: 0.5rem 1rem;
-        transition: background 0.2s ease;
-    }
-    .glass-badge:hover {
-        background: rgba(255,255,255,0.15);
-    }
-    .glass-icon-box {
-        background: rgba(255,255,255,0.15);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255,255,255,0.3);
-        border-radius: 16px;
-        width: 3rem; height: 3rem;
-        display: flex; align-items: center; justify-content: center;
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-        transition: transform 0.2s ease;
-    }
-    .glass-icon-box:hover {
-        transform: scale(1.05);
-    }
-</style>
+<section class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-800 via-primary-700 to-info-600 text-white shadow-xl shadow-primary-950/20">
+    <div class="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-24 -left-12 h-56 w-56 rounded-full bg-cyan-300/20 blur-3xl"></div>
 
-<div class="premium-hero">
-    <div class="premium-hero-bg-1"></div>
-    <div class="premium-hero-bg-2"></div>
-    
-    <div class="relative max-w-7xl mx-auto px-5 sm:px-8 py-6" style="z-index: 10;">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-5">
+    <div class="relative mx-auto max-w-7xl px-5 py-6 sm:px-8 sm:py-8">
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div class="flex items-center gap-4">
                 @isset($icon)
-                    <div class="hidden sm:flex glass-icon-box text-white">
-                        <div style="transform: scale(0.8)">
-                            {{ $icon }}
-                        </div>
+                    <div class="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/25 bg-white/10 text-white shadow-lg shadow-primary-950/10 backdrop-blur sm:flex">
+                        <div class="scale-90">{{ $icon }}</div>
                     </div>
                 @endisset
                 <div>
-                    <h1 class="font-extrabold text-white tracking-tight" style="font-size: 1.75rem; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">
-                        {{ $title }}
-                    </h1>
+                    <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-blue-100">BKK SMK MUTU</p>
+                    <h1 class="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">{{ $title }}</h1>
                     @if($subtitle)
-                        <p class="mt-1.5 font-medium" style="font-size: 0.95rem; color: #e0f2fe; text-shadow: 0 1px 2px rgba(0,0,0,0.1); max-width: 32rem;">
-                            {{ $subtitle }}
-                        </p>
+                        <p class="mt-2 max-w-2xl text-sm font-medium leading-6 text-blue-100 sm:text-base">{{ $subtitle }}</p>
                     @endif
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                {{-- Date badge --}}
-                <div class="hidden lg:flex flex-col items-end glass-badge text-right">
-                    <p style="font-size: 0.65rem; letter-spacing: 0.15em; font-weight: 600; color: #bae6fd; text-transform: uppercase; margin-bottom: 0.15rem;">
-                        Hari Ini
-                    </p>
-                    <p style="font-size: 0.95rem; font-weight: 700; color: white;">
-                        {{ now()->translatedFormat('d M Y') }}
-                    </p>
+            <div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+                <div class="hidden rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-right shadow-sm backdrop-blur lg:block">
+                    <p class="mb-0.5 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-blue-100">Hari Ini</p>
+                    <p class="text-sm font-bold text-white">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
 
-                {{-- Extra actions slot --}}
                 @isset($actions)
-                    <div class="flex flex-wrap gap-2">
-                        {{ $actions }}
-                    </div>
+                    <div class="flex flex-wrap gap-2">{{ $actions }}</div>
                 @endisset
             </div>
         </div>
 
-        {{-- Extra content below --}}
         @isset($extra)
-            <div class="mt-5 pt-4" style="border-top: 1px solid rgba(255,255,255,0.1);">
-                {{ $extra }}
-            </div>
+            <div class="mt-6 border-t border-white/15 pt-5">{{ $extra }}</div>
         @endisset
     </div>
-</div>
+</section>

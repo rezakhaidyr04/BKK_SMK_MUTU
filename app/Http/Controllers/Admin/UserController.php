@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -66,23 +67,33 @@ class UserController extends Controller
             "email" => ["required", "email", "max:255", "unique:users,email"],
             "role" => [
                 "required",
-                Rule::in(["admin", "student", "alumni", "teacher"]),
+                Rule::in(["admin", "student", "alumni", "teacher", "company"]),
             ],
             "password" => ["required", "string", "min:8", "confirmed"],
             "password_confirmation" => ["required"],
             "is_active" => ["nullable", "boolean"],
         ]);
 
-        User::create([
+        $user = User::create([
             "name" => $validated["name"],
             "email" => $validated["email"],
             "role" => $validated["role"],
             "password" => bcrypt($validated["password"]),
             "is_active" => $validated["is_active"] ?? true,
-            "email_verified_at" => $validated["role"] === "admin"
+            "email_verified_at" => in_array($validated["role"], ["admin", "company"])
                 ? now()
                 : null,
         ]);
+
+        // Jika role company, buat record Company otomatis
+        if ($validated["role"] === "company") {
+            Company::create([
+                "user_id"             => $user->id,
+                "name"                => $validated["name"],
+                "is_verified"         => false,
+                "verification_status" => "not_submitted",
+            ]);
+        }
 
         return redirect()
             ->route("admin.users.index")
@@ -101,7 +112,7 @@ class UserController extends Controller
             ],
             "role" => [
                 "required",
-                Rule::in(["admin", "student", "alumni", "teacher"]),
+                Rule::in(["admin", "student", "alumni", "teacher", "company"]),
             ],
             "is_active" => ["nullable", "boolean"],
             "password" => ["nullable", "string", "min:8"],

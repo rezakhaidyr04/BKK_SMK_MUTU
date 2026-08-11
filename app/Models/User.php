@@ -22,6 +22,8 @@ class User extends Authenticatable
         "bio",
         "role",
         "is_active",
+        "must_change_password",
+        "password_changed_at",
     ];
 
     protected $hidden = ["password", "remember_token"];
@@ -30,6 +32,8 @@ class User extends Authenticatable
         "email_verified_at" => "datetime",
         "password" => "hashed",
         "is_active" => "boolean",
+        "must_change_password" => "boolean",
+        "password_changed_at" => "datetime",
     ];
 
     public function student()

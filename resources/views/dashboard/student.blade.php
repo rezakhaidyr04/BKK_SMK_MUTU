@@ -4,7 +4,7 @@
         <x-ui.dashboard-hero
             title="Selamat datang kembali, {{ Auth::user()->name }}!"
             subtitle="Mari temukan pekerjaan impian Anda hari ini"
-            gradient="from-blue-600 via-blue-700 to-indigo-700"
+            gradient="from-slate-900 via-indigo-900 to-slate-900"
         >
             <x-slot:actions>
                 {{-- Profile Completion Card --}}
@@ -26,16 +26,16 @@
         </x-ui.dashboard-hero>
 
         <div class="page-container pt-6">
-            <div class="rounded-2xl border border-blue-100 bg-blue-50 px-5 py-4 shadow-sm">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div class="rounded-2xl border border-indigo-100 bg-gradient-to-r from-indigo-50/80 to-white px-6 py-5 shadow-sm backdrop-blur-sm">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <p class="text-sm font-semibold text-blue-800">Fokus utama siswa dan alumni</p>
-                        <p class="text-sm text-blue-700 mt-1">Cari lowongan, simpan yang cocok, lamar, lalu pantau status sampai selesai.</p>
+                        <p class="text-sm font-semibold text-indigo-900">Fokus utama siswa dan alumni</p>
+                        <p class="text-sm text-indigo-700 mt-1">Cari lowongan, simpan yang cocok, lamar, lalu pantau status lamaran.</p>
                     </div>
-                    <div class="flex flex-wrap gap-2 text-xs font-semibold text-blue-700">
-                        <span class="px-3 py-1 rounded-full bg-white border border-blue-100">Cari lowongan</span>
-                        <span class="px-3 py-1 rounded-full bg-white border border-blue-100">Kelola CV</span>
-                        <span class="px-3 py-1 rounded-full bg-white border border-blue-100">Pantau lamaran</span>
+                    <div class="flex flex-wrap gap-2 text-xs font-medium text-indigo-800">
+                        <span class="px-4 py-1.5 rounded-full bg-white border border-indigo-100 shadow-sm transition hover:shadow hover:-translate-y-0.5">Cari lowongan</span>
+                        <span class="px-4 py-1.5 rounded-full bg-white border border-indigo-100 shadow-sm transition hover:shadow hover:-translate-y-0.5">Kelola CV</span>
+                        <span class="px-4 py-1.5 rounded-full bg-white border border-indigo-100 shadow-sm transition hover:shadow hover:-translate-y-0.5">Pantau lamaran</span>
                     </div>
                 </div>
             </div>
@@ -43,43 +43,43 @@
 
         <div class="page-container page-section">
             {{-- Quick Actions --}}
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6 mb-8">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Aksi Cepat</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <a href="{{ route('jobs.index') }}" class="flex flex-col items-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors group">
-                        <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            <div class="bg-white dark:bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 p-6 mb-8">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-5">Aksi Cepat</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+                    <a href="{{ route('jobs.index') }}" class="group flex flex-col items-center p-5 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-100 dark:border-gray-700 rounded-2xl hover:shadow-lg hover:shadow-indigo-500/10 hover:border-indigo-200 transition-all duration-300 hover:-translate-y-1">
+                        <div class="w-14 h-14 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 shadow-inner">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                             </svg>
                         </div>
-                        <span class="text-sm font-semibold text-gray-900 dark:text-white text-center">Cari Lowongan</span>
+                        <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Cari Lowongan</span>
                     </a>
                     
-                    <a href="{{ route('cv.builder') }}" class="flex flex-col items-center p-4 bg-green-50 dark:bg-green-900/20 rounded-xl hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group">
-                        <div class="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('cv.builder') }}" class="group flex flex-col items-center p-5 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-100 dark:border-gray-700 rounded-2xl hover:shadow-lg hover:shadow-emerald-500/10 hover:border-emerald-200 transition-all duration-300 hover:-translate-y-1">
+                        <div class="w-14 h-14 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-inner">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                         </div>
                         <span class="text-sm font-semibold text-gray-900 dark:text-white text-center">Buat CV</span>
                     </a>
                     
-                    <a href="{{ route('bookmarks.index') }}" class="flex flex-col items-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-colors group">
-                        <div class="w-12 h-12 bg-yellow-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                    <a href="{{ route('bookmarks.index') }}" class="group flex flex-col items-center p-5 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-100 dark:border-gray-700 rounded-2xl hover:shadow-lg hover:shadow-amber-500/10 hover:border-amber-200 transition-all duration-300 hover:-translate-y-1">
+                        <div class="w-14 h-14 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 shadow-inner">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                             </svg>
                         </div>
-                        <span class="text-sm font-semibold text-gray-900 dark:text-white text-center">Tersimpan</span>
+                        <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">Tersimpan</span>
                     </a>
                     
-                    <a href="{{ route('applications.index') }}" class="flex flex-col items-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors group">
-                        <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    <a href="{{ route('applications.index') }}" class="group flex flex-col items-center p-5 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-100 dark:border-gray-700 rounded-2xl hover:shadow-lg hover:shadow-purple-500/10 hover:border-purple-200 transition-all duration-300 hover:-translate-y-1">
+                        <div class="w-14 h-14 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300 shadow-inner">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                         </div>
-                        <span class="text-sm font-semibold text-gray-900 dark:text-white text-center">Lamaran Saya</span>
+                        <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">Lamaran Saya</span>
                     </a>
                 </div>
             </div>

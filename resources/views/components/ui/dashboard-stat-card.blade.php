@@ -48,33 +48,32 @@ $linkColor = match($color) {
 @endphp
 
 <div {{ $attributes->merge([
-    'class' => "bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-700 border-l-4 {$borderColor}
-                hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+    'class' => "dashboard-surface relative overflow-hidden border-l-4 {$borderColor} p-4 sm:p-5"
 ]) }}>
-    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-15" aria-hidden="true"></div>
-    <div class="flex items-center justify-between">
-        <div>
+    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-current to-transparent opacity-20" aria-hidden="true"></div>
+    <div class="flex items-start justify-between gap-3">
+        <div class="min-w-0">
             @php
-                $labelClass = $size === 'sm' ? 'text-xs font-medium text-gray-600 dark:text-gray-400 mb-1' : 'text-sm font-medium text-gray-600 dark:text-gray-400 mb-1';
-                $valueClass = $size === 'sm' ? 'text-3xl font-bold text-gray-900 dark:text-white' : 'text-4xl font-bold text-gray-900 dark:text-white';
+                $labelClass = $size === 'sm' ? 'mb-1 text-xs font-semibold text-slate-500 dark:text-neutral-400' : 'mb-1 text-sm font-semibold text-slate-500 dark:text-neutral-400';
+                $valueClass = $size === 'sm' ? 'text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl dark:text-white' : 'text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white';
             @endphp
             <p class="{{ $labelClass }}">{{ $label }}</p>
             <p class="{{ $valueClass }}">{{ $value }}</p>
         </div>
         @isset($icon)
-        <div class="w-16 h-16 {{ $iconBg }} rounded-2xl flex items-center justify-center" aria-hidden="true">
+        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl {{ $iconBg }} sm:h-14 sm:w-14" aria-hidden="true">
             <span class="{{ $iconColor }}">
                 {{ $icon }}
             </span>
         </div>
         @endisset
     </div>
-    <div class="mt-4">
+    <div class="mt-3 border-t border-slate-100 pt-3 text-xs dark:border-neutral-800 sm:mt-4">
         @isset($footer)
             {{ $footer }}
         @else
             @if($href && $hrefLabel)
-                <a href="{{ $href }}" class="text-sm {{ $linkColor }} font-semibold hover:underline">{{ $hrefLabel }}</a>
+                <a href="{{ $href }}" class="{{ $linkColor }} inline-flex items-center gap-1 font-bold hover:underline">{{ $hrefLabel }}</a>
             @elseif($footnote)
                 <div class="text-sm text-gray-500 dark:text-gray-400">{{ $footnote }}</div>
             @endif

@@ -1,17 +1,53 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
+        {{-- Header --}}
         <div class="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-2xl">
             <div class="absolute inset-0 bg-black opacity-10"></div>
             <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
             <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="flex items-center justify-between">
-                    <div>
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex-1">
                         <h1 class="text-3xl font-bold text-white mb-2">Detail Perusahaan</h1>
-                        <p class="text-purple-100">{{ $company->name }}</p>
+                        <p class="text-purple-100 text-lg font-semibold">{{ $company->name }}</p>
+                        <div class="flex items-center gap-3 mt-3 flex-wrap">
+                            @if($company->verification_status === 'verified')
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-full">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                Disetujui
+                            </span>
+                            @elseif($company->verification_status === 'rejected')
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-red-500 text-white text-xs font-bold rounded-full">
+                                ✕ Ditolak
+                            </span>
+                            @else
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-400 text-white text-xs font-bold rounded-full">
+                                ⏳ Menunggu
+                            </span>
+                            @endif
+
+                            @if($company->user_id)
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">
+                                👤 Ada Akun Login
+                            </span>
+                            @else
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 text-purple-100 text-xs font-semibold rounded-full">
+                                👤 Belum Ada Akun
+                            </span>
+                            @endif
+
+                            @if($company->mou_path)
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">
+                                📄 Ada MoU
+                            </span>
+                            @endif
+                        </div>
                     </div>
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-3 flex-shrink-0">
                         <a href="{{ route('admin.companies.edit', $company) }}"
                            class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-purple-700 text-sm font-semibold rounded-xl hover:bg-purple-50 transition shadow-lg">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                            </svg>
                             Edit
                         </a>
                         <a href="{{ route('admin.companies.index') }}"
@@ -24,32 +60,122 @@
         </div>
 
         <div class="page-container page-section">
+
+            {{-- ═══════════════════════════════════════════════════════
+                 ONE-TIME PASSWORD PANEL — Tampil SEKALI, lalu hilang
+                 Setelah reload, data ini tidak ada lagi
+            ═══════════════════════════════════════════════════════ --}}
+            @if(session('account_created') && session('temp_password'))
+            <div class="mb-6 bg-amber-50 border-2 border-amber-400 rounded-2xl overflow-hidden shadow-lg" id="tempPasswordPanel">
+                <div class="px-5 py-3 bg-amber-400 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                        </svg>
+                        <span class="font-bold text-white text-sm">⚠ PASSWORD SEMENTARA — CATAT SEKARANG! Tidak akan tampil lagi.</span>
+                    </div>
+                    <button onclick="document.getElementById('tempPasswordPanel').remove()"
+                            class="text-white hover:text-amber-100 transition text-lg font-bold">✕</button>
+                </div>
+                <div class="p-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-xs font-semibold text-amber-700 mb-1">Email Login</p>
+                            <div class="flex items-center gap-2 bg-white border border-amber-200 rounded-xl px-4 py-3">
+                                <code class="text-sm font-mono text-gray-800 flex-1 select-all" id="accountEmail">{{ session('account_email') }}</code>
+                                <button onclick="copyText('accountEmail', 'btnCopyEmail')" id="btnCopyEmail"
+                                        class="text-amber-600 hover:text-amber-800 text-xs font-semibold flex-shrink-0 transition">
+                                    Salin
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-xs font-semibold text-amber-700 mb-1">Password Sementara</p>
+                            <div class="flex items-center gap-2 bg-white border border-amber-200 rounded-xl px-4 py-3">
+                                <code class="text-sm font-mono text-gray-800 flex-1 select-all" id="tempPass">{{ session('temp_password') }}</code>
+                                <button onclick="copyText('tempPass', 'btnCopyPass')" id="btnCopyPass"
+                                        class="text-amber-600 hover:text-amber-800 text-xs font-semibold flex-shrink-0 transition">
+                                    Salin
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 flex items-start gap-2">
+                        <svg class="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <p class="text-xs text-amber-700">
+                            Password ini <strong>hanya tampil sekali</strong> dan tidak disimpan di server.
+                            Perusahaan wajib mengganti password saat pertama kali login.
+                            Salin dan berikan ke perusahaan secara aman (telepon/langsung).
+                        </p>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            {{-- Flash Messages --}}
+            @if(session('success'))
+            <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl flex items-center gap-3">
+                <svg class="w-5 h-5 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                {{ session('success') }}
+            </div>
+            @endif
+
+            @if(session('error'))
+            <div class="mb-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded-2xl flex items-center gap-3">
+                <svg class="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                {{ session('error') }}
+            </div>
+            @endif
+
+            @if($errors->any())
+            <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-2xl">
+                <ul class="text-sm text-red-700 space-y-1 list-disc pl-5">
+                    @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
+                </ul>
+            </div>
+            @endif
+
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Info Perusahaan -->
-                <div class="lg:col-span-1">
+                {{-- ── Sidebar (Profil & Aksi) ── --}}
+                <div class="lg:col-span-1 space-y-5">
+
+                    {{-- Identitas --}}
                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                         <div class="p-6 text-center border-b border-gray-100 bg-gradient-to-br from-indigo-50 to-purple-50">
-                            @if($company->logo)
-                            <img src="{{ asset('storage/' . $company->logo) }}" alt="{{ $company->name }}"
-                                 class="w-20 h-20 mx-auto rounded-2xl object-cover border-2 border-indigo-200 mb-3">
-                            @else
                             <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold mb-3">
                                 {{ substr($company->name, 0, 1) }}
                             </div>
-                            @endif
                             <h3 class="font-bold text-gray-900 text-lg">{{ $company->name }}</h3>
-                            <p class="text-sm text-gray-500 mt-1">{{ $company->industry ?? '-' }}</p>
-                            <div class="mt-2">
+                            <p class="text-sm text-gray-500 mt-1">{{ $company->industry ?? 'Industri belum diisi' }}</p>
+                            <div class="mt-3">
                                 <x-ui.status-badge :status="$company->verification_status ?? ($company->is_verified ? 'verified' : 'pending')" />
                             </div>
                         </div>
                         <div class="p-5 space-y-3 text-sm">
+                            @if(optional($company->user)->email ?? $company->email)
                             <div class="flex items-start gap-2">
                                 <svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                 </svg>
-                                <span class="text-gray-700">{{ optional($company->user)->email ?? '-' }}</span>
+                                <span class="text-gray-700">{{ optional($company->user)->email ?? $company->email }}</span>
                             </div>
+                            @endif
+
+                            @if($company->phone)
+                            <div class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                </svg>
+                                <span class="text-gray-700">{{ $company->phone }}</span>
+                            </div>
+                            @endif
+
                             @if($company->website)
                             <div class="flex items-start gap-2">
                                 <svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,6 +184,7 @@
                                 <a href="{{ $company->website }}" target="_blank" class="text-blue-600 hover:underline break-all">{{ $company->website }}</a>
                             </div>
                             @endif
+
                             @if($company->address)
                             <div class="flex items-start gap-2">
                                 <svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,39 +193,138 @@
                                 <span class="text-gray-700">{{ $company->address }}</span>
                             </div>
                             @endif
-                            @if($company->tax_number)
-                            <div class="flex items-start gap-2">
-                                <svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h10a2 2 0 012 2v14a2 2 0 01-2 2z"/>
-                                </svg>
-                                <span class="text-gray-700">{{ $company->tax_number }}</span>
-                            </div>
-                            @endif
-                            @if($company->business_license_path || $company->operating_license_path)
-                            <div class="mt-4 space-y-2 bg-white border border-gray-200 rounded-lg p-4">
-                                <p class="font-semibold text-gray-900">Berkas Verifikasi</p>
-                                @if($company->business_license_path)
-                                    <p class="text-sm"><a href="{{ asset('storage/' . $company->business_license_path) }}" target="_blank" class="text-indigo-600 hover:underline">Business License</a></p>
+
+
+
+                            <div class="pt-3 border-t border-gray-100 space-y-1.5 text-xs text-gray-500">
+                                <div class="flex justify-between">
+                                    <span>Terdaftar</span>
+                                    <span class="font-medium text-gray-900">{{ $company->created_at->format('d M Y') }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Total Lowongan</span>
+                                    <span class="font-bold text-indigo-600">{{ $company->jobs->count() }}</span>
+                                </div>
+                                @if($company->reviewed_at)
+                                <div class="flex justify-between">
+                                    <span>Direview</span>
+                                    <span class="font-medium text-gray-900">{{ $company->reviewed_at->format('d M Y') }}</span>
+                                </div>
+                                @if($company->reviewer)
+                                <div class="flex justify-between">
+                                    <span>Oleh</span>
+                                    <span class="font-medium text-gray-900">{{ $company->reviewer->name }}</span>
+                                </div>
                                 @endif
-                                @if($company->operating_license_path)
-                                    <p class="text-sm"><a href="{{ asset('storage/' . $company->operating_license_path) }}" target="_blank" class="text-indigo-600 hover:underline">Operating License</a></p>
                                 @endif
-                            </div>
-                            @endif
-                            <div class="pt-2 border-t border-gray-100 flex items-center justify-between">
-                                <span class="text-gray-500">Terdaftar</span>
-                                <span class="font-medium text-gray-900">{{ $company->created_at->format('d M Y') }}</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-gray-500">Total Lowongan</span>
-                                <span class="font-bold text-indigo-600">{{ $company->jobs->count() }}</span>
                             </div>
                         </div>
                     </div>
+
+                    {{-- Aksi Verifikasi --}}
+                    @if($company->verification_status !== 'verified')
+                    <div class="bg-white rounded-2xl shadow-lg p-5 space-y-3">
+                        <h4 class="font-bold text-gray-900 text-sm">Aksi Verifikasi</h4>
+
+                        <form method="POST" action="{{ route('admin.companies.approve', $company) }}">
+                            @csrf
+                            <button type="submit"
+                                    onclick="return confirm('Setujui verifikasi {{ addslashes($company->name) }}?')"
+                                    class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-600 text-white text-sm font-semibold rounded-xl hover:bg-emerald-700 transition">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Setujui Verifikasi
+                            </button>
+                        </form>
+                    </div>
+                    @endif
+
+                    @if($company->verification_status !== 'rejected')
+                    <div class="bg-white rounded-2xl shadow-lg p-5">
+                        <button type="button"
+                                onclick="openRejectModal({{ $company->id }}, '{{ addslashes($company->name) }}')"
+                                class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-xl hover:bg-red-700 transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Tolak Verifikasi
+                        </button>
+                    </div>
+                    @endif
+
+                    @if($company->verification_status === 'rejected' && $company->rejection_reason)
+                    <div class="bg-red-50 border border-red-200 rounded-2xl p-4">
+                        <p class="text-xs font-bold text-red-700 mb-1">Alasan Penolakan:</p>
+                        <p class="text-sm text-red-700">{{ $company->rejection_reason }}</p>
+                    </div>
+                    @endif
+
+                    {{-- ── Buat Akun Perusahaan (Phase 3) ── --}}
+                    @if($company->isApproved() && !$company->hasUserAccount())
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-indigo-200">
+                        <div class="px-5 py-3 bg-gradient-to-r from-indigo-600 to-purple-600">
+                            <div class="flex items-center gap-2">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                                </svg>
+                                <span class="font-bold text-white text-sm">Buat Akun Perusahaan</span>
+                            </div>
+                        </div>
+                        <form method="POST" action="{{ route('admin.companies.create-account', $company) }}"
+                              class="p-5 space-y-3">
+                            @csrf
+                            <div>
+                                <label for="create_email" class="block text-xs font-semibold text-gray-700 mb-1">Email Login</label>
+                                <input type="email" id="create_email" name="email"
+                                       value="{{ old('email', $company->email) }}"
+                                       placeholder="hrd@perusahaan.com"
+                                       required
+                                       class="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition {{ $errors->has('email') ? 'border-red-400' : '' }}">
+                                @error('email')
+                                <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                                @enderror
+                                <p class="text-xs text-gray-400 mt-1">Email ini akan menjadi username login perusahaan.</p>
+                            </div>
+                            <button type="submit"
+                                    onclick="return confirm('Buat akun login untuk {{ addslashes($company->name) }}?\n\nPassword sementara akan ditampilkan SEKALI. Pastikan Anda siap mencatatnya.')"
+                                    class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700 transition">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                </svg>
+                                Buat Akun & Tampilkan Password
+                            </button>
+                        </form>
+                    </div>
+                    @elseif($company->hasUserAccount())
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4">
+                        <div class="flex items-center gap-2 mb-1">
+                            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <p class="text-xs font-bold text-emerald-800">Akun Sudah Ada</p>
+                        </div>
+                        <p class="text-xs text-emerald-700">{{ optional($company->user)->email }}</p>
+                        <p class="text-xs text-emerald-600 mt-1">
+                            @if(optional($company->user)->must_change_password)
+                                Status: Belum ganti password
+                            @else
+                                Status: Password sudah diganti ✓
+                            @endif
+                        </p>
+                    </div>
+                    @elseif(!$company->isApproved())
+                    <div class="bg-gray-50 border border-gray-200 rounded-2xl p-4">
+                        <p class="text-xs text-gray-500 text-center">Akun dapat dibuat setelah perusahaan disetujui.</p>
+                    </div>
+                    @endif
+
                 </div>
 
-                <!-- Deskripsi + Lowongan -->
+                {{-- ── Konten Utama ── --}}
                 <div class="lg:col-span-2 space-y-6">
+
+                    {{-- Deskripsi --}}
                     @if($company->description)
                     <div class="bg-white rounded-2xl shadow-lg p-6">
                         <h3 class="font-bold text-gray-900 mb-3">Deskripsi Perusahaan</h3>
@@ -106,6 +332,123 @@
                     </div>
                     @endif
 
+                    {{-- Surat MoU --}}
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-teal-50 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="font-bold text-gray-900">Surat MoU / Perjanjian Kerjasama</h3>
+                            </div>
+                            @if($company->mou_path)
+                            <a href="{{ route('admin.companies.mou.download', $company) }}"
+                               class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white text-sm font-semibold rounded-xl hover:bg-emerald-700 transition">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                Download MoU
+                            </a>
+                            @endif
+                        </div>
+
+                        <div class="p-6">
+                            @if($company->mou_path)
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-4 text-center">
+                                    <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-2">
+                                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                    <p class="text-xs text-gray-500">Status File</p>
+                                    <p class="font-bold text-emerald-700 text-sm mt-1">File Tersedia</p>
+                                </div>
+
+                                @if($company->mou_number)
+                                <div class="bg-gray-50 border border-gray-100 rounded-xl p-4">
+                                    <p class="text-xs text-gray-500">Nomor MoU</p>
+                                    <p class="font-semibold text-gray-900 text-sm mt-1">{{ $company->mou_number }}</p>
+                                </div>
+                                @endif
+
+                                @if($company->mou_signed_at)
+                                <div class="bg-gray-50 border border-gray-100 rounded-xl p-4">
+                                    <p class="text-xs text-gray-500">Ditandatangani</p>
+                                    <p class="font-semibold text-gray-900 text-sm mt-1">{{ $company->mou_signed_at->format('d M Y') }}</p>
+                                </div>
+                                @endif
+
+                                @if($company->mou_expires_at)
+                                <div class="bg-gray-50 border border-gray-100 rounded-xl p-4">
+                                    <p class="text-xs text-gray-500">Berakhir</p>
+                                    <p class="font-semibold text-sm mt-1 {{ $company->mou_expires_at->isPast() ? 'text-red-600' : 'text-gray-900' }}">
+                                        {{ $company->mou_expires_at->format('d M Y') }}
+                                        @if($company->mou_expires_at->isPast())
+                                        <span class="text-xs text-red-500 block mt-0.5">⚠ Sudah kadaluarsa</span>
+                                        @elseif($company->mou_expires_at->diffInDays(now()) < 30)
+                                        <span class="text-xs text-amber-600 block mt-0.5">⚠ Segera berakhir</span>
+                                        @endif
+                                    </p>
+                                </div>
+                                @endif
+                            </div>
+
+                            <div class="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-2">
+                                <svg class="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                </svg>
+                                <p class="text-xs text-amber-700">
+                                    File MoU disimpan secara <strong>privat</strong>. Hanya admin yang dapat mengunduh file ini.
+                                    URL tidak dapat diakses langsung.
+                                </p>
+                            </div>
+
+                            @else
+                            <div class="text-center py-8 text-gray-400">
+                                <svg class="w-12 h-12 mx-auto text-gray-200 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                <p class="text-sm text-gray-400">Belum ada file MoU yang diunggah.</p>
+                                <a href="{{ route('admin.companies.edit', $company) }}"
+                                   class="mt-3 inline-flex items-center gap-1.5 text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                                    Upload MoU via Edit →
+                                </a>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    {{-- Dokumen Legalitas Lama --}}
+                    @if($company->business_license_path || $company->operating_license_path)
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100">
+                            <h3 class="font-bold text-gray-900">Berkas Verifikasi (Legalitas)</h3>
+                            <p class="text-xs text-gray-500 mt-0.5">Dokumen yang diunggah oleh perusahaan</p>
+                        </div>
+                        <div class="p-5 space-y-2">
+
+                            @if($company->business_license_path)
+                            <div class="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg">
+                                <span class="text-sm text-gray-700">Izin Usaha (SIUP)</span>
+                                <a href="{{ asset('storage/' . $company->business_license_path) }}" target="_blank"
+                                   class="text-xs text-indigo-600 font-semibold hover:underline">Lihat →</a>
+                            </div>
+                            @endif
+                            @if($company->operating_license_path)
+                            <div class="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg">
+                                <span class="text-sm text-gray-700">Izin Operasional</span>
+                                <a href="{{ asset('storage/' . $company->operating_license_path) }}" target="_blank"
+                                   class="text-xs text-indigo-600 font-semibold hover:underline">Lihat →</a>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    @endif
+
+                    {{-- Lowongan --}}
                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                         <div class="px-6 py-4 border-b border-gray-100">
                             <h3 class="font-bold text-gray-900">Lowongan Terbaru</h3>
@@ -131,8 +474,73 @@
                             @endforelse
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+
+    {{-- Reject Modal --}}
+    <x-ui.modal id="rejectModal" title="Tolak Verifikasi">
+        <p class="text-sm text-slate-500 mb-4">Perusahaan: <span id="rejectCompanyName" class="font-semibold text-slate-800"></span></p>
+
+        <form id="rejectForm" method="POST" class="ui-form-stack">
+            @csrf
+            <div>
+                <label class="ui-label">Alasan Penolakan <span class="text-red-500">*</span></label>
+                <textarea name="rejection_reason" rows="4" required maxlength="500" class="ui-textarea"
+                          placeholder="Contoh: Profil perusahaan belum lengkap. Mohon isi industri, alamat, dan deskripsi perusahaan terlebih dahulu."></textarea>
+                <p class="text-xs text-slate-400 mt-1">Alasan ini akan ditampilkan ke perusahaan. Maks 500 karakter.</p>
+            </div>
+
+            <div class="ui-form-actions">
+                <x-ui.btn variant="danger" type="submit">Kirim Penolakan</x-ui.btn>
+                <x-ui.btn variant="secondary" type="button" onclick="closeRejectModal()">Batal</x-ui.btn>
+            </div>
+        </form>
+    </x-ui.modal>
+
+    @push('scripts')
+    <script>
+    function openRejectModal(companyId, companyName) {
+        document.getElementById('rejectCompanyName').textContent = companyName;
+        document.getElementById('rejectForm').action = `/admin/companies/${companyId}/reject`;
+        document.getElementById('rejectModal').classList.remove('hidden');
+    }
+    function closeRejectModal() {
+        document.getElementById('rejectModal').classList.add('hidden');
+        document.getElementById('rejectForm').querySelector('textarea').value = '';
+    }
+    document.querySelectorAll('[data-modal-close]').forEach(el => {
+        el.addEventListener('click', closeRejectModal);
+    });
+
+    // Copy to clipboard — untuk one-time password panel
+    function copyText(sourceId, btnId) {
+        const text = document.getElementById(sourceId)?.textContent?.trim();
+        if (!text) return;
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = document.getElementById(btnId);
+            if (btn) {
+                const orig = btn.textContent;
+                btn.textContent = 'Tersalin ✓';
+                btn.classList.add('text-emerald-600');
+                setTimeout(() => {
+                    btn.textContent = orig;
+                    btn.classList.remove('text-emerald-600');
+                }, 2000);
+            }
+        }).catch(() => {
+            // Fallback untuk browser lama
+            const el = document.getElementById(sourceId);
+            const range = document.createRange();
+            range.selectNode(el);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+        });
+    }
+    </script>
+    @endpush
 </x-app-layout>

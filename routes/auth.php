@@ -56,4 +56,13 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
+
+    Route::get('force-password-change', [PasswordController::class, 'forceChange'])
+                ->name('password.force-change')
+                ->withoutMiddleware([\App\Http\Middleware\ForcePasswordChange::class]);
+
+    Route::post('force-password-change', [PasswordController::class, 'forceUpdate'])
+                ->name('password.force-update')
+                ->withoutMiddleware([\App\Http\Middleware\ForcePasswordChange::class]);
 });
+

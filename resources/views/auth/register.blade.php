@@ -25,9 +25,9 @@
             <label for="role" class="block text-sm font-medium text-gray-700 mb-1.5">
                 Daftar Sebagai
             </label>
-            <select id="role" name="role" class="ui-select" onchange="toggleCompanyFields(this.value)">
+            <select id="role" name="role" class="ui-select" onchange="toggleStudentFields(this.value)">
                 <option value="student" {{ old('role', 'student') === 'student' ? 'selected' : '' }}>Siswa</option>
-                <option value="company" {{ old('role') === 'company' ? 'selected' : '' }}>Perusahaan</option>
+                <option value="alumni" {{ old('role') === 'alumni' ? 'selected' : '' }}>Alumni</option>
             </select>
             <x-input-error :messages="$errors->get('role')" class="mt-1.5" />
         </div>
@@ -95,56 +95,6 @@
             </div>
         </div>
 
-        {{-- Field khusus perusahaan --}}
-        <div id="company-fields" class="space-y-5 hidden">
-            <div>
-                <label for="company_name" class="block text-sm font-medium text-gray-700 mb-1.5">
-                    Nama Perusahaan
-                </label>
-                <input id="company_name"
-                       type="text"
-                       name="company_name"
-                       value="{{ old('company_name') }}"
-                       placeholder="Contoh: PT Sukses Mandiri"
-                       class="ui-input">
-                <x-input-error :messages="$errors->get('company_name')" class="mt-1.5" />
-            </div>
-
-            <div>
-                <label for="company_industry" class="block text-sm font-medium text-gray-700 mb-1.5">
-                    Bidang Usaha <span class="text-gray-400 font-normal">(opsional)</span>
-                </label>
-                <input id="company_industry"
-                       type="text"
-                       name="company_industry"
-                       value="{{ old('company_industry') }}"
-                       placeholder="Contoh: Teknologi, Manufaktur"
-                       class="ui-input">
-            </div>
-
-            <div>
-                <label for="company_address" class="block text-sm font-medium text-gray-700 mb-1.5">
-                    Alamat <span class="text-gray-400 font-normal">(opsional)</span>
-                </label>
-                <input id="company_address"
-                       type="text"
-                       name="company_address"
-                       value="{{ old('company_address') }}"
-                       placeholder="Alamat kantor"
-                       class="ui-input">
-            </div>
-
-            <div>
-                <label for="company_website" class="block text-sm font-medium text-gray-700 mb-1.5">
-                    Website <span class="text-gray-400 font-normal">(opsional)</span>
-                </label>
-                <input id="company_website"
-                       type="url"
-                       name="company_website"
-                       value="{{ old('company_website') }}"
-                       placeholder="https://contoh.com"
-                       class="ui-input">
-            </div>
         </div>
 
         {{-- Password --}}
@@ -182,23 +132,21 @@
     </form>
 
     <script>
-        function toggleCompanyFields(role) {
+        function toggleStudentFields(role) {
             const studentFields = document.getElementById('student-fields');
-            const companyFields = document.getElementById('company-fields');
 
-            if (!studentFields || !companyFields) {
+            if (!studentFields) {
                 return;
             }
 
-            const isCompany = role === 'company';
-            studentFields.classList.toggle('hidden', isCompany);
-            companyFields.classList.toggle('hidden', !isCompany);
+            const isStudent = role === 'student' || role === 'alumni';
+            studentFields.classList.toggle('hidden', !isStudent);
         }
 
         document.addEventListener('DOMContentLoaded', function () {
             const roleSelect = document.getElementById('role');
             if (roleSelect) {
-                toggleCompanyFields(roleSelect.value);
+                toggleStudentFields(roleSelect.value);
             }
         });
     </script>

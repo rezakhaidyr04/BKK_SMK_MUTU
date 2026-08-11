@@ -1,15 +1,16 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
+        {{-- Header --}}
         <div class="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-2xl">
             <div class="absolute inset-0 bg-black opacity-10"></div>
             <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
             <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h1 class="text-3xl font-bold text-white mb-2">Ubah Perusahaan</h1>
-                        <p class="text-purple-100">{{ $company->name }}</p>
+                        <h1 class="text-3xl font-bold text-white mb-2">Tambah Perusahaan</h1>
+                        <p class="text-purple-100">Tambahkan data perusahaan mitra baru. Akun login dibuat setelah perusahaan disetujui.</p>
                     </div>
-                    <a href="{{ route('admin.companies.show', $company) }}"
+                    <a href="{{ route('admin.companies.index') }}"
                        class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-purple-700 text-sm font-semibold rounded-xl hover:bg-purple-50 transition shadow-lg">
                         ← Kembali
                     </a>
@@ -20,80 +21,101 @@
         <div class="page-container page-section">
             @if($errors->any())
             <div class="bg-red-50 border border-red-200 rounded-2xl p-4 mb-6 max-w-3xl mx-auto">
-                <ul class="text-sm text-red-700 space-y-1 list-disc pl-5">
-                    @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
-                </ul>
+                <div class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <ul class="text-sm text-red-700 space-y-1 list-disc pl-2">
+                        @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
+                    </ul>
+                </div>
             </div>
             @endif
 
-            <form method="POST" action="{{ route('admin.companies.update', $company) }}"
-                  enctype="multipart/form-data"
+            <form method="POST" action="{{ route('admin.companies.store') }}" enctype="multipart/form-data"
                   class="max-w-3xl mx-auto space-y-6">
                 @csrf
-                @method('PUT')
 
-                {{-- ── Informasi Perusahaan ──────────────────────────────── --}}
+                {{-- ── Informasi Perusahaan ──────────────────────────── --}}
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                     <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-indigo-50 to-purple-50">
                         <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 bg-indigo-600 rounded-xl flex items-center justify-center text-white text-lg font-bold">
-                                {{ substr($company->name, 0, 1) }}
+                            <div class="w-9 h-9 bg-indigo-600 rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                </svg>
                             </div>
                             <div>
                                 <h3 class="font-bold text-gray-900">Informasi Perusahaan</h3>
-                                <p class="text-xs text-gray-500">Edit informasi dasar perusahaan</p>
+                                <p class="text-xs text-gray-500">Data dasar perusahaan mitra</p>
                             </div>
                         </div>
                     </div>
+
                     <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+                        {{-- Nama --}}
                         <div class="md:col-span-2">
-                            <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Nama Perusahaan <span class="text-red-500">*</span></label>
-                            <input type="text" id="name" name="name" value="{{ old('name', $company->name) }}" required
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                            <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Nama Perusahaan <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="name" name="name" value="{{ old('name') }}" required
+                                   placeholder="PT. Contoh Indonesia"
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition {{ $errors->has('name') ? 'border-red-400 bg-red-50' : '' }}">
                         </div>
+
+                        {{-- Industri --}}
                         <div>
                             <label for="industry" class="block text-sm font-semibold text-gray-700 mb-2">Industri</label>
-                            <input type="text" id="industry" name="industry" value="{{ old('industry', $company->industry) }}"
+                            <input type="text" id="industry" name="industry" value="{{ old('industry') }}"
+                                   placeholder="Manufaktur, Teknologi, dll."
                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
                         </div>
+
+                        {{-- Website --}}
                         <div>
                             <label for="website" class="block text-sm font-semibold text-gray-700 mb-2">Website</label>
-                            <input type="url" id="website" name="website" value="{{ old('website', $company->website) }}"
+                            <input type="url" id="website" name="website" value="{{ old('website') }}"
+                                   placeholder="https://contoh.com"
                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
                         </div>
+
+                        {{-- Email --}}
                         <div>
                             <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Perusahaan</label>
-                            <input type="email" id="email" name="email" value="{{ old('email', $company->email) }}"
+                            <input type="email" id="email" name="email" value="{{ old('email') }}"
+                                   placeholder="hrd@contoh.com"
                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                            <p class="text-xs text-gray-400 mt-1">Email ini akan digunakan sebagai login akun perusahaan.</p>
                         </div>
+
+                        {{-- Phone --}}
                         <div>
-                            <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Telepon</label>
-                            <input type="text" id="phone" name="phone" value="{{ old('phone', $company->phone) }}"
+                            <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Nomor Telepon</label>
+                            <input type="text" id="phone" name="phone" value="{{ old('phone') }}"
+                                   placeholder="021-12345678"
                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
                         </div>
+
+                        {{-- Alamat --}}
                         <div class="md:col-span-2">
                             <label for="address" class="block text-sm font-semibold text-gray-700 mb-2">Alamat</label>
-                            <input type="text" id="address" name="address" value="{{ old('address', $company->address) }}"
+                            <input type="text" id="address" name="address" value="{{ old('address') }}"
+                                   placeholder="Jl. Contoh No. 1, Kota"
                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
                         </div>
 
-                        <div class="md:col-span-2">
-                            <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">Deskripsi</label>
-                            <textarea id="description" name="description" rows="4"
-                                      class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-none">{{ old('description', $company->description) }}</textarea>
-                        </div>
 
-                        {{-- Verifikasi manual --}}
-                        <div class="md:col-span-2 flex items-center gap-2 py-2">
-                            <input type="checkbox" id="is_verified" name="is_verified" value="1"
-                                   {{ old('is_verified', $company->is_verified) ? 'checked' : '' }}
-                                   class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                            <label for="is_verified" class="text-sm text-gray-700">Tandai sebagai Terverifikasi</label>
+                        {{-- Deskripsi --}}
+                        <div class="md:col-span-2">
+                            <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">Deskripsi Perusahaan</label>
+                            <textarea id="description" name="description" rows="4"
+                                      placeholder="Ceritakan tentang perusahaan ini..."
+                                      class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-none">{{ old('description') }}</textarea>
                         </div>
                     </div>
                 </div>
 
-                {{-- ── Surat MoU ─────────────────────────────────────────── --}}
+                {{-- ── Surat MoU ──────────────────────────────────────── --}}
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                     <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-teal-50">
                         <div class="flex items-center gap-3">
@@ -103,43 +125,24 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-bold text-gray-900">Surat MoU</h3>
-                                <p class="text-xs text-gray-500">Upload file baru untuk menggantikan MoU yang lama</p>
+                                <h3 class="font-bold text-gray-900">Surat MoU / Perjanjian Kerjasama</h3>
+                                <p class="text-xs text-gray-500">File MoU disimpan secara privat — hanya dapat diunduh oleh admin</p>
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
-                        {{-- Current MoU Status --}}
-                        @if($company->mou_path)
-                        <div class="md:col-span-2 flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3">
-                            <div class="flex items-center gap-3">
-                                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <div>
-                                    <p class="text-sm font-semibold text-emerald-800">File MoU sudah ada</p>
-                                    <p class="text-xs text-emerald-600">Upload file baru di bawah untuk menggantinya</p>
-                                </div>
-                            </div>
-                            <a href="{{ route('admin.companies.mou.download', $company) }}"
-                               class="flex-shrink-0 text-xs text-emerald-700 font-semibold border border-emerald-300 px-3 py-1.5 rounded-lg hover:bg-emerald-100 transition">
-                                Download MoU
-                            </a>
-                        </div>
-                        @endif
 
+                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
                         {{-- Upload MoU --}}
                         <div class="md:col-span-2">
-                            <label for="mou_path" class="block text-sm font-semibold text-gray-700 mb-2">
-                                {{ $company->mou_path ? 'Ganti File MoU' : 'Upload File MoU' }}
-                            </label>
-                            <div class="relative border-2 border-dashed border-gray-200 rounded-xl p-5 hover:border-emerald-400 transition cursor-pointer"
+                            <label for="mou_path" class="block text-sm font-semibold text-gray-700 mb-2">File MoU</label>
+                            <div class="relative border-2 border-dashed border-gray-200 rounded-xl p-6 hover:border-emerald-400 transition cursor-pointer"
                                  onclick="document.getElementById('mou_path').click()">
                                 <div class="text-center">
-                                    <svg class="mx-auto w-8 h-8 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="mx-auto w-10 h-10 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                                     </svg>
-                                    <p class="text-sm text-gray-500">Klik untuk upload — PDF, JPG, PNG (maks. 10 MB)</p>
+                                    <p class="text-sm text-gray-500 mb-1">Klik untuk upload atau drag & drop</p>
+                                    <p class="text-xs text-gray-400">PDF, JPG, PNG — maks. 10 MB</p>
                                     <p id="mou_file_name" class="mt-2 text-sm font-medium text-emerald-600 hidden"></p>
                                 </div>
                                 <input type="file" id="mou_path" name="mou_path"
@@ -152,38 +155,58 @@
                             @enderror
                         </div>
 
+                        {{-- Nomor MoU --}}
                         <div>
                             <label for="mou_number" class="block text-sm font-semibold text-gray-700 mb-2">Nomor MoU</label>
-                            <input type="text" id="mou_number" name="mou_number" value="{{ old('mou_number', $company->mou_number) }}"
+                            <input type="text" id="mou_number" name="mou_number" value="{{ old('mou_number') }}"
+                                   placeholder="MOU/BKK/2024/001"
                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
                         </div>
+
+                        {{-- Tanggal Berlaku --}}
                         <div>
                             <label for="mou_signed_at" class="block text-sm font-semibold text-gray-700 mb-2">Tanggal Ditandatangani</label>
-                            <input type="date" id="mou_signed_at" name="mou_signed_at"
-                                   value="{{ old('mou_signed_at', optional($company->mou_signed_at)->format('Y-m-d')) }}"
+                            <input type="date" id="mou_signed_at" name="mou_signed_at" value="{{ old('mou_signed_at') }}"
                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
                         </div>
+
+                        {{-- Tanggal Berakhir --}}
                         <div>
                             <label for="mou_expires_at" class="block text-sm font-semibold text-gray-700 mb-2">Tanggal Berakhir</label>
-                            <input type="date" id="mou_expires_at" name="mou_expires_at"
-                                   value="{{ old('mou_expires_at', optional($company->mou_expires_at)->format('Y-m-d')) }}"
+                            <input type="date" id="mou_expires_at" name="mou_expires_at" value="{{ old('mou_expires_at') }}"
                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
                         </div>
                     </div>
                 </div>
 
+                {{-- Info: Akun dibuat setelah approval --}}
+                <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 flex items-start gap-4">
+                    <div class="flex-shrink-0">
+                        <svg class="w-6 h-6 text-blue-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-blue-800">Tentang Pembuatan Akun</p>
+                        <p class="text-sm text-blue-700 mt-1">
+                            Data perusahaan akan tersimpan dengan status <strong>Menunggu</strong>.
+                            Akun login hanya dapat dibuat setelah perusahaan <strong>disetujui (approved)</strong> oleh admin.
+                        </p>
+                    </div>
+                </div>
+
                 {{-- Actions --}}
                 <div class="flex items-center justify-between">
-                    <a href="{{ route('admin.companies.show', $company) }}"
+                    <a href="{{ route('admin.companies.index') }}"
                        class="px-6 py-3 border border-gray-200 text-gray-700 text-sm font-semibold rounded-xl hover:bg-gray-50 transition">
                         Batal
                     </a>
                     <button type="submit"
                             class="inline-flex items-center gap-2 px-8 py-3 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/30">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
-                        Simpan Perubahan
+                        Tambah Perusahaan
                     </button>
                 </div>
             </form>

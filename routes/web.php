@@ -195,18 +195,34 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
         ->prefix("admin")
         ->name("admin.")
         ->group(function () {
+            // Company Management — FULL CRUD (admin yang buat perusahaan)
             Route::resource(
                 "companies",
                 App\Http\Controllers\Admin\CompanyController::class,
-            )->only(["index", "show", "edit", "update"]);
+            )->only(["index", "create", "store", "show", "edit", "update"]);
+
             Route::post("companies/{company}/approve", [
                 App\Http\Controllers\Admin\CompanyController::class,
                 "approve",
             ])->name("companies.approve");
+
             Route::post("companies/{company}/reject", [
                 App\Http\Controllers\Admin\CompanyController::class,
                 "reject",
             ])->name("companies.reject");
+
+            // Private MoU download — hanya admin
+            Route::get("companies/{company}/mou/download", [
+                App\Http\Controllers\Admin\CompanyController::class,
+                "downloadMou",
+            ])->name("companies.mou.download");
+
+            // Create account for approved company (Phase 3 — placeholder terdaftar di sini)
+            Route::post("companies/{company}/create-account", [
+                App\Http\Controllers\Admin\CompanyController::class,
+                "createAccount",
+            ])->name("companies.create-account");
+
             Route::resource(
                 "users",
                 App\Http\Controllers\Admin\UserController::class,

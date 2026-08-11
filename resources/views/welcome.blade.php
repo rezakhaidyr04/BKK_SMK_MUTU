@@ -36,7 +36,6 @@
                     <a href="#jobs" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Lowongan</a>
                     <a href="#trusted" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Perusahaan</a>
                     <a href="#features" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Tentang Kami</a>
-                    <a href="{{ route('login') }}" class="text-xs font-medium text-slate-300 hover:text-blue-600 transition" title="Admin Login">Admin</a>
                 </div>
                 
                 <div class="flex items-center gap-4">

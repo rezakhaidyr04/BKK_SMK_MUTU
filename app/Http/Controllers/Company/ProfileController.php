@@ -67,20 +67,9 @@ class ProfileController extends Controller
         }
 
         $validated = $request->validate([
-            'tax_number' => ['nullable', 'string', 'max:255'],
-            'npwp_file' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
             'business_license' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
             'operating_license' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
         ]);
-
-        // store uploaded verification documents (if any)
-        if ($request->hasFile('npwp_file')) {
-            $path_npwp = $request->file('npwp_file')->storePubliclyAs(
-                "company_verifications/{$company->id}", 'npwp_' . time() . '.' . $request->file('npwp_file')->getClientOriginalExtension(),
-                ['disk' => 'public']
-            );
-            $company->npwp_path = $path_npwp;
-        }
 
         if ($request->hasFile('business_license')) {
             $path = $request->file('business_license')->storePubliclyAs(
@@ -98,7 +87,6 @@ class ProfileController extends Controller
             $company->operating_license_path = $path2;
         }
 
-        $company->tax_number = $validated['tax_number'] ?? null;
 
         // mark company as pending verification
         $company->verification_status = 'pending';
