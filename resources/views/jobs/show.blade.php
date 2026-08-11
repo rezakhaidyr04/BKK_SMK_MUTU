@@ -493,8 +493,8 @@
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-gray-900 leading-tight mb-1">{{ $job->company->name ?? 'Perusahaan' }}</h4>
-                                    <div class="flex items-center gap-1 text-[11px] text-gray-500 mb-2">
-                                        <span class="text-yellow-400">⭐</span> Data ulasan belum tersedia
+                                        <div class="flex items-center gap-1 text-[11px] text-gray-500 mb-2">
+                                        Data ulasan belum tersedia
                                     </div>
                                 </div>
                             </div>

@@ -17,27 +17,27 @@
                             </span>
                             @elseif($company->verification_status === 'rejected')
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-red-500 text-white text-xs font-bold rounded-full">
-                                ✕ Ditolak
+                                Ditolak
                             </span>
                             @else
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-400 text-white text-xs font-bold rounded-full">
-                                ⏳ Menunggu
+                                Menunggu
                             </span>
                             @endif
 
                             @if($company->user_id)
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">
-                                👤 Ada Akun Login
+                                Ada Akun Login
                             </span>
                             @else
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 text-purple-100 text-xs font-semibold rounded-full">
-                                👤 Belum Ada Akun
+                                Belum Ada Akun
                             </span>
                             @endif
 
                             @if($company->mou_path)
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">
-                                📄 Ada MoU
+                                Ada MoU
                             </span>
                             @endif
                         </div>
@@ -72,10 +72,10 @@
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
                         </svg>
-                        <span class="font-bold text-white text-sm">⚠ PASSWORD SEMENTARA — CATAT SEKARANG! Tidak akan tampil lagi.</span>
+                        <span class="font-bold text-white text-sm">PERINGATAN: PASSWORD SEMENTARA — CATAT SEKARANG! Tidak akan tampil lagi.</span>
                     </div>
-                    <button onclick="document.getElementById('tempPasswordPanel').remove()"
-                            class="text-white hover:text-amber-100 transition text-lg font-bold">✕</button>
+                        <button onclick="document.getElementById('tempPasswordPanel').remove()"
+                            class="text-white hover:text-amber-100 transition text-lg font-bold">&times;</button>
                 </div>
                 <div class="p-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -387,9 +387,9 @@
                                     <p class="font-semibold text-sm mt-1 {{ $company->mou_expires_at->isPast() ? 'text-red-600' : 'text-gray-900' }}">
                                         {{ $company->mou_expires_at->format('d M Y') }}
                                         @if($company->mou_expires_at->isPast())
-                                        <span class="text-xs text-red-500 block mt-0.5">⚠ Sudah kadaluarsa</span>
+                                        <span class="text-xs text-red-500 block mt-0.5">Sudah kadaluarsa</span>
                                         @elseif($company->mou_expires_at->diffInDays(now()) < 30)
-                                        <span class="text-xs text-amber-600 block mt-0.5">⚠ Segera berakhir</span>
+                                        <span class="text-xs text-amber-600 block mt-0.5">Segera berakhir</span>
                                         @endif
                                     </p>
                                 </div>

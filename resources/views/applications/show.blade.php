@@ -78,7 +78,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
-                            📅 Jadwal Wawancara
+                            Jadwal Wawancara
                         </h2>
                         <dl class="space-y-3 text-sm">
                             <div class="flex items-start gap-3">
@@ -100,7 +100,7 @@
                             <div class="flex items-start gap-3">
                                 <dt class="text-purple-600 font-semibold w-28 flex-shrink-0">Tipe</dt>
                                 <dd class="text-purple-900">
-                                    {{ $application->interview_type === 'online' ? '💻 Online' : '🏢 Tatap Muka' }}
+                                    {{ $application->interview_type === 'online' ? 'Online' : 'Tatap Muka' }}
                                 </dd>
                             </div>
                             @if($application->interview_type === 'online' && $application->interview_link)
@@ -122,7 +122,7 @@
                             @endif
                         </dl>
                         <div class="mt-4 p-3 bg-white rounded-lg border border-purple-200 text-xs text-purple-700">
-                            💡 Hadir tepat waktu, bawa dokumen pendukung (CV, KTP, Ijazah), dan berpakaian rapi.
+                            Hadir tepat waktu, bawa dokumen pendukung (CV, KTP, Ijazah), dan berpakaian rapi.
                         </div>
                     </div>
                     @endif

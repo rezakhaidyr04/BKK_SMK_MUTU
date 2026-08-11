@@ -60,8 +60,8 @@
                             </div>
                             <h3 class="font-bold text-gray-900">{{ $event->title }}</h3>
                             <p class="text-sm text-gray-500 mt-1">
-                                📅 {{ $event->start_time->format('d M Y, H:i') }} &nbsp;·&nbsp;
-                                📍 {{ $event->location }}
+                                {{ $event->start_time->format('d M Y, H:i') }} &nbsp;·&nbsp;
+                                {{ $event->location }}
                             </p>
                             <p class="text-xs text-gray-400 mt-1">Didaftarkan: {{ $reg->registered_at->format('d M Y') }}</p>
                         </div>

@@ -122,13 +122,13 @@
 
     @if (session('success'))
         <div style="margin-bottom: 1rem; border-radius: 12px; background: #d1fae5; border: 1px solid #6ee7b7; padding: 0.875rem 1rem; font-size: 0.875rem; color: #065f46; font-weight: 500;">
-            ✓ {{ session('success') }}
+            Berhasil: {{ session('success') }}
         </div>
     @endif
 
     @if (session('error'))
         <div style="margin-bottom: 1rem; border-radius: 12px; background: #fee2e2; border: 1px solid #fca5a5; padding: 0.875rem 1rem; font-size: 0.875rem; color: #991b1b; font-weight: 500;">
-            ✕ {{ session('error') }}
+            Gagal: {{ session('error') }}
         </div>
     @endif
 
@@ -158,7 +158,7 @@
                         @if($company->logo)
                             <img id="logo-preview" src="{{ asset('storage/' . $company->logo) }}" alt="Logo" style="width:100%; height:100%; object-fit:contain;" />
                         @else
-                            <span id="logo-preview" style="font-size:1.5rem; color:#94a3b8;">🏢</span>
+                            <span id="logo-preview" style="font-size:1rem; color:#94a3b8;">Logo</span>
                         @endif
                     </div>
                     <div class="file-upload-area" style="flex:1; min-width:12rem;" onclick="document.getElementById('logo-input').click()">
@@ -248,7 +248,7 @@
             <div style="border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 1rem; margin-bottom: 1.5rem;">
                 <p style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; margin: 0 0 0.75rem;">Dokumen Kerjasama (MoU)</p>
                 <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
-                    <a href="#" style="opacity: 0.7; cursor: default;" class="doc-preview-link" title="Silakan hubungi admin jika ingin mengunduh ulang">
+                    <a href="javascript:void(0);" role="button" aria-disabled="true" style="opacity: 0.7; cursor: default;" class="doc-preview-link" title="Silakan hubungi admin jika ingin mengunduh ulang">
                         <svg style="width:0.875rem;height:0.875rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                         Surat MoU Telah Terunggah
                     </a>
