@@ -10,6 +10,7 @@ $config = match($status) {
     'active' => ['class' => 'ui-badge-green', 'label' => 'Aktif'],
     'inactive' => ['class' => 'ui-badge-gray', 'label' => 'Nonaktif'],
     'pending' => ['class' => 'ui-badge-yellow', 'label' => 'Menunggu'],
+    'not_submitted' => ['class' => 'ui-badge-gray', 'label' => 'Belum Dikirim'],
     'verified' => ['class' => 'ui-badge-green', 'label' => 'Terverifikasi'],
     'published' => ['class' => 'ui-badge-green', 'label' => 'Dipublish'],
     'draft' => ['class' => 'ui-badge-yellow', 'label' => 'Draft'],
