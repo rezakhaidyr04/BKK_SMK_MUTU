@@ -3,9 +3,7 @@
         <x-ui.page-header title="Daftar Perusahaan" subtitle="Kelola dan verifikasi akun perusahaan mitra BKK.">
             <x-slot:actions>
                 @if($pendingCount > 0)
-                <span class="ui-badge ui-badge-yellow">
-                    {{ $pendingCount }} menunggu verifikasi
-                </span>
+                <x-ui.status-badge :status="'pending'">{{ $pendingCount }} menunggu verifikasi</x-ui.status-badge>
                 @endif
                 <a href="{{ route('admin.companies.create') }}"
                    class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700 transition shadow-sm">
@@ -69,7 +67,7 @@
                         <td>
                             <x-ui.status-badge :status="$company->verification_status" />
                             @if($company->mou_path)
-                            <span class="block mt-1 text-xs text-emerald-600 font-medium">📄 Ada MoU</span>
+                            <span class="block mt-1 text-xs text-emerald-600 font-medium">Ada MoU</span>
                             @endif
                             @if($company->verification_status === 'rejected' && $company->rejection_reason)
                             <p class="text-xs text-red-500 mt-1 max-w-[180px]">{{ Str::limit($company->rejection_reason, 50) }}</p>
