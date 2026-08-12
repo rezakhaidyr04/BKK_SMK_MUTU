@@ -273,3 +273,17 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
             ])->name("reports.export-excel");
         });
 });
+
+// Debug playground: preview status badges for different status values
+// Only registered in local environment — not accessible in production or staging
+if (app()->environment('local')) {
+    Route::get('/_debug/status-playground', function () {
+        $statuses = [
+            'not_submitted', 'submitted', 'under_review', 'interviewed',
+            'accepted', 'rejected', 'pending', 'verified', 'draft', 'closed',
+            'unknown_status'
+        ];
+
+        return view('debug.status-playground', compact('statuses'));
+    });
+}
