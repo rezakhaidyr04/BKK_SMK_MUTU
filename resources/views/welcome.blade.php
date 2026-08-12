@@ -123,7 +123,7 @@
                 {{-- KIRI: teks --}}
                 <div class="hero-text-col">
                     <div id="js-hero-greeting" class="hero-greeting" style="display:inline-flex; align-items:center; gap:8px; border-radius:9999px; border:1px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.12); padding:8px 20px; font-size:0.85rem; font-weight:600; color:#fff; backdrop-filter:blur(12px); margin-bottom:24px;">
-                        👋 Selamat Datang di BKK SMK MUTU
+                        Selamat Datang di BKK SMK MUTU
                     </div>
 
                     <h1 style="font-size:clamp(1.6rem, 2.6vw, 2.6rem); font-weight:800; line-height:1.2; color:#fff; margin:0 0 16px; letter-spacing:-0.02em;">
@@ -146,14 +146,14 @@
                     <aside class="hero-info-bar" aria-label="Info ringkas BKK SMK MUTU">
                         <div style="overflow:hidden;">
                             <div class="hero-info-scroll" style="display:inline-flex; align-items:center; gap:24px; white-space:nowrap;">
-                                <span class="hero-info-pill">🔥 5 Lowongan Baru Hari Ini</span>
-                                <span class="hero-info-pill">📅 Job Fair 15 September 2026</span>
-                                <span class="hero-info-pill">⭐ 15+ Alumni Diterima Bulan Ini</span>
-                                <span class="hero-info-pill">📄 CV Builder Kini Tersedia</span>
-                                <span class="hero-info-pill">🔥 5 Lowongan Baru Hari Ini</span>
-                                <span class="hero-info-pill">📅 Job Fair 15 September 2026</span>
-                                <span class="hero-info-pill">⭐ 15+ Alumni Diterima Bulan Ini</span>
-                                <span class="hero-info-pill">📄 CV Builder Kini Tersedia</span>
+                                <span class="hero-info-pill">5 Lowongan Baru Hari Ini</span>
+                                <span class="hero-info-pill">Job Fair 15 September 2026</span>
+                                <span class="hero-info-pill">15+ Alumni Diterima Bulan Ini</span>
+                                <span class="hero-info-pill">CV Builder Kini Tersedia</span>
+                                <span class="hero-info-pill">5 Lowongan Baru Hari Ini</span>
+                                <span class="hero-info-pill">Job Fair 15 September 2026</span>
+                                <span class="hero-info-pill">15+ Alumni Diterima Bulan Ini</span>
+                                <span class="hero-info-pill">CV Builder Kini Tersedia</span>
                             </div>
                         </div>
                     </aside>
@@ -171,15 +171,15 @@
 
                         {{-- Badge kanan atas --}}
                         <div class="hero-badge" data-index="1" style="position:absolute; top:20%; right:5%; z-index:3;">
-                            <span>💼</span><span>150+ Lowongan Aktif</span>
+                            <span class="hero-badge-text">150+ Lowongan Aktif</span>
                         </div>
                         {{-- Badge kiri atas --}}
                         <div class="hero-badge" data-index="2" style="position:absolute; top:35%; left:-5%; z-index:3;">
-                            <span>📄</span><span>CV ATS Profesional</span>
+                            <span class="hero-badge-text">CV ATS Profesional</span>
                         </div>
                         {{-- Badge kanan bawah --}}
                         <div class="hero-badge" data-index="3" style="position:absolute; bottom:25%; right:-2%; z-index:3;">
-                            <span>🏆</span><span>93% Alumni Berhasil</span>
+                            <span class="hero-badge-text">93% Alumni Berhasil</span>
                         </div>
                     </div>
                 </div>
@@ -529,7 +529,7 @@
                             <p class="text-sm font-semibold text-slate-900">Rp 4.000.000 - 5.200.000</p>
                             <p class="text-xs text-slate-400">Deadline: 31 Jul 2026</p>
                         </div>
-                        <a href="#" class="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 hover:text-blue-700 transition">Lihat Detail <span>→</span></a>
+                        <a href="javascript:void(0);" role="button" aria-disabled="true" class="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 opacity-70 cursor-default">Lihat Detail <span>→</span></a>
                     </article>
                     <!-- Sample Card 2 -->
                     <article class="job-card-v2">
@@ -553,7 +553,7 @@
                             <p class="text-sm font-semibold text-slate-900">Rp 4.500.000 - 6.500.000</p>
                             <p class="text-xs text-slate-400">Deadline: 28 Jul 2026</p>
                         </div>
-                        <a href="#" class="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 hover:text-blue-700 transition">Lihat Detail <span>→</span></a>
+                        <a href="javascript:void(0);" role="button" aria-disabled="true" class="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 opacity-70 cursor-default">Lihat Detail <span>→</span></a>
                     </article>
                     <!-- Sample Card 3 -->
                     <article class="job-card-v2">
@@ -577,7 +577,7 @@
                             <p class="text-sm font-semibold text-slate-900">Rp 3.500.000 - 4.500.000</p>
                             <p class="text-xs text-slate-400">Deadline: 25 Jul 2026</p>
                         </div>
-                        <a href="#" class="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 hover:text-blue-700 transition">Lihat Detail <span>→</span></a>
+                        <a href="javascript:void(0);" role="button" aria-disabled="true" class="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 opacity-70 cursor-default">Lihat Detail <span>→</span></a>
                     </article>
                     <!-- Sample Card 4 -->
                     <article class="job-card-v2">
@@ -601,7 +601,7 @@
                             <p class="text-sm font-semibold text-slate-900">Rp 3.800.000 - 4.800.000</p>
                             <p class="text-xs text-slate-400">Deadline: 30 Jul 2026</p>
                         </div>
-                        <a href="#" class="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 hover:text-blue-700 transition">Lihat Detail <span>→</span></a>
+                        <a href="javascript:void(0);" role="button" aria-disabled="true" class="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-blue-600 opacity-70 cursor-default">Lihat Detail <span>→</span></a>
                     </article>
                 </div>
                 <button class="job-carousel-btn job-carousel-next" aria-label="Next">
@@ -685,8 +685,8 @@
             <div class="mt-12 border-t border-slate-800 pt-8 text-sm text-slate-500 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <p>© {{ date('Y') }} BKK SMK MUTU. Hak cipta dilindungi.</p>
                 <div class="flex flex-wrap gap-4">
-                    <a href="#" class="transition hover:text-white">Privacy Policy</a>
-                    <a href="#" class="transition hover:text-white">Terms</a>
+                    <a href="javascript:void(0);" role="button" aria-disabled="true" class="transition hover:text-white opacity-70 cursor-default">Privacy Policy</a>
+                    <a href="javascript:void(0);" role="button" aria-disabled="true" class="transition hover:text-white opacity-70 cursor-default">Terms</a>
                 </div>
             </div>
         </div>
@@ -706,7 +706,8 @@
                 } else {
                     greet = 'Selamat Malam di BKK SMK MUTU';
                 }
-                greetingEl.textContent = '👋 ' + greet;
+                // insert emoji as presentational and escape the greeting text
+                greetingEl.innerHTML = '<span aria-hidden="true">👋</span> ' + escapeHTML(greet);
                 window.requestAnimationFrame(function () {
                     greetingEl.classList.add('show');
                 });
@@ -764,6 +765,16 @@
                     }
                 }
                 window.requestAnimationFrame(step);
+            }
+
+            // Simple HTML escaper to avoid injecting untrusted content
+            function escapeHTML(str) {
+                return String(str)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
             }
 
             // Job carousel navigation

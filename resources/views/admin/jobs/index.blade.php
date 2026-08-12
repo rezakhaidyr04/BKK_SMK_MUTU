@@ -1,28 +1,19 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <div class="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-2xl">
-            <div class="absolute inset-0 bg-black opacity-10"></div>
-            <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div>
-                    <h1 class="text-3xl font-bold text-white mb-2">Daftar Lowongan</h1>
-                    <p class="text-purple-100">Kelola lowongan kerja yang diposting oleh perusahaan.</p>
-                </div>
-                <div>
-                    <a href="{{ route('admin.jobs.create') }}"
-                       class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-purple-700 text-sm font-semibold rounded-xl hover:bg-purple-50 transition shadow-lg">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                        Tambah Lowongan
-                    </a>
-                </div>
-            </div>
-        </div>
+        <x-ui.page-hero title="Daftar Lowongan" subtitle="Kelola lowongan kerja yang diposting oleh perusahaan.">
+            <x-slot name="actions">
+                <x-ui.btn href="{{ route('admin.jobs.create') }}">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Tambah Lowongan
+                </x-ui.btn>
+            </x-slot>
+        </x-ui.page-hero>
 
         <div class="page-container page-section">
             <!-- Filter -->
-            <div class="bg-white rounded-2xl shadow-lg p-5 mb-6">
+            <x-ui.card class="mb-6">
                 <form method="GET" action="{{ route('admin.jobs.index') }}" class="grid gap-4 md:grid-cols-3 w-full">
                     <div>
                         <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Cari</label>
@@ -42,7 +33,7 @@
                         <x-ui.btn variant="secondary" href="{{ route('admin.jobs.index') }}">Atur Ulang</x-ui.btn>
                     </div>
                 </form>
-            </div>
+            </x-ui.card>
 
             <x-ui.panel>
                 <div class="ui-table-wrap -mx-6 -mt-6">

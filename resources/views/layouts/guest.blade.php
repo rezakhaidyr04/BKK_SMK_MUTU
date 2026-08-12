@@ -8,7 +8,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}">
@@ -247,8 +247,8 @@
             <div class="mt-6 border-t border-gray-800 pt-4 text-xs text-gray-500 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                 <p>© {{ date('Y') }} BKK SMK MUTU. Hak cipta dilindungi.</p>
                 <div class="flex flex-wrap gap-3">
-                    <a href="#" class="transition hover:text-white">Kebijakan Privasi</a>
-                    <a href="#" class="transition hover:text-white">Syarat & Ketentuan</a>
+                    <a href="javascript:void(0);" role="button" aria-disabled="true" class="transition hover:text-white opacity-70 cursor-default">Kebijakan Privasi</a>
+                    <a href="javascript:void(0);" role="button" aria-disabled="true" class="transition hover:text-white opacity-70 cursor-default">Syarat & Ketentuan</a>
                 </div>
             </div>
         </div>
