@@ -16,10 +16,9 @@
         <x-ui.stat-card label="Draft" :value="\App\Models\News::where('is_published', false)->count()" icon="document" color="yellow" />
     </div>
 
-    <!-- Filter -->
-    <div class="ui-filter-bar mb-6">
-        <form method="GET" action="{{ route('admin.news.index') }}" class="flex flex-wrap gap-4 items-end w-full">
-            <div class="ui-filter-field flex-1 min-w-[200px]">
+    <div class="ui-filter-bar">
+        <form method="GET" action="{{ route('admin.news.index') }}" class="grid gap-4 md:grid-cols-4 w-full">
+            <div class="ui-filter-field md:col-span-2">
                 <label class="ui-label">Cari Judul</label>
                 <input type="text" name="search" value="{{ request('search') }}" class="ui-input" placeholder="Cari berita...">
             </div>
@@ -33,7 +32,7 @@
             </div>
             <div class="flex items-end gap-2">
                 <x-ui.btn type="submit">Saring</x-ui.btn>
-                <x-ui.btn variant="secondary" href="{{ route('admin.news.index') }}">Reset</x-ui.btn>
+                <x-ui.btn variant="secondary" href="{{ route('admin.news.index') }}">Atur Ulang</x-ui.btn>
             </div>
         </form>
     </div>
@@ -110,10 +109,8 @@
                 </tbody>
             </table>
         </div>
-        @if($news->hasPages())
         <div class="mt-6 pt-4 border-t border-slate-100">
             {{ $news->links() }}
         </div>
-        @endif
     </x-ui.panel>
 </x-app-layout>

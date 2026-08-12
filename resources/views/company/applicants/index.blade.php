@@ -1,62 +1,62 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <x-ui.page-header title="Pelamar" subtitle="Lihat pelamar yang sudah mengajukan lamaran untuk lowongan perusahaan Anda." />
+    </x-slot>
 
-@section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex flex-col gap-6">
-        <div class="bg-white shadow-sm rounded-lg p-6">
-            <h1 class="text-2xl font-semibold text-gray-900">Pelamar</h1>
-            <p class="mt-2 text-sm text-gray-600">Lihat pelamar yang sudah mengajukan lamaran untuk lowongan perusahaan Anda.</p>
+    <x-ui.panel>
+        <div class="ui-table-wrap -mx-6 -mt-6">
+            <table class="ui-table">
+                <thead>
+                    <tr>
+                        <th>Pelamar</th>
+                        <th>Lowongan</th>
+                        <th>Posisi</th>
+                        <th>Tanggal Melamar</th>
+                        <th>Status</th>
+                        <th>Lampiran</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($applications as $application)
+                    <tr>
+                        <td>
+                            <p class="font-semibold text-slate-900">{{ $application->user->name }}</p>
+                            <p class="text-xs text-slate-400 mt-0.5">{{ $application->user->email }}</p>
+                        </td>
+                        <td class="font-medium text-slate-800">{{ optional($application->job)->title ?? '-' }}</td>
+                        <td class="text-slate-600">{{ optional($application->job)->position ?? '-' }}</td>
+                        <td class="text-sm text-slate-500">{{ $application->created_at->format('d M Y') }}</td>
+                        <td>
+                            <x-ui.status-badge :status="$application->status">
+                                {{ ucfirst(str_replace('_', ' ', $application->status)) }}
+                            </x-ui.status-badge>
+                        </td>
+                        <td class="text-sm text-slate-500">
+                            {{ $application->attachment_name ?? 'Tidak ada' }}
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6">
+                            <x-ui.empty-state
+                                icon="briefcase"
+                                title="Belum ada pelamar"
+                                description="Pelamar akan muncul setelah ada lowongan aktif dan kandidat mengajukan lamaran."
+                                ctaLabel="Kelola Lowongan"
+                                ctaHref="{{ route('company.jobs.index') }}"
+                                ctaVariant="secondary"
+                            />
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
 
-        <div class="bg-white shadow-sm rounded-lg p-6">
-            @if($applications->isEmpty())
-                <div class="text-center py-16">
-                    <p class="text-lg font-semibold text-gray-900">Belum ada pelamar</p>
-                    <p class="mt-2 text-sm text-gray-600">Pelamar akan muncul setelah ada lowongan aktif dan kandidat mengajukan lamaran.</p>
-                    <a href="{{ route('company.jobs.index') }}" class="mt-6 inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700">Kelola Lowongan</a>
-                </div>
-            @else
-                <div class="space-y-4">
-                    @foreach($applications as $application)
-                        <div class="rounded-2xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition">
-                            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                                <div>
-                                    <h2 class="text-lg font-semibold text-gray-900">{{ $application->user->name }}</h2>
-                                    <p class="text-sm text-gray-500">{{ $application->user->email }}</p>
-                                </div>
-                                <div class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-slate-700">{{ ucfirst($application->status) }}</div>
-                            </div>
-
-                            <div class="mt-4 grid gap-4 md:grid-cols-3">
-                                <div>
-                                    <p class="text-sm text-gray-500">Lowongan</p>
-                                    <p class="font-medium text-gray-900">{{ optional($application->job)->title ?? '-' }}</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Posisi</p>
-                                    <p class="font-medium text-gray-900">{{ optional($application->job)->position ?? '-' }}</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Melamar</p>
-                                    <p class="font-medium text-gray-900">{{ $application->created_at->format('d M Y') }}</p>
-                                </div>
-                            </div>
-
-                            <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                                <p class="text-sm text-gray-600">{{ Str::limit($application->cover_letter ?? '-', 140) }}</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="text-xs text-slate-500">CV/Terlampir: {{ $application->attachment_name ?? 'Tidak ada' }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <div class="mt-6">
-                    {{ $applications->links() }}
-                </div>
-            @endif
+        @if($applications->hasPages())
+        <div class="mt-6 pt-4 border-t border-slate-100">
+            {{ $applications->links() }}
         </div>
-    </div>
-</div>
-@endsection
+        @endif
+    </x-ui.panel>
+</x-app-layout>

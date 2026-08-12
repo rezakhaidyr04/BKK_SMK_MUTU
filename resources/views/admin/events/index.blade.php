@@ -16,6 +16,30 @@
         <x-ui.stat-card label="Acara Selesai" :value="\App\Models\Event::where('start_time', '<', now())->count()" icon="check" color="slate" />
     </div>
 
+    <div class="ui-filter-bar">
+        <form method="GET" action="{{ route('admin.events.index') }}" class="grid gap-4 md:grid-cols-4 w-full">
+            <div class="ui-filter-field md:col-span-2">
+                <label class="ui-label">Cari Acara</label>
+                <input type="text" name="search" value="{{ request('search') }}" class="ui-input" placeholder="Judul atau lokasi acara...">
+            </div>
+            <div class="ui-filter-field">
+                <label class="ui-label">Tipe</label>
+                <select name="type" class="ui-select">
+                    <option value="">Semua Tipe</option>
+                    <option value="job_fair"  {{ request('type') === 'job_fair'  ? 'selected' : '' }}>Job Fair</option>
+                    <option value="seminar"   {{ request('type') === 'seminar'   ? 'selected' : '' }}>Seminar</option>
+                    <option value="workshop"  {{ request('type') === 'workshop'  ? 'selected' : '' }}>Workshop</option>
+                    <option value="pelatihan" {{ request('type') === 'pelatihan' ? 'selected' : '' }}>Pelatihan</option>
+                    <option value="lainnya"   {{ request('type') === 'lainnya'   ? 'selected' : '' }}>Lainnya</option>
+                </select>
+            </div>
+            <div class="flex items-end gap-2">
+                <x-ui.btn type="submit">Saring</x-ui.btn>
+                <x-ui.btn variant="secondary" href="{{ route('admin.events.index') }}">Atur Ulang</x-ui.btn>
+            </div>
+        </form>
+    </div>
+
     <x-ui.panel>
         <div class="ui-table-wrap -mx-6 -mt-6">
             <table class="ui-table">
@@ -98,10 +122,8 @@
                 </tbody>
             </table>
         </div>
-        @if($events->hasPages())
         <div class="mt-6 pt-4 border-t border-slate-100">
             {{ $events->links() }}
         </div>
-        @endif
     </x-ui.panel>
 </x-app-layout>
