@@ -26,8 +26,12 @@ class ApplicationPolicy
 
     public function update(User $user, Application $application)
     {
-        // only admin can change application status
-        return $user->role === 'admin';
+        // admin can do anything, handled in before()
+        if ($user->role === 'company' && $user->company) {
+            return $user->company->id === $application->job->company_id;
+        }
+
+        return false;
     }
 
     public function downloadAttachment(User $user, Application $application): bool
