@@ -29,4 +29,9 @@ class ApplicationPolicy
         // only admin can change application status
         return $user->role === 'admin';
     }
+
+    public function downloadAttachment(User $user, Application $application): bool
+    {
+        return $this->view($user, $application);
+    }
 }

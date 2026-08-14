@@ -207,6 +207,8 @@ class CompanyController extends Controller
     // ─────────────────────────────────────────────────────────────
     public function downloadMou(Company $company)
     {
+        $this->authorize('downloadMou', $company);
+
         if (! $company->mou_path) {
             abort(404, 'File MoU tidak ditemukan.');
         }
@@ -221,6 +223,25 @@ class CompanyController extends Controller
                     pathinfo($company->mou_path, PATHINFO_EXTENSION);
 
         return Storage::disk('local')->download($company->mou_path, $fileName);
+    }
+
+    public function downloadLegalDocument(Company $company, string $document)
+    {
+        $this->authorize('downloadLegalDocument', $company);
+
+        $column = match ($document) {
+            'business-license' => 'business_license_path',
+            'operating-license' => 'operating_license_path',
+            'npwp' => 'npwp_path',
+            default => abort(404),
+        };
+
+        $path = $company->{$column};
+        abort_unless($path, 404);
+
+        abort_unless(Storage::disk('private')->exists($path), 404);
+
+        return Storage::disk('private')->download($path);
     }
 
     // ─────────────────────────────────────────────────────────────

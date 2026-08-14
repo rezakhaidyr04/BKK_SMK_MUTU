@@ -72,17 +72,17 @@ class ProfileController extends Controller
         ]);
 
         if ($request->hasFile('business_license')) {
-            $path = $request->file('business_license')->storePubliclyAs(
+            $path = $request->file('business_license')->storeAs(
                 "company_verifications/{$company->id}", 'business_license_' . time() . '.' . $request->file('business_license')->getClientOriginalExtension(),
-                ['disk' => 'public']
+                'private'
             );
             $company->business_license_path = $path;
         }
 
         if ($request->hasFile('operating_license')) {
-            $path2 = $request->file('operating_license')->storePubliclyAs(
+            $path2 = $request->file('operating_license')->storeAs(
                 "company_verifications/{$company->id}", 'operating_license_' . time() . '.' . $request->file('operating_license')->getClientOriginalExtension(),
-                ['disk' => 'public']
+                'private'
             );
             $company->operating_license_path = $path2;
         }

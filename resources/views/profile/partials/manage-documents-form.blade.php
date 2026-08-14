@@ -30,7 +30,7 @@
                             </div>
                             <div class="min-w-0">
                                 <p class="font-bold text-slate-800 text-sm truncate">{{ $doc->document_type }}</p>
-                                <a href="{{ asset('storage/' . $doc->file_path) }}" target="_blank" class="text-xs text-blue-600 hover:text-blue-700 font-semibold hover:underline truncate block max-w-xs sm:max-w-md">
+                                <a href="{{ route('documents.download', $doc) }}" class="text-xs text-blue-600 hover:text-blue-700 font-semibold hover:underline truncate block max-w-xs sm:max-w-md">
                                     {{ $doc->original_name }}
                                 </a>
                             </div>

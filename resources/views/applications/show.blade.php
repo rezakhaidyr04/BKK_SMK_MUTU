@@ -1,5 +1,8 @@
 <x-app-layout>
-    <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+    <x-slot name="header">
+        <x-ui.page-header title="Detail Lamaran" subtitle="{{ $application->job->title }} - {{ $application->job->company_name ?? 'Perusahaan' }}" />
+    </x-slot>
+    <div class="min-h-screen">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
@@ -64,8 +67,8 @@
                     @if($application->attachment_path)
                     <div class="rounded-xl bg-white p-6 shadow-lg border border-gray-100">
                         <h2 class="text-lg font-bold text-gray-900 mb-3">Lampiran</h2>
-                        <a href="{{ asset('storage/' . $application->attachment_path) }}" target="_blank" class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
-                            Buka {{ $application->attachment_name ?? 'Lampiran' }}
+                        <a href="{{ route('applications.attachment.download', $application) }}" class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+                            Unduh {{ $application->attachment_name ?? 'Lampiran' }}
                         </a>
                     </div>
                     @endif

@@ -1,4 +1,7 @@
 <x-app-layout>
+    <x-slot name="header">
+        <x-ui.page-header title="Pembuat CV" subtitle="Buat CV yang rapi dan siap untuk rekruter." />
+    </x-slot>
     @push('styles')
     <style>
         [x-cloak] { display: none !important; }

@@ -1,30 +1,14 @@
-<x-app-layout :full-bleed="true">
-    <div class="page-shell">
-        <div class="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-2xl">
-            <div class="absolute inset-0 bg-black opacity-10"></div>
-            <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h1 class="text-3xl font-bold text-white mb-2">{{ $job->title }}</h1>
-                        <p class="text-purple-100">{{ $job->company_name ?? '-' }}</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <a href="{{ route('admin.jobs.edit', $job) }}"
-                           class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-purple-700 text-sm font-semibold rounded-xl hover:bg-purple-50 transition shadow-lg">
-                            Edit
-                        </a>
-                        <a href="{{ route('admin.jobs.index') }}"
-                           class="inline-flex items-center px-5 py-2.5 border border-white/30 text-white text-sm font-semibold rounded-xl hover:bg-white/10 transition">
-                            ← Kembali
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+<x-app-layout>
+    <x-slot name="header">
+        <x-ui.page-header title="{{ $job->title }}" subtitle="{{ $job->company_name ?? '-' }}">
+            <x-slot:actions>
+                <x-ui.btn href="{{ route('admin.jobs.edit', $job) }}" variant="white" size="sm">Edit</x-ui.btn>
+                <x-ui.btn href="{{ route('admin.jobs.index') }}" variant="white" size="sm">← Kembali</x-ui.btn>
+            </x-slot:actions>
+        </x-ui.page-header>
+    </x-slot>
 
-        <div class="page-container page-section">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Info Sidebar -->
                 <div class="lg:col-span-1 space-y-4">
                     <div class="bg-white rounded-2xl shadow-lg p-5 space-y-3 text-sm">
@@ -129,7 +113,7 @@
                                         <p class="text-xs font-semibold text-gray-600 mb-2">Kelengkapan Berkas:</p>
                                         <div class="flex flex-wrap gap-2">
                                             @foreach($application->user->documents as $doc)
-                                                <a href="{{ asset('storage/' . $doc->file_path) }}" target="_blank" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-gray-100 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 text-xs transition">
+                                                <a href="{{ route('documents.download', $doc) }}" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-gray-100 text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 text-xs transition">
                                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
                                                     </svg>
@@ -148,6 +132,4 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 </x-app-layout>

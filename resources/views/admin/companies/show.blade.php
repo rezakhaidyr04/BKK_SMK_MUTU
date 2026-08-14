@@ -1,65 +1,20 @@
-<x-app-layout :full-bleed="true">
-    <div class="page-shell">
-        {{-- Header --}}
-        <div class="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-2xl">
-            <div class="absolute inset-0 bg-black opacity-10"></div>
-            <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="flex items-start justify-between gap-4">
-                    <div class="flex-1">
-                        <h1 class="text-3xl font-bold text-white mb-2">Detail Perusahaan</h1>
-                        <p class="text-purple-100 text-lg font-semibold">{{ $company->name }}</p>
-                        <div class="flex items-center gap-3 mt-3 flex-wrap">
-                            @if($company->verification_status === 'verified')
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-full">
-                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                Disetujui
-                            </span>
-                            @elseif($company->verification_status === 'rejected')
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-red-500 text-white text-xs font-bold rounded-full">
-                                Ditolak
-                            </span>
-                            @else
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-400 text-white text-xs font-bold rounded-full">
-                                Menunggu
-                            </span>
-                            @endif
+<x-app-layout>
+    <x-slot name="header">
+        <x-ui.page-header title="Detail Perusahaan" subtitle="{{ $company->name }}">
+            <x-slot:actions>
+                <x-ui.status-badge :status="$company->verification_status ?? ($company->is_verified ? 'verified' : 'pending')" />
+                <x-ui.btn href="{{ route('admin.companies.edit', $company) }}" variant="white" size="sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                    Edit
+                </x-ui.btn>
+                <x-ui.btn href="{{ route('admin.companies.index') }}" variant="white" size="sm">← Kembali</x-ui.btn>
+            </x-slot:actions>
+        </x-ui.page-header>
+    </x-slot>
 
-                            @if($company->user_id)
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">
-                                Ada Akun Login
-                            </span>
-                            @else
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 text-purple-100 text-xs font-semibold rounded-full">
-                                Belum Ada Akun
-                            </span>
-                            @endif
-
-                            @if($company->mou_path)
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">
-                                Ada MoU
-                            </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3 flex-shrink-0">
-                        <a href="{{ route('admin.companies.edit', $company) }}"
-                           class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-purple-700 text-sm font-semibold rounded-xl hover:bg-purple-50 transition shadow-lg">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                            </svg>
-                            Edit
-                        </a>
-                        <a href="{{ route('admin.companies.index') }}"
-                           class="inline-flex items-center px-5 py-2.5 border border-white/30 text-white text-sm font-semibold rounded-xl hover:bg-white/10 transition">
-                            ← Kembali
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="page-container page-section">
+    <div class="page-container page-section">
 
             {{-- ═══════════════════════════════════════════════════════
                  ONE-TIME PASSWORD PANEL — Tampil SEKALI, lalu hilang
@@ -433,14 +388,14 @@
                             @if($company->business_license_path)
                             <div class="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg">
                                 <span class="text-sm text-gray-700">Izin Usaha (SIUP)</span>
-                                <a href="{{ asset('storage/' . $company->business_license_path) }}" target="_blank"
+                                <a href="{{ route('admin.companies.documents.download', [$company, 'business-license']) }}"
                                    class="text-xs text-indigo-600 font-semibold hover:underline">Lihat →</a>
                             </div>
                             @endif
                             @if($company->operating_license_path)
                             <div class="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg">
                                 <span class="text-sm text-gray-700">Izin Operasional</span>
-                                <a href="{{ asset('storage/' . $company->operating_license_path) }}" target="_blank"
+                                <a href="{{ route('admin.companies.documents.download', [$company, 'operating-license']) }}"
                                    class="text-xs text-indigo-600 font-semibold hover:underline">Lihat →</a>
                             </div>
                             @endif
@@ -478,7 +433,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
     {{-- Reject Modal --}}
     <x-ui.modal id="rejectModal" title="Tolak Verifikasi">

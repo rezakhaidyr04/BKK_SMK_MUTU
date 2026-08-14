@@ -59,7 +59,7 @@ class CvBuilderController extends Controller
         $pdf = PDF::loadView('cv.templates.' . $request->input('template'), $data)
             ->setPaper('a4', 'portrait');
 
-        Storage::disk('public')->put($fileName, $pdf->output());
+        Storage::disk('private')->put($fileName, $pdf->output());
 
         $cvFile = CvFile::create([
             'user_id' => Auth::id(),
@@ -72,26 +72,21 @@ class CvBuilderController extends Controller
 
     public function download(CvFile $cvFile)
     {
-        // Authorization check
-        if ($cvFile->user_id !== Auth::id()) {
-            abort(403);
-        }
+        $this->authorize('view', $cvFile);
 
-        if (!Storage::disk('public')->exists($cvFile->file_path)) {
+        if (!Storage::disk('private')->exists($cvFile->file_path)) {
             return back()->with('error', 'File CV tidak ditemukan.');
         }
 
-        return Storage::disk('public')->download($cvFile->file_path);
+        return Storage::disk('private')->download($cvFile->file_path);
     }
 
     public function destroy(CvFile $cvFile)
     {
-        if ($cvFile->user_id !== Auth::id()) {
-            abort(403);
-        }
+        $this->authorize('view', $cvFile);
 
-        if (Storage::disk('public')->exists($cvFile->file_path)) {
-            Storage::disk('public')->delete($cvFile->file_path);
+        if (Storage::disk('private')->exists($cvFile->file_path)) {
+            Storage::disk('private')->delete($cvFile->file_path);
         }
         
         $cvFile->delete();

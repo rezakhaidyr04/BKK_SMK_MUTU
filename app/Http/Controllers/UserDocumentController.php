@@ -16,7 +16,7 @@ class UserDocumentController extends Controller
         ]);
 
         $file = $request->file('file');
-        $path = $file->store('user_documents', 'public');
+        $path = $file->store('user_documents', 'private');
 
         UserDocument::create([
             'user_id' => auth()->id(),
@@ -30,16 +30,26 @@ class UserDocumentController extends Controller
 
     public function destroy(UserDocument $document)
     {
-        if ($document->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $this->authorize('view', $document);
 
-        if (Storage::disk('public')->exists($document->file_path)) {
-            Storage::disk('public')->delete($document->file_path);
+        if (Storage::disk('private')->exists($document->file_path)) {
+            Storage::disk('private')->delete($document->file_path);
         }
 
         $document->delete();
 
         return redirect()->back()->with('success', 'Dokumen berhasil dihapus.');
+    }
+
+    public function download(UserDocument $document)
+    {
+        $this->authorize('view', $document);
+
+        abort_unless(Storage::disk('private')->exists($document->file_path), 404);
+
+        return Storage::disk('private')->download(
+            $document->file_path,
+            $document->original_name ?: basename($document->file_path)
+        );
     }
 }

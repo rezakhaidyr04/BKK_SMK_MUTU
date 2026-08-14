@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ApplicationController extends Controller
 {
@@ -89,5 +90,19 @@ class ApplicationController extends Controller
 
         return redirect()->route('applications.index')
             ->with('success', 'Lamaran berhasil ditarik.');
+    }
+
+    public function downloadAttachment(Application $application)
+    {
+        $this->authorize('downloadAttachment', $application);
+
+        abort_unless($application->attachment_path, 404);
+
+        abort_unless(Storage::disk('private')->exists($application->attachment_path), 404);
+
+        return Storage::disk('private')->download(
+            $application->attachment_path,
+            $application->attachment_name ?: basename($application->attachment_path)
+        );
     }
 }

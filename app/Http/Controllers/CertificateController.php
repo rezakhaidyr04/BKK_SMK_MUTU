@@ -27,7 +27,7 @@ class CertificateController extends Controller
             'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
 
-        $filePath = $request->file('file')->store('certificates', 'public');
+        $filePath = $request->file('file')->store('certificates', 'private');
 
         Certificate::create([
             'user_id' => Auth::id(),
@@ -42,18 +42,23 @@ class CertificateController extends Controller
 
     public function destroy(Certificate $certificate)
     {
-        // Authorization check
-        if ($certificate->user_id !== Auth::id()) {
-            abort(403);
-        }
+        $this->authorize('view', $certificate);
 
-        // Delete file
-        if (Storage::disk('public')->exists($certificate->file_path)) {
-            Storage::disk('public')->delete($certificate->file_path);
+        if (Storage::disk('private')->exists($certificate->file_path)) {
+            Storage::disk('private')->delete($certificate->file_path);
         }
 
         $certificate->delete();
 
         return back()->with('success', 'Sertifikat berhasil dihapus.');
+    }
+
+    public function download(Certificate $certificate)
+    {
+        $this->authorize('view', $certificate);
+
+        abort_unless(Storage::disk('private')->exists($certificate->file_path), 404);
+
+        return Storage::disk('private')->download($certificate->file_path);
     }
 }

@@ -137,7 +137,7 @@ class JobController extends Controller
         $attachmentSize = null;
 
         if ($attachment) {
-            $attachmentPath = $attachment->store("applications", "public");
+            $attachmentPath = $attachment->store("applications", "private");
             $attachmentName = $attachment->getClientOriginalName();
             $attachmentMime = $attachment->getClientMimeType();
             $attachmentSize = $attachment->getSize();

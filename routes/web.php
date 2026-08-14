@@ -63,6 +63,7 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
 
     // Documents
     Route::post("/documents", [\App\Http\Controllers\UserDocumentController::class, "store"])->name("documents.store");
+    Route::get("/documents/{document}/download", [\App\Http\Controllers\UserDocumentController::class, "download"])->name("documents.download");
     Route::delete("/documents/{document}", [\App\Http\Controllers\UserDocumentController::class, "destroy"])->name("documents.destroy");
 
     Route::get('/notifications/mark-read', function () {
@@ -103,6 +104,10 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
         SuratPengantarController::class,
         "download",
     ])->name("applications.surat-pengantar");
+    Route::get("/applications/{application}/attachment", [
+        ApplicationController::class,
+        "downloadAttachment",
+    ])->name("applications.attachment.download");
 
     Route::delete("/applications/{application}", [
         ApplicationController::class,
@@ -141,6 +146,7 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
     Route::post("/certificates", [CertificateController::class, "store"])->name(
         "certificates.store",
     );
+    Route::get("/certificates/{certificate}/download", [CertificateController::class, "download"])->name("certificates.download");
     Route::delete("/certificates/{certificate}", [
         CertificateController::class,
         "destroy",
@@ -216,6 +222,11 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
                 App\Http\Controllers\Admin\CompanyController::class,
                 "downloadMou",
             ])->name("companies.mou.download");
+
+            Route::get("companies/{company}/documents/{document}/download", [
+                App\Http\Controllers\Admin\CompanyController::class,
+                "downloadLegalDocument",
+            ])->name("companies.documents.download");
 
             // Create account for approved company (Phase 3 — placeholder terdaftar di sini)
             Route::post("companies/{company}/create-account", [
