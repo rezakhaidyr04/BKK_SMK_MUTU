@@ -8,8 +8,8 @@ class ApplicationRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        // Students and Alumni can apply
-        return in_array($this->user()?->role, ['student', 'alumni'], true);
+        // Jobseekers can apply
+        return $this->user()?->role === 'jobseeker';
     }
 
     public function rules(): array

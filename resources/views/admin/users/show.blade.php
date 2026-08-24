@@ -1,32 +1,17 @@
-<x-app-layout :full-bleed="true">
-    <div class="page-shell">
-        <div class="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-2xl">
-            <div class="absolute inset-0 bg-black opacity-10"></div>
-            <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h1 class="text-3xl font-bold text-white mb-2">Detail Pengguna</h1>
-                        <p class="text-purple-100">{{ $user->name }}</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <a href="{{ route('admin.users.edit', $user) }}"
-                           class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-purple-700 text-sm font-semibold rounded-xl hover:bg-purple-50 transition shadow-lg">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                            </svg>
-                            Edit
-                        </a>
-                        <a href="{{ route('admin.users.index') }}"
-                           class="inline-flex items-center px-5 py-2.5 border border-white/30 text-white text-sm font-semibold rounded-xl hover:bg-white/10 transition">
-                            ← Kembali
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="page-container page-section">
+<x-app-layout>
+    <x-slot name="header">
+        <x-ui.page-header title="Detail Pengguna" subtitle="{{ $user->name }}">
+            <x-slot:actions>
+                <x-ui.btn href="{{ route('admin.users.edit', $user) }}" variant="white" size="sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                    Edit
+                </x-ui.btn>
+                <x-ui.btn href="{{ route('admin.users.index') }}" variant="white" size="sm">← Kembali</x-ui.btn>
+            </x-slot:actions>
+        </x-ui.page-header>
+    </x-slot>
             <div class="max-w-3xl mx-auto space-y-6">
                 <!-- Profil Card -->
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
@@ -72,5 +57,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </x-app-layout>

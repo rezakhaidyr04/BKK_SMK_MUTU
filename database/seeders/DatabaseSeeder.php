@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             ], [
                 'name' => 'Ahmad nur harry',
                 'password' => \Illuminate\Support\Facades\Hash::make('password123'),
-                'role' => 'student',
+                'role' => 'jobseeker',
                 'phone' => '081234560002',
                 'bio' => 'Lulusan SMK Akuntansi dengan pengalaman magang dan keahlian Microsoft Office serta pembukuan sederhana.',
             ]);
@@ -85,8 +85,8 @@ class DatabaseSeeder extends Seeder
                     'custom_experience' => $cvData['experience'],
                 ]))->setPaper('a4', 'portrait');
 
-                $fileName = 'cv/ahmad_nur_harry_modern.pdf';
-                \Illuminate\Support\Facades\Storage::disk('public')->put($fileName, $pdf->output());
+                $fileName = 'cv-files/ahmad_nur_harry_modern.pdf';
+                \Illuminate\Support\Facades\Storage::disk('private')->put($fileName, $pdf->output());
 
                 if (class_exists(\App\Models\CvFile::class)) {
                     \App\Models\CvFile::updateOrCreate([

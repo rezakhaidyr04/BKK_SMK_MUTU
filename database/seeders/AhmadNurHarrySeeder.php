@@ -23,7 +23,7 @@ class AhmadNurHarrySeeder extends Seeder
         ], [
             'name' => 'Ahmad nur harry',
             'password' => Hash::make('password123'),
-            'role' => 'student',
+            'role' => 'jobseeker',
             'phone' => '081234560002',
             'bio' => 'Lulusan SMK Akuntansi dengan pengalaman magang dan keahlian Microsoft Office serta pembukuan sederhana.',
             'avatar' => null,
@@ -87,8 +87,8 @@ class AhmadNurHarrySeeder extends Seeder
                 'custom_experience' => $cvData['experience'],
             ]))->setPaper('a4', 'portrait');
 
-            $fileName = 'cv/ahmad_nur_harry_modern.pdf';
-            Storage::disk('public')->put($fileName, $pdf->output());
+            $fileName = 'cv-files/ahmad_nur_harry_modern.pdf';
+            Storage::disk('private')->put($fileName, $pdf->output());
 
             // record CvFile if model exists
             if (class_exists($cvFileModel)) {

@@ -87,22 +87,20 @@ body {
     padding-bottom: 2rem;
 }
 
-/* Page Hero */
+/* Page Hero — matches app layout header gradient exactly */
 .ui-page-hero {
-    background: linear-gradient(135deg, rgba(37,99,235,0.98) 0%, rgba(59,130,246,0.9) 45%, rgba(96,165,250,0.8) 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, #1e293b 0%, #1e3a8a 60%, #312e81 100%);
     position: relative;
     overflow: hidden;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
 }
 
 .ui-page-hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 15% 25%, rgba(255,255,255,0.25) 0%, transparent 30%),
-                radial-gradient(circle at 85% 15%, rgba(59,130,246,0.18) 0%, transparent 35%);
+    background: radial-gradient(circle at 15% 50%, rgba(99,102,241,0.25) 0%, transparent 55%),
+                radial-gradient(circle at 85% 20%, rgba(59,130,246,0.15) 0%, transparent 50%);
     pointer-events: none;
 }
 
@@ -162,12 +160,18 @@ body {
     position: relative;
     max-width: 80rem;
     margin: 0 auto;
-    padding: 2.5rem 1rem;
+    padding: 1.75rem 1rem;
 }
 
 @media (min-width: 640px) {
     .ui-page-hero-inner {
-        padding: 3rem 1.5rem;
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .ui-page-hero-inner {
+        padding: 2.25rem 2rem;
     }
 }
 
@@ -196,23 +200,24 @@ body {
 }
 
 .ui-page-hero-title {
-    font-size: 2.25rem;
-    font-weight: 800;
-    line-height: 1.08;
-    letter-spacing: -0.02em;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #ffffff;
     margin: 0;
 }
 
 @media (min-width: 1024px) {
-    .ui-page-hero-title { font-size: 3.5rem; }
+    .ui-page-hero-title { font-size: 1.375rem; }
 }
 
 .ui-page-hero-subtitle {
-    margin-top: 0.75rem;
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.88);
-    max-width: 44rem;
-    line-height: 1.7;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: rgba(219,234,254,0.85);
+    max-width: 56rem;
+    line-height: 1.6;
 }
 
 .ui-card {
@@ -1147,10 +1152,8 @@ body {
 
 /* Standardized headings */
 .ui-section-title { font-size: 1.5rem; font-weight: 700; color: var(--color-text); }
-.page-title,
-.ui-page-hero-title { font-size: 2rem; font-weight: 800; color: var(--color-heading); line-height: 1.1; margin: 0; }
-.page-subtitle,
-.ui-page-hero-subtitle { font-size: 1rem; font-weight: 500; color: var(--color-subheading); line-height: 1.7; margin-top: 0.5rem; }
+.page-title { font-size: 2rem; font-weight: 800; color: var(--color-heading); line-height: 1.1; margin: 0; }
+.page-subtitle { font-size: 1rem; font-weight: 500; color: var(--color-subheading); line-height: 1.7; margin-top: 0.5rem; }
 .ui-subtitle { font-size: 1.125rem; font-weight: 600; color: #334155; }
 
 /* Company initials / avatar used in job cards */

@@ -10,9 +10,9 @@ class StudentProfileCvFieldsTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_student_profile_can_store_cv_fields(): void
+    public function test_jobseeker_profile_can_store_cv_fields(): void
     {
-        $user = User::factory()->create(['role' => 'student']);
+        $user = User::factory()->create(['role' => 'jobseeker']);
         $user->student()->create(['nisn' => '1234567890']);
 
         $response = $this

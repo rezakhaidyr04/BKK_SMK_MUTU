@@ -1,4 +1,7 @@
 <x-app-layout>
+    <x-slot name="header">
+        <x-ui.page-header title="{{ $student->user->name }}" subtitle="Detail profil dan penempatan siswa." />
+    </x-slot>
     <div class="page-shell">
         {{-- Back Button --}}
         <div class="page-container pt-6">

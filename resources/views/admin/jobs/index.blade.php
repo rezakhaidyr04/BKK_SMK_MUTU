@@ -1,16 +1,17 @@
 <x-app-layout :full-bleed="true">
-    <div class="page-shell">
-        <x-ui.page-hero title="Daftar Lowongan" subtitle="Kelola lowongan kerja yang diposting oleh perusahaan.">
-            <x-slot name="actions">
+    <x-slot name="header">
+        <x-ui.page-header title="Daftar Lowongan" subtitle="Kelola lowongan kerja yang diposting oleh perusahaan.">
+            <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.jobs.create') }}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                     </svg>
                     Tambah Lowongan
                 </x-ui.btn>
-            </x-slot>
-        </x-ui.page-hero>
-
+            </x-slot:actions>
+        </x-ui.page-header>
+    </x-slot>
+    <div class="page-shell">
         <div class="page-container page-section">
             <!-- Filter -->
             <x-ui.card class="mb-6">

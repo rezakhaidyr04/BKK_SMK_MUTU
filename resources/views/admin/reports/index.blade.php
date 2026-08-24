@@ -1,4 +1,7 @@
 <x-app-layout :full-bleed="true">
+<x-slot name="header">
+    <x-ui.page-header title="Laporan & Analitik" subtitle="Ringkasan performa sistem per {{ now()->format('d F Y') }}" />
+</x-slot>
 <div class="min-h-screen bg-slate-50">
 
     {{-- ===== HERO HEADER ===== --}}
@@ -69,14 +72,14 @@
                     <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#f8fafc;border-radius:12px;margin-bottom:10px;">
                         <div style="display:flex;align-items:center;gap:10px;">
                             <div style="width:10px;height:10px;border-radius:50%;background:#3b82f6;flex-shrink:0;"></div>
-                            <span style="font-size:14px;font-weight:500;color:#334155;">Siswa</span>
+                            <span style="font-size:14px;font-weight:500;color:#334155;">Pencari Kerja</span>
                         </div>
                         <span style="font-size:20px;font-weight:800;color:#1e3a8a;">{{ number_format($summary['total_students']) }}</span>
                     </div>
                     <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#f8fafc;border-radius:12px;margin-bottom:10px;">
                         <div style="display:flex;align-items:center;gap:10px;">
                             <div style="width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;"></div>
-                            <span style="font-size:14px;font-weight:500;color:#334155;">Alumni</span>
+                            <span style="font-size:14px;font-weight:500;color:#334155;">Legacy Alumni</span>
                         </div>
                         <span style="font-size:20px;font-weight:800;color:#065f46;">{{ number_format($summary['total_alumni']) }}</span>
                     </div>
@@ -212,7 +215,7 @@
                 </div>
                 @forelse($recentUsers as $user)
                 @php
-                    $colors = ['admin'=>['bg'=>'#f3e8ff','text'=>'#7c3aed'],'student'=>['bg'=>'#dbeafe','text'=>'#1d4ed8'],'alumni'=>['bg'=>'#d1fae5','text'=>'#065f46'],'company'=>['bg'=>'#ffedd5','text'=>'#c2410c']];
+                    $colors = ['admin'=>['bg'=>'#f3e8ff','text'=>'#7c3aed'],'jobseeker'=>['bg'=>'#dbeafe','text'=>'#1d4ed8'],'teacher'=>['bg'=>'#ede9fe','text'=>'#6d28d9'],'company'=>['bg'=>'#ffedd5','text'=>'#c2410c']];
                     $uc = $colors[$user->role] ?? ['bg'=>'#f1f5f9','text'=>'#475569'];
                 @endphp
                 <div style="display:flex;align-items:center;gap:12px;padding:14px 24px;border-bottom:1px solid #f8fafc;transition:background 0.15s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">

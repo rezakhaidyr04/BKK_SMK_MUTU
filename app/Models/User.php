@@ -87,4 +87,24 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserDocument::class);
     }
+
+    public function isJobseeker(): bool
+    {
+        return $this->role === 'jobseeker';
+    }
+
+    public function isCompany(): bool
+    {
+        return $this->role === 'company';
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isTeacher(): bool
+    {
+        return $this->role === 'teacher';
+    }
 }

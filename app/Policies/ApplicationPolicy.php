@@ -19,8 +19,15 @@ class ApplicationPolicy
 
     public function view(User $user, Application $application)
     {
-        // applicant themselves or admin
+        // The applicant themselves
         if ($user->id === $application->user_id) return true;
+
+        // Company user viewing applications for their own job
+        if ($user->role === 'company' && $user->company) {
+            $application->loadMissing('job');
+            return $user->company->id === $application->job?->company_id;
+        }
+
         return false;
     }
 

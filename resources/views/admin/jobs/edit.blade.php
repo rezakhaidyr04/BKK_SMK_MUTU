@@ -1,32 +1,21 @@
-<x-app-layout :full-bleed="true">
-    <div class="page-shell">
-        <div class="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-2xl">
-            <div class="absolute inset-0 bg-black opacity-10"></div>
-            <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h1 class="text-3xl font-bold text-white mb-2">Ubah Lowongan</h1>
-                        <p class="text-purple-100">Perbarui detail lowongan kerja.</p>
-                    </div>
-                    <a href="{{ route('admin.jobs.index') }}"
-                       class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-purple-700 text-sm font-semibold rounded-xl hover:bg-purple-50 transition shadow-lg">
-                        ← Kembali
-                    </a>
-                </div>
-            </div>
-        </div>
+<x-app-layout>
+    <x-slot name="header">
+        <x-ui.page-header title="Ubah Lowongan" subtitle="Perbarui detail lowongan kerja.">
+            <x-slot:actions>
+                <x-ui.btn href="{{ route('admin.jobs.index') }}" variant="white" size="sm">← Kembali</x-ui.btn>
+            </x-slot:actions>
+        </x-ui.page-header>
+    </x-slot>
 
-        <div class="page-container page-section">
-            @if($errors->any())
-            <div class="bg-red-50 border border-red-200 rounded-2xl p-4 mb-6 max-w-3xl mx-auto">
-                <ul class="text-sm text-red-700 space-y-1 list-disc pl-5">
-                    @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
-                </ul>
-            </div>
-            @endif
+    @if($errors->any())
+    <x-ui.alert type="danger" class="mb-6 max-w-3xl mx-auto">
+        <ul class="list-disc pl-4 space-y-1">
+            @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
+        </ul>
+    </x-ui.alert>
+    @endif
 
-            <div class="max-w-3xl mx-auto">
+    <div class="max-w-3xl mx-auto">
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                     <div class="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-indigo-50 to-purple-50">
                         <h3 class="font-bold text-gray-900">Edit Lowongan: {{ $job->title }}</h3>
@@ -117,6 +106,4 @@
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
 </x-app-layout>

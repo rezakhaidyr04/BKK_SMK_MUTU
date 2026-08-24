@@ -1,12 +1,8 @@
 <x-app-layout :full-bleed="true">
+    <x-slot name="header">
+        <x-ui.page-header title="Dasbor Guru" subtitle="Monitoring penempatan kerja siswa & alumni" />
+    </x-slot>
     <div class="page-shell">
-        {{-- Hero Header (Reusable Component) --}}
-        <x-ui.dashboard-hero
-            title="Dasbor Guru"
-            subtitle="Monitoring penempatan kerja siswa & alumni"
-            gradient="from-blue-600 via-teal-600 to-green-600"
-        />
-
         <div class="page-container pt-6">
             <div class="rounded-2xl border border-teal-100 bg-teal-50 px-5 py-4 shadow-sm">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">

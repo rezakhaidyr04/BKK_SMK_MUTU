@@ -1,10 +1,7 @@
 <x-app-layout>
-    <div class="page-shell">
-        <x-ui.dashboard-hero
-            title="Acara Karir"
-            subtitle="Monitoring acara karir dan partisipasi siswa"
-            gradient="from-purple-600 via-pink-600 to-red-600"
-        />
+    <x-slot name="header">
+        <x-ui.page-header title="Acara Karir" subtitle="Monitoring acara karir dan partisipasi siswa." />
+    </x-slot>
 
         <div class="page-container page-section">
             {{-- Statistics Cards --}}

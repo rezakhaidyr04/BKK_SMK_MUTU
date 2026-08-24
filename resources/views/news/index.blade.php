@@ -1,25 +1,10 @@
-﻿<x-app-layout :full-bleed="true">
+<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <!-- Hero Section -->
-        <div class="relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 overflow-hidden">
-            <div class="absolute inset-0 bg-black/20"></div>
-            <div class="absolute inset-0">
-                <div class="absolute top-0 left-0 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-                <div class="absolute bottom-0 right-0 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
-            </div>
-            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div class="text-center">
-                    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white text-sm font-medium mb-6">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
-                        </svg>
-                        Berita & Artikel Karir
-                    </span>
-                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Berita Karir Terbaru</h1>
-                    <p class="text-lg text-blue-100 max-w-2xl mx-auto">Informasi terbaru seputar dunia kerja, tips karir, dan pengumuman dari BKK SMK MUTU untuk membantu Anda sukses.</p>
-                </div>
-            </div>
-        </div>
+        <x-ui.page-hero
+            title="Berita Karir Terbaru"
+            subtitle="Informasi terbaru seputar dunia kerja, tips karir, dan pengumuman dari BKK SMK MUTU untuk membantu Anda sukses."
+            badge="Berita & Artikel Karir"
+        />
 
         <div class="page-container page-section">
             @if($news->count() > 0)

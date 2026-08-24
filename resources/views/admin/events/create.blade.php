@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-ui.page-header title="Buat Acara Baru" subtitle="Jadwalkan acara karir untuk siswa dan alumni.">
+        <x-ui.page-header title="Buat Acara Baru" subtitle="Jadwalkan acara karier untuk pencari kerja, alumni, dan komunitas sekolah.">
             <x-slot:actions>
                 <x-ui.btn variant="secondary" href="{{ route('admin.events.index') }}" size="sm">
                     Kembali

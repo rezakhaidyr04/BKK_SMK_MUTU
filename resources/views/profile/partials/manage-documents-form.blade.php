@@ -75,7 +75,7 @@
         </div>
 
         <div class="pt-2">
-            <x-primary-button class="rounded-xl px-5 py-2.5 bg-blue-600 hover:bg-blue-700 shadow-sm transition w-full justify-center">{{ __('Unggah Berkas') }}</x-primary-button>
+            <x-ui.btn type="submit" class="w-full justify-center">{{ __('Unggah Berkas') }}</x-ui.btn>
         </div>
     </form>
 </section>

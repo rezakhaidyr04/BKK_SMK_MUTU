@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-ui.page-header title="Manajemen Acara" subtitle="Kelola acara karir, job fair, dan seminar untuk siswa & alumni.">
+        <x-ui.page-header title="Manajemen Acara" subtitle="Kelola acara karier, job fair, dan seminar untuk pencari kerja dan komunitas sekolah.">
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.events.create') }}" size="sm">
                     Buat Acara
@@ -115,7 +115,7 @@
                     @empty
                     <tr>
                         <td colspan="6">
-                            <x-ui.empty-state title="Belum ada acara" description="Buat acara karir pertama untuk siswa dan alumni." />
+                            <x-ui.empty-state title="Belum ada acara" description="Buat acara karier pertama untuk pencari kerja dan komunitas sekolah." />
                         </td>
                     </tr>
                     @endforelse

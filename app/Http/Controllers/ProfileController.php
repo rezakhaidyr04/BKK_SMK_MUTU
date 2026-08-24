@@ -17,7 +17,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        if ($user->role === 'company') {
+        if ($user->isCompany()) {
             return Redirect::route('company.profile.edit');
         }
 
@@ -30,7 +30,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        if ($user->role === 'company') {
+        if ($user->isCompany()) {
             return Redirect::route('company.profile.edit')->with('error', 'Silakan kelola profil perusahaan melalui halaman profil perusahaan.');
         }
 
@@ -45,7 +45,7 @@ class ProfileController extends Controller
 
             $processor = new ImageProcessor(quality: 82, maxWidth: 320, maxHeight: 320);
             $avatarName = 'avatar-' . $user->id . '-' . time();
-            $path = $processor->store($request->file("avatar"), 'avatars', $avatarName);
+            $path = $processor->store($request->file("avatar"), 'profile-photos', $avatarName);
 
             if ($path) {
                 $validated["avatar"] = $path;
@@ -84,13 +84,10 @@ class ProfileController extends Controller
         }
         $user->skills()->sync($skillIds);
 
-        // Simpan data akademik (student/alumni)
-        if (in_array($user->role, ["student", "alumni"])) {
+        // Simpan data diri & CV pencari kerja
+        if ($user->isJobseeker()) {
             $studentData = array_filter(
                 [
-                    "major" => $request->input("major"),
-                    "graduation_year" =>
-                        $request->input("graduation_year") ?: null,
                     "address" => $request->input("address"),
                     "linkedin_url" => $request->input("linkedin_url"),
                     "portfolio_url" => $request->input("portfolio_url"),

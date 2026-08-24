@@ -14,7 +14,7 @@ class RestoreAdminAccounts extends Command
     protected $signature = 'db:restore-admin
                             {--force : Paksa reset password ke default}';
 
-    protected $description = 'Memulihkan akun admin, guru, company, dan siswa default jika terhapus';
+    protected $description = 'Memulihkan akun admin, guru, company, dan pencari kerja default jika terhapus';
 
     private array $defaultAccounts = [
         [
@@ -69,13 +69,13 @@ class RestoreAdminAccounts extends Command
             'email' => 'siswa@bkk.com',
             'name' => 'Siswa Demo BKK',
             'password' => 'password123',
-            'role' => 'student',
+            'role' => 'jobseeker',
         ],
         [
             'email' => 'budi.santoso@siswa.bkk.com',
             'name' => 'Budi Santoso',
             'password' => 'password123',
-            'role' => 'student',
+            'role' => 'jobseeker',
             'student' => [
                 'nisn' => '0012345601',
                 'major' => 'Teknik Mesin',
@@ -87,7 +87,7 @@ class RestoreAdminAccounts extends Command
             'email' => 'siti.rahayu@siswa.bkk.com',
             'name' => 'Siti Rahayu',
             'password' => 'password123',
-            'role' => 'student',
+            'role' => 'jobseeker',
             'student' => [
                 'nisn' => '0012345602',
                 'major' => 'Akuntansi',
@@ -99,7 +99,7 @@ class RestoreAdminAccounts extends Command
             'email' => 'rizky.pratama@siswa.bkk.com',
             'name' => 'Rizky Pratama',
             'password' => 'password123',
-            'role' => 'student',
+            'role' => 'jobseeker',
             'student' => [
                 'nisn' => '0012345603',
                 'major' => 'Rekayasa Perangkat Lunak',
@@ -111,7 +111,7 @@ class RestoreAdminAccounts extends Command
             'email' => 'dewi.anggraini@siswa.bkk.com',
             'name' => 'Dewi Anggraini',
             'password' => 'password123',
-            'role' => 'student',
+            'role' => 'jobseeker',
             'student' => [
                 'nisn' => '0012345604',
                 'major' => 'Perhotelan',
@@ -123,7 +123,7 @@ class RestoreAdminAccounts extends Command
             'email' => 'andi.kurniawan@siswa.bkk.com',
             'name' => 'Andi Kurniawan',
             'password' => 'password123',
-            'role' => 'student',
+            'role' => 'jobseeker',
             'student' => [
                 'nisn' => '0012345605',
                 'major' => 'Teknik Komputer dan Jaringan',
@@ -135,7 +135,7 @@ class RestoreAdminAccounts extends Command
             'email' => 'maya.fitriani@siswa.bkk.com',
             'name' => 'Maya Fitriani',
             'password' => 'password123',
-            'role' => 'student',
+            'role' => 'jobseeker',
             'student' => [
                 'nisn' => '0012345606',
                 'major' => 'Tata Boga',
@@ -147,7 +147,7 @@ class RestoreAdminAccounts extends Command
             'email' => 'dimas.setiawan@siswa.bkk.com',
             'name' => 'Dimas Setiawan',
             'password' => 'password123',
-            'role' => 'student',
+            'role' => 'jobseeker',
             'student' => [
                 'nisn' => '0012345607',
                 'major' => 'Teknik Otomotif',
@@ -159,7 +159,7 @@ class RestoreAdminAccounts extends Command
             'email' => 'nurul.hidayah@siswa.bkk.com',
             'name' => 'Nurul Hidayah',
             'password' => 'password123',
-            'role' => 'student',
+            'role' => 'jobseeker',
             'student' => [
                 'nisn' => '0012345608',
                 'major' => 'Administrasi Perkantoran',
@@ -193,7 +193,7 @@ class RestoreAdminAccounts extends Command
 
     private function ensureRolesExist(): void
     {
-        foreach (['admin', 'teacher', 'student', 'alumni', 'company'] as $role) {
+        foreach (['admin', 'teacher', 'jobseeker', 'company'] as $role) {
             Role::firstOrCreate(['name' => $role, 'guard_name' => 'web']);
         }
 
@@ -253,7 +253,7 @@ class RestoreAdminAccounts extends Command
             }
         }
 
-        if ($account['role'] === 'student') {
+        if ($account['role'] === 'jobseeker') {
             $student = Student::withTrashed()->where('user_id', $user->id)->first();
             $studentData = $account['student'] ?? [];
 

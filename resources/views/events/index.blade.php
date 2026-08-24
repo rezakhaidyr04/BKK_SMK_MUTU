@@ -1,28 +1,12 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <!-- Header -->
-        <div class="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-2xl">
-            <div class="absolute inset-0 bg-black opacity-10"></div>
-            <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h1 class="text-3xl font-bold text-white mb-2">Acara Karir</h1>
-                        <p class="text-purple-100">Job fair, workshop, seminar, dan kegiatan pengembangan karir.</p>
-                    </div>
-                    @auth
-                    <a href="{{ route('events.my') }}"
-                       class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-purple-700 text-sm font-semibold rounded-xl hover:bg-purple-50 transition shadow-lg">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                        </svg>
-                        Acara Saya
-                    </a>
-                    @endauth
-                </div>
-            </div>
-        </div>
-
+        <x-ui.page-hero title="Acara Karir" subtitle="Job fair, workshop, seminar, dan kegiatan pengembangan karir.">
+            <x-slot:actions>
+                @auth
+                <x-ui.btn href="{{ route('events.my') }}" variant="secondary" size="sm">Acara Saya</x-ui.btn>
+                @endauth
+            </x-slot:actions>
+        </x-ui.page-hero>
         <div class="page-container page-section">
             <!-- Filter Bar -->
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">

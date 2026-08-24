@@ -4,43 +4,46 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\User;
 
 class Phase5PublicRegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    public function company_role_is_not_allowed_via_public_registration(): void
+    public function public_registration_creates_jobseeker_account_by_default(): void
     {
         $response = $this->post('/register', [
-            'name' => 'Test Company',
-            'email' => 'testcompany@example.com',
+            'name' => 'Public Jobseeker',
+            'email' => 'jobseeker@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
-            'role' => 'company',
-            'company_name' => 'PT Test Company',
         ]);
 
-        $response->assertSessionHasErrors('role');
-        $this->assertDatabaseMissing('users', ['email' => 'testcompany@example.com']);
+        $response->assertRedirect();
+        $this->assertDatabaseHas('users', [
+            'email' => 'jobseeker@example.com',
+            'role' => 'jobseeker',
+        ]);
     }
 
     /** @test */
-    public function student_role_is_still_allowed_via_public_registration(): void
+    public function public_registration_does_not_allow_role_escalation_via_role_input(): void
     {
-        $response = $this->post('/register', [
-            'name' => 'Test Student',
-            'email' => 'teststudent@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-            'role' => 'student',
-        ]);
+        foreach (['company', 'student', 'alumni', 'admin', 'teacher', 'invalid'] as $role) {
+            $response = $this->post('/register', [
+                'name' => 'Tampered User',
+                'email' => 'blocked-' . $role . '@example.com',
+                'password' => 'password',
+                'password_confirmation' => 'password',
+                'role' => $role,
+            ]);
 
-        $response->assertRedirect(); // redirect to home
-        $this->assertDatabaseHas('users', [
-            'email' => 'teststudent@example.com',
-            'role' => 'student'
-        ]);
+            $response->assertRedirect();
+            $this->assertDatabaseHas('users', [
+                'email' => 'blocked-' . $role . '@example.com',
+                'role' => 'jobseeker',
+            ]);
+            auth()->logout();
+        }
     }
 }

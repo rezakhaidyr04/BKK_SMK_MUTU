@@ -67,9 +67,14 @@ class ProfileController extends Controller
         }
 
         $validated = $request->validate([
+            'tax_number' => ['nullable', 'string', 'max:100'],
             'business_license' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
             'operating_license' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
         ]);
+
+        if (isset($validated['tax_number'])) {
+            $company->tax_number = $validated['tax_number'];
+        }
 
         if ($request->hasFile('business_license')) {
             $path = $request->file('business_license')->storeAs(
@@ -86,7 +91,6 @@ class ProfileController extends Controller
             );
             $company->operating_license_path = $path2;
         }
-
 
         // mark company as pending verification
         $company->verification_status = 'pending';

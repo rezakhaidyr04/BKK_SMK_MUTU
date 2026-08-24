@@ -1,70 +1,47 @@
-<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Pembuat CV" subtitle="Buat CV yang rapi dan siap untuk rekruter." />
-    </x-slot>
-    @push('styles')
-    <style>
-        [x-cloak] { display: none !important; }
-        /* Preview styling to match PDF templates */
-        .preview-sheet { border-radius: 12px; overflow: hidden; box-shadow: 0 6px 24px rgba(15,23,42,0.06); border:1px solid #e6eef6; background:#fff }
-        .preview-hero { background: linear-gradient(135deg,#1f4f8a,#163b66 60%); color:#fff; padding:18px }
-        .preview-header { display:flex; gap:12px; align-items:center }
-        .preview-avatar { width:64px; height:64px; border-radius:12px; object-fit:cover; border:2px solid rgba(255,255,255,0.12) }
-        .preview-name { font-weight:800; font-size:15px; margin:0 }
-        .preview-headline { font-size:12px; opacity:0.95 }
-        .preview-pill { display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,0.06); color:#fff; font-weight:700; font-size:11px }
-        .preview-section { padding:12px; }
-        .preview-section-title { font-weight:800; color:#163b66; font-size:11px; text-transform:uppercase; margin-bottom:6px }
-        .preview-section-body { color:#334155; font-size:12px; line-height:1.5 }
-        .preview-card { border-radius:10px; border:1px solid #eef6fb; padding:10px; background:#fff }
-        .preview-skill { display:inline-block; background:#eef2ff; color:#1d4ed8; padding:6px 10px; border-radius:999px; font-weight:700; margin:3px }
-        .preview-hr { height:2px; background:#163b66; border:0; margin:12px 0 }
-        .preview-meta { font-size:11px; color:rgba(255,255,255,0.9) }
-    </style>
-    @endpush
-    <div x-data="{
-        template: 'modern',
-        headline: @js($previewData['headline']),
-        summary: @js($previewData['summary']),
-        experience: @js($previewData['experience']),
-        achievement: ''
-    }" class="min-h-screen bg-[radial-gradient(circle_at_top,_#eff6ff_0,_#f8fafc_35%,_#eef2ff_100%)]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between mb-8">
-                <div>
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold mb-3">
-                        ATS Ready · PDF Export · Template Fleksibel
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-hero
+            title="CV Profesional"
+            subtitle="Susun CV yang rapi, konsisten, dan siap dikirim ke perekrut."
+            badge="ATS Ready · PDF Export · 1 Template"
+        >
+            <x-slot:actions>
+                <div class="flex items-center gap-3">
+                    <div class="text-center">
+                        <div class="text-sm font-bold text-white">1</div>
+                        <div class="text-[11px] text-blue-200">Template</div>
                     </div>
-                    <h1 class="text-3xl lg:text-4xl font-bold text-gray-900">Pembuat CV</h1>
-                    <p class="text-gray-600 mt-2 max-w-2xl">Buat CV yang lebih rapi, lebih padat isi, dan lebih enak dilihat perekrut. Jika profil kamu belum lengkap, halaman ini tetap memberi arahan yang jelas supaya hasil akhirnya tidak kosong.</p>
-                </div>
-                <div class="grid grid-cols-3 gap-3 text-center">
-                    <div class="rounded-2xl bg-white border border-blue-100 px-4 py-3 shadow-sm">
-                        <div class="text-lg font-bold text-gray-900">3</div>
-                        <div class="text-xs text-gray-500">Template</div>
+                    <div class="w-px h-8 bg-white/20"></div>
+                    <div class="text-center">
+                        <div class="text-sm font-bold text-white">ATS</div>
+                        <div class="text-[11px] text-blue-200">Siap rekruter</div>
                     </div>
-                    <div class="rounded-2xl bg-white border border-blue-100 px-4 py-3 shadow-sm">
-                        <div class="text-lg font-bold text-gray-900">1x</div>
-                        <div class="text-xs text-gray-500">Klik export</div>
-                    </div>
-                    <div class="rounded-2xl bg-white border border-blue-100 px-4 py-3 shadow-sm">
-                        <div class="text-lg font-bold text-gray-900">PDF</div>
-                        <div class="text-xs text-gray-500">Siap unduh</div>
+                    <div class="w-px h-8 bg-white/20"></div>
+                    <div class="text-center">
+                        <div class="text-sm font-bold text-white">PDF</div>
+                        <div class="text-[11px] text-blue-200">Siap unduh</div>
                     </div>
                 </div>
-            </div>
+            </x-slot:actions>
+        </x-ui.page-hero>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-                <div class="lg:col-span-2 space-y-6">
+        <div x-data="{
+            headline: @js($previewData['headline']),
+            summary: @js($previewData['summary']),
+            experience: @js($previewData['experience']),
+            achievement: ''
+        }" class="page-container page-section">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-8 xl:col-span-9 space-y-6">
                     <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
                         <div class="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
-                            <h2 class="text-xl font-bold text-gray-900">Pilih Template</h2>
-                            <p class="text-sm text-gray-600 mt-1">Pilih gaya yang paling cocok dengan tujuan lamaranmu.</p>
+                            <h2 class="text-xl font-bold text-gray-900">Template CV Standar</h2>
+                            <p class="text-sm text-gray-600 mt-1">Gunakan satu template CV yang rapi, konsisten, dan siap untuk perekrut.</p>
                         </div>
 
-                        <form action="{{ route('cv.generate') }}" method="POST" class="p-6 sm:p-8">
+                        <form action="{{ route('cv.generate') }}" method="POST" class="p-6 sm:p-8 pb-28 sm:pb-8 space-y-5">
                             @csrf
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                 <label class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm">
                                     <input type="checkbox" name="include_photo" value="1" checked class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
                                     Foto profil
@@ -78,67 +55,23 @@
                                     Tampilkan sertifikat
                                 </label>
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                                <label class="cursor-pointer group" @click="template = 'modern'">
-                                    <input type="radio" name="template" value="modern" class="peer hidden" x-model="template" checked>
-                                    <div class="h-full rounded-2xl border-2 border-gray-200 peer-checked:border-blue-600 peer-checked:bg-blue-50/60 p-4 transition shadow-sm group-hover:-translate-y-0.5 group-hover:shadow-md">
-                                        <div class="rounded-xl bg-gradient-to-br from-blue-50 to-sky-100 p-4 h-44 mb-4 overflow-hidden">
-                                            <div class="h-2 w-20 bg-blue-500 rounded-full mb-3"></div>
-                                            <div class="h-2 w-32 bg-blue-200 rounded-full mb-2"></div>
-                                            <div class="h-2 w-24 bg-blue-200 rounded-full mb-6"></div>
-                                            <div class="grid grid-cols-2 gap-2">
-                                                <div class="h-8 rounded-lg bg-white/80"></div>
-                                                <div class="h-8 rounded-lg bg-white/60"></div>
-                                            </div>
-                                        </div>
-                                        <p class="font-semibold text-gray-900">Modern</p>
-                                        <p class="text-xs text-gray-500 mt-1">Tampilan bersih, cocok untuk CV yang terasa segar dan profesional.</p>
-                                    </div>
-                                </label>
+                            <input type="hidden" name="template" value="modern">
 
-                                <label class="cursor-pointer group" @click="template = 'classic'">
-                                    <input type="radio" name="template" value="classic" class="peer hidden" x-model="template">
-                                    <div class="h-full rounded-2xl border-2 border-gray-200 peer-checked:border-blue-600 peer-checked:bg-blue-50/60 p-4 transition shadow-sm group-hover:-translate-y-0.5 group-hover:shadow-md">
-                                        <div class="rounded-xl bg-gradient-to-br from-gray-50 to-gray-200 p-4 h-44 mb-4 overflow-hidden">
-                                            <div class="mx-auto h-16 w-16 rounded-full bg-gray-300 mb-3"></div>
-                                            <div class="h-2 w-28 bg-gray-500 rounded-full mx-auto mb-2"></div>
-                                            <div class="h-2 w-36 bg-gray-300 rounded-full mx-auto mb-6"></div>
-                                            <div class="space-y-2">
-                                                <div class="h-2 rounded-full bg-gray-300"></div>
-                                                <div class="h-2 rounded-full bg-gray-300 w-5/6"></div>
-                                            </div>
-                                        </div>
-                                        <p class="font-semibold text-gray-900">Klasik</p>
-                                        <p class="text-xs text-gray-500 mt-1">Layout formal yang aman untuk rekrutmen tradisional dan instansi.</p>
+                            <div class="rounded-2xl border border-blue-100 bg-blue-50/70 p-4">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shrink-0">CV</div>
+                                    <div class="text-left">
+                                        <p class="font-semibold text-gray-900">Template standar aktif</p>
+                                        <p class="text-sm text-gray-600 mt-1">Template ini dipakai otomatis untuk semua CV agar hasilnya konsisten, bersih, dan mudah dibaca perekrut.</p>
                                     </div>
-                                </label>
-
-                                <label class="cursor-pointer group" @click="template = 'professional'">
-                                    <input type="radio" name="template" value="professional" class="peer hidden" x-model="template">
-                                    <div class="h-full rounded-2xl border-2 border-gray-200 peer-checked:border-blue-600 peer-checked:bg-blue-50/60 p-4 transition shadow-sm group-hover:-translate-y-0.5 group-hover:shadow-md">
-                                        <div class="rounded-xl bg-gradient-to-br from-indigo-50 to-purple-100 p-4 h-44 mb-4 overflow-hidden flex">
-                                            <div class="w-16 rounded-xl bg-indigo-900/80 mr-3"></div>
-                                            <div class="flex-1 space-y-2">
-                                                <div class="h-3 w-24 bg-indigo-500 rounded-full"></div>
-                                                <div class="h-2 w-32 bg-indigo-200 rounded-full"></div>
-                                                <div class="h-2 w-28 bg-indigo-200 rounded-full mb-4"></div>
-                                                <div class="grid grid-cols-2 gap-2">
-                                                    <div class="h-6 rounded-lg bg-white/90"></div>
-                                                    <div class="h-6 rounded-lg bg-white/70"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="font-semibold text-gray-900">Profesional</p>
-                                        <p class="text-xs text-gray-500 mt-1">Lebih tegas dan elegan untuk lowongan yang butuh kesan serius.</p>
-                                    </div>
-                                </label>
+                                </div>
                             </div>
 
-                            <div class="rounded-2xl bg-amber-50 border border-amber-100 px-4 py-3 text-sm text-amber-900 mb-6">
+                            <div class="rounded-2xl bg-amber-50 border border-amber-100 px-4 py-3 text-sm text-amber-900">
                                 Tip: hasil terbaik muncul kalau profil kamu sudah lengkap. Isi nama, bio, pengalaman, skill, dan sertifikat terlebih dahulu.
                             </div>
 
-                            <div class="grid grid-cols-1 gap-4 mb-6">
+                            <div class="grid grid-cols-1 gap-3.5">
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Headline CV</label>
                                     <input type="text" name="custom_headline" maxlength="120" x-model="headline" placeholder="Contoh: Admin Office, Operator Produksi, Junior Web Developer" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">
@@ -153,19 +86,33 @@
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Ringkasan singkat</label>
-                                    <textarea name="custom_summary" rows="4" maxlength="1200" x-model="summary" placeholder="Tulis 2-4 kalimat yang menjelaskan siapa kamu, keahlian utama, dan target kerja." class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                                    <textarea name="custom_summary" rows="3" maxlength="1200" x-model="summary" placeholder="Tulis 2-4 kalimat yang menjelaskan siapa kamu, keahlian utama, dan target kerja." class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Pengalaman / proyek / organisasi paling relevan</label>
-                                    <textarea name="custom_experience" rows="5" maxlength="2000" placeholder="Contoh:\n- Magang di toko retail selama 3 bulan\n- Membantu administrasi OSIS\n- Membuat website sekolah sederhana" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                                    <textarea name="custom_experience" rows="4" maxlength="2000" placeholder="Contoh:\n- Magang di toko retail selama 3 bulan\n- Membantu administrasi OSIS\n- Membuat website sekolah sederhana" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Pencapaian utama</label>
-                                    <textarea name="custom_achievement" rows="3" maxlength="500" x-model="achievement" placeholder="Contoh: Juara 2 lomba desain poster, lulus PKL dengan predikat baik, memimpin proyek kelas." class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                                    <textarea name="custom_achievement" rows="2" maxlength="500" x-model="achievement" placeholder="Contoh: Juara 2 lomba desain poster, lulus PKL dengan predikat baik, memimpin proyek kelas." class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
                                 </div>
                             </div>
 
-                            <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+                            <button type="submit" class="hidden sm:inline-flex w-full items-center justify-center gap-2 px-6 py-3.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m0 0l-3-3m3 3l3-3M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1"/>
+                                 </svg>
+                                 Buat CV PDF
+                             </button>
++
++                            <div class="sm:hidden fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur px-4 py-3 shadow-[0_-8px_24px_rgba(15,23,42,0.08)]">
++                                <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200">
++                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
++                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m0 0l-3-3m3 3l3-3M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1"/>
++                                    </svg>
++                                    Buat CV PDF
++                                </button>
++                            </div>
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m0 0l-3-3m3 3l3-3M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1"/>
                                 </svg>
@@ -177,24 +124,24 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
                             <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold mb-3">1</div>
-                            <h3 class="font-semibold text-gray-900">Pilih gaya</h3>
-                            <p class="text-sm text-gray-600 mt-2">Tentukan template sesuai posisi dan karakter perusahaan.</p>
+                            <h3 class="font-semibold text-gray-900">Lengkapi isi CV</h3>
+                            <p class="text-sm text-gray-600 mt-2">Isi bagian penting seperti headline, ringkasan, pengalaman, dan posisi yang dituju.</p>
                         </div>
                         <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
                             <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold mb-3">2</div>
-                            <h3 class="font-semibold text-gray-900">Unduh PDF</h3>
-                            <p class="text-sm text-gray-600 mt-2">CV tersimpan rapi dan bisa diunduh lagi kapan saja.</p>
+                            <h3 class="font-semibold text-gray-900">Buat PDF</h3>
+                            <p class="text-sm text-gray-600 mt-2">Sistem akan memakai satu template standar yang rapi dan konsisten.</p>
                         </div>
                         <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
                             <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold mb-3">3</div>
-                            <h3 class="font-semibold text-gray-900">Perbarui terus</h3>
-                            <p class="text-sm text-gray-600 mt-2">Sesuaikan template saat profil atau pengalaman kamu bertambah.</p>
+                            <h3 class="font-semibold text-gray-900">Unduh kapan saja</h3>
+                            <p class="text-sm text-gray-600 mt-2">CV yang sudah dibuat tersimpan dan bisa diunduh ulang saat dibutuhkan.</p>
                         </div>
                     </div>
                 </div>
 
-                <aside class="space-y-6">
-                    <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
+                <aside class="space-y-5 lg:col-span-4 xl:col-span-3 lg:sticky lg:top-24 self-start">
+                    <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-5">
                         <h3 class="text-lg font-bold text-gray-900 mb-4">CV Anda</h3>
                         @if($cvFiles->count() > 0)
                             <div class="space-y-3">
@@ -203,7 +150,7 @@
                                     <div class="flex items-start justify-between gap-3">
                                         <div>
                                             <p class="text-sm font-semibold text-gray-900">CV {{ $cv->created_at->format('d M Y') }}</p>
-                                            <p class="text-xs text-gray-500 mt-1">{{ $cv->is_ats_friendly ? 'ATS friendly' : 'Template standar' }}</p>
+                                            <p class="text-xs text-gray-500 mt-1">Template standar · ATS friendly</p>
                                         </div>
                                         <div class="shrink-0 flex items-center gap-2">
                                             <a href="{{ route('cv.download', $cv->id) }}" class="inline-flex items-center px-3 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition">Unduh</a>
@@ -232,19 +179,12 @@
                         @endif
                     </div>
 
-                    <div class="bg-gradient-to-br from-slate-900 to-blue-900 text-white rounded-3xl p-6 shadow-xl">
-                        <h3 class="text-lg font-bold mb-3">Agar CV tidak kosong</h3>
-                        <ul class="space-y-3 text-sm text-blue-100">
-                            <li>• Isi ringkasan singkat di profil.</li>
-                            <li>• Tambahkan skill utama yang relevan.</li>
-                            <li>• Sertakan pengalaman dan sertifikat.</li>
-                            <li>• Foto opsional, tapi bantu identitas jika rapi.</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
-                        <h3 class="text-lg font-bold text-gray-900 mb-4">Preview Cepat</h3>
-                        <div x-show="template === 'modern'" x-cloak class="preview-sheet preview-modern">
+                    <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-4">
+                        <div class="flex items-center justify-between gap-3 mb-3">
+                            <h3 class="text-sm font-bold text-gray-900">Preview CV</h3>
+                            <span class="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-[10px] font-semibold text-blue-700 border border-blue-100">Standar</span>
+                        </div>
+                        <div class="preview-sheet preview-modern scale-[0.96] origin-top">
                             <div class="preview-hero">
                                 <div class="preview-header">
                                     @if($previewData['name'])
@@ -295,57 +235,8 @@
                             </div>
                         </div>
 
-                        <div x-show="template === 'classic'" x-cloak class="preview-sheet preview-classic">
-                            <div class="px-5 py-4 text-center">
-                                <p class="preview-name">{{ strtoupper($previewData['name']) }}</p>
-                                <p class="preview-headline" x-text="headline"></p>
-                            </div>
-                            <div class="p-4">
-                                <div class="preview-section">
-                                    <div class="preview-section-title">Profil Singkat</div>
-                                    <div class="preview-section-body" x-text="summary"></div>
-                                </div>
-                                <div class="preview-section">
-                                    <div class="preview-section-title">Pendidikan</div>
-                                    <div class="preview-section-body">
-                                        <div>{{ $previewData['education']['school'] }}</div>
-                                        <div>{{ $previewData['education']['major'] }}</div>
-                                        <div>{{ $previewData['education']['year'] }}</div>
-                                        <div class="mt-2">{{ Str::limit($previewData['education']['history'], 140) }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div x-show="template === 'professional'" x-cloak class="preview-sheet preview-professional">
-                            <div class="grid grid-cols-[90px,1fr] min-h-[180px]">
-                                <div class="preview-hero" style="padding:12px;">
-                                    <div class="preview-header" style="flex-direction:column;align-items:center">
-                                        <div class="preview-avatar">{{ strtoupper(substr($previewData['name'], 0, 1)) }}</div>
-                                        <div style="height:8px"></div>
-                                        <div class="preview-meta">{{ $previewData['email'] }}</div>
-                                        <div class="preview-meta">{{ $previewData['phone'] }}</div>
-                                    </div>
-                                </div>
-                                <div class="p-4">
-                                    <p class="preview-name">{{ $previewData['name'] }}</p>
-                                    <p class="preview-headline" x-text="headline"></p>
-                                    <div class="mt-3">
-                                        <div class="preview-section">
-                                            <div class="preview-section-title">Tentang Saya</div>
-                                            <div class="preview-section-body" x-text="summary"></div>
-                                        </div>
-                                        <div class="preview-section" style="margin-top:8px">
-                                            <div class="preview-section-title">Pendidikan</div>
-                                            <div class="preview-section-body">
-                                                <div>{{ $previewData['education']['school'] }} · {{ $previewData['education']['major'] }} · {{ $previewData['education']['year'] }}</div>
-                                                <div class="mt-1">{{ Str::limit($previewData['education']['history'], 140) }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </aside>
             </div>

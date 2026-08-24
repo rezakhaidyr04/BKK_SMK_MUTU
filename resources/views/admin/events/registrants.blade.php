@@ -54,7 +54,7 @@
                         </td>
                         <td>
                             @php
-                                $roleLabels = ['student'=>'Siswa','alumni'=>'Alumni','teacher'=>'Guru','company'=>'Perusahaan', 'admin' => 'Admin'];
+                                $roleLabels = ['jobseeker'=>'Pencari Kerja','teacher'=>'Guru','company'=>'Perusahaan', 'admin' => 'Admin'];
                             @endphp
                             <span class="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
                                 {{ $roleLabels[$reg->user->role] ?? $reg->user->role }}

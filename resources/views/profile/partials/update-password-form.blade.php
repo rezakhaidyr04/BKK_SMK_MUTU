@@ -31,7 +31,7 @@
         </div>
 
         <div class="flex items-center gap-4 border-t border-slate-100 pt-5">
-            <x-primary-button class="rounded-xl px-5 py-2.5 bg-blue-600 hover:bg-blue-700 shadow-sm transition">{{ __('Perbarui Sandi') }}</x-primary-button>
+            <x-ui.btn type="submit">{{ __('Perbarui Sandi') }}</x-ui.btn>
 
             @if (session('status') === 'password-updated')
                 <p x-data="{ show: true }"

@@ -1,10 +1,7 @@
 <x-app-layout>
-    <div class="page-shell">
-        <x-ui.dashboard-hero
-            title="Data Penempatan"
-            subtitle="Monitoring penempatan kerja siswa"
-            gradient="from-green-600 via-teal-600 to-blue-600"
-        />
+    <x-slot name="header">
+        <x-ui.page-header title="Data Penempatan" subtitle="Monitoring penempatan kerja siswa." />
+    </x-slot>
 
         <div class="page-container page-section">
             {{-- Statistics Cards --}}
@@ -180,5 +177,4 @@
                 @endif
             </div>
         </div>
-    </div>
 </x-app-layout>

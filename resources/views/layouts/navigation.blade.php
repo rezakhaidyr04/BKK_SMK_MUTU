@@ -157,7 +157,7 @@
             </a>
             @endif
 
-            @if(Auth::user()->role === 'student' || Auth::user()->role === 'alumni')
+            @if(Auth::user()->role === 'jobseeker')
             <!-- Jobs Section -->
             <div class="mt-6">
                 <h3 class="nav-section-title">Pencarian Kerja</h3>
@@ -433,7 +433,7 @@
                 </a>
                 @endif
 
-                @if(Auth::user()->role === 'student' || Auth::user()->role === 'alumni')
+                @if(Auth::user()->role === 'jobseeker')
                 <!-- Jobs Section -->
                 <div class="mt-6">
                     <h3 class="nav-section-title">Pencarian Kerja</h3>

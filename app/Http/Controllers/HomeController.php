@@ -20,18 +20,18 @@ class HomeController extends Controller
             ->where('deadline', '>=', now())
             ->count();
 
-        $studentsCount = User::whereIn('role', ['student', 'alumni'])->count();
+        $studentsCount = User::where('role', 'jobseeker')->count();
 
         // Calculate stats for the welcome page
         $companiesCount = \App\Models\Company::count();
-        
-        $alumniCount = User::where('role', 'alumni')->count();
-        $placedAlumniCount = User::where('role', 'alumni')
+
+        $jobseekerCount = User::where('role', 'jobseeker')->count();
+        $placedJobseekersCount = User::where('role', 'jobseeker')
             ->whereHas('applications', function($q) {
                 $q->where('status', 'accepted');
             })->count();
-            
-        $successRate = $alumniCount > 0 ? round(($placedAlumniCount / $alumniCount) * 100) : 0;
+
+        $successRate = $jobseekerCount > 0 ? round(($placedJobseekersCount / $jobseekerCount) * 100) : 0;
 
         // collect static partner logos from public/images/companies
         $partnerLogos = [];

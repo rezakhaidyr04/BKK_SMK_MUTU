@@ -14,12 +14,12 @@ class JobApplicationAttachmentTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_student_can_apply_with_attachment(): void
+    public function test_jobseeker_can_apply_with_attachment(): void
     {
-        Storage::fake('public');
+        Storage::fake('private');
 
-        $student = User::factory()->create([
-            'role' => 'student',
+        $jobseeker = User::factory()->create([
+            'role' => 'jobseeker',
             'email_verified_at' => now(),
         ]);
 
@@ -38,7 +38,7 @@ class JobApplicationAttachmentTest extends TestCase
             'company_id' => $company->id,
         ]);
 
-        $response = $this->actingAs($student)->post(route('jobs.apply', $job), [
+        $response = $this->actingAs($jobseeker)->post(route('jobs.apply', $job), [
             'cover_letter' => str_repeat('Saya tertarik melamar posisi ini. ', 5),
             'attachment' => UploadedFile::fake()->create('cv-siswa.pdf', 400, 'application/pdf'),
         ]);
@@ -48,6 +48,6 @@ class JobApplicationAttachmentTest extends TestCase
         $application = \App\Models\Application::first();
         $this->assertNotNull($application);
         $this->assertNotNull($application->attachment_path);
-        Storage::disk('public')->assertExists($application->attachment_path);
+        Storage::disk('private')->assertExists($application->attachment_path);
     }
 }

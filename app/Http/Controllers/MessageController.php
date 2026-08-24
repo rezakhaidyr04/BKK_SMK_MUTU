@@ -75,48 +75,19 @@ class MessageController extends Controller
         ]);
     }
 
-    public function send(Request $request, Conversation $conversation)
+    public function send(\App\Http\Requests\SendMessageRequest $request, Conversation $conversation, \App\Services\MessageService $messageService)
     {
-        $request->validate([
-            'body' => 'required|string|max:1000',
+        $message = $messageService->sendMessage($conversation, $request->validated());
+
+        return response()->json([
+            'success' => true,
+            'message' => [
+                'id' => $message->id,
+                'body' => $message->body,
+                'sender_id' => $message->sender_id,
+                'sender_name' => $message->sender->name ?? 'Pengguna',
+                'created_at_formatted' => $message->created_at->format('d M Y, H:i'),
+            ]
         ]);
-
-        // Check authorization
-        if (!$conversation->users->contains(Auth::id())) {
-            abort(403);
-        }
-
-        $message = Message::create([
-            'conversation_id' => $conversation->id,
-            'sender_id' => Auth::id(),
-            'body' => $request->body,
-        ]);
-
-        $message->load('sender');
-
-        // Broadcast the message so realtime clients can receive it
-        try {
-            Log::info('Dispatching MessageSent event', ['message_id' => $message->id]);
-            Event::dispatch(new \App\Events\MessageSent($message));
-            Log::info('MessageSent event dispatched', ['message_id' => $message->id]);
-        } catch (\Throwable $e) {
-            Log::error('MessageSent dispatch failed', ['message_id' => $message->id, 'error' => $e->getMessage()]);
-            // ignore broadcast failures; message still persisted
-        }
-
-        if ($request->wantsJson()) {
-            return response()->json([
-                'success' => true,
-                'message' => [
-                    'id' => $message->id,
-                    'body' => $message->body,
-                    'sender_id' => $message->sender_id,
-                    'sender_name' => $message->sender->name ?? 'Pengguna',
-                    'created_at_formatted' => $message->created_at->format('d M Y, H:i'),
-                ]
-            ]);
-        }
-
-        return back()->with('success', 'Pesan berhasil dikirim.');
     }
 }

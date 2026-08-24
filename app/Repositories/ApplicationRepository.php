@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\ApplicationRepositoryInterface;
 use App\Models\Application;
+use App\Notifications\ApplicationReceived;
 
 class ApplicationRepository implements ApplicationRepositoryInterface 
 {
@@ -19,7 +20,15 @@ class ApplicationRepository implements ApplicationRepositoryInterface
 
     public function createApplication(array $applicationDetails) 
     {
-        return Application::create($applicationDetails);
+        $application = Application::create($applicationDetails);
+
+        // Notify the company user that a new application was received
+        $companyUser = optional($application->job->company ?? null)->user ?? null;
+        if ($companyUser) {
+            $companyUser->notify(new ApplicationReceived($application));
+        }
+
+        return $application;
     }
 
     public function updateApplicationStatus($applicationId, $newStatus) 

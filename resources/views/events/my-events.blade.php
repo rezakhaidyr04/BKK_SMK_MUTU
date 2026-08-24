@@ -1,21 +1,10 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <div class="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-2xl">
-            <div class="absolute inset-0 bg-black opacity-10"></div>
-            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h1 class="text-3xl font-bold text-white mb-2">Acara Saya</h1>
-                        <p class="text-purple-100">Acara yang kamu daftarkan</p>
-                    </div>
-                    <a href="{{ route('events.index') }}"
-                       class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-purple-700 text-sm font-semibold rounded-xl hover:bg-purple-50 transition shadow-lg">
-                        Jelajahi Acara Lain
-                    </a>
-                </div>
-            </div>
-        </div>
-
+        <x-ui.page-hero title="Acara Saya" subtitle="Acara yang kamu daftarkan.">
+            <x-slot:actions>
+                <x-ui.btn href="{{ route('events.index') }}" variant="secondary" size="sm">Jelajahi Acara Lain</x-ui.btn>
+            </x-slot:actions>
+        </x-ui.page-hero>
         <div class="page-container page-section">
             @if(session('success'))
             <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-2xl text-sm text-green-700 flex items-center gap-2">

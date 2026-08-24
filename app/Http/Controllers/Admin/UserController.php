@@ -67,7 +67,7 @@ class UserController extends Controller
             "email" => ["required", "email", "max:255", "unique:users,email"],
             "role" => [
                 "required",
-                Rule::in(["admin", "student", "alumni", "teacher", "company"]),
+                Rule::in(["admin", "jobseeker", "teacher", "company"]),
             ],
             "password" => ["required", "string", "min:8", "confirmed"],
             "password_confirmation" => ["required"],
@@ -112,7 +112,7 @@ class UserController extends Controller
             ],
             "role" => [
                 "required",
-                Rule::in(["admin", "student", "alumni", "teacher", "company"]),
+                Rule::in(["admin", "jobseeker", "teacher", "company"]),
             ],
             "is_active" => ["nullable", "boolean"],
             "password" => ["nullable", "string", "min:8"],

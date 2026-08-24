@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-ui.page-header title="Tulis Berita Baru" subtitle="Publikasikan artikel berita karir untuk siswa & alumni.">
+        <x-ui.page-header title="Tulis Berita Baru" subtitle="Publikasikan artikel berita karier untuk pencari kerja dan komunitas sekolah.">
             <x-slot:actions>
                 <x-ui.btn variant="secondary" href="{{ route('admin.news.index') }}" size="sm">
                     Kembali

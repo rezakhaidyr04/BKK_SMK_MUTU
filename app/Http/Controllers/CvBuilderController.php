@@ -24,50 +24,11 @@ class CvBuilderController extends Controller
         return view('cv.builder', compact('user', 'cvFiles', 'previewData'));
     }
 
-    public function generate(Request $request)
+    public function generate(\App\Http\Requests\CvGenerateRequest $request, \App\Services\CvBuilderService $cvService)
     {
-        $request->validate([
-            'template' => 'required|in:modern,classic,professional',
-            'include_photo' => 'boolean',
-            'include_skills' => 'boolean',
-            'include_certificates' => 'boolean',
-            'custom_headline' => 'nullable|string|max:120',
-            'custom_summary' => 'nullable|string|max:1200',
-            'custom_experience' => 'nullable|string|max:2000',
-            'custom_achievement' => 'nullable|string|max:500',
-        ]);
+        $cvService->generateCv($request->validated());
 
-        $user = Auth::user();
-        $user->load(['student', 'skills', 'cvFiles', 'certificates']);
-
-        $data = [
-            'user' => $user,
-            'include_photo' => (bool) $request->input('include_photo', false),
-            'include_skills' => (bool) $request->input('include_skills', true),
-            'include_certificates' => (bool) $request->input('include_certificates', false),
-            'custom_headline' => trim((string) $request->input('custom_headline', '')),
-            'custom_summary' => trim((string) $request->input('custom_summary', '')),
-            'custom_experience' => trim((string) $request->input('custom_experience', '')),
-            'custom_achievement' => trim((string) $request->input('custom_achievement', '')),
-            'target_position' => trim((string) $request->input('target_position', '')),
-            'ats_keywords' => trim((string) $request->input('ats_keywords', '')),
-        ];
-
-        $fileName = 'cv/generated-cv-' . Auth::id() . '-' . time() . '.pdf';
-
-        // Render PDF from blade template. Expect package barryvdh/laravel-dompdf installed.
-        $pdf = PDF::loadView('cv.templates.' . $request->input('template'), $data)
-            ->setPaper('a4', 'portrait');
-
-        Storage::disk('private')->put($fileName, $pdf->output());
-
-        $cvFile = CvFile::create([
-            'user_id' => Auth::id(),
-            'file_path' => $fileName,
-            'is_ats_friendly' => $request->input('template') === 'classic' ? true : false,
-        ]);
-
-        return back()->with('success', 'CV berhasil dibuat dan disimpan.')->with('cvFileId', $cvFile->id);
+        return back()->with('success', 'CV sedang diproses di latar belakang. Silakan muat ulang halaman ini dalam beberapa saat untuk melihat hasilnya.');
     }
 
     public function download(CvFile $cvFile)
@@ -111,8 +72,8 @@ class CvBuilderController extends Controller
             'preferred_position' => $user->student?->preferred_position ?: 'Posisi yang diinginkan belum diisi',
             'target_position' => $user->student?->preferred_position ?: '',
             'education' => [
-                'school' => 'SMK MUTU Cikampek',
-                'major' => $user->student?->major ?: 'Jurusan belum diisi',
+                'school' => $user->student?->education_history ? 'Lihat riwayat pendidikan' : 'Sekolah atau pendidikan terakhir belum diisi',
+                'major' => $user->student?->major ?: 'Bidang studi atau keahlian belum diisi',
                 'year' => $user->student?->graduation_year ?: 'Tahun lulus belum diisi',
                 'history' => $user->student?->education_history ?: 'Riwayat pendidikan belum diisi',
             ],

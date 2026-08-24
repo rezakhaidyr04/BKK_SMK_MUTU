@@ -1,29 +1,13 @@
 <x-app-layout :full-bleed="true">
-    <div class="min-h-screen bg-[#F8FAFC] pb-12" x-data="{ activeTab: 'deskripsi' }">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-            <!-- Breadcrumbs -->
-            <nav class="flex text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
-                <ol class="inline-flex items-center space-x-1 md:space-x-3">
-                    <li class="inline-flex items-center">
-                        <a href="{{ route('dashboard') }}" class="inline-flex items-center hover:text-blue-600 transition-colors">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                            Dashboard
-                        </a>
-                    </li>
-                    <li>
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                            <a href="{{ route('jobs.index') }}" class="ml-1 md:ml-2 hover:text-blue-600 transition-colors">Cari Lowongan</a>
-                        </div>
-                    </li>
-                    <li aria-current="page">
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                            <span class="ml-1 md:ml-2 font-medium text-gray-800">{{ $job->title }}</span>
-                        </div>
-                    </li>
-                </ol>
-            </nav>
+    <div class="page-shell">
+        <x-ui.page-hero 
+            title="{{ $job->title }}" 
+            subtitle="{{ $job->company_name ?? 'Detail lowongan pekerjaan' }}"
+            :back-url="route('jobs.index')"
+            back-label="Kembali ke Lowongan"
+        />
+        <div class="min-h-screen bg-[#F8FAFC] pb-12" x-data="{ activeTab: 'deskripsi' }">
+            <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Main Content (Left Column) -->
@@ -436,7 +420,7 @@
                                     </ul>
                                 </div>
 
-                                <div x-data="{ showForm: false }">
+                                <div x-data="{ showForm: {{ $errors->any() ? 'true' : 'false' }} }">
                                     <button @click="showForm = !showForm" x-show="!showForm" class="w-full px-4 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 shadow-sm transition-all flex items-center justify-center gap-2">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                                         Lamar Sekarang
@@ -444,13 +428,29 @@
 
                                     <form action="{{ route('jobs.apply', $job->id) }}" method="POST" enctype="multipart/form-data" x-show="showForm" x-cloak x-transition>
                                         @csrf
+                                        @if ($errors->any())
+                                        <div class="mb-4 mt-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+                                            <p class="text-sm font-semibold text-red-700 mb-1">Lamaran belum terkirim, mohon perbaiki dulu:</p>
+                                            <ul class="list-disc list-inside text-xs text-red-600 space-y-0.5">
+                                                @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        @endif
                                         <div class="mb-4 mt-2">
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Surat Lamaran</label>
-                                            <textarea name="cover_letter" rows="4" required class="w-full text-sm px-3 py-2 border-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Ceritakan kenapa Anda cocok..."></textarea>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Surat Lamaran <span class="text-gray-400 font-normal">(minimal 100 karakter)</span></label>
+                                            <textarea name="cover_letter" rows="4" required minlength="100" class="w-full text-sm px-3 py-2 border-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('cover_letter') border-red-300 @enderror" placeholder="Ceritakan kenapa Anda cocok...">{{ old('cover_letter') }}</textarea>
+                                            @error('cover_letter')
+                                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="mb-4">
                                             <label class="block text-sm font-medium text-gray-700 mb-1">Lampiran Pendukung (Opsional)</label>
                                             <input type="file" name="attachment" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                            @error('attachment')
+                                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="flex gap-2">
                                             <button type="button" @click="showForm = false" class="flex-1 px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-colors text-sm">Batal</button>
@@ -559,6 +559,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     @push('scripts')

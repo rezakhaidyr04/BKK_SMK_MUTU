@@ -1,29 +1,25 @@
 <x-app-layout :full-bleed="true">
+    <x-slot name="header">
+        <x-ui.page-header title="Selamat datang kembali, {{ Auth::user()->name }}!" subtitle="Mari temukan pekerjaan impian Anda hari ini" />
+    </x-slot>
     <div class="page-shell">
-        {{-- Hero Header (Reusable Component) --}}
-        <x-ui.dashboard-hero
-            title="Selamat datang kembali, {{ Auth::user()->name }}!"
-            subtitle="Mari temukan pekerjaan impian Anda hari ini"
-            gradient="from-slate-900 via-indigo-900 to-slate-900"
-        >
-            <x-slot:actions>
+        <div class="page-container pt-6">
                 {{-- Profile Completion Card --}}
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 min-w-[240px]">
+                <div class="rounded-2xl p-4 border border-slate-200 bg-white min-w-[240px]">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-white text-sm font-medium">Kelengkapan Profil</span>
-                        <span class="text-white text-sm font-bold">{{ $stats['profile_completion'] }}%</span>
+                        <span class="text-slate-700 text-sm font-medium">Kelengkapan Profil</span>
+                        <span class="text-slate-900 text-sm font-bold">{{ $stats['profile_completion'] }}%</span>
                     </div>
                     <div class="w-full bg-white/20 rounded-full h-2.5 overflow-hidden">
                         <div class="ui-progress-fill bg-green-400 h-2.5 rounded-full" style="--progress: {{ $stats['profile_completion'] }}%;"></div>
                     </div>
                     @if($stats['profile_completion'] < 100)
-                    <a href="{{ route('profile.edit') }}" class="mt-3 inline-block text-sm text-white hover:text-blue-100 underline">
+                    <a href="{{ route('profile.edit') }}" class="mt-3 inline-block text-sm text-primary-700 hover:text-primary-900 underline">
                         Lengkapi profil Anda →
                     </a>
                     @endif
                 </div>
-            </x-slot:actions>
-        </x-ui.dashboard-hero>
+        </div>
 
         <div class="page-container pt-6">
             <div class="rounded-2xl border border-indigo-100 bg-gradient-to-r from-indigo-50/80 to-white px-6 py-5 shadow-sm backdrop-blur-sm">
@@ -46,8 +42,8 @@
             <div class="bg-white dark:bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 p-6 mb-8">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-5">Aksi Cepat</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
-                    <a href="{{ route('jobs.index') }}" class="group flex flex-col items-center p-5 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-100 dark:border-gray-700 rounded-2xl hover:shadow-lg hover:shadow-indigo-500/10 hover:border-indigo-200 transition-all duration-300 hover:-translate-y-1">
-                        <div class="w-14 h-14 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 shadow-inner">
+                    <a href="{{ route('jobs.index') }}" class="group flex flex-col items-center p-5 bg-white border border-slate-200 rounded-lg hover:shadow-sm hover:border-slate-300 transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                             </svg>
@@ -55,8 +51,8 @@
                         <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Cari Lowongan</span>
                     </a>
                     
-                    <a href="{{ route('cv.builder') }}" class="group flex flex-col items-center p-5 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-100 dark:border-gray-700 rounded-2xl hover:shadow-lg hover:shadow-emerald-500/10 hover:border-emerald-200 transition-all duration-300 hover:-translate-y-1">
-                        <div class="w-14 h-14 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-inner">
+                    <a href="{{ route('cv.builder') }}" class="group flex flex-col items-center p-5 bg-white border border-slate-200 rounded-lg hover:shadow-sm hover:border-slate-300 transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
@@ -64,8 +60,8 @@
                         <span class="text-sm font-semibold text-gray-900 dark:text-white text-center">Buat CV</span>
                     </a>
                     
-                    <a href="{{ route('bookmarks.index') }}" class="group flex flex-col items-center p-5 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-100 dark:border-gray-700 rounded-2xl hover:shadow-lg hover:shadow-amber-500/10 hover:border-amber-200 transition-all duration-300 hover:-translate-y-1">
-                        <div class="w-14 h-14 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 shadow-inner">
+                    <a href="{{ route('bookmarks.index') }}" class="group flex flex-col items-center p-5 bg-white border border-slate-200 rounded-lg hover:shadow-sm hover:border-slate-300 transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                             </svg>
@@ -73,8 +69,8 @@
                         <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">Tersimpan</span>
                     </a>
                     
-                    <a href="{{ route('applications.index') }}" class="group flex flex-col items-center p-5 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-100 dark:border-gray-700 rounded-2xl hover:shadow-lg hover:shadow-purple-500/10 hover:border-purple-200 transition-all duration-300 hover:-translate-y-1">
-                        <div class="w-14 h-14 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300 shadow-inner">
+                    <a href="{{ route('applications.index') }}" class="group flex flex-col items-center p-5 bg-white border border-slate-200 rounded-lg hover:shadow-sm hover:border-slate-300 transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
@@ -152,13 +148,13 @@
                     <x-slot:icon>
                         @if($stats['unread_messages'] > 0)
                         <div class="relative">
-                            <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
+                            <span class="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full animate-pulse"></span>
                         </div>
                         @else
-                        <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                         @endif
@@ -410,18 +406,18 @@
                 <!-- Right Column (1/3) -->
                 <div class="space-y-6">
                     <!-- Activity Timeline -->
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
-                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 cursor-pointer" @click="activitiesOpen = !activitiesOpen">
+                    <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="px-6 py-5 border-b border-slate-200 cursor-pointer" @click="activitiesOpen = !activitiesOpen">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center">
-                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Aktivitas Terbaru</h3>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">Tindakan terbaru Anda</p>
+                                        <h3 class="text-lg font-bold text-slate-900">Aktivitas Terbaru</h3>
+                                        <p class="text-sm text-slate-600">Tindakan terbaru Anda</p>
                                     </div>
                                 </div>
                                 <svg x-show="activitiesOpen" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -441,17 +437,17 @@
                                         <div class="flex flex-col items-center">
                                             @php
                                                 $colorClasses = [
-                                                    'blue' => 'bg-blue-500',
-                                                    'green' => 'bg-green-500',
-                                                    'yellow' => 'bg-yellow-500',
-                                                    'red' => 'bg-red-500',
-                                                    'purple' => 'bg-purple-500',
-                                                    'gray' => 'bg-gray-500',
+                                                    'blue' => 'bg-blue-50',
+                                                    'green' => 'bg-blue-50',
+                                                    'yellow' => 'bg-blue-50',
+                                                    'red' => 'bg-blue-50',
+                                                    'purple' => 'bg-blue-50',
+                                                    'gray' => 'bg-blue-50',
                                                 ];
-                                                $bgColor = $colorClasses[$activity['color']] ?? 'bg-gray-500';
+                                                $bgColor = $colorClasses[$activity['color']] ?? 'bg-blue-50';
                                             @endphp
-                                            <div class="w-8 h-8 rounded-full {{ $bgColor }} flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                            <div class="w-8 h-8 rounded-full {{ $bgColor }} flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                     @if($activity['icon'] === 'briefcase')
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                                     @else
@@ -486,18 +482,18 @@
                     </div>
 
                     <!-- Upcoming Events -->
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
-                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 cursor-pointer" @click="eventsOpen = !eventsOpen">
+                    <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="px-6 py-5 border-b border-slate-200 cursor-pointer" @click="eventsOpen = !eventsOpen">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-orange-600 rounded-xl flex items-center justify-center">
-                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Acara Mendatang</h3>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">Peluang karir</p>
+                                        <h3 class="text-lg font-bold text-slate-900">Acara Mendatang</h3>
+                                        <p class="text-sm text-slate-600">Peluang karir</p>
                                     </div>
                                 </div>
                                 <svg x-show="eventsOpen" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -513,10 +509,10 @@
                             @if($upcomingEvents->count() > 0)
                                 <div class="space-y-4">
                                     @foreach($upcomingEvents as $event)
-                                    <div class="bg-gradient-to-br from-orange-50 to-red-50 dark:from-gray-800 dark:to-gray-750 rounded-xl p-4 border border-orange-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-500 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                                    <div class="bg-white rounded-lg p-4 border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all duration-300">
                                         <div class="flex gap-3">
                                             <div class="flex-shrink-0">
-                                                <div class="w-12 h-12 bg-orange-600 rounded-lg flex flex-col items-center justify-center text-white shadow-md">
+                                                <div class="w-12 h-12 bg-blue-50 rounded-lg flex flex-col items-center justify-center text-blue-600">
                                                     <span class="text-xs font-semibold">{{ $event->start_time->format('M') }}</span>
                                                     <span class="text-lg font-bold leading-none">{{ $event->start_time->format('d') }}</span>
                                                 </div>
@@ -538,8 +534,8 @@
                                 </div>
                             @else
                                 <div class="text-center py-8">
-                                    <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 rounded-full flex items-center justify-center animate-gentle-float" aria-hidden="true">
-                                        <svg class="w-8 h-8 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-16 h-16 mx-auto mb-3 bg-blue-50 rounded-full flex items-center justify-center animate-gentle-float" aria-hidden="true">
+                                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                         </svg>
                                     </div>
@@ -550,13 +546,12 @@
                     </div>
 
                     <!-- Quick Actions -->
-                    <div class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl shadow-lg overflow-hidden relative group">
-                        <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden="true"></div>
-                        <div class="p-6 relative z-10">
-                            <h3 class="text-lg font-bold text-white mb-4">Aksi Cepat</h3>
+                    <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-slate-900 mb-4">Aksi Cepat</h3>
                             <div class="space-y-2">
-                                <a href="{{ route('jobs.index') }}" class="flex items-center gap-3 p-3 bg-white/10 backdrop-blur-sm rounded-xl hover:bg-white/20 transition-all duration-300 text-white group/link">
-                                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center group-hover/link:scale-110 transition-transform" aria-hidden="true">
+                                <a href="{{ route('jobs.index') }}" class="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 hover:border-slate-300 transition-all duration-300 text-slate-700 group/link">
+                                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center group-hover/link:scale-110 transition-transform" aria-hidden="true">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                         </svg>
@@ -564,8 +559,8 @@
                                     <span class="font-medium group-hover/link:translate-x-1 transition-transform">Jelajahi Lowongan</span>
                                 </a>
                                 
-                                <a href="{{ route('cv.builder') }}" class="flex items-center gap-3 p-3 bg-white/10 backdrop-blur-sm rounded-xl hover:bg-white/20 transition-all duration-300 text-white group/link">
-                                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center group-hover/link:scale-110 transition-transform" aria-hidden="true">
+                                <a href="{{ route('cv.builder') }}" class="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 hover:border-slate-300 transition-all duration-300 text-slate-700 group/link">
+                                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center group-hover/link:scale-110 transition-transform" aria-hidden="true">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
@@ -573,8 +568,8 @@
                                     <span class="font-medium group-hover/link:translate-x-1 transition-transform">Buat CV</span>
                                 </a>
                                 
-                                <a href="{{ route('events.index') }}" class="flex items-center gap-3 p-3 bg-white/10 backdrop-blur-sm rounded-xl hover:bg-white/20 transition-all duration-300 text-white group/link">
-                                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center group-hover/link:scale-110 transition-transform" aria-hidden="true">
+                                <a href="{{ route('events.index') }}" class="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 hover:border-slate-300 transition-all duration-300 text-slate-700 group/link">
+                                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center group-hover/link:scale-110 transition-transform" aria-hidden="true">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                         </svg>

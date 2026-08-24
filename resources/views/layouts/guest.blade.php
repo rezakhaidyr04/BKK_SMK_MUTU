@@ -166,12 +166,12 @@
                 </div>
 
                 <h2>Menghubungkan<br>Talenta dengan<br>Peluang</h2>
-                <p>Platform karir untuk siswa dan alumni SMK MUTU Cikampek menemukan pekerjaan terbaik mereka.</p>
+                <p>Platform karier untuk pencari kerja dan perusahaan agar lebih mudah terhubung dengan peluang terbaik.</p>
             </div>
 
             <div class="auth-stats">
                 <div class="text-center">
-                    <div class="stat-num">{{ number_format(\App\Models\User::whereIn('role', ['student', 'alumni'])->count()) }}</div>
+                    <div class="stat-num">{{ number_format(\App\Models\User::where('role', 'jobseeker')->count()) }}</div>
                     <div class="stat-label">Pengguna Terdaftar</div>
                 </div>
                 <div class="text-center">

@@ -1,13 +1,9 @@
-<x-app-layout :full-bleed="true">
-    <div class="page-shell">
-    {{-- Admin Header --}}
-    <x-ui.dashboard-hero
-        title="Dasbor Admin"
-        subtitle="Ringkasan lengkap sistem dan analitik"
-        gradient="from-indigo-600 via-purple-600 to-pink-600"
-    />
+<x-app-layout>
+    <x-slot name="header">
+        <x-ui.page-header title="Dasbor Admin" subtitle="Ringkasan lengkap sistem dan analitik." />
+    </x-slot>
 
-        <div class="page-container pt-6">
+        <div class="pt-2">
             <div class="rounded-2xl border border-indigo-100 bg-indigo-50 px-5 py-4 shadow-sm">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                     <div>
@@ -280,7 +276,6 @@
                 </div>
             </div>
         </div>
-    </div>
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>

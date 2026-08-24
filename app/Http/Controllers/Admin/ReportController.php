@@ -14,8 +14,8 @@ class ReportController extends Controller
     public function index()
     {
         $summary = [
-            'total_students'          => User::where('role', 'student')->count(),
-            'total_alumni'            => User::where('role', 'alumni')->count(),
+            'total_students'          => User::where('role', 'jobseeker')->count(),
+            'total_alumni'            => 0,
             'total_jobs'              => Job::count(),
             'active_jobs'             => Job::where('status', 'active')->count(),
             'closed_jobs'             => Job::where('status', 'closed')->count(),
@@ -47,8 +47,7 @@ class ReportController extends Controller
     {
         $rows = [
             ['Metrik', 'Nilai'],
-            ['Total Siswa',                 User::where('role', 'student')->count()],
-            ['Total Alumni',                User::where('role', 'alumni')->count()],
+            ['Total Pencari Kerja',         User::where('role', 'jobseeker')->count()],
             ['Total Lowongan',              Job::count()],
             ['Lowongan Aktif',              Job::where('status', 'active')->count()],
             ['Lowongan Ditutup',            Job::where('status', 'closed')->count()],
@@ -83,8 +82,7 @@ class ReportController extends Controller
 
         $rows = [
             ['Metrik', 'Nilai'],
-            ['Total Siswa',                 User::where('role', 'student')->count()],
-            ['Total Alumni',                User::where('role', 'alumni')->count()],
+            ['Total Pencari Kerja',         User::where('role', 'jobseeker')->count()],
             ['Total Lowongan',              Job::count()],
             ['Lowongan Aktif',              Job::where('status', 'active')->count()],
             ['Lowongan Ditutup',            Job::where('status', 'closed')->count()],

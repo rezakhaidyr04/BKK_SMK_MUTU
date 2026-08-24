@@ -16,7 +16,8 @@ class JobController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Job::where("status", "active")
+        $query = Job::with('company')
+            ->where("status", "active")
             ->where("deadline", ">=", now());
 
         // Search
@@ -72,7 +73,19 @@ class JobController extends Controller
             ->distinct()
             ->pluck("location");
 
-        return view("jobs.index", compact("jobs", "jobTypes", "locations"));
+        $activeJobsCount = Job::where("status", "active")
+            ->where("deadline", ">=", now())
+            ->count();
+        $locationsCount = Job::where("status", "active")
+            ->where("deadline", ">=", now())
+            ->distinct("location")
+            ->count("location");
+        $companiesCount = Job::where("status", "active")
+            ->where("deadline", ">=", now())
+            ->distinct("company_name")
+            ->count("company_name");
+
+        return view("jobs.index", compact("jobs", "jobTypes", "locations", "activeJobsCount", "locationsCount", "companiesCount"));
     }
 
     public function show(Job $job)
@@ -96,7 +109,7 @@ class JobController extends Controller
         $savedCount = Bookmark::where("job_id", $job->id)->count();
         $matchScore = null;
 
-        if (Auth::check() && in_array(Auth::user()->role, ["student", "alumni"], true)) {
+        if (Auth::check() && Auth::user()->role === "jobseeker") {
             $matchScore = (new JobMatchingService())->score($job, Auth::user());
         }
 
@@ -119,7 +132,7 @@ class JobController extends Controller
 
     public function apply(ApplicationRequest $request, Job $job)
     {
-        abort_unless(in_array(Auth::user()?->role, ["student", "alumni"], true), 403);
+        abort_unless(Auth::user()?->role === "jobseeker", 403);
 
         // Check if already applied
         $existingApplication = Application::where("job_id", $job->id)

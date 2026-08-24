@@ -30,24 +30,22 @@ class DashboardController extends Controller
         switch ($user->role) {
             case "admin":
                 return $this->adminDashboard();
-            case "student":
-            case "alumni":
+            case "jobseeker":
                 return $this->studentAlumniDashboard();
             case "teacher":
                 return $this->teacherDashboard();
             case "company":
                 return $this->companyDashboard();
             default:
-                // Default to student dashboard for unknown roles
-                return $this->studentAlumniDashboard();
+                abort(403, 'Unauthorized access.');
         }
     }
 
     private function adminDashboard()
     {
         $stats = [
-            "total_students" => User::where("role", "student")->count(),
-            "total_alumni" => User::where("role", "alumni")->count(),
+            "total_students" => User::where("role", "jobseeker")->count(),
+            "total_alumni" => 0,
             "total_jobs" => Job::where("status", "active")->count(),
             "total_applications" => Application::count(),
             "pending_applications" => Application::where(
@@ -69,19 +67,15 @@ class DashboardController extends Controller
         $lastMonth = now()->subMonth()->startOfMonth();
         $lastMonthEnd = now()->subMonth()->endOfMonth();
 
-        $studentsThisMonth = User::where("role", "student")
+        $studentsThisMonth = User::where("role", "jobseeker")
             ->where("created_at", ">=", $thisMonth)
             ->count();
-        $studentsLastMonth = User::where("role", "student")
+        $studentsLastMonth = User::where("role", "jobseeker")
             ->whereBetween("created_at", [$lastMonth, $lastMonthEnd])
             ->count();
 
-        $alumniThisMonth = User::where("role", "alumni")
-            ->where("created_at", ">=", $thisMonth)
-            ->count();
-        $alumniLastMonth = User::where("role", "alumni")
-            ->whereBetween("created_at", [$lastMonth, $lastMonthEnd])
-            ->count();
+        $alumniThisMonth = 0;
+        $alumniLastMonth = 0;
 
         $jobsThisMonth = Job::where("created_at", ">=", $thisMonth)->count();
         $jobsLastMonth = Job::whereBetween("created_at", [
@@ -148,7 +142,7 @@ class DashboardController extends Controller
             "role",
             DB::raw("COUNT(*) as count"),
         )
-            ->whereIn("role", ["student", "alumni"])
+            ->where("role", "jobseeker")
             ->groupBy("role")
             ->get();
 
@@ -258,8 +252,8 @@ class DashboardController extends Controller
     private function teacherDashboard()
     {
         $stats = [
-            "total_students" => User::where("role", "student")->count(),
-            "total_alumni" => User::where("role", "alumni")->count(),
+            "total_students" => User::where("role", "jobseeker")->count(),
+            "total_alumni" => 0,
             "placed_students" => Application::where(
                 "status",
                 "accepted",
@@ -376,7 +370,7 @@ class DashboardController extends Controller
         }
 
         // --- Bagian 2: Data akademik siswa (masing-masing 1 poin) ---
-        if (in_array($user->role, ["student", "alumni"]) && $user->student) {
+        if ($user->role === "jobseeker" && $user->student) {
             $studentFields = ["major", "graduation_year", "address"];
             foreach ($studentFields as $field) {
                 $total++;

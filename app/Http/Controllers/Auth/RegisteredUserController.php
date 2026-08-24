@@ -30,7 +30,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $validated = $request->validate([
             "name" => ["required", "string", "max:255"],
             "email" => [
                 "required",
@@ -41,35 +41,16 @@ class RegisteredUserController extends Controller
                 "unique:" . User::class,
             ],
             "password" => ["required", "confirmed", Rules\Password::defaults()],
-            "role" => ["nullable", "string", "in:student,alumni"],
-            "nis" => ["nullable", "string", "max:20", "unique:students,nisn"],
-            "graduation_year" => [
-                "nullable",
-                "integer",
-                "min:2000",
-                "max:" . (date("Y") + 5),
-            ],
-            // 'terms' => ['required', 'accepted'], // Tidak dipakai di form registrasi saat ini
         ]);
 
-        $role = $request->input("role", "student");
-
         $user = User::create([
-            "name" => $request->name,
-            "email" => $request->email,
-            "password" => Hash::make($request->password),
-            "role" => $role,
+            "name" => $validated["name"],
+            "email" => $validated["email"],
+            "password" => Hash::make($validated["password"]),
+            "role" => "jobseeker",
             "is_active" => true,
             "email_verified_at" => null,
         ]);
-
-        // Create student record if role is student or alumni
-        if (in_array($role, ["student", "alumni"])) {
-            $user->student()->create([
-                "nisn" => $role === "student" ? $request->nis : null,
-                "graduation_year" => $request->graduation_year,
-            ]);
-        }
 
         event(new Registered($user));
 

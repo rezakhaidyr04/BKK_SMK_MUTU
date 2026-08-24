@@ -1,12 +1,9 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-bold text-2xl text-gray-900 tracking-tight">
-            {{ __('Pengaturan Akun') }}
-        </h2>
-    </x-slot>
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-hero title="{{ __('Pengaturan Akun') }}" subtitle="Kelola profil, keamanan, dan dokumen akun Anda." />
 
-    <div class="py-10 bg-slate-50/50 min-h-screen" x-data="{ currentTab: 'profile' }">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div class="py-6" x-data="{ currentTab: 'profile' }">
+        <div class="page-container space-y-8">
             
             {{-- Header card dengan stats & Glassmorphism --}}
             <div class="relative overflow-hidden p-6 sm:p-8 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.02)] sm:rounded-3xl border border-slate-100/80">
@@ -132,6 +129,7 @@
 
             </div>
         </div>
+    </div>
     </div>
 
     @push('styles')

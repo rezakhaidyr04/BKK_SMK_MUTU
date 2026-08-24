@@ -128,9 +128,9 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
     Route::get("/cv/builder", [CvBuilderController::class, "index"])->name(
         "cv.builder",
     );
-    Route::post("/cv/generate", [CvBuilderController::class, "generate"])->name(
-        "cv.generate",
-    );
+    Route::post("/cv/generate", [CvBuilderController::class, "generate"])
+        ->middleware('throttle:cv-generate')
+        ->name("cv.generate");
     Route::get("/cv/download/{cvFile}", [
         CvBuilderController::class,
         "download",
@@ -168,7 +168,7 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
     Route::post("/messages/{conversation}", [
         MessageController::class,
         "send",
-    ])->name("messages.send");
+    ])->middleware('throttle:send-message')->name("messages.send");
 
     // Teacher Routes
     Route::middleware("role:teacher")

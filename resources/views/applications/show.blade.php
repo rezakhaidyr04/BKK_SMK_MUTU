@@ -1,20 +1,13 @@
-<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Detail Lamaran" subtitle="{{ $application->job->title }} - {{ $application->job->company_name ?? 'Perusahaan' }}" />
-    </x-slot>
-    <div class="min-h-screen">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Detail Lamaran</h1>
-                    <p class="text-gray-600 mt-1">{{ $application->job->title }} - {{ $application->job->company_name ?? 'Perusahaan' }}</p>
-                </div>
-                <a href="{{ auth()->user()->role === 'company' ? route('company.applicants.index') : route('applications.index') }}"
-                   class="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">
-                    Kembali
-                </a>
-            </div>
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-hero 
+            title="Detail Lamaran" 
+            subtitle="{{ $application->job->title }} - {{ $application->job->company_name ?? 'Perusahaan' }}" 
+            :back-url="auth()->user()->role === 'company' ? route('company.applicants.index') : route('applications.index')"
+            back-label="Kembali ke Daftar Lamaran"
+        />
 
+        <div class="page-container page-section">
             @php
                 $statusConfig = [
                     'submitted' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-700', 'label' => 'Terkirim'],
@@ -28,56 +21,53 @@
 
             <div class="grid gap-6 lg:grid-cols-3">
                 <div class="lg:col-span-2 space-y-6">
-                    <div class="rounded-xl bg-white p-6 shadow-lg border border-gray-100">
+                    <x-ui.panel>
                         <div class="flex items-start justify-between gap-4">
                             <div>
-                                <h2 class="text-xl font-bold text-gray-900">{{ $application->job->title }}</h2>
-                                <p class="text-gray-600 mt-1">{{ $application->job->company_name ?? 'Perusahaan' }}</p>
+                                <h2 class="text-xl font-bold text-slate-900">{{ $application->job->title }}</h2>
+                                <p class="text-slate-600 mt-1">{{ $application->job->company_name ?? 'Perusahaan' }}</p>
                             </div>
-                            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold {{ $status['bg'] }} {{ $status['text'] }}">
-                                {{ $status['label'] }}
-                            </span>
+                            <x-ui.status-badge :status="$application->status" />
                         </div>
 
                         <dl class="mt-6 grid gap-4 sm:grid-cols-2">
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">Pelamar</dt>
-                                <dd class="mt-1 text-gray-900">{{ $application->user->name }}</dd>
+                                <dt class="text-sm font-medium text-slate-500">Pelamar</dt>
+                                <dd class="mt-1 font-semibold text-slate-900">{{ $application->user->name }}</dd>
                             </div>
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">Email</dt>
-                                <dd class="mt-1 text-gray-900">{{ $application->user->email }}</dd>
+                                <dt class="text-sm font-medium text-slate-500">Email</dt>
+                                <dd class="mt-1 text-slate-900">{{ $application->user->email }}</dd>
                             </div>
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">Lokasi Lowongan</dt>
-                                <dd class="mt-1 text-gray-900">{{ $application->job->location ?? '-' }}</dd>
+                                <dt class="text-sm font-medium text-slate-500">Lokasi Lowongan</dt>
+                                <dd class="mt-1 text-slate-900">{{ $application->job->location ?? '-' }}</dd>
                             </div>
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">Tanggal Melamar</dt>
-                                <dd class="mt-1 text-gray-900">{{ $application->created_at->format('d M Y, H:i') }}</dd>
+                                <dt class="text-sm font-medium text-slate-500">Tanggal Melamar</dt>
+                                <dd class="mt-1 text-slate-900">{{ $application->created_at->format('d M Y, H:i') }} WIB</dd>
                             </div>
                         </dl>
-                    </div>
+                    </x-ui.panel>
 
-                    <div class="rounded-xl bg-white p-6 shadow-lg border border-gray-100">
-                        <h2 class="text-lg font-bold text-gray-900 mb-3">Surat Lamaran</h2>
-                        <div class="prose max-w-none text-gray-700 whitespace-pre-line">{{ $application->cover_letter ?: 'Tidak ada surat lamaran.' }}</div>
-                    </div>
+                    <x-ui.panel title="Surat Lamaran">
+                        <div class="prose max-w-none text-slate-700 whitespace-pre-line text-sm">{{ $application->cover_letter ?: 'Tidak ada surat lamaran.' }}</div>
+                    </x-ui.panel>
 
                     @if($application->attachment_path)
-                    <div class="rounded-xl bg-white p-6 shadow-lg border border-gray-100">
-                        <h2 class="text-lg font-bold text-gray-900 mb-3">Lampiran</h2>
-                        <a href="{{ route('applications.attachment.download', $application) }}" class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+                    <x-ui.panel title="Lampiran">
+                        <x-ui.btn href="{{ route('applications.attachment.download', $application) }}" variant="primary" size="sm">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                             Unduh {{ $application->attachment_name ?? 'Lampiran' }}
-                        </a>
-                    </div>
+                        </x-ui.btn>
+                    </x-ui.panel>
                     @endif
 
                     {{-- Info Jadwal Wawancara --}}
                     @if($application->interview_date)
-                    <div class="rounded-xl border-2 border-purple-200 bg-purple-50 p-6 shadow-sm">
-                        <h2 class="text-lg font-bold text-purple-800 mb-4 flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="rounded-xl border border-purple-200 bg-purple-50 p-6 shadow-sm">
+                        <h2 class="text-lg font-bold text-purple-900 mb-4 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
@@ -145,7 +135,7 @@
 
                     {{-- Hasil Akhir Seleksi --}}
                     @if($application->status === 'accepted')
-                    <div class="rounded-xl border-2 border-green-200 bg-green-50 p-6 shadow-sm">
+                    <div class="rounded-xl border border-green-200 bg-green-50 p-6 shadow-sm">
                         <div class="flex items-start gap-4">
                             <div class="flex-shrink-0 p-2 bg-green-100 rounded-full">
                                 <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -159,7 +149,7 @@
                         </div>
                     </div>
                     @elseif($application->status === 'rejected')
-                    <div class="rounded-xl border-2 border-red-200 bg-red-50 p-6 shadow-sm">
+                    <div class="rounded-xl border border-red-200 bg-red-50 p-6 shadow-sm">
                         <div class="flex items-start gap-4">
                             <div class="flex-shrink-0 p-2 bg-red-100 rounded-full">
                                 <svg class="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -175,35 +165,36 @@
                     @endif
                 </div>
 
-                <aside class="rounded-xl bg-white p-6 shadow-lg border border-gray-100 h-fit">
-                    <h2 class="text-lg font-bold text-gray-900 mb-4">Timeline</h2>
-                    <div class="space-y-4">
-                        @foreach($timeline as $item)
-                            <div class="flex gap-3">
-                                <div class="mt-1 h-3 w-3 rounded-full {{ $item['completed'] ? 'bg-blue-600' : 'bg-gray-300' }}"></div>
-                                <div>
-                                    <p class="text-sm font-semibold text-gray-900">{{ $item['label'] }}</p>
-                                    <p class="text-xs text-gray-500">{{ $item['date'] ? $item['date']->format('d M Y') : 'Menunggu update' }}</p>
+                <div class="space-y-6">
+                    <x-ui.panel title="Timeline Seleksi">
+                        <div class="space-y-4">
+                            @foreach($timeline as $item)
+                                <div class="flex gap-3">
+                                    <div class="mt-1 h-3 w-3 shrink-0 rounded-full {{ $item['completed'] ? 'bg-blue-600' : 'bg-slate-300' }}"></div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-slate-900">{{ $item['label'] }}</p>
+                                        <p class="text-xs text-slate-500">{{ $item['date'] ? $item['date']->format('d M Y') : 'Menunggu update' }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
+                    </x-ui.panel>
+
+                    <div class="space-y-3">
+                        <x-ui.btn href="{{ route('jobs.show', $application->job) }}" class="w-full justify-center">
+                            Lihat Detail Lowongan
+                        </x-ui.btn>
+
+                        @if(auth()->user()->role === 'jobseeker' || auth()->user()->role === 'admin')
+                        <x-ui.btn href="{{ route('applications.surat-pengantar', $application) }}" variant="secondary" class="w-full justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            Cetak Surat Pengantar
+                        </x-ui.btn>
+                        @endif
                     </div>
-
-                    <a href="{{ route('jobs.show', $application->job) }}"
-                       class="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
-                        Lihat Lowongan
-                    </a>
-
-                    @if(auth()->user()->role === 'student' || auth()->user()->role === 'admin')
-                    <a href="{{ route('applications.surat-pengantar', $application) }}" target="_blank"
-                       class="mt-3 inline-flex w-full items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 shadow shadow-indigo-200 gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                        Cetak Surat Pengantar
-                    </a>
-                    @endif
-                </aside>
+                </div>
             </div>
         </div>
     </div>

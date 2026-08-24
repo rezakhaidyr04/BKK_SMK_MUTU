@@ -2,8 +2,8 @@
     <header class="border-b border-slate-100 pb-4 mb-6">
         <h2 class="text-lg font-bold text-slate-900 tracking-tight">Informasi Profil</h2>
         <p class="mt-1 text-sm text-slate-500">
-            @if(in_array(Auth::user()->role, ['student', 'alumni']))
-                Perbarui foto, nama, email, nomor HP, bio, keahlian, dan info akademik Anda.
+            @if(Auth::user()->role === 'jobseeker')
+                Perbarui foto, nama, email, nomor HP, bio, keahlian, dan profil karier Anda.
             @elseif(Auth::user()->role === 'company')
                 Perbarui foto, nama, email, nomor HP, dan informasi perusahaan Anda.
             @else
@@ -21,35 +21,37 @@
         @method('patch')
 
         {{-- Avatar Section --}}
-        <div class="bg-slate-50/50 rounded-2xl p-4 border border-slate-100 flex flex-col sm:flex-row items-center gap-5">
-            <div class="relative group">
-                @php
-                    $avatarPreviewUrl = $user->avatar ? asset('storage/' . ltrim($user->avatar, '/')) : null;
-                @endphp
-                @if($avatarPreviewUrl)
-                    <img id="avatar-preview" src="{{ $avatarPreviewUrl }}"
-                         alt="{{ $user->name }}"
-                         class="w-20 h-20 rounded-2xl object-cover border-2 border-white shadow-md ring-1 ring-slate-200">
-                @else
-                    <div id="avatar-preview-placeholder"
-                         class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-2xl font-extrabold shadow-md">
-                        {{ substr($user->name, 0, 1) }}
-                    </div>
-                    <img id="avatar-preview" src="" alt="" class="w-20 h-20 rounded-2xl object-cover border-2 border-white shadow-md ring-1 ring-slate-200 hidden">
-                @endif
+        <div class="bg-slate-50/50 rounded-2xl p-4 border border-slate-100">
+            @php
+                $avatarPreviewUrl = $user->avatar ? asset('storage/' . ltrim($user->avatar, '/')) : null;
+            @endphp
+
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-800">Foto Profil</h3>
+                    <p class="text-xs text-slate-400 mt-1">Foto utama ditampilkan pada kartu profil di bagian atas halaman.</p>
+                </div>
+
+                <div class="text-left sm:text-right">
+                    <label for="avatar" class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 hover:border-slate-300 rounded-xl text-sm font-semibold text-slate-700 hover:text-slate-900 shadow-sm transition">
+                        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        Pilih Foto Baru
+                    </label>
+                    <input id="avatar" name="avatar" type="file" class="sr-only" accept="image/jpeg,image/png,image/webp,image/gif"
+                           onchange="previewAvatar(event)">
+                    <p class="text-xs text-slate-400 mt-2">Format file JPG, PNG, WebP, GIF. Maksimal 3MB.</p>
+                </div>
             </div>
-            
-            <div class="text-center sm:text-left">
-                <label for="avatar" class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 hover:border-slate-300 rounded-xl text-sm font-semibold text-slate-700 hover:text-slate-900 shadow-sm transition">
-                    <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                    Pilih Foto Baru
-                </label>
-                <input id="avatar" name="avatar" type="file" class="sr-only" accept="image/jpeg,image/png,image/webp,image/gif"
-                       onchange="previewAvatar(event)">
-                <p class="text-xs text-slate-400 mt-2">Format file JPG, PNG, WebP, GIF. Maksimal 3MB.</p>
-            </div>
+
+            @if($avatarPreviewUrl)
+                <img id="avatar-preview" src="{{ $avatarPreviewUrl }}" alt="" class="hidden">
+            @else
+                <div id="avatar-preview-placeholder" class="hidden">{{ substr($user->name, 0, 1) }}</div>
+                <img id="avatar-preview" src="" alt="" class="hidden">
+            @endif
+
             <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
         </div>
 
@@ -92,8 +94,8 @@
             <x-input-error class="mt-1.5" :messages="$errors->get('phone')" />
         </div>
 
-        {{-- Bio / Ringkasan Singkat (student/alumni only) --}}
-        @if(in_array(Auth::user()->role, ['student', 'alumni']))
+        {{-- Bio / Ringkasan Singkat --}}
+        @if(Auth::user()->role === 'jobseeker')
         <div>
             <x-input-label for="bio" value="Bio / Ringkasan Singkat" class="text-slate-700 font-semibold mb-1" />
             <textarea id="bio" name="bio" rows="3"
@@ -107,7 +109,7 @@
             <x-input-error class="mt-1.5" :messages="$errors->get('bio')" />
         </div>
 
-        {{-- Keahlian (student/alumni only) --}}
+        {{-- Keahlian (jobseeker only) --}}
         <div x-data="skillsManager({{ Js::from($user->skills->pluck('name')->toArray()) }})">
             <x-input-label value="Keahlian & Kompetensi" class="text-slate-700 font-semibold mb-1" />
             <p class="text-xs text-slate-400 mb-2">Tulis keahlian lalu tekan <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] font-mono">Enter</kbd> atau tanda koma <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] font-mono">,</kbd></p>
@@ -139,35 +141,11 @@
         </div>
         @endif
 
-        {{-- Data Akademik & CV (student/alumni only) --}}
-        @if(in_array(Auth::user()->role, ['student', 'alumni']))
+        {{-- Data Diri & CV --}}
         <div class="border-t border-slate-100 pt-6">
             <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4">Data Diri & CV</h3>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                    <x-input-label for="major" value="Jurusan / Program Keahlian" class="text-slate-700 font-semibold mb-1" />
-                    <x-text-input id="major" name="major" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
-                                  :value="old('major', $user->student->major ?? '')"
-                                  placeholder="Contoh: Teknik Komputer & Jaringan" />
-                    <x-input-error class="mt-1.5" :messages="$errors->get('major')" />
-                </div>
-
-                <div>
-                    <x-input-label for="graduation_year" value="Tahun Lulus" class="text-slate-700 font-semibold mb-1" />
-                    <select id="graduation_year" name="graduation_year"
-                            class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm">
-                        <option value="">Pilih Tahun Lulus</option>
-                        @for($year = date('Y') + 2; $year >= date('Y') - 15; $year--)
-                            <option value="{{ $year }}"
-                                {{ old('graduation_year', $user->student->graduation_year ?? '') == $year ? 'selected' : '' }}>
-                                {{ $year }}
-                            </option>
-                        @endfor
-                    </select>
-                    <x-input-error class="mt-1.5" :messages="$errors->get('graduation_year')" />
-                </div>
-
                 <div>
                     <x-input-label for="preferred_position" value="Posisi yang Diinginkan" class="text-slate-700 font-semibold mb-1" />
                     <x-text-input id="preferred_position" name="preferred_position" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
@@ -225,7 +203,7 @@
             <div class="mt-5">
                 <x-input-label for="education_history" value="Riwayat Pendidikan (SD s.d. sekarang)" class="text-slate-700 font-semibold mb-1" />
                 <div class="mb-2 rounded-xl border border-blue-100 bg-blue-50 px-3 py-2 text-sm text-blue-700">
-                    Isi dari tingkat paling rendah sampai saat ini, misalnya SD, SMP, dan SMK. Ini akan muncul di CV Anda.
+                    Isi riwayat pendidikan Anda dari tingkat paling rendah sampai saat ini. Jika Anda bukan dari SMK MUTU, Anda tetap dapat mengisi sekolah atau lembaga pendidikan terakhir Anda.
                 </div>
                 <textarea id="education_history" name="education_history" rows="4"
                           class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm"
@@ -249,10 +227,9 @@
                 <x-input-error class="mt-1.5" :messages="$errors->get('address')" />
             </div>
         </div>
-        @endif
 
         <div class="flex items-center gap-4 border-t border-slate-100 pt-6">
-            <x-primary-button class="rounded-xl px-5 py-2.5 bg-blue-600 hover:bg-blue-700 shadow-sm transition">{{ __('Simpan Perubahan') }}</x-primary-button>
+            <x-ui.btn type="submit">{{ __('Simpan Perubahan') }}</x-ui.btn>
 
             @if (session('status') === 'profile-updated')
                 <p x-data="{ show: true }"

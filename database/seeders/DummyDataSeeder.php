@@ -22,7 +22,7 @@ class DummyDataSeeder extends Seeder
         $this->command->info('📋 Membuat lowongan kerja...');
         $jobs = $this->createJobs($companies);
 
-        $this->command->info('🎓 Membuat akun siswa...');
+        $this->command->info('🎓 Membuat akun pencari kerja...');
         $students = $this->createStudents();
 
         $this->command->info('📨 Membuat lamaran...');
@@ -38,7 +38,7 @@ class DummyDataSeeder extends Seeder
             [
                 ['Perusahaan', count($companies)],
                 ['Lowongan', count($jobs)],
-                ['Siswa', count($students)],
+                ['Pencari Kerja', count($students)],
                 ['Lamaran', Application::count()],
             ]
         );
@@ -397,13 +397,13 @@ class DummyDataSeeder extends Seeder
             $user->forceFill([
                 'name'              => $d['name'],
                 'password'          => Hash::make('password123'),
-                'role'              => 'student',
+                'role'              => 'jobseeker',
                 'phone'             => $d['phone'],
                 'bio'               => $d['bio'],
                 'is_active'         => true,
                 'email_verified_at' => now(),
             ])->save();
-            $user->syncRoles(['student']);
+            $user->syncRoles(['jobseeker']);
 
             $student = Student::withTrashed()->where('user_id', $user->id)->first();
             if (! $student) {

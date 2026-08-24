@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="mb-6">
-        <h2 class="text-2xl font-bold text-gray-900">Buat Akun</h2>
-        <p class="text-sm text-gray-500 mt-1">Mulai perjalanan karir Anda bersama BKK SMK MUTU</p>
+        <h2 class="text-2xl font-bold text-gray-900">Daftar sebagai Pencari Kerja</h2>
+        <p class="mt-1 text-sm text-gray-500">Buat akun pencari kerja untuk mencari lowongan, membuat CV, dan melamar pekerjaan.</p>
     </div>
 
     @if($errors->any())
@@ -15,28 +15,11 @@
     </div>
     @endif
 
-
-
     <form method="POST" action="{{ route('register') }}" class="space-y-5">
         @csrf
 
-        {{-- Pilih role --}}
         <div>
-            <label for="role" class="block text-sm font-medium text-gray-700 mb-1.5">
-                Daftar Sebagai
-            </label>
-            <select id="role" name="role" class="ui-select" onchange="toggleStudentFields(this.value)">
-                <option value="student" {{ old('role', 'student') === 'student' ? 'selected' : '' }}>Siswa</option>
-                <option value="alumni" {{ old('role') === 'alumni' ? 'selected' : '' }}>Alumni</option>
-            </select>
-            <x-input-error :messages="$errors->get('role')" class="mt-1.5" />
-        </div>
-
-        {{-- Nama --}}
-        <div>
-            <label for="name" class="block text-sm font-medium text-gray-700 mb-1.5">
-                Nama Lengkap
-            </label>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-1.5">Nama Lengkap</label>
             <input id="name"
                    type="text"
                    name="name"
@@ -49,7 +32,6 @@
             <x-input-error :messages="$errors->get('name')" class="mt-1.5" />
         </div>
 
-        {{-- Email --}}
         <div>
             <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">Alamat Email</label>
             <input id="email"
@@ -63,41 +45,7 @@
             <x-input-error :messages="$errors->get('email')" class="mt-1.5" />
         </div>
 
-        {{-- Field khusus siswa --}}
-        <div id="student-fields" class="space-y-5">
-            <div>
-                <label for="nis" class="block text-sm font-medium text-gray-700 mb-1.5">
-                    NIS <span class="text-gray-400 font-normal">(opsional)</span>
-                </label>
-                <input id="nis"
-                       type="text"
-                       name="nis"
-                       value="{{ old('nis') }}"
-                       placeholder="Nomor Induk Siswa"
-                       class="ui-input">
-                <x-input-error :messages="$errors->get('nis')" class="mt-1.5" />
-            </div>
 
-            <div>
-                <label for="graduation_year" class="block text-sm font-medium text-gray-700 mb-1.5">
-                    Tahun Lulus <span class="text-gray-400 font-normal">(opsional)</span>
-                </label>
-                <select id="graduation_year" name="graduation_year"
-                        class="ui-select">
-                    <option value="">Pilih tahun lulus</option>
-                    @for($year = date('Y') + 2; $year >= date('Y') - 10; $year--)
-                        <option value="{{ $year }}" {{ old('graduation_year') == $year ? 'selected' : '' }}>
-                            {{ $year }}
-                        </option>
-                    @endfor
-                </select>
-                <x-input-error :messages="$errors->get('graduation_year')" class="mt-1.5" />
-            </div>
-        </div>
-
-        </div>
-
-        {{-- Password --}}
         <div>
             <label for="password" class="block text-sm font-medium text-gray-700 mb-1.5">Kata Sandi</label>
             <input id="password"
@@ -110,7 +58,6 @@
             <x-input-error :messages="$errors->get('password')" class="mt-1.5" />
         </div>
 
-        {{-- Konfirmasi Password --}}
         <div>
             <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1.5">
                 Konfirmasi Kata Sandi
@@ -125,31 +72,10 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1.5" />
         </div>
 
-        {{-- Submit --}}
         <button type="submit" class="w-full ui-btn ui-btn-primary mt-2">
             Buat Akun
         </button>
     </form>
-
-    <script>
-        function toggleStudentFields(role) {
-            const studentFields = document.getElementById('student-fields');
-
-            if (!studentFields) {
-                return;
-            }
-
-            const isStudent = role === 'student' || role === 'alumni';
-            studentFields.classList.toggle('hidden', !isStudent);
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const roleSelect = document.getElementById('role');
-            if (roleSelect) {
-                toggleStudentFields(roleSelect.value);
-            }
-        });
-    </script>
 
     <p class="mt-6 text-center text-sm text-gray-500">
         Sudah punya akun?

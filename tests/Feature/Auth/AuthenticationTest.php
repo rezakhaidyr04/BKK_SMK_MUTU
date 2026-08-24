@@ -55,18 +55,56 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
-    public function test_company_users_can_access_the_app_after_registration(): void
+    public function test_public_registration_always_signs_in_as_jobseeker_even_when_role_is_tampered(): void
     {
-        $this->post('/register', [
-            'name' => 'PT Contoh',
-            'email' => 'company@example.com',
-            'password' => 'password',
+        $response = $this->post('/register', [
+            'name'                  => 'PT Contoh',
+            'email'                 => 'company@example.com',
+            'password'              => 'password',
             'password_confirmation' => 'password',
-            'role' => 'company',
+            'role'                  => 'company',
         ]);
 
         $this->assertAuthenticated();
-        $this->get('/dashboard')->assertStatus(200);
+        $response->assertRedirect(RouteServiceProvider::HOME);
+        $this->assertEquals('jobseeker', auth()->user()->role);
+    }
+
+    public function test_jobseeker_users_are_redirected_to_their_dashboard(): void
+    {
+        $user = User::factory()->create(['role' => 'jobseeker']);
+
+        $response = $this->actingAs($user)->get(RouteServiceProvider::HOME);
+
+        $response->assertOk();
+    }
+
+    public function test_admin_users_are_redirected_to_their_dashboard(): void
+    {
+        $user = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($user)->get(RouteServiceProvider::HOME);
+
+        $response->assertOk();
+    }
+
+    public function test_teacher_users_are_redirected_to_their_dashboard(): void
+    {
+        $user = User::factory()->create(['role' => 'teacher']);
+
+        $response = $this->actingAs($user)->get(RouteServiceProvider::HOME);
+
+        $response->assertOk();
+    }
+
+    public function test_company_users_are_redirected_to_their_dashboard(): void
+    {
+        $user = User::factory()->create(['role' => 'company']);
+        \App\Models\Company::factory()->create(['user_id' => $user->id]);
+
+        $response = $this->actingAs($user)->get(RouteServiceProvider::HOME);
+
+        $response->assertOk();
     }
 
     public function test_users_can_logout(): void

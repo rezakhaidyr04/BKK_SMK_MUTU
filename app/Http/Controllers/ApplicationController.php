@@ -11,7 +11,7 @@ class ApplicationController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Application::with(['job'])
+        $query = Application::with(['job.company'])
             ->where('user_id', Auth::id())
             ->latest();
 
@@ -24,12 +24,12 @@ class ApplicationController extends Controller
 
         // Statistics
         $stats = [
-            'total' => Application::where('user_id', Auth::id())->count(),
-            'submitted' => Application::where('user_id', Auth::id())->where('status', 'submitted')->count(),
+            'total'        => Application::where('user_id', Auth::id())->count(),
+            'submitted'    => Application::where('user_id', Auth::id())->where('status', 'submitted')->count(),
             'under_review' => Application::where('user_id', Auth::id())->where('status', 'under_review')->count(),
-            'interviewed' => Application::where('user_id', Auth::id())->where('status', 'interviewed')->count(),
-            'accepted' => Application::where('user_id', Auth::id())->where('status', 'accepted')->count(),
-            'rejected' => Application::where('user_id', Auth::id())->where('status', 'rejected')->count(),
+            'interviewed'  => Application::where('user_id', Auth::id())->where('status', 'interviewed')->count(),
+            'accepted'     => Application::where('user_id', Auth::id())->where('status', 'accepted')->count(),
+            'rejected'     => Application::where('user_id', Auth::id())->where('status', 'rejected')->count(),
         ];
 
         return view('applications.index', compact('applications', 'stats'));
@@ -37,7 +37,7 @@ class ApplicationController extends Controller
 
     public function show(Application $application)
     {
-        $application->load(['job']);
+        $application->load(['job.company']);
         $this->authorize('view', $application);
 
         // Timeline for status tracking

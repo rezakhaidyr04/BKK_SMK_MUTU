@@ -79,9 +79,29 @@
 
                 initChat() {
                     this.scrollToBottom();
-                    this.interval = setInterval(() => {
-                        this.fetchMessages();
-                    }, 3000);
+                    
+                    if (typeof window.Echo !== 'undefined') {
+                        // Jika websockets aktif, gunakan listener
+                        window.Echo.channel(`conversation.${conversationId}`)
+                            .listen('MessageSent', (e) => {
+                                // Jangan tambahkan pesan jika kita sendiri yang mengirim (sudah ditambah via ajax)
+                                if (e.sender_id !== this.authId) {
+                                    this.messages.push({
+                                        id: e.id,
+                                        body: e.body,
+                                        sender_id: e.sender_id,
+                                        sender_name: e.sender_name,
+                                        created_at_formatted: e.created_at_formatted
+                                    });
+                                    this.scrollToBottom();
+                                }
+                            });
+                    } else {
+                        // Fallback ke polling tradisional
+                        this.interval = setInterval(() => {
+                            this.fetchMessages();
+                        }, 3000);
+                    }
                 },
 
                 async fetchMessages() {

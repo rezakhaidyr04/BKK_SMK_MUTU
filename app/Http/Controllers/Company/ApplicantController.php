@@ -18,8 +18,7 @@ class ApplicantController extends Controller
 
         $applications = Application::with(['job', 'user'])
             ->whereHas('job', function ($query) use ($company) {
-                $query->where('company_id', $company->id)
-                    ->orWhere('company_name', $company->name);
+                $query->where('company_id', $company->id);
             })
             ->latest()
             ->paginate(10);

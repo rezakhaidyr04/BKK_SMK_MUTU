@@ -14,9 +14,10 @@ class RoleAndAdminSeeder extends Seeder
         $roles = [
             'admin',
             'teacher',
-            'student',
-            'alumni',
+            'jobseeker',
             'company',
+            // legacy Spatie roles sengaja tidak dibuat ulang di seeder aktif
+            // karena account role pencari kerja sekarang sudah dikonsolidasikan.
         ];
 
         foreach ($roles as $role) {

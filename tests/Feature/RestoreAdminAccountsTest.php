@@ -16,11 +16,13 @@ class RestoreAdminAccountsTest extends TestCase
     {
         Role::firstOrCreate(['name' => 'company', 'guard_name' => 'web']);
 
+        // Use an email that is in the RestoreAdminAccounts command's defaultAccounts list
+        // so the command knows to restore it.
         $user = User::create([
-            'name' => 'PT Contoh BKK',
-            'email' => 'company@bkk.com',
+            'name'     => 'PT Contoh BKK',
+            'email'    => 'pt.contoh@bkk.com',
             'password' => bcrypt('password123'),
-            'role' => 'company',
+            'role'     => 'company',
             'is_active' => true,
         ]);
         $user->assignRole('company');
@@ -28,7 +30,7 @@ class RestoreAdminAccountsTest extends TestCase
 
         $this->artisan('db:restore-admin', ['--force' => true])->assertSuccessful();
 
-        $restoredUser = User::withTrashed()->where('email', 'company@bkk.com')->first();
+        $restoredUser = User::withTrashed()->where('email', 'pt.contoh@bkk.com')->first();
 
         $this->assertNotNull($restoredUser);
         $this->assertNull($restoredUser->deleted_at);
@@ -36,7 +38,7 @@ class RestoreAdminAccountsTest extends TestCase
         $this->assertTrue($restoredUser->hasRole('company'));
         $this->assertDatabaseHas('companies', [
             'user_id' => $restoredUser->id,
-            'name' => 'PT Contoh BKK',
+            'name'    => 'PT Contoh BKK',
         ]);
     }
 }

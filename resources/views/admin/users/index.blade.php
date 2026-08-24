@@ -24,8 +24,7 @@
                     <option value="">Semua</option>
                     <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                     <option value="company" {{ request('role') == 'company' ? 'selected' : '' }}>Perusahaan</option>
-                    <option value="student" {{ request('role') == 'student' ? 'selected' : '' }}>Mahasiswa</option>
-                    <option value="alumni" {{ request('role') == 'alumni' ? 'selected' : '' }}>Alumni</option>
+                    <option value="jobseeker" {{ request('role') == 'jobseeker' ? 'selected' : '' }}>Pencari Kerja</option>
                     <option value="teacher" {{ request('role') == 'teacher' ? 'selected' : '' }}>Guru</option>
                 </select>
             </div>

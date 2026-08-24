@@ -1,8 +1,6 @@
 @props(['title', 'subtitle' => null])
 
-<section class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-800 via-primary-700 to-info-600 text-white shadow-xl shadow-primary-950/20">
-    <div class="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl"></div>
-    <div class="pointer-events-none absolute -bottom-24 -left-12 h-56 w-56 rounded-full bg-cyan-300/20 blur-3xl"></div>
+<section class="relative text-white">
 
     <div class="relative mx-auto max-w-7xl px-5 py-6 sm:px-8 sm:py-8">
         <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">

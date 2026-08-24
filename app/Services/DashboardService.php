@@ -20,9 +20,10 @@ class DashboardService
     {
         return match($user->role) {
             'admin' => $this->getAdminStats(),
-            'student', 'alumni' => $this->getStudentAlumniStats($user),
+            'jobseeker' => $this->getStudentAlumniStats($user),
             'teacher' => $this->getTeacherStats(),
-            default => $this->getStudentAlumniStats($user),
+            'company' => [],
+            default => [],
         };
     }
 
@@ -32,8 +33,8 @@ class DashboardService
     private function getAdminStats(): array
     {
         return [
-            'total_students' => $this->getCachedCount('total_students', fn() => User::where('role', 'student')->count()),
-            'total_alumni' => $this->getCachedCount('total_alumni', fn() => User::where('role', 'alumni')->count()),
+            'total_students' => $this->getCachedCount('total_students', fn() => User::where('role', 'jobseeker')->count()),
+            'total_alumni' => 0,
             'total_jobs' => $this->getCachedCount('total_jobs', fn() => Job::where('status', 'active')->count()),
             'total_applications' => $this->getCachedCount('total_applications', fn() => Application::count()),
             'pending_applications' => $this->getCachedCount('pending_applications', fn() => Application::where('status', 'submitted')->count()),
@@ -73,8 +74,8 @@ class DashboardService
     private function getTeacherStats(): array
     {
         return [
-            'total_students' => $this->getCachedCount('total_students', fn() => User::where('role', 'student')->count()),
-            'total_alumni' => $this->getCachedCount('total_alumni', fn() => User::where('role', 'alumni')->count()),
+            'total_students' => $this->getCachedCount('total_students', fn() => User::where('role', 'jobseeker')->count()),
+            'total_alumni' => 0,
             'active_jobs' => $this->getCachedCount('total_jobs', fn() => Job::where('status', 'active')->count()),
             'placed_alumni' => $this->getCachedCount('placed_alumni', fn() => 
                 Application::where('status', 'accepted')->count()

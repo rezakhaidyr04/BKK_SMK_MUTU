@@ -11,7 +11,7 @@ class JobController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Job::query();
+        $query = Job::with('company');
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -108,11 +108,11 @@ class JobController extends Controller
 
     public function broadcast(Job $job)
     {
-        $students = \App\Models\User::where('role', 'student')->get();
-        
-        \Illuminate\Support\Facades\Notification::send($students, new \App\Notifications\NewJobNotification($job));
+        $jobseekers = \App\Models\User::where('role', 'jobseeker')->get();
+
+        \Illuminate\Support\Facades\Notification::send($jobseekers, new \App\Notifications\NewJobNotification($job));
 
         return redirect()->back()
-            ->with('success', 'Notifikasi lowongan kerja berhasil di-broadcast ke ' . $students->count() . ' siswa melalui email.');
+            ->with('success', 'Notifikasi lowongan kerja berhasil di-broadcast ke ' . $jobseekers->count() . ' pencari kerja melalui email.');
     }
 }

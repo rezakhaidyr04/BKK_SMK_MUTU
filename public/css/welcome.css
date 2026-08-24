@@ -34,13 +34,11 @@
         flex: 0 0 100%;
         max-width: 100%;
         padding-right: 0;
-        padding-bottom: 32px;
+        padding-bottom: 16px;
     }
     .hero-photo-col {
         flex: 0 0 100%;
         max-width: 100%;
-        max-height: 240px;
-        overflow: hidden;
     }
 }
 
@@ -474,3 +472,168 @@
 
 /* ── FOOTER SOCIAL ────────────────────────────────────────── */
 #social { scroll-margin-top: 80px; }
+
+/* Hero company visual */
+.hero-visual-stack {
+    max-width: 560px;
+}
+
+.feature-company-caption {
+    max-width: 760px;
+    margin: 0 auto 1rem;
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #64748b;
+}
+
+.feature-company-visual {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.75rem;
+    width: 100%;
+}
+
+.feature-company-visual-wide {
+    width: min(100%, 820px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.feature-company-image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 24px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.hero-student-image {
+    position: relative;
+}
+
+@media (max-width: 1023px) {
+    .feature-company-caption {
+        margin-bottom: 0.9rem;
+        font-size: 0.9rem;
+    }
+
+    .feature-company-visual {
+        margin-bottom: 1.25rem;
+    }
+
+    .feature-company-visual-wide {
+        width: min(100%, 560px);
+    }
+
+    .feature-company-image {
+        width: 100%;
+        max-height: 240px;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+
+    .hero-illustration-wrap {
+        min-height: 0;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .hero-photo-col {
+        justify-content: center;
+        margin-top: 4px;
+    }
+
+    .hero-text-col h1 {
+        margin-bottom: 12px !important;
+        line-height: 1.15 !important;
+    }
+
+    .hero-text-col p {
+        margin-bottom: 20px !important;
+        line-height: 1.65 !important;
+    }
+
+    .hero-text-col > div[style*="display:flex"] {
+        margin-bottom: 22px !important;
+    }
+
+    .hero-info-bar {
+        padding: 6px 8px;
+    }
+
+    .hero-info-scroll {
+        gap: 8px !important;
+    }
+
+    .hero-info-pill {
+        padding: 4px 10px !important;
+        font-size: 0.7rem !important;
+    }
+
+    .hero-text-col > div[style*="display:flex"] {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px !important;
+    }
+
+    .hero-text-col .hero-cta {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hero-student-image {
+        width: 100% !important;
+        max-width: 250px !important;
+        margin: 0 auto -4px !important;
+    }
+}
+
+@media (max-width: 640px) {
+    nav .h-16 {
+        height: 4.25rem;
+    }
+
+    nav .flex.items-center.gap-3 {
+        gap: 0.65rem;
+    }
+
+    nav img[alt="BKK SMK MUTU"] {
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 0.75rem;
+    }
+
+    nav .text-xl.font-bold {
+        font-size: 1.55rem;
+        line-height: 1.2;
+    }
+
+    nav a[href$="login"] {
+        padding: 0.65rem 0.95rem;
+        font-size: 0.9rem;
+    }
+
+    #hero {
+        min-height: auto !important;
+    }
+
+    .hero-greeting {
+        margin-bottom: 18px !important;
+        padding: 7px 14px !important;
+        font-size: 0.75rem !important;
+    }
+
+    .hero-text-col h1 {
+        font-size: 2rem !important;
+    }
+
+    .hero-info-bar {
+        padding: 5px 6px;
+    }
+
+    .hero-info-pill {
+        padding: 4px 9px !important;
+        font-size: 0.68rem !important;
+    }
+}

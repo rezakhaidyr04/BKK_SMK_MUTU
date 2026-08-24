@@ -34,7 +34,7 @@
                 <div class="hidden lg:flex items-center gap-6">
                     <a href="{{ route('home') }}" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Beranda</a>
                     <a href="#jobs" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Lowongan</a>
-                    <a href="#trusted" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Perusahaan</a>
+
                     <a href="#features" class="text-sm font-medium text-slate-700 hover:text-blue-600 transition">Tentang Kami</a>
                 </div>
                 
@@ -50,11 +50,8 @@
                             </button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors hidden sm:block">
+                        <a href="{{ route('login') }}" class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                             Masuk
-                        </a>
-                        <a href="{{ route('register') }}" class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                            Daftar
                         </a>
                     @endif
                     
@@ -80,9 +77,7 @@
                 <a href="#jobs" @click="mobileMenuOpen = false" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors">
                     Lowongan
                 </a>
-                <a href="#trusted" @click="mobileMenuOpen = false" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors">
-                    Perusahaan
-                </a>
+
                 <a href="#features" @click="mobileMenuOpen = false" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors">
                     Tentang Kami
                 </a>
@@ -99,6 +94,9 @@
                 @else
                     <a href="{{ route('login') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors sm:hidden">
                         Masuk
+                    </a>
+                    <a href="{{ route('register') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors">
+                        Daftar
                     </a>
                 @endif
             </div>
@@ -159,25 +157,21 @@
                     </aside>
                 </div>
 
-                {{-- KANAN: foto siswa --}}
-                <div class="hero-photo-col" style="position: relative; display: flex; align-items: flex-end; justify-content: flex-end;">
-                    <div class="hero-illustration-wrap" style="position: relative; width: 100%; display: flex; align-items: flex-end; justify-content: center; min-height: 480px;">
-                        
-                        {{-- Foto siswa tanpa container box kecil agar berukuran besar dan natural --}}
+                {{-- KANAN: visual perusahaan + siswa --}}
+                <div class="hero-photo-col hero-visual-col" style="position: relative; display: flex; align-items: flex-end; justify-content: flex-end;">
+                    <div class="hero-illustration-wrap hero-visual-stack" style="position: relative; width: 100%; display: flex; align-items: flex-end; justify-content: center; min-height: 480px;">
                         <img src="{{ asset('images/foto_siswa/siswa.png') }}"
                              alt="Ilustrasi siswa BKK SMK MUTU"
                              loading="eager"
-                             style="width: 110%; max-width: 580px; height: auto; object-fit: contain; display: block; z-index: 2; margin-bottom: -4px;">
+                             class="hero-student-image"
+                             style="width: 100%; max-width: 520px; height: auto; object-fit: contain; display: block; z-index: 2; margin-bottom: -4px;">
 
-                        {{-- Badge kanan atas --}}
                         <div class="hero-badge" data-index="1" style="position:absolute; top:20%; right:5%; z-index:3;">
                             <span class="hero-badge-text">150+ Lowongan Aktif</span>
                         </div>
-                        {{-- Badge kiri atas --}}
                         <div class="hero-badge" data-index="2" style="position:absolute; top:35%; left:-5%; z-index:3;">
                             <span class="hero-badge-text">CV ATS Profesional</span>
                         </div>
-                        {{-- Badge kanan bawah --}}
                         <div class="hero-badge" data-index="3" style="position:absolute; bottom:25%; right:-2%; z-index:3;">
                             <span class="hero-badge-text">93% Alumni Berhasil</span>
                         </div>
@@ -189,47 +183,15 @@
     </section>
 
 
-    <!-- Trusted Companies (static assets) -->
-    <section id="trusted" class="py-16 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <p class="text-sm uppercase tracking-[0.32em] text-slate-400">Dipercaya oleh Perusahaan Terkemuka</p>
-                <h2 class="mt-4 text-3xl font-semibold text-slate-900 sm:text-4xl">Jaringan mitra yang terus berkembang</h2>
-                <p class="mt-3 text-base text-slate-500">Lebih dari <span class="font-semibold text-slate-1000">6</span> perusahaan mitra aktif mendukung lulusan SMK MUTU.</p>
-            </div>
-
-            <div class="trusted-marquee-card overflow-hidden py-6">
-                @if(!empty($partnerLogos))
-                    <div class="trusted-marquee-track" aria-hidden="true">
-                        @foreach($partnerLogos as $logo)
-                            <div class="trusted-logo">
-                                <img src="{{ asset($logo) }}" alt="" loading="lazy" onerror="this.style.display='none'" />
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="trusted-marquee-track" aria-hidden="true">
-                        @foreach($partnerLogos as $logo)
-                            <div class="trusted-logo">
-                                <img src="{{ asset($logo) }}" alt="" loading="lazy" onerror="this.style.display='none'" />
-                            </div>
-                        @endforeach
-                    </div>
-                @else
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 px-6">
-                        <div class="rounded-2xl bg-slate-100 p-6 text-center text-slate-500">Logo mitra belum tersedia</div>
-                        <div class="rounded-2xl bg-slate-100 p-6 text-center text-slate-500">Logo mitra belum tersedia</div>
-                        <div class="rounded-2xl bg-slate-100 p-6 text-center text-slate-500">Logo mitra belum tersedia</div>
-                        <div class="rounded-2xl bg-slate-100 p-6 text-center text-slate-500">Logo mitra belum tersedia</div>
-                    </div>
-                @endif
-            </div>
-        </div>
-    </section>
 
     <!-- Why Choose BKK SMK MUTU -->
     <section id="features" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-14">
+                <p class="feature-company-caption">Didukung jaringan perusahaan mitra untuk membantu siswa dan alumni melangkah lebih siap ke dunia kerja.</p>
+                <div class="feature-company-visual feature-company-visual-wide">
+                    <img src="{{ asset('images/perusahaan/perusahaan.jpeg') }}" alt="Perusahaan mitra BKK SMK MUTU" class="feature-company-image">
+                </div>
                 <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl">Mengapa Memilih BKK SMK MUTU?</h2>
                 <p class="mt-3 text-base text-slate-500">Platform lengkap untuk pengembangan karir Anda</p>
             </div>

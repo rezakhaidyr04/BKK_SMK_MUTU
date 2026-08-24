@@ -1,10 +1,7 @@
 <x-app-layout>
-    <div class="page-shell">
-        <x-ui.dashboard-hero
-            title="Daftar Siswa"
-            subtitle="Kelola dan monitoring semua siswa"
-            gradient="from-blue-600 via-teal-600 to-green-600"
-        />
+    <x-slot name="header">
+        <x-ui.page-header title="Daftar Siswa" subtitle="Kelola dan monitoring semua siswa." />
+    </x-slot>
 
         <div class="page-container page-section">
             {{-- Filters --}}
@@ -134,5 +131,4 @@
                 @endif
             </div>
         </div>
-    </div>
 </x-app-layout>

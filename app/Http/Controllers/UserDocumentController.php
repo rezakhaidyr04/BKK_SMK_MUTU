@@ -16,7 +16,7 @@ class UserDocumentController extends Controller
         ]);
 
         $file = $request->file('file');
-        $path = $file->store('user_documents', 'private');
+        $path = $file->store('user-documents', 'private');
 
         UserDocument::create([
             'user_id' => auth()->id(),
