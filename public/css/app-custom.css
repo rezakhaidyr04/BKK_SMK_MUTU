@@ -25,6 +25,23 @@
     --color-primary-dark: var(--color-primary-700);
     --color-primary-light: var(--color-primary-50);
 
+    /* Navy scale */
+    --navy:   #071733;
+    --navy-2: #0b2454;
+    --navy-3: #173d91;
+
+    /* ── Alias pendek (kompatibel dengan welcome.css & semua role) ── */
+    --primary:       var(--color-primary-600);   /* #2563eb */
+    --primary-dark:  var(--color-primary-700);   /* #1d4ed8 */
+    --primary-light: var(--color-primary-50);    /* #eff6ff */
+    --text:          var(--color-heading);        /* #0f172a */
+    --text-2:        var(--color-body);           /* #475569 */
+    --text-3:        var(--color-muted);          /* #94a3b8 */
+    --white:         #ffffff;
+    --bg:            var(--color-surface);        /* #ffffff */
+    --bg-soft:       var(--color-background);     /* #f8fafc */
+    --border:        var(--color-border);         /* #e2e8f0 */
+
     /* Semantic colors */
     --color-success: #22C55E;
     --color-warning: #F59E0B;
@@ -120,31 +137,97 @@ body {
 /* ============================================================
    4. PAGE HERO (digunakan oleh komponen ui/page-hero.blade.php)
    ============================================================ */
-.ui-page-hero {
-    background: linear-gradient(135deg, #1e293b 0%, #1e3a8a 60%, #312e81 100%);
+
+/* Header halaman dalam layout app.blade.php */
+.app-page-header {
+    background: linear-gradient(135deg, #1a3a8f 0%, #1e50d0 50%, #2563eb 100%);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 24px rgba(7,23,51,0.25);
+    min-height: 130px;
+    display: flex;
+    align-items: center;
+}
+
+/* Dekorasi gelombang kanan */
+.app-page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 60% 80% at 85% 50%, rgba(255,255,255,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 95% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.app-page-header::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 45%;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 24px 24px, 48px 48px;
+    background-position: 0 0, 12px 12px;
+    pointer-events: none;
+    mask-image: linear-gradient(to left, rgba(0,0,0,0.5) 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.5) 0%, transparent 100%);
+}
+
+.app-page-header .page-container {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+.ui-page-hero {
+    background: linear-gradient(135deg, #1a3a8f 0%, #1e50d0 50%, #2563eb 100%);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(7,23,51,0.25);
+    min-height: 130px;
 }
 
 .ui-page-hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 15% 50%, rgba(99,102,241,0.25) 0%, transparent 55%),
-                radial-gradient(circle at 85% 20%, rgba(59,130,246,0.15) 0%, transparent 50%);
+    background:
+        radial-gradient(ellipse 60% 80% at 85% 50%, rgba(255,255,255,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 95% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
     pointer-events: none;
+}
+
+.ui-page-hero::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 45%;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 24px 24px, 48px 48px;
+    background-position: 0 0, 12px 12px;
+    pointer-events: none;
+    mask-image: linear-gradient(to left, rgba(0,0,0,0.5) 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.5) 0%, transparent 100%);
 }
 
 .ui-page-hero-inner {
     position: relative;
+    z-index: 2;
     max-width: 80rem;
     margin: 0 auto;
-    padding: 1.75rem 1rem;
+    padding: 2.5rem 1rem;
 }
 
 @media (min-width: 640px) {
-    .ui-page-hero-inner { padding: 2rem 1.5rem; }
+    .ui-page-hero-inner { padding: 2.75rem 1.5rem; }
 }
 
 @media (min-width: 1024px) {
@@ -732,7 +815,7 @@ body {
     padding: 1rem 1.4rem;
     border-radius: 9999px;
     background: #eff6ff;
-    color: #1e3a8a;
+    color: var(--navy-3);
     font-size: 0.95rem;
     font-weight: 600;
 }
@@ -799,7 +882,7 @@ body {
     height: 3rem;
     border-radius: 9999px;
     background: #eff6ff;
-    color: #1e3a8a;
+    color: var(--navy-3);
     font-weight: 700;
 }
 

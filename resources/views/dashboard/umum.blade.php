@@ -39,49 +39,49 @@
 
         <div class="page-container page-section">
             {{-- Quick Actions --}}
-            <div class="bg-white dark:bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 p-6 mb-8">
+            <div class="bg-white dark:bg-gray-800/80 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 p-6 mb-8">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-5">Aksi Cepat</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
-                    <a href="{{ route('jobs.index') }}" class="group flex flex-col items-center p-5 bg-white border border-slate-200 rounded-lg hover:shadow-sm hover:border-slate-300 transition-all duration-300">
-                        <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="{{ route('jobs.index') }}" class="group flex flex-col items-center p-5 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+                        <div class="w-14 h-14 bg-blue-600 text-white rounded-xl flex items-center justify-center mb-3 shadow-md group-hover:scale-110 transition-all duration-200">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                             </svg>
                         </div>
-                        <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Cari Lowongan</span>
+                        <span class="text-sm font-bold text-blue-800 text-center">Cari Lowongan</span>
                     </a>
-                    
-                    <a href="{{ route('cv.builder') }}" class="group flex flex-col items-center p-5 bg-white border border-slate-200 rounded-lg hover:shadow-sm hover:border-slate-300 transition-all duration-300">
-                        <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300">
+
+                    <a href="{{ route('cv.builder') }}" class="group flex flex-col items-center p-5 bg-gradient-to-br from-violet-50 to-violet-100 border border-violet-200 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+                        <div class="w-14 h-14 bg-violet-600 text-white rounded-xl flex items-center justify-center mb-3 shadow-md group-hover:scale-110 transition-all duration-200">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                         </div>
-                        <span class="text-sm font-semibold text-gray-900 dark:text-white text-center">Buat CV</span>
+                        <span class="text-sm font-bold text-violet-800 text-center">Buat CV</span>
                     </a>
-                    
-                    <a href="{{ route('bookmarks.index') }}" class="group flex flex-col items-center p-5 bg-white border border-slate-200 rounded-lg hover:shadow-sm hover:border-slate-300 transition-all duration-300">
-                        <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300">
+
+                    <a href="{{ route('bookmarks.index') }}" class="group flex flex-col items-center p-5 bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+                        <div class="w-14 h-14 bg-amber-500 text-white rounded-xl flex items-center justify-center mb-3 shadow-md group-hover:scale-110 transition-all duration-200">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                             </svg>
                         </div>
-                        <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">Tersimpan</span>
+                        <span class="text-sm font-bold text-amber-800 text-center">Tersimpan</span>
                     </a>
-                    
-                    <a href="{{ route('applications.index') }}" class="group flex flex-col items-center p-5 bg-white border border-slate-200 rounded-lg hover:shadow-sm hover:border-slate-300 transition-all duration-300">
-                        <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300">
+
+                    <a href="{{ route('applications.index') }}" class="group flex flex-col items-center p-5 bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+                        <div class="w-14 h-14 bg-emerald-600 text-white rounded-xl flex items-center justify-center mb-3 shadow-md group-hover:scale-110 transition-all duration-200">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                         </div>
-                        <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">Lamaran Saya</span>
+                        <span class="text-sm font-bold text-emerald-800 text-center">Lamaran Saya</span>
                     </a>
                 </div>
             </div>
 
             {{-- Stats Grid (Refactored using reusable component) --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+            <div class="flex flex-row gap-4 mb-8 overflow-x-auto">
                 <x-ui.dashboard-stat-card
                     label="Lamaran Aktif"
                     :value="$stats['active_applications']"

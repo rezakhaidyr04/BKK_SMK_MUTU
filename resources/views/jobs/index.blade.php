@@ -1,33 +1,33 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
     <!-- Hero Search Section -->
-    <section class="bg-white border-b border-slate-200 pt-6 pb-10">
+    <section class="border-b border-slate-200 pt-8 pb-10" style="background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 60%, var(--navy-2) 100%);">
         <div class="page-container">
             <div class="max-w-5xl">
-                <div class="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 border border-blue-100 mb-3">
+                <div class="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white border border-white/20 mb-3">
                     Lowongan aktif · Filter cepat · Siap dilamar
                 </div>
-                <h1 class="text-3xl font-bold text-slate-900">Temukan Pekerjaan Impian Anda</h1>
-                <p class="mt-2 text-slate-600 max-w-2xl">Temukan {{ $jobs->total() }} peluang yang menunggu Anda, lalu saring hasilnya agar lebih sesuai dengan posisi, lokasi, dan jenis pekerjaan yang dicari.</p>
+                <h1 class="text-3xl font-bold text-white">Temukan Pekerjaan Impian Anda</h1>
+                <p class="mt-2 text-blue-100 max-w-2xl">Temukan {{ $jobs->total() }} peluang yang menunggu Anda, lalu saring hasilnya agar lebih sesuai dengan posisi, lokasi, dan jenis pekerjaan yang dicari.</p>
             </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 mt-5">
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
-                        <p class="text-xs uppercase tracking-[0.18em] text-blue-600 font-semibold">Langkah 1</p>
-                        <p class="text-slate-800 font-semibold mt-1">Cari lowongan yang relevan</p>
+                    <div class="bg-white/10 border border-white/20 rounded-xl p-4 backdrop-blur-sm">
+                        <p class="text-xs uppercase tracking-[0.18em] text-blue-200 font-semibold">Langkah 1</p>
+                        <p class="text-white font-semibold mt-1">Cari lowongan yang relevan</p>
                     </div>
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
-                        <p class="text-xs uppercase tracking-[0.18em] text-blue-600 font-semibold">Langkah 2</p>
-                        <p class="text-slate-800 font-semibold mt-1">Simpan yang paling cocok</p>
+                    <div class="bg-white/10 border border-white/20 rounded-xl p-4 backdrop-blur-sm">
+                        <p class="text-xs uppercase tracking-[0.18em] text-blue-200 font-semibold">Langkah 2</p>
+                        <p class="text-white font-semibold mt-1">Simpan yang paling cocok</p>
                     </div>
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
-                        <p class="text-xs uppercase tracking-[0.18em] text-blue-600 font-semibold">Langkah 3</p>
-                        <p class="text-slate-800 font-semibold mt-1">Lamar dan pantau progres</p>
+                    <div class="bg-white/10 border border-white/20 rounded-xl p-4 backdrop-blur-sm">
+                        <p class="text-xs uppercase tracking-[0.18em] text-blue-200 font-semibold">Langkah 3</p>
+                        <p class="text-white font-semibold mt-1">Lamar dan pantau progres</p>
                     </div>
                 </div>
 
                 <!-- Advanced Search Form -->
                 <form action="{{ route('jobs.index') }}" method="GET" class="max-w-5xl">
-                    <div class="bg-white shadow-sm border border-slate-200 rounded-xl p-5 md:p-6">
+                    <div class="bg-white shadow-lg border border-slate-100 rounded-2xl p-5 md:p-6 mt-2">
                         <div class="flex items-center justify-between gap-3 mb-4">
                             <div>
                                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Filter pencarian</p>
@@ -99,17 +99,17 @@
 
         <div class="page-container page-section">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Lowongan Aktif</p>
-                    <p class="mt-2 text-2xl font-bold text-slate-900">{{ $activeJobsCount }}</p>
+                <div class="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl px-5 py-4 text-white shadow-md">
+                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue-200">Lowongan Aktif</p>
+                    <p class="mt-1 text-3xl font-bold">{{ $activeJobsCount }}</p>
                 </div>
-                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Lokasi</p>
-                    <p class="mt-2 text-2xl font-bold text-slate-900">{{ $locationsCount }}</p>
+                <div class="bg-gradient-to-br from-violet-600 to-violet-700 rounded-2xl px-5 py-4 text-white shadow-md">
+                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-violet-200">Lokasi</p>
+                    <p class="mt-1 text-3xl font-bold">{{ $locationsCount }}</p>
                 </div>
-                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-4">
-                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Perusahaan</p>
-                    <p class="mt-2 text-2xl font-bold text-slate-900">{{ $companiesCount }}</p>
+                <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl px-5 py-4 text-white shadow-md">
+                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200">Perusahaan</p>
+                    <p class="mt-1 text-3xl font-bold">{{ $companiesCount }}</p>
                 </div>
             </div>
 
@@ -197,7 +197,7 @@
                         </p>
 
                         <div class="flex items-center gap-3 mt-auto">
-                            <a href="{{ route('jobs.show', $job->id) }}" class="flex-1 px-4 py-2.5 bg-slate-900 text-white rounded-lg text-sm font-medium hover:bg-slate-800 transition text-center">
+                            <a href="{{ route('jobs.show', $job->id) }}" class="flex-1 px-4 py-2.5 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition text-center">
                                 Lihat Detail
                             </a>
 

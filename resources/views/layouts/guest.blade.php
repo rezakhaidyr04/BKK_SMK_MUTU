@@ -28,8 +28,8 @@
             width: 42%;
             flex-shrink: 0;
             padding: 3rem;
-            background-color: #1d4ed8; /* blue-700 */
-            color: #fff;
+            background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 55%, var(--navy-3) 100%);
+            color: var(--white);
         }
         @media (min-width: 1024px) {
             .auth-left { display: flex; }
@@ -40,10 +40,10 @@
             font-weight: 700;
             line-height: 1.2;
             margin: 1.5rem 0 1rem;
-            color: #fff;
+            color: var(--white);
         }
         .auth-left p {
-            color: #bfdbfe; /* blue-200 */
+            color: rgba(255,255,255,0.72);
             font-size: 0.95rem;
             line-height: 1.7;
             max-width: 280px;
@@ -63,12 +63,12 @@
         .auth-logo-row .brand-name {
             font-size: 1.2rem;
             font-weight: 700;
-            color: #fff;
+            color: var(--white);
             line-height: 1.2;
         }
         .auth-logo-row .brand-sub {
             font-size: 0.8rem;
-            color: #93c5fd; /* blue-300 */
+            color: rgba(255,255,255,0.65);
         }
         .auth-stats {
             display: grid;
@@ -81,11 +81,11 @@
         .auth-stats .stat-num {
             font-size: 1.75rem;
             font-weight: 700;
-            color: #fff;
+            color: var(--white);
         }
         .auth-stats .stat-label {
             font-size: 0.72rem;
-            color: #93c5fd;
+            color: rgba(255,255,255,0.65);
             margin-top: 2px;
         }
 
@@ -96,7 +96,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background-color: #f3f4f6; /* gray-100 */
+            background-color: var(--bg-soft);
             padding: 2.5rem 1.5rem;
             overflow-y: auto;
         }
@@ -120,14 +120,14 @@
         .auth-mobile-logo span {
             font-size: 1.1rem;
             font-weight: 700;
-            color: #111827;
+            color: var(--text);
         }
 
         /* Form card */
         .auth-card {
             width: 100%;
             max-width: 440px;
-            background: #fff;
+            background: var(--white);
             border-radius: 16px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
             padding: 2rem;
@@ -140,14 +140,14 @@
         }
         .auth-back a {
             font-size: 0.85rem;
-            color: #6b7280;
+            color: var(--text-2);
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 4px;
             transition: color 0.15s;
         }
-        .auth-back a:hover { color: #111827; }
+        .auth-back a:hover { color: var(--text); }
     </style>
 </head>
 <body class="font-sans antialiased">

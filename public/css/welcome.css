@@ -79,7 +79,7 @@ a:focus-visible { outline: 2px solid #60a5fa; outline-offset: 3px; }
     top: 0; left: 0; right: 0;
     z-index: 100;
     height: var(--navbar-h);
-    background: linear-gradient(90deg, rgba(7,24,54,.98), rgba(15,45,105,.98));
+    background: linear-gradient(90deg, rgba(7,23,51,.98), rgba(11,36,84,.98));
     border-bottom: 1px solid rgba(255,255,255,.08);
     box-shadow: 0 4px 20px rgba(0,0,0,.10);
     backdrop-filter: blur(16px);
@@ -223,7 +223,7 @@ a:focus-visible { outline: 2px solid #60a5fa; outline-offset: 3px; }
 .mobile-menu {
     display: none;
     flex-direction: column;
-    background: #071836;
+    background: var(--navy);
     padding: 0 20px;
     border-top: 1px solid rgba(255,255,255,.08);
     overflow: hidden;
@@ -273,7 +273,7 @@ section.hero {
     min-height: 540px;
     background:
         radial-gradient(ellipse 70% 90% at 75% 48%, rgba(37,99,235,.42), transparent 68%),
-        linear-gradient(120deg, #071733 0%, #0b2454 42%, #173d91 100%);
+        linear-gradient(120deg, var(--navy) 0%, var(--navy-2) 42%, var(--navy-3) 100%);
 }
 
 /* Dekorasi background */
@@ -545,7 +545,7 @@ section.hero {
    8. STATISTICS SECTION
    ============================================================ */
 .stats-section {
-    background: linear-gradient(135deg, #071733 0%, #0b2454 60%, #173d91 100%);
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 60%, var(--navy-3) 100%);
     padding: 44px 0;
     position: relative;
     z-index: 10;
@@ -693,7 +693,7 @@ section.hero {
 }
 .testimonial-card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(37,99,235,.09); }
 .testimonial-card.featured {
-    background: linear-gradient(135deg,#1e3a8a,#2563eb);
+    background: linear-gradient(135deg, var(--navy-3), #2563eb);
     border-color: transparent;
 }
 .testimonial-card.featured .testimonial-text,
@@ -779,7 +779,7 @@ section.hero {
     overflow: hidden; border-radius: 28px;
     background:
         radial-gradient(circle at 80% 20%, rgba(96,165,250,.28), transparent 35%),
-        linear-gradient(135deg,#0b2b70,#2563eb);
+        linear-gradient(135deg,var(--navy-2),#2563eb);
     box-shadow: 0 25px 60px rgba(37,99,235,.22);
 }
 .cta-content-v2 { position: relative; z-index: 3; max-width: 620px; }
@@ -1074,7 +1074,7 @@ footer a:hover { color: #fff !important; }
     border-radius: 28px;
     background:
         radial-gradient(circle at 80% 20%, rgba(96,165,250,.28), transparent 35%),
-        linear-gradient(135deg,#0b2b70,#2563eb);
+        linear-gradient(135deg,var(--navy-2),#2563eb);
     box-shadow: 0 25px 60px rgba(37,99,235,.22);
     flex-wrap: wrap;
     gap: 32px;
@@ -1286,7 +1286,7 @@ footer a:hover { color: #fff !important; }
     overflow: hidden;
     background:
         radial-gradient(circle at 80% 20%, rgba(96,165,250,.28), transparent 40%),
-        linear-gradient(135deg,#0b2b70,#2563eb);
+        linear-gradient(135deg,var(--navy-2),#2563eb);
     box-shadow: 0 25px 60px rgba(37,99,235,.22);
     flex-wrap: wrap;
 }
@@ -1441,7 +1441,7 @@ footer.footer,
    33. BLUE BANNER — stats strip biru
    ============================================================ */
 .blue-banner {
-    background: linear-gradient(135deg,#071733 0%,#0b2454 60%,#173d91 100%);
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 60%, var(--navy-3) 100%);
     padding: 44px 0;
 }
 .blue-banner-grid {

@@ -5,8 +5,8 @@
 @layer base {
   body {
     @apply font-sans antialiased transition-colors duration-300;
-    background-color: #f8fafc;
-    color: #0f172a;
+    background-color: var(--bg-soft);   /* #f8fafc */
+    color: var(--text);                  /* #0f172a */
   }
 
   .dark body {

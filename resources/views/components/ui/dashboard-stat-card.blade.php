@@ -9,46 +9,46 @@
 ])
 
 @php
-$borderColor = 'border-slate-200';
-$iconBg = 'bg-blue-50';
-$iconColor = 'text-blue-600';
-
-$linkColor = match($color) {
-    'green'  => 'text-green-600 dark:text-green-400',
-    'purple' => 'text-violet-600 dark:text-violet-400',
-    'orange' => 'text-amber-600 dark:text-amber-400',
-    default  => 'text-blue-600 dark:text-blue-400',
+$palette = match($color) {
+    'green'  => ['iconBg' => 'bg-green-100',  'iconClr' => 'text-green-600',  'linkClr' => 'text-green-600'],
+    'purple' => ['iconBg' => 'bg-violet-100', 'iconClr' => 'text-violet-600', 'linkClr' => 'text-violet-600'],
+    'orange' => ['iconBg' => 'bg-amber-100',  'iconClr' => 'text-amber-600',  'linkClr' => 'text-amber-600'],
+    'red'    => ['iconBg' => 'bg-red-100',    'iconClr' => 'text-red-500',    'linkClr' => 'text-red-500'],
+    'yellow' => ['iconBg' => 'bg-yellow-100', 'iconClr' => 'text-yellow-600', 'linkClr' => 'text-yellow-600'],
+    'indigo' => ['iconBg' => 'bg-blue-100',   'iconClr' => 'text-blue-600',   'linkClr' => 'text-blue-600'],
+    default  => ['iconBg' => 'bg-blue-100',   'iconClr' => 'text-blue-600',   'linkClr' => 'text-blue-600'],
 };
+
+$labelClass = 'mb-1 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-neutral-500';
+$valueClass = $size === 'sm'
+    ? 'text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-3xl'
+    : 'text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl';
 @endphp
 
 <div {{ $attributes->merge([
-    'class' => "bg-white relative overflow-hidden rounded-lg border {$borderColor} p-4 shadow-sm sm:p-5"
+    'class' => 'bg-white relative overflow-hidden rounded-2xl border border-slate-100 p-5 shadow-sm hover:shadow-md transition-all duration-200 dark:bg-neutral-900 dark:border-neutral-800 flex flex-col flex-1 min-w-[160px]'
 ]) }}>
-    <div class="flex items-start justify-between gap-3">
-        <div class="min-w-0">
-            @php
-                $labelClass = $size === 'sm' ? 'mb-1 text-xs font-semibold text-slate-500 dark:text-neutral-400' : 'mb-1 text-sm font-semibold text-slate-500 dark:text-neutral-400';
-                $valueClass = $size === 'sm' ? 'text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl dark:text-white' : 'text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white';
-            @endphp
+    <div class="flex items-start justify-between gap-3 flex-1">
+        <div class="min-w-0 flex-1">
             <p class="{{ $labelClass }}">{{ $label }}</p>
             <p class="{{ $valueClass }}">{{ $value }}</p>
         </div>
         @isset($icon)
-        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl {{ $iconBg }} sm:h-14 sm:w-14" aria-hidden="true">
-            <span class="{{ $iconColor }}">
+        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl {{ $palette['iconBg'] }}" aria-hidden="true">
+            <span class="{{ $palette['iconClr'] }}">
                 {{ $icon }}
             </span>
         </div>
         @endisset
     </div>
-    <div class="mt-3 border-t border-slate-100 pt-3 text-xs dark:border-neutral-800 sm:mt-4">
+    <div class="mt-4 border-t border-slate-100 pt-3 dark:border-neutral-800">
         @isset($footer)
             {{ $footer }}
         @else
             @if($href && $hrefLabel)
-                <a href="{{ $href }}" class="{{ $linkColor }} inline-flex items-center gap-1 font-bold hover:underline">{{ $hrefLabel }}</a>
+                <a href="{{ $href }}" class="{{ $palette['linkClr'] }} text-xs font-semibold inline-flex items-center gap-1 hover:underline">{{ $hrefLabel }}</a>
             @elseif($footnote)
-                <div class="text-sm text-gray-500 dark:text-gray-400">{{ $footnote }}</div>
+                <p class="text-xs text-slate-400 dark:text-gray-500">{{ $footnote }}</p>
             @endif
         @endisset
     </div>

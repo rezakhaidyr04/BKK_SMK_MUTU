@@ -59,16 +59,16 @@
                     <div class="fade-in">
 
                     @isset($header)
-                        <header class="relative overflow-hidden shadow-md" style="background: linear-gradient(135deg, #1e293b 0%, #1e3a8a 60%, #1e3a8a 100%);">
-                            <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(circle at 15% 50%, rgba(99,102,241,0.25) 0%, transparent 55%), radial-gradient(circle at 85% 20%, rgba(59,130,246,0.15) 0%, transparent 50%);"></div>
-                            <div class="page-container py-5 relative">
+                        <header class="app-page-header relative overflow-hidden shadow-lg">
+                            <div class="pointer-events-none absolute inset-0"></div>
+                            <div class="page-container py-9 relative">
                                 {{ $header }}
                             </div>
                         </header>
                     @elseif(View::hasSection('header'))
-                        <header class="relative overflow-hidden shadow-md" style="background: linear-gradient(135deg, #1e293b 0%, #1e3a8a 60%, #1e3a8a 100%);">
-                            <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(circle at 15% 50%, rgba(99,102,241,0.25) 0%, transparent 55%), radial-gradient(circle at 85% 20%, rgba(59,130,246,0.15) 0%, transparent 50%);"></div>
-                            <div class="page-container py-5 relative">
+                        <header class="app-page-header relative overflow-hidden shadow-lg">
+                            <div class="pointer-events-none absolute inset-0"></div>
+                            <div class="page-container py-9 relative">
                                 @yield('header')
                             </div>
                         </header>

@@ -1,15 +1,15 @@
-﻿@props(['label', 'value', 'color' => 'blue', 'icon' => null, 'subtitle' => null])
+@props(['label', 'value', 'color' => 'blue', 'icon' => null, 'subtitle' => null])
 
 @php
 // Color maps
 $colorMap = [
-    'blue'   => ['bg' => '#eff6ff', 'icon' => '#2563eb', 'value' => '#1e40af', 'border' => '#bfdbfe', 'accent' => '#3b82f6'],
+    'blue'   => ['bg' => '#eff6ff', 'icon' => '#2563eb', 'value' => '#173d91', 'border' => '#bfdbfe', 'accent' => '#3b82f6'],
     'green'  => ['bg' => '#f0fdf4', 'icon' => '#16a34a', 'value' => '#166534', 'border' => '#bbf7d0', 'accent' => '#22c55e'],
     'purple' => ['bg' => '#faf5ff', 'icon' => '#7c3aed', 'value' => '#581c87', 'border' => '#e9d5ff', 'accent' => '#a855f7'],
     'yellow' => ['bg' => '#fefce8', 'icon' => '#ca8a04', 'value' => '#854d0e', 'border' => '#fde68a', 'accent' => '#eab308'],
     'red'    => ['bg' => '#fef2f2', 'icon' => '#dc2626', 'value' => '#991b1b', 'border' => '#fecaca', 'accent' => '#ef4444'],
     'orange' => ['bg' => '#fffbeb', 'icon' => '#b45309', 'value' => '#9a3412', 'border' => '#fde68a', 'accent' => '#d97706'],
-    'indigo' => ['bg' => '#eff6ff', 'icon' => '#2563eb', 'value' => '#1e40af', 'border' => '#bfdbfe', 'accent' => '#3b82f6'],
+    'indigo' => ['bg' => '#eff6ff', 'icon' => '#2563eb', 'value' => '#173d91', 'border' => '#bfdbfe', 'accent' => '#3b82f6'],
     'slate'  => ['bg' => '#f8fafc', 'icon' => '#475569', 'value' => '#1e293b', 'border' => '#e2e8f0', 'accent' => '#64748b'],
     'gray'   => ['bg' => '#f9fafb', 'icon' => '#6b7280', 'value' => '#111827', 'border' => '#e5e7eb', 'accent' => '#9ca3af'],
 ];
@@ -34,7 +34,7 @@ $icons = [
     'mail'          => '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>',
 ];
 
-// Resolve icon — if already an SVG string, use it; if a key name, look up; else use generic
+// Resolve icon � if already an SVG string, use it; if a key name, look up; else use generic
 $resolvedIcon = null;
 if ($icon) {
     if (str_starts_with(trim($icon), '<svg')) {
@@ -50,7 +50,7 @@ if ($icon) {
 <div {{ $attributes->merge(['class' => '']) }}
      style="
          position: relative;
-         background: #ffffff;
+         background: var(--white);
          border: 1px solid {{ $c['border'] }};
          border-top: 3px solid {{ $c['accent'] }};
          border-radius: 14px;
@@ -70,7 +70,7 @@ if ($icon) {
             <p style="
                 font-size: 11px;
                 font-weight: 700;
-                color: #94a3b8;
+                color: var(--text-3);
                 text-transform: uppercase;
                 letter-spacing: 0.07em;
                 margin: 0 0 8px 0;
@@ -87,7 +87,7 @@ if ($icon) {
             @if($subtitle)
                 <p style="
                     font-size: 12px;
-                    color: #94a3b8;
+                    color: var(--text-3);
                     margin: 6px 0 0 0;
                 ">{{ $subtitle }}</p>
             @endif
