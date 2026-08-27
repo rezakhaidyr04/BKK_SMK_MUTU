@@ -16,6 +16,48 @@ class JobMatchingServiceTest extends TestCase
         parent::tearDown();
     }
 
+    private function makeUser(array $attributes = []): User
+    {
+        return new class($attributes) extends User {
+            public array $testAttributes;
+
+            public function __construct(array $attributes = [])
+            {
+                parent::__construct();
+                $this->testAttributes = $attributes;
+            }
+
+            public function __get($key)
+            {
+                if ($key === 'skills') {
+                    return collect();
+                }
+                return $this->testAttributes[$key] ?? null;
+            }
+
+            public function __isset($key)
+            {
+                return isset($this->testAttributes[$key]);
+            }
+
+            public function skills()
+            {
+                $names = $this->testAttributes['skill_names'] ?? [];
+                return new class($names) {
+                    public function __construct(private array $names) {}
+                    public function pluck($col)
+                    {
+                        return \Illuminate\Support\Collection::make($this->names);
+                    }
+                    public function map($cb)
+                    {
+                        return \Illuminate\Support\Collection::make($this->names)->map($cb);
+                    }
+                };
+            }
+        };
+    }
+
     public function test_skill_heavy_match_returns_high_score()
     {
         $service = new JobMatchingService();
@@ -25,28 +67,13 @@ class JobMatchingServiceTest extends TestCase
         $job->description = 'We need PHP, Laravel, MySQL developer with 2 years experience.';
         $job->skills = 'php, laravel, mysql';
         $job->location = 'Jakarta';
-        $company = new \stdClass();
-        $company->industry = 'Software';
-        $job->company = $company;
 
-        // Create a lightweight User subclass with skills() and student property
-        $user = new class extends User {
-            public $student;
-            public function skills()
-            {
-                return new class {
-                    public function pluck($col)
-                    {
-                        return \Illuminate\Support\Collection::make(['PHP', 'Laravel', 'HTML']);
-                    }
-                };
-            }
-        };
-        $user->student = (object)[
-            'major' => 'Teknik Informatika',
-            'experience' => '3 years',
-            'address' => 'Jakarta'
-        ];
+        $user = $this->makeUser([
+            'skill_names' => ['PHP', 'Laravel', 'HTML'],
+            'education_history' => 'SMK Teknik Informatika',
+            'experience_organization' => 'Magang 3 years di startup',
+            'address' => 'Jakarta',
+        ]);
 
         $score = $service->score($job, $user);
 
@@ -63,31 +90,17 @@ class JobMatchingServiceTest extends TestCase
         $job->description = 'Mechanical assembly, CNC, welding.';
         $job->skills = 'welding, cnc, mechanical';
         $job->location = 'Bandung';
-        $company = new \stdClass();
-        $company->industry = 'Manufacturing';
-        $job->company = $company;
 
-        $user = new class extends User {
-            public $student;
-            public function skills()
-            {
-                return new class {
-                    public function pluck($col)
-                    {
-                        return \Illuminate\Support\Collection::make(['PHP', 'Laravel']);
-                    }
-                };
-            }
-        };
-        $user->student = (object)[
-            'major' => 'Teknik Informatika',
-            'experience' => '0 years',
-            'address' => 'Jakarta'
-        ];
+        $user = $this->makeUser([
+            'skill_names' => ['PHP', 'Laravel'],
+            'education_history' => 'SMK Teknik Informatika',
+            'experience_organization' => 'Belum ada pengalaman kerja',
+            'address' => 'Jakarta',
+        ]);
 
         $score = $service->score($job, $user);
 
         $this->assertIsInt($score);
-        $this->assertLessThanOrEqual(40, $score, 'Expected low score for mismatched skills and industry');
+        $this->assertLessThanOrEqual(40, $score, 'Expected low score for mismatched skills and location');
     }
 }

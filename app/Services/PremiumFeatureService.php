@@ -17,7 +17,7 @@ class PremiumFeatureService
      */
     public function getAdminAnalytics(): array
     {
-        $totalJobseekers  = User::where('role', 'jobseeker')->count();
+        $totalUmum  = User::where('role', 'umum')->count();
         $totalJobs         = Job::count();
         $totalApplications = Application::count();
         $totalCompanies    = User::where('role', 'company')->count();
@@ -33,7 +33,7 @@ class PremiumFeatureService
 
         return [
             'totals' => [
-                'jobseekers'   => $totalJobseekers,
+                'umum' => $totalUmum,
                 'companies'    => $totalCompanies,
                 'jobs'         => $totalJobs,
                 'applications' => $totalApplications,

@@ -54,7 +54,7 @@ class JobController extends Controller
             'qualifications' => ['nullable', 'string'],
             'benefits' => ['nullable', 'string'],
             'deadline' => ['nullable', 'date'],
-            'status' => ['required', Rule::in(['active', 'inactive', 'closed'])],
+            'status' => ['required', Rule::in(['active', 'closed', 'draft'])],
         ]);
 
         Job::create($validated);
@@ -89,7 +89,7 @@ class JobController extends Controller
             'qualifications' => ['nullable', 'string'],
             'benefits' => ['nullable', 'string'],
             'deadline' => ['nullable', 'date'],
-            'status' => ['required', Rule::in(['active', 'inactive', 'closed'])],
+            'status' => ['required', Rule::in(['active', 'closed', 'draft'])],
         ]);
 
         $job->update($validated);
@@ -108,7 +108,7 @@ class JobController extends Controller
 
     public function broadcast(Job $job)
     {
-        $jobseekers = \App\Models\User::where('role', 'jobseeker')->get();
+        $jobseekers = \App\Models\User::where('role', 'umum')->get();
 
         \Illuminate\Support\Facades\Notification::send($jobseekers, new \App\Notifications\NewJobNotification($job));
 

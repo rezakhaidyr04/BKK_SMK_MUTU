@@ -94,7 +94,7 @@ class SyncCompanyUsers extends Command
                         // 'not_submitted' adalah status intentional untuk Company yang
                         // dibuat oleh sistem/admin — konsisten dengan AdminUserController.
                         // 'pending' dipakai setelah perusahaan mengajukan verifikasi.
-                        'verification_status' => 'not_submitted',
+                        'verification_status' => 'pending',
                     ]);
                 });
 

@@ -67,7 +67,7 @@ class UserController extends Controller
             "email" => ["required", "email", "max:255", "unique:users,email"],
             "role" => [
                 "required",
-                Rule::in(["admin", "jobseeker", "teacher", "company"]),
+                Rule::in(["admin", "umum", "company"]),
             ],
             "password" => ["required", "string", "min:8", "confirmed"],
             "password_confirmation" => ["required"],
@@ -85,13 +85,15 @@ class UserController extends Controller
                 : null,
         ]);
 
+        $user->syncRoles([$validated['role']]);
+
         // Jika role company, buat record Company otomatis
         if ($validated["role"] === "company") {
             Company::create([
                 "user_id"             => $user->id,
                 "name"                => $validated["name"],
                 "is_verified"         => false,
-                "verification_status" => "not_submitted",
+                "verification_status" => "pending",
             ]);
         }
 
@@ -112,7 +114,7 @@ class UserController extends Controller
             ],
             "role" => [
                 "required",
-                Rule::in(["admin", "jobseeker", "teacher", "company"]),
+                Rule::in(["admin", "umum", "company"]),
             ],
             "is_active" => ["nullable", "boolean"],
             "password" => ["nullable", "string", "min:8"],
@@ -141,6 +143,10 @@ class UserController extends Controller
         }
 
         $user->save();
+
+        if (isset($validated['role'])) {
+            $user->syncRoles([$user->role]);
+        }
 
         return redirect()
             ->route("admin.users.index")

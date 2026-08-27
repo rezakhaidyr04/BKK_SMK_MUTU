@@ -24,17 +24,10 @@ class JobMatchingService
         $score = 0.0;
 
         // Prepare text sources
-        $jobText = strtolower(($job->title ?? '') . ' ' . ($job->qualifications ?? '') . ' ' . ($job->description ?? '') . ' ' . ($job->requirements ?? '') . ' ' . ($job->skills ?? ''));
+        $jobText = strtolower(($job->title ?? '') . ' ' . ($job->qualifications ?? '') . ' ' . ($job->description ?? '') . ' ' . ($job->requirements ?? ''));
 
-        // 1) Skills: try to use relation if exists, otherwise extract tokens from jobText
-        $userSkillNames = [];
-        if (method_exists($user, 'skills')) {
-            $userSkillNames = $user->skills()->pluck('name')->map(fn($s) => $this->normalize($s))->filter()->unique()->values()->toArray();
-        }
-        // Fallback: try student->skills (comma separated)
-        if (empty($userSkillNames) && !empty($user->student->skills ?? '')) {
-            $userSkillNames = $this->tokens($user->student->skills);
-        }
+        // 1) Skills dari relasi user_skills.
+        $userSkillNames = $user->skills()->pluck('name')->map(fn($s) => $this->normalize($s))->filter()->unique()->values()->toArray();
 
         $jobSkillTokens = [];
         if (isset($job->skills) && !empty($job->skills)) {
@@ -47,12 +40,15 @@ class JobMatchingService
         $skillScore = $this->jaccardSimilarity($userSkillNames, $jobSkillTokens);
         $score += $skillScore * $weights['skills'];
 
-        // 2) Education: compare major/degree keywords
+        // 2) Education: bandingkan riwayat pendidikan dengan teks lowongan.
         $eduScore = 0;
-        if (!empty($user->student->major ?? '') || !empty($user->student->degree ?? '')) {
-            $major = $this->normalize($user->student->major ?? $user->student->degree ?? '');
-            if ($major && str_contains($jobText, $major)) {
-                $eduScore = 1;
+        if (!empty($user->education_history)) {
+            $educationTokens = array_slice($this->tokens($user->education_history), 0, 10);
+            foreach ($educationTokens as $token) {
+                if (strlen($token) > 3 && str_contains($jobText, $token)) {
+                    $eduScore = 1;
+                    break;
+                }
             }
         }
         $score += $eduScore * $weights['education'];
@@ -60,7 +56,7 @@ class JobMatchingService
         // 3) Experience: compare numeric years if present
         $expScore = 0;
         $jobYears = $this->extractYearsRequirement($jobText);
-        $userYears = $this->extractYearsRequirement(strtolower($user->student->experience ?? ''));
+        $userYears = $this->extractYearsRequirement(strtolower($user->experience_organization ?? ''));
         if ($jobYears > 0) {
             if ($userYears >= $jobYears) {
                 $expScore = 1;
@@ -75,7 +71,7 @@ class JobMatchingService
 
         // 4) Location
         $locScore = 0;
-        $userLoc = $this->normalize($user->student->address ?? '');
+        $userLoc = $this->normalize($user->address ?? '');
         $jobLoc = $this->normalize($job->location ?? '');
         if ($userLoc && $jobLoc) {
             if ($userLoc === $jobLoc || str_contains($userLoc, $jobLoc) || str_contains($jobLoc, $userLoc)) {
@@ -89,9 +85,18 @@ class JobMatchingService
         }
         $score += $locScore * $weights['location'];
 
-        // 5) Industry - removed as companies no longer exist
+        // 5) Industry: cocokkan industri perusahaan dengan posisi yang diinginkan user.
         $indScore = 0;
-        // Industry matching is no longer available since companies are removed
+        $industry = '';
+        if ($job->company_id && $job->company?->industry) {
+            $industry = $job->company->industry;
+        } elseif (!empty($job->company_name)) {
+            $industry = (string) $job->company_name;
+        }
+        $preferred = $this->normalize($user->preferred_position ?? '');
+        if ($industry && $preferred && (str_contains($this->normalize($industry), $preferred) || str_contains($preferred, $this->normalize($industry)))) {
+            $indScore = 1;
+        }
         $score += $indScore * $weights['industry'];
 
         return (int) round(min(1, $score) * 100);
@@ -135,4 +140,3 @@ class JobMatchingService
         return 0;
     }
 }
-

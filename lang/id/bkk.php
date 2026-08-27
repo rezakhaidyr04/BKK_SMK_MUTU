@@ -11,7 +11,6 @@ return [
 
     'job_status' => [
         'active' => 'Aktif',
-        'inactive' => 'Nonaktif',
         'closed' => 'Ditutup',
         'draft' => 'Draf',
     ],
@@ -25,10 +24,8 @@ return [
 
     'role' => [
         'admin' => 'Admin',
-        'student' => 'Siswa',
-        'alumni' => 'Alumni',
+        'umum' => 'Pengguna Umum',
         'company' => 'Perusahaan',
-        'teacher' => 'Guru BK',
     ],
 
     'event_type' => [

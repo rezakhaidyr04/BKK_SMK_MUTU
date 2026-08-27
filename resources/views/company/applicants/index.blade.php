@@ -310,6 +310,23 @@
 
                                 <div class="flex items-center justify-end gap-2">
 
+                                    {{-- CHAT KANDIDAT --}}
+                                    @if($application->user)
+                                    <form action="{{ route('messages.start') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="recipient_id" value="{{ $application->user_id }}">
+                                        <button
+                                            type="submit"
+                                            title="Chat kandidat"
+                                            aria-label="Chat dengan {{ $application->user->name }}"
+                                            class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700"
+                                        >
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                    @endif
 
                                     {{-- DETAIL --}}
                                     <a

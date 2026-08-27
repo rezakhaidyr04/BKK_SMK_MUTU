@@ -38,7 +38,7 @@
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
                 @php
                     $heroStats = [
-                        ['label'=>'Total Pengguna','value'=>$summary['total_students']+$summary['total_alumni'],'color'=>'rgba(129,140,248,1)'],
+                        ['label'=>'Total Pengguna','value'=>$summary['total_umum'],'color'=>'rgba(129,140,248,1)'],
                         ['label'=>'Lowongan Aktif','value'=>$summary['active_jobs'],'color'=>'rgba(52,211,153,1)'],
                         ['label'=>'Total Lamaran','value'=>$summary['total_applications'],'color'=>'rgba(251,191,36,1)'],
                         ['label'=>'Lamaran Diterima','value'=>$summary['accepted_applications'],'color'=>'rgba(248,113,113,1)'],
@@ -72,20 +72,13 @@
                     <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#f8fafc;border-radius:12px;margin-bottom:10px;">
                         <div style="display:flex;align-items:center;gap:10px;">
                             <div style="width:10px;height:10px;border-radius:50%;background:#3b82f6;flex-shrink:0;"></div>
-                            <span style="font-size:14px;font-weight:500;color:#334155;">Pencari Kerja</span>
+                            <span style="font-size:14px;font-weight:500;color:#334155;">Pengguna Umum</span>
                         </div>
-                        <span style="font-size:20px;font-weight:800;color:#1e3a8a;">{{ number_format($summary['total_students']) }}</span>
-                    </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#f8fafc;border-radius:12px;margin-bottom:10px;">
-                        <div style="display:flex;align-items:center;gap:10px;">
-                            <div style="width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;"></div>
-                            <span style="font-size:14px;font-weight:500;color:#334155;">Legacy Alumni</span>
-                        </div>
-                        <span style="font-size:20px;font-weight:800;color:#065f46;">{{ number_format($summary['total_alumni']) }}</span>
+                        <span style="font-size:20px;font-weight:800;color:#1e3a8a;">{{ number_format($summary['total_umum']) }}</span>
                     </div>
                     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:linear-gradient(135deg,#2563eb,#4f46e5);border-radius:12px;">
                         <span style="font-size:14px;font-weight:600;color:rgba(255,255,255,0.9);">Total</span>
-                        <span style="font-size:22px;font-weight:900;color:#fff;">{{ number_format($summary['total_students'] + $summary['total_alumni']) }}</span>
+                        <span style="font-size:22px;font-weight:900;color:#fff;">{{ number_format($summary['total_umum']) }}</span>
                     </div>
                 </div>
             </div>
@@ -215,7 +208,7 @@
                 </div>
                 @forelse($recentUsers as $user)
                 @php
-                    $colors = ['admin'=>['bg'=>'#f3e8ff','text'=>'#7c3aed'],'jobseeker'=>['bg'=>'#dbeafe','text'=>'#1d4ed8'],'teacher'=>['bg'=>'#ede9fe','text'=>'#6d28d9'],'company'=>['bg'=>'#ffedd5','text'=>'#c2410c']];
+                    $colors = ['admin'=>['bg'=>'#f3e8ff','text'=>'#7c3aed'],'umum'=>['bg'=>'#dbeafe','text'=>'#1d4ed8'],'company'=>['bg'=>'#ffedd5','text'=>'#c2410c']];
                     $uc = $colors[$user->role] ?? ['bg'=>'#f1f5f9','text'=>'#475569'];
                 @endphp
                 <div style="display:flex;align-items:center;gap:12px;padding:14px 24px;border-bottom:1px solid #f8fafc;transition:background 0.15s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">

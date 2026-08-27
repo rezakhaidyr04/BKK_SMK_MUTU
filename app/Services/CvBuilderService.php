@@ -10,7 +10,7 @@ class CvBuilderService
     public function generateCv(array $validatedData)
     {
         $user = Auth::user();
-        $user->load(['student', 'skills', 'cvFiles', 'certificates']);
+        $user->load(['skills', 'cvFiles', 'certificates']);
 
         $data = [
             'user' => $user,

@@ -47,10 +47,12 @@ class RegisteredUserController extends Controller
             "name" => $validated["name"],
             "email" => $validated["email"],
             "password" => Hash::make($validated["password"]),
-            "role" => "jobseeker",
+            "role" => "umum",
             "is_active" => true,
             "email_verified_at" => null,
         ]);
+
+        $user->syncRoles(['umum']);
 
         event(new Registered($user));
 

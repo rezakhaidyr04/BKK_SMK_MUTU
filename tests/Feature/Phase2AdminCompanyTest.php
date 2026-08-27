@@ -48,7 +48,7 @@ class Phase2AdminCompanyTest extends TestCase
     /** @test */
     public function non_admin_cannot_access_admin_companies(): void
     {
-        $student = User::factory()->create(['role' => 'student']);
+        $student = User::factory()->create(['role' => 'umum']);
         $response = $this->actingAs($student)->get(route('admin.companies.index'));
         $response->assertForbidden();
     }
@@ -173,7 +173,7 @@ class Phase2AdminCompanyTest extends TestCase
         $path = UploadedFile::fake()->create('mou.pdf', 100)->store('company_mou', 'local');
         $company = Company::factory()->create(['mou_path' => $path]);
 
-        $student = User::factory()->create(['role' => 'student']);
+        $student = User::factory()->create(['role' => 'umum']);
         $response = $this->actingAs($student)->get(route('admin.companies.mou.download', $company));
         $response->assertForbidden();
     }

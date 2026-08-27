@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" x-bind:class="{ 'dark': darkMode }" x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,12 +44,6 @@
         <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}">
         
         @stack('styles')
-        {{-- Prevent flash of light mode when dark mode is saved --}}
-        <script>
-            if (localStorage.getItem('darkMode') === 'true') {
-                document.documentElement.classList.add('dark');
-            }
-        </script>
     </head>
     <body x-data="{ sidebarOpen: window.innerWidth >= 1024 }" @resize.window="sidebarOpen = window.innerWidth >= 1024 ? sidebarOpen : false" class="font-sans antialiased bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-50 @auth authenticated @endauth">
         {{-- Toast notification portal --}}
@@ -99,7 +93,7 @@
                                     <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-8 h-8 rounded-lg object-cover">
                                     <div>
                                         <h3 class="text-lg font-semibold text-white">BKK SMK MUTU</h3>
-                                        <p class="text-xs text-gray-400">Platform karir siswa & alumni SMK</p>
+                                        <p class="text-xs text-gray-400">Platform karir pencari kerja SMK</p>
                                     </div>
                                 </div>
                                 <p class="text-xs text-gray-400">Menghubungkan talenta muda dengan perusahaan terpercaya.</p>

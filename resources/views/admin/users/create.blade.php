@@ -31,9 +31,8 @@
                     <label class="ui-label">Peran <span class="text-red-500">*</span></label>
                     <select id="role" name="role" required class="ui-select">
                         <option value="">-- Pilih Peran --</option>
-                        <option value="jobseeker" {{ old('role') === 'jobseeker' ? 'selected' : '' }}>Pencari Kerja</option>
+                        <option value="umum" {{ old('role') === 'umum' ? 'selected' : '' }}>Pengguna Umum</option>
                         <option value="company" {{ old('role') === 'company' ? 'selected' : '' }}>Perusahaan</option>
-                        <option value="teacher" {{ old('role') === 'teacher' ? 'selected' : '' }}>Guru</option>
                         <option value="admin"   {{ old('role') === 'admin'   ? 'selected' : '' }}>Admin</option>
                     </select>
                 </div>

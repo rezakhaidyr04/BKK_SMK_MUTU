@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Company;
-use App\Models\Student;
 use App\Models\Job;
 use App\Models\Application;
 use App\Models\Bookmark;
@@ -297,89 +296,80 @@ class DummyDataSeeder extends Seeder
 
         return $jobs;
     }
-
-    // ─── SISWA ────────────────────────────────────────────────────
+    // ─── PENGGUNA UMUM ─────────────────────────────────────────────
     private function createStudents(): array
     {
         $data = [
             [
-                'email' => 'budi.santoso@siswa.bkk.com',
+                'email' => 'budi.santoso@umum.bkk.com',
                 'name'  => 'Budi Santoso',
                 'phone' => '081234560001',
                 'bio'   => 'Lulusan SMK jurusan Teknik Mesin, siap bekerja keras dan belajar hal baru.',
-                'nisn'  => '0012345601',
-                'major' => 'Teknik Mesin',
-                'graduation_year' => 2024,
+                'preferred_position' => 'Teknisi Mesin / Operator Produksi',
+                'education_history' => "SMK MUTU Cikampek (Teknik Mesin, lulus 2024)",
                 'address' => 'Jl. Melati No. 5, Cikampek Barat',
             ],
             [
-                'email' => 'siti.rahayu@siswa.bkk.com',
+                'email' => 'siti.rahayu@umum.bkk.com',
                 'name'  => 'Siti Rahayu',
                 'phone' => '081234560002',
                 'bio'   => 'Lulusan SMK Akuntansi dengan keahlian Microsoft Office dan pembukuan.',
-                'nisn'  => '0012345602',
-                'major' => 'Akuntansi',
-                'graduation_year' => 2024,
+                'preferred_position' => 'Staf Akuntansi / Admin Keuangan',
+                'education_history' => "SMK MUTU Cikampek (Akuntansi, lulus 2024)",
                 'address' => 'Jl. Anggrek No. 12, Cikampek',
             ],
             [
-                'email' => 'rizky.pratama@siswa.bkk.com',
+                'email' => 'rizky.pratama@umum.bkk.com',
                 'name'  => 'Rizky Pratama',
                 'phone' => '081234560003',
-                'bio'   => 'Siswa RPL yang gemar coding dan pengembangan aplikasi web.',
-                'nisn'  => '0012345603',
-                'major' => 'Rekayasa Perangkat Lunak',
-                'graduation_year' => 2024,
+                'bio'   => 'Lulusan RPL yang gemar coding dan pengembangan aplikasi web.',
+                'preferred_position' => 'Web Developer / IT Support',
+                'education_history' => "SMK MUTU Cikampek (Rekayasa Perangkat Lunak, lulus 2024)",
                 'address' => 'Perumahan Cikampek Baru Blok C No. 8',
             ],
             [
-                'email' => 'dewi.anggraini@siswa.bkk.com',
+                'email' => 'dewi.anggraini@umum.bkk.com',
                 'name'  => 'Dewi Anggraini',
                 'phone' => '081234560004',
                 'bio'   => 'Lulusan SMK Perhotelan yang bersemangat dan komunikatif.',
-                'nisn'  => '0012345604',
-                'major' => 'Perhotelan',
-                'graduation_year' => 2024,
+                'preferred_position' => 'Resepsionis / Pramusaji',
+                'education_history' => "SMK MUTU Cikampek (Perhotelan, lulus 2024)",
                 'address' => 'Jl. Pramuka No. 33, Cikampek Timur',
             ],
             [
-                'email' => 'andi.kurniawan@siswa.bkk.com',
+                'email' => 'andi.kurniawan@umum.bkk.com',
                 'name'  => 'Andi Kurniawan',
                 'phone' => '081234560005',
                 'bio'   => 'Lulusan TKJ dengan keahlian jaringan komputer dan troubleshooting hardware.',
-                'nisn'  => '0012345605',
-                'major' => 'Teknik Komputer dan Jaringan',
-                'graduation_year' => 2024,
+                'preferred_position' => 'Teknisi Jaringan / IT Support',
+                'education_history' => "SMK MUTU Cikampek (Teknik Komputer dan Jaringan, lulus 2024)",
                 'address' => 'Jl. Veteran No. 17, Cikampek',
             ],
             [
-                'email' => 'maya.fitriani@siswa.bkk.com',
+                'email' => 'maya.fitriani@umum.bkk.com',
                 'name'  => 'Maya Fitriani',
                 'phone' => '081234560006',
-                'bio'   => 'Siswa Tata Boga yang kreatif dan berpengalaman dalam catering sekolah.',
-                'nisn'  => '0012345606',
-                'major' => 'Tata Boga',
-                'graduation_year' => 2025,
+                'bio'   => 'Lulusan Tata Boga yang kreatif dan berpengalaman dalam catering sekolah.',
+                'preferred_position' => 'Pramusaji / Barista',
+                'education_history' => "SMK MUTU Cikampek (Tata Boga, lulus 2025)",
                 'address' => 'Jl. Pahlawan No. 21, Cikampek',
             ],
             [
-                'email' => 'dimas.setiawan@siswa.bkk.com',
+                'email' => 'dimas.setiawan@umum.bkk.com',
                 'name'  => 'Dimas Setiawan',
                 'phone' => '081234560007',
                 'bio'   => 'Lulusan Teknik Otomotif dengan pengalaman magang di bengkel resmi.',
-                'nisn'  => '0012345607',
-                'major' => 'Teknik Otomotif',
-                'graduation_year' => 2024,
+                'preferred_position' => 'Mekanik Otomotif / Kurir',
+                'education_history' => "SMK MUTU Cikampek (Teknik Otomotif, lulus 2024)",
                 'address' => 'Desa Wadas, Cikampek Barat',
             ],
             [
-                'email' => 'nurul.hidayah@siswa.bkk.com',
+                'email' => 'nurul.hidayah@umum.bkk.com',
                 'name'  => 'Nurul Hidayah',
                 'phone' => '081234560008',
-                'bio'   => 'Siswa Administrasi Perkantoran yang terorganisir dan bertanggung jawab.',
-                'nisn'  => '0012345608',
-                'major' => 'Administrasi Perkantoran',
-                'graduation_year' => 2025,
+                'bio'   => 'Lulusan Administrasi Perkantoran yang terorganisir dan bertanggung jawab.',
+                'preferred_position' => 'Staff Administrasi / Kasir',
+                'education_history' => "SMK MUTU Cikampek (Administrasi Perkantoran, lulus 2025)",
                 'address' => 'Jl. Cikarang No. 4, Cikampek',
             ],
         ];
@@ -387,6 +377,7 @@ class DummyDataSeeder extends Seeder
         $students = [];
         foreach ($data as $d) {
             $user = User::withTrashed()->where('email', $d['email'])->first();
+
             if (! $user) {
                 $user = new User();
                 $user->email = $d['email'];
@@ -397,28 +388,16 @@ class DummyDataSeeder extends Seeder
             $user->forceFill([
                 'name'              => $d['name'],
                 'password'          => Hash::make('password123'),
-                'role'              => 'jobseeker',
+                'role'              => 'umum',
                 'phone'             => $d['phone'],
                 'bio'               => $d['bio'],
+                'preferred_position' => $d['preferred_position'],
+                'education_history' => $d['education_history'],
+                'address'           => $d['address'],
                 'is_active'         => true,
                 'email_verified_at' => now(),
             ])->save();
-            $user->syncRoles(['jobseeker']);
-
-            $student = Student::withTrashed()->where('user_id', $user->id)->first();
-            if (! $student) {
-                $student = new Student();
-                $student->user_id = $user->id;
-            }
-            if ($student->trashed()) {
-                $student->restore();
-            }
-            $student->forceFill([
-                'nisn'            => $d['nisn'],
-                'major'           => $d['major'],
-                'graduation_year' => $d['graduation_year'],
-                'address'         => $d['address'],
-            ])->save();
+            $user->syncRoles(['umum']);
 
             $students[] = $user;
         }

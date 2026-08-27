@@ -126,6 +126,15 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'ab_testing' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/ab-testing.log'),
+            'level' => 'info',
+            'days' => 30,
+            'replace_placeholders' => true,
+            'permission' => 0664,
+        ],
     ],
 
 ];

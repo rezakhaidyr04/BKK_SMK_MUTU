@@ -19,7 +19,7 @@ class JobApplicationAttachmentTest extends TestCase
         Storage::fake('private');
 
         $jobseeker = User::factory()->create([
-            'role' => 'jobseeker',
+            'role' => 'umum',
             'email_verified_at' => now(),
         ]);
 

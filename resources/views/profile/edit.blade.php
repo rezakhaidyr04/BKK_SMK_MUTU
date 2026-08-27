@@ -77,7 +77,7 @@
                         </svg>
                         Keamanan Sandi
                     </button>
-                    @if(in_array(Auth::user()->role, ['student', 'alumni']))
+                    @if(Auth::user()->isUmum())
                     <button @click="currentTab = 'documents'"
                             :class="currentTab === 'documents' ? 'border-blue-600 text-blue-600 font-bold' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 font-semibold'"
                             class="whitespace-nowrap pb-4 px-1 border-b-2 text-sm transition-all duration-200 flex items-center gap-2">
@@ -114,7 +114,7 @@
                 </div>
 
                 {{-- Tab 3: Berkas Pendukung --}}
-                @if(in_array(Auth::user()->role, ['student', 'alumni']))
+                @if(Auth::user()->isUmum())
                 <div x-show="currentTab === 'documents'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-3" x-transition:enter-end="opacity-100 translate-y-0" class="p-6 sm:p-8 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.02)] sm:rounded-3xl border border-slate-100/80" style="display: none;">
                     @include('profile.partials.manage-documents-form')
                 </div>

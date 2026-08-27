@@ -18,12 +18,11 @@ class RoleRouteSmokeTest extends TestCase
     public function test_authenticated_role_dashboards_render_or_redirect_safely(): void
     {
         $admin = User::factory()->create(['role' => 'admin']);
-        $jobseeker = User::factory()->create(['role' => 'jobseeker']);
-        $teacher = User::factory()->create(['role' => 'teacher']);
+        $umum = User::factory()->create(['role' => 'umum']);
         $companyUser = User::factory()->create(['role' => 'company']);
         Company::factory()->create(['user_id' => $companyUser->id]);
 
-        foreach ([$admin, $jobseeker, $teacher, $companyUser] as $user) {
+        foreach ([$admin, $umum, $companyUser] as $user) {
             $this->actingAs($user)
                 ->get(route('dashboard'))
                 ->assertStatus(200);
@@ -32,7 +31,7 @@ class RoleRouteSmokeTest extends TestCase
 
     public function test_detail_pages_used_by_roles_render(): void
     {
-        $jobseeker = User::factory()->create(['role' => 'jobseeker']);
+        $umum = User::factory()->create(['role' => 'umum']);
         $companyUser = User::factory()->create(['role' => 'company']);
         $company = Company::factory()->create([
             'user_id' => $companyUser->id,
@@ -42,12 +41,12 @@ class RoleRouteSmokeTest extends TestCase
         $job = Job::factory()->create(['company_id' => $company->id]);
         $application = Application::create([
             'job_id' => $job->id,
-            'user_id' => $jobseeker->id,
+            'user_id' => $umum->id,
             'cover_letter' => str_repeat('Lamaran ', 20),
             'status' => 'submitted',
         ]);
 
-        $this->actingAs($jobseeker)
+        $this->actingAs($umum)
             ->get(route('applications.show', $application))
             ->assertStatus(200);
 

@@ -104,20 +104,15 @@
                                  </svg>
                                  Buat CV PDF
                              </button>
-+
-+                            <div class="sm:hidden fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur px-4 py-3 shadow-[0_-8px_24px_rgba(15,23,42,0.08)]">
-+                                <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200">
-+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m0 0l-3-3m3 3l3-3M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1"/>
-+                                    </svg>
-+                                    Buat CV PDF
-+                                </button>
-+                            </div>
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m0 0l-3-3m3 3l3-3M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1"/>
-                                </svg>
-                                Buat CV PDF
-                            </button>
+
+                            <div class="sm:hidden fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur px-4 py-3 shadow-[0_-8px_24px_rgba(15,23,42,0.08)]">
+                                <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m0 0l-3-3m3 3l3-3M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1"/>
+                                    </svg>
+                                    Buat CV PDF
+                                </button>
+                            </div>
                         </form>
                     </div>
 
@@ -143,7 +138,19 @@
                 <aside class="space-y-5 lg:col-span-4 xl:col-span-3 lg:sticky lg:top-24 self-start">
                     <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-5">
                         <h3 class="text-lg font-bold text-gray-900 mb-4">CV Anda</h3>
-                        @if($cvFiles->count() > 0)
+                        @if(session('success') && str_contains(session('success'), 'CV sedang diproses'))
+                            {{-- CV sedang dibuat di queue: tampilkan skeleton + auto refresh --}}
+                            <div x-data="{ seconds: 5 }" x-init="setInterval(() => { if (seconds > 0) seconds--; else window.location.reload(); }, 1000)">
+                                <x-ui.skeleton-loader type="list" :count="1" />
+                                <p class="mt-3 text-sm text-gray-600 flex items-center gap-2">
+                                    <svg class="w-4 h-4 animate-spin text-blue-600" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                                    </svg>
+                                    Sedang membuat PDF Anda… Halaman dimuat ulang otomatis dalam <span x-text="seconds"></span> detik.
+                                </p>
+                            </div>
+                        @elseif($cvFiles->count() > 0)
                             <div class="space-y-3">
                                 @foreach($cvFiles as $cv)
                                 <div class="rounded-2xl border border-gray-100 bg-gray-50 p-4">

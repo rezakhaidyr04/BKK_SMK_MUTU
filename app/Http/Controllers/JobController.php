@@ -7,8 +7,7 @@ use App\Models\Bookmark;
 use App\Models\Application;
 use App\Http\Requests\ApplicationRequest;
 use App\Notifications\ApplicationReceived;
-use App\Services\JobMatchingService;
-use Illuminate\Http\Request;
+use App\Services\JobMatchingService;use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -109,7 +108,7 @@ class JobController extends Controller
         $savedCount = Bookmark::where("job_id", $job->id)->count();
         $matchScore = null;
 
-        if (Auth::check() && Auth::user()->role === "jobseeker") {
+        if (Auth::check() && Auth::user()->role === "umum") {
             $matchScore = (new JobMatchingService())->score($job, Auth::user());
         }
 
@@ -132,7 +131,7 @@ class JobController extends Controller
 
     public function apply(ApplicationRequest $request, Job $job)
     {
-        abort_unless(Auth::user()?->role === "jobseeker", 403);
+        abort_unless(Auth::user()?->role === "umum", 403);
 
         // Check if already applied
         $existingApplication = Application::where("job_id", $job->id)
@@ -151,7 +150,7 @@ class JobController extends Controller
 
         if ($attachment) {
             $attachmentPath = $attachment->store("applications", "private");
-            $attachmentName = $attachment->getClientOriginalName();
+            $attachmentName = basename($attachment->getClientOriginalName());
             $attachmentMime = $attachment->getClientMimeType();
             $attachmentSize = $attachment->getSize();
         }
@@ -166,6 +165,11 @@ class JobController extends Controller
             "attachment_size" => $attachmentSize,
             "status" => "submitted",
         ]);
+
+        // Beri tahu perusahaan pemilik lowongan.
+        if ($job->company?->user) {
+            $job->company->user->notify(new ApplicationReceived($application));
+        }
 
         return redirect()
             ->route("jobs.show", $job)

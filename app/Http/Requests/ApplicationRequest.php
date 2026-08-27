@@ -9,7 +9,7 @@ class ApplicationRequest extends FormRequest
     public function authorize(): bool
     {
         // Jobseekers can apply
-        return $this->user()?->role === 'jobseeker';
+        return $this->user()?->role === 'umum';
     }
 
     public function rules(): array

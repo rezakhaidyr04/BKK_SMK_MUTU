@@ -14,60 +14,11 @@
         </x-ui.page-header>
     </x-slot>
 
-    <div class="page-container page-section">
+<div class="page-container page-section">
 
-            {{-- ═══════════════════════════════════════════════════════
-                 ONE-TIME PASSWORD PANEL — Tampil SEKALI, lalu hilang
-                 Setelah reload, data ini tidak ada lagi
-            ═══════════════════════════════════════════════════════ --}}
-            @if(session('account_created') && session('temp_password'))
-            <div class="mb-6 bg-amber-50 border-2 border-amber-400 rounded-2xl overflow-hidden shadow-lg" id="tempPasswordPanel">
-                <div class="px-5 py-3 bg-amber-400 flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
-                        </svg>
-                        <span class="font-bold text-white text-sm">PERINGATAN: PASSWORD SEMENTARA — CATAT SEKARANG! Tidak akan tampil lagi.</span>
-                    </div>
-                        <button onclick="document.getElementById('tempPasswordPanel').remove()"
-                            class="text-white hover:text-amber-100 transition text-lg font-bold">&times;</button>
-                </div>
-                <div class="p-5">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <p class="text-xs font-semibold text-amber-700 mb-1">Email Login</p>
-                            <div class="flex items-center gap-2 bg-white border border-amber-200 rounded-xl px-4 py-3">
-                                <code class="text-sm font-mono text-gray-800 flex-1 select-all" id="accountEmail">{{ session('account_email') }}</code>
-                                <button onclick="copyText('accountEmail', 'btnCopyEmail')" id="btnCopyEmail"
-                                        class="text-amber-600 hover:text-amber-800 text-xs font-semibold flex-shrink-0 transition">
-                                    Salin
-                                </button>
-                            </div>
-                        </div>
-                        <div>
-                            <p class="text-xs font-semibold text-amber-700 mb-1">Password Sementara</p>
-                            <div class="flex items-center gap-2 bg-white border border-amber-200 rounded-xl px-4 py-3">
-                                <code class="text-sm font-mono text-gray-800 flex-1 select-all" id="tempPass">{{ session('temp_password') }}</code>
-                                <button onclick="copyText('tempPass', 'btnCopyPass')" id="btnCopyPass"
-                                        class="text-amber-600 hover:text-amber-800 text-xs font-semibold flex-shrink-0 transition">
-                                    Salin
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-3 flex items-start gap-2">
-                        <svg class="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <p class="text-xs text-amber-700">
-                            Password ini <strong>hanya tampil sekali</strong> dan tidak disimpan di server.
-                            Perusahaan wajib mengganti password saat pertama kali login.
-                            Salin dan berikan ke perusahaan secara aman (telepon/langsung).
-                        </p>
-                    </div>
-                </div>
-            </div>
-            @endif
+            {{-- ════════════════════════════════════════════════════════
+                 Account created notification
+                 ═══════════════════════════════════════════════════════ --}}
 
             {{-- Flash Messages --}}
             @if(session('success'))
@@ -93,6 +44,31 @@
                 <ul class="text-sm text-red-700 space-y-1 list-disc pl-5">
                     @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
                 </ul>
+            </div>
+            @endif
+
+            {{-- Password awal hanya ditampilkan sekali — session data akan otomatis hilang setelah dibaca --}}
+            @if(session('initial_password'))
+            <div class="mb-6 bg-blue-50 border-2 border-blue-400 rounded-2xl overflow-hidden shadow-lg">
+                <div class="px-5 py-3 bg-blue-400 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2m4 0a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                        <span class="font-semibold text-blue-500">PASSWORD AWAL AKUN</span>
+                    </div>
+                        <button onclick="document.querySelector('.initial-password-panel').remove()"
+                            class="text-blue-500 hover:text-blue-900 transition text-lg font-bold">&times;</button>
+                </div>
+                <div class="p-5">
+                    <p class="text-sm text-blue-500 mb-3">Password ini hanya ditampilkan <strong>satu kali</strong> setelah pembuatan akun.</p>
+                    <div class="bg-white rounded-xl p-4 mb-4">
+                        <code class="text-sm font-mono text-blue-500 block word-break" id="initialPass">{{ session('initial_password') }}</code>
+                    </div>
+                    <p class="text-sm text-blue-600">
+                        <strong>Disarankan:</strong> Ganti password setelah login pertama untuk keamanan maksimal.
+                    </p>
+                </div>
             </div>
             @endif
 

@@ -31,11 +31,9 @@ class Phase1DatabaseTest extends TestCase
     {
         parent::setUp();
         // Pastikan Spatie roles tersedia di test DB (tidak menghapus data lain)
-        Role::firstOrCreate(['name' => 'admin',   'guard_name' => 'web']);
-        Role::firstOrCreate(['name' => 'teacher',  'guard_name' => 'web']);
-        Role::firstOrCreate(['name' => 'student',  'guard_name' => 'web']);
-        Role::firstOrCreate(['name' => 'alumni',   'guard_name' => 'web']);
-        Role::firstOrCreate(['name' => 'company',  'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'admin',  'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'umum',   'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'company', 'guard_name' => 'web']);
     }
 
     /** @test */

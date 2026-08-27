@@ -13,21 +13,20 @@ class PublicUserFlowHardeningTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_new_jobseeker_can_complete_core_public_flow(): void
+    public function test_new_umum_user_can_complete_core_public_flow(): void
     {
         $registerResponse = $this->post('/register', [
-            'name' => 'Public Jobseeker',
-            'email' => 'public-jobseeker@example.com',
-            'role' => 'jobseeker',
+            'name' => 'Pengguna Umum',
+            'email' => 'public-umum@example.com',
+            'role' => 'umum',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
 
         $registerResponse->assertRedirect('/dashboard');
 
-        $user = User::where('email', 'public-jobseeker@example.com')->firstOrFail();
-        $this->assertSame('jobseeker', $user->role);
-        $this->assertNull($user->student);
+        $user = User::where('email', 'public-umum@example.com')->firstOrFail();
+        $this->assertSame('umum', $user->role);
 
         $this->actingAs($user)
             ->get('/dashboard')
@@ -39,21 +38,21 @@ class PublicUserFlowHardeningTest extends TestCase
 
         $this->actingAs($user)
             ->patch('/profile', [
-                'name' => 'Updated Public Jobseeker',
-                'email' => 'public-jobseeker@example.com',
+                'name' => 'Pengguna Umum Diperbarui',
+                'email' => 'public-umum@example.com',
                 'phone' => '081234567890',
-                'bio' => 'Pencari kerja umum tanpa NISN.',
+                'bio' => 'Pencari kerja umum.',
                 'education_history' => 'SMA Negeri 1',
                 'experience_organization' => 'Relawan acara komunitas',
                 'address' => 'Karawang',
             ])
             ->assertRedirect('/profile');
 
-        $user->refresh()->load('student');
-        $this->assertSame('jobseeker', $user->role);
-        $this->assertNotNull($user->student);
-        $this->assertNull($user->student->nisn);
-        $this->assertNull($user->student->graduation_year);
+        $user->refresh();
+        $this->assertSame('umum', $user->role);
+        $this->assertSame('SMA Negeri 1', $user->education_history);
+        $this->assertSame('Relawan acara komunitas', $user->experience_organization);
+        $this->assertSame('Karawang', $user->address);
 
         $this->actingAs($user)
             ->get('/cv/builder')
@@ -91,55 +90,33 @@ class PublicUserFlowHardeningTest extends TestCase
         ]);
     }
 
-    public function test_legacy_jobseeker_with_student_profile_keeps_access_to_profile_cv_and_application(): void
+    public function test_profile_fields_can_be_cleared_after_being_filled(): void
     {
         $user = User::factory()->create([
-            'role' => 'jobseeker',
+            'role' => 'umum',
             'email_verified_at' => now(),
-        ]);
-
-        $user->student()->create([
-            'nisn' => '1234567890',
-            'major' => 'Rekayasa Perangkat Lunak',
-            'graduation_year' => 2024,
-            'address' => 'Cikampek',
+            'linkedin_url' => 'https://linkedin.com/in/lama',
             'education_history' => 'SMK MUTU Cikampek',
         ]);
 
-        $companyUser = User::factory()->create([
-            'role' => 'company',
-            'email_verified_at' => now(),
-        ]);
-
-        $company = Company::factory()->create([
-            'user_id' => $companyUser->id,
-            'is_verified' => true,
-            'verification_status' => 'verified',
-        ]);
-
-        $job = Job::factory()->create([
-            'company_id' => $company->id,
-        ]);
-
-        $this->actingAs($user)->get('/dashboard')->assertOk();
-        $this->actingAs($user)->get('/profile')->assertOk();
-        $this->actingAs($user)->get('/cv/builder')->assertOk();
-        $this->actingAs($user)->get('/jobs')->assertOk();
-
         $this->actingAs($user)
-            ->post(route('jobs.apply', $job), [
-                'cover_letter' => str_repeat('Saya memiliki pengalaman profil legacy yang tetap aman. ', 3),
+            ->patch('/profile', [
+                'name' => $user->name,
+                'email' => $user->email,
+                'linkedin_url' => '',
+                'education_history' => '',
             ])
-            ->assertRedirect(route('jobs.show', $job));
+            ->assertRedirect('/profile');
 
-        $application = Application::where('user_id', $user->id)->first();
-        $this->assertNotNull($application);
+        $user->refresh();
+        $this->assertNull($user->linkedin_url);
+        $this->assertNull($user->education_history);
     }
 
-    public function test_role_isolation_for_jobseeker_company_and_teacher(): void
+    public function test_role_isolation_for_umum_and_company(): void
     {
-        $jobseeker = User::factory()->create([
-            'role' => 'jobseeker',
+        $umum = User::factory()->create([
+            'role' => 'umum',
             'email_verified_at' => now(),
         ]);
 
@@ -154,21 +131,13 @@ class PublicUserFlowHardeningTest extends TestCase
             'verification_status' => 'verified',
         ]);
 
-        $teacher = User::factory()->create([
-            'role' => 'teacher',
-            'email_verified_at' => now(),
-        ]);
-
-        $this->actingAs($jobseeker)->get('/admin/users')->assertStatus(403);
-        $this->actingAs($jobseeker)->get('/company/jobs')->assertStatus(403);
+        $this->actingAs($umum)->get('/admin/users')->assertStatus(403);
+        $this->actingAs($umum)->get('/company/jobs')->assertStatus(403);
 
         $this->actingAs($companyUser)->get('/admin/users')->assertStatus(403);
         $this->actingAs($companyUser)->patch('/profile', [
             'name' => 'Should Redirect',
             'email' => $companyUser->email,
         ])->assertRedirect(route('company.profile.edit'));
-
-        $this->actingAs($teacher)->get('/admin/users')->assertStatus(403);
-        $this->actingAs($teacher)->get('/dashboard')->assertOk();
     }
 }

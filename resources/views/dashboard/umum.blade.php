@@ -10,7 +10,7 @@
                         <span class="text-slate-700 text-sm font-medium">Kelengkapan Profil</span>
                         <span class="text-slate-900 text-sm font-bold">{{ $stats['profile_completion'] }}%</span>
                     </div>
-                    <div class="w-full bg-white/20 rounded-full h-2.5 overflow-hidden">
+                    <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
                         <div class="ui-progress-fill bg-green-400 h-2.5 rounded-full" style="--progress: {{ $stats['profile_completion'] }}%;"></div>
                     </div>
                     @if($stats['profile_completion'] < 100)
@@ -25,7 +25,7 @@
             <div class="rounded-2xl border border-indigo-100 bg-gradient-to-r from-indigo-50/80 to-white px-6 py-5 shadow-sm backdrop-blur-sm">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <p class="text-sm font-semibold text-indigo-900">Fokus utama siswa dan alumni</p>
+                        <p class="text-sm font-semibold text-indigo-900">Fokus utama pencari kerja</p>
                         <p class="text-sm text-indigo-700 mt-1">Cari lowongan, simpan yang cocok, lamar, lalu pantau status lamaran.</p>
                     </div>
                     <div class="flex flex-wrap gap-2 text-xs font-medium text-indigo-800">

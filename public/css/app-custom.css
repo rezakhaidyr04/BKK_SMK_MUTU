@@ -522,43 +522,7 @@ body {
     white-space: nowrap;
 }
 
-/* Hero refinements for premium landing */
-#hero {
-    padding-top: 7rem; /* ~112px */
-    padding-bottom: 7rem;
-}
-
-#hero .ui-page-hero-title {
-    max-width: 40rem; /* approx max-w-2xl */
-    font-weight: 900; /* font-black */
-    line-height: 1.03;
-}
-
-.hero-greeting {
-    background: rgba(255,255,255,0.14);
-    border: 1px solid rgba(255,255,255,0.18);
-    padding: 0.5rem 0.9rem;
-    font-weight: 700;
-    color: #ffffff;
-    backdrop-filter: blur(18px);
-}
-
-.hero-info-bar {
-    height: 42px;
-    display: flex;
-    align-items: center;
-    border-radius: 999px;
-    padding: 6px 8px;
-    gap: 0.75rem;
-    background: var(--color-glass);
-    border: 1px solid var(--color-glass-border);
-    backdrop-filter: blur(18px);
-}
-
-.hero-info-scroll { display:flex; gap:1.25rem; animation: hero-marquee 18s linear infinite; }
-.hero-info-bar:hover .hero-info-scroll, .hero-info-bar:focus-within .hero-info-scroll { animation-play-state: paused; }
-
-@keyframes hero-marquee { 0% { transform: translateX(0);} 100% { transform: translateX(-50%);} }
+/* Hero refinements - new design uses .new-hero classes in welcome.css */
 
 /* Illustration area */
 .hero-illustration-wrap {
@@ -1695,54 +1659,7 @@ body {
 }
 
 /* ── HERO SECTION (welcome page) ───────────────────────────────────────── */
-/* Hero background: gradient biru gelap */
-#hero .hero-bg {
-    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 45%, #4f46e5 100%) !important;
-}
-
-/* Teks hero putih */
-#hero h1,
-#hero p,
-#hero .ui-page-hero-title {
-    color: #ffffff !important;
-}
-
-/* Greeting pill & info bar: semi-transparan putih */
-#hero .hero-greeting,
-#hero .hero-info-bar,
-#hero .hero-info-pill {
-    background: rgba(255,255,255,0.15) !important;
-    color: #ffffff !important;
-    border: 1px solid rgba(255,255,255,0.2) !important;
-    box-shadow: none !important;
-    backdrop-filter: blur(8px) !important;
-}
-
-/* Tombol sekunder di hero */
-#hero .hero-cta.secondary,
-#hero .ui-btn-white {
-    background: rgba(255,255,255,0.95) !important;
-    color: #1d4ed8 !important;
-    border: none !important;
-}
-
-/* Ilustrasi hero — tanpa kotak, foto transparan */
-#hero .hero-illustration {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-}
-#hero .hero-illustration img { border-radius: 0 !important; }
-
-/* Navbar tetap solid */
-nav {
-    background: #ffffff !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
-    border-bottom: 1px solid #e5e7eb !important;
-}
-
-/* Tombol primary tetap biru */
+/* New design: white background hero, no gradient overrides needed */
 
 .ui-table tbody tr:hover {
     background: #f8fafc;
@@ -2169,12 +2086,10 @@ footer {
     border-color: #fbbf24;
 }
 
-/* ============================================================
-   V2 REDESIGN — Feature Cards
-   ============================================================ */
+/* Feature card - new design uses .new-feature-card in welcome.css */
 .feature-card-v2 {
     background: #fff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #f1f5f9;
     border-radius: 1rem;
     padding: 1.5rem 1rem;
     text-align: center;
@@ -2290,151 +2205,10 @@ footer {
 }
 
 /* ============================================================
-   V2 REDESIGN — Statistics Bar
+   V2 REDESIGN — Statistics Bar (old style, hidden for new design)
    ============================================================ */
-.stats-bar-v2 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 18px;
-    padding: 26px;
-    border-radius: 32px;
-    background: rgba(248, 250, 252, 0.96);
-    box-shadow: 0 32px 70px rgba(15, 23, 42, 0.1);
-    position: relative;
-    overflow: hidden;
-}
-.stats-bar-v2::before {
-    content: '';
-    position: absolute;
-    top: -16%;
-    right: -12%;
-    width: 240px;
-    height: 240px;
-    /* decorative blue blob removed to match new design */
-    background: transparent;
-    border-radius: 50%;
-    filter: blur(6px);
-    pointer-events: none;
-}
-.stats-bar-v2::after {
-    content: '';
-    position: absolute;
-    bottom: -18%;
-    left: -10%;
-    width: 280px;
-    height: 280px;
-    /* decorative green blob removed to avoid overlapping accents */
-    background: transparent;
-    border-radius: 50%;
-    filter: blur(10px);
-    pointer-events: none;
-}
-
-.stat-item-v2 {
-    background: #ffffff;
-    border-radius: 28px;
-    border: 1px solid rgba(148, 163, 184, 0.16);
-    padding: 24px;
-    display: grid;
-    gap: 18px;
-    box-shadow: 0 18px 36px rgba(15, 23, 42, 0.06);
-    position: relative;
-    overflow: hidden;
-}
-.stat-item-v2::after {
-    content: '';
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 12px;
-    height: 12px;
-    /* remove blue accent dot (use per-card icon colors instead) */
-    background: transparent;
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-.stat-icon-v2 {
-    width: 64px;
-    height: 64px;
-    border-radius: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
-}
-.stat-icon-v2 svg { width: 28px; height: 28px; }
-
-.stat-item-v2 .stat-texts {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-.stat-item-v2 .stat-texts p:first-child {
-    font-size: 32px;
-    font-weight: 800;
-    margin: 0;
-    letter-spacing: -0.03em;
-}
-.stat-item-v2 .stat-texts p:nth-child(2) {
-    font-size: 16px;
-    font-weight: 700;
-    margin: 0;
-    color: #0f172a;
-}
-
-/* Per-card accent variants to match design example */
-.stat-item-v2.accent-blue .stat-icon-v2 { background: #eff6ff; }
-.stat-item-v2.accent-blue .stat-icon-v2 svg { stroke: #2563eb; }
-.stat-item-v2.accent-blue .stat-texts p:first-child { color: #1e40af; }
-
-.stat-item-v2.accent-green .stat-icon-v2 { background: #f0fdf4; }
-.stat-item-v2.accent-green .stat-icon-v2 svg { stroke: #16a34a; }
-.stat-item-v2.accent-green .stat-texts p:first-child { color: #166534; }
-
-.stat-item-v2.accent-purple .stat-icon-v2 { background: #faf5ff; }
-.stat-item-v2.accent-purple .stat-icon-v2 svg { stroke: #7c3aed; }
-.stat-item-v2.accent-purple .stat-texts p:first-child { color: #581c87; }
-
-.stat-item-v2.accent-yellow .stat-icon-v2 { background: #fefce8; }
-.stat-item-v2.accent-yellow .stat-icon-v2 svg { stroke: #ca8a04; }
-.stat-item-v2.accent-yellow .stat-texts p:first-child { color: #854d0e; }
-
-/* set accent color variable used by the accent bar and hover states */
-.stat-item-v2.accent-blue { --accent-color: #3b82f6; }
-.stat-item-v2.accent-green { --accent-color: #16a34a; }
-.stat-item-v2.accent-purple { --accent-color: #7c3aed; }
-.stat-item-v2.accent-yellow { --accent-color: #f59e0b; }
-
-/* hover lift */
-.stat-item-v2 { transition: transform 0.28s ease, box-shadow 0.28s ease; }
-.stat-item-v2:hover { transform: translateY(-8px); box-shadow: 0 32px 70px rgba(15,23,42,0.12); }
-
-@media (max-width: 1024px) {
-    .stats-bar-v2 {
-        grid-template-columns: repeat(2, minmax(220px, 1fr));
-        padding: 22px;
-    }
-}
-
-@media (max-width: 640px) {
-    .stats-bar-v2 {
-        grid-template-columns: 1fr;
-        padding: 18px;
-    }
-    .stat-item-v2 {
-        padding: 20px;
-    }
-    .stat-icon-v2 {
-        width: 56px;
-        height: 56px;
-        border-radius: 16px;
-    }
-    .stat-icon-v2 svg { width: 24px; height: 24px; }
-    .stat-item-v2 .stat-texts p:first-child {
-        font-size: 28px;
-    }
-}
+.stats-bar-v2 { display: none; }
+.stat-item-v2 { display: none; }
 
 /* ============================================================
    V2 REDESIGN — Job Cards Carousel
@@ -2538,56 +2312,9 @@ footer {
 }
 
 /* ============================================================
-   V2 REDESIGN — CTA Banner
+   V2 REDESIGN — CTA Banner (old style, hidden for new design)
    ============================================================ */
-.cta-banner-v2 {
-    position: relative;
-    overflow: hidden;
-    border-radius: 1.5rem;
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 40%, #3b82f6 100%);
-    padding: 3rem 2.5rem;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    box-shadow: 0 16px 48px rgba(37, 99, 235, 0.25);
-}
-
-.cta-banner-v2::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.12), transparent 50%);
-    pointer-events: none;
-}
-
-.cta-content-v2 {
-    position: relative;
-    z-index: 2;
-    flex: 1;
-}
-
-.cta-illustration-v2 {
-    position: relative;
-    z-index: 2;
-    flex-shrink: 0;
-}
-
-.cta-illustration-img {
-    height: 200px;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.2));
-}
-
-@media (max-width: 768px) {
-    .cta-banner-v2 {
-        flex-direction: column;
-        text-align: center;
-        padding: 2rem 1.5rem;
-    }
-    .cta-illustration-v2 { order: -1; }
-    .cta-illustration-img { height: 160px; }
-}
+.cta-banner-v2 { display: none; }
 
 /* Carousel JS helper */
 .job-carousel-wrapper .job-carousel-btn:active {

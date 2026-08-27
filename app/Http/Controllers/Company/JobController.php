@@ -12,10 +12,7 @@ class JobController extends Controller
     public function index(Request $request)
     {
         $company = $request->user()->company;
-        $query = Job::where(function ($query) use ($company) {
-            $query->where('company_id', $company?->id)
-                ->orWhere('company_name', $company?->name ?? '');
-        });
+        $query = Job::where('company_id', $company?->id);
 
         if ($request->filled('search')) {
             $query->where(function ($query) use ($request) {

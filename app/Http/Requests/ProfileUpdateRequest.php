@@ -27,6 +27,7 @@ class ProfileUpdateRequest extends FormRequest
             ],
             "phone" => ["nullable", "string", "max:20"],
             "bio" => ["nullable", "string", "max:500"],
+            "address" => ["nullable", "string", "max:1000"],
             "linkedin_url" => ["nullable", "url", "max:255"],
             "portfolio_url" => ["nullable", "url", "max:255"],
             "preferred_position" => ["nullable", "string", "max:100"],

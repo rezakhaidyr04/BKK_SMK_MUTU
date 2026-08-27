@@ -55,7 +55,7 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
-    public function test_public_registration_always_signs_in_as_jobseeker_even_when_role_is_tampered(): void
+    public function test_public_registration_always_signs_in_as_umum_even_when_role_is_tampered(): void
     {
         $response = $this->post('/register', [
             'name'                  => 'PT Contoh',
@@ -67,12 +67,12 @@ class AuthenticationTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertRedirect(RouteServiceProvider::HOME);
-        $this->assertEquals('jobseeker', auth()->user()->role);
+        $this->assertEquals('umum', auth()->user()->role);
     }
 
-    public function test_jobseeker_users_are_redirected_to_their_dashboard(): void
+    public function test_umum_users_are_redirected_to_their_dashboard(): void
     {
-        $user = User::factory()->create(['role' => 'jobseeker']);
+        $user = User::factory()->create(['role' => 'umum']);
 
         $response = $this->actingAs($user)->get(RouteServiceProvider::HOME);
 
@@ -82,15 +82,6 @@ class AuthenticationTest extends TestCase
     public function test_admin_users_are_redirected_to_their_dashboard(): void
     {
         $user = User::factory()->create(['role' => 'admin']);
-
-        $response = $this->actingAs($user)->get(RouteServiceProvider::HOME);
-
-        $response->assertOk();
-    }
-
-    public function test_teacher_users_are_redirected_to_their_dashboard(): void
-    {
-        $user = User::factory()->create(['role' => 'teacher']);
 
         $response = $this->actingAs($user)->get(RouteServiceProvider::HOME);
 

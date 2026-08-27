@@ -24,6 +24,58 @@ class MessageController extends Controller
         return view('messages.index', compact('conversations'));
     }
 
+    public function start(\Illuminate\Http\Request $request)
+    {
+        $validated = $request->validate([
+            'recipient_id' => [
+                'required',
+                'integer',
+                'exists:users,id',
+                function ($attribute, $value, $fail) {
+                    if ((int) $value === auth()->id()) {
+                        $fail('Anda tidak dapat mengirim pesan ke diri sendiri.');
+                    }
+                },
+            ],
+            'job_id' => ['nullable', 'integer', 'exists:jobs,id'],
+        ]);
+
+        $sender = Auth::user();
+        $recipient = \App\Models\User::findOrFail($validated['recipient_id']);
+
+        // Hanya pasangan pencari kerja (umum) <-> perusahaan yang boleh chat.
+        $allowedPair = ($sender->isUmum() && $recipient->isCompany())
+            || ($sender->isCompany() && $recipient->isUmum());
+
+        if (! $allowedPair) {
+            return back()->with('error', 'Percakapan hanya tersedia antara pencari kerja dan perusahaan.');
+        }
+
+        $conversation = $this->findOrCreateConversation($sender, $recipient);
+
+        return redirect()->route('messages.show', $conversation);
+    }
+
+    private function findOrCreateConversation($userA, $userB): Conversation
+    {
+        $existing = Conversation::whereHas('users', function ($query) use ($userA) {
+                $query->where('user_id', $userA->id);
+            })
+            ->whereHas('users', function ($query) use ($userB) {
+                $query->where('user_id', $userB->id);
+            })
+            ->first();
+
+        if ($existing) {
+            return $existing;
+        }
+
+        $conversation = Conversation::create();
+        $conversation->users()->attach([$userA->id, $userB->id]);
+
+        return $conversation;
+    }
+
     public function show(Conversation $conversation)
     {
         // Check authorization

@@ -171,7 +171,7 @@
 
             <div class="auth-stats">
                 <div class="text-center">
-                    <div class="stat-num">{{ number_format(\App\Models\User::where('role', 'jobseeker')->count()) }}</div>
+                    <div class="stat-num">{{ number_format(\App\Models\User::where('role', 'umum')->count()) }}</div>
                     <div class="stat-label">Pengguna Terdaftar</div>
                 </div>
                 <div class="text-center">
@@ -220,7 +220,7 @@
                         <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" class="w-8 h-8 rounded-lg object-cover">
                         <div>
                             <h3 class="text-lg font-semibold text-white">BKK SMK MUTU</h3>
-                            <p class="text-xs text-gray-400">Platform karir siswa & alumni SMK</p>
+                            <p class="text-xs text-gray-400">Platform karir pencari kerja SMK</p>
                         </div>
                     </div>
                     <p class="text-xs text-gray-400">Menghubungkan talenta muda dengan perusahaan terpercaya.</p>

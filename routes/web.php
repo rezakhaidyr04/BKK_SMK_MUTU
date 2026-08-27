@@ -157,6 +157,9 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
     Route::get("/messages", [MessageController::class, "index"])->name(
         "messages.index",
     );
+    Route::post("/messages/start", [MessageController::class, "start"])
+        ->middleware('throttle:send-message')
+        ->name("messages.start");
     Route::get("/messages/{conversation}", [
         MessageController::class,
         "show",
@@ -169,33 +172,6 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
         MessageController::class,
         "send",
     ])->middleware('throttle:send-message')->name("messages.send");
-
-    // Teacher Routes
-    Route::middleware("role:teacher")
-        ->prefix("teacher")
-        ->name("teacher.")
-        ->group(function () {
-            Route::get("/students", [
-                App\Http\Controllers\Teacher\StudentController::class,
-                "index",
-            ])->name("students.index");
-            Route::get("/student/{student}", [
-                App\Http\Controllers\Teacher\StudentController::class,
-                "show",
-            ])->name("student.show");
-            Route::get("/placements", [
-                App\Http\Controllers\Teacher\PlacementController::class,
-                "index",
-            ])->name("placements.index");
-            Route::get("/reports", [
-                App\Http\Controllers\Teacher\ReportController::class,
-                "index",
-            ])->name("reports.index");
-            Route::get("/events", [
-                App\Http\Controllers\Teacher\EventController::class,
-                "index",
-            ])->name("events.index");
-        });
 
     // Admin Routes
     Route::middleware("role:admin")
@@ -285,6 +261,25 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
             ])->name("reports.export-excel");
         });
 });
+
+// A/B Testing Tracking
+Route::post('/ab-test/track', function (\Illuminate\Http\Request $request) {
+    $validated = $request->validate([
+        'event' => 'required|string',
+        'variations' => 'array',
+        'variant' => 'string',
+    ]);
+
+    $abTest = app(\App\Services\ABTestingService::class);
+    $abTest->trackEvent($validated['event'], [
+        'variant' => $validated['variant'] ?? null,
+        'variations' => $validated['variations'] ?? [],
+        'url' => $request->header('referer'),
+        'user_agent' => $request->userAgent(),
+    ]);
+
+    return response()->json(['success' => true]);
+})->name('ab-test.track');
 
 // Debug playground: preview status badges for different status values
 // Only registered in local environment — not accessible in production or staging

@@ -5,12 +5,11 @@
 
 ---
 
-## 👑 Akun Admin & Staff
+## 👑 Akun Admin
 
 | Role | Nama | Email | Password |
 |------|------|-------|----------|
 | **Admin** | Super Admin BKK | admin@bkk.com | password123 |
-| **Guru** | Guru BKK | guru@bkk.com | password123 |
 
 ---
 
@@ -18,7 +17,7 @@
 
 | Nama Perusahaan | Email | Password | Industri |
 |-----------------|-------|----------|----------|
-| PT Contoh BKK *(default)* | company@bkk.com | password123 | Umum |
+| PT Contoh BKK *(default)* | pt.contoh@bkk.com | password123 | Umum |
 | PT Maju Bersama | pt.maju@bkk.com | password123 | Manufaktur |
 | PT Teknologi Nusantara | pt.tekno@bkk.com | password123 | IT |
 | PT Ritel Cikampek | pt.retail@bkk.com | password123 | Ritel |
@@ -27,19 +26,17 @@
 
 ---
 
-## 🎓 Akun Siswa (Test)
+## 👤 Akun Pengguna Umum (Test)
 
-| Nama | Email | Password | Jurusan |
-|------|-------|----------|---------|
-| Siswa Demo BKK *(default)* | siswa@bkk.com | password123 | - |
-| Budi Santoso | budi.santoso@siswa.bkk.com | password123 | Teknik Mesin |
-| Siti Rahayu | siti.rahayu@siswa.bkk.com | password123 | Akuntansi |
-| Rizky Pratama | rizky.pratama@siswa.bkk.com | password123 | Rekayasa Perangkat Lunak |
-| Dewi Anggraini | dewi.anggraini@siswa.bkk.com | password123 | Perhotelan |
-| Andi Kurniawan | andi.kurniawan@siswa.bkk.com | password123 | Teknik Komputer & Jaringan |
-| Maya Fitriani | maya.fitriani@siswa.bkk.com | password123 | Tata Boga |
-| Dimas Setiawan | dimas.setiawan@siswa.bkk.com | password123 | Teknik Otomotif |
-| Nurul Hidayah | nurul.hidayah@siswa.bkk.com | password123 | Administrasi Perkantoran |
+Role `umum` = pencari kerja publik (bukan hanya siswa/alumni).
+
+| Nama | Email | Password |
+|------|-------|----------|
+| Pengguna Demo BKK *(default)* | umum@bkk.com | password123 |
+| Budi Santoso | budi.santoso@umum.bkk.com | password123 |
+| Siti Rahayu | siti.rahayu@umum.bkk.com | password123 |
+| Rizky Pratama | rizky.pratama@umum.bkk.com | password123 |
+| Dewi Anggraini | dewi.anggraini@umum.bkk.com | password123 |
 
 ---
 
@@ -68,7 +65,7 @@ php artisan db:restore-admin
 # Pulihkan + reset password ke default
 php artisan db:restore-admin --force
 
-# Isi ulang data dummy (siswa, perusahaan, lowongan, lamaran)
+# Isi ulang data dummy (pengguna, perusahaan, lowongan, lamaran)
 php artisan db:seed --class=DummyDataSeeder
 
 # Reset database + seed ulang (HATI-HATI: hapus semua data!)
@@ -81,9 +78,9 @@ php artisan migrate:fresh --seed
 
 - ✅ **5 Perusahaan** di wilayah Cikampek (terverifikasi)
 - ✅ **9 Lowongan** aktif dengan deskripsi, kualifikasi, gaji, dan deadline
-- ✅ **8 Siswa** dari berbagai jurusan SMK MUTU Cikampek
+- ✅ **8 Pengguna umum** dari berbagai latar belakang keahlian
 - ✅ **16 Lamaran** dengan status: submitted, under_review, interviewed, accepted, rejected
-- ✅ **Bookmark** tersimpan untuk setiap siswa
+- ✅ **Bookmark** tersimpan untuk setiap pengguna
 
 ---
 

@@ -202,7 +202,7 @@
                             </a>
 
                             @auth
-                            <button onclick="toggleBookmark({{ $job->id }})" class="p-2.5 border border-slate-200 rounded-lg hover:border-red-200 hover:bg-red-50 transition-colors bookmark-btn-{{ $job->id }}">
+                            <button onclick="toggleBookmark({{ $job->id }})" aria-label="Simpan lowongan" class="p-2.5 border border-slate-200 rounded-lg hover:border-red-200 hover:bg-red-50 transition-colors bookmark-btn-{{ $job->id }}">
                                 <svg class="w-5 h-5 text-slate-500 hover:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                                 </svg>
@@ -254,25 +254,48 @@
             return url.toString();
         }
 
-        function toggleBookmark(jobId) {
-            fetch(`/jobs/${jobId}/bookmark`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                const btn = document.querySelector(`.bookmark-btn-${jobId} svg`);
+        async function toggleBookmark(jobId) {
+            const btn = document.querySelector(`.bookmark-btn-${jobId}`);
+            if (!btn || btn.dataset.busy === '1') return;
+            btn.dataset.busy = '1';
+            btn.disabled = true;
+            btn.style.opacity = '0.6';
+
+            try {
+                const response = await fetch(`/jobs/${jobId}/bookmark`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    }
+                });
+
+                if (!response.ok) throw new Error('Gagal menyimpan');
+
+                const data = await response.json();
+                const svg = btn.querySelector('svg');
                 if (data.bookmarked) {
-                    btn.setAttribute('fill', 'currentColor');
-                    btn.classList.add('text-red-500');
+                    svg.setAttribute('fill', 'currentColor');
+                    svg.classList.add('text-red-500');
                 } else {
-                    btn.setAttribute('fill', 'none');
-                    btn.classList.remove('text-red-500');
+                    svg.setAttribute('fill', 'none');
+                    svg.classList.remove('text-red-500');
                 }
-            });
+
+                if (window.toast && data.message) {
+                    window.toast.success(data.message);
+                }
+            } catch (error) {
+                if (window.toast) {
+                    window.toast.error('Gagal memperbarui simpanan. Coba lagi.');
+                } else {
+                    alert('Gagal memperbarui simpanan. Coba lagi.');
+                }
+            } finally {
+                btn.dataset.busy = '0';
+                btn.disabled = false;
+                btn.style.opacity = '';
+            }
         }
     </script>
     @endpush

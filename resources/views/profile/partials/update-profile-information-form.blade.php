@@ -2,7 +2,7 @@
     <header class="border-b border-slate-100 pb-4 mb-6">
         <h2 class="text-lg font-bold text-slate-900 tracking-tight">Informasi Profil</h2>
         <p class="mt-1 text-sm text-slate-500">
-            @if(Auth::user()->role === 'jobseeker')
+            @if(Auth::user()->role === 'umum')
                 Perbarui foto, nama, email, nomor HP, bio, keahlian, dan profil karier Anda.
             @elseif(Auth::user()->role === 'company')
                 Perbarui foto, nama, email, nomor HP, dan informasi perusahaan Anda.
@@ -95,7 +95,7 @@
         </div>
 
         {{-- Bio / Ringkasan Singkat --}}
-        @if(Auth::user()->role === 'jobseeker')
+        @if(Auth::user()->role === 'umum')
         <div>
             <x-input-label for="bio" value="Bio / Ringkasan Singkat" class="text-slate-700 font-semibold mb-1" />
             <textarea id="bio" name="bio" rows="3"
@@ -109,7 +109,7 @@
             <x-input-error class="mt-1.5" :messages="$errors->get('bio')" />
         </div>
 
-        {{-- Keahlian (jobseeker only) --}}
+        {{-- Keahlian (pengguna umum) --}}
         <div x-data="skillsManager({{ Js::from($user->skills->pluck('name')->toArray()) }})">
             <x-input-label value="Keahlian & Kompetensi" class="text-slate-700 font-semibold mb-1" />
             <p class="text-xs text-slate-400 mb-2">Tulis keahlian lalu tekan <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] font-mono">Enter</kbd> atau tanda koma <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] font-mono">,</kbd></p>
@@ -149,7 +149,7 @@
                 <div>
                     <x-input-label for="preferred_position" value="Posisi yang Diinginkan" class="text-slate-700 font-semibold mb-1" />
                     <x-text-input id="preferred_position" name="preferred_position" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
-                                  :value="old('preferred_position', $user->student->preferred_position ?? '')"
+                                  :value="old('preferred_position', $user->preferred_position ?? '')"
                                   placeholder="Contoh: Frontend Developer" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('preferred_position')" />
                 </div>
@@ -158,8 +158,8 @@
                     <x-input-label for="gender" value="Jenis Kelamin" class="text-slate-700 font-semibold mb-1" />
                     <select id="gender" name="gender" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm">
                         <option value="">Pilih</option>
-                        <option value="Laki-laki" {{ old('gender', $user->student->gender ?? '') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                        <option value="Perempuan" {{ old('gender', $user->student->gender ?? '') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                        <option value="Laki-laki" {{ old('gender', $user->gender ?? '') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                        <option value="Perempuan" {{ old('gender', $user->gender ?? '') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                     </select>
                     <x-input-error class="mt-1.5" :messages="$errors->get('gender')" />
                 </div>
@@ -169,7 +169,7 @@
                 <div>
                     <x-input-label for="birth_place" value="Tempat Lahir" class="text-slate-700 font-semibold mb-1" />
                     <x-text-input id="birth_place" name="birth_place" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
-                                  :value="old('birth_place', $user->student->birth_place ?? '')"
+                                  :value="old('birth_place', $user->birth_place ?? '')"
                                   placeholder="Contoh: Cikampek" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('birth_place')" />
                 </div>
@@ -177,7 +177,7 @@
                 <div>
                     <x-input-label for="birth_date" value="Tanggal Lahir" class="text-slate-700 font-semibold mb-1" />
                     <x-text-input id="birth_date" name="birth_date" type="date" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
-                                  :value="old('birth_date', $user->student->birth_date ?? '')" />
+                                  :value="old('birth_date', $user->birth_date ?? '')" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('birth_date')" />
                 </div>
             </div>
@@ -186,7 +186,7 @@
                 <div>
                     <x-input-label for="linkedin_url" value="LinkedIn" class="text-slate-700 font-semibold mb-1" />
                     <x-text-input id="linkedin_url" name="linkedin_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
-                                  :value="old('linkedin_url', $user->student->linkedin_url ?? '')"
+                                  :value="old('linkedin_url', $user->linkedin_url ?? '')"
                                   placeholder="https://linkedin.com/in/namamu" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('linkedin_url')" />
                 </div>
@@ -194,7 +194,7 @@
                 <div>
                     <x-input-label for="portfolio_url" value="Portofolio / Website" class="text-slate-700 font-semibold mb-1" />
                     <x-text-input id="portfolio_url" name="portfolio_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
-                                  :value="old('portfolio_url', $user->student->portfolio_url ?? '')"
+                                  :value="old('portfolio_url', $user->portfolio_url ?? '')"
                                   placeholder="https://namaportofolio.com" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('portfolio_url')" />
                 </div>
@@ -207,7 +207,7 @@
                 </div>
                 <textarea id="education_history" name="education_history" rows="4"
                           class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm"
-                          placeholder="Contoh:&#10;SD Negeri 1 Cikampek (2016-2022)&#10;SMP Negeri 2 Cikampek (2022-2025)&#10;SMK MUTU Cikampek (2025-sekarang)&#10;Jurusan: Akuntansi">{{ old('education_history', $user->student->education_history ?? '') }}</textarea>
+                          placeholder="Contoh:&#10;SD Negeri 1 Cikampek (2016-2022)&#10;SMP Negeri 2 Cikampek (2022-2025)&#10;SMK MUTU Cikampek (2025-sekarang)&#10;Jurusan: Akuntansi">{{ old('education_history', $user->education_history ?? '') }}</textarea>
                 <x-input-error class="mt-1.5" :messages="$errors->get('education_history')" />
             </div>
 
@@ -215,7 +215,7 @@
                 <x-input-label for="experience_organization" value="Pengalaman / Organisasi" class="text-slate-700 font-semibold mb-1" />
                 <textarea id="experience_organization" name="experience_organization" rows="4"
                           class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm"
-                          placeholder="Contoh: Magang di toko online&#10;Ketua OSIS&#10;Anggota Pramuka">{{ old('experience_organization', $user->student->experience_organization ?? '') }}</textarea>
+                          placeholder="Contoh: Magang di toko online&#10;Ketua OSIS&#10;Anggota Pramuka">{{ old('experience_organization', $user->experience_organization ?? '') }}</textarea>
                 <x-input-error class="mt-1.5" :messages="$errors->get('experience_organization')" />
             </div>
 
@@ -223,7 +223,7 @@
                 <x-input-label for="address" value="Alamat Tinggal" class="text-slate-700 font-semibold mb-1" />
                 <textarea id="address" name="address" rows="2"
                           class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm"
-                          placeholder="Masukkan alamat domisili lengkap Anda...">{{ old('address', $user->student->address ?? '') }}</textarea>
+                          placeholder="Masukkan alamat domisili lengkap Anda...">{{ old('address', $user->address ?? '') }}</textarea>
                 <x-input-error class="mt-1.5" :messages="$errors->get('address')" />
             </div>
         </div>

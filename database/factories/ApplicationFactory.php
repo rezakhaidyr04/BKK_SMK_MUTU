@@ -22,7 +22,7 @@ class ApplicationFactory extends Factory
             'attachment_name' => 'resume.pdf',
             'attachment_mime' => 'application/pdf',
             'attachment_size' => 102400,
-            'status' => 'pending',
+            'status' => 'submitted',
             'interview_date' => null,
             'interview_location' => null,
             'interview_type' => null,

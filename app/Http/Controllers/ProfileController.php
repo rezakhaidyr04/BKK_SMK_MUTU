@@ -13,6 +13,18 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    private array $profileFields = [
+        "address",
+        "preferred_position",
+        "education_history",
+        "experience_organization",
+        "birth_place",
+        "birth_date",
+        "gender",
+        "linkedin_url",
+        "portfolio_url",
+    ];
+
     public function edit(Request $request): View|RedirectResponse
     {
         $user = $request->user();
@@ -22,7 +34,7 @@ class ProfileController extends Controller
         }
 
         return view("profile.edit", [
-            "user" => $user->load("student", "skills", "cvFiles", "documents"),
+            "user" => $user->load("skills", "cvFiles", "documents"),
         ]);
     }
 
@@ -64,6 +76,11 @@ class ProfileController extends Controller
             "avatar" => $validated["avatar"] ?? $user->avatar,
         ]);
 
+        // Data profil pencari kerja tersimpan langsung di tabel users.
+        foreach ($this->profileFields as $field) {
+            $user->$field = $validated[$field] ?? null;
+        }
+
         if ($user->isDirty("email")) {
             $user->email_verified_at = null;
         }
@@ -83,30 +100,6 @@ class ProfileController extends Controller
             }
         }
         $user->skills()->sync($skillIds);
-
-        // Simpan data diri & CV pencari kerja
-        if ($user->isJobseeker()) {
-            $studentData = array_filter(
-                [
-                    "address" => $request->input("address"),
-                    "linkedin_url" => $request->input("linkedin_url"),
-                    "portfolio_url" => $request->input("portfolio_url"),
-                    "preferred_position" => $request->input("preferred_position"),
-                    "education_history" => $request->input("education_history"),
-                    "experience_organization" => $request->input("experience_organization"),
-                    "birth_place" => $request->input("birth_place"),
-                    "birth_date" => $request->input("birth_date"),
-                    "gender" => $request->input("gender"),
-                ],
-                fn($v) => $v !== null && $v !== "",
-            );
-
-            if ($user->student) {
-                $user->student->update($studentData);
-            } else {
-                $user->student()->create($studentData);
-            }
-        }
 
         return Redirect::route("profile.edit")->with(
             "status",

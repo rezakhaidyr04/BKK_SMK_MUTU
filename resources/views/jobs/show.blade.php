@@ -199,7 +199,7 @@
                                                         <p class="font-medium text-gray-700">Skor dihitung dari profil, lokasi, pengalaman, dan skill yang tersimpan di akun Anda.</p>
                                                         <p>Lengkapi profil dan unggah CV untuk menaikkan skor kecocokan.</p>
                                                     @else
-                                                        <p class="font-medium text-gray-700">Masuk sebagai siswa atau alumni untuk melihat skor kecocokan personal.</p>
+                                                        <p class="font-medium text-gray-700">Masuk sebagai pencari kerja untuk melihat skor kecocokan personal.</p>
                                                         <p>Detail ini tidak ditampilkan ke tamu agar tidak menyesatkan.</p>
                                                     @endif
                                                 </div>
@@ -340,10 +340,10 @@
                     <!-- Application Card -->
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                         @auth
-                            @if(!in_array(auth()->user()->role, ['student', 'alumni']))
+                            @if(!auth()->user()->isUmum())
                                 <div class="text-center py-4">
                                     <h3 class="text-base font-bold text-gray-900 mb-1">Aksi tidak tersedia</h3>
-                                    <p class="text-xs text-gray-500">Hanya untuk siswa dan alumni.</p>
+                                    <p class="text-xs text-gray-500">Melamar lowongan hanya tersedia untuk akun pencari kerja.</p>
                                 </div>
                             @elseif($hasApplied)
                                 <div class="text-center py-6">
@@ -471,7 +471,7 @@
                                     <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
                                 </div>
                                 <h3 class="text-lg font-bold text-gray-900 mb-2">Masuk untuk melamar</h3>
-                                <p class="text-sm text-gray-500 mb-6">Anda harus login sebagai siswa/alumni untuk melamar lowongan ini.</p>
+                                <p class="text-sm text-gray-500 mb-6">Anda harus login sebagai pencari kerja untuk melamar lowongan ini.</p>
                                 <a href="{{ route('login') }}" class="block w-full px-4 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors text-center">Masuk Sekarang</a>
                             </div>
                         @endauth
@@ -483,10 +483,12 @@
                         <div class="flex flex-col mb-4 items-start gap-4">
                             <div class="flex gap-4">
                                 <div class="flex-shrink-0">
-                                    @if($job->company->user->avatar ?? null)
-                                    <img src="{{ asset('storage/' . $job->company->user->avatar) }}" class="w-14 h-14 rounded-xl object-cover border border-gray-100 shadow-sm">
+                                    @if($job->company?->logo)
+                                    <img src="{{ asset('storage/' . $job->company->logo) }}" alt="Logo {{ $job->company->name }}" class="w-14 h-14 rounded-xl object-cover border border-gray-100 shadow-sm">
+                                    @elseif($job->company->user->avatar ?? null)
+                                    <img src="{{ asset('storage/' . $job->company->user->avatar) }}" alt="Logo {{ $job->company->name }}" class="w-14 h-14 rounded-xl object-cover border border-gray-100 shadow-sm">
                                     @else
-                                    <div class="w-14 h-14 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xl border border-blue-100 shadow-sm">
+                                    <div class="w-14 h-14 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xl border border-blue-100 shadow-sm" aria-hidden="true">
                                         {{ substr($job->company->name ?? 'C', 0, 1) }}
                                     </div>
                                     @endif
@@ -509,7 +511,18 @@
                                 @endif
                             </div>
                         </div>
-                        <button class="w-full px-4 py-2 border border-blue-600 text-blue-600 text-sm font-semibold rounded-lg hover:bg-blue-50 transition-colors">
+                        @if(auth()->check() && auth()->user()->isUmum() && ($job->company?->user_id))
+                        <form action="{{ route('messages.start') }}" method="POST" class="mb-2">
+                            @csrf
+                            <input type="hidden" name="recipient_id" value="{{ $job->company->user_id }}">
+                            <input type="hidden" name="job_id" value="{{ $job->id }}">
+                            <button type="submit" class="w-full px-4 py-2 border border-blue-600 text-blue-600 text-sm font-semibold rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                                Hubungi Perusahaan
+                            </button>
+                        </form>
+                        @endif
+                        <button class="w-full px-4 py-2 border border-gray-200 text-gray-500 text-sm font-semibold rounded-lg cursor-not-allowed" disabled title="Halaman profil perusahaan segera hadir">
                             Lihat Profil Perusahaan
                         </button>
                     </div>
@@ -526,10 +539,10 @@
                             <a href="{{ route('jobs.show', $similar->id) }}" class="block group border border-gray-100 rounded-xl p-3 hover:border-blue-300 hover:shadow-sm transition-all">
                                 <div class="flex gap-3">
                                     <div class="flex-shrink-0">
-                                        @if($similar->company->user->avatar ?? null)
-                                        <img src="{{ asset('storage/' . $similar->company->user->avatar) }}" class="w-12 h-12 rounded-lg object-cover border border-gray-100">
+                                        @if($similar->company?->logo)
+                                        <img src="{{ asset('storage/' . $similar->company->logo) }}" alt="Logo {{ $similar->company->name }}" class="w-12 h-12 rounded-lg object-cover border border-gray-100">
                                         @else
-                                        <div class="w-12 h-12 rounded-lg bg-gray-50 text-gray-600 flex items-center justify-center font-bold border border-gray-100">
+                                        <div class="w-12 h-12 rounded-lg bg-gray-50 text-gray-600 flex items-center justify-center font-bold border border-gray-100" aria-hidden="true">
                                             {{ substr($similar->company->name ?? 'C', 0, 1) }}
                                         </div>
                                         @endif

@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\Company;
-use App\Models\Student;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +13,7 @@ class RestoreAdminAccounts extends Command
     protected $signature = 'db:restore-admin
                             {--force : Paksa reset password ke default}';
 
-    protected $description = 'Memulihkan akun admin, guru, company, dan pencari kerja default jika terhapus';
+    protected $description = 'Memulihkan akun admin, company, dan pengguna umum default jika terhapus';
 
     private array $defaultAccounts = [
         [
@@ -22,12 +21,6 @@ class RestoreAdminAccounts extends Command
             'name' => 'Super Admin BKK',
             'password' => 'password123',
             'role' => 'admin',
-        ],
-        [
-            'email' => 'guru@bkk.com',
-            'name' => 'Guru BKK',
-            'password' => 'password123',
-            'role' => 'teacher',
         ],
         [
             'email' => 'pt.contoh@bkk.com',
@@ -66,105 +59,53 @@ class RestoreAdminAccounts extends Command
             'role' => 'company',
         ],
         [
-            'email' => 'siswa@bkk.com',
-            'name' => 'Siswa Demo BKK',
+            'email' => 'umum@bkk.com',
+            'name' => 'Pengguna Demo BKK',
             'password' => 'password123',
-            'role' => 'jobseeker',
+            'role' => 'umum',
         ],
         [
-            'email' => 'budi.santoso@siswa.bkk.com',
+            'email' => 'budi.santoso@umum.bkk.com',
             'name' => 'Budi Santoso',
             'password' => 'password123',
-            'role' => 'jobseeker',
-            'student' => [
-                'nisn' => '0012345601',
-                'major' => 'Teknik Mesin',
-                'graduation_year' => 2024,
+            'role' => 'umum',
+            'profile' => [
+                'preferred_position' => 'Teknisi Mesin',
                 'address' => 'Jl. Melati No. 5, Cikampek Barat',
+                'education_history' => "SMK MUTU Cikampek (Teknik Mesin)",
             ],
         ],
         [
-            'email' => 'siti.rahayu@siswa.bkk.com',
+            'email' => 'siti.rahayu@umum.bkk.com',
             'name' => 'Siti Rahayu',
             'password' => 'password123',
-            'role' => 'jobseeker',
-            'student' => [
-                'nisn' => '0012345602',
-                'major' => 'Akuntansi',
-                'graduation_year' => 2024,
+            'role' => 'umum',
+            'profile' => [
+                'preferred_position' => 'Staf Akuntansi',
                 'address' => 'Jl. Anggrek No. 12, Cikampek',
+                'education_history' => "SMK MUTU Cikampek (Akuntansi)",
             ],
         ],
         [
-            'email' => 'rizky.pratama@siswa.bkk.com',
+            'email' => 'rizky.pratama@umum.bkk.com',
             'name' => 'Rizky Pratama',
             'password' => 'password123',
-            'role' => 'jobseeker',
-            'student' => [
-                'nisn' => '0012345603',
-                'major' => 'Rekayasa Perangkat Lunak',
-                'graduation_year' => 2024,
+            'role' => 'umum',
+            'profile' => [
+                'preferred_position' => 'Programmer / Web Developer',
                 'address' => 'Perumahan Cikampek Baru Blok C No. 8',
+                'education_history' => "SMK MUTU Cikampek (Rekayasa Perangkat Lunak)",
             ],
         ],
         [
-            'email' => 'dewi.anggraini@siswa.bkk.com',
+            'email' => 'dewi.anggraini@umum.bkk.com',
             'name' => 'Dewi Anggraini',
             'password' => 'password123',
-            'role' => 'jobseeker',
-            'student' => [
-                'nisn' => '0012345604',
-                'major' => 'Perhotelan',
-                'graduation_year' => 2024,
+            'role' => 'umum',
+            'profile' => [
+                'preferred_position' => 'Staf Housekeeping / Front Office',
                 'address' => 'Jl. Pramuka No. 33, Cikampek Timur',
-            ],
-        ],
-        [
-            'email' => 'andi.kurniawan@siswa.bkk.com',
-            'name' => 'Andi Kurniawan',
-            'password' => 'password123',
-            'role' => 'jobseeker',
-            'student' => [
-                'nisn' => '0012345605',
-                'major' => 'Teknik Komputer dan Jaringan',
-                'graduation_year' => 2024,
-                'address' => 'Jl. Veteran No. 17, Cikampek',
-            ],
-        ],
-        [
-            'email' => 'maya.fitriani@siswa.bkk.com',
-            'name' => 'Maya Fitriani',
-            'password' => 'password123',
-            'role' => 'jobseeker',
-            'student' => [
-                'nisn' => '0012345606',
-                'major' => 'Tata Boga',
-                'graduation_year' => 2025,
-                'address' => 'Jl. Pahlawan No. 21, Cikampek',
-            ],
-        ],
-        [
-            'email' => 'dimas.setiawan@siswa.bkk.com',
-            'name' => 'Dimas Setiawan',
-            'password' => 'password123',
-            'role' => 'jobseeker',
-            'student' => [
-                'nisn' => '0012345607',
-                'major' => 'Teknik Otomotif',
-                'graduation_year' => 2024,
-                'address' => 'Desa Wadas, Cikampek Barat',
-            ],
-        ],
-        [
-            'email' => 'nurul.hidayah@siswa.bkk.com',
-            'name' => 'Nurul Hidayah',
-            'password' => 'password123',
-            'role' => 'jobseeker',
-            'student' => [
-                'nisn' => '0012345608',
-                'major' => 'Administrasi Perkantoran',
-                'graduation_year' => 2025,
-                'address' => 'Jl. Cikarang No. 4, Cikampek',
+                'education_history' => "SMK MUTU Cikampek (Perhotelan)",
             ],
         ],
     ];
@@ -193,7 +134,7 @@ class RestoreAdminAccounts extends Command
 
     private function ensureRolesExist(): void
     {
-        foreach (['admin', 'teacher', 'jobseeker', 'company'] as $role) {
+        foreach (['admin', 'umum', 'company'] as $role) {
             Role::firstOrCreate(['name' => $role, 'guard_name' => 'web']);
         }
 
@@ -253,33 +194,13 @@ class RestoreAdminAccounts extends Command
             }
         }
 
-        if ($account['role'] === 'jobseeker') {
-            $student = Student::withTrashed()->where('user_id', $user->id)->first();
-            $studentData = $account['student'] ?? [];
-
-            if (! $student) {
-                Student::create(array_merge([
-                    'user_id' => $user->id,
-                ], $studentData));
-            } else {
-                if ($student->trashed()) {
-                    $student->restore();
+        if ($account['role'] === 'umum' && !empty($account['profile'])) {
+            foreach ($account['profile'] as $field => $value) {
+                if ($user->$field !== $value) {
+                    $user->forceFill([$field => $value]);
                 }
-
-                $student->forceFill(array_merge([
-                    'user_id' => $user->id,
-                ], $studentData))->save();
             }
-
-            $existingStudent = Student::where('nisn', $studentData['nisn'] ?? null)
-                ->where('id', '!=', $student?->id)
-                ->first();
-
-            if ($existingStudent) {
-                $existingStudent->forceFill([
-                    'nisn' => null,
-                ])->save();
-            }
+            $user->save();
         }
 
         $status = $created ? '✔ Dibuat baru' : '✔ Diverifikasi';

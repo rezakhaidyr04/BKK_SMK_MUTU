@@ -22,14 +22,14 @@ class Phase5PublicRegistrationTest extends TestCase
         $response->assertRedirect();
         $this->assertDatabaseHas('users', [
             'email' => 'jobseeker@example.com',
-            'role' => 'jobseeker',
+            'role' => 'umum',
         ]);
     }
 
     /** @test */
     public function public_registration_does_not_allow_role_escalation_via_role_input(): void
     {
-        foreach (['company', 'student', 'alumni', 'admin', 'teacher', 'invalid'] as $role) {
+        foreach (['company', 'admin', 'teacher', 'invalid'] as $role) {
             $response = $this->post('/register', [
                 'name' => 'Tampered User',
                 'email' => 'blocked-' . $role . '@example.com',
@@ -41,7 +41,7 @@ class Phase5PublicRegistrationTest extends TestCase
             $response->assertRedirect();
             $this->assertDatabaseHas('users', [
                 'email' => 'blocked-' . $role . '@example.com',
-                'role' => 'jobseeker',
+                'role' => 'umum',
             ]);
             auth()->logout();
         }

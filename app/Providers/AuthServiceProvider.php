@@ -6,14 +6,12 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\Job;
 use App\Models\Application;
-use App\Models\Student;
 use App\Models\Company;
 use App\Models\Certificate;
 use App\Models\CvFile;
 use App\Models\UserDocument;
 use App\Policies\JobPolicy;
 use App\Policies\ApplicationPolicy;
-use App\Policies\StudentPolicy;
 use App\Policies\CompanyPolicy;
 use App\Policies\CertificatePolicy;
 use App\Policies\CvFilePolicy;
@@ -29,7 +27,6 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Job::class => JobPolicy::class,
         Application::class => ApplicationPolicy::class,
-        Student::class => StudentPolicy::class,
         Company::class => CompanyPolicy::class,
         Certificate::class => CertificatePolicy::class,
         CvFile::class => CvFilePolicy::class,

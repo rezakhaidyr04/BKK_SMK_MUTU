@@ -62,8 +62,8 @@
             {{-- Main Stats Grid --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <x-ui.dashboard-stat-card
-                    label="Total Siswa"
-                    :value="$stats['total_students']"
+                    label="Total Pengguna Umum"
+                    :value="$stats['total_umum']"
                     color="blue"
                     class="animate-slide-up animate-slide-up-1"
                 >
@@ -74,33 +74,10 @@
                     </x-slot:icon>
                     <x-slot:footer>
                         <div class="flex items-center text-sm">
-                            @if($growth['students'] >= 0)
-                                <span class="text-green-600 dark:text-green-400 font-semibold">+{{ $growth['students'] }}%</span>
+                            @if($growth['users'] >= 0)
+                                <span class="text-green-600 dark:text-green-400 font-semibold">+{{ $growth['users'] }}%</span>
                             @else
-                                <span class="text-red-500 dark:text-red-400 font-semibold">{{ $growth['students'] }}%</span>
-                            @endif
-                            <span class="text-gray-600 dark:text-gray-400 ml-2">dari bulan lalu</span>
-                        </div>
-                    </x-slot:footer>
-                </x-ui.dashboard-stat-card>
-
-                <x-ui.dashboard-stat-card
-                    label="Total Alumni"
-                    :value="$stats['total_alumni']"
-                    color="green"
-                    class="animate-slide-up animate-slide-up-2"
-                >
-                    <x-slot:icon>
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        </svg>
-                    </x-slot:icon>
-                    <x-slot:footer>
-                        <div class="flex items-center text-sm">
-                            @if($growth['alumni'] >= 0)
-                                <span class="text-green-600 dark:text-green-400 font-semibold">+{{ $growth['alumni'] }}%</span>
-                            @else
-                                <span class="text-red-500 dark:text-red-400 font-semibold">{{ $growth['alumni'] }}%</span>
+                                <span class="text-red-500 dark:text-red-400 font-semibold">{{ $growth['users'] }}%</span>
                             @endif
                             <span class="text-gray-600 dark:text-gray-400 ml-2">dari bulan lalu</span>
                         </div>
@@ -266,7 +243,7 @@
                         @empty
                         <x-ui.empty-state
                             title="Belum Ada Lamaran"
-                            description="Lamaran dari alumni akan muncul di sini"
+                            description="Lamaran dari pencari kerja akan muncul di sini"
                             icon="document"
                             class="py-8"
                         />

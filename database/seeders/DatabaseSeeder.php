@@ -22,19 +22,13 @@ class DatabaseSeeder extends Seeder
         // Create sample user Ahmad Nur Harry for CV preview
         try {
             $user = \App\Models\User::updateOrCreate([
-                'email' => 'harry.nur@siswa.bkk.com'
+                'email' => 'harry.nur@umum.bkk.com'
             ], [
                 'name' => 'Ahmad nur harry',
                 'password' => \Illuminate\Support\Facades\Hash::make('password123'),
-                'role' => 'jobseeker',
+                'role' => 'umum',
                 'phone' => '081234560002',
                 'bio' => 'Lulusan SMK Akuntansi dengan pengalaman magang dan keahlian Microsoft Office serta pembukuan sederhana.',
-            ]);
-
-            $studentData = [
-                'nisn' => '0001234567',
-                'major' => 'Akuntansi',
-                'graduation_year' => 2024,
                 'address' => 'Jl. Anggrek No. 12, Karawang',
                 'linkedin_url' => 'https://linkedin.com/in/ahmadnurharry',
                 'portfolio_url' => 'https://ahmad-harry.example.com',
@@ -44,12 +38,7 @@ class DatabaseSeeder extends Seeder
                 'birth_place' => 'Karawang',
                 'birth_date' => '2004-06-15',
                 'gender' => 'Laki-laki',
-            ];
-
-            // Use updateOrCreate by user_id to avoid unique nisn conflicts
-            \App\Models\Student::updateOrCreate([
-                'user_id' => $user->id,
-            ], $studentData);
+            ]);
 
             $skills = ['Microsoft Excel', 'Pembukuan', 'Administrasi Perkantoran', 'Komunikasi'];
             $skillIds = [];
@@ -73,9 +62,9 @@ class DatabaseSeeder extends Seeder
 
             // Generate sample CV PDF (modern)
             try {
-                $user->load('student', 'skills', 'certificates');
+                $user->load('skills', 'certificates');
                 $cvData = (new \App\Http\Controllers\CvBuilderController)->buildPreviewData($user);
-                $pdf = PDF::loadView('cv.templates.modern', array_merge($cvData, [
+                $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('cv.templates.modern', array_merge($cvData, [
                     'user' => $user,
                     'include_photo' => true,
                     'include_skills' => true,

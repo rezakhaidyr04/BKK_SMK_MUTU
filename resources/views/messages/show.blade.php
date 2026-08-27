@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="p-6 border-t border-gray-100 bg-gray-50">
-                    <form @submit.prevent="sendMessage" class="space-y-4">
+                    <form @submit.prevent="sendMessage" data-no-lock class="space-y-4">
                         <label class="block text-sm font-medium text-gray-700">Tulis pesan</label>
                         <textarea x-model="newMessage" @keydown.enter.prevent="sendMessage" rows="3" class="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring-blue-200" placeholder="Ketik pesan Anda lalu tekan Enter..." required></textarea>
                         <div class="flex items-center justify-between">

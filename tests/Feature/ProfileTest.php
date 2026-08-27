@@ -100,7 +100,7 @@ class ProfileTest extends TestCase
 
     public function test_profile_update_cannot_change_role_via_request_payload(): void
     {
-        $user = User::factory()->create(['role' => 'jobseeker']);
+        $user = User::factory()->create(['role' => 'umum']);
 
         $this->actingAs($user)
             ->patch('/profile', [
@@ -113,7 +113,7 @@ class ProfileTest extends TestCase
 
         $user->refresh();
 
-        $this->assertSame('jobseeker', $user->role);
+        $this->assertSame('umum', $user->role);
         $this->assertSame('Updated Name', $user->name);
     }
 

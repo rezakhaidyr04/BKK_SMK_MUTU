@@ -20,12 +20,11 @@
             </div>
             <div class="ui-filter-field">
                 <label class="ui-label">Role</label>
-                <select name="role" class="ui-select">
+                <select name="role" class="ui-select" aria-label="Filter role">
                     <option value="">Semua</option>
                     <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                     <option value="company" {{ request('role') == 'company' ? 'selected' : '' }}>Perusahaan</option>
-                    <option value="jobseeker" {{ request('role') == 'jobseeker' ? 'selected' : '' }}>Pencari Kerja</option>
-                    <option value="teacher" {{ request('role') == 'teacher' ? 'selected' : '' }}>Guru</option>
+                    <option value="umum" {{ request('role') == 'umum' ? 'selected' : '' }}>Pengguna Umum</option>
                 </select>
             </div>
             <div class="ui-filter-field">

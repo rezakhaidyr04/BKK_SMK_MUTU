@@ -75,9 +75,9 @@
                 <td><strong>{{ $application->user->name }}</strong></td>
             </tr>
             <tr>
-                <td>Jurusan / Keahlian</td>
+                <td>Posisi / Keahlian</td>
                 <td>:</td>
-                <td>{{ optional($application->user->student)->major ?? '-' }}</td>
+                <td>{{ optional($application->user)->preferred_position ?? '-' }}</td>
             </tr>
             <tr>
                 <td>Email</td>

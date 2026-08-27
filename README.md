@@ -2,13 +2,12 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)
 ![Laravel](https://img.shields.io/badge/Laravel-10-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-8.1%2B-purple.svg)
-![Status](https://img.shields.io/badge/status-production%20ready-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-**Platform Bursa Kerja Khusus (BKK) modern untuk siswa & alumni SMK MUTU Cikampek**
+**Platform Bursa Kerja Khusus (BKK) modern untuk pencari kerja & perusahaan**
 
 [Fitur](#-fitur-utama) • [Instalasi](#-instalasi) • [Dokumentasi](#-dokumentasi) • [Tim](#-tim)
 
@@ -18,11 +17,11 @@
 
 ## 📖 Tentang Project
 
-**BKK SMK MUTU** adalah platform digital modern yang menghubungkan siswa dan alumni SMK MUTU Cikampek dengan peluang karir terbaik. Dibangun dengan teknologi terkini dan desain UI/UX setara platform profesional seperti LinkedIn, Glints, dan JobStreet.
+**BKK SMK MUTU** adalah platform digital modern yang menghubungkan para pencari kerja (pengguna umum — bukan hanya siswa atau alumni) dengan peluang karir terbaik. Dibangun dengan teknologi terkini dan desain UI/UX setara platform profesional seperti LinkedIn, Glints, dan JobStreet.
 
 ### 🎯 Tujuan
 
-- Memudahkan siswa & alumni mencari pekerjaan
+- Memudahkan masyarakat umum mencari pekerjaan
 - Mempermudah perusahaan menemukan talent berkualitas
 - Monitoring penyaluran kerja oleh sekolah
 - Meningkatkan tingkat keterserapan lulusan di dunia kerja
@@ -31,42 +30,42 @@
 
 ## ✨ Fitur Utama
 
-### 👨‍🎓 Untuk Siswa & Alumni
+### 👤 Untuk Pengguna Umum (Pencari Kerja)
 
 | Fitur | Deskripsi |
 |-------|-----------|
 | 🔍 **Advanced Job Search** | Filter & search dengan multiple criteria |
-| 📊 **Job Match System** | Rekomendasi pekerjaan berdasarkan skills |
+| 📊 **Job Match System** | Rekomendasi pekerjaan berdasarkan skills, lokasi, pengalaman |
 | 📝 **Application Tracker** | Timeline status lamaran real-time |
-| 💼 **CV Builder ATS-Friendly** | Generate CV profesional |
+| 💼 **CV Builder ATS-Friendly** | Generate CV profesional (PDF) |
 | 📜 **Certificate Management** | Upload & showcase sertifikat |
+| 📄 **Berkas Pendukung** | Upload ijazah/SKCK/KTP untuk melengkapi lamaran |
 | 🔖 **Bookmark Jobs** | Simpan lowongan untuk dilamar nanti |
-| 📅 **Career Events** | Info seminar, workshop, job fair |
+| 📅 **Career Events** | Info seminar, workshop, job fair + pendaftaran |
 | 📰 **Career News** | Tips karir & info industri |
-| 💬 **Direct Messaging** | Chat langsung dengan HR perusahaan |
+| 💬 **Direct Messaging** | Chat langsung dengan HR perusahaan dari halaman lowongan |
 | 📈 **Profile Completion** | Progress tracker kelengkapan profil |
 
 ### 🏢 Untuk Perusahaan
 
 | Fitur | Deskripsi |
 |-------|-----------|
-| 📢 **Job Posting** | Post lowongan dengan mudah |
-| 👥 **Applicant Management** | Kelola pelamar secara efisien |
-| 📊 **Recruitment Analytics** | Dashboard statistik rekrutmen |
-| 🔍 **Talent Search** | Cari kandidat berdasarkan skills |
-| ⭐ **Applicant Rating** | Review & rating pelamar |
-| 💬 **Direct Contact** | Chat langsung dengan kandidat |
+| 📢 **Job Posting** | Post lowongan dengan mudah (setelah terverifikasi) |
+| 👥 **Applicant Management** | Kelola status pelamar + jadwal wawancara |
+| 💬 **Direct Contact** | Chat langsung dengan kandidat dari daftar pelamar |
+| 🛡️ **Company Verification** | Submit dokumen legal untuk diverifikasi admin |
+| 📊 **Recruitment Dashboard** | Ringkasan lowongan, lamaran, progres rekrutmen |
 
-### 🎯 Untuk Admin / Guru BK
+### 🎯 Untuk Admin
 
 | Fitur | Deskripsi |
 |-------|-----------|
-| 📊 **Analytics Dashboard** | Overview lengkap seluruh sistem |
-| 👥 **User Management** | Kelola semua pengguna |
-| 🏢 **Company Verification** | Verifikasi & approve perusahaan |
-| 📈 **Placement Reports** | Laporan penyaluran kerja |
-| 📊 **Statistics & Charts** | Visualisasi data keterserapan |
-| 🔔 **Notification Center** | Broadcast pengumuman |
+| 📊 **Analytics Dashboard** | Overview lengkap seluruh sistem + chart 6 bulan |
+| 👥 **User Management** | Kelola semua pengguna (admin, umum, perusahaan) |
+| 🏢 **Company Verification** | Verifikasi & approve/reject perusahaan + MoA |
+| 📢 **Job Broadcast** | Kirim notifikasi lowongan ke seluruh pengguna |
+| 📈 **Placement Reports** | Laporan penyaluran kerja (CSV/Excel) |
+| 📰 **News & Events CRUD** | Kelola berita karir & acara |
 
 ---
 
@@ -113,7 +112,7 @@ php artisan serve
 
 **Buka browser:** `http://localhost:8000`
 
-**Login Admin:** `admin@bkk.com` / `admin123`
+**Login Admin:** `admin@bkk.com` / `password123`
 
 ### Menjalankan test
 
@@ -121,47 +120,20 @@ php artisan serve
 php artisan test
 ```
 
-> 📚 Panduan lengkap tersedia di [QUICK_START.md](QUICK_START.md)
-
 ---
 
 ## 🛠️ Technology Stack
 
 | Kategori | Teknologi |
 |----------|-----------|
-| **Backend** | Laravel 12, PHP 8.2+ |
+| **Backend** | Laravel 10, PHP 8.1+ |
 | **Database** | MySQL 8.0 |
 | **Auth** | Laravel Breeze |
-| **Role** | Spatie Permissions |
+| **Role** | Kolom `users.role` + Spatie Permissions |
 | **Frontend** | Tailwind CSS, Alpine.js |
 | **Template** | Blade Templates |
 | **Icons** | Heroicons |
-| **Pattern** | MVC, Repository, Service Layer |
-
----
-
-## 📁 Struktur Project
-
-```
-BKK SMK MUTU/
-├── app/
-│   ├── Http/
-│   │   ├── Controllers/       # 13+ controllers
-│   │   └── Middleware/
-│   ├── Models/                # 15+ models
-│   └── Repositories/
-├── resources/
-│   └── views/
-│       ├── layouts/
-│       ├── dashboard/
-│       ├── jobs/
-│       └── applications/
-├── database/
-│   └── migrations/
-├── routes/
-│   └── web.php
-└── public/
-```
+| **Pattern** | MVC, Service Layer |
 
 ---
 
@@ -170,10 +142,11 @@ BKK SMK MUTU/
 | Role | Akses |
 |------|-------|
 | **Admin** | Full access ke seluruh sistem |
-| **Guru BK** | Monitoring & laporan |
-| **Siswa** | Cari lowongan & melamar |
-| **Alumni** | Cari lowongan & melamar |
+| **Umum** | Cari lowongan, lamar kerja, CV builder, chat |
 | **Perusahaan** | Post lowongan & kelola pelamar |
+
+> Catatan: role lama `siswa`, `alumni`, dan `guru` sudah digabung/dihapus.
+> Seluruh pengguna publik memakai role `umum`.
 
 ---
 
@@ -182,21 +155,21 @@ BKK SMK MUTU/
 - ✅ CSRF Protection
 - ✅ XSS Protection
 - ✅ SQL Injection Protection
-- ✅ Input Validation
+- ✅ Input Validation (Form Request + rule enum)
 - ✅ Password Hashing (Bcrypt)
 - ✅ Role-based Access Control (RBAC)
 - ✅ Session Security
-- ✅ File Upload Validation
-- ✅ Rate Limiting
+- ✅ File Upload Validation + penyimpanan privat
+- ✅ Rate Limiting (login, kirim pesan, generate CV)
 
 ---
 
 ## ⚡ Performa
 
 - ✅ Query Optimization & Eager Loading
-- ✅ Route, Config & View Caching
+- ✅ Database Indexes (role, company_name, unread messages)
 - ✅ Pagination
-- ✅ Asset Optimization
+- ✅ Asset Optimization (WebP via ImageProcessor)
 
 ---
 
@@ -204,10 +177,7 @@ BKK SMK MUTU/
 
 | Dokumen | Deskripsi |
 |---------|-----------|
-| [QUICK_START.md](QUICK_START.md) | Cara cepat menjalankan project |
-| [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) | Panduan deploy ke production |
-| [TRANSFORMATION_SUMMARY.md](TRANSFORMATION_SUMMARY.md) | Detail transformasi sistem |
-| [AKUN_TEST.md](AKUN_TEST.md) | Daftar akun untuk testing |
+| [AKUN_TEST.md](docs/AKUN_TEST.md) | Daftar akun untuk testing |
 
 ---
 
@@ -232,17 +202,13 @@ BKK SMK MUTU/
 ## 📞 Kontak & Support
 
 - 📧 Email: bkk@smkmutu.sch.id
-- 📱 WhatsApp: +62 xxx xxxx xxxx
-- 🌐 Website: https://bkksmkmutu.sch.id
 
 ---
 
 <div align="center">
 
-**Dibuat dengan ❤️ untuk Siswa & Alumni SMK MUTU Cikampek**
+**Dibuat dengan ❤️ untuk para pencari kerja SMK MUTU Cikampek**
 
-**v1.0.0 • 2026 • Production Ready**
-
-[⬆ Kembali ke Atas](#-bkk-smk-mutu-cikampek)
+**v1.1.0 • 2026**
 
 </div>

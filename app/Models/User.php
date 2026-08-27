@@ -24,6 +24,15 @@ class User extends Authenticatable
         "is_active",
         "must_change_password",
         "password_changed_at",
+        "address",
+        "preferred_position",
+        "education_history",
+        "experience_organization",
+        "birth_place",
+        "birth_date",
+        "gender",
+        "linkedin_url",
+        "portfolio_url",
     ];
 
     protected $hidden = ["password", "remember_token"];
@@ -34,17 +43,8 @@ class User extends Authenticatable
         "is_active" => "boolean",
         "must_change_password" => "boolean",
         "password_changed_at" => "datetime",
+        "birth_date" => "date",
     ];
-
-    public function student()
-    {
-        return $this->hasOne(Student::class);
-    }
-
-    public function alumni()
-    {
-        return $this->hasOne(Alumni::class);
-    }
 
     public function company()
     {
@@ -88,9 +88,14 @@ class User extends Authenticatable
         return $this->hasMany(UserDocument::class);
     }
 
-    public function isJobseeker(): bool
+    public function conversations()
     {
-        return $this->role === 'jobseeker';
+        return $this->belongsToMany(Conversation::class, 'conversation_user')->withTimestamps();
+    }
+
+    public function isUmum(): bool
+    {
+        return $this->role === 'umum';
     }
 
     public function isCompany(): bool
@@ -101,10 +106,5 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
-    }
-
-    public function isTeacher(): bool
-    {
-        return $this->role === 'teacher';
     }
 }

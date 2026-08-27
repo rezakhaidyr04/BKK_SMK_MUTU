@@ -55,8 +55,8 @@ class NotificationAndMessagingTest extends TestCase
                 'body' => 'Hello'
             ]);
 
-        $response->assertStatus(302);
-        $response->assertSessionHasNoErrors();
+        $response->assertOk();
+        $this->assertTrue($response->json('success'));
 
         $this->assertDatabaseHas('messages', [
             'conversation_id' => $conv->id,
@@ -67,5 +67,46 @@ class NotificationAndMessagingTest extends TestCase
         Event::assertDispatched(MessageSent::class, function ($event) use ($conv) {
             return $event->message->conversation_id === $conv->id;
         });
+    }
+
+    public function test_umum_user_can_start_conversation_with_company()
+    {
+        $umum = User::factory()->create(['role' => 'umum', 'email_verified_at' => now()]);
+        $companyUser = User::factory()->create(['role' => 'company', 'email_verified_at' => now()]);
+
+        $response = $this->actingAs($umum)
+            ->post(route('messages.start'), [
+                'recipient_id' => $companyUser->id,
+            ]);
+
+        $response->assertRedirect();
+
+        $conversation = Conversation::whereHas('users', fn ($q) => $q->where('user_id', $umum->id))
+            ->whereHas('users', fn ($q) => $q->where('user_id', $companyUser->id))
+            ->first();
+
+        $this->assertNotNull($conversation, 'Conversation should be created');
+
+        // Memulai ulang dengan penerima yang sama tidak boleh membuat percakapan baru.
+        $this->actingAs($umum)
+            ->post(route('messages.start'), [
+                'recipient_id' => $companyUser->id,
+            ]);
+
+        $this->assertSame(1, Conversation::count());
+    }
+
+    public function test_users_cannot_start_conversation_with_themselves()
+    {
+        $user = User::factory()->create(['role' => 'umum', 'email_verified_at' => now()]);
+
+        $response = $this->actingAs($user)
+            ->from('/dashboard')
+            ->post(route('messages.start'), [
+                'recipient_id' => $user->id,
+            ]);
+
+        $response->assertRedirect('/dashboard');
+        $response->assertSessionHasErrors(['recipient_id']);
     }
 }

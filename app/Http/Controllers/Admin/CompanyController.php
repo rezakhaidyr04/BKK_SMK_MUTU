@@ -280,14 +280,16 @@ class CompanyController extends Controller
         $plainPassword = Str::password(12, letters: true, numbers: true, symbols: false);
 
         // 5. Buat user — simpan password HANYA dalam bentuk hash
+        // must_change_password = true paksa company login pertama kali
+        // dan mengarahkan ke halaman ganti password via ForcePasswordChange middleware.
         $user = User::create([
             'name'                => $company->name,
             'email'               => $validated['email'],
             'password'            => Hash::make($plainPassword),   // NEVER store plaintext
             'role'                => 'company',
             'is_active'           => true,
-            'must_change_password' => true,
             'email_verified_at'   => now(),
+            'must_change_password' => true,
         ]);
 
         // 6. Sync Spatie role = 'company'
@@ -296,13 +298,13 @@ class CompanyController extends Controller
         // 7. Hubungkan user ke perusahaan
         $company->update(['user_id' => $user->id]);
 
-        // 8. Flash password SEKALI ke session — tidak disimpan di DB
-        //    Setelah redirect & view dirender, plaintext hilang dari server
+        // 8. Password awal akan ditampilkan SATU KALI di halaman berikutnya
+        // menggunakan session Laravel — akan otomatis hilang setelah ditampilkan.
         return redirect()
             ->route('admin.companies.show', $company)
             ->with('account_created', true)
-            ->with('temp_password', $plainPassword)   // one-time flash
             ->with('account_email', $validated['email'])
-            ->with('success', "Akun berhasil dibuat untuk {$company->name}. Catat password sementara sekarang!");
+            ->with('initial_password', $plainPassword)
+            ->with('success', "Akun berhasil dibuat untuk {$company->name}. Password awal telah dibuat. <strong>Disarankan</strong> mengganti password setelah login pertama untuk keamanan maksimal.");
     }
 }

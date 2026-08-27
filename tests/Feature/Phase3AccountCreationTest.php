@@ -58,7 +58,7 @@ class Phase3AccountCreationTest extends TestCase
 
         $response->assertRedirect(route('admin.companies.show', $company));
         $response->assertSessionHas('account_created', true);
-        $response->assertSessionHas('temp_password');  // password sementara di flash
+        $response->assertSessionHas('initial_password');  // password awal di flash session
         $response->assertSessionHas('account_email', 'hrd@majutest.com');
 
         // User harus dibuat
@@ -226,7 +226,7 @@ class Phase3AccountCreationTest extends TestCase
     public function create_account_route_requires_admin(): void
     {
         $company  = Company::factory()->withoutAccount()->approved()->create();
-        $student  = User::factory()->create(['role' => 'student']);
+        $student  = User::factory()->create(['role' => 'umum']);
 
         $response = $this->actingAs($student)->post(
             route('admin.companies.create-account', $company),
@@ -252,6 +252,6 @@ class Phase3AccountCreationTest extends TestCase
         $firstVisit = $this->actingAs($this->admin)->get(
             route('admin.companies.show', $company)
         );
-        $firstVisit->assertSessionMissing('temp_password'); // Sudah di-consume oleh flash
+        $firstVisit->assertSessionMissing('initial_password'); // Sudah di-consume oleh flash
     }
 }

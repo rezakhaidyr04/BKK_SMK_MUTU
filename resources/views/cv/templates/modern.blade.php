@@ -69,8 +69,7 @@
                     <td>
                         <div class="name">{{ $user->name }}</div>
                         <div class="headline">
-                            {{ $custom_headline ?: ($user->student?->preferred_position ?: ($user->student?->major ?? 'Pencari kerja')) }}
-                            @if($user->student && $user->student->graduation_year) &middot; Lulusan {{ $user->student->graduation_year }} @endif
+                            {{ $custom_headline ?: ($user->preferred_position ?? 'Pencari kerja') }}
                         </div>
                         <div>
                             <span class="pill">ATS Friendly</span>
@@ -80,8 +79,8 @@
                     <td style="width: 160px;" class="hero-contact">
                         <div>{{ $user->email }}</div>
                         <div>{{ $user->phone ?? '-' }}</div>
-                        @if($user->student && $user->student->linkedin_url)<div>LinkedIn tersedia</div>@endif
-                        @if($user->student && $user->student->portfolio_url)<div>Portofolio tersedia</div>@endif
+                        @if(!empty($user->linkedin_url))<div>LinkedIn tersedia</div>@endif
+                        @if(!empty($user->portfolio_url))<div>Portofolio tersedia</div>@endif
                     </td>
                 </tr>
             </table>
@@ -102,8 +101,8 @@
                             <div class="section-title">Pengalaman</div>
                             @if($custom_experience)
                                 <div class="section-body">{!! nl2br(e($custom_experience)) !!}</div>
-                            @elseif($user->student && $user->student->experience_organization)
-                                <div class="section-body">{!! nl2br(e($user->student->experience_organization)) !!}</div>
+                            @elseif(!empty($user->experience_organization))
+                                <div class="section-body">{!! nl2br(e($user->experience_organization)) !!}</div>
                             @else
                                 <div class="section-body muted">Belum ada pengalaman yang ditambahkan. Isi pengalaman magang, organisasi, atau proyek sekolah agar lebih kuat di mata perekrut.</div>
                             @endif
@@ -154,7 +153,7 @@
                             <div class="section-body">
                                 <div>{{ $user->email }}</div>
                                 <div>{{ $user->phone ?? '-' }}</div>
-                                <div>{{ $user->student?->address ?? 'Alamat belum diisi' }}</div>
+                                <div>{{ $user->address ?? 'Alamat belum diisi' }}</div>
                             </div>
                         </div>
 
@@ -174,11 +173,10 @@
                         <div class="card">
                             <div class="section-title">Pendidikan</div>
                             <div class="section-body">
-                                <strong>SMK MUTU Cikampek</strong><br>
-                                {{ $user->student?->major ?? 'Jurusan belum diisi' }}<br>
-                                {{ $user->student?->graduation_year ? 'Lulus ' . $user->student?->graduation_year : 'Tahun lulus belum diisi' }}
-                                @if($user->student && $user->student->education_history)
-                                    <br><br>{!! nl2br(e($user->student->education_history)) !!}
+                                @if(!empty($user->education_history))
+                                    {!! nl2br(e($user->education_history)) !!}
+                                @else
+                                    Riwayat pendidikan belum diisi.
                                 @endif
                             </div>
                         </div>

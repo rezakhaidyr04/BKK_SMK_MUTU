@@ -33,8 +33,7 @@
                     <select name="role" required class="ui-select">
                         <option value="admin"   {{ old('role', $user->role) == 'admin'   ? 'selected' : '' }}>Admin</option>
                         <option value="company" {{ old('role', $user->role) == 'company' ? 'selected' : '' }}>Perusahaan</option>
-                        <option value="jobseeker" {{ old('role', $user->role) == 'jobseeker' ? 'selected' : '' }}>Pencari Kerja</option>
-                        <option value="teacher" {{ old('role', $user->role) == 'teacher' ? 'selected' : '' }}>Guru</option>
+                        <option value="umum" {{ old('role', $user->role) == 'umum' ? 'selected' : '' }}>Pengguna Umum</option>
                     </select>
                 </div>
                 <div class="grid gap-4 md:grid-cols-2">

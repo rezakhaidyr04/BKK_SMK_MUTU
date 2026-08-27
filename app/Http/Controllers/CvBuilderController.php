@@ -13,7 +13,7 @@ class CvBuilderController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $user->load(['student', 'skills', 'certificates']);
+        $user->load(['skills', 'certificates']);
 
         $previewData = $this->buildPreviewData($user);
         
@@ -62,20 +62,20 @@ class CvBuilderController extends Controller
 
         return [
             'name' => $user->name,
-            'headline' => $user->student?->major ?: 'Pencari kerja siap berkembang',
+            'headline' => $user->preferred_position ?: 'Pencari kerja siap berkembang',
             'summary' => $user->bio ?: 'Ringkasan belum diisi. Gunakan area ini untuk memperkenalkan diri, keahlian utama, dan target karir yang kamu kejar.',
             'phone' => $user->phone ?: '08xxxxxxxxxx',
             'email' => $user->email,
-            'address' => $user->student?->address ?: 'Cikampek, Jawa Barat',
-            'linkedin_url' => $user->student?->linkedin_url ?? null,
-            'portfolio_url' => $user->student?->portfolio_url ?? null,
-            'preferred_position' => $user->student?->preferred_position ?: 'Posisi yang diinginkan belum diisi',
-            'target_position' => $user->student?->preferred_position ?: '',
+            'address' => $user->address ?: 'Cikampek, Jawa Barat',
+            'linkedin_url' => $user->linkedin_url ?? null,
+            'portfolio_url' => $user->portfolio_url ?? null,
+            'preferred_position' => $user->preferred_position ?: 'Posisi yang diinginkan belum diisi',
+            'target_position' => $user->preferred_position ?: '',
             'education' => [
-                'school' => $user->student?->education_history ? 'Lihat riwayat pendidikan' : 'Sekolah atau pendidikan terakhir belum diisi',
-                'major' => $user->student?->major ?: 'Bidang studi atau keahlian belum diisi',
-                'year' => $user->student?->graduation_year ?: 'Tahun lulus belum diisi',
-                'history' => $user->student?->education_history ?: 'Riwayat pendidikan belum diisi',
+                'school' => $user->education_history ? 'Lihat riwayat pendidikan' : 'Sekolah atau pendidikan terakhir belum diisi',
+                'major' => 'Bidang studi atau keahlian belum diisi',
+                'year' => null,
+                'history' => $user->education_history ?: 'Riwayat pendidikan belum diisi',
             ],
             'skills' => !empty($skills) ? $skills : [
                 'Komunikasi',
@@ -83,7 +83,7 @@ class CvBuilderController extends Controller
                 'Microsoft Office',
                 'Problem solving',
             ],
-            'experience' => $user->student?->experience_organization ?: "- Magang atau proyek sekolah\n- Kegiatan organisasi\n- Tugas atau pencapaian relevan",
+            'experience' => $user->experience_organization ?: "- Magang atau proyek kerja\n- Kegiatan organisasi\n- Tugas atau pencapaian relevan",
             'certificates' => !empty($certificates) ? $certificates : [
                 'Belum ada sertifikat ditambahkan',
             ],
