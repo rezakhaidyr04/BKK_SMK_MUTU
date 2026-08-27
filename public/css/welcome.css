@@ -223,10 +223,11 @@ a:focus-visible { outline: 2px solid #60a5fa; outline-offset: 3px; }
    ============================================================ */
 section.hero {
     position: relative;
-    min-height: 680px;
-    padding-top: calc(var(--navbar-h) + 50px);
-    padding-bottom: 60px;
+    padding-top: calc(var(--navbar-h) + 40px);
+    padding-bottom: 0;
     overflow: hidden;
+    /* Tinggi hero eksplisit supaya foto bisa mengisi dari atas sampai bawah */
+    min-height: 540px;
     background:
         radial-gradient(ellipse 70% 90% at 75% 48%, rgba(37,99,235,.42), transparent 68%),
         linear-gradient(120deg, #071733 0%, #0b2454 42%, #173d91 100%);
@@ -274,10 +275,10 @@ section.hero {
     position: relative;
     z-index: 2;
     display: grid;
-    grid-template-columns: 1fr 520px;
+    grid-template-columns: 1fr 560px;
     align-items: center;
-    gap: 48px;
-    min-height: 560px;
+    gap: 32px;
+    min-height: 500px;
 }
 
 /* Kolom kiri */
@@ -285,6 +286,9 @@ section.hero {
     display: flex;
     flex-direction: column;
     gap: 0;
+    justify-content: center;
+    padding-top: 0;
+    padding-bottom: 48px;
 }
 
 .hero-badge {
@@ -321,6 +325,10 @@ section.hero {
     max-width: 520px;
 }
 
+/* Stats & info — disembunyikan di hero, sudah ada di stats-section & blue-banner */
+.hero-stats,
+.hero-info { display: none !important; }
+
 /* CTA buttons */
 .hero-cta {
     display: flex;
@@ -355,76 +363,53 @@ section.hero {
 }
 .hero-cta .btn-outline:hover { background: rgba(255,255,255,.16); }
 
-/* Stats kecil */
-.hero-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px 36px;
-    margin-bottom: 28px;
-    padding-top: 4px;
-    border-top: 1px solid rgba(255,255,255,.10);
-}
-.hero-stat { display: flex; flex-direction: column; gap: 2px; }
-.hero-stat-number { color: #fff; font-size: 1.5rem; font-weight: 800; line-height: 1; }
-.hero-stat-label  { color: rgba(255,255,255,.55); font-size: .73rem; font-weight: 500; }
-
-/* Info items */
-.hero-info { display: flex; flex-direction: column; gap: 9px; }
-.hero-info-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: rgba(255,255,255,.65);
-    font-size: .83rem;
-    font-weight: 500;
-}
-
 /* ============================================================
    7. HERO VISUAL — foto + floating cards
    ============================================================ */
 
 /*
    Kolom kanan: .hero-visual
-   Kita beri padding-right supaya floating card tidak terpotong.
-   Floating card keluar ke kanan, tidak menimpa foto.
+   padding-right = ruang untuk floating cards di sebelah kanan foto
 */
 .hero-visual {
     position: relative;
-    /* Ruang untuk floating card di sebelah kanan foto */
-    padding-right: 220px;
+    padding-right: 210px;
     display: flex;
     align-items: flex-end;
     justify-content: center;
+    /* Tinggi pas dari atas hero sampai batas bawah */
+    height: calc(500px + 40px);   /* min-height hero-inner + padding-top hero */
+    margin-bottom: 0;
 }
 
 /*
    .hero-image = anchor untuk floating card
-   HARUS position:relative & overflow:visible
+   overflow:visible agar kartu boleh keluar ke kanan
 */
 .hero-image {
     position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    width: 100%;
-    min-height: 520px;
-    overflow: visible;          /* penting: kartu boleh keluar area */
 }
 
-/* Foto siswa */
+/* Foto siswa — kaki TEPAT di batas bawah hero */
 .hero-image picture { display: contents; }
 .hero-image img {
     display: block;
     width: auto;
-    height: auto;
-    max-width: 340px;
-    max-height: 520px;
+    /* Isi tinggi penuh container, kaki di bawah */
+    height: 100%;
+    max-width: 420px;
+    max-height: 100%;
     object-fit: contain;
     object-position: bottom center;
     position: relative;
     z-index: 2;
-    /* sedikit drop shadow agar terpisah dari background */
-    filter: drop-shadow(0 20px 40px rgba(0,0,0,.25));
+    filter: drop-shadow(0 16px 32px rgba(0,0,0,.22));
 }
 
 /* ============================================================
@@ -454,22 +439,22 @@ section.hero {
 
 /* Kartu 1 — kanan atas */
 .floating-card-1 {
-    top: 6%;
-    right: -210px;
+    top: 12%;
+    right: -200px;
     left: auto;
     bottom: auto;
 }
 /* Kartu 2 — kanan tengah */
 .floating-card-2 {
-    top: 42%;
-    right: -210px;
+    top: 44%;
+    right: -200px;
     left: auto;
     bottom: auto;
 }
 /* Kartu 3 — kanan bawah */
 .floating-card-3 {
-    bottom: 10%;
-    right: -210px;
+    bottom: 18%;
+    right: -200px;
     left: auto;
     top: auto;
 }
@@ -795,18 +780,18 @@ footer a:hover { color: #fff !important; }
    19. RESPONSIVE — 1280px
    ============================================================ */
 @media (max-width: 1280px) {
-    .hero-inner { grid-template-columns: 1fr 460px; }
+    .hero-inner { grid-template-columns: 1fr 500px; }
     .hero-visual { padding-right: 195px; }
     .floating-card-1,
     .floating-card-2,
-    .floating-card-3 { right: -190px; }
+    .floating-card-3 { right: -185px; }
 }
 
 /* ============================================================
    20. RESPONSIVE — 1100px
    ============================================================ */
 @media (max-width: 1100px) {
-    .hero-inner { grid-template-columns: 1fr 400px; gap: 32px; }
+    .hero-inner { grid-template-columns: 1fr 420px; gap: 24px; }
     .hero-visual { padding-right: 175px; }
     .floating-card { width: 185px; }
     .floating-card-1,
@@ -819,28 +804,32 @@ footer a:hover { color: #fff !important; }
    21. RESPONSIVE — 1024px (single column)
    ============================================================ */
 @media (max-width: 1024px) {
-    section.hero { min-height: auto; padding-bottom: 40px; }
+    section.hero { padding-bottom: 0; }
 
     .hero-inner {
         grid-template-columns: 1fr;
         text-align: center;
+        gap: 24px;
         min-height: auto;
-        gap: 32px;
+        max-height: none;
+        align-items: center;
     }
-    .hero-content { align-items: center; }
+    .hero-content {
+        align-items: center;
+        padding-bottom: 0;
+        justify-content: flex-start;
+    }
     .hero-badge   { margin-left: auto; margin-right: auto; }
     .hero-desc    { text-align: center; margin-left: auto; margin-right: auto; }
     .hero-cta     { justify-content: center; }
-    .hero-stats   { justify-content: center; }
-    .hero-info    { align-items: center; }
 
-    /* Visual tetap ada, tapi lebih kecil */
     .hero-visual {
         padding-right: 160px;
         justify-content: center;
+        height: auto;
     }
-    .hero-image { min-height: 440px; }
-    .hero-image img { max-width: 300px; max-height: 440px; }
+    .hero-image { height: auto; min-height: 400px; }
+    .hero-image img { height: auto; max-width: 300px; max-height: 400px; }
     .floating-card { width: 170px; min-height: 56px; padding: 9px 12px; gap: 8px; }
     .floating-card-1,
     .floating-card-2,
@@ -858,17 +847,17 @@ footer a:hover { color: #fff !important; }
     :root { --navbar-h: 66px; }
 
     section.hero {
-        padding-top: calc(66px + 28px);
-        padding-bottom: 32px;
+        padding-top: calc(66px + 16px);
+        padding-bottom: 0;
     }
 
     .hero-title { font-size: clamp(2rem, 8vw, 2.8rem) !important; }
     .hero-desc  { font-size: .95rem !important; }
     .hero-cta .btn { padding: 12px 22px; font-size: .9rem; }
 
-    .hero-visual { padding-right: 120px; }
-    .hero-image  { min-height: 380px; }
-    .hero-image img { max-width: 260px; max-height: 380px; }
+    .hero-visual { padding-right: 120px; height: auto; }
+    .hero-image  { min-height: 300px; height: auto; }
+    .hero-image img { height: auto; max-width: 240px; max-height: 300px; }
     .floating-card { width: 148px; min-height: 50px; padding: 8px 10px; gap: 7px; border-radius: 12px; }
     .floating-card-1,
     .floating-card-2,
