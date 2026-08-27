@@ -1,4 +1,4 @@
-<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-hero 
             title="{{ $job->title }}" 
@@ -72,7 +72,7 @@
                                     Rp {{ number_format($job->salary_min, 0, ',', '.') }} - {{ number_format($job->salary_max, 0, ',', '.') }}
                                 </span>
                                 @endif
-                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-purple-50 text-purple-700 rounded-full text-sm font-medium">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-violet-50 text-violet-700 rounded-full text-sm font-medium">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                     {{ \App\Support\Label::jobType($job->job_type) }}
                                 </span>
@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                                 <div class="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-center gap-4 hover:shadow-md transition-shadow">
-                                    <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-lg flex items-center justify-center">
+                                    <div class="w-12 h-12 bg-violet-100 text-violet-500 rounded-lg flex items-center justify-center">
                                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg>
                                     </div>
                                     <div>
@@ -112,7 +112,7 @@
                                     </div>
                                 </div>
                                 <div class="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-center gap-4 hover:shadow-md transition-shadow">
-                                    <div class="w-12 h-12 bg-orange-100 text-orange-500 rounded-lg flex items-center justify-center">
+                                    <div class="w-12 h-12 bg-amber-100 text-amber-500 rounded-lg flex items-center justify-center">
                                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
                                     </div>
                                     <div>

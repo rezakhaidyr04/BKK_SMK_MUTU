@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ mobileMenuOpen: false }">
 <head>
     <meta charset="utf-8">
@@ -172,7 +172,7 @@
                             <!-- Floating Card 2 -->
                             <div class="floating-card floating-card-2">
                                 <div class="floating-card-icon green">
-                                    <svg width="16" height="16" fill="none" stroke="#059669" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    <svg width="16" height="16" fill="none" stroke="#16a34a" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                                 </div>
                                 <span class="floating-card-text">CV ATS Profesional</span>
                             </div>
@@ -244,29 +244,13 @@
         <section class="partners-section">
             <div class="container">
                 <p class="partners-label">Didukung jaringan perusahaan mitra untuk membuka lebih banyak peluang kerja.</p>
-                <div class="partner-ticker-wrap">
-                    <div class="partner-ticker">
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#0066cc;">Telkom</span><span class="partner-logo-sub">Indonesia</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#e85d00;">Indofood</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#cc0000;font-style:italic;">Honda</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#1a1a8c;letter-spacing:2px;">YAMAHA</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#e60012;">Mitsubishi</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#003087;">BRI</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#0066b3;">BCA</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#eb0a1e;letter-spacing:1px;">TOYOTA</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#00529b;">Astra</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#ff6600;">Pertamina</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#0066cc;">Telkom</span><span class="partner-logo-sub">Indonesia</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#e85d00;">Indofood</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#cc0000;font-style:italic;">Honda</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#1a1a8c;letter-spacing:2px;">YAMAHA</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#e60012;">Mitsubishi</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#003087;">BRI</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#0066b3;">BCA</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#eb0a1e;letter-spacing:1px;">TOYOTA</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#00529b;">Astra</span></div>
-                        <div class="partner-logo-card"><span class="partner-logo-text" style="color:#ff6600;">Pertamina</span></div>
-                    </div>
+                <div class="partner-image-wrap">
+                    <img
+                        src="{{ asset('images/perusahaan/perusahaan.webp') }}"
+                        alt="Perusahaan mitra BKK SMK MUTU"
+                        class="partner-image"
+                        loading="lazy"
+                    >
                 </div>
             </div>
         </section>
@@ -374,7 +358,7 @@
                         </div>
                         <p class="testimonial-text">"Fitur pembuat CV-nya luar biasa! CV saya sekarang ramah ATS dan banyak perusahaan yang menghubungi. Terima kasih BKK SMK MUTU!"</p>
                         <div class="testimonial-author">
-                            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">SP</div>
+                            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #16a34a, #16a34a);">SP</div>
                             <div>
                                 <span class="testimonial-name">Siti Permata</span>
                                 <span class="testimonial-role">Admin Staff @ PT Maju Bersama</span>
@@ -574,7 +558,7 @@
                     <div class="job-carousel-track" x-show="jobsLoaded">
                         @foreach($jobs->take(4) as $index => $job)
                         @php
-                            $colors = ['#2563eb', '#0d9488', '#ef4444', '#eab308'];
+                            $colors = ['#2563eb', '#15803d', '#ef4444', '#eab308'];
                             $bgColor = $colors[$index % 4];
                         @endphp
                         <article class="job-card">
@@ -663,7 +647,7 @@
                         <article class="job-card">
                             <div class="job-card-top">
                                 <div class="job-card-company">
-                                    <div class="job-card-logo" style="background:#0d9488;">T</div>
+                                    <div class="job-card-logo" style="background:#15803d;">T</div>
                                     <div>
                                         <h3 class="job-card-title">Junior Web Developer</h3>
                                         <p class="job-card-company-name">PT Teknologi Nusantara</p>

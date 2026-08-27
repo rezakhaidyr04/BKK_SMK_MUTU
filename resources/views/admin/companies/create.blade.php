@@ -1,4 +1,4 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
         <x-ui.page-header title="Tambah Perusahaan" subtitle="Tambahkan data perusahaan mitra baru. Akun login dibuat setelah perusahaan disetujui.">
             <x-slot:actions>
@@ -23,9 +23,9 @@
 
                 {{-- ── Informasi Perusahaan ──────────────────────────── --}}
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-indigo-50 to-purple-50">
+                    <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-violet-50">
                         <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 bg-indigo-600 rounded-xl flex items-center justify-center">
+                            <div class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center">
                                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                                 </svg>
@@ -45,7 +45,7 @@
                             </label>
                             <input type="text" id="name" name="name" value="{{ old('name') }}" required
                                    placeholder="PT. Contoh Indonesia"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition {{ $errors->has('name') ? 'border-red-400 bg-red-50' : '' }}">
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition {{ $errors->has('name') ? 'border-red-400 bg-red-50' : '' }}">
                         </div>
 
                         {{-- Industri --}}
@@ -53,7 +53,7 @@
                             <label for="industry" class="block text-sm font-semibold text-gray-700 mb-2">Industri</label>
                             <input type="text" id="industry" name="industry" value="{{ old('industry') }}"
                                    placeholder="Manufaktur, Teknologi, dll."
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                         </div>
 
                         {{-- Website --}}
@@ -61,7 +61,7 @@
                             <label for="website" class="block text-sm font-semibold text-gray-700 mb-2">Website</label>
                             <input type="url" id="website" name="website" value="{{ old('website') }}"
                                    placeholder="https://contoh.com"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                         </div>
 
                         {{-- Email --}}
@@ -69,7 +69,7 @@
                             <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Perusahaan</label>
                             <input type="email" id="email" name="email" value="{{ old('email') }}"
                                    placeholder="hrd@contoh.com"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                             <p class="text-xs text-gray-400 mt-1">Email ini akan digunakan sebagai login akun perusahaan.</p>
                         </div>
 
@@ -78,7 +78,7 @@
                             <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Nomor Telepon</label>
                             <input type="text" id="phone" name="phone" value="{{ old('phone') }}"
                                    placeholder="021-12345678"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                         </div>
 
                         {{-- Alamat --}}
@@ -86,7 +86,7 @@
                             <label for="address" class="block text-sm font-semibold text-gray-700 mb-2">Alamat</label>
                             <input type="text" id="address" name="address" value="{{ old('address') }}"
                                    placeholder="Jl. Contoh No. 1, Kota"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                         </div>
 
 
@@ -95,16 +95,16 @@
                             <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">Deskripsi Perusahaan</label>
                             <textarea id="description" name="description" rows="4"
                                       placeholder="Ceritakan tentang perusahaan ini..."
-                                      class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-none">{{ old('description') }}</textarea>
+                                      class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none">{{ old('description') }}</textarea>
                         </div>
                     </div>
                 </div>
 
                 {{-- ── Surat MoU ──────────────────────────────────────── --}}
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-teal-50">
+                    <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-green-50 to-green-50">
                         <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center">
+                            <div class="w-9 h-9 bg-green-600 rounded-xl flex items-center justify-center">
                                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                 </svg>
@@ -120,7 +120,7 @@
                         {{-- Upload MoU --}}
                         <div class="md:col-span-2">
                             <label for="mou_path" class="block text-sm font-semibold text-gray-700 mb-2">File MoU</label>
-                            <div class="relative border-2 border-dashed border-gray-200 rounded-xl p-6 hover:border-emerald-400 transition cursor-pointer"
+                            <div class="relative border-2 border-dashed border-gray-200 rounded-xl p-6 hover:border-green-400 transition cursor-pointer"
                                  onclick="document.getElementById('mou_path').click()">
                                 <div class="text-center">
                                     <svg class="mx-auto w-10 h-10 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,7 +128,7 @@
                                     </svg>
                                     <p class="text-sm text-gray-500 mb-1">Klik untuk upload atau drag & drop</p>
                                     <p class="text-xs text-gray-400">PDF, JPG, PNG — maks. 10 MB</p>
-                                    <p id="mou_file_name" class="mt-2 text-sm font-medium text-emerald-600 hidden"></p>
+                                    <p id="mou_file_name" class="mt-2 text-sm font-medium text-green-600 hidden"></p>
                                 </div>
                                 <input type="file" id="mou_path" name="mou_path"
                                        accept=".pdf,.jpg,.jpeg,.png"
@@ -145,21 +145,21 @@
                             <label for="mou_number" class="block text-sm font-semibold text-gray-700 mb-2">Nomor MoU</label>
                             <input type="text" id="mou_number" name="mou_number" value="{{ old('mou_number') }}"
                                    placeholder="MOU/BKK/2024/001"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition">
                         </div>
 
                         {{-- Tanggal Berlaku --}}
                         <div>
                             <label for="mou_signed_at" class="block text-sm font-semibold text-gray-700 mb-2">Tanggal Ditandatangani</label>
                             <input type="date" id="mou_signed_at" name="mou_signed_at" value="{{ old('mou_signed_at') }}"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition">
                         </div>
 
                         {{-- Tanggal Berakhir --}}
                         <div>
                             <label for="mou_expires_at" class="block text-sm font-semibold text-gray-700 mb-2">Tanggal Berakhir</label>
                             <input type="date" id="mou_expires_at" name="mou_expires_at" value="{{ old('mou_expires_at') }}"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition">
                         </div>
                     </div>
                 </div>
@@ -187,7 +187,7 @@
                         Batal
                     </a>
                     <button type="submit"
-                            class="inline-flex items-center gap-2 px-8 py-3 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/30">
+                            class="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-500/30">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>

@@ -1,4 +1,4 @@
-<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-hero 
             title="Detail Lamaran" 
@@ -12,7 +12,7 @@
                 $statusConfig = [
                     'submitted' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-700', 'label' => 'Terkirim'],
                     'under_review' => ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-700', 'label' => 'Ditinjau'],
-                    'interviewed' => ['bg' => 'bg-purple-100', 'text' => 'text-purple-700', 'label' => 'Wawancara'],
+                    'interviewed' => ['bg' => 'bg-violet-100', 'text' => 'text-violet-700', 'label' => 'Wawancara'],
                     'accepted' => ['bg' => 'bg-green-100', 'text' => 'text-green-700', 'label' => 'Diterima'],
                     'rejected' => ['bg' => 'bg-red-100', 'text' => 'text-red-700', 'label' => 'Ditolak'],
                 ];
@@ -65,9 +65,9 @@
 
                     {{-- Info Jadwal Wawancara --}}
                     @if($application->interview_date)
-                    <div class="rounded-xl border border-purple-200 bg-purple-50 p-6 shadow-sm">
-                        <h2 class="text-lg font-bold text-purple-900 mb-4 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="rounded-xl border border-violet-200 bg-violet-50 p-6 shadow-sm">
+                        <h2 class="text-lg font-bold text-violet-900 mb-4 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
@@ -75,20 +75,20 @@
                         </h2>
                         <dl class="space-y-3 text-sm">
                             <div class="flex items-start gap-3">
-                                <dt class="text-purple-600 font-semibold w-28 flex-shrink-0">Tanggal</dt>
-                                <dd class="text-purple-900 font-bold">
+                                <dt class="text-violet-600 font-semibold w-28 flex-shrink-0">Tanggal</dt>
+                                <dd class="text-violet-900 font-bold">
                                     {{ $application->interview_date->locale('id')->translatedFormat('l, d F Y') }}
                                 </dd>
                             </div>
                             <div class="flex items-start gap-3">
-                                <dt class="text-purple-600 font-semibold w-28 flex-shrink-0">Jam</dt>
-                                <dd class="text-purple-900 font-bold">
+                                <dt class="text-violet-600 font-semibold w-28 flex-shrink-0">Jam</dt>
+                                <dd class="text-violet-900 font-bold">
                                     {{ $application->interview_date->format('H:i') }} WIB
                                 </dd>
                             </div>
                             <div class="flex items-start gap-3">
-                                <dt class="text-purple-600 font-semibold w-28 flex-shrink-0">Tipe</dt>
-                                <dd class="text-purple-900">
+                                <dt class="text-violet-600 font-semibold w-28 flex-shrink-0">Tipe</dt>
+                                <dd class="text-violet-900">
                                     @if($application->interview_type === 'online')
                                         <span class="inline-flex items-center gap-1 font-semibold">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
@@ -104,7 +104,7 @@
                             </div>
                             @if($application->interview_type === 'online' && $application->interview_link)
                             <div class="flex items-start gap-3">
-                                <dt class="text-purple-600 font-semibold w-28 flex-shrink-0">Link Meeting</dt>
+                                <dt class="text-violet-600 font-semibold w-28 flex-shrink-0">Link Meeting</dt>
                                 <dd>
                                     <a href="{{ $application->interview_link }}" target="_blank"
                                        class="inline-flex items-center gap-1 text-blue-600 hover:underline break-all font-medium">
@@ -116,18 +116,18 @@
                             @endif
                             @if($application->interview_type === 'offline' && $application->interview_location)
                             <div class="flex items-start gap-3">
-                                <dt class="text-purple-600 font-semibold w-28 flex-shrink-0">Lokasi</dt>
-                                <dd class="text-purple-900">{{ $application->interview_location }}</dd>
+                                <dt class="text-violet-600 font-semibold w-28 flex-shrink-0">Lokasi</dt>
+                                <dd class="text-violet-900">{{ $application->interview_location }}</dd>
                             </div>
                             @endif
                             @if($application->interview_notes)
                             <div class="flex items-start gap-3">
-                                <dt class="text-purple-600 font-semibold w-28 flex-shrink-0">Catatan</dt>
-                                <dd class="text-purple-900 whitespace-pre-wrap">{{ $application->interview_notes }}</dd>
+                                <dt class="text-violet-600 font-semibold w-28 flex-shrink-0">Catatan</dt>
+                                <dd class="text-violet-900 whitespace-pre-wrap">{{ $application->interview_notes }}</dd>
                             </div>
                             @endif
                         </dl>
-                        <div class="mt-4 p-3 bg-white rounded-lg border border-purple-200 text-xs text-purple-700">
+                        <div class="mt-4 p-3 bg-white rounded-lg border border-violet-200 text-xs text-violet-700">
                             Hadir tepat waktu, bawa dokumen pendukung (CV, KTP, Ijazah), dan berpakaian rapi.
                         </div>
                     </div>

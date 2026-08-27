@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('content')
 <style>
@@ -64,7 +64,7 @@
         letter-spacing: 0.05em;
     }
     .badge-pending { background: #fef3c7; color: #92400e; }
-    .badge-verified { background: #d1fae5; color: #065f46; }
+    .badge-verified { background: #dcfce7; color: #065f46; }
     .badge-rejected { background: #fee2e2; color: #991b1b; }
     .badge-not_submitted { background: #f1f5f9; color: #475569; }
     .doc-preview-link {
@@ -105,7 +105,7 @@
         justify-content: center;
         gap: 0.375rem;
         padding: 0.5rem 1.25rem;
-        background: linear-gradient(135deg, #059669, #047857);
+        background: linear-gradient(135deg, #16a34a, #047857);
         color: white;
         border: none;
         border-radius: 10px;
@@ -121,7 +121,7 @@
 <div style="max-width: 64rem; margin: 0 auto; padding: 2rem 1rem;">
 
     @if (session('success'))
-        <div style="margin-bottom: 1rem; border-radius: 12px; background: #d1fae5; border: 1px solid #6ee7b7; padding: 0.875rem 1rem; font-size: 0.875rem; color: #065f46; font-weight: 500;">
+        <div style="margin-bottom: 1rem; border-radius: 12px; background: #dcfce7; border: 1px solid #86efac; padding: 0.875rem 1rem; font-size: 0.875rem; color: #065f46; font-weight: 500;">
             Berhasil: {{ session('success') }}
         </div>
     @endif
@@ -260,8 +260,8 @@
         @endif
 
         @if($company->is_verified ?? false)
-            <div style="border-radius: 12px; background: #d1fae5; border: 1px solid #6ee7b7; padding: 1rem; display: flex; align-items: center; gap: 0.75rem;">
-                <svg style="width:1.5rem;height:1.5rem;color:#059669;flex-shrink:0;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <div style="border-radius: 12px; background: #dcfce7; border: 1px solid #86efac; padding: 1rem; display: flex; align-items: center; gap: 0.75rem;">
+                <svg style="width:1.5rem;height:1.5rem;color:#16a34a;flex-shrink:0;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <p style="font-size:0.875rem; font-weight:600; color:#065f46; margin:0;">Perusahaan Anda sudah terverifikasi. Semua fitur perekrutan telah aktif.</p>
             </div>
         @else

@@ -1,4 +1,4 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
         <x-ui.page-header title="Buat Pengguna Baru" subtitle="Tambahkan akun pengguna baru ke sistem.">
             <x-slot:actions>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="flex items-center gap-2 py-2">
                     <input type="checkbox" id="is_active" name="is_active" value="1" checked
-                           class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                           class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
                     <label for="is_active" class="text-sm text-slate-700">Aktifkan akun langsung</label>
                 </div>
                 <div class="flex items-center justify-between pt-4 border-t border-slate-100">

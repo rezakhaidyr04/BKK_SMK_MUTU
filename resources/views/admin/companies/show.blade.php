@@ -1,4 +1,4 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
         <x-ui.page-header title="Detail Perusahaan" subtitle="{{ $company->name }}">
             <x-slot:actions>
@@ -22,8 +22,8 @@
 
             {{-- Flash Messages --}}
             @if(session('success'))
-            <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl flex items-center gap-3">
-                <svg class="w-5 h-5 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 rounded-2xl flex items-center gap-3">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 {{ session('success') }}
@@ -78,8 +78,8 @@
 
                     {{-- Identitas --}}
                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                        <div class="p-6 text-center border-b border-gray-100 bg-gradient-to-br from-indigo-50 to-purple-50">
-                            <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold mb-3">
+                        <div class="p-6 text-center border-b border-gray-100 bg-gradient-to-br from-blue-50 to-violet-50">
+                            <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-white text-2xl font-bold mb-3">
                                 {{ substr($company->name, 0, 1) }}
                             </div>
                             <h3 class="font-bold text-gray-900 text-lg">{{ $company->name }}</h3>
@@ -134,7 +134,7 @@
                                 </div>
                                 <div class="flex justify-between">
                                     <span>Total Lowongan</span>
-                                    <span class="font-bold text-indigo-600">{{ $company->jobs->count() }}</span>
+                                    <span class="font-bold text-blue-600">{{ $company->jobs->count() }}</span>
                                 </div>
                                 @if($company->reviewed_at)
                                 <div class="flex justify-between">
@@ -161,7 +161,7 @@
                             @csrf
                             <button type="submit"
                                     onclick="return confirm('Setujui verifikasi {{ addslashes($company->name) }}?')"
-                                    class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-600 text-white text-sm font-semibold rounded-xl hover:bg-emerald-700 transition">
+                                    class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-green-600 text-white text-sm font-semibold rounded-xl hover:bg-green-700 transition">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
@@ -193,8 +193,8 @@
 
                     {{-- ── Buat Akun Perusahaan (Phase 3) ── --}}
                     @if($company->isApproved() && !$company->hasUserAccount())
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-indigo-200">
-                        <div class="px-5 py-3 bg-gradient-to-r from-indigo-600 to-purple-600">
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-blue-200">
+                        <div class="px-5 py-3 bg-gradient-to-r from-blue-600 to-violet-600">
                             <div class="flex items-center gap-2">
                                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
@@ -211,7 +211,7 @@
                                        value="{{ old('email', $company->email) }}"
                                        placeholder="hrd@perusahaan.com"
                                        required
-                                       class="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition {{ $errors->has('email') ? 'border-red-400' : '' }}">
+                                       class="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition {{ $errors->has('email') ? 'border-red-400' : '' }}">
                                 @error('email')
                                 <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
                                 @enderror
@@ -219,7 +219,7 @@
                             </div>
                             <button type="submit"
                                     onclick="return confirm('Buat akun login untuk {{ addslashes($company->name) }}?\n\nPassword sementara akan ditampilkan SEKALI. Pastikan Anda siap mencatatnya.')"
-                                    class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700 transition">
+                                    class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                 </svg>
@@ -228,15 +228,15 @@
                         </form>
                     </div>
                     @elseif($company->hasUserAccount())
-                    <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4">
+                    <div class="bg-green-50 border border-green-200 rounded-2xl p-4">
                         <div class="flex items-center gap-2 mb-1">
-                            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
-                            <p class="text-xs font-bold text-emerald-800">Akun Sudah Ada</p>
+                            <p class="text-xs font-bold text-green-800">Akun Sudah Ada</p>
                         </div>
-                        <p class="text-xs text-emerald-700">{{ optional($company->user)->email }}</p>
-                        <p class="text-xs text-emerald-600 mt-1">
+                        <p class="text-xs text-green-700">{{ optional($company->user)->email }}</p>
+                        <p class="text-xs text-green-600 mt-1">
                             @if(optional($company->user)->must_change_password)
                                 Status: Belum ganti password
                             @else
@@ -265,9 +265,9 @@
 
                     {{-- Surat MoU --}}
                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                        <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-teal-50 flex items-center justify-between">
+                        <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-green-50 to-green-50 flex items-center justify-between">
                             <div class="flex items-center gap-3">
-                                <div class="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center">
+                                <div class="w-9 h-9 bg-green-600 rounded-xl flex items-center justify-center">
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                     </svg>
@@ -276,7 +276,7 @@
                             </div>
                             @if($company->mou_path)
                             <a href="{{ route('admin.companies.mou.download', $company) }}"
-                               class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white text-sm font-semibold rounded-xl hover:bg-emerald-700 transition">
+                               class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-xl hover:bg-green-700 transition">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                 </svg>
@@ -288,14 +288,14 @@
                         <div class="p-6">
                             @if($company->mou_path)
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-4 text-center">
-                                    <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-2">
-                                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="bg-green-50 border border-green-100 rounded-xl p-4 text-center">
+                                    <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-2">
+                                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
                                     </div>
                                     <p class="text-xs text-gray-500">Status File</p>
-                                    <p class="font-bold text-emerald-700 text-sm mt-1">File Tersedia</p>
+                                    <p class="font-bold text-green-700 text-sm mt-1">File Tersedia</p>
                                 </div>
 
                                 @if($company->mou_number)
@@ -344,7 +344,7 @@
                                 </svg>
                                 <p class="text-sm text-gray-400">Belum ada file MoU yang diunggah.</p>
                                 <a href="{{ route('admin.companies.edit', $company) }}"
-                                   class="mt-3 inline-flex items-center gap-1.5 text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                                   class="mt-3 inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 font-medium">
                                     Upload MoU via Edit →
                                 </a>
                             </div>
@@ -365,14 +365,14 @@
                             <div class="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg">
                                 <span class="text-sm text-gray-700">Izin Usaha (SIUP)</span>
                                 <a href="{{ route('admin.companies.documents.download', [$company, 'business-license']) }}"
-                                   class="text-xs text-indigo-600 font-semibold hover:underline">Lihat →</a>
+                                   class="text-xs text-blue-600 font-semibold hover:underline">Lihat →</a>
                             </div>
                             @endif
                             @if($company->operating_license_path)
                             <div class="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg">
                                 <span class="text-sm text-gray-700">Izin Operasional</span>
                                 <a href="{{ route('admin.companies.documents.download', [$company, 'operating-license']) }}"
-                                   class="text-xs text-indigo-600 font-semibold hover:underline">Lihat →</a>
+                                   class="text-xs text-blue-600 font-semibold hover:underline">Lihat →</a>
                             </div>
                             @endif
                         </div>
@@ -392,7 +392,7 @@
                                         <p class="font-semibold text-gray-900">{{ $job->title }}</p>
                                         <p class="text-xs text-gray-500 mt-0.5">{{ \App\Support\Label::jobStatus($job->status) }} · {{ $job->location }}</p>
                                     </div>
-                                    <a href="{{ route('admin.jobs.show', $job) }}" class="text-xs text-indigo-600 font-semibold hover:underline flex-shrink-0">Detail</a>
+                                    <a href="{{ route('admin.jobs.show', $job) }}" class="text-xs text-blue-600 font-semibold hover:underline flex-shrink-0">Detail</a>
                                 </div>
                                 @if($job->description)
                                 <p class="text-xs text-gray-400 mt-2 line-clamp-2">{{ \Illuminate\Support\Str::limit($job->description, 100) }}</p>
@@ -454,10 +454,10 @@
             if (btn) {
                 const orig = btn.textContent;
                 btn.textContent = 'Tersalin ✓';
-                btn.classList.add('text-emerald-600');
+                btn.classList.add('text-green-600');
                 setTimeout(() => {
                     btn.textContent = orig;
-                    btn.classList.remove('text-emerald-600');
+                    btn.classList.remove('text-green-600');
                 }, 2000);
             }
         }).catch(() => {

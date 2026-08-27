@@ -1,4 +1,4 @@
-<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-hero title="Acara Saya" subtitle="Acara yang kamu daftarkan.">
             <x-slot:actions>
@@ -19,7 +19,7 @@
             @php
                 $event = $reg->event;
                 $isPast = $event->start_time->isPast();
-                $typeColors = ['job_fair'=>'bg-blue-100 text-blue-700','seminar'=>'bg-purple-100 text-purple-700','workshop'=>'bg-orange-100 text-orange-700','pelatihan'=>'bg-green-100 text-green-700','lainnya'=>'bg-gray-100 text-gray-700'];
+                $typeColors = ['job_fair'=>'bg-blue-100 text-blue-700','seminar'=>'bg-violet-100 text-violet-700','workshop'=>'bg-amber-100 text-amber-700','pelatihan'=>'bg-green-100 text-green-700','lainnya'=>'bg-gray-100 text-gray-700'];
                 $typeLabels = ['job_fair'=>'Job Fair','seminar'=>'Seminar','workshop'=>'Workshop','pelatihan'=>'Pelatihan','lainnya'=>'Lainnya'];
             @endphp
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-4 {{ $reg->status === 'cancelled' ? 'opacity-60' : '' }}">
@@ -27,7 +27,7 @@
                     @if($event->poster)
                     <img src="{{ asset('storage/' . $event->poster) }}" alt="" class="w-full sm:w-36 h-36 object-cover flex-shrink-0">
                     @else
-                    <div class="w-full sm:w-36 h-36 bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center flex-shrink-0">
+                    <div class="w-full sm:w-36 h-36 bg-gradient-to-br from-blue-400 to-violet-500 flex items-center justify-center flex-shrink-0">
                         <svg class="text-white opacity-60 w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="flex items-center gap-2 flex-shrink-0">
                             <a href="{{ route('events.show', $event) }}"
-                               class="px-4 py-2 bg-indigo-50 text-indigo-700 text-sm font-semibold rounded-xl hover:bg-indigo-100 transition">
+                               class="px-4 py-2 bg-blue-50 text-blue-700 text-sm font-semibold rounded-xl hover:bg-blue-100 transition">
                                 Detail
                             </a>
                             @if($reg->status === 'registered' && !$isPast)
@@ -75,15 +75,15 @@
             </div>
             @empty
             <div class="bg-white rounded-2xl shadow-lg p-16 text-center">
-                <div class="w-20 h-20 mx-auto mb-4 bg-indigo-100 rounded-full flex items-center justify-center">
-                    <svg class="text-indigo-500 ui-svg-icon ui-svg-icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-20 h-20 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
+                    <svg class="text-blue-500 ui-svg-icon ui-svg-icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                     </svg>
                 </div>
                 <h3 class="text-lg font-bold text-gray-900 mb-2">Belum ada acara</h3>
                 <p class="text-gray-500 text-sm mb-6">Kamu belum mendaftar ke acara apapun.</p>
                 <a href="{{ route('events.index') }}"
-                   class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition">
+                   class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition">
                     Jelajahi Acara
                 </a>
             </div>

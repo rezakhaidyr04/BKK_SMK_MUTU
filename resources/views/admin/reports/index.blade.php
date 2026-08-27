@@ -1,11 +1,11 @@
-<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true">
 <x-slot name="header">
     <x-ui.page-header title="Laporan & Analitik" subtitle="Ringkasan performa sistem per {{ now()->format('d F Y') }}" />
 </x-slot>
 <div class="min-h-screen bg-slate-50">
 
     {{-- ===== HERO HEADER ===== --}}
-    <div style="background: linear-gradient(135deg, #1e293b 0%, #1e3a8a 60%, #312e81 100%); position:relative; overflow:hidden;">
+    <div style="background: linear-gradient(135deg, #1e293b 0%, #1e3a8a 60%, #1e3a8a 100%); position:relative; overflow:hidden;">
         <div style="position:absolute;inset:0;background:radial-gradient(circle at 20% 50%,rgba(99,102,241,0.3) 0%,transparent 60%),radial-gradient(circle at 80% 20%,rgba(59,130,246,0.2) 0%,transparent 50%);pointer-events:none;"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" style="position:relative;">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
@@ -26,8 +26,8 @@
                         Ekspor CSV
                     </a>
                     <a href="{{ route('admin.reports.export-excel') }}"
-                       style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:#059669;border:1px solid #047857;color:#fff;border-radius:12px;font-size:14px;font-weight:600;text-decoration:none;box-shadow:0 4px 20px rgba(5,150,105,0.4);transition:background 0.2s;"
-                       onmouseover="this.style.background='#047857'" onmouseout="this.style.background='#059669'">
+                       style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:#16a34a;border:1px solid #047857;color:#fff;border-radius:12px;font-size:14px;font-weight:600;text-decoration:none;box-shadow:0 4px 20px rgba(5,150,105,0.4);transition:background 0.2s;"
+                       onmouseover="this.style.background='#047857'" onmouseout="this.style.background='#16a34a'">
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                         Ekspor Excel
                     </a>
@@ -76,7 +76,7 @@
                         </div>
                         <span style="font-size:20px;font-weight:800;color:#1e3a8a;">{{ number_format($summary['total_umum']) }}</span>
                     </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:linear-gradient(135deg,#2563eb,#4f46e5);border-radius:12px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:linear-gradient(135deg,#2563eb,#2563eb);border-radius:12px;">
                         <span style="font-size:14px;font-weight:600;color:rgba(255,255,255,0.9);">Total</span>
                         <span style="font-size:22px;font-weight:900;color:#fff;">{{ number_format($summary['total_umum']) }}</span>
                     </div>
@@ -87,8 +87,8 @@
             <div style="background:#fff;border-radius:20px;border:1px solid #e2e8f0;box-shadow:0 1px 8px rgba(15,23,42,0.06);padding:24px;">
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
                     <h3 style="font-weight:700;font-size:15px;color:#0f172a;">Data Lowongan</h3>
-                    <div style="width:36px;height:36px;border-radius:10px;background:#ecfdf5;display:flex;align-items:center;justify-content:center;">
-                        <svg width="18" height="18" fill="none" stroke="#10b981" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <div style="width:36px;height:36px;border-radius:10px;background:#f0fdf4;display:flex;align-items:center;justify-content:center;">
+                        <svg width="18" height="18" fill="none" stroke="#16a34a" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     </div>
                 </div>
                 <div>
@@ -96,12 +96,12 @@
                         <span style="font-size:14px;font-weight:500;color:#334155;">Total</span>
                         <span style="font-size:20px;font-weight:800;color:#0f172a;">{{ number_format($summary['total_jobs']) }}</span>
                     </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#ecfdf5;border-radius:12px;margin-bottom:10px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#f0fdf4;border-radius:12px;margin-bottom:10px;">
                         <div style="display:flex;align-items:center;gap:8px;">
-                            <div style="width:8px;height:8px;border-radius:50%;background:#10b981;animation:pulse 2s infinite;"></div>
+                            <div style="width:8px;height:8px;border-radius:50%;background:#16a34a;animation:pulse 2s infinite;"></div>
                             <span style="font-size:14px;font-weight:500;color:#065f46;">Aktif</span>
                         </div>
-                        <span style="font-size:20px;font-weight:800;color:#059669;">{{ number_format($summary['active_jobs']) }}</span>
+                        <span style="font-size:20px;font-weight:800;color:#16a34a;">{{ number_format($summary['active_jobs']) }}</span>
                     </div>
                     <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fef2f2;border-radius:12px;">
                         <div style="display:flex;align-items:center;gap:8px;">
@@ -119,7 +119,7 @@
                     ? round(($summary['accepted_applications'] / $summary['total_applications']) * 100, 1)
                     : 0;
             @endphp
-            <div style="background:linear-gradient(145deg,#1e3a8a,#312e81);border-radius:20px;box-shadow:0 8px 32px rgba(30,58,138,0.35);padding:24px;color:#fff;display:flex;flex-direction:column;justify-content:space-between;">
+            <div style="background:linear-gradient(145deg,#1e3a8a,#1e3a8a);border-radius:20px;box-shadow:0 8px 32px rgba(30,58,138,0.35);padding:24px;color:#fff;display:flex;flex-direction:column;justify-content:space-between;">
                 <div>
                     <p style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(165,180,252,0.9);margin-bottom:8px;">Tingkat Keberhasilan</p>
                     <p style="font-size:56px;font-weight:900;line-height:1;color:#fff;">{{ $rate }}<span style="font-size:28px;">%</span></p>
@@ -130,7 +130,7 @@
                 </div>
                 <div style="margin-top:24px;">
                     <div style="height:8px;background:rgba(255,255,255,0.15);border-radius:99px;overflow:hidden;">
-                        <div style="height:100%;width:{{ min($rate, 100) }}%;background:linear-gradient(90deg,#818cf8,#a5f3fc);border-radius:99px;transition:width 1s ease;"></div>
+                        <div style="height:100%;width:{{ min($rate, 100) }}%;background:linear-gradient(90deg,#60a5fa,#a5f3fc);border-radius:99px;transition:width 1s ease;"></div>
                     </div>
                     <div style="display:flex;justify-content:space-between;margin-top:6px;">
                         <span style="font-size:11px;color:rgba(203,213,225,0.6);">0%</span>
@@ -160,7 +160,7 @@
                     <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;">
                         <span style="font-size:13px;font-weight:700;color:#334155;">{{ $month['count'] }}</span>
                         <div style="flex:1;width:100%;display:flex;align-items:flex-end;">
-                            <div style="width:100%;height:{{ max($pct, 3) }}%;background:linear-gradient(180deg,#6366f1,#2563eb);border-radius:8px 8px 4px 4px;min-height:6px;transition:height 0.5s ease;box-shadow:0 4px 12px rgba(99,102,241,0.25);"></div>
+                            <div style="width:100%;height:{{ max($pct, 3) }}%;background:linear-gradient(180deg,#3b82f6,#2563eb);border-radius:8px 8px 4px 4px;min-height:6px;transition:height 0.5s ease;box-shadow:0 4px 12px rgba(99,102,241,0.25);"></div>
                         </div>
                         <span style="font-size:10px;color:#94a3b8;text-align:center;white-space:nowrap;">{{ $month['label'] }}</span>
                     </div>
@@ -175,7 +175,7 @@
                     $statuses = [
                         ['label'=>'Diajukan','value'=>$summary['submitted_applications'],'color'=>'#3b82f6','bg'=>'#eff6ff'],
                         ['label'=>'Diwawancara','value'=>$summary['interviewed_applications'],'color'=>'#8b5cf6','bg'=>'#f5f3ff'],
-                        ['label'=>'Diterima','value'=>$summary['accepted_applications'],'color'=>'#10b981','bg'=>'#ecfdf5'],
+                        ['label'=>'Diterima','value'=>$summary['accepted_applications'],'color'=>'#16a34a','bg'=>'#f0fdf4'],
                         ['label'=>'Ditolak','value'=>$summary['rejected_applications'],'color'=>'#ef4444','bg'=>'#fef2f2'],
                     ];
                     $total = max($summary['total_applications'], 1);
@@ -208,11 +208,11 @@
                 </div>
                 @forelse($recentUsers as $user)
                 @php
-                    $colors = ['admin'=>['bg'=>'#f3e8ff','text'=>'#7c3aed'],'umum'=>['bg'=>'#dbeafe','text'=>'#1d4ed8'],'company'=>['bg'=>'#ffedd5','text'=>'#c2410c']];
+                    $colors = ['admin'=>['bg'=>'#f3e8ff','text'=>'#7c3aed'],'umum'=>['bg'=>'#dbeafe','text'=>'#1d4ed8'],'company'=>['bg'=>'#fef3c7','text'=>'#c2410c']];
                     $uc = $colors[$user->role] ?? ['bg'=>'#f1f5f9','text'=>'#475569'];
                 @endphp
                 <div style="display:flex;align-items:center;gap:12px;padding:14px 24px;border-bottom:1px solid #f8fafc;transition:background 0.15s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
-                    <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#2563eb);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0;">
+                    <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#2563eb);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0;">
                         {{ strtoupper(substr($user->name,0,1)) }}
                     </div>
                     <div style="flex:1;min-width:0;">
@@ -236,11 +236,11 @@
                 </div>
                 @forelse($recentJobs as $job)
                 @php
-                    $sc = ['active'=>['bg'=>'#d1fae5','text'=>'#065f46'],'inactive'=>['bg'=>'#f1f5f9','text'=>'#475569'],'closed'=>['bg'=>'#fee2e2','text'=>'#991b1b'],'draft'=>['bg'=>'#fef9c3','text'=>'#854d0e']];
+                    $sc = ['active'=>['bg'=>'#dcfce7','text'=>'#065f46'],'inactive'=>['bg'=>'#f1f5f9','text'=>'#475569'],'closed'=>['bg'=>'#fee2e2','text'=>'#991b1b'],'draft'=>['bg'=>'#fef9c3','text'=>'#854d0e']];
                     $jc = $sc[$job->status] ?? ['bg'=>'#f1f5f9','text'=>'#475569'];
                 @endphp
                 <div style="display:flex;align-items:center;gap:12px;padding:14px 24px;border-bottom:1px solid #f8fafc;transition:background 0.15s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
-                    <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#6366f1);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0;">
+                    <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#3b82f6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0;">
                         {{ strtoupper(substr($job->company_name??'C',0,1)) }}
                     </div>
                     <div style="flex:1;min-width:0;">

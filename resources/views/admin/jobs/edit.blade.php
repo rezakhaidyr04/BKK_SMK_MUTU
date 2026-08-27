@@ -1,4 +1,4 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
         <x-ui.page-header title="Ubah Lowongan" subtitle="Perbarui detail lowongan kerja.">
             <x-slot:actions>
@@ -17,7 +17,7 @@
 
     <div class="max-w-3xl mx-auto">
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                    <div class="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-indigo-50 to-purple-50">
+                    <div class="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-violet-50">
                         <h3 class="font-bold text-gray-900">Edit Lowongan: {{ $job->title }}</h3>
                     </div>
                     <form method="POST" action="{{ route('admin.jobs.update', $job) }}" class="p-6 space-y-4">
@@ -26,27 +26,27 @@
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Perusahaan <span class="text-red-500">*</span></label>
                             <input type="text" name="company_name" value="{{ old('company_name', $job->company_name) }}" required
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                         </div>
                         <div class="grid gap-4 md:grid-cols-2">
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Judul <span class="text-red-500">*</span></label>
                                 <input type="text" name="title" value="{{ old('title', $job->title) }}" required
-                                       class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                       class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Posisi</label>
                                 <input type="text" name="position" value="{{ old('position', $job->position) }}"
-                                       class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                       class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Lokasi</label>
                                 <input type="text" name="location" value="{{ old('location', $job->location) }}"
-                                       class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                       class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Tipe Kerja</label>
-                                <select name="job_type" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                <select name="job_type" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                                     <option value="">Pilih tipe</option>
                                     <option value="full_time"  {{ old('job_type', $job->job_type) == 'full_time'  ? 'selected' : '' }}>Penuh Waktu</option>
                                     <option value="part_time"  {{ old('job_type', $job->job_type) == 'part_time'  ? 'selected' : '' }}>Paruh Waktu</option>
@@ -57,21 +57,21 @@
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Gaji Minimum</label>
                                 <input type="number" name="salary_min" value="{{ old('salary_min', $job->salary_min) }}" min="0"
-                                       class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                       class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Gaji Maksimum</label>
                                 <input type="number" name="salary_max" value="{{ old('salary_max', $job->salary_max) }}" min="0"
-                                       class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                       class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Deadline</label>
                                 <input type="date" name="deadline" value="{{ old('deadline', optional($job->deadline)->format('Y-m-d')) }}"
-                                       class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                       class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Status <span class="text-red-500">*</span></label>
-                                <select name="status" required class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                <select name="status" required class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                                     <option value="active"   {{ old('status', $job->status) == 'active'   ? 'selected' : '' }}>Aktif</option>
                                     <option value="inactive" {{ old('status', $job->status) == 'inactive' ? 'selected' : '' }}>Nonaktif</option>
                                     <option value="closed"   {{ old('status', $job->status) == 'closed'   ? 'selected' : '' }}>Ditutup</option>
@@ -80,15 +80,15 @@
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Kualifikasi</label>
-                            <textarea name="qualifications" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-y">{{ old('qualifications', $job->qualifications) }}</textarea>
+                            <textarea name="qualifications" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-y">{{ old('qualifications', $job->qualifications) }}</textarea>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Benefit</label>
-                            <textarea name="benefits" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-y">{{ old('benefits', $job->benefits) }}</textarea>
+                            <textarea name="benefits" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-y">{{ old('benefits', $job->benefits) }}</textarea>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Deskripsi Pekerjaan</label>
-                            <textarea name="description" rows="5" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-y">{{ old('description', $job->description) }}</textarea>
+                            <textarea name="description" rows="5" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-y">{{ old('description', $job->description) }}</textarea>
                         </div>
                         <div class="flex items-center justify-between pt-4 border-t border-gray-100">
                             <a href="{{ route('admin.jobs.index') }}"
@@ -96,7 +96,7 @@
                                 Batal
                             </a>
                             <button type="submit"
-                                    class="inline-flex items-center gap-2 px-6 py-2.5 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700 transition shadow-lg">
+                                    class="inline-flex items-center gap-2 px-6 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition shadow-lg">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>

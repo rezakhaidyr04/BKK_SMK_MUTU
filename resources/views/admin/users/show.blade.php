@@ -1,4 +1,4 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
         <x-ui.page-header title="Detail Pengguna" subtitle="{{ $user->name }}">
             <x-slot:actions>
@@ -15,13 +15,13 @@
             <div class="max-w-3xl mx-auto space-y-6">
                 <!-- Profil Card -->
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                    <div class="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-indigo-50 to-purple-50">
+                    <div class="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-violet-50">
                         <div class="flex items-center gap-4">
                             @if($user->avatar)
                             <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $user->name }}"
-                                 class="w-16 h-16 rounded-2xl object-cover border-2 border-indigo-200">
+                                 class="w-16 h-16 rounded-2xl object-cover border-2 border-blue-200">
                             @else
-                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold">
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-white text-2xl font-bold">
                                 {{ substr($user->name, 0, 1) }}
                             </div>
                             @endif

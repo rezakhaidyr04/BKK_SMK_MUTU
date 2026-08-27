@@ -1,4 +1,4 @@
-@props([
+﻿@props([
     'label',
     'value',
     'color' => 'blue',
@@ -15,8 +15,8 @@ $iconColor = 'text-blue-600';
 
 $linkColor = match($color) {
     'green'  => 'text-green-600 dark:text-green-400',
-    'purple' => 'text-purple-600 dark:text-purple-400',
-    'orange' => 'text-orange-600 dark:text-orange-400',
+    'purple' => 'text-violet-600 dark:text-violet-400',
+    'orange' => 'text-amber-600 dark:text-amber-400',
     default  => 'text-blue-600 dark:text-blue-400',
 };
 @endphp

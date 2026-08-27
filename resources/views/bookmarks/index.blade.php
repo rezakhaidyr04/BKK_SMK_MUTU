@@ -1,13 +1,13 @@
-<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-hero title="Lowongan Tersimpan" subtitle="Lowongan yang Anda tandai untuk dilihat nanti." />
 
         <div class="page-container page-section">
-            <div class="mb-6 rounded-2xl border border-emerald-100 bg-emerald-50 p-5">
+            <div class="mb-6 rounded-2xl border border-green-100 bg-green-50 p-5">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                     <div>
-                        <p class="text-sm font-semibold text-emerald-800">Gunakan sebagai shortlist</p>
-                        <p class="text-sm text-emerald-700 mt-1">Simpan lowongan yang menarik, lalu bandingkan sebelum mengirim lamaran.</p>
+                        <p class="text-sm font-semibold text-green-800">Gunakan sebagai shortlist</p>
+                        <p class="text-sm text-green-700 mt-1">Simpan lowongan yang menarik, lalu bandingkan sebelum mengirim lamaran.</p>
                     </div>
                     <x-ui.btn href="{{ route('jobs.index') }}" variant="secondary" size="sm">Cari Lowongan</x-ui.btn>
                 </div>

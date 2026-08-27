@@ -1,4 +1,4 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
         <x-ui.page-header title="Daftar Pengguna" subtitle="Kelola semua akun pengguna di sistem.">
             <x-slot:actions>
@@ -68,7 +68,7 @@
                         <td>
                             <div class="ui-table-actions">
                                 <a href="{{ route('admin.users.show', $user) }}" class="text-blue-600 hover:text-blue-800">Lihat</a>
-                                <a href="{{ route('admin.users.edit', $user) }}" class="text-indigo-600 hover:text-indigo-800">Ubah</a>
+                                <a href="{{ route('admin.users.edit', $user) }}" class="text-blue-600 hover:text-blue-800">Ubah</a>
                                 <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline" onsubmit="return confirm('Hapus pengguna ini?');">
                                     @csrf
                                     @method('DELETE')

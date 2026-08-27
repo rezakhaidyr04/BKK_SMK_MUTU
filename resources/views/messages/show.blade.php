@@ -1,4 +1,4 @@
-<x-app-layout>
+﻿<x-app-layout>
     <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             @php
@@ -16,7 +16,7 @@
             <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden"
                  x-data="chat({{ $conversation->id }}, {{ Auth::id() }})"
                  x-init="initChat()">
-                <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+                <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-blue-50">
                     <p class="text-sm text-gray-600">Riwayat pesan di percakapan ini.</p>
                 </div>
 
@@ -65,13 +65,16 @@
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('chat', (conversationId, authId) => ({
-                messages: @json($messages->map(fn($m) => [
-                    'id' => $m->id, 
-                    'body' => $m->body, 
-                    'sender_id' => $m->sender_id, 
-                    'sender_name' => $m->sender->name ?? 'Pengguna', 
-                    'created_at_formatted' => $m->created_at->format('d M Y, H:i')
-                ])),
+                @php
+                    $chatMessages = $messages->map(fn($m) => [
+                        'id' => $m->id,
+                        'body' => $m->body,
+                        'sender_id' => $m->sender_id,
+                        'sender_name' => $m->sender->name ?? 'Pengguna',
+                        'created_at_formatted' => $m->created_at->format('d M Y, H:i')
+                    ])->values();
+                @endphp
+                messages: @json($chatMessages),
                 newMessage: '',
                 authId: authId,
                 isSending: false,

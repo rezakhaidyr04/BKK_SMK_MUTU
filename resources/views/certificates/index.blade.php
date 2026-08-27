@@ -1,4 +1,4 @@
-<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-hero title="Sertifikat Saya" subtitle="Tunjukkan pencapaian dan kualifikasi Anda.">
             <x-slot:actions>
@@ -20,7 +20,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($certificates as $cert)
                 <div class="ui-panel overflow-hidden">
-                    <div class="h-36 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                    <div class="h-36 bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
                         <svg class="w-14 h-14 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
                         </svg>

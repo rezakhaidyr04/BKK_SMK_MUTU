@@ -1,4 +1,4 @@
-<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true">
     <x-slot name="header">
         <x-ui.page-header title="Daftar Lowongan" subtitle="Kelola lowongan kerja yang diposting oleh perusahaan.">
             <x-slot:actions>
@@ -62,7 +62,7 @@
                                 <td>
                                     <div class="ui-table-actions">
                                         <a href="{{ route('admin.jobs.show', $job) }}" class="text-blue-600 hover:text-blue-800">Lihat</a>
-                                        <a href="{{ route('admin.jobs.edit', $job) }}" class="text-indigo-600 hover:text-indigo-800">Ubah</a>
+                                        <a href="{{ route('admin.jobs.edit', $job) }}" class="text-blue-600 hover:text-blue-800">Ubah</a>
                                         <form action="{{ route('admin.jobs.destroy', $job) }}" method="POST" class="inline"
                                               onsubmit="return confirm('Hapus lowongan ini?');">
                                             @csrf @method('DELETE')

@@ -1,4 +1,4 @@
-@props(['company', 'stats', 'recentJobs', 'recentApplications'])
+﻿@props(['company', 'stats', 'recentJobs', 'recentApplications'])
 
 <style>
     .premium-card {
@@ -14,7 +14,7 @@
         border-color: #e2e8f0;
     }
     .warning-card {
-        background: linear-gradient(135deg, #f43f5e, #be123c);
+        background: linear-gradient(135deg, #dc2626, #be123c);
         border-radius: 20px;
         box-shadow: 0 4px 6px -1px rgba(190, 18, 60, 0.2);
         position: relative;
@@ -63,7 +63,7 @@
         box-shadow: 0 2px 4px -1px rgba(0,0,0,0.1) !important;
         font-weight: 600 !important;
     }
-    .glass-btn-warning:hover { background: #ffe4e6 !important; }
+    .glass-btn-warning:hover { background: #fee2e2 !important; }
     .glass-btn-outline {
         background: rgba(255,255,255,0.15) !important;
         color: white !important;
@@ -111,9 +111,9 @@
                                 </svg>
                             </div>
                             <div>
-                                <p style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #ffe4e6; margin:0;">Perhatian Verifikasi</p>
+                                <p style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #fee2e2; margin:0;">Perhatian Verifikasi</p>
                                 <h2 style="margin-top: 0.125rem; margin-bottom: 0.25rem; font-size: 1.125rem; font-weight: 700; color: white;">Perusahaan belum terverifikasi</h2>
-                                <p style="font-size: 0.8rem; color: #ffe4e6; font-weight: 500; margin:0;">Lengkapi dokumen legal dan profil untuk membuka semua fitur perekrutan.</p>
+                                <p style="font-size: 0.8rem; color: #fee2e2; font-weight: 500; margin:0;">Lengkapi dokumen legal dan profil untuk membuka semua fitur perekrutan.</p>
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-2 shrink-0">
@@ -133,10 +133,10 @@
                         <div class="relative flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between" style="z-index: 10;">
                             <div style="max-width: 24rem;">
                                 <div style="display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0.625rem; border-radius: 9999px; background: #f8fafc; border: 1px solid #e2e8f0; margin-bottom: 0.75rem;">
-                                    <span style="width: 0.375rem; height: 0.375rem; border-radius: 50%; background: #0ea5e9;"></span>
+                                    <span style="width: 0.375rem; height: 0.375rem; border-radius: 50%; background: #3b82f6;"></span>
                                     <p style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #475569; margin:0;">Ringkasan</p>
                                 </div>
-                                <h2 style="font-size: 1.25rem; font-weight: 700; color: #0f172a; margin:0;">Status: <span style="color: #0284c7;">{{ $stats['company_status'] }}</span></h2>
+                                <h2 style="font-size: 1.25rem; font-weight: 700; color: #0f172a; margin:0;">Status: <span style="color: #2563eb;">{{ $stats['company_status'] }}</span></h2>
                                 <p style="margin-top: 0.5rem; font-size: 0.85rem; color: #64748b; line-height: 1.5; margin-bottom:0;">Pantau aktivitas perekrutan Anda. Total lowongan aktif, pelamar baru, dan status verifikasi Anda.</p>
                             </div>
                             <div class="grid gap-3 sm:grid-cols-3 xl:grid-cols-1 w-full xl:w-auto shrink-0">
@@ -196,12 +196,12 @@
                                     <div class="stat-list-item">
                                         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                                             <div class="flex items-center gap-3">
-                                                <div style="display: flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 0.5rem; background: linear-gradient(135deg, #e0e7ff, #c7d2fe); color: #4338ca; font-weight: 700; font-size: 0.95rem; box-shadow: inset 0 1px 2px rgba(255,255,255,0.5);">
+                                                <div style="display: flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 0.5rem; background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1d4ed8; font-weight: 700; font-size: 0.95rem; box-shadow: inset 0 1px 2px rgba(255,255,255,0.5);">
                                                     {{ strtoupper(substr($application->user->name ?? '-', 0, 1)) }}
                                                 </div>
                                                 <div>
                                                     <p style="font-weight: 600; color: #0f172a; font-size: 0.95rem; margin:0;">{{ $application->user->name }}</p>
-                                                    <p style="font-size: 0.7rem; font-weight: 600; color: #4f46e5; background: #eef2ff; display: inline-block; padding: 0.125rem 0.375rem; border-radius: 0.25rem; margin-top: 0.125rem; margin-bottom:0;">{{ optional($application->job)->title ?? 'Lowongan' }}</p>
+                                                    <p style="font-size: 0.7rem; font-weight: 600; color: #2563eb; background: #eff6ff; display: inline-block; padding: 0.125rem 0.375rem; border-radius: 0.25rem; margin-top: 0.125rem; margin-bottom:0;">{{ optional($application->job)->title ?? 'Lowongan' }}</p>
                                                 </div>
                                             </div>
                                             <div class="sm:text-right flex flex-row sm:flex-col justify-between items-center sm:items-end sm:border-t-0 border-t border-slate-100 pt-3 sm:pt-0">
@@ -256,7 +256,7 @@
                                     <span style="font-size: 0.65rem; font-weight: 700; color: #1d4ed8;">{{ $stats['verification_percent'] }}%</span>
                                 </div>
                                 <div style="height: 0.375rem; border-radius: 9999px; background: rgba(59,130,246,0.2); overflow: hidden;">
-                                    <div style="height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #3b82f6, #6366f1); width: {{ $stats['verification_percent'] }}%;"></div>
+                                    <div style="height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #3b82f6, #3b82f6); width: {{ $stats['verification_percent'] }}%;"></div>
                                 </div>
                                 <p style="margin-top: 0.5rem; font-size: 0.7rem; font-weight: 500; color: #1e40af; line-height: 1.4; margin-bottom:0;">{{ $stats['verification_note'] }}</p>
                             </div>

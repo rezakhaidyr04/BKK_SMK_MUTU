@@ -1,4 +1,4 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
         <x-ui.page-header title="Ubah Pengguna" subtitle="Perbarui data dan kontrol akses pengguna.">
             <x-slot:actions>
@@ -44,7 +44,7 @@
                     <div class="flex items-center gap-2 pt-6">
                         <input type="checkbox" name="is_active" value="1"
                                {{ old('is_active', $user->is_active) ? 'checked' : '' }}
-                               class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                               class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
                         <label class="text-sm text-slate-700">Aktifkan akun</label>
                     </div>
                 </div>

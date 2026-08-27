@@ -1,4 +1,4 @@
-{{-- Menu sidebar tunggal: dipakai oleh sidebar desktop dan drawer mobile --}}
+﻿{{-- Menu sidebar tunggal: dipakai oleh sidebar desktop dan drawer mobile --}}
 @props([
     'mobile' => false,
 ])
@@ -157,7 +157,7 @@
 @if($role === 'company')
 <div class="{{ $mobile ? 'company-nav-panel' : 'mt-6 company-nav-panel' }}">
     <h3 class="nav-section-title">Perusahaan</h3>
-    <p class="mb-3 px-2 text-xs text-orange-700">Pusat rekrutmen untuk kelola lowongan dan pelamar</p>
+    <p class="mb-3 px-2 text-xs text-amber-700">Pusat rekrutmen untuk kelola lowongan dan pelamar</p>
 
     <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} flex items-center gap-3">
         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -1,4 +1,4 @@
-<!-- Custom Sidebar Styling -->
+﻿<!-- Custom Sidebar Styling -->
 <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 
 <!-- Top Navigation Bar -->
@@ -64,7 +64,7 @@
                         @if(Auth::user()->avatar)
                         <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 rounded-full object-cover">
                         @else
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-semibold text-sm" aria-hidden="true">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-semibold text-sm" aria-hidden="true">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
                         @endif
@@ -167,7 +167,7 @@
                     @if(Auth::user()->avatar)
                         <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm flex-shrink-0">
                     @else
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-sm flex-shrink-0" aria-hidden="true">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-sm flex-shrink-0" aria-hidden="true">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
                     @endif

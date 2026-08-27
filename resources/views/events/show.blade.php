@@ -1,4 +1,4 @@
-<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-hero 
             title="{{ $event->title }}" 
@@ -15,7 +15,7 @@
                         <img src="{{ asset('storage/' . $event->poster) }}" alt="{{ $event->title }}"
                              class="w-full h-64 object-cover">
                         @else
-                        <div class="w-full h-48 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                        <div class="w-full h-48 bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center">
                             <svg class="w-16 h-16 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
@@ -25,7 +25,7 @@
                         <div class="p-6 sm:p-8">
                             @php
                                 $typeLabels = ['job_fair'=>'Job Fair','seminar'=>'Seminar','workshop'=>'Workshop','pelatihan'=>'Pelatihan','lainnya'=>'Lainnya'];
-                                $typeColors = ['job_fair'=>'bg-blue-100 text-blue-700','seminar'=>'bg-purple-100 text-purple-700','workshop'=>'bg-orange-100 text-orange-700','pelatihan'=>'bg-green-100 text-green-700','lainnya'=>'bg-gray-100 text-gray-700'];
+                                $typeColors = ['job_fair'=>'bg-blue-100 text-blue-700','seminar'=>'bg-violet-100 text-violet-700','workshop'=>'bg-amber-100 text-amber-700','pelatihan'=>'bg-green-100 text-green-700','lainnya'=>'bg-gray-100 text-gray-700'];
                             @endphp
                             <span class="inline-flex px-3 py-1 rounded-full text-xs font-semibold {{ $typeColors[$event->type] ?? 'bg-gray-100 text-gray-700' }}">
                                 {{ $typeLabels[$event->type] ?? $event->type }}
@@ -102,9 +102,9 @@
                 <div class="space-y-4">
                     <!-- Card Daftar -->
                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden sticky top-24">
-                        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4">
+                        <div class="bg-gradient-to-r from-blue-600 to-violet-600 px-6 py-4">
                             <h3 class="text-white font-bold text-lg">Daftar Acara</h3>
-                            <p class="text-indigo-100 text-sm mt-0.5">Amankan tempat kamu sekarang</p>
+                            <p class="text-blue-100 text-sm mt-0.5">Amankan tempat kamu sekarang</p>
                         </div>
                         <div class="p-6">
                             @if(session('success'))
@@ -141,7 +141,7 @@
                                 <div class="text-center">
                                     <p class="text-sm text-gray-600 mb-4">Login untuk mendaftar ke acara ini</p>
                                     <a href="{{ route('login') }}"
-                                       class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700 transition">
+                                       class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition">
                                         Login untuk Daftar
                                     </a>
                                 </div>
@@ -178,10 +178,10 @@
                                     <div class="mb-4">
                                         <label class="block text-xs font-semibold text-gray-600 mb-1.5">Catatan <span class="text-gray-400 font-normal">(opsional)</span></label>
                                         <textarea name="notes" rows="2" placeholder="Pertanyaan atau informasi tambahan..."
-                                                  class="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none">{{ old('notes') }}</textarea>
+                                                  class="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none">{{ old('notes') }}</textarea>
                                     </div>
                                     <button type="submit"
-                                            class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-indigo-600 text-white text-sm font-bold rounded-xl hover:bg-indigo-700 transition shadow-lg">
+                                            class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-blue-600 text-white text-sm font-bold rounded-xl hover:bg-blue-700 transition shadow-lg">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
@@ -192,7 +192,7 @@
 
                             @auth
                             <div class="mt-4 pt-4 border-t border-gray-100 text-center">
-                                <a href="{{ route('events.my') }}" class="text-xs text-indigo-600 hover:underline">
+                                <a href="{{ route('events.my') }}" class="text-xs text-blue-600 hover:underline">
                                     Lihat semua acara yang kamu ikuti →
                                 </a>
                             </div>

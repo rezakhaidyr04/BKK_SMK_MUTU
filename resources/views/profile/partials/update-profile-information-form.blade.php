@@ -1,4 +1,4 @@
-<section>
+﻿<section>
     <header class="border-b border-slate-100 pb-4 mb-6">
         <h2 class="text-lg font-bold text-slate-900 tracking-tight">Informasi Profil</h2>
         <p class="mt-1 text-sm text-slate-500">
@@ -59,14 +59,14 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
                 <x-input-label for="name" :value="__('Nama Lengkap')" class="text-slate-700 font-semibold mb-1" />
-                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
+                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                               :value="old('name', $user->name)" required autofocus autocomplete="name" />
                 <x-input-error class="mt-1.5" :messages="$errors->get('name')" />
             </div>
 
             <div>
                 <x-input-label for="email" :value="__('Alamat Email')" class="text-slate-700 font-semibold mb-1" />
-                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
+                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                               :value="old('email', $user->email)" required autocomplete="username" />
                 <x-input-error class="mt-1.5" :messages="$errors->get('email')" />
 
@@ -74,7 +74,7 @@
                     <div class="mt-2">
                         <p class="text-sm text-slate-800">
                             {{ __('Alamat email Anda belum diverifikasi.') }}
-                            <button form="send-verification" class="underline text-sm text-slate-600 hover:text-slate-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <button form="send-verification" class="underline text-sm text-slate-600 hover:text-slate-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                 {{ __('Kirim ulang email verifikasi.') }}
                             </button>
                         </p>
@@ -89,7 +89,7 @@
         {{-- Nomor HP --}}
         <div>
             <x-input-label for="phone" value="Nomor Handphone" class="text-slate-700 font-semibold mb-1" />
-            <x-text-input id="phone" name="phone" type="tel" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
+            <x-text-input id="phone" name="phone" type="tel" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                           :value="old('phone', $user->phone)" autocomplete="tel" placeholder="Contoh: 08123456789" />
             <x-input-error class="mt-1.5" :messages="$errors->get('phone')" />
         </div>
@@ -99,7 +99,7 @@
         <div>
             <x-input-label for="bio" value="Bio / Ringkasan Singkat" class="text-slate-700 font-semibold mb-1" />
             <textarea id="bio" name="bio" rows="3"
-                      class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm"
+                      class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm"
                       placeholder="Ceritakan singkat mengenai latar belakang, minat, dan tujuan karir Anda..."
                       maxlength="500">{{ old('bio', $user->bio ?? '') }}</textarea>
             <div class="flex justify-between mt-1.5">
@@ -148,7 +148,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                     <x-input-label for="preferred_position" value="Posisi yang Diinginkan" class="text-slate-700 font-semibold mb-1" />
-                    <x-text-input id="preferred_position" name="preferred_position" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
+                    <x-text-input id="preferred_position" name="preferred_position" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                   :value="old('preferred_position', $user->preferred_position ?? '')"
                                   placeholder="Contoh: Frontend Developer" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('preferred_position')" />
@@ -156,7 +156,7 @@
 
                 <div>
                     <x-input-label for="gender" value="Jenis Kelamin" class="text-slate-700 font-semibold mb-1" />
-                    <select id="gender" name="gender" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm">
+                    <select id="gender" name="gender" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm">
                         <option value="">Pilih</option>
                         <option value="Laki-laki" {{ old('gender', $user->gender ?? '') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
                         <option value="Perempuan" {{ old('gender', $user->gender ?? '') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
@@ -168,7 +168,7 @@
             <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                     <x-input-label for="birth_place" value="Tempat Lahir" class="text-slate-700 font-semibold mb-1" />
-                    <x-text-input id="birth_place" name="birth_place" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
+                    <x-text-input id="birth_place" name="birth_place" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                   :value="old('birth_place', $user->birth_place ?? '')"
                                   placeholder="Contoh: Cikampek" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('birth_place')" />
@@ -176,7 +176,7 @@
 
                 <div>
                     <x-input-label for="birth_date" value="Tanggal Lahir" class="text-slate-700 font-semibold mb-1" />
-                    <x-text-input id="birth_date" name="birth_date" type="date" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
+                    <x-text-input id="birth_date" name="birth_date" type="date" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                   :value="old('birth_date', $user->birth_date ?? '')" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('birth_date')" />
                 </div>
@@ -185,7 +185,7 @@
             <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                     <x-input-label for="linkedin_url" value="LinkedIn" class="text-slate-700 font-semibold mb-1" />
-                    <x-text-input id="linkedin_url" name="linkedin_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
+                    <x-text-input id="linkedin_url" name="linkedin_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                   :value="old('linkedin_url', $user->linkedin_url ?? '')"
                                   placeholder="https://linkedin.com/in/namamu" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('linkedin_url')" />
@@ -193,7 +193,7 @@
 
                 <div>
                     <x-input-label for="portfolio_url" value="Portofolio / Website" class="text-slate-700 font-semibold mb-1" />
-                    <x-text-input id="portfolio_url" name="portfolio_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
+                    <x-text-input id="portfolio_url" name="portfolio_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                   :value="old('portfolio_url', $user->portfolio_url ?? '')"
                                   placeholder="https://namaportofolio.com" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('portfolio_url')" />
@@ -206,7 +206,7 @@
                     Isi riwayat pendidikan Anda dari tingkat paling rendah sampai saat ini. Jika Anda bukan dari SMK MUTU, Anda tetap dapat mengisi sekolah atau lembaga pendidikan terakhir Anda.
                 </div>
                 <textarea id="education_history" name="education_history" rows="4"
-                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm"
+                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm"
                           placeholder="Contoh:&#10;SD Negeri 1 Cikampek (2016-2022)&#10;SMP Negeri 2 Cikampek (2022-2025)&#10;SMK MUTU Cikampek (2025-sekarang)&#10;Jurusan: Akuntansi">{{ old('education_history', $user->education_history ?? '') }}</textarea>
                 <x-input-error class="mt-1.5" :messages="$errors->get('education_history')" />
             </div>
@@ -214,7 +214,7 @@
             <div class="mt-5">
                 <x-input-label for="experience_organization" value="Pengalaman / Organisasi" class="text-slate-700 font-semibold mb-1" />
                 <textarea id="experience_organization" name="experience_organization" rows="4"
-                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm"
+                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm"
                           placeholder="Contoh: Magang di toko online&#10;Ketua OSIS&#10;Anggota Pramuka">{{ old('experience_organization', $user->experience_organization ?? '') }}</textarea>
                 <x-input-error class="mt-1.5" :messages="$errors->get('experience_organization')" />
             </div>
@@ -222,7 +222,7 @@
             <div class="mt-5">
                 <x-input-label for="address" value="Alamat Tinggal" class="text-slate-700 font-semibold mb-1" />
                 <textarea id="address" name="address" rows="2"
-                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm text-sm"
+                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm"
                           placeholder="Masukkan alamat domisili lengkap Anda...">{{ old('address', $user->address ?? '') }}</textarea>
                 <x-input-error class="mt-1.5" :messages="$errors->get('address')" />
             </div>
@@ -256,7 +256,7 @@
         </div>
         <div class="mt-6 flex justify-end gap-3">
             <button type="button" onclick="closeCropper()" class="px-5 py-2.5 text-slate-600 font-medium hover:text-slate-800 hover:bg-slate-100 rounded-xl transition">Batal</button>
-            <button type="button" onclick="applyCrop()" class="px-5 py-2.5 bg-indigo-600 text-white font-medium rounded-xl shadow-sm hover:bg-indigo-700 hover:shadow transition">Simpan Potongan</button>
+            <button type="button" onclick="applyCrop()" class="px-5 py-2.5 bg-blue-600 text-white font-medium rounded-xl shadow-sm hover:bg-blue-700 hover:shadow transition">Simpan Potongan</button>
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-@props([
+﻿@props([
     'href',
     'label',
     'accentColor' => 'blue',
@@ -6,9 +6,9 @@
 
 @php
 $hoverClasses = match($accentColor) {
-    'purple' => 'hover:text-purple-600 hover:bg-purple-50 dark:hover:text-purple-400 dark:hover:bg-purple-900/20',
+    'purple' => 'hover:text-violet-600 hover:bg-violet-50 dark:hover:text-violet-400 dark:hover:bg-violet-900/20',
     'green'  => 'hover:text-green-600 hover:bg-green-50 dark:hover:text-green-400 dark:hover:bg-green-900/20',
-    'orange' => 'hover:text-orange-600 hover:bg-orange-50 dark:hover:text-orange-400 dark:hover:bg-orange-900/20',
+    'orange' => 'hover:text-amber-600 hover:bg-amber-50 dark:hover:text-amber-400 dark:hover:bg-amber-900/20',
     default  => 'hover:text-blue-600 hover:bg-blue-50 dark:hover:text-blue-400 dark:hover:bg-blue-900/20',
 };
 @endphp

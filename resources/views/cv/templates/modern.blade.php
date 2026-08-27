@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="id">
 <head>
     <meta charset="utf-8">
@@ -45,7 +45,7 @@
         .card { background-color: #f8fafc; border: 1px solid #eef6fb; padding: 10px 12px; margin-bottom: 12px; }
 
         .skill {
-            display: inline-block; background-color: #eef2ff; color: #1d4ed8;
+            display: inline-block; background-color: #eff6ff; color: #1d4ed8;
             padding: 4px 9px; border-radius: 10px; font-size: 10px; margin: 0 4px 4px 0;
         }
         .skill-empty { color: #94a3b8; font-size: 10px; }

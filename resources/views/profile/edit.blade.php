@@ -1,4 +1,4 @@
-<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-hero title="{{ __('Pengaturan Akun') }}" subtitle="Kelola profil, keamanan, dan dokumen akun Anda." />
 
@@ -9,7 +9,7 @@
             <div class="relative overflow-hidden p-6 sm:p-8 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.02)] sm:rounded-3xl border border-slate-100/80">
                 {{-- Decorative background gradient glow --}}
                 <div class="absolute -right-10 -top-10 w-44 h-44 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -left-10 -bottom-10 w-44 h-44 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-10 -bottom-10 w-44 h-44 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
                 <div class="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                     <div class="flex items-center gap-5">
@@ -21,7 +21,7 @@
                                 <img src="{{ $avatarUrl }}" alt="{{ $user->name }}"
                                      class="w-20 h-20 rounded-2xl object-cover border-4 border-white shadow-md ring-1 ring-slate-100">
                             @else
-                                <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-3xl font-extrabold shadow-md">
+                                <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-blue-600 flex items-center justify-center text-white text-3xl font-extrabold shadow-md">
                                     {{ substr($user->name, 0, 1) }}
                                 </div>
                             @endif

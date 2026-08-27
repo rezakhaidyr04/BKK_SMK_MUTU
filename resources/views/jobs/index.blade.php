@@ -1,4 +1,4 @@
-<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
     <!-- Hero Search Section -->
     <section class="bg-white border-b border-slate-200 pt-6 pb-10">
@@ -145,7 +145,7 @@
                                         $jobTypeClasses = match($job->job_type) {
                                             'full_time' => 'bg-blue-50 text-blue-700 border border-blue-100',
                                             'part_time' => 'bg-violet-50 text-violet-700 border border-violet-100',
-                                            'internship' => 'bg-emerald-50 text-emerald-700 border border-emerald-100',
+                                            'internship' => 'bg-green-50 text-green-700 border border-green-100',
                                             'contract' => 'bg-amber-50 text-amber-700 border border-amber-100',
                                             default => 'bg-slate-100 text-slate-600 border border-slate-200',
                                         };
@@ -153,7 +153,7 @@
                                     <span class="inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide {{ $jobTypeClasses }}">{{ \App\Support\Label::jobType($job->job_type) }}</span>
                                     <span class="inline-flex items-center rounded-full bg-slate-50 px-2.5 py-1 text-[11px] font-medium text-slate-600 border border-slate-200">{{ $job->location }}</span>
                                     @if($job->created_at->gte(now()->subDays(7)))
-                                        <span class="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700 border border-emerald-100">Baru</span>
+                                        <span class="inline-flex items-center rounded-full bg-green-50 px-2.5 py-1 text-[11px] font-medium text-green-700 border border-green-100">Baru</span>
                                     @endif
                                     @if($job->deadline->lte(now()->addDays(3)))
                                         <span class="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-medium text-amber-700 border border-amber-100">Deadline dekat</span>

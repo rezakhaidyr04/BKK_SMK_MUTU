@@ -1,4 +1,4 @@
-<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true">
     <x-slot name="header">
         <x-ui.page-header title="Selamat datang kembali, {{ Auth::user()->name }}!" subtitle="Mari temukan pekerjaan impian Anda hari ini" />
     </x-slot>
@@ -22,16 +22,16 @@
         </div>
 
         <div class="page-container pt-6">
-            <div class="rounded-2xl border border-indigo-100 bg-gradient-to-r from-indigo-50/80 to-white px-6 py-5 shadow-sm backdrop-blur-sm">
+            <div class="rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50/80 to-white px-6 py-5 shadow-sm backdrop-blur-sm">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <p class="text-sm font-semibold text-indigo-900">Fokus utama pencari kerja</p>
-                        <p class="text-sm text-indigo-700 mt-1">Cari lowongan, simpan yang cocok, lamar, lalu pantau status lamaran.</p>
+                        <p class="text-sm font-semibold text-blue-900">Fokus utama pencari kerja</p>
+                        <p class="text-sm text-blue-700 mt-1">Cari lowongan, simpan yang cocok, lamar, lalu pantau status lamaran.</p>
                     </div>
-                    <div class="flex flex-wrap gap-2 text-xs font-medium text-indigo-800">
-                        <span class="px-4 py-1.5 rounded-full bg-white border border-indigo-100 shadow-sm transition hover:shadow hover:-translate-y-0.5">Cari lowongan</span>
-                        <span class="px-4 py-1.5 rounded-full bg-white border border-indigo-100 shadow-sm transition hover:shadow hover:-translate-y-0.5">Kelola CV</span>
-                        <span class="px-4 py-1.5 rounded-full bg-white border border-indigo-100 shadow-sm transition hover:shadow hover:-translate-y-0.5">Pantau lamaran</span>
+                    <div class="flex flex-wrap gap-2 text-xs font-medium text-blue-800">
+                        <span class="px-4 py-1.5 rounded-full bg-white border border-blue-100 shadow-sm transition hover:shadow hover:-translate-y-0.5">Cari lowongan</span>
+                        <span class="px-4 py-1.5 rounded-full bg-white border border-blue-100 shadow-sm transition hover:shadow hover:-translate-y-0.5">Kelola CV</span>
+                        <span class="px-4 py-1.5 rounded-full bg-white border border-blue-100 shadow-sm transition hover:shadow hover:-translate-y-0.5">Pantau lamaran</span>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                             </svg>
                         </div>
-                        <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Cari Lowongan</span>
+                        <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Cari Lowongan</span>
                     </a>
                     
                     <a href="{{ route('cv.builder') }}" class="group flex flex-col items-center p-5 bg-white border border-slate-200 rounded-lg hover:shadow-sm hover:border-slate-300 transition-all duration-300">
@@ -75,7 +75,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                         </div>
-                        <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">Lamaran Saya</span>
+                        <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 text-center group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">Lamaran Saya</span>
                     </a>
                 </div>
             </div>
@@ -173,7 +173,7 @@
                 }">
                     {{-- Job Recommendations Section --}}
                     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
-                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 cursor-pointer" @click="recommendationsOpen = !recommendationsOpen">
+                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-blue-50 dark:from-blue-900/20 dark:to-blue-900/20 cursor-pointer" @click="recommendationsOpen = !recommendationsOpen">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
@@ -211,7 +211,7 @@
                                     <div class="group relative bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-750 rounded-xl p-5 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                                         <div class="flex items-start gap-4">
                                             <div class="flex-shrink-0">
-                                                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-md" aria-hidden="true">
+                                                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-md" aria-hidden="true">
                                                     {{ substr($job->company_name ?? 'C', 0, 1) }}
                                                 </div>
                                             </div>
@@ -302,7 +302,7 @@
                             @else
                                 <!-- Empty State -->
                                 <div class="text-center py-12">
-                                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-full flex items-center justify-center animate-gentle-float" aria-hidden="true">
+                                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-blue-100 dark:from-blue-900/30 dark:to-blue-900/30 rounded-full flex items-center justify-center animate-gentle-float" aria-hidden="true">
                                         <svg class="w-10 h-10 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                         </svg>
@@ -319,10 +319,10 @@
 
                     <!-- My Applications Section -->
                     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
-                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 cursor-pointer" @click="applicationsOpen = !applicationsOpen">
+                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-violet-50 to-violet-50 dark:from-violet-900/20 dark:to-violet-900/20 cursor-pointer" @click="applicationsOpen = !applicationsOpen">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center">
+                                    <div class="w-10 h-10 bg-violet-600 rounded-xl flex items-center justify-center">
                                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
@@ -333,7 +333,7 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <a href="{{ route('applications.index') }}" class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 flex items-center gap-1 group" @click.stop>
+                                    <a href="{{ route('applications.index') }}" class="text-sm font-medium text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 flex items-center gap-1 group" @click.stop>
                                         Lihat Semua
                                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -354,7 +354,7 @@
                                 <div class="space-y-4">
                                     @foreach($myApplications as $application)
                                     @if($application->job)
-                                    <div class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-750 rounded-xl p-5 border border-gray-200 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-500 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                                    <div class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-750 rounded-xl p-5 border border-gray-200 dark:border-gray-700 hover:border-violet-300 dark:hover:border-violet-500 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
                                         <div class="flex items-start justify-between mb-3">
                                             <div class="flex-1">
                                                 <h4 class="text-base font-bold text-gray-900 dark:text-white mb-1">{{ $application->job->title }}</h4>
@@ -364,7 +364,7 @@
                                                 $statusConfig = [
                                                     'submitted' => ['bg' => 'bg-blue-100 dark:bg-blue-900/30', 'text' => 'text-blue-700 dark:text-blue-400', 'label' => 'Terkirim'],
                                                     'under_review' => ['bg' => 'bg-yellow-100 dark:bg-yellow-900/30', 'text' => 'text-yellow-700 dark:text-yellow-400', 'label' => 'Sedang Ditinjau'],
-                                                    'interviewed' => ['bg' => 'bg-purple-100 dark:bg-purple-900/30', 'text' => 'text-purple-700 dark:text-purple-400', 'label' => 'Wawancara'],
+                                                    'interviewed' => ['bg' => 'bg-violet-100 dark:bg-violet-900/30', 'text' => 'text-violet-700 dark:text-violet-400', 'label' => 'Wawancara'],
                                                     'accepted' => ['bg' => 'bg-green-100 dark:bg-green-900/30', 'text' => 'text-green-700 dark:text-green-400', 'label' => 'Diterima'],
                                                     'rejected' => ['bg' => 'bg-red-100 dark:bg-red-900/30', 'text' => 'text-red-700 dark:text-red-400', 'label' => 'Ditolak'],
                                                 ];
@@ -377,7 +377,7 @@
                                         
                                         <div class="flex items-center justify-between text-sm">
                                             <span class="text-gray-500 dark:text-gray-400">Melamar {{ $application->created_at->diffForHumans() }}</span>
-                                            <a href="{{ route('applications.show', $application->id) }}" class="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium">
+                                            <a href="{{ route('applications.show', $application->id) }}" class="text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 font-medium">
                                                 Lihat Detail →
                                             </a>
                                         </div>
@@ -387,14 +387,14 @@
                                 </div>
                             @else
                                 <div class="text-center py-12">
-                                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-full flex items-center justify-center animate-gentle-float" aria-hidden="true">
-                                        <svg class="w-10 h-10 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-violet-100 to-violet-100 dark:from-violet-900/30 dark:to-violet-900/30 rounded-full flex items-center justify-center animate-gentle-float" aria-hidden="true">
+                                        <svg class="w-10 h-10 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
                                     </div>
                                     <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Belum ada lamaran</h4>
                                     <p class="text-gray-600 dark:text-gray-400 mb-4">Mulai melamar lowongan yang sesuai keahlian Anda</p>
-                                    <a href="{{ route('jobs.index') }}" class="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 transition-colors">
+                                    <a href="{{ route('jobs.index') }}" class="inline-flex items-center px-6 py-3 bg-violet-600 text-white font-medium rounded-lg hover:bg-violet-700 transition-colors">
                                         Jelajahi Lowongan
                                     </a>
                                 </div>

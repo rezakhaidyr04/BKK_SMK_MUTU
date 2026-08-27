@@ -1,4 +1,4 @@
-<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-hero
             title="CV Profesional"
@@ -34,7 +34,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div class="lg:col-span-8 xl:col-span-9 space-y-6">
                     <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
-                        <div class="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+                        <div class="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-blue-50">
                             <h2 class="text-xl font-bold text-gray-900">Template CV Standar</h2>
                             <p class="text-sm text-gray-600 mt-1">Gunakan satu template CV yang rapi, konsisten, dan siap untuk perekrut.</p>
                         </div>
@@ -123,12 +123,12 @@
                             <p class="text-sm text-gray-600 mt-2">Isi bagian penting seperti headline, ringkasan, pengalaman, dan posisi yang dituju.</p>
                         </div>
                         <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
-                            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold mb-3">2</div>
+                            <div class="w-10 h-10 rounded-xl bg-green-100 text-green-700 flex items-center justify-center font-bold mb-3">2</div>
                             <h3 class="font-semibold text-gray-900">Buat PDF</h3>
                             <p class="text-sm text-gray-600 mt-2">Sistem akan memakai satu template standar yang rapi dan konsisten.</p>
                         </div>
                         <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
-                            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold mb-3">3</div>
+                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold mb-3">3</div>
                             <h3 class="font-semibold text-gray-900">Unduh kapan saja</h3>
                             <p class="text-sm text-gray-600 mt-2">CV yang sudah dibuat tersimpan dan bisa diunduh ulang saat dibutuhkan.</p>
                         </div>

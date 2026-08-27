@@ -1,4 +1,4 @@
-<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-hero 
             title="Pelamar" 
@@ -319,7 +319,7 @@
                                             type="submit"
                                             title="Chat kandidat"
                                             aria-label="Chat dengan {{ $application->user->name }}"
-                                            class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700"
+                                            class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-green-200 hover:bg-green-50 hover:text-green-700"
                                         >
                                             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
@@ -495,17 +495,17 @@
                                                         <div
                                                             x-show="status === 'interviewed'"
                                                             x-cloak
-                                                            class="space-y-4 rounded-xl border border-purple-100 bg-purple-50 p-4"
+                                                            class="space-y-4 rounded-xl border border-violet-100 bg-violet-50 p-4"
                                                             style="display: none;"
                                                         >
 
                                                             <div>
 
-                                                                <p class="text-sm font-bold text-purple-900">
+                                                                <p class="text-sm font-bold text-violet-900">
                                                                     Jadwal Wawancara
                                                                 </p>
 
-                                                                <p class="mt-1 text-xs text-purple-700">
+                                                                <p class="mt-1 text-xs text-violet-700">
                                                                     Informasi ini akan dilihat oleh kandidat.
                                                                 </p>
 
@@ -525,7 +525,7 @@
                                                                         type="date"
                                                                         name="interview_date"
                                                                         value="{{ $application->interview_date ? $application->interview_date->format('Y-m-d') : '' }}"
-                                                                        class="w-full rounded-lg border-slate-300 text-sm focus:border-purple-500 focus:ring-purple-500"
+                                                                        class="w-full rounded-lg border-slate-300 text-sm focus:border-violet-500 focus:ring-violet-500"
                                                                     >
 
                                                                 </div>
@@ -541,7 +541,7 @@
                                                                         type="time"
                                                                         name="interview_time"
                                                                         value="{{ $application->interview_date ? $application->interview_date->format('H:i') : '' }}"
-                                                                        class="w-full rounded-lg border-slate-300 text-sm focus:border-purple-500 focus:ring-purple-500"
+                                                                        class="w-full rounded-lg border-slate-300 text-sm focus:border-violet-500 focus:ring-violet-500"
                                                                     >
 
                                                                 </div>
@@ -559,7 +559,7 @@
                                                                 <select
                                                                     x-model="type"
                                                                     name="interview_type"
-                                                                    class="w-full rounded-lg border-slate-300 text-sm focus:border-purple-500 focus:ring-purple-500"
+                                                                    class="w-full rounded-lg border-slate-300 text-sm focus:border-violet-500 focus:ring-violet-500"
                                                                 >
 
                                                                     <option value="offline">
@@ -591,7 +591,7 @@
                                                                     name="interview_link"
                                                                     value="{{ $application->interview_link }}"
                                                                     placeholder="https://zoom.us/..."
-                                                                    class="w-full rounded-lg border-slate-300 text-sm focus:border-purple-500 focus:ring-purple-500"
+                                                                    class="w-full rounded-lg border-slate-300 text-sm focus:border-violet-500 focus:ring-violet-500"
                                                                 >
 
                                                             </div>
@@ -611,7 +611,7 @@
                                                                     name="interview_location"
                                                                     value="{{ $application->interview_location }}"
                                                                     placeholder="Contoh: Ruang HRD"
-                                                                    class="w-full rounded-lg border-slate-300 text-sm focus:border-purple-500 focus:ring-purple-500"
+                                                                    class="w-full rounded-lg border-slate-300 text-sm focus:border-violet-500 focus:ring-violet-500"
                                                                 >
 
                                                             </div>
@@ -628,7 +628,7 @@
                                                                     name="interview_notes"
                                                                     rows="3"
                                                                     placeholder="Contoh: Harap membawa laptop dan dokumen pendukung."
-                                                                    class="w-full rounded-lg border-slate-300 text-sm focus:border-purple-500 focus:ring-purple-500"
+                                                                    class="w-full rounded-lg border-slate-300 text-sm focus:border-violet-500 focus:ring-violet-500"
                                                                 >{{ $application->interview_notes }}</textarea>
 
                                                             </div>

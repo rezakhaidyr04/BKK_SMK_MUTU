@@ -1,4 +1,4 @@
-<x-guest-layout>
+﻿<x-guest-layout>
     <div class="mb-4 text-sm text-gray-600">
         {{ __('Demi keamanan, Anda diwajibkan untuk mengganti password sementara yang diberikan oleh admin saat login pertama kali.') }}
     </div>
@@ -29,7 +29,7 @@
 
         <div class="flex items-center justify-end mt-4">
             <!-- Logout option for the user in case they want to back out -->
-            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-4">
+            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mr-4">
                 {{ __('Keluar (Logout)') }}
             </a>
 

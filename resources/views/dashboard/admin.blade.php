@@ -1,19 +1,19 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
         <x-ui.page-header title="Dasbor Admin" subtitle="Ringkasan lengkap sistem dan analitik." />
     </x-slot>
 
         <div class="pt-2">
-            <div class="rounded-2xl border border-indigo-100 bg-indigo-50 px-5 py-4 shadow-sm">
+            <div class="rounded-2xl border border-blue-100 bg-blue-50 px-5 py-4 shadow-sm">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                     <div>
-                        <p class="text-sm font-semibold text-indigo-800">Fokus utama admin</p>
-                        <p class="text-sm text-indigo-700 mt-1">Pantau data, verifikasi perusahaan, moderasi konten, dan jaga sistem tetap rapi.</p>
+                        <p class="text-sm font-semibold text-blue-800">Fokus utama admin</p>
+                        <p class="text-sm text-blue-700 mt-1">Pantau data, verifikasi perusahaan, moderasi konten, dan jaga sistem tetap rapi.</p>
                     </div>
-                    <div class="flex flex-wrap gap-2 text-xs font-semibold text-indigo-700">
-                        <span class="px-3 py-1 rounded-full bg-white border border-indigo-100">Verifikasi</span>
-                        <span class="px-3 py-1 rounded-full bg-white border border-indigo-100">Analitik</span>
-                        <span class="px-3 py-1 rounded-full bg-white border border-indigo-100">Manajemen user</span>
+                    <div class="flex flex-wrap gap-2 text-xs font-semibold text-blue-700">
+                        <span class="px-3 py-1 rounded-full bg-white border border-blue-100">Verifikasi</span>
+                        <span class="px-3 py-1 rounded-full bg-white border border-blue-100">Analitik</span>
+                        <span class="px-3 py-1 rounded-full bg-white border border-blue-100">Manajemen user</span>
                     </div>
                 </div>
             </div>
@@ -47,8 +47,8 @@
                             <p class="text-xs text-neutral-500 dark:text-neutral-400">Manajemen pengguna</p>
                         </div>
                     </a>
-                    <a href="{{ route('admin.reports.index') }}" class="group flex items-center gap-3 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-all duration-200 hover:-translate-y-0.5 border border-transparent hover:border-purple-200 dark:hover:border-purple-800">
-                        <div class="w-10 h-10 bg-purple-600 dark:bg-purple-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 shadow-sm">
+                    <a href="{{ route('admin.reports.index') }}" class="group flex items-center gap-3 p-4 bg-violet-50 dark:bg-violet-900/20 rounded-xl hover:bg-violet-100 dark:hover:bg-violet-900/30 transition-all duration-200 hover:-translate-y-0.5 border border-transparent hover:border-violet-200 dark:hover:border-violet-800">
+                        <div class="w-10 h-10 bg-violet-600 dark:bg-violet-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 shadow-sm">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                         </div>
                         <div>
@@ -115,7 +115,7 @@
                     <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1 font-medium">Menunggu Tinjauan</p>
                 </div>
                 <div class="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-100 dark:border-neutral-800 shadow-sm p-5 text-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" data-reveal>
-                    <p class="text-3xl font-bold text-purple-600 dark:text-purple-400">{{ $stats['interviews_scheduled'] }}</p>
+                    <p class="text-3xl font-bold text-violet-600 dark:text-violet-400">{{ $stats['interviews_scheduled'] }}</p>
                     <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1 font-medium">Wawancara</p>
                 </div>
                 <div class="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-100 dark:border-neutral-800 shadow-sm p-5 text-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" data-reveal>
@@ -214,7 +214,7 @@
                 <div class="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-neutral-100 dark:border-neutral-800 overflow-hidden" data-reveal>
                     <div class="px-6 py-5 border-b border-neutral-100 dark:border-neutral-800">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <div class="w-10 h-10 bg-violet-600 rounded-xl flex items-center justify-center flex-shrink-0">
                                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                 </svg>

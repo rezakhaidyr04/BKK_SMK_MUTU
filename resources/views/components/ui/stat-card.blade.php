@@ -1,4 +1,4 @@
-@props(['label', 'value', 'color' => 'blue', 'icon' => null, 'subtitle' => null])
+﻿@props(['label', 'value', 'color' => 'blue', 'icon' => null, 'subtitle' => null])
 
 @php
 // Color maps
@@ -8,8 +8,8 @@ $colorMap = [
     'purple' => ['bg' => '#faf5ff', 'icon' => '#7c3aed', 'value' => '#581c87', 'border' => '#e9d5ff', 'accent' => '#a855f7'],
     'yellow' => ['bg' => '#fefce8', 'icon' => '#ca8a04', 'value' => '#854d0e', 'border' => '#fde68a', 'accent' => '#eab308'],
     'red'    => ['bg' => '#fef2f2', 'icon' => '#dc2626', 'value' => '#991b1b', 'border' => '#fecaca', 'accent' => '#ef4444'],
-    'orange' => ['bg' => '#fff7ed', 'icon' => '#ea580c', 'value' => '#9a3412', 'border' => '#fed7aa', 'accent' => '#f97316'],
-    'indigo' => ['bg' => '#eef2ff', 'icon' => '#4f46e5', 'value' => '#3730a3', 'border' => '#c7d2fe', 'accent' => '#6366f1'],
+    'orange' => ['bg' => '#fffbeb', 'icon' => '#b45309', 'value' => '#9a3412', 'border' => '#fde68a', 'accent' => '#d97706'],
+    'indigo' => ['bg' => '#eff6ff', 'icon' => '#2563eb', 'value' => '#1e40af', 'border' => '#bfdbfe', 'accent' => '#3b82f6'],
     'slate'  => ['bg' => '#f8fafc', 'icon' => '#475569', 'value' => '#1e293b', 'border' => '#e2e8f0', 'accent' => '#64748b'],
     'gray'   => ['bg' => '#f9fafb', 'icon' => '#6b7280', 'value' => '#111827', 'border' => '#e5e7eb', 'accent' => '#9ca3af'],
 ];
