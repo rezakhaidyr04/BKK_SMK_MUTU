@@ -27,18 +27,15 @@
         box-shadow: 0 10px 15px -3px rgba(190, 18, 60, 0.3);
     }
     .warning-bg {
-        position: absolute; inset: 0;
-        background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+');
-        opacity: 0.15; pointer-events: none;
+        display: none;
     }
     .warning-icon-box {
-        background: rgba(255,255,255,0.2);
-        backdrop-filter: blur(4px);
-        border: 1px solid rgba(255,255,255,0.3);
+        background: #ffffff;
+        color: #be123c;
+        border: 1px solid #fecdd3;
         border-radius: 12px;
         width: 2.75rem; height: 2.75rem;
         display: flex; align-items: center; justify-content: center;
-        box-shadow: inset 0 2px 4px rgba(255,255,255,0.1);
         transition: transform 0.25s ease;
     }
     .warning-card:hover .warning-icon-box {
@@ -65,12 +62,11 @@
     }
     .glass-btn-warning:hover { background: #fee2e2 !important; }
     .glass-btn-outline {
-        background: rgba(255,255,255,0.15) !important;
-        color: white !important;
-        border: 1px solid rgba(255,255,255,0.3) !important;
-        backdrop-filter: blur(4px) !important;
+        background: #ffffff !important;
+        color: #be123c !important;
+        border: 1px solid #ffffff !important;
     }
-    .glass-btn-outline:hover { background: rgba(255,255,255,0.25) !important; }
+    .glass-btn-outline:hover { background: #fee2e2 !important; }
     .stat-badge-light {
         padding: 0.25rem 0.6rem; 
         background: var(--bg-soft); 
@@ -127,9 +123,6 @@
             <div class="grid gap-6 xl:grid-cols-[1.7fr_1fr]">
                 <div class="space-y-6">
                     <div class="premium-card p-6 lg:p-8 relative">
-                        <div style="position: absolute; top: 0; right: 0; padding: 1.5rem; opacity: 0.03; pointer-events: none;">
-                            <svg style="width: 6rem; height: 6rem; color: var(--primary);" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                        </div>
                         <div class="relative flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between" style="z-index: 10;">
                             <div style="max-width: 24rem;">
                                 <div style="display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0.625rem; border-radius: 9999px; background: var(--bg-soft); border: 1px solid var(--border); margin-bottom: 0.75rem;">
@@ -196,7 +189,7 @@
                                     <div class="stat-list-item">
                                         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                                             <div class="flex items-center gap-3">
-                                                <div style="display: flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 0.5rem; background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: var(--primary-dark); font-weight: 700; font-size: 0.95rem; box-shadow: inset 0 1px 2px rgba(255,255,255,0.5);">
+                                                <div style="display: flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 0.5rem; background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: var(--primary-dark); font-weight: 700; font-size: 0.95rem;">
                                                     {{ strtoupper(substr($application->user->name ?? '-', 0, 1)) }}
                                                 </div>
                                                 <div>
@@ -255,7 +248,7 @@
                                     <span style="font-size: 0.65rem; font-weight: 700; color: var(--navy-3); text-transform: uppercase; letter-spacing: 0.05em;">Kelengkapan Data</span>
                                     <span style="font-size: 0.65rem; font-weight: 700; color: var(--primary-dark);">{{ $stats['verification_percent'] }}%</span>
                                 </div>
-                                <div style="height: 0.375rem; border-radius: 9999px; background: rgba(59,130,246,0.2); overflow: hidden;">
+                                    <div style="height: 0.375rem; border-radius: 9999px; background: #dbeafe; overflow: hidden;">
                                     <div style="height: 100%; border-radius: 9999px; background: linear-gradient(90deg, var(--primary), var(--primary)); width: {{ $stats['verification_percent'] }}%;"></div>
                                 </div>
                                 <p style="margin-top: 0.5rem; font-size: 0.7rem; font-weight: 500; color: var(--navy-3); line-height: 1.4; margin-bottom:0;">{{ $stats['verification_note'] }}</p>

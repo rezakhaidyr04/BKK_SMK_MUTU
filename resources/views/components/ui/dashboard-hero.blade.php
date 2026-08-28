@@ -1,12 +1,12 @@
 @props(['title', 'subtitle' => null])
 
-<section class="relative text-white">
+<section class="relative text-white bg-gradient-to-br from-[#1a3a8f] to-[#2563eb]">
 
     <div class="relative mx-auto max-w-7xl px-5 py-6 sm:px-8 sm:py-8">
         <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div class="flex items-center gap-4">
                 @isset($icon)
-                    <div class="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/25 bg-white/10 text-white shadow-lg shadow-primary-950/10 backdrop-blur sm:flex">
+                    <div class="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-blue-500 bg-blue-800 text-white shadow-lg sm:flex">
                         <div class="scale-90">{{ $icon }}</div>
                     </div>
                 @endisset
@@ -20,7 +20,7 @@
             </div>
 
             <div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-                <div class="hidden rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-right shadow-sm backdrop-blur lg:block">
+                <div class="hidden rounded-xl border border-blue-500 bg-blue-800 px-4 py-2 text-right shadow-sm lg:block">
                     <p class="mb-0.5 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-blue-100">Hari Ini</p>
                     <p class="text-sm font-bold text-white">{{ now()->translatedFormat('d M Y') }}</p>
                 </div>
@@ -32,7 +32,7 @@
         </div>
 
         @isset($extra)
-            <div class="mt-6 border-t border-white/15 pt-5">{{ $extra }}</div>
+            <div class="mt-6 border-t border-blue-400 pt-5">{{ $extra }}</div>
         @endisset
     </div>
 </section>
