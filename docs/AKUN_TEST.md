@@ -17,12 +17,12 @@
 
 | Nama Perusahaan | Email | Password | Industri |
 |-----------------|-------|----------|----------|
-| PT Contoh BKK *(default)* | pt.contoh@bkk.com | password123 | Umum |
-| PT Maju Bersama | pt.maju@bkk.com | password123 | Manufaktur |
-| PT Teknologi Nusantara | pt.tekno@bkk.com | password123 | IT |
-| PT Ritel Cikampek | pt.retail@bkk.com | password123 | Ritel |
-| PT Cepat Kirim Logistik | pt.logistik@bkk.com | password123 | Logistik |
-| PT Cikampek Hospitality | pt.hotel@bkk.com | password123 | Perhotelan |
+| PT Contoh BKK *(default)* | pt.contoh@gmail.com | password123 | Umum |
+| PT Maju Bersama | pt.maju@gmail.com | password123 | Manufaktur |
+| PT Teknologi Nusantara | pt.tekno@gmail.com | password123 | IT |
+| PT Ritel Cikampek | pt.retail@gmail.com | password123 | Ritel |
+| PT Cepat Kirim Logistik | pt.logistik@gmail.com | password123 | Logistik |
+| PT Cikampek Hospitality | pt.hotel@gmail.com | password123 | Perhotelan |
 
 ---
 
@@ -32,11 +32,11 @@ Role `umum` = pencari kerja publik (bukan hanya siswa/alumni).
 
 | Nama | Email | Password |
 |------|-------|----------|
-| Pengguna Demo BKK *(default)* | umum@bkk.com | password123 |
-| Budi Santoso | budi.santoso@umum.bkk.com | password123 |
-| Siti Rahayu | siti.rahayu@umum.bkk.com | password123 |
-| Rizky Pratama | rizky.pratama@umum.bkk.com | password123 |
-| Dewi Anggraini | dewi.anggraini@umum.bkk.com | password123 |
+| Pengguna Demo BKK *(default)* | umum@gmail.com | password123 |
+| Budi Santoso | budi.santoso@gmail.com | password123 |
+| Siti Rahayu | siti.rahayu@gmail.com | password123 |
+| Rizky Pratama | rizky.pratama@gmail.com | password123 |
+| Dewi Anggraini | dewi.anggraini@gmail.com | password123 |
 
 ---
 

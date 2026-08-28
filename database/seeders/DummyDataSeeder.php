@@ -48,7 +48,7 @@ class DummyDataSeeder extends Seeder
     {
         $data = [
             [
-                'email' => 'pt.maju@bkk.com',
+                'email' => 'pt.maju@gmail.com',
                 'name'  => 'PT Maju Bersama',
                 'industry' => 'Manufaktur',
                 'description' => 'Perusahaan manufaktur terkemuka di Cikampek yang bergerak di bidang otomotif dan elektronik.',
@@ -56,7 +56,7 @@ class DummyDataSeeder extends Seeder
                 'address' => 'Jl. Industri Raya No. 12, Cikampek Barat',
             ],
             [
-                'email' => 'pt.tekno@bkk.com',
+                'email' => 'pt.tekno@gmail.com',
                 'name'  => 'PT Teknologi Nusantara',
                 'industry' => 'Teknologi Informasi',
                 'description' => 'Perusahaan IT yang fokus pada pengembangan software dan solusi digital untuk UMKM Indonesia.',
@@ -64,7 +64,7 @@ class DummyDataSeeder extends Seeder
                 'address' => 'Jl. Sudirman No. 45, Cikampek Timur',
             ],
             [
-                'email' => 'pt.retail@bkk.com',
+                'email' => 'pt.retail@gmail.com',
                 'name'  => 'PT Ritel Cikampek',
                 'industry' => 'Perdagangan & Ritel',
                 'description' => 'Jaringan supermarket dan minimarket modern yang tersebar di seluruh Cikampek dan sekitarnya.',
@@ -72,7 +72,7 @@ class DummyDataSeeder extends Seeder
                 'address' => 'Jl. Tuparev No. 78, Cikampek',
             ],
             [
-                'email' => 'pt.logistik@bkk.com',
+                'email' => 'pt.logistik@gmail.com',
                 'name'  => 'PT Cepat Kirim Logistik',
                 'industry' => 'Logistik & Transportasi',
                 'description' => 'Perusahaan logistik dan pengiriman barang dengan armada lengkap mencakup seluruh Jawa Barat.',
@@ -80,12 +80,20 @@ class DummyDataSeeder extends Seeder
                 'address' => 'Jl. Bypass Tanjungpura No. 5, Cikampek',
             ],
             [
-                'email' => 'pt.hotel@bkk.com',
+                'email' => 'pt.hotel@gmail.com',
                 'name'  => 'PT Cikampek Hospitality',
                 'industry' => 'Perhotelan & Pariwisata',
                 'description' => 'Pengelola jaringan hotel bintang tiga di kawasan industri Cikampek dengan standar pelayanan internasional.',
                 'website' => 'https://Cikampekhospitality.com',
                 'address' => 'Jl. Arteri Tol No. 99, Cikampek',
+            ],
+            [
+                'email' => 'pt.contoh@gmail.com',
+                'name'  => 'PT Contoh BKK',
+                'industry' => 'Umum',
+                'description' => 'Perusahaan contoh untuk keperluan demonstrasi dan pengujian Mutu Career Center.',
+                'website' => 'https://contohbkk.example.com',
+                'address' => 'Jl. Contoh No. 1, Cikampek',
             ],
         ];
 
@@ -271,6 +279,22 @@ class DummyDataSeeder extends Seeder
                 'status'      => 'active',
                 'deadline'    => Carbon::now()->addDays(12),
             ],
+
+            // PT Contoh BKK
+            [
+                'company_index' => 5,
+                'title'       => 'Staff Administrasi Umum',
+                'position'    => 'Admin',
+                'location'    => 'Cikampek',
+                'job_type'    => 'full_time',
+                'salary_min'  => 3000000,
+                'salary_max'  => 4000000,
+                'description' => "Dibutuhkan staff administrasi umum untuk mendukung operasional perusahaan contoh kami.\n\nTanggung jawab:\n- Input dan pengarsipan data\n- Membuat laporan rutin\n- Melayani korespondensi kantor\n- Berkoordinasi antar divisi",
+                'qualifications' => "- Lulusan SMK Administrasi Perkantoran / Akuntansi\n- Menguasai Microsoft Office\n- Teliti, rapi, dan komunikatif\n- Bersedia bekerja di kantor",
+                'benefits'    => "- Gaji pokok + tunjangan\n- BPJS Kesehatan & Ketenagakerjaan\n- Jam kerja teratur",
+                'status'      => 'active',
+                'deadline'    => Carbon::now()->addDays(30),
+            ],
         ];
 
         $jobs = [];
@@ -301,7 +325,7 @@ class DummyDataSeeder extends Seeder
     {
         $data = [
             [
-                'email' => 'budi.santoso@umum.bkk.com',
+                'email' => 'budi.santoso@gmail.com',
                 'name'  => 'Budi Santoso',
                 'phone' => '081234560001',
                 'bio'   => 'Lulusan SMK jurusan Teknik Mesin, siap bekerja keras dan belajar hal baru.',
@@ -310,7 +334,7 @@ class DummyDataSeeder extends Seeder
                 'address' => 'Jl. Melati No. 5, Cikampek Barat',
             ],
             [
-                'email' => 'siti.rahayu@umum.bkk.com',
+                'email' => 'siti.rahayu@gmail.com',
                 'name'  => 'Siti Rahayu',
                 'phone' => '081234560002',
                 'bio'   => 'Lulusan SMK Akuntansi dengan keahlian Microsoft Office dan pembukuan.',
@@ -319,7 +343,7 @@ class DummyDataSeeder extends Seeder
                 'address' => 'Jl. Anggrek No. 12, Cikampek',
             ],
             [
-                'email' => 'rizky.pratama@umum.bkk.com',
+                'email' => 'rizky.pratama@gmail.com',
                 'name'  => 'Rizky Pratama',
                 'phone' => '081234560003',
                 'bio'   => 'Lulusan RPL yang gemar coding dan pengembangan aplikasi web.',
@@ -328,7 +352,7 @@ class DummyDataSeeder extends Seeder
                 'address' => 'Perumahan Cikampek Baru Blok C No. 8',
             ],
             [
-                'email' => 'dewi.anggraini@umum.bkk.com',
+                'email' => 'dewi.anggraini@gmail.com',
                 'name'  => 'Dewi Anggraini',
                 'phone' => '081234560004',
                 'bio'   => 'Lulusan SMK Perhotelan yang bersemangat dan komunikatif.',
@@ -337,7 +361,7 @@ class DummyDataSeeder extends Seeder
                 'address' => 'Jl. Pramuka No. 33, Cikampek Timur',
             ],
             [
-                'email' => 'andi.kurniawan@umum.bkk.com',
+                'email' => 'andi.kurniawan@gmail.com',
                 'name'  => 'Andi Kurniawan',
                 'phone' => '081234560005',
                 'bio'   => 'Lulusan TKJ dengan keahlian jaringan komputer dan troubleshooting hardware.',
@@ -346,7 +370,7 @@ class DummyDataSeeder extends Seeder
                 'address' => 'Jl. Veteran No. 17, Cikampek',
             ],
             [
-                'email' => 'maya.fitriani@umum.bkk.com',
+                'email' => 'maya.fitriani@gmail.com',
                 'name'  => 'Maya Fitriani',
                 'phone' => '081234560006',
                 'bio'   => 'Lulusan Tata Boga yang kreatif dan berpengalaman dalam catering sekolah.',
@@ -355,7 +379,7 @@ class DummyDataSeeder extends Seeder
                 'address' => 'Jl. Pahlawan No. 21, Cikampek',
             ],
             [
-                'email' => 'dimas.setiawan@umum.bkk.com',
+                'email' => 'dimas.setiawan@gmail.com',
                 'name'  => 'Dimas Setiawan',
                 'phone' => '081234560007',
                 'bio'   => 'Lulusan Teknik Otomotif dengan pengalaman magang di bengkel resmi.',
@@ -364,13 +388,22 @@ class DummyDataSeeder extends Seeder
                 'address' => 'Desa Wadas, Cikampek Barat',
             ],
             [
-                'email' => 'nurul.hidayah@umum.bkk.com',
+                'email' => 'nurul.hidayah@gmail.com',
                 'name'  => 'Nurul Hidayah',
                 'phone' => '081234560008',
                 'bio'   => 'Lulusan Administrasi Perkantoran yang terorganisir dan bertanggung jawab.',
                 'preferred_position' => 'Staff Administrasi / Kasir',
                 'education_history' => "SMK MUTU Cikampek (Administrasi Perkantoran, lulus 2025)",
                 'address' => 'Jl. Cikarang No. 4, Cikampek',
+            ],
+            [
+                'email' => 'umum@gmail.com',
+                'name'  => 'Pengguna Demo BKK',
+                'phone' => '081234560000',
+                'bio'   => 'Akun demo pencari kerja untuk keperluan demonstrasi dan pengujian platform.',
+                'preferred_position' => 'Staff Administrasi / Customer Service',
+                'education_history' => 'SMA/SMK sederajat',
+                'address' => 'Cikampek',
             ],
         ];
 
@@ -441,6 +474,11 @@ class DummyDataSeeder extends Seeder
             // Nurul (Adm. Perkantoran) → admin & kasir
             [7, 5, 'accepted',     Carbon::now()->subDays(30)],
             [7, 4, 'rejected',     Carbon::now()->subDays(28)],
+
+            // Pengguna Demo (umum) → pt.contoh, pt.maju, pt.retail
+            [8, 9, 'submitted',    Carbon::now()->subDays(3)],
+            [8, 0, 'under_review', Carbon::now()->subDays(6)],
+            [8, 5, 'interviewed',  Carbon::now()->subDays(9)],
         ];
 
         $coverLetters = [
@@ -487,6 +525,7 @@ class DummyDataSeeder extends Seeder
             [5, 6], [5, 7],
             [6, 0], [6, 1],
             [7, 4], [7, 5],
+            [8, 9], [8, 0], [8, 5],
         ];
 
         foreach ($bookmarks as [$si, $ji]) {
