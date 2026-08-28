@@ -35,11 +35,40 @@ Route::get("/events/{event}", [EventController::class, "show"])->name("events.sh
 Route::get("/news", [NewsController::class, "index"])->name("news.index");
 Route::get("/news/{news}", [NewsController::class, "show"])->name("news.show");
 
+// SEO: Sitemap
+Route::get("/sitemap.xml", function () {
+    $urls = collect([
+        url("/"),
+        route("jobs.index"),
+        route("events.index"),
+        route("news.index"),
+    ]);
+
+    foreach (\App\Models\Job::where("status", "active")->latest()->get() as $job) {
+        $urls->push(route("jobs.show", $job));
+    }
+    foreach (\App\Models\News::where("is_published", true)->latest()->get() as $news) {
+        $urls->push(route("news.show", $news));
+    }
+    foreach (\App\Models\Event::latest()->get() as $event) {
+        $urls->push(route("events.show", $event));
+    }
+
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+    foreach ($urls->unique() as $url) {
+        $xml .= '  <url><loc>' . e($url) . '</loc></url>' . "\n";
+    }
+    $xml .= '</urlset>';
+
+    return response($xml, 200, ["Content-Type" => "application/xml"]);
+});
+
 // Auth Routes
 require __DIR__ . "/auth.php";
 
 // Authenticated Routes with rate limiting
-Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
+Route::middleware(["auth", "throttle:60,1"])->group(function () {
     // Dashboard
     Route::get("/dashboard", [DashboardController::class, "index"])->name(
         "dashboard",
@@ -174,7 +203,7 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
     ])->middleware('throttle:send-message')->name("messages.send");
 
     // Admin Routes
-    Route::middleware("role:admin")
+    Route::middleware(["role:admin", "log.activity"])
         ->prefix("admin")
         ->name("admin.")
         ->group(function () {
@@ -231,6 +260,14 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
                 App\Http\Controllers\Admin\JobController::class,
                 "broadcast",
             ])->name("jobs.broadcast");
+            Route::post("jobs/{job}/approve", [
+                App\Http\Controllers\Admin\JobController::class,
+                "approve",
+            ])->name("jobs.approve");
+            Route::post("jobs/{job}/reject", [
+                App\Http\Controllers\Admin\JobController::class,
+                "reject",
+            ])->name("jobs.reject");
             Route::resource(
                 "news",
                 App\Http\Controllers\Admin\NewsController::class,
@@ -259,6 +296,26 @@ Route::middleware(["auth", "verified", "throttle:60,1"])->group(function () {
                 App\Http\Controllers\Admin\ReportController::class,
                 "exportExcel",
             ])->name("reports.export-excel");
+            Route::get("/reports/export-pdf", [
+                App\Http\Controllers\Admin\ReportController::class,
+                "exportPdf",
+            ])->name("reports.export-pdf");
+
+            // Audit log aktivitas admin
+            Route::get("/activities", [
+                App\Http\Controllers\Admin\ActivityController::class,
+                "index",
+            ])->name("activities.index");
+
+            // Personal Access Token (Sanctum) untuk admin
+            Route::get("/api-tokens", [
+                App\Http\Controllers\Admin\ApiTokenController::class,
+                "index",
+            ])->name("api-tokens.index");
+            Route::post("/api-tokens", [
+                App\Http\Controllers\Admin\ApiTokenController::class,
+                "store",
+            ])->name("api-tokens.store");
         });
 });
 

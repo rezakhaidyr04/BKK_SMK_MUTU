@@ -68,14 +68,8 @@
                             <input type="date" name="deadline" value="{{ old('deadline') }}" class="ui-input w-full">
                             @error('deadline')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-2">Status <span class="text-red-600">*</span></label>
-                            <select name="status" required class="ui-input w-full">
-                                <option value="active" {{ old('status') === 'active' ? 'selected' : '' }}>Aktif</option>
-                                <option value="inactive" {{ old('status') === 'inactive' ? 'selected' : '' }}>Nonaktif</option>
-                                <option value="closed" {{ old('status') === 'closed' ? 'selected' : '' }}>Ditutup</option>
-                            </select>
-                            @error('status')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
+                        <div class="rounded-xl bg-blue-50 border border-blue-100 p-4 text-sm text-blue-800">
+                            Lowongan yang Anda buat akan berstatus <strong>Menunggu Persetujuan</strong> dan baru dipublikasikan setelah diverifikasi oleh admin BKK.
                         </div>
                     </div>
                 </x-ui.panel>

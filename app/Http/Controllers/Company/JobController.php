@@ -61,14 +61,14 @@ class JobController extends Controller
             'qualifications' => ['required', 'string'],
             'benefits' => ['nullable', 'string'],
             'deadline' => ['nullable', 'date'],
-            'status' => ['required', 'string'],
         ]);
 
         $validated['company_id'] = $request->user()->company?->id;
         $validated['company_name'] = $request->user()->company?->name ?? $validated['company_name'];
+        $validated['status'] = 'pending';
 
         Job::create($validated);
 
-        return redirect()->route('company.jobs.index')->with('success', 'Lowongan berhasil dibuat.');
+        return redirect()->route('company.jobs.index')->with('success', 'Lowongan berhasil dibuat dan menunggu persetujuan admin.');
     }
 }

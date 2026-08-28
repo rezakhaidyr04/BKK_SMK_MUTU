@@ -5,7 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'BKK SMK MUTU') }}</title>
+        <title>{{ $seoTitle ?? config('app.name', 'BKK SMK MUTU') }}</title>
+        <meta name="description" content="{{ $seoDescription ?? 'Bursa Kerja Khusus (BKK) SMK MUTU — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.' }}">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{{ $seoTitle ?? config('app.name', 'BKK SMK MUTU') }}">
+        <meta property="og:description" content="{{ $seoDescription ?? 'Bursa Kerja Khusus (BKK) SMK MUTU — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.' }}">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta name="twitter:card" content="summary">
+        <link rel="canonical" href="{{ url()->current() }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">

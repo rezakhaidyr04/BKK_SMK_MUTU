@@ -1,4 +1,4 @@
-﻿<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true" title="Berita Karir — BKK SMK MUTU" description="Informasi terbaru seputar dunia kerja, tips karir, dan pengumuman dari BKK SMK MUTU.">
     <div class="page-shell">
         <x-ui.page-hero
             title="Berita Karir Terbaru"

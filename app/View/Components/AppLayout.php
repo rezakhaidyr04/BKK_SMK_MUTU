@@ -9,6 +9,8 @@ class AppLayout extends Component
 {
     public function __construct(
         public bool $fullBleed = false,
+        public ?string $title = null,
+        public ?string $description = null,
     ) {}
 
     /**
@@ -16,6 +18,9 @@ class AppLayout extends Component
      */
     public function render(): View
     {
-        return view('layouts.app');
+        return view('layouts.app', [
+            'seoTitle' => $this->title,
+            'seoDescription' => $this->description,
+        ]);
     }
 }

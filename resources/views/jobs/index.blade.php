@@ -1,4 +1,4 @@
-﻿<x-app-layout :full-bleed="true">
+﻿<x-app-layout :full-bleed="true" title="Lowongan Kerja — BKK SMK MUTU" description="Daftar lowongan kerja terbaru dari perusahaan mitra BKK SMK MUTU. Temukan peluang karier untuk siswa dan alumni.">
     <div class="page-shell">
     <!-- Hero Search Section -->
     <section class="border-b border-slate-200 pt-8 pb-10" style="background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 60%, var(--navy-2) 100%);">

@@ -39,3 +39,34 @@ window.Alpine = Alpine;
 })();
 
 Alpine.start();
+
+// A/B testing: teruskan event yang di-dispatch dari Alpine ke endpoint tracking.
+function trackAbTest(eventName, variant) {
+    if (!eventName) return;
+
+    const token = document.querySelector('meta[name="csrf-token"]')?.content;
+
+    fetch('/ab-test/track', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': token,
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: JSON.stringify({ event: eventName, variant: variant ?? null }),
+    }).catch(() => {});
+}
+
+document.addEventListener('ab-test-track', (e) => {
+    const detail = e.detail || {};
+    trackAbTest(detail.event, detail.variant);
+});
+
+// Lacak impression (variasi yang benar-benar ditampilkan) sekali saat halaman dimuat.
+document.addEventListener('DOMContentLoaded', () => {
+    const el = document.querySelector('[data-ab-variant]');
+    if (el) {
+        trackAbTest('impression', el.dataset.abVariant);
+    }
+});

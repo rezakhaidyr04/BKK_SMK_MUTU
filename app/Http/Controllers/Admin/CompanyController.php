@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminCompanyCreateAccountRequest;
+use App\Http\Requests\AdminCompanyRejectRequest;
+use App\Http\Requests\AdminCompanyStoreRequest;
+use App\Http\Requests\AdminCompanyUpdateRequest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -51,22 +55,9 @@ class CompanyController extends Controller
     // ─────────────────────────────────────────────────────────────
     // STORE — Simpan perusahaan baru (belum ada akun user)
     // ─────────────────────────────────────────────────────────────
-    public function store(Request $request)
+    public function store(AdminCompanyStoreRequest $request)
     {
-        $validated = $request->validate([
-            'name'            => ['required', 'string', 'max:255'],
-            'industry'        => ['nullable', 'string', 'max:255'],
-            'description'     => ['nullable', 'string'],
-            'website'         => ['nullable', 'url', 'max:255'],
-            'email'           => ['nullable', 'email', 'max:255'],
-            'phone'           => ['nullable', 'string', 'max:50'],
-            'address'         => ['nullable', 'string', 'max:500'],
-            'tax_number'      => ['nullable', 'string', 'max:100'],
-            'mou_path'        => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
-            'mou_number'      => ['nullable', 'string', 'max:255'],
-            'mou_signed_at'   => ['nullable', 'date'],
-            'mou_expires_at'  => ['nullable', 'date', 'after_or_equal:mou_signed_at'],
-        ]);
+        $validated = $request->validated();
 
         // Handle MoU file upload (private disk)
         $mouPath = null;
@@ -121,23 +112,9 @@ class CompanyController extends Controller
     // ─────────────────────────────────────────────────────────────
     // UPDATE
     // ─────────────────────────────────────────────────────────────
-    public function update(Request $request, Company $company)
+    public function update(AdminCompanyUpdateRequest $request, Company $company)
     {
-        $validated = $request->validate([
-            'name'           => ['required', 'string', 'max:255'],
-            'industry'       => ['nullable', 'string', 'max:255'],
-            'description'    => ['nullable', 'string'],
-            'website'        => ['nullable', 'url', 'max:255'],
-            'email'          => ['nullable', 'email', 'max:255'],
-            'phone'          => ['nullable', 'string', 'max:50'],
-            'address'        => ['nullable', 'string', 'max:500'],
-            'tax_number'     => ['nullable', 'string', 'max:100'],
-            'mou_path'       => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
-            'mou_number'     => ['nullable', 'string', 'max:255'],
-            'mou_signed_at'  => ['nullable', 'date'],
-            'mou_expires_at' => ['nullable', 'date', 'after_or_equal:mou_signed_at'],
-            'is_verified'    => ['nullable', 'boolean'],
-        ]);
+        $validated = $request->validated();
 
         // Handle MoU file upload
         if ($request->hasFile('mou_path')) {
@@ -183,11 +160,9 @@ class CompanyController extends Controller
     // ─────────────────────────────────────────────────────────────
     // REJECT — wajib ada rejection_reason
     // ─────────────────────────────────────────────────────────────
-    public function reject(Request $request, Company $company)
+    public function reject(AdminCompanyRejectRequest $request, Company $company)
     {
-        $validated = $request->validate([
-            'rejection_reason' => ['required', 'string', 'max:500'],
-        ]);
+        $validated = $request->validated();
 
         $company->update([
             'is_verified'         => false,
@@ -247,7 +222,7 @@ class CompanyController extends Controller
     // ─────────────────────────────────────────────────────────────
     // CREATE ACCOUNT — hanya untuk perusahaan APPROVED & belum punya akun
     // ─────────────────────────────────────────────────────────────
-    public function createAccount(Request $request, Company $company)
+    public function createAccount(AdminCompanyCreateAccountRequest $request, Company $company)
     {
         // 1. Hanya perusahaan yang SUDAH APPROVED yang boleh dibuatkan akun
         if (! $company->isApproved()) {
@@ -264,17 +239,7 @@ class CompanyController extends Controller
         }
 
         // 3. Tentukan email: prioritaskan companies.email, lalu minta admin input
-        $validated = $request->validate([
-            'email' => [
-                'required',
-                'email',
-                'max:255',
-                'unique:users,email',   // Email harus unik di tabel users
-            ],
-        ], [
-            'email.unique'   => 'Email ini sudah digunakan oleh akun lain.',
-            'email.required' => 'Email login diperlukan untuk membuat akun.',
-        ]);
+        $validated = $request->validated();
 
         // 4. Generate password sementara yang aman (12 karakter)
         $plainPassword = Str::password(12, letters: true, numbers: true, symbols: false);

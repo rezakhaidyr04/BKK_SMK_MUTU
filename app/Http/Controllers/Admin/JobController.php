@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminJobStoreRequest;
+use App\Http\Requests\AdminJobUpdateRequest;
 use App\Models\Job;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class JobController extends Controller
 {
@@ -40,22 +41,9 @@ class JobController extends Controller
         return view('admin.jobs.create');
     }
 
-    public function store(Request $request)
+    public function store(AdminJobStoreRequest $request)
     {
-        $validated = $request->validate([
-            'company_name' => ['required', 'string', 'max:255'],
-            'title' => ['required', 'string', 'max:255'],
-            'position' => ['nullable', 'string', 'max:255'],
-            'location' => ['nullable', 'string', 'max:255'],
-            'job_type' => ['nullable', Rule::in(['full_time', 'part_time', 'internship', 'contract'])],
-            'salary_min' => ['nullable', 'numeric', 'min:0'],
-            'salary_max' => ['nullable', 'numeric', 'min:0'],
-            'description' => ['nullable', 'string'],
-            'qualifications' => ['nullable', 'string'],
-            'benefits' => ['nullable', 'string'],
-            'deadline' => ['nullable', 'date'],
-            'status' => ['required', Rule::in(['active', 'closed', 'draft'])],
-        ]);
+        $validated = $request->validated();
 
         Job::create($validated);
 
@@ -75,22 +63,9 @@ class JobController extends Controller
         return view('admin.jobs.edit', compact('job'));
     }
 
-    public function update(Request $request, Job $job)
+    public function update(AdminJobUpdateRequest $request, Job $job)
     {
-        $validated = $request->validate([
-            'company_name' => ['required', 'string', 'max:255'],
-            'title' => ['required', 'string', 'max:255'],
-            'position' => ['nullable', 'string', 'max:255'],
-            'location' => ['nullable', 'string', 'max:255'],
-            'job_type' => ['nullable', Rule::in(['full_time', 'part_time', 'internship', 'contract'])],
-            'salary_min' => ['nullable', 'numeric', 'min:0'],
-            'salary_max' => ['nullable', 'numeric', 'min:0'],
-            'description' => ['nullable', 'string'],
-            'qualifications' => ['nullable', 'string'],
-            'benefits' => ['nullable', 'string'],
-            'deadline' => ['nullable', 'date'],
-            'status' => ['required', Rule::in(['active', 'closed', 'draft'])],
-        ]);
+        $validated = $request->validated();
 
         $job->update($validated);
 
@@ -114,5 +89,21 @@ class JobController extends Controller
 
         return redirect()->back()
             ->with('success', 'Notifikasi lowongan kerja berhasil di-broadcast ke ' . $jobseekers->count() . ' pencari kerja melalui email.');
+    }
+
+    public function approve(Job $job)
+    {
+        $job->update(['status' => 'active']);
+
+        return redirect()->route('admin.jobs.index')
+            ->with('success', 'Lowongan disetujui dan dipublikasikan.');
+    }
+
+    public function reject(Job $job)
+    {
+        $job->update(['status' => 'rejected']);
+
+        return redirect()->route('admin.jobs.index')
+            ->with('success', 'Lowongan ditolak.');
     }
 }

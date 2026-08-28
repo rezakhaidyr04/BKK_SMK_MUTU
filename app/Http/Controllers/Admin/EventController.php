@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminEventStoreRequest;
+use App\Http\Requests\AdminEventUpdateRequest;
 use App\Models\Event;
 use App\Services\ImageProcessor;
 use Illuminate\Http\Request;
@@ -32,17 +34,9 @@ class EventController extends Controller
         return view('admin.events.create');
     }
 
-    public function store(Request $request)
+    public function store(AdminEventStoreRequest $request)
     {
-        $validated = $request->validate([
-            'title'       => ['required', 'string', 'max:255'],
-            'type'        => ['required', 'string', 'in:job_fair,seminar,workshop,pelatihan,lainnya'],
-            'description' => ['required', 'string'],
-            'start_time'  => ['required', 'date'],
-            'end_time'    => ['nullable', 'date', 'after:start_time'],
-            'location'    => ['required', 'string', 'max:255'],
-            'poster'      => ['nullable', 'image', 'max:3072', 'mimes:jpg,jpeg,png,webp'],
-        ]);
+        $validated = $request->validated();
 
         if ($request->hasFile('poster')) {
             $processor = new ImageProcessor(quality: 82, maxWidth: 1200, maxHeight: 900);
@@ -64,17 +58,9 @@ class EventController extends Controller
         return view('admin.events.edit', compact('event'));
     }
 
-    public function update(Request $request, Event $event)
+    public function update(AdminEventUpdateRequest $request, Event $event)
     {
-        $validated = $request->validate([
-            'title'       => ['required', 'string', 'max:255'],
-            'type'        => ['required', 'string', 'in:job_fair,seminar,workshop,pelatihan,lainnya'],
-            'description' => ['required', 'string'],
-            'start_time'  => ['required', 'date'],
-            'end_time'    => ['nullable', 'date', 'after:start_time'],
-            'location'    => ['required', 'string', 'max:255'],
-            'poster'      => ['nullable', 'image', 'max:3072', 'mimes:jpg,jpeg,png,webp'],
-        ]);
+        $validated = $request->validated();
 
         if ($request->hasFile('poster')) {
             if ($event->poster) {

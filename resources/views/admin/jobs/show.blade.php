@@ -13,14 +13,9 @@
                 <div class="lg:col-span-1 space-y-4">
                     <div class="bg-white rounded-2xl shadow-lg p-5 space-y-3 text-sm">
                         <h3 class="font-bold text-gray-900 text-base mb-3">Detail Lowongan</h3>
-                        @php
-                            $statusColors = ['active'=>'bg-green-100 text-green-700','inactive'=>'bg-gray-100 text-gray-700','closed'=>'bg-red-100 text-red-700','draft'=>'bg-yellow-100 text-yellow-700'];
-                        @endphp
                         <div class="flex items-center justify-between">
                             <span class="text-gray-500">Status</span>
-                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold {{ $statusColors[$job->status] ?? 'bg-gray-100 text-gray-700' }}">
-                                {{ \App\Support\Label::jobStatus($job->status) }}
-                            </span>
+                            <x-ui.status-badge :status="$job->status" />
                         </div>
                         <div class="flex items-center justify-between border-t border-gray-100 pt-3">
                             <span class="text-gray-500">Lokasi</span>
@@ -61,7 +56,20 @@
                             </svg>
                             Broadcast ke Pencari Kerja
                         </button>
-                    </form>
+                        </form>
+
+                        @if($job->status === 'pending')
+                        <div class="flex gap-2 mt-3">
+                            <form action="{{ route('admin.jobs.approve', $job) }}" method="POST" class="flex-1" onsubmit="return confirm('Setujui dan publikasikan lowongan ini?');">
+                                @csrf
+                                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-2.5 px-4 rounded-xl transition">Setujui</button>
+                            </form>
+                            <form action="{{ route('admin.jobs.reject', $job) }}" method="POST" class="flex-1" onsubmit="return confirm('Tolak lowongan ini?');">
+                                @csrf
+                                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-2.5 px-4 rounded-xl transition">Tolak</button>
+                            </form>
+                        </div>
+                        @endif
                 </div>
 
                 <!-- Konten utama -->

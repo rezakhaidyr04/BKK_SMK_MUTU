@@ -7,6 +7,7 @@ use App\Models\Application;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\Event;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -92,33 +93,55 @@ class ReportController extends Controller
             ['Lamaran Diwawancara',         Application::where('status', 'interviewed')->count()],
         ];
 
-        // Build HTML table — browsers recognize this as Excel-compatible XLS
-        $html  = '<html xmlns:o="urn:schemas-microsoft-com:office:office" ';
-        $html .= 'xmlns:x="urn:schemas-microsoft-com:office:excel" ';
-        $html .= 'xmlns="http://www.w3.org/TR/REC-html40">';
-        $html .= '<head><meta charset="UTF-8"><meta name=ProgId content=Excel.Sheet>';
-        $html .= '<style>body{font-family:Arial,sans-serif;font-size:11pt;}';
-        $html .= 'th{background:#2563eb;color:#fff;padding:8px 12px;text-align:left;font-weight:bold;}';
-        $html .= 'td{padding:8px 12px;border-bottom:1px solid #e2e8f0;}';
-        $html .= 'tr:nth-child(even) td{background:#f8fafc;}';
-        $html .= '</style></head><body>';
-        $html .= '<h2 style="font-family:Arial;color:#1e3a8a;">Laporan BKK SMK MUTU — ' . now()->format('d M Y') . '</h2>';
-        $html .= '<table border="1" cellspacing="0">';
+        // Real Excel 2003 XML (SpreadsheetML) — opens natively in Excel
+        $xml = '<?xml version="1.0"?>' . "\n";
+        $xml .= '<?mso-application progid="Excel.Sheet"?>' . "\n";
+        $xml .= '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" ';
+        $xml .= 'xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">' . "\n";
+        $xml .= '  <Worksheet ss:Name="Laporan BKK">' . "\n";
+        $xml .= '    <Table>' . "\n";
 
-        foreach ($rows as $i => $row) {
-            $html .= '<tr>';
+        foreach ($rows as $row) {
+            $xml .= '      <Row>' . "\n";
             foreach ($row as $cell) {
-                $tag   = ($i === 0) ? 'th' : 'td';
-                $html .= "<{$tag}>" . htmlspecialchars((string) $cell) . "</{$tag}>";
+                $type = is_numeric($cell) ? 'Number' : 'String';
+                $value = htmlspecialchars((string) $cell, ENT_XML1);
+                $xml .= '        <Cell><Data ss:Type="' . $type . '">' . $value . '</Data></Cell>' . "\n";
             }
-            $html .= '</tr>';
+            $xml .= '      </Row>' . "\n";
         }
 
-        $html .= '</table></body></html>';
+        $xml .= '    </Table>' . "\n";
+        $xml .= '  </Worksheet>' . "\n";
+        $xml .= '</Workbook>';
 
-        return response($html, 200, [
+        return response($xml, 200, [
             'Content-Type'        => 'application/vnd.ms-excel; charset=utf-8',
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ]);
+    }
+
+    public function exportPdf()
+    {
+        $rows = [
+            ['Total Pencari Kerja',         User::where('role', 'umum')->count()],
+            ['Total Lowongan',              Job::count()],
+            ['Lowongan Aktif',              Job::where('status', 'active')->count()],
+            ['Lowongan Ditutup',            Job::where('status', 'closed')->count()],
+            ['Total Lamaran',               Application::count()],
+            ['Lamaran Diajukan',            Application::where('status', 'submitted')->count()],
+            ['Lamaran Diterima',            Application::where('status', 'accepted')->count()],
+            ['Lamaran Ditolak',             Application::where('status', 'rejected')->count()],
+            ['Lamaran Diwawancara',         Application::where('status', 'interviewed')->count()],
+        ];
+
+        $filename = 'laporan-bkk-' . now()->format('YmdHis') . '.pdf';
+
+        $pdf = Pdf::loadView('admin.reports.pdf', [
+            'rows' => $rows,
+            'generatedAt' => now()->format('d F Y H:i'),
+        ]);
+
+        return $pdf->download($filename);
     }
 }

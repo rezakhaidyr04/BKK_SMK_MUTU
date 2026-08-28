@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminNewsStoreRequest;
+use App\Http\Requests\AdminNewsUpdateRequest;
+use App\Http\Requests\AdminNewsUploadImageRequest;
 use App\Models\News;
 use App\Services\ImageProcessor;
 use Illuminate\Http\Request;
@@ -39,15 +42,9 @@ class NewsController extends Controller
         return view('admin.news.create');
     }
 
-    public function store(Request $request)
+    public function store(AdminNewsStoreRequest $request)
     {
-        $validated = $request->validate([
-            'title'        => ['required', 'string', 'max:255'],
-            'category'     => ['nullable', 'string', 'max:100'],
-            'content'      => ['required', 'string'],
-            'thumbnail'    => ['nullable', 'image', 'max:2048', 'mimes:jpg,jpeg,png,webp'],
-            'is_published' => ['nullable', 'boolean'],
-        ]);
+        $validated = $request->validated();
 
         $slug = Str::slug($validated['title']);
         $baseSlug = $slug;
@@ -85,15 +82,9 @@ class NewsController extends Controller
         return view('admin.news.edit', compact('news'));
     }
 
-    public function update(Request $request, News $news)
+    public function update(AdminNewsUpdateRequest $request, News $news)
     {
-        $validated = $request->validate([
-            'title'        => ['required', 'string', 'max:255'],
-            'category'     => ['nullable', 'string', 'max:100'],
-            'content'      => ['required', 'string'],
-            'thumbnail'    => ['nullable', 'image', 'max:2048', 'mimes:jpg,jpeg,png,webp'],
-            'is_published' => ['nullable', 'boolean'],
-        ]);
+        $validated = $request->validated();
 
         if ($request->hasFile('thumbnail')) {
             if ($news->thumbnail) {
@@ -132,11 +123,9 @@ class NewsController extends Controller
             ->with('success', 'Berita berhasil dihapus.');
     }
 
-    public function uploadImage(Request $request)
+    public function uploadImage(AdminNewsUploadImageRequest $request)
     {
-        $request->validate([
-            'image' => ['required', 'image', 'max:5120', 'mimes:jpg,jpeg,png,webp,gif'],
-        ]);
+        $request->validated();
 
         $processor = new ImageProcessor(quality: 80, maxWidth: 1200, maxHeight: 1200);
         $path = $processor->store(

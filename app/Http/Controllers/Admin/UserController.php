@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminUserStoreRequest;
+use App\Http\Requests\AdminUserUpdateRequest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -60,19 +61,9 @@ class UserController extends Controller
         return view("admin.users.create");
     }
 
-    public function store(Request $request)
+    public function store(AdminUserStoreRequest $request)
     {
-        $validated = $request->validate([
-            "name" => ["required", "string", "max:255"],
-            "email" => ["required", "email", "max:255", "unique:users,email"],
-            "role" => [
-                "required",
-                Rule::in(["admin", "umum", "company"]),
-            ],
-            "password" => ["required", "string", "min:8", "confirmed"],
-            "password_confirmation" => ["required"],
-            "is_active" => ["nullable", "boolean"],
-        ]);
+        $validated = $request->validated();
 
         $user = User::create([
             "name" => $validated["name"],
@@ -102,23 +93,9 @@ class UserController extends Controller
             ->with("success", "Pengguna baru berhasil dibuat.");
     }
 
-    public function update(Request $request, User $user)
+    public function update(AdminUserUpdateRequest $request, User $user)
     {
-        $validated = $request->validate([
-            "name" => ["required", "string", "max:255"],
-            "email" => [
-                "required",
-                "email",
-                "max:255",
-                Rule::unique("users")->ignore($user->id),
-            ],
-            "role" => [
-                "required",
-                Rule::in(["admin", "umum", "company"]),
-            ],
-            "is_active" => ["nullable", "boolean"],
-            "password" => ["nullable", "string", "min:8"],
-        ]);
+        $validated = $request->validated();
 
         if ($user->id === auth()->id() && $validated["role"] !== $user->role) {
             return back()->with(

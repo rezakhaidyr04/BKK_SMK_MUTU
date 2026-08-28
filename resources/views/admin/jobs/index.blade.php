@@ -25,6 +25,7 @@
                         <select name="status" class="ui-select">
                             <option value="">Semua</option>
                             <option value="active"   {{ request('status') == 'active'   ? 'selected' : '' }}>Aktif</option>
+                            <option value="pending"  {{ request('status') == 'pending'  ? 'selected' : '' }}>Menunggu</option>
                             <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Nonaktif</option>
                             <option value="closed"   {{ request('status') == 'closed'   ? 'selected' : '' }}>Ditutup</option>
                         </select>
@@ -63,6 +64,18 @@
                                     <div class="ui-table-actions">
                                         <a href="{{ route('admin.jobs.show', $job) }}" class="text-blue-600 hover:text-blue-800">Lihat</a>
                                         <a href="{{ route('admin.jobs.edit', $job) }}" class="text-blue-600 hover:text-blue-800">Ubah</a>
+                                        @if($job->status === 'pending')
+                                        <form action="{{ route('admin.jobs.approve', $job) }}" method="POST" class="inline"
+                                              onsubmit="return confirm('Setujui dan publikasikan lowongan ini?');">
+                                            @csrf
+                                            <button type="submit" class="text-green-600 hover:text-green-800 font-semibold text-sm">Setujui</button>
+                                        </form>
+                                        <form action="{{ route('admin.jobs.reject', $job) }}" method="POST" class="inline"
+                                              onsubmit="return confirm('Tolak lowongan ini?');">
+                                            @csrf
+                                            <button type="submit" class="text-red-600 hover:text-red-800 font-semibold text-sm">Tolak</button>
+                                        </form>
+                                        @endif
                                         <form action="{{ route('admin.jobs.destroy', $job) }}" method="POST" class="inline"
                                               onsubmit="return confirm('Hapus lowongan ini?');">
                                             @csrf @method('DELETE')

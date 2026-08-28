@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Services\ABTestingService;
-use App\Services\PartnerLogoService;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
@@ -17,20 +16,12 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
-            \App\Interfaces\JobRepositoryInterface::class,
-            \App\Repositories\JobRepository::class
-        );
-        $this->app->bind(
             \App\Interfaces\ApplicationRepositoryInterface::class,
             \App\Repositories\ApplicationRepository::class
         );
 
         $this->app->singleton(ABTestingService::class, function () {
             return new ABTestingService();
-        });
-
-        $this->app->singleton(PartnerLogoService::class, function () {
-            return new PartnerLogoService();
         });
     }
 
