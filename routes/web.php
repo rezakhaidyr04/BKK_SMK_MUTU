@@ -115,6 +115,7 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
         Route::get("/jobs/create", [App\Http\Controllers\Company\JobController::class, "create"])->name("jobs.create");
         Route::post("/jobs", [App\Http\Controllers\Company\JobController::class, "store"])->name("jobs.store");
         Route::get("/applicants", [App\Http\Controllers\Company\ApplicantController::class, "index"])->name("applicants.index");
+        Route::get("/applicants/{application}", [App\Http\Controllers\Company\ApplicantController::class, "show"])->name("applicants.show");
         Route::patch("/applications/{application}", [App\Http\Controllers\Company\ApplicantController::class, "update"])->name("applications.update");
         Route::get("/profile", [App\Http\Controllers\Company\ProfileController::class, "edit"])->name("profile.edit");
         Route::put("/profile", [App\Http\Controllers\Company\ProfileController::class, "update"])->name("profile.update");

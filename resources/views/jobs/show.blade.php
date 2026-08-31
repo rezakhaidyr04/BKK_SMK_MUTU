@@ -3,7 +3,7 @@
         <x-ui.page-hero 
             title="{{ $job->title }}" 
             subtitle="{{ $job->company_name ?? 'Detail lowongan pekerjaan' }}"
-            :back-url="route('jobs.index')"
+            :back-url="auth()->user()->isCompany() ? route('company.jobs.index') : route('jobs.index')"
             back-label="Kembali ke Lowongan"
         />
         <div class="min-h-screen bg-[#F8FAFC] pb-12" x-data="{ activeTab: 'deskripsi' }">

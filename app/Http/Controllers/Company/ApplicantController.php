@@ -26,6 +26,22 @@ class ApplicantController extends Controller
         return view('company.applicants.index', compact('applications', 'company'));
     }
 
+    public function show(Application $application)
+    {
+        $this->authorize('view', $application);
+
+        $application->load([
+            'job.company',
+            'user',
+            'user.skills',
+            'user.cvFiles',
+            'user.certificates',
+            'user.documents',
+        ]);
+
+        return view('company.applicants.show', compact('application'));
+    }
+
     public function update(Request $request, Application $application)
     {
         $this->authorize('update', $application);

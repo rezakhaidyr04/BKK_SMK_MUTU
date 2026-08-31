@@ -330,7 +330,7 @@
 
                                     {{-- DETAIL --}}
                                     <a
-                                        href="{{ route('applications.show', $application) }}"
+                                        href="{{ route('company.applicants.show', $application) }}"
                                         class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
                                     >
 
