@@ -78,9 +78,7 @@
 </style>
 
 <div class="page-shell bg-slate-50 min-h-screen">
-    <div class="page-container py-6">
-        <section class="space-y-6">
-            <x-ui.dashboard-hero
+    <x-ui.dashboard-hero
                 title="Dashboard Perusahaan"
                 subtitle="Kelola data perusahaan, lowongan, dan pelamar dalam satu halaman."
             >
@@ -96,6 +94,8 @@
                 </x-slot:actions>
             </x-ui.dashboard-hero>
 
+    <div class="page-container py-6">
+        <section class="space-y-6">
             @if($company && !($company->is_verified ?? false))
                 <div class="warning-card p-6">
                     <div class="warning-bg"></div>

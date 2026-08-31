@@ -69,6 +69,9 @@
     --radius-xl:   1rem;
     --radius-pill: 9999px;
 
+    /* Single source of vertical offset for the fixed navbar (matches sidebar top-16). */
+    --navbar-h: 4rem;
+
     /* Shadows */
     --shadow-subtle:   0 1px 2px rgba(15,23,42,0.06);
     --shadow-sm:       0 1px 3px rgba(15,23,42,0.08);
@@ -95,8 +98,13 @@ body {
 /* ============================================================
    3. PAGE STRUCTURE
    ============================================================ */
+
+/* --navbar-h is defined as a CSS var on :root so sidebar.css can also reference it */
+:root { --navbar-h: 64px; }
+
 .page-shell {
-    min-height: calc(100vh - 4rem);
+    /* min-height: pilih seluruh sisa viewport di bawah navbar */
+    min-height: calc(100vh - var(--navbar-h));
     background-color: var(--color-background);
 }
 
@@ -130,7 +138,7 @@ body {
 }
 
 .page-section {
-    padding-top: 2rem;
+    padding-top: 0;
     padding-bottom: 2rem;
 }
 
@@ -144,9 +152,9 @@ body {
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 24px rgba(7,23,51,0.25);
-    min-height: 130px;
+    min-height: 112px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 }
 
 /* Dekorasi gelombang kanan */
@@ -223,16 +231,16 @@ body {
     z-index: 2;
     max-width: 80rem;
     margin: 0 auto;
-    padding: 2.5rem 1rem;
+    padding: 1.5rem 1rem;
 }
 
 @media (min-width: 640px) {
-    .ui-page-hero-inner { padding: 2.75rem 1.5rem; }
+    .ui-page-hero-inner { padding: 1.75rem 1.5rem; }
 }
 
 @media (min-width: 1024px) {
     .ui-page-hero-inner {
-        padding: 2.25rem 4rem;
+        padding: 1.5rem 4rem;
     }
 }
 
@@ -1904,8 +1912,37 @@ footer {
     z-index: 50;
 }
 
-.main-content { padding-bottom: 2rem; }
+/* -------------------------------------------------------
+   GLOBAL LAYOUT POSITIONING
+   Navbar: fixed, height = var(--navbar-h) = 64px
+   Sidebar: fixed, top = var(--navbar-h)
+   Main content wrapper: margin-top = var(--navbar-h) (SATU KALI)
+------------------------------------------------------- */
 
+/* Wrapper utama konten — didorong menggunakan padding pada elemen main, bukan pada wrapper */
+.app-main-wrapper {
+    margin-top: 0;
+    padding-top: 0;
+    min-height: 100vh;
+    overflow-x: hidden;         /* cegah horizontal overflow global */
+}
+
+/* Main content area */
+.main-content {
+    padding-top: 0;
+    padding-bottom: 2rem;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;         /* cegah horizontal overflow */
+}
+
+/* Fade-in wrapper — pastikan tidak ada top spacing */
+.fade-in {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+/* Sidebar */
 aside.sidebar-container { z-index: 40; }
 
 @media (min-width: 1024px) {

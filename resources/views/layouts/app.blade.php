@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -59,36 +59,21 @@
         <div class="min-h-screen bg-neutral-50 dark:bg-neutral-950 flex flex-col">
             @include('layouts.navigation')
 
-            <!-- Wrapper that shifts when sidebar toggles so main+footer stay aligned -->
-            <div :class="['transition-all duration-300', sidebarOpen ? 'lg:ml-64' : 'lg:ml-0']" class="flex-1">
-                <!-- Main Content with proper margin for sidebar and top nav -->
-                <main class="main-content pt-16 flex-1">
+            <!-- Content area: .app-main-wrapper TIDAK memiliki spacing agar konsisten -->
+            <div :class="['app-main-wrapper transition-all duration-300', sidebarOpen ? 'lg:ml-64' : 'lg:ml-0']">
+                <!-- Kompensasi Navbar hanya SEKALI di sini -->
+                <main class="main-content" style="padding-top: 64px !important; margin-top: 0 !important;">@isset($header)<header class="app-page-header relative overflow-hidden shadow-sm" style="margin-top: 0 !important; padding-top: 0 !important; top: 0 !important; transform: translateY(0) !important;"><div class="pointer-events-none absolute inset-0"></div><div class="page-container py-6 relative">{{ $header }}</div></header>@elseif(View::hasSection('header'))<header class="app-page-header relative overflow-hidden shadow-sm" style="margin-top: 0 !important; padding-top: 0 !important; top: 0 !important; transform: translateY(0) !important;"><div class="pointer-events-none absolute inset-0"></div><div class="page-container py-6 relative">@yield('header')</div></header>@endif
+
+                    <!-- PAGE CONTENT -->
                     <div class="fade-in">
-
-                    @isset($header)
-                        <header class="app-page-header relative overflow-hidden shadow-lg">
-                            <div class="pointer-events-none absolute inset-0"></div>
-                            <div class="page-container py-9 relative">
-                                {{ $header }}
+                        @hasSection('content')
+                            @yield('content')
+                        @else
+                            <div class="@if($fullBleed ?? false) @else page-container page-section @endif">
+                                {{ $slot ?? '' }}
                             </div>
-                        </header>
-                    @elseif(View::hasSection('header'))
-                        <header class="app-page-header relative overflow-hidden shadow-lg">
-                            <div class="pointer-events-none absolute inset-0"></div>
-                            <div class="page-container py-9 relative">
-                                @yield('header')
-                            </div>
-                        </header>
-                    @endif
-
-                    @hasSection('content')
-                        @yield('content')
-                    @else
-                        <div class="@if($fullBleed ?? false) @else page-container page-section @endif">
-                            {{ $slot ?? '' }}
-                        </div>
-                    @endif
-                </div>
+                        @endif
+                    </div>
                 </main>
 
                 <!-- Footer -->

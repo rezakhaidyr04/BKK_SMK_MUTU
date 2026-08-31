@@ -151,7 +151,7 @@
 /* Improved spacing */
 .sidebar-container {
     /* position handled by HTML classes (fixed/absolute) — ensure it anchors between top and bottom */
-    top: 4rem; /* match top nav height */
+    top: var(--navbar-h, 64px); /* sync dengan navbar height via CSS variable */
     bottom: 0;
     height: auto;
     overflow: hidden;
