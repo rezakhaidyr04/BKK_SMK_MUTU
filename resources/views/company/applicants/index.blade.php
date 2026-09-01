@@ -119,8 +119,10 @@
 
                                     <div class="min-w-0">
 
-                                        <p class="truncate font-semibold text-slate-900">
-                                            {{ $application->user->name }}
+                                        <p class="truncate font-semibold text-slate-900 hover:text-blue-600 transition">
+                                            <a href="{{ route('company.applicants.show', $application) }}" class="hover:underline">
+                                                {{ $application->user->name }}
+                                            </a>
                                         </p>
 
                                         <p class="mt-0.5 truncate text-xs text-slate-400">
@@ -246,7 +248,7 @@
                             <td>
 
                                 <x-ui.status-badge :status="$application->status">
-                                    {{ ucfirst(str_replace('_', ' ', $application->status)) }}
+                                    {{ \App\Support\Label::applicationStatus($application->status) }}
                                 </x-ui.status-badge>
 
                             </td>

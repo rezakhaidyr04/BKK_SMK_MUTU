@@ -1,8 +1,8 @@
 @props(['title', 'subtitle' => null])
 
-<section class="relative text-white bg-gradient-to-br from-[#1a3a8f] to-[#2563eb]">
+<section {{ $attributes->merge(['class' => 'dashboard-hero relative text-white bg-gradient-to-br from-[#1a3a8f] to-[#2563eb]']) }}>
 
-    <div class="relative mx-auto max-w-7xl px-5 py-12 sm:px-8 sm:py-14">
+    <div class="relative mx-auto max-w-7xl px-5 py-6 sm:px-8 sm:py-6">
         <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div class="flex items-center gap-4">
                 @isset($icon)

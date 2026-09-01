@@ -6,7 +6,7 @@
     'backLabel' => 'Kembali',
 ])
 
-<div class="ui-page-hero">
+<div class="ui-page-hero page-banner">
     <div class="ui-page-hero-inner">
 
         {{-- Back Link --}}

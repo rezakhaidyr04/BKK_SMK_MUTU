@@ -78,7 +78,8 @@
 </style>
 
 <div class="page-shell bg-slate-50 min-h-screen">
-    <x-ui.dashboard-hero
+            <x-ui.dashboard-hero
+                class="page-banner"
                 title="Dashboard Perusahaan"
                 subtitle="Kelola data perusahaan, lowongan, dan pelamar dalam satu halaman."
             >
@@ -202,7 +203,7 @@
                                                     <svg style="width: 0.75rem; height: 0.75rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                                     {{ $application->created_at->diffForHumans() }}
                                                 </p>
-                                                <p style="margin: 0; sm:margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.65rem; font-weight: 700; padding: 0.125rem 0.375rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 0.25rem; display: inline-block;">{{ ucfirst($application->status) }}</p>
+                                                <p style="margin: 0; sm:margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.65rem; font-weight: 700; padding: 0.125rem 0.375rem; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 0.25rem; display: inline-block;">{{ \App\Support\Label::applicationStatus($application->status) }}</p>
                                             </div>
                                         </div>
                                     </div>

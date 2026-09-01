@@ -337,15 +337,48 @@
                 <!-- Right Sidebar -->
                 <div class="space-y-6">
                     
-                    <!-- Application Card -->
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                        @auth
-                            @if(!auth()->user()->isUmum())
-                                <div class="text-center py-4">
-                                    <h3 class="text-base font-bold text-gray-900 mb-1">Aksi tidak tersedia</h3>
-                                    <p class="text-xs text-gray-500">Melamar lowongan hanya tersedia untuk akun pencari kerja.</p>
-                                </div>
-                            @elseif($hasApplied)
+                     <!-- Application Card -->
+                     @auth
+                         @if(auth()->user()->isCompany() && $job->company_id === auth()->user()->company?->id)
+                             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                                 <div class="flex items-center justify-between mb-4">
+                                     <h3 class="text-lg font-bold text-slate-900">Lowongan Anda</h3>
+                                     <x-ui.status-badge :status="$job->status" />
+                                 </div>
+                                 <div class="grid grid-cols-3 gap-4 mb-6">
+                                     <div class="text-center p-3 bg-blue-50 rounded-xl">
+                                         <p class="text-2xl font-bold text-blue-600">{{ $job->applications->count() }}</p>
+                                         <p class="text-xs text-blue-600 font-semibold">Pelamar</p>
+                                     </div>
+                                     <div class="text-center p-3 bg-violet-50 rounded-xl">
+                                         <p class="text-2xl font-bold text-violet-600">{{ $job->applications->where('status', 'under_review')->count() }}</p>
+                                         <p class="text-xs text-violet-600 font-semibold">Ditinjau</p>
+                                     </div>
+                                     <div class="text-center p-3 bg-green-50 rounded-xl">
+                                         <p class="text-2xl font-bold text-green-600">{{ $job->applications->where('status', 'accepted')->count() }}</p>
+                                         <p class="text-xs text-green-600 font-semibold">Diterima</p>
+                                     </div>
+                                 </div>
+                                 <div class="flex flex-col gap-2">
+                                     <a href="{{ route('company.applicants.index') }}" class="w-full px-4 py-2.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors text-center">
+                                         Lihat Semua Pelamar
+                                     </a>
+                                     @if($job->status === 'pending')
+                                     <a href="{{ route('company.jobs.index') }}" class="w-full px-4 py-2.5 border border-slate-200 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 transition-colors text-center">
+                                         Kelola Lowongan
+                                     </a>
+                                     @endif
+                                     <a href="{{ route('company.jobs.index') }}" class="w-full px-4 py-2.5 border border-slate-200 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 transition-colors text-center">
+                                         Kembali ke Daftar Lowongan
+                                     </a>
+                                 </div>
+                             </div>
+                         @elseif(!auth()->user()->isUmum())
+                             <div class="text-center py-4">
+                                 <h3 class="text-base font-bold text-gray-900 mb-1">Aksi tidak tersedia</h3>
+                                 <p class="text-xs text-gray-500">Melamar lowongan hanya tersedia untuk akun pencari kerja.</p>
+                             </div>
+                         @elseif($hasApplied)
                                 <div class="text-center py-6">
                                     <div class="w-16 h-16 mx-auto mb-4 bg-green-50 rounded-full flex items-center justify-center">
                                         <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
