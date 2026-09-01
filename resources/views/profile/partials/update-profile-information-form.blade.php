@@ -184,19 +184,33 @@
 
             <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
+                    <x-input-label for="portfolio_url" value="Portofolio / Google Drive Link" class="text-slate-700 font-semibold mb-1" />
+                    <x-text-input id="portfolio_url" name="portfolio_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                                  :value="old('portfolio_url', $user->portfolio_url ?? '')"
+                                  placeholder="https://namaportofolio.com atau https://drive.google.com/..." />
+                    <p class="text-xs text-slate-400 mt-1">Portfolio website atau link Google Drive</p>
+                    <x-input-error class="mt-1.5" :messages="$errors->get('portfolio_url')" />
+                </div>
+
+                <div>
+                    <x-input-label for="portfolio_type" value="Tipe Portofolio" class="text-slate-700 font-semibold mb-1" />
+                    <select id="portfolio_type" name="portfolio_type" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm">
+                        <option value="">Pilih tipe portofolio</option>
+                        <option value="website" {{ old('portfolio_type', $user->portfolio_type ?? '') == 'website' ? 'selected' : '' }}>Portfolio Website</option>
+                        <option value="drive" {{ old('portfolio_type', $user->portfolio_type ?? '') == 'drive' ? 'selected' : '' }}>Google Drive</option>
+                    </select>
+                    <p class="text-xs text-slate-400 mt-1">Pilih tipe link portofolio Anda</p>
+                    <x-input-error class="mt-1.5" :messages="$errors->get('portfolio_type')" />
+                </div>
+            </div>
+
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
                     <x-input-label for="linkedin_url" value="LinkedIn" class="text-slate-700 font-semibold mb-1" />
                     <x-text-input id="linkedin_url" name="linkedin_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                   :value="old('linkedin_url', $user->linkedin_url ?? '')"
                                   placeholder="https://linkedin.com/in/namamu" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('linkedin_url')" />
-                </div>
-
-                <div>
-                    <x-input-label for="portfolio_url" value="Portofolio / Website" class="text-slate-700 font-semibold mb-1" />
-                    <x-text-input id="portfolio_url" name="portfolio_url" type="url" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
-                                  :value="old('portfolio_url', $user->portfolio_url ?? '')"
-                                  placeholder="https://namaportofolio.com" />
-                    <x-input-error class="mt-1.5" :messages="$errors->get('portfolio_url')" />
                 </div>
             </div>
 

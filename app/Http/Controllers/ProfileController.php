@@ -23,6 +23,7 @@ class ProfileController extends Controller
         "gender",
         "linkedin_url",
         "portfolio_url",
+        "portfolio_type",
     ];
 
     public function edit(Request $request): View|RedirectResponse

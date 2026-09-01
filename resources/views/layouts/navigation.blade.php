@@ -137,7 +137,7 @@
     </nav>
     @auth
     <!-- Desktop Sidebar -->
-    <aside x-show="sidebarOpen" x-cloak class="sidebar-container fixed left-0 top-16 w-64 bg-white border-r border-gray-200 shadow-sm z-40 hidden lg:block">
+    <aside x-show="sidebarOpen" x-cloak x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="sidebar-container fixed left-0 top-16 w-64 bg-white border-r border-gray-200 shadow-sm z-40 hidden lg:block">
         <div class="sidebar-content sidebar-scroll">
             <x-ui.sidebar-menu />
         </div>

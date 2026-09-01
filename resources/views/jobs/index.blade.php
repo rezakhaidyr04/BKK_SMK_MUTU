@@ -3,7 +3,7 @@
     <!-- Hero Search Section -->
     <section class="page-banner border-b border-slate-200 pt-8 pb-10" style="background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 60%, var(--navy-2) 100%);">
         <div class="page-container">
-            <div class="max-w-5xl">
+            <div class="w-full">
                 <div class="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white border border-white/20 mb-3">
                     Lowongan aktif · Filter cepat · Siap dilamar
                 </div>
@@ -26,7 +26,7 @@
                 </div>
 
                 <!-- Advanced Search Form -->
-                <form action="{{ route('jobs.index') }}" method="GET" class="max-w-5xl">
+                <form action="{{ route('jobs.index') }}" method="GET" class="w-full">
                     <div class="bg-white shadow-lg border border-slate-100 rounded-2xl p-5 md:p-6 mt-2">
                         <div class="flex items-center justify-between gap-3 mb-4">
                             <div>

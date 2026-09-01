@@ -55,14 +55,24 @@
                             @if($application->user->linkedin_url)
                             <div class="flex items-start gap-3 text-sm">
                                 <span class="text-slate-400">🔗</span>
-                                <a href="{{ $application->user->linkedin_url }}" target="_blank" class="text-blue-600 hover:underline break-all">{{ $application->user->linkedin_url }}</a>
+                                <div class="flex flex-col">
+                                    <a href="{{ $application->user->linkedin_url }}" target="_blank" class="text-blue-600 hover:underline">
+                                        LinkedIn - {{ $application->user->name }}
+                                    </a>
+                                    <span class="text-xs text-slate-400 mt-0.5">{{ $application->user->linkedin_url }}</span>
+                                </div>
                             </div>
                             @endif
 
                             @if($application->user->portfolio_url)
                             <div class="flex items-start gap-3 text-sm">
                                 <span class="text-slate-400">💼</span>
-                                <a href="{{ $application->user->portfolio_url }}" target="_blank" class="text-blue-600 hover:underline break-all">{{ $application->user->portfolio_url }}</a>
+                                <div class="flex flex-col">
+                                    <a href="{{ $application->user->portfolio_url }}" target="_blank" class="text-blue-600 hover:underline break-all">
+                                        {{ $application->user->portfolio_type === 'drive' ? 'Google Drive' : 'Portfolio Website' }}
+                                    </a>
+                                    <span class="text-xs text-slate-400 mt-0.5">{{ $application->user->portfolio_url }}</span>
+                                </div>
                             </div>
                             @endif
                         </div>

@@ -36,6 +36,7 @@ class ProfileUpdateRequest extends FormRequest
             "birth_place" => ["nullable", "string", "max:100"],
             "birth_date" => ["nullable", "date"],
             "gender" => ["nullable", "string", "max:20"],
+            "portfolio_type" => ["nullable", "string", "in:website,drive"],
             "avatar" => [
                 "nullable",
                 "image",

@@ -33,6 +33,7 @@ class User extends Authenticatable
         "gender",
         "linkedin_url",
         "portfolio_url",
+        "portfolio_type",
     ];
 
     protected $hidden = ["password", "remember_token"];

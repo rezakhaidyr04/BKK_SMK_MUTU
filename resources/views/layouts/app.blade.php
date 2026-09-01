@@ -52,7 +52,18 @@
         
         @stack('styles')
     </head>
-    <body x-data="{ sidebarOpen: window.innerWidth >= 1024 }" @resize.window="sidebarOpen = window.innerWidth >= 1024 ? sidebarOpen : false" class="font-sans antialiased bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-50 @auth authenticated @endauth">
+    <body x-data="{ 
+        sidebarOpen: (() => {
+            const stored = localStorage.getItem('sidebarOpen');
+            if (stored !== null) return JSON.parse(stored);
+            return window.innerWidth >= 1024;
+        })(),
+        init() {
+            this.$watch('sidebarOpen', (val) => {
+                localStorage.setItem('sidebarOpen', JSON.stringify(val));
+            });
+        }
+    }" @resize.window="sidebarOpen = window.innerWidth >= 1024 ? sidebarOpen : false" class="font-sans antialiased bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-50 @auth authenticated @endauth">
         {{-- Toast notification portal --}}
         <x-ui.toast />
         
