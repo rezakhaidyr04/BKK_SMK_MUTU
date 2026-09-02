@@ -38,6 +38,11 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(3)->by($request->user()?->id ?: $request->ip());
         });
 
+        // Rate limiter for review submission (spam/flood protection)
+        RateLimiter::for('submit-review', function (Request $request) {
+            return Limit::perDay(3)->by($request->user()?->id ?: $request->ip());
+        });
+
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')

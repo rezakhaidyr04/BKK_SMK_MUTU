@@ -1,6 +1,6 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-hero title="Sertifikat Saya" subtitle="Tunjukkan pencapaian dan kualifikasi Anda.">
+        <x-ui.page-banner title="Sertifikat Saya" subtitle="Tunjukkan pencapaian dan kualifikasi Anda.">
             <x-slot:actions>
                 <button
                     type="button"
@@ -13,7 +13,7 @@
                     Unggah Sertifikat
                 </button>
             </x-slot:actions>
-        </x-ui.page-hero>
+        </x-ui.page-banner>
 
         <div class="page-container page-section">
             @if($certificates->count() > 0)

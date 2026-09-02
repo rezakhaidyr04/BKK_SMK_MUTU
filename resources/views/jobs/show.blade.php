@@ -1,6 +1,6 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-hero 
+        <x-ui.page-banner 
             title="{{ $job->title }}" 
             subtitle="{{ $job->company_name ?? 'Detail lowongan pekerjaan' }}"
             :back-url="auth()->user()->isCompany() ? route('company.jobs.index') : route('jobs.index')"

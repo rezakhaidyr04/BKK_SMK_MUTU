@@ -11,6 +11,7 @@ use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SuratPengantarController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,10 @@ Route::get("/events/{event}", [EventController::class, "show"])->name("events.sh
 // News (Public)
 Route::get("/news", [NewsController::class, "index"])->name("news.index");
 Route::get("/news/{news}", [NewsController::class, "show"])->name("news.show");
+
+// Reviews (Public)
+Route::get("/reviews/create", [ReviewController::class, "create"])->name("reviews.create");
+Route::post("/reviews", [ReviewController::class, "store"])->middleware('throttle:submit-review')->name("reviews.store");
 
 // SEO: Sitemap
 Route::get("/sitemap.xml", function () {

@@ -1,6 +1,6 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-hero 
+        <x-ui.page-banner 
             title="Detail Lamaran" 
             subtitle="{{ $application->job->title }} - {{ $application->job->company_name ?? 'Perusahaan' }}" 
             :back-url="auth()->user()->role === 'company' ? route('company.applicants.index') : route('applications.index')"

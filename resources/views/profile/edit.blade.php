@@ -1,6 +1,6 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-hero title="{{ __('Pengaturan Akun') }}" subtitle="Kelola profil, keamanan, dan dokumen akun Anda." />
+        <x-ui.page-banner title="{{ __('Pengaturan Akun') }}" subtitle="Kelola profil, keamanan, dan dokumen akun Anda." />
 
     <div class="py-6" x-data="{ currentTab: 'profile' }">
         <div class="page-container space-y-8">

@@ -1,6 +1,6 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-hero
+        <x-ui.page-banner
             title="{{ $news->title }}"
             subtitle="{{ $news->created_at->format('d M Y') }}"
             :back-url="route('news.index')"

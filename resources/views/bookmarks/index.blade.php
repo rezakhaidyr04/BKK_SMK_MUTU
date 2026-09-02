@@ -1,6 +1,6 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-hero title="Lowongan Tersimpan" subtitle="Lowongan yang Anda tandai untuk dilihat nanti." />
+        <x-ui.page-banner title="Lowongan Tersimpan" subtitle="Lowongan yang Anda tandai untuk dilihat nanti." />
 
         <div class="page-container page-section">
             <div class="mb-6 rounded-2xl border border-green-100 bg-green-50 p-5">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use App\Models\User;
+use App\Models\Review;
 
 class HomeController extends Controller
 {
@@ -32,12 +33,28 @@ class HomeController extends Controller
 
         $successRate = $umumCount > 0 ? round(($placedUmumCount / $umumCount) * 100) : 0;
 
+        // Get review statistics
+        $averageRating = round(Review::getAverageRating(), 1);
+        $totalReviews = Review::getTotalReviews();
+        $satisfactionPercentage = Review::getSatisfactionPercentage();
+        
+        // Get approved reviews (limit to 3 for display)
+        $approvedReviews = Review::approved()
+            ->orderByRaw('featured DESC')
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
+
         return view('welcome', compact(
             'jobs',
             'activeJobsCount',
             'usersCount',
             'companiesCount',
-            'successRate'
+            'successRate',
+            'averageRating',
+            'totalReviews',
+            'satisfactionPercentage',
+            'approvedReviews'
         ));
     }
 }

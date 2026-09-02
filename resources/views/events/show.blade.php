@@ -1,6 +1,6 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-hero 
+        <x-ui.page-banner 
             title="{{ $event->title }}" 
             subtitle="Detail acara karir dan pendaftaran."
             :back-url="route('events.index')"

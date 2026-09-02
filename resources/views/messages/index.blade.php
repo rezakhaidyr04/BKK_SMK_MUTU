@@ -1,10 +1,14 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-hero title="Pesan" subtitle="Kelola percakapan dengan perusahaan dari satu tempat.">
+        <x-ui.page-banner 
+            title="Pesan" 
+            subtitle="Kelola percakapan dengan perusahaan dari satu tempat."
+            variant="default"
+        >
             <x-slot:actions>
                 <x-ui.btn href="{{ route('jobs.index') }}" variant="secondary" size="sm">Cari Lowongan</x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-hero>
+        </x-ui.page-banner>
 
         <div class="page-container page-section">
             @if($conversations->count() > 0)

@@ -1,6 +1,6 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-hero 
+        <x-ui.page-banner 
             title="Pelamar" 
             subtitle="Kelola kandidat yang mendaftar ke lowongan perusahaan Anda."
         />

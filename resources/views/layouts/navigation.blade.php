@@ -101,11 +101,22 @@
                             </a>
 
                             @if(Auth::user()->role === 'company')
-                                <a href="{{ $profileRoute }}#verification" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                     <a href="{{ $profileRoute }}#verification" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m1-3h.01M12 20v-6m-6 6h12"/>
                                     </svg>
                                     Verifikasi Perusahaan
+                                </a>
+                            @else
+                                <!-- Divider for non-company users -->
+                                <div class="border-t border-gray-100 my-2"></div>
+
+                                <!-- Leave Review Button -->
+                                <a href="{{ route('reviews.create') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-amber-600 hover:bg-amber-50 transition-colors">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                    Bagikan Ulasan
                                 </a>
                             @endif
 

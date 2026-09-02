@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             CompanyRolePermissionSeeder::class,
             DummyDataSeeder::class,
             EventAndNewsSeeder::class,
+            ReviewSeeder::class,
         ]);
 
         // Create sample user Ahmad Nur Harry for CV preview

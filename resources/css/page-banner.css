@@ -1,0 +1,514 @@
+/**
+ * Page Banner Design System
+ * 
+ * Modern, premium page header component untuk BKK SMK MUTU
+ * Menggunakan palet warna: Biru Tua (#102a72), Biru (#1d4ed8), Cyan (#0891b2)
+ * 
+ * Komponen:
+ * .page-banner           - Main container
+ * .page-banner__content  - Content wrapper
+ * .page-banner__eyebrow  - Badge/eyebrow text
+ * .page-banner__title    - Page title
+ * .page-banner__subtitle - Page subtitle/description
+ * .page-banner__actions  - Action buttons container
+ * .page-banner__decoration - Decorative elements
+ * 
+ * Variasi:
+ * .page-banner--compact  - Ukuran lebih kecil
+ * .page-banner--with-actions - Layout dengan actions prominent
+ * .page-banner--accent   - Dengan accent color dari cyan
+ */
+
+/* ============================================================
+   BASE PAGE BANNER STYLES
+   ============================================================ */
+
+.page-banner {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(16, 42, 114, 0.12), 
+                0 2px 8px rgba(7, 23, 51, 0.08);
+    background: linear-gradient(
+        135deg,
+        #102a72 0%,
+        #1d4ed8 50%,
+        #0891b2 100%
+    );
+    margin-top: -40px;
+    margin-bottom: 32px;
+    padding: 48px;
+    min-height: 160px;
+    display: flex;
+    align-items: stretch;
+    isolation: isolate;
+}
+
+/* ============================================================
+   DECORATIVE BACKGROUND ELEMENTS
+   ============================================================ */
+
+/* Gradient overlay - soft glow di kanan atas */
+.page-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(255, 255, 255, 0.12) 0%,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 95% 95%,
+            rgba(14, 165, 233, 0.15) 0%,
+            transparent 40%
+        ),
+        radial-gradient(
+            ellipse 50% 100% at 100% 0%,
+            rgba(255, 255, 255, 0.08) 0%,
+            transparent 50%
+        );
+    pointer-events: none;
+}
+
+/* Abstract grid dan shapes di sebelah kanan */
+.page-banner::after {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 60%;
+    height: 120%;
+    z-index: 0;
+    background:
+        /* Subtle grid pattern */
+        repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.04) 0px,
+            rgba(255, 255, 255, 0.04) 1px,
+            transparent 1px,
+            transparent 32px
+        ),
+        repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.04) 0px,
+            rgba(255, 255, 255, 0.04) 1px,
+            transparent 1px,
+            transparent 32px
+        ),
+        /* Radial circles */
+        radial-gradient(
+            circle at 70% 30%,
+            rgba(255, 255, 255, 0.06) 0%,
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 120% 80%,
+            rgba(14, 165, 233, 0.08) 0%,
+            transparent 30%
+        );
+    pointer-events: none;
+    mask-image: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0.6) 0%,
+        rgba(0, 0, 0, 0.3) 50%,
+        transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0.6) 0%,
+        rgba(0, 0, 0, 0.3) 50%,
+        transparent 100%
+    );
+}
+
+/* ============================================================
+   CONTENT STRUCTURE
+   ============================================================ */
+
+.page-banner__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+}
+
+.page-banner__header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.page-banner__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    padding: 6px 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(4px);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    margin-bottom: 4px;
+}
+
+.page-banner__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    word-break: break-word;
+    text-shadow: 0 2px 4px rgba(7, 23, 51, 0.1);
+}
+
+.page-banner__subtitle {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+    padding: 0;
+    max-width: 85%;
+    letter-spacing: 0.3px;
+}
+
+.page-banner__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-top: 12px;
+    flex-shrink: 0;
+}
+
+/* ============================================================
+   RESPONSIVE LAYOUT
+   ============================================================ */
+
+@media (min-width: 768px) {
+    .page-banner {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 32px;
+        padding: 48px 56px;
+        min-height: 180px;
+    }
+
+    .page-banner__content {
+        grid-column: 1;
+    }
+
+    .page-banner__actions {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 1024px) {
+    .page-banner {
+        padding: 40px 36px;
+    }
+
+    .page-banner__title {
+        font-size: 2rem;
+    }
+
+    .page-banner__subtitle {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-banner {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 32px 24px;
+        margin-bottom: 24px;
+        border-radius: 16px;
+    }
+
+    .page-banner__title {
+        font-size: 1.75rem;
+    }
+
+    .page-banner__subtitle {
+        font-size: 0.95rem;
+        max-width: 100%;
+    }
+
+    .page-banner__actions {
+        flex-direction: row;
+        grid-column: 1;
+        align-items: stretch;
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .page-banner__actions > * {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-banner {
+        padding: 24px 16px;
+        margin-top: -30px;
+    }
+
+    .page-banner__title {
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+
+    .page-banner__subtitle {
+        font-size: 0.9rem;
+    }
+
+    .page-banner__eyebrow {
+        font-size: 0.7rem;
+        padding: 4px 10px;
+    }
+
+    .page-banner__actions {
+        gap: 8px;
+    }
+}
+
+/* ============================================================
+   VARIASI: COMPACT
+   ============================================================ */
+
+.page-banner--compact {
+    padding: 32px 40px;
+    min-height: 120px;
+}
+
+.page-banner--compact .page-banner__title {
+    font-size: 1.875rem;
+}
+
+.page-banner--compact .page-banner__subtitle {
+    font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+    .page-banner--compact {
+        padding: 24px 20px;
+    }
+
+    .page-banner--compact .page-banner__title {
+        font-size: 1.5rem;
+    }
+}
+
+/* ============================================================
+   VARIASI: WITH ACTIONS
+   ============================================================ */
+
+.page-banner--with-actions {
+    /* Actions lebih prominent */
+}
+
+.page-banner--with-actions .page-banner__actions {
+    gap: 16px;
+}
+
+/* ============================================================
+   VARIASI: ACCENT
+   ============================================================ */
+
+.page-banner--accent {
+    background: linear-gradient(
+        135deg,
+        #0891b2 0%,
+        #06b6d4 50%,
+        #00d9ff 100%
+    );
+}
+
+.page-banner--accent::before {
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(255, 255, 255, 0.15) 0%,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 15% 85%,
+            rgba(16, 42, 114, 0.1) 0%,
+            transparent 40%
+        );
+}
+
+/* ============================================================
+   LEGACY COMPATIBILITY - ui-page-hero
+   ============================================================ */
+
+.ui-page-hero {
+    background: linear-gradient(
+        135deg,
+        #102a72 0%,
+        #1d4ed8 50%,
+        #0891b2 100%
+    );
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(16, 42, 114, 0.12), 
+                0 2px 8px rgba(7, 23, 51, 0.08);
+    min-height: 130px;
+    padding: 48px;
+}
+
+.ui-page-hero-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.ui-page-hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(7, 23, 51, 0.1);
+}
+
+.ui-page-hero-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+    line-height: 1.6;
+    max-width: 85%;
+}
+
+/* ============================================================
+   UTILITY: Back Link
+   ============================================================ */
+
+.page-banner__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    margin-bottom: 8px;
+}
+
+.page-banner__back:hover {
+    color: #ffffff;
+    transform: translateX(-2px);
+}
+
+.page-banner__back svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+}
+
+.page-banner__back:hover svg {
+    transform: translateX(-2px);
+}
+
+/* ============================================================
+   BUTTON STYLES DALAM PAGE BANNER
+   ============================================================ */
+
+.page-banner .ui-btn {
+    background: rgba(255, 255, 255, 0.95);
+    color: #102a72;
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 10px 24px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.page-banner .ui-btn:hover {
+    background: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(16, 42, 114, 0.2);
+}
+
+.page-banner .ui-btn:active {
+    transform: translateY(0);
+}
+
+.page-banner .ui-btn-primary {
+    background: rgba(255, 255, 255, 0.95);
+    color: #102a72;
+}
+
+.page-banner .ui-btn-secondary {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.page-banner .ui-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #ffffff;
+}
+
+/* ============================================================
+   ANIMATION
+   ============================================================ */
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-banner {
+    animation: slideInDown 0.4s ease-out;
+}
+
+.page-banner__title {
+    animation: slideInDown 0.5s ease-out 0.1s both;
+}
+
+.page-banner__subtitle {
+    animation: slideInDown 0.5s ease-out 0.2s both;
+}
+
+.page-banner__actions {
+    animation: slideInDown 0.5s ease-out 0.3s both;
+}

@@ -1,10 +1,10 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-hero title="Acara Saya" subtitle="Acara yang kamu daftarkan.">
+        <x-ui.page-banner title="Acara Saya" subtitle="Acara yang kamu daftarkan.">
             <x-slot:actions>
                 <x-ui.btn href="{{ route('events.index') }}" variant="secondary" size="sm">Jelajahi Acara Lain</x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-hero>
+        </x-ui.page-banner>
         <div class="page-container page-section">
             @if(session('success'))
             <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-2xl text-sm text-green-700 flex items-center gap-2">

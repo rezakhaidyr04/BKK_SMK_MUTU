@@ -32,15 +32,6 @@
                         <span>BKK SMK MUTU</span>
                     </a>
 
-                    <!-- Desktop Nav Links -->
-                    <div class="navbar-links">
-                        <a href="{{ route('home') }}" class="active">Beranda</a>
-                        <a href="javascript:void(0)">Lowongan</a>
-                        <a href="javascript:void(0)">Tentang Kami</a>
-                        <a href="javascript:void(0)">Perusahaan</a>
-                        <a href="javascript:void(0)">Artikel</a>
-                    </div>
-
                     <!-- Actions -->
                     <div class="navbar-actions">
                         @if(auth()->check())
@@ -65,11 +56,6 @@
             </div>
             <!-- Mobile Menu -->
             <div class="mobile-menu" :class="{ 'is-open': mobileMenuOpen }">
-                <a href="{{ route('home') }}" class="active">Beranda</a>
-                <a href="javascript:void(0)">Lowongan</a>
-                <a href="javascript:void(0)">Tentang Kami</a>
-                <a href="javascript:void(0)">Perusahaan</a>
-                <a href="javascript:void(0)">Artikel</a>
                 @if(auth()->check())
                     <a href="{{ route('dashboard') }}">Dasbor</a>
                 @else
@@ -336,79 +322,77 @@
                     <p class="section-subtitle">Cerita nyata dari mereka yang telah berhasil menemukan karir impian</p>
                 </div>
                 <div class="testimonials-grid">
-                    <article class="testimonial-card" data-reveal>
-                        <div class="testimonial-stars">
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                        </div>
-                        <p class="testimonial-text">"BKK SMK MUTU membantu saya menemukan pekerjaan impian sebagai Web Developer di PT Teknologi Nusantara. Platformnya sangat mudah digunakan!"</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">AR</div>
-                            <div>
-                                <span class="testimonial-name">Ahmad Rizky</span>
-                                <span class="testimonial-role">Web Developer @ PT Teknologi Nusantara</span>
+                    @forelse($approvedReviews as $review)
+                        <article class="testimonial-card @if($review->featured) featured @endif" data-reveal>
+                            @if($review->featured)
+                                <div class="testimonial-badge-popular">Populer</div>
+                            @endif
+                            <div class="testimonial-stars">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <svg width="16" height="16" fill="{{ $i <= $review->rating ? '#f59e0b' : '#d1d5db' }}" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                @endfor
                             </div>
-                        </div>
-                    </article>
-                    <article class="testimonial-card featured" data-reveal>
-                        <div class="testimonial-badge-popular">Populer</div>
-                        <div class="testimonial-stars">
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                        </div>
-                        <p class="testimonial-text">"Fitur pembuat CV-nya luar biasa! CV saya sekarang ramah ATS dan banyak perusahaan yang menghubungi. Terima kasih BKK SMK MUTU!"</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #16a34a, #16a34a);">SP</div>
-                            <div>
-                                <span class="testimonial-name">Siti Permata</span>
-                                <span class="testimonial-role">Admin Staff @ PT Maju Bersama</span>
+                            <p class="testimonial-text">"{{ Str::limit($review->comment, 180) }}"</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-avatar" style="background: linear-gradient(135deg, {{ ['#3b82f6', '#16a34a', '#f59e0b', '#8b5cf6', '#ec4899'][$loop->index % 5] }}, {{ ['#2563eb', '#10b981', '#d97706', '#7c3aed', '#db2777'][$loop->index % 5] }});">
+                                    {{ strtoupper(substr($review->display_name, 0, 2)) }}
+                                </div>
+                                <div>
+                                    <span class="testimonial-name">{{ $review->display_name }}</span>
+                                    <span class="testimonial-role">
+                                        @if($review->job_title && $review->company_name)
+                                            {{ $review->job_title }} @ {{ $review->company_name }}
+                                        @else
+                                            Pengguna BKK SMK MUTU
+                                        @endif
+                                    </span>
+                                </div>
                             </div>
+                        </article>
+                    @empty
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                            <p style="color: #64748b; font-size: 1.125rem;">Tidak ada review yang ditampilkan saat ini.</p>
                         </div>
-                    </article>
-                    <article class="testimonial-card" data-reveal>
-                        <div class="testimonial-stars">
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="16" height="16" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                        </div>
-                        <p class="testimonial-text">"Proses pencarian kerja jadi sangat mudah. Dari daftar sampai diterima kerja, semuanya terpantau di satu platform. Sangat membantu!"</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">DW</div>
-                            <div>
-                                <span class="testimonial-name">Dedi Wahyudi</span>
-                                <span class="testimonial-role">Operator Produksi @ PT Yamaha Motor</span>
-                            </div>
-                        </div>
-                    </article>
+                    @endforelse
                 </div>
                 <div class="testimonials-stats">
                     <div class="testimonials-stat">
-                        <span class="testimonials-stat-number">4.9</span>
+                        <span class="testimonials-stat-number">{{ number_format($averageRating, 1) }}</span>
                         <div class="testimonials-stat-stars">
-                            <svg width="14" height="14" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="14" height="14" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="14" height="14" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="14" height="14" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                            <svg width="14" height="14" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            @for($i = 1; $i <= 5; $i++)
+                                <svg width="14" height="14" fill="#f59e0b" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            @endfor
                         </div>
                         <span class="testimonials-stat-label">Rating Pengguna</span>
                     </div>
                     <div class="testimonials-stat">
-                        <span class="testimonials-stat-number">1,200+</span>
+                        <span class="testimonials-stat-number">{{ $totalReviews }}{{ $totalReviews > 0 ? '+' : '' }}</span>
                         <span class="testimonials-stat-label">Ulasan Positif</span>
                     </div>
                     <div class="testimonials-stat">
-                        <span class="testimonials-stat-number">98%</span>
+                        <span class="testimonials-stat-number">{{ $satisfactionPercentage }}%</span>
                         <span class="testimonials-stat-label">Puas dengan Layanan</span>
                     </div>
+                </div>
+
+                <!-- Call to Action: Leave Review -->
+                <div style="margin-top: 3rem; text-align: center; padding: 2rem; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1)); border-radius: 1rem; border: 1px solid rgba(59, 130, 246, 0.2);">
+                    <h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">Punya Pengalaman Positif?</h3>
+                    <p style="color: #6b7280; margin-bottom: 1.5rem; font-size: 0.95rem;">Bagikan cerita sukses Anda dan bantu pencari kerja lain untuk membuat keputusan terbaik</p>
+                    @auth
+                        <a href="{{ route('reviews.create') }}" class="ui-btn ui-btn-primary" style="display: inline-block;">
+                            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="display: inline-block; margin-right: 0.5rem;">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            Bagikan Ulasan Anda
+                        </a>
+                    @else
+                        <p style="font-size: 0.9rem; color: #6b7280; margin-bottom: 1rem;">Silakan login untuk membagikan ulasan Anda</p>
+                        <div style="display: flex; gap: 1rem; justify-content: center;">
+                            <a href="{{ route('login') }}" class="ui-btn ui-btn-secondary" style="display: inline-block;">Masuk</a>
+                            <a href="{{ route('register') }}" class="ui-btn ui-btn-primary" style="display: inline-block;">Daftar Gratis</a>
+                        </div>
+                    @endauth
                 </div>
             </div>
         </section>

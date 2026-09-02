@@ -1,6 +1,6 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-hero
+        <x-ui.page-banner
             title="Profile Pelamar"
             subtitle="{{ $application->user->name }} — {{ $application->job->title }}"
             :back-url="route('company.applicants.index')"

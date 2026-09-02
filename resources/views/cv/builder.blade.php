@@ -1,9 +1,9 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-hero
+        <x-ui.page-banner
             title="CV Profesional"
             subtitle="Susun CV yang rapi, konsisten, dan siap dikirim ke perekrut."
-            badge="ATS Ready · PDF Export · 1 Template"
+            eyebrow="ATS Ready · PDF Export · 1 Template"
         >
             <x-slot:actions>
                 <div class="flex items-center gap-3">
@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </x-slot:actions>
-        </x-ui.page-hero>
+        </x-ui.page-banner>
 
         <div x-data="{
             headline: @js($previewData['headline']),

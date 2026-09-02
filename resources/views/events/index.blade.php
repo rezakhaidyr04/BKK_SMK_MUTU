@@ -1,12 +1,12 @@
 ﻿<x-app-layout :full-bleed="true" title="Acara Karir — BKK SMK MUTU" description="Job fair, workshop, seminar, dan kegiatan pengembangan karir dari BKK SMK MUTU.">
     <div class="page-shell">
-        <x-ui.page-hero title="Acara Karir" subtitle="Job fair, workshop, seminar, dan kegiatan pengembangan karir.">
+        <x-ui.page-banner title="Acara Karir" subtitle="Job fair, workshop, seminar, dan kegiatan pengembangan karir.">
             <x-slot:actions>
                 @auth
                 <x-ui.btn href="{{ route('events.my') }}" variant="secondary" size="sm">Acara Saya</x-ui.btn>
                 @endauth
             </x-slot:actions>
-        </x-ui.page-hero>
+        </x-ui.page-banner>
         <div class="page-container page-section">
             <!-- Filter Bar -->
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">

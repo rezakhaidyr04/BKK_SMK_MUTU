@@ -1,9 +1,9 @@
 ﻿<x-app-layout :full-bleed="true" title="Berita Karir — BKK SMK MUTU" description="Informasi terbaru seputar dunia kerja, tips karir, dan pengumuman dari BKK SMK MUTU.">
     <div class="page-shell">
-        <x-ui.page-hero
+        <x-ui.page-banner
             title="Berita Karir Terbaru"
             subtitle="Informasi terbaru seputar dunia kerja, tips karir, dan pengumuman dari BKK SMK MUTU untuk membantu Anda sukses."
-            badge="Berita & Artikel Karir"
+            eyebrow="Berita & Artikel Karir"
         />
 
         <div class="page-container page-section">
