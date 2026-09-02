@@ -6,7 +6,7 @@
     </div>
     <div class="auth-card-header">
         <h2 class="auth-section-title">Reset Kata Sandi</h2>
-        <p class="auth-section-subtitle">Masukkan alamat email Anda, lalu kami akan kirimkan link untuk membuat kata sandi baru.</p>
+        <p class="auth-section-subtitle">Masukkan alamat email Anda untuk menerima tautan pengaturan ulang kata sandi.</p>
     </div>
     <div class="auth-card-body">
         <x-auth-session-status class="mb-4" :status="session('status')" />

@@ -73,7 +73,7 @@
             <!-- Content area: .app-main-wrapper TIDAK memiliki spacing agar konsisten -->
             <div :class="['app-main-wrapper transition-all duration-300', sidebarOpen ? 'lg:ml-64' : 'lg:ml-0']">
                 <!-- Kompensasi Navbar hanya SEKALI di sini -->
-                <main class="main-content" style="padding-top: 64px !important; margin-top: 0 !important;">@isset($header)<header class="app-page-header relative overflow-hidden shadow-sm" style="margin-top: -40px !important; padding-top: 0 !important; top: 0 !important; transform: translateY(0) !important;"><div class="pointer-events-none absolute inset-0"></div><div class="page-container py-6 relative">{{ $header }}</div></header>@elseif(View::hasSection('header'))<header class="app-page-header relative overflow-hidden shadow-sm" style="margin-top: -40px !important; padding-top: 0 !important; top: 0 !important; transform: translateY(0) !important;"><div class="pointer-events-none absolute inset-0"></div><div class="page-container py-6 relative">@yield('header')</div></header>@endif
+                <main class="main-content">@isset($header)<header class="app-page-header relative overflow-hidden shadow-sm"><div class="pointer-events-none absolute inset-0"></div><div class="page-container py-6 relative">{{ $header }}</div></header>@elseif(View::hasSection('header'))<header class="app-page-header relative overflow-hidden shadow-sm"><div class="pointer-events-none absolute inset-0"></div><div class="page-container py-6 relative">@yield('header')</div></header>@endif
 
                     <!-- PAGE CONTENT -->
                     <div class="fade-in">
@@ -123,8 +123,8 @@
                         <div class="mt-6 border-t border-gray-800 pt-4 text-xs text-gray-500 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                             <p>© {{ date('Y') }} BKK SMK MUTU. Hak cipta dilindungi.</p>
                             <div class="flex flex-wrap gap-3">
-                                <a href="javascript:void(0);" role="button" aria-disabled="true" class="transition hover:text-white opacity-70 cursor-default">Kebijakan Privasi</a>
-                                <a href="javascript:void(0);" role="button" aria-disabled="true" class="transition hover:text-white opacity-70 cursor-default">Syarat & Ketentuan</a>
+                                <span class="opacity-70">Kebijakan Privasi</span>
+                                <span class="opacity-70">Syarat & Ketentuan</span>
                             </div>
                         </div>
                     </div>

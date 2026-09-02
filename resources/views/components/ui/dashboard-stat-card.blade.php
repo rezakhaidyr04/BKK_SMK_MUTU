@@ -11,7 +11,7 @@
 @php
 $palette = match($color) {
     'green'  => ['iconBg' => 'bg-green-100',  'iconClr' => 'text-green-600',  'linkClr' => 'text-green-600'],
-    'purple' => ['iconBg' => 'bg-violet-100', 'iconClr' => 'text-violet-600', 'linkClr' => 'text-violet-600'],
+    'purple' => ['iconBg' => 'bg-blue-100', 'iconClr' => 'text-blue-600', 'linkClr' => 'text-blue-600'],
     'orange' => ['iconBg' => 'bg-amber-100',  'iconClr' => 'text-amber-600',  'linkClr' => 'text-amber-600'],
     'red'    => ['iconBg' => 'bg-red-100',    'iconClr' => 'text-red-500',    'linkClr' => 'text-red-500'],
     'yellow' => ['iconBg' => 'bg-yellow-100', 'iconClr' => 'text-yellow-600', 'linkClr' => 'text-yellow-600'],
@@ -26,7 +26,7 @@ $valueClass = $size === 'sm'
 @endphp
 
 <div {{ $attributes->merge([
-    'class' => 'bg-white relative overflow-hidden rounded-2xl border border-slate-100 p-5 shadow-sm hover:shadow-md transition-all duration-200 dark:bg-neutral-900 dark:border-neutral-800 flex flex-col flex-1 min-w-[160px]'
+    'class' => 'ui-stat-card ui-stat-card-' . $color . ' flex flex-col min-w-0 dark:bg-neutral-900'
 ]) }}>
     <div class="flex items-start justify-between gap-3 flex-1">
         <div class="min-w-0 flex-1">

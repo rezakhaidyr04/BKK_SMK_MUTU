@@ -2,10 +2,10 @@
     <x-slot name="header">
         <x-ui.page-header title="Selamat datang kembali, {{ Auth::user()->name }}!" subtitle="Mari temukan pekerjaan impian Anda hari ini" />
     </x-slot>
-    <div class="page-shell">
-        <div class="page-container pt-6">
+    <div class="page-shell dashboard-user-page">
+        <div class="page-container pt-4 pb-2">
                 {{-- Profile Completion Card --}}
-                <div class="rounded-2xl p-4 border border-slate-200 bg-white min-w-[240px]">
+                <div class="rounded-2xl p-3 border border-slate-200 bg-white min-w-[240px]">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-slate-700 text-sm font-medium">Kelengkapan Profil</span>
                         <span class="text-slate-900 text-sm font-bold">{{ $stats['profile_completion'] }}%</span>
@@ -21,8 +21,8 @@
                 </div>
         </div>
 
-        <div class="page-container pt-6">
-            <div class="rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50/80 to-white px-6 py-5 shadow-sm backdrop-blur-sm">
+        <div class="page-container pb-6">
+            <div class="rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50/80 to-white px-5 py-4 shadow-sm backdrop-blur-sm">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
                         <p class="text-sm font-semibold text-blue-900">Fokus utama pencari kerja</p>
@@ -39,11 +39,11 @@
 
         <div class="page-container page-section">
             {{-- Quick Actions --}}
-            <div class="bg-white dark:bg-gray-800/80 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 p-6 mb-8">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-5">Aksi Cepat</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <a href="{{ route('jobs.index') }}" class="group flex flex-col items-center p-5 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all duration-200">
-                        <div class="w-14 h-14 bg-blue-600 text-white rounded-xl flex items-center justify-center mb-3 shadow-md group-hover:scale-110 transition-all duration-200">
+            <div class="bg-white dark:bg-gray-800/80 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 p-5 mb-6">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Aksi Cepat</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <a href="{{ route('jobs.index') }}" class="group flex flex-col items-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+                        <div class="w-12 h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center mb-2 shadow-md group-hover:scale-105 transition-all duration-200">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                             </svg>
@@ -51,37 +51,37 @@
                         <span class="text-sm font-bold text-blue-800 text-center">Cari Lowongan</span>
                     </a>
 
-                    <a href="{{ route('cv.builder') }}" class="group flex flex-col items-center p-5 bg-gradient-to-br from-violet-50 to-violet-100 border border-violet-200 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all duration-200">
-                        <div class="w-14 h-14 bg-violet-600 text-white rounded-xl flex items-center justify-center mb-3 shadow-md group-hover:scale-110 transition-all duration-200">
+                    <a href="{{ route('cv.builder') }}" class="group flex flex-col items-center p-4 bg-white border border-slate-200 rounded-xl hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+                        <div class="w-12 h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center mb-2 shadow-md group-hover:scale-105 transition-all duration-200">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                         </div>
-                        <span class="text-sm font-bold text-violet-800 text-center">Buat CV</span>
+                        <span class="text-sm font-bold text-slate-800 text-center">Buat CV</span>
                     </a>
 
-                    <a href="{{ route('bookmarks.index') }}" class="group flex flex-col items-center p-5 bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all duration-200">
-                        <div class="w-14 h-14 bg-amber-500 text-white rounded-xl flex items-center justify-center mb-3 shadow-md group-hover:scale-110 transition-all duration-200">
+                    <a href="{{ route('bookmarks.index') }}" class="group flex flex-col items-center p-4 bg-white border border-slate-200 rounded-xl hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+                        <div class="w-12 h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center mb-2 shadow-md group-hover:scale-105 transition-all duration-200">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                             </svg>
                         </div>
-                        <span class="text-sm font-bold text-amber-800 text-center">Tersimpan</span>
+                        <span class="text-sm font-bold text-slate-800 text-center">Tersimpan</span>
                     </a>
 
-                    <a href="{{ route('applications.index') }}" class="group flex flex-col items-center p-5 bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all duration-200">
-                        <div class="w-14 h-14 bg-emerald-600 text-white rounded-xl flex items-center justify-center mb-3 shadow-md group-hover:scale-110 transition-all duration-200">
+                    <a href="{{ route('applications.index') }}" class="group flex flex-col items-center p-4 bg-white border border-slate-200 rounded-xl hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+                        <div class="w-12 h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center mb-2 shadow-md group-hover:scale-105 transition-all duration-200">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                         </div>
-                        <span class="text-sm font-bold text-emerald-800 text-center">Lamaran Saya</span>
+                        <span class="text-sm font-bold text-slate-800 text-center">Lamaran Saya</span>
                     </a>
                 </div>
             </div>
 
             {{-- Stats Grid (Refactored using reusable component) --}}
-            <div class="flex flex-row gap-4 mb-8 overflow-x-auto">
+            <div class="dashboard-stats-grid grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
                 <x-ui.dashboard-stat-card
                     label="Lamaran Aktif"
                     :value="$stats['active_applications']"
@@ -99,7 +99,7 @@
                 <x-ui.dashboard-stat-card
                     label="Wawancara"
                     :value="$stats['interview_count']"
-                    color="purple"
+                    color="blue"
                     footnote="Terjadwal"
                     class="animate-slide-up animate-slide-up-2"
                 >
@@ -172,8 +172,8 @@
                     eventsOpen: false
                 }">
                     {{-- Job Recommendations Section --}}
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
-                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-blue-50 dark:from-blue-900/20 dark:to-blue-900/20 cursor-pointer" @click="recommendationsOpen = !recommendationsOpen">
+                    <div class="dashboard-content-panel bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+                        <div class="dashboard-panel-header px-5 py-4 border-b border-gray-100 dark:border-gray-700 bg-slate-50 dark:bg-neutral-800 cursor-pointer" @click="recommendationsOpen = !recommendationsOpen">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
@@ -203,12 +203,12 @@
                             </div>
                         </div>
 
-                        <div x-show="recommendationsOpen" x-collapse class="p-6">
+                        <div x-show="recommendationsOpen" x-collapse class="p-5">
                             @if($recommendedJobs->count() > 0)
                                 <div class="grid gap-4">
                                     @foreach($recommendedJobs->take(3) as $job)
                                     @if($job)
-                                    <div class="group relative bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-750 rounded-xl p-5 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                                    <div class="group relative bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                                         <div class="flex items-start gap-4">
                                             <div class="flex-shrink-0">
                                                 <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-md" aria-hidden="true">
@@ -318,11 +318,11 @@
                     </div>
 
                     <!-- My Applications Section -->
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
-                        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-violet-50 to-violet-50 dark:from-violet-900/20 dark:to-violet-900/20 cursor-pointer" @click="applicationsOpen = !applicationsOpen">
+                    <div class="dashboard-content-panel bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+                        <div class="dashboard-panel-header px-5 py-4 border-b border-gray-100 dark:border-gray-700 bg-slate-50 dark:bg-neutral-800 cursor-pointer" @click="applicationsOpen = !applicationsOpen">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-violet-600 rounded-xl flex items-center justify-center">
+                                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
                                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
@@ -333,7 +333,7 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <a href="{{ route('applications.index') }}" class="text-sm font-medium text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 flex items-center gap-1 group" @click.stop>
+                                    <a href="{{ route('applications.index') }}" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1 group" @click.stop>
                                         Lihat Semua
                                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -349,12 +349,12 @@
                             </div>
                         </div>
 
-                        <div x-show="applicationsOpen" x-collapse class="p-6">
+                        <div x-show="applicationsOpen" x-collapse class="p-5">
                             @if($myApplications->count() > 0)
                                 <div class="space-y-4">
                                     @foreach($myApplications as $application)
                                     @if($application->job)
-                                    <div class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-750 rounded-xl p-5 border border-gray-200 dark:border-gray-700 hover:border-violet-300 dark:hover:border-violet-500 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                                    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                                         <div class="flex items-start justify-between mb-3">
                                             <div class="flex-1">
                                                 <h4 class="text-base font-bold text-gray-900 dark:text-white mb-1">{{ $application->job->title }}</h4>
@@ -364,7 +364,7 @@
                                                 $statusConfig = [
                                                     'submitted' => ['bg' => 'bg-blue-100 dark:bg-blue-900/30', 'text' => 'text-blue-700 dark:text-blue-400', 'label' => 'Terkirim'],
                                                     'under_review' => ['bg' => 'bg-yellow-100 dark:bg-yellow-900/30', 'text' => 'text-yellow-700 dark:text-yellow-400', 'label' => 'Sedang Ditinjau'],
-                                                    'interviewed' => ['bg' => 'bg-violet-100 dark:bg-violet-900/30', 'text' => 'text-violet-700 dark:text-violet-400', 'label' => 'Wawancara'],
+                                                    'interviewed' => ['bg' => 'bg-blue-100 dark:bg-blue-900/30', 'text' => 'text-blue-700 dark:text-blue-400', 'label' => 'Wawancara'],
                                                     'accepted' => ['bg' => 'bg-green-100 dark:bg-green-900/30', 'text' => 'text-green-700 dark:text-green-400', 'label' => 'Diterima'],
                                                     'rejected' => ['bg' => 'bg-red-100 dark:bg-red-900/30', 'text' => 'text-red-700 dark:text-red-400', 'label' => 'Ditolak'],
                                                 ];
@@ -377,7 +377,7 @@
                                         
                                         <div class="flex items-center justify-between text-sm">
                                             <span class="text-gray-500 dark:text-gray-400">Melamar {{ $application->created_at->diffForHumans() }}</span>
-                                            <a href="{{ route('applications.show', $application->id) }}" class="text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 font-medium">
+                                            <a href="{{ route('applications.show', $application->id) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
                                                 Lihat Detail →
                                             </a>
                                         </div>
@@ -387,14 +387,14 @@
                                 </div>
                             @else
                                 <div class="text-center py-12">
-                                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-violet-100 to-violet-100 dark:from-violet-900/30 dark:to-violet-900/30 rounded-full flex items-center justify-center animate-gentle-float" aria-hidden="true">
-                                        <svg class="w-10 h-10 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-20 h-20 mx-auto mb-4 bg-blue-50 dark:bg-blue-900/30 rounded-full flex items-center justify-center" aria-hidden="true">
+                                        <svg class="w-10 h-10 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
                                     </div>
                                     <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Belum ada lamaran</h4>
                                     <p class="text-gray-600 dark:text-gray-400 mb-4">Mulai melamar lowongan yang sesuai keahlian Anda</p>
-                                    <a href="{{ route('jobs.index') }}" class="inline-flex items-center px-6 py-3 bg-violet-600 text-white font-medium rounded-lg hover:bg-violet-700 transition-colors">
+                                    <a href="{{ route('jobs.index') }}" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
                                         Jelajahi Lowongan
                                     </a>
                                 </div>

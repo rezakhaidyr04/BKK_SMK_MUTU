@@ -69,7 +69,7 @@
 
 /* Section titles */
 .nav-section-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-sans);
     letter-spacing: 0.08em;
     font-weight: 700;
     font-size: 10.5px;
@@ -210,3 +210,33 @@
 .dark .help-card h4 { color: #f1f5f9; }
 .dark .help-card p { color: var(--text-3); }
 .dark .help-card a { color: #60a5fa; }
+
+.dark nav.bg-white {
+    background-color: #171717;
+    border-color: #404040;
+}
+
+.dark nav.bg-white .text-gray-900 { color: #f5f5f5; }
+.dark nav.bg-white .text-gray-700 { color: #d4d4d4; }
+.dark nav.bg-white .text-gray-600,
+.dark nav.bg-white .text-gray-500 { color: #a3a3a3; }
+
+.dark nav.bg-white button:hover { background-color: #262626; }
+.dark nav.bg-white button.text-gray-600,
+.dark nav.bg-white button .text-gray-500 { color: #d4d4d4; }
+
+.dark nav.bg-white .bg-white {
+    background-color: #262626;
+    border-color: #404040;
+}
+
+.dark nav.bg-white .border-gray-100,
+.dark nav.bg-white .border-gray-200,
+.dark nav.bg-white .border-gray-50 { border-color: #404040; }
+
+.dark nav.bg-white .hover\:bg-gray-50:hover { background-color: #333333; }
+.dark nav.bg-white .bg-blue-50\/50 { background-color: rgba(30, 64, 175, 0.25); }
+
+.dark .mobile-sidebar-overlay + div,
+.dark .bg-white.shadow-2xl.rounded-r-2xl { background-color: #171717; border-color: #404040; }
+.dark .bg-slate-50 { background-color: #262626; }

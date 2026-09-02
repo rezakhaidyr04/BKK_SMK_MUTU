@@ -35,7 +35,7 @@
         #1d4ed8 50%,
         #0891b2 100%
     );
-    margin-top: -40px;
+    margin-top: 0;
     margin-bottom: 32px;
     padding: 48px;
     min-height: 160px;
@@ -167,7 +167,7 @@
     font-size: 2.5rem;
     font-weight: 700;
     line-height: 1.2;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     color: #ffffff;
     margin: 0;
     padding: 0;
@@ -256,7 +256,7 @@
     }
 
     .page-banner__actions {
-        flex-direction: row;
+        flex-direction: column;
         grid-column: 1;
         align-items: stretch;
         width: 100%;
@@ -264,15 +264,14 @@
     }
 
     .page-banner__actions > * {
-        flex: 1;
-        min-width: 0;
+        width: 100%;
     }
 }
 
 @media (max-width: 480px) {
     .page-banner {
         padding: 24px 16px;
-        margin-top: -30px;
+        margin-top: 0;
     }
 
     .page-banner__title {

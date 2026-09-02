@@ -3,25 +3,22 @@
 <style>
     /* ─── Modern Card Styling ─── */
     .premium-card {
-        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-        border-radius: 24px;
-        box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.04), 0 1px 3px -1px rgba(0, 0, 0, 0.02);
-        border: 1px solid rgba(203, 213, 225, 0.6);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        backdrop-filter: blur(8px);
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+        border: 1px solid #e2e8f0;
+        transition: box-shadow 0.2s ease;
     }
     .premium-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.1), 0 6px 12px -2px rgba(0, 0, 0, 0.05);
-        border-color: rgba(59, 130, 246, 0.2);
-        background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+        border-color: #bfdbfe;
     }
 
     /* ─── Warning Card with Modern Design ─── */
     .warning-card {
         background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%);
-        border-radius: 24px;
-        box-shadow: 0 12px 24px -4px rgba(180, 83, 9, 0.2);
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(127, 29, 29, 0.16);
         position: relative;
         overflow: hidden;
         color: white;
@@ -37,15 +34,14 @@
         height: 200%;
         background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
         background-size: 50px 50px;
-        animation: drift 20s linear infinite;
+        animation: none;
     }
     @keyframes drift {
         0% { transform: translate(0, 0); }
         100% { transform: translate(50px, 50px); }
     }
     .warning-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 32px -4px rgba(180, 83, 9, 0.35);
+        box-shadow: 0 12px 24px rgba(127, 29, 29, 0.2);
     }
     .warning-bg {
         display: none;
@@ -70,11 +66,11 @@
 
     /* ─── Stat List Items ─── */
     .stat-list-item {
-        border-radius: 18px;
+        border-radius: 12px;
         border: 1px solid rgba(203, 213, 225, 0.6);
-        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        background: #ffffff;
         padding: 1rem 1.25rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
         position: relative;
         overflow: hidden;
     }
@@ -92,34 +88,33 @@
         left: 100%;
     }
     .stat-list-item:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 16px -3px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.08);
         border-color: rgba(59, 130, 246, 0.3);
-        background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+        background: #ffffff;
     }
 
     /* ─── Modern Buttons ─── */
     .glass-btn-warning {
-        background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%) !important;
-        color: #b91c1c !important;
-        border: 1px solid rgba(185, 28, 28, 0.2) !important;
-        box-shadow: 0 4px 12px -2px rgba(185, 28, 28, 0.1) !important;
-        font-weight: 600 !important;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        background: #ffffff;
+        color: #b91c1c;
+        border: 1px solid rgba(185, 28, 28, 0.2);
+        box-shadow: 0 4px 12px -2px rgba(185, 28, 28, 0.1);
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .glass-btn-warning:hover { 
-        background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%) !important;
+        background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
         transform: translateY(-2px);
-        box-shadow: 0 8px 16px -2px rgba(185, 28, 28, 0.2) !important;
+        box-shadow: 0 8px 16px -2px rgba(185, 28, 28, 0.2);
     }
     .glass-btn-outline {
-        background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%) !important;
-        color: #b91c1c !important;
-        border: 1px solid rgba(185, 28, 28, 0.15) !important;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        background: #ffffff;
+        color: #b91c1c;
+        border: 1px solid rgba(185, 28, 28, 0.15);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .glass-btn-outline:hover { 
-        background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%) !important;
+        background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
         transform: translateY(-2px);
     }
 
@@ -144,15 +139,14 @@
 
     /* ─── Enhanced Stats Cards ─── */
     .modern-stat-box {
-        border-radius: 16px;
+        border-radius: 12px;
         border: 1px solid rgba(203, 213, 225, 0.6);
-        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        background: #ffffff;
         padding: 1rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
     }
     .modern-stat-box:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 16px -3px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.08);
         border-color: rgba(59, 130, 246, 0.2);
     }
 
@@ -212,9 +206,9 @@
     }
 </style>
 
-<div class="page-shell bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
+<div class="page-shell company-dashboard-page min-h-screen">
             <x-ui.dashboard-hero
-                class="page-banner"
+                class="company-dashboard-hero"
                 title="Dashboard Perusahaan"
                 subtitle="Kelola data perusahaan, lowongan, dan pelamar dalam satu halaman."
             >
@@ -225,8 +219,8 @@
                 </x-slot:icon>
 
                 <x-slot:actions>
-                    <x-ui.btn href="{{ route('company.jobs.create') }}" variant="company" size="sm" style="box-shadow: 0 8px 16px -2px rgba(16, 185, 129, 0.25); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);" onmouseover="this.style.boxShadow='0 12px 24px -4px rgba(16, 185, 129, 0.35)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='0 8px 16px -2px rgba(16, 185, 129, 0.25)'; this.style.transform='translateY(0)'">Buat Lowongan</x-ui.btn>
-                    <x-ui.btn href="{{ route('company.jobs.index') }}" variant="white" size="sm" style="color: var(--navy-3); box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.08);">Daftar Lowongan</x-ui.btn>
+                    <x-ui.btn href="{{ route('company.jobs.create') }}" variant="company" size="sm">Buat Lowongan</x-ui.btn>
+                    <x-ui.btn href="{{ route('company.jobs.index') }}" variant="white" size="sm">Daftar Lowongan</x-ui.btn>
                 </x-slot:actions>
             </x-ui.dashboard-hero>
 

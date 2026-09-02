@@ -14,6 +14,7 @@ $colorMap = [
     'gray'   => ['bg' => '#f9fafb', 'icon' => '#6b7280', 'value' => '#111827', 'border' => '#e5e7eb', 'accent' => '#9ca3af'],
 ];
 $c = $colorMap[$color] ?? $colorMap['blue'];
+$colorClass = in_array($color, array_keys($colorMap), true) ? $color : 'blue';
 
 // Icon SVG library
 $icons = [
@@ -47,70 +48,28 @@ if ($icon) {
 }
 @endphp
 
-<div {{ $attributes->merge(['class' => '']) }}
-     style="
-         position: relative;
-         background: var(--white);
-         border: 1px solid {{ $c['border'] }};
-         border-top: 3px solid {{ $c['accent'] }};
-         border-radius: 14px;
-         padding: 20px 22px;
-         box-shadow: 0 2px 8px rgba(15,23,42,0.06);
-         transition: box-shadow 0.2s ease, transform 0.2s ease;
-         cursor: default;
-         overflow: hidden;
-     "
-     onmouseover="this.style.boxShadow='0 8px 28px rgba(15,23,42,0.11)';this.style.transform='translateY(-2px)'"
-     onmouseout="this.style.boxShadow='0 2px 8px rgba(15,23,42,0.06)';this.style.transform='translateY(0)'">
+<div {{ $attributes->merge(['class' => 'ui-stat-card ui-stat-card-' . $colorClass]) }}>
 
-    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px;">
+    <div class="ui-stat-card__row">
 
         {{-- Label & Value --}}
-        <div style="min-width:0; flex:1;">
-            <p style="
-                font-size: 11px;
-                font-weight: 700;
-                color: var(--text-3);
-                text-transform: uppercase;
-                letter-spacing: 0.07em;
-                margin: 0 0 8px 0;
-            ">{{ $label }}</p>
+        <div class="ui-stat-card__content">
+            <p class="ui-stat-card__label">{{ $label }}</p>
 
-            <p style="
-                font-size: 30px;
-                font-weight: 800;
-                color: {{ $c['value'] }};
-                line-height: 1;
-                margin: 0;
-            ">{{ $value }}</p>
+            <p class="ui-stat-card__value ui-stat-card__value-{{ $colorClass }}">{{ $value }}</p>
 
             @if($subtitle)
-                <p style="
-                    font-size: 12px;
-                    color: var(--text-3);
-                    margin: 6px 0 0 0;
-                ">{{ $subtitle }}</p>
+                <p class="ui-stat-card__subtitle">{{ $subtitle }}</p>
             @endif
 
             @isset($footer)
-                <div style="margin-top: 10px; font-size: 12px;">{{ $footer }}</div>
+                <div class="ui-stat-card__footer">{{ $footer }}</div>
             @endisset
         </div>
 
         {{-- Icon Badge --}}
         @if($resolvedIcon)
-            <div style="
-                width: 46px;
-                height: 46px;
-                border-radius: 12px;
-                background: {{ $c['bg'] }};
-                color: {{ $c['icon'] }};
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-shrink: 0;
-                border: 1px solid {{ $c['border'] }};
-            ">
+            <div class="ui-stat-card__icon ui-stat-card__icon-{{ $colorClass }}">
                 {!! $resolvedIcon !!}
             </div>
         @endif

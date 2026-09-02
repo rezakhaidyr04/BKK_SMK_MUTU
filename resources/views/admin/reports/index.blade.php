@@ -1,7 +1,4 @@
 <x-app-layout :full-bleed="true">
-<x-slot name="header">
-    <x-ui.page-header title="Laporan & Analitik" subtitle="Ringkasan performa sistem per {{ now()->format('d F Y') }}" />
-</x-slot>
 <div class="min-h-screen bg-slate-50">
 
     {{-- ===== HERO HEADER ===== --}}

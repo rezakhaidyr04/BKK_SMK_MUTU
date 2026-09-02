@@ -13,7 +13,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('css/welcome.css') }}?v={{ time() }}">
 
@@ -631,7 +631,7 @@
                                 <p class="job-card-salary">Rp 4.000.000 - 5.200.000</p>
                                 <p class="job-card-deadline">Deadline: 31 Jul 2026</p>
                             </div>
-                            <a href="javascript:void(0);" class="job-card-link disabled">Lihat Detail <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></a>
+                            <span class="job-card-link disabled" aria-disabled="true">Lihat Detail <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></span>
                         </article>
                         <!-- Sample Card 2 -->
                         <article class="job-card">
@@ -655,7 +655,7 @@
                                 <p class="job-card-salary">Rp 4.500.000 - 6.500.000</p>
                                 <p class="job-card-deadline">Deadline: 28 Jul 2026</p>
                             </div>
-                            <a href="javascript:void(0);" class="job-card-link disabled">Lihat Detail <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></a>
+                            <span class="job-card-link disabled" aria-disabled="true">Lihat Detail <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></span>
                         </article>
                         <!-- Sample Card 3 -->
                         <article class="job-card">
@@ -679,7 +679,7 @@
                                 <p class="job-card-salary">Rp 3.500.000 - 4.500.000</p>
                                 <p class="job-card-deadline">Deadline: 25 Jul 2026</p>
                             </div>
-                            <a href="javascript:void(0);" class="job-card-link disabled">Lihat Detail <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></a>
+                            <span class="job-card-link disabled" aria-disabled="true">Lihat Detail <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></span>
                         </article>
                         <!-- Sample Card 4 -->
                         <article class="job-card">
@@ -703,7 +703,7 @@
                                 <p class="job-card-salary">Rp 3.800.000 - 4.800.000</p>
                                 <p class="job-card-deadline">Deadline: 30 Jul 2026</p>
                             </div>
-                            <a href="javascript:void(0);" class="job-card-link disabled">Lihat Detail <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></a>
+                            <span class="job-card-link disabled" aria-disabled="true">Lihat Detail <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></span>
                         </article>
                     </div>
                     <button class="carousel-btn carousel-btn-next" aria-label="Next">

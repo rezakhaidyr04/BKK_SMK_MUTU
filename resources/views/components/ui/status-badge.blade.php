@@ -4,7 +4,7 @@
 $config = match($status) {
     'submitted' => ['class' => 'ui-badge-blue', 'label' => 'Terkirim'],
     'under_review' => ['class' => 'ui-badge-yellow', 'label' => 'Ditinjau'],
-    'interviewed' => ['class' => 'ui-badge-purple', 'label' => 'Wawancara'],
+    'interviewed' => ['class' => 'ui-badge-blue', 'label' => 'Wawancara'],
     'accepted' => ['class' => 'ui-badge-green', 'label' => 'Diterima'],
     'rejected' => ['class' => 'ui-badge-red', 'label' => 'Ditolak'],
     'active' => ['class' => 'ui-badge-green', 'label' => 'Aktif'],

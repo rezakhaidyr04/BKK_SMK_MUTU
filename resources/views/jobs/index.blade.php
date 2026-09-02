@@ -1,7 +1,7 @@
 ﻿<x-app-layout :full-bleed="true" title="Lowongan Kerja — BKK SMK MUTU" description="Daftar lowongan kerja terbaru dari perusahaan mitra BKK SMK MUTU. Temukan peluang karier untuk siswa dan alumni.">
     <div class="page-shell">
     <!-- Hero Search Section -->
-    <section class="page-banner border-b border-slate-200 pt-8 pb-10" style="background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 60%, var(--navy-2) 100%);">
+    <section class="jobs-search-hero border-b border-slate-200">
         <div class="page-container">
             <div class="w-full">
                 <div class="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white border border-white/20 mb-3">
@@ -50,7 +50,7 @@
                                     </div>
                                     <input type="text" name="search" value="{{ request('search') }}" 
                                            placeholder="Judul pekerjaan, posisi, perusahaan..."
-                                           class="ui-input border-slate-300 focus:border-blue-500 focus:ring-blue-500" style="padding-left: 2rem;">
+                                           class="ui-input border-slate-300 focus:border-blue-500 focus:ring-blue-500 pl-8">
                                 </div>
                             </div>
 
@@ -103,8 +103,8 @@
                     <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue-200">Lowongan Aktif</p>
                     <p class="mt-1 text-3xl font-bold">{{ $activeJobsCount }}</p>
                 </div>
-                <div class="bg-gradient-to-br from-violet-600 to-violet-700 rounded-2xl px-5 py-4 text-white shadow-md">
-                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-violet-200">Lokasi</p>
+                <div class="bg-gradient-to-br from-cyan-600 to-cyan-700 rounded-2xl px-5 py-4 text-white shadow-md">
+                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-100">Lokasi</p>
                     <p class="mt-1 text-3xl font-bold">{{ $locationsCount }}</p>
                 </div>
                 <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl px-5 py-4 text-white shadow-md">
