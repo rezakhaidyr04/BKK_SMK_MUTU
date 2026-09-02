@@ -20,178 +20,118 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}">
 
-    <style>
-        /* Layout utama */
-        .auth-wrap {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Panel kiri — branding */
-        .auth-left {
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 42%;
-            flex-shrink: 0;
-            padding: 3rem;
-            background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 55%, var(--navy-3) 100%);
-            color: var(--white);
-        }
-        @media (min-width: 1024px) {
-            .auth-left { display: flex; }
-        }
-
-        .auth-left h2 {
-            font-size: 2.25rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin: 1.5rem 0 1rem;
-            color: var(--white);
-        }
-        .auth-left p {
-            color: rgba(255,255,255,0.72);
-            font-size: 0.95rem;
-            line-height: 1.7;
-            max-width: 280px;
-        }
-        .auth-logo-row {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 3rem;
-        }
-        .auth-logo-row img {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            object-fit: cover;
-        }
-        .auth-logo-row .brand-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--white);
-            line-height: 1.2;
-        }
-        .auth-logo-row .brand-sub {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.65);
-        }
-        .auth-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            margin-top: auto;
-        }
-        .auth-stats .stat-num {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--white);
-        }
-        .auth-stats .stat-label {
-            font-size: 0.72rem;
-            color: rgba(255,255,255,0.65);
-            margin-top: 2px;
-        }
-
-        /* Panel kanan — form */
-        .auth-right {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--bg-soft);
-            padding: 2.5rem 1.5rem;
-            overflow-y: auto;
-        }
-
-        /* Mobile logo */
-        .auth-mobile-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.625rem;
-            margin-bottom: 2rem;
-        }
-        @media (min-width: 1024px) {
-            .auth-mobile-logo { display: none; }
-        }
-        .auth-mobile-logo img {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            object-fit: cover;
-        }
-        .auth-mobile-logo span {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        /* Form card */
-        .auth-card {
-            width: 100%;
-            max-width: 440px;
-            background: var(--white);
-            border-radius: 16px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
-            padding: 2rem;
-        }
-
-        /* Back link */
-        .auth-back {
-            margin-top: 1.5rem;
-            text-align: center;
-        }
-        .auth-back a {
-            font-size: 0.85rem;
-            color: var(--text-2);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: color 0.15s;
-        }
-        .auth-back a:hover { color: var(--text); }
-    </style>
 </head>
 <body class="font-sans antialiased">
 
     <div class="auth-wrap">
 
-        {{-- Panel Kiri --}}
-        <div class="auth-left">
-            <div>
-                <div class="auth-logo-row">
+        {{-- Panel Kiri — Sidebar --}}
+        <aside class="auth-sidebar">
+            <div class="auth-sidebar-decor"></div>
+            <div class="auth-sidebar-decor-2"></div>
+
+            {{-- Header --}}
+            <div class="auth-sidebar-header">
+                <div class="auth-sidebar-logo">
                     <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU">
                     <div>
-                        <div class="brand-name">BKK SMK MUTU</div>
-                        <div class="brand-sub">Pusat Pengembangan Karir</div>
+                        <div class="auth-sidebar-brand">BKK SMK MUTU</div>
+                        <div class="auth-sidebar-subbrand">Pusat Pengembangan Karir</div>
                     </div>
                 </div>
-
-                <h2>Menghubungkan<br>Talenta dengan<br>Peluang</h2>
-                <p>Platform karier untuk pencari kerja dan perusahaan agar lebih mudah terhubung dengan peluang terbaik.</p>
             </div>
 
-            <div class="auth-stats">
-                <div class="text-center">
-                    <div class="stat-num">{{ number_format(\App\Models\User::where('role', 'umum')->count()) }}</div>
-                    <div class="stat-label">Pengguna Terdaftar</div>
+            {{-- Nav --}}
+            <nav class="auth-sidebar-nav">
+                <div class="auth-nav-section">
+                    <h3 class="auth-nav-section-title">Fitur Utama</h3>
+
+                    <a href="{{ route('jobs.index') }}" class="auth-nav-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        <span>Cari Lowongan</span>
+                        <span class="auth-nav-badge">Live</span>
+                    </a>
+
+                    <a href="{{ route('register') }}" class="auth-nav-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+                        <span>Daftar Akun</span>
+                        <span class="auth-nav-badge">Gratis</span>
+                    </a>
+
+                    <a href="{{ route('cv.builder') }}" class="auth-nav-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        <span>Pembuat CV</span>
+                        <span class="auth-nav-badge">ATS</span>
+                    </a>
                 </div>
-                <div class="text-center">
-                    <div class="stat-num">{{ number_format(\App\Models\Job::where('status', 'active')->where('deadline', '>=', now())->count()) }}</div>
-                    <div class="stat-label">Lowongan Aktif</div>
+
+                <div class="auth-nav-section" style="margin-top: 1.5rem;">
+                    <h3 class="auth-nav-section-title">Layanan</h3>
+
+                    <a href="{{ route('certificates.index') }}" class="auth-nav-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                        <span>Sertifikat</span>
+                    </a>
+
+                    <a href="{{ route('events.index') }}" class="auth-nav-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <span>Acara & Pelatihan</span>
+                    </a>
+
+                    <a href="{{ route('news.index') }}" class="auth-nav-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                        <span>Berita Karir</span>
+                    </a>
+                </div>
+
+                <div class="auth-nav-section" style="margin-top: 1.5rem;">
+                    <h3 class="auth-nav-section-title">Untuk Perusahaan</h3>
+
+                    <a href="{{ route('company.jobs.index') }}" class="auth-nav-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        <span>Rekrut Karyawan</span>
+                    </a>
+                </div>
+            </nav>
+
+            {{-- Stats --}}
+            <div class="auth-sidebar-stats">
+                <div class="auth-sidebar-stats-inner">
+                    <div class="auth-sidebar-stats-title">Angka Kami</div>
+                    <div class="auth-stats-grid">
+                        <div class="auth-stat-item">
+                            <div class="auth-stat-num">{{ number_format(\App\Models\User::where('role', 'umum')->count()) }}</div>
+                            <div class="auth-stat-label">Pencari Kerja</div>
+                        </div>
+                        <div class="auth-stat-item">
+                            <div class="auth-stat-num">{{ number_format(\App\Models\Job::where('status', 'active')->where('deadline', '>=', now())->count()) }}</div>
+                            <div class="auth-stat-label">Lowongan Aktif</div>
+                        </div>
+                        <div class="auth-stat-item">
+                            <div class="auth-stat-num">{{ number_format(\App\Models\Company::count()) }}</div>
+                            <div class="auth-stat-label">Perusahaan</div>
+                        </div>
+                        <div class="auth-stat-item">
+                            <div class="auth-stat-num">{{ number_format(\App\Models\Application::count()) }}</div>
+                            <div class="auth-stat-label">Lamaran Tersimpan</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            {{-- Footer --}}
+            <div class="auth-sidebar-footer">
+                <div class="auth-sidebar-contact">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <span>bkk@smkmutu.sch.id</span>
+                </div>
+            </div>
+        </aside>
 
         {{-- Panel Kanan --}}
         <div class="auth-right">
 
-            {{-- Logo mobile: tampil di layar kecil, tersembunyi di desktop --}}
+            {{-- Logo mobile --}}
             <div class="auth-mobile-logo">
                 <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU">
                 <div>
@@ -201,8 +141,10 @@
             </div>
 
             {{-- Card --}}
-            <div class="auth-card">
-                {{ $slot }}
+            <div class="auth-card-wrapper">
+                <div class="auth-card">
+                    {{ $slot }}
+                </div>
             </div>
 
             {{-- Back link --}}
