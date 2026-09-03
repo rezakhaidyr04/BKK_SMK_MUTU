@@ -60,7 +60,7 @@
             </div>
 
             {{-- Main Stats Grid --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="admin-primary-stats mb-8">
                 <x-ui.dashboard-stat-card
                     label="Total Pengguna Umum"
                     :value="$stats['total_umum']"
@@ -125,12 +125,12 @@
             </div>
 
             {{-- Charts & Recent Activity --}}
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8" x-data="{
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8" x-data="{
                 chartsLoaded: false,
                 chartsOpen: true,
                 statusOpen: true
             }" x-init="$nextTick(() => { chartsLoaded = true; setTimeout(() => initCharts(), 150); })">
-                <div class="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-neutral-100 dark:border-neutral-800 overflow-hidden" data-reveal>
+                <div class="min-w-0 bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-neutral-100 dark:border-neutral-800 overflow-hidden" data-reveal>
                     <div class="px-6 py-5 border-b border-neutral-100 dark:border-neutral-800 cursor-pointer select-none" @click="chartsOpen = !chartsOpen">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
@@ -167,7 +167,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-neutral-100 dark:border-neutral-800 overflow-hidden" data-reveal>
+                <div class="min-w-0 bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-neutral-100 dark:border-neutral-800 overflow-hidden" data-reveal>
                     <div class="px-6 py-5 border-b border-neutral-100 dark:border-neutral-800 cursor-pointer select-none" @click="statusOpen = !statusOpen">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
@@ -207,7 +207,7 @@
             </div>
 
             {{-- Recent Applications & Top Companies --}}
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" x-data="{ 
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" x-data="{ 
                 applicationsOpen: true,
                 companiesOpen: true
             }">

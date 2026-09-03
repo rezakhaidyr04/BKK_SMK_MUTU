@@ -192,7 +192,7 @@
 
     /* ─── Section Transitions ─── */
     .section-fade-in {
-        animation: fadeInUp 0.5s ease-out;
+        animation: none;
     }
     @keyframes fadeInUp {
         from {
@@ -224,10 +224,10 @@
                 </x-slot:actions>
             </x-ui.dashboard-hero>
 
-    <div class="page-container py-8 section-fade-in">
-        <section class="space-y-8">
+    <div class="page-container py-6 section-fade-in">
+        <section class="space-y-6">
             @if($company && !($company->is_verified ?? false))
-                <div class="warning-card p-8">
+                <div class="warning-card p-5 lg:p-6">
                     <div class="warning-bg"></div>
                     <div class="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between" style="z-index: 10;">
                         <div class="flex items-center gap-6 flex-1">
@@ -252,8 +252,8 @@
 
             <div class="grid gap-8 xl:grid-cols-[1.7fr_1fr]">
                 <div class="space-y-8">
-                    <div class="premium-card p-8 lg:p-10 relative">
-                        <div class="relative flex flex-col gap-8 xl:flex-row xl:items-start xl:justify-between" style="z-index: 10;">
+                    <div class="premium-card p-6 lg:p-7 relative">
+                        <div class="relative flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between" style="z-index: 10;">
                             <div style="max-width: 24rem;">
                                 <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.8rem; border-radius: 12px; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1px solid #bfdbfe; margin-bottom: 1rem;">
                                     <span style="width: 0.5rem; height: 0.5rem; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #2563eb); box-shadow: 0 0 4px rgba(59, 130, 246, 0.4);"></span>
@@ -262,14 +262,14 @@
                                 <h2 style="font-size: 1.5rem; font-weight: 800; color: #0f172a; margin:0; line-height: 1.3;">Status: <span style="background: linear-gradient(135deg, #3b82f6, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">{{ $stats['company_status'] }}</span></h2>
                                 <p style="margin-top: 0.75rem; font-size: 0.95rem; color: #475569; line-height: 1.6; margin-bottom:0; font-weight: 500;">Pantau aktivitas perekrutan Anda secara real-time. Total lowongan aktif, pelamar baru, dan status verifikasi dalam satu layar.</p>
                             </div>
-                            <div class="grid gap-4 sm:grid-cols-3 xl:grid-cols-1 w-full xl:w-auto shrink-0">
+                            <div class="grid gap-3 sm:grid-cols-3 xl:grid-cols-1 w-full xl:w-auto shrink-0">
                                 <x-ui.dashboard-stat-card label="Lowongan Aktif" :value="$stats['active_jobs']" color="green" size="sm" />
                                 <x-ui.dashboard-stat-card label="Pelamar Baru" :value="$stats['total_applications']" color="indigo" size="sm" />
                                 <x-ui.dashboard-stat-card label="Diterima" :value="$stats['accepted_applications']" color="purple" size="sm" />
                             </div>
                         </div>
 
-                        <div style="margin-top: 2rem; padding: 1.25rem; border-radius: 18px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 1px solid #cffafe; position: relative; overflow: hidden;">
+                        <div class="company-publish-callout">
                             <div style="position: absolute; inset: 0; background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05), transparent 50%);"></div>
                             <div class="relative flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                                 <div>
@@ -283,7 +283,7 @@
                         </div>
                     </div>
 
-                    <x-ui.panel title="Lowongan Terbaru" subtitle="Daftar lowongan yang baru dipublikasikan." style="background: white; border: 1px solid rgba(203, 213, 225, 0.6); border-radius: 24px;">
+                    <x-ui.panel title="Lowongan Terbaru" subtitle="Daftar lowongan yang baru dipublikasikan." class="company-dashboard-panel">
                         @if($recentJobs->isNotEmpty())
                             <div class="space-y-4">
                                 @foreach($recentJobs as $job)
@@ -314,7 +314,7 @@
                         @endif
                     </x-ui.panel>
 
-                    <x-ui.panel title="Aplikasi Terbaru" subtitle="Pelamar terakhir yang mendaftar pada lowongan Anda." style="background: white; border: 1px solid rgba(203, 213, 225, 0.6); border-radius: 24px;">
+                    <x-ui.panel title="Aplikasi Terbaru" subtitle="Pelamar terakhir yang mendaftar pada lowongan Anda." class="company-dashboard-panel">
                         @if($recentApplications->isNotEmpty())
                             <div class="space-y-4">
                                 @foreach($recentApplications as $application)
@@ -349,7 +349,7 @@
                 </div>
 
                 <div class="space-y-8">
-                    <div class="premium-card p-8 relative overflow-hidden">
+                    <div class="premium-card p-6 relative overflow-hidden">
                         <div style="position: absolute; inset: 0; background: radial-gradient(circle at 100% 0%, rgba(59, 130, 246, 0.03), transparent 70%);"></div>
                         <div class="relative flex flex-col gap-6">
                             <div class="flex items-center justify-between gap-4" style="border-bottom: 1px solid rgba(203, 213, 225, 0.6); padding-bottom: 1.25rem;">
@@ -396,7 +396,7 @@
                         </div>
                     </div>
 
-                    <div class="premium-card p-8">
+                    <div class="premium-card p-6">
                         <div class="flex items-center justify-between gap-3 mb-6">
                             <div>
                                 <h3 style="font-size: 1rem; font-weight: 800; color: #0f172a; margin:0;">📊 Statistik Ringkas</h3>
@@ -447,17 +447,17 @@
                                 <p style="font-size: 1.5rem; font-weight: 900; color: #0369a1; margin:0;">{{ $stats['accepted_applications'] }}</p>
                             </div>
 
-                            <div style="display: flex; align-items: center; justify-content: space-between; border-radius: 14px; border: 1px solid rgba(203, 213, 225, 0.6); background: linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%); padding: 1rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);" class="hover:shadow-md hover:border-purple-300">
+                            <div style="display: flex; align-items: center; justify-content: space-between; border-radius: 14px; border: 1px solid #bfdbfe; background: #eff6ff; padding: 1rem; transition: box-shadow 0.2s ease, border-color 0.2s ease;" class="hover:shadow-md hover:border-blue-300">
                                 <div class="flex items-center gap-4">
-                                    <div style="width: 2.25rem; height: 2.25rem; border-radius: 10px; background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px -2px rgba(147, 51, 234, 0.3);">
+                                    <div style="width: 2.25rem; height: 2.25rem; border-radius: 10px; background: #2563eb; color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.25);">
                                         <svg style="width: 1.125rem; height: 1.125rem;" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v-1h8v1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" /></svg>
                                     </div>
                                     <div>
-                                        <p style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #6b21a8; margin:0;">Total Pelamar</p>
-                                        <p style="font-size: 0.8rem; color: #a855f7; margin-top: 0.1rem; margin-bottom: 0; font-weight: 600;">Semua aplikasi</p>
+                                        <p style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #1d4ed8; margin:0;">Total Pelamar</p>
+                                        <p style="font-size: 0.8rem; color: #2563eb; margin-top: 0.1rem; margin-bottom: 0; font-weight: 600;">Semua aplikasi</p>
                                     </div>
                                 </div>
-                                <p style="font-size: 1.5rem; font-weight: 900; color: #6b21a8; margin:0;">{{ $stats['total_applications'] }}</p>
+                                <p style="font-size: 1.5rem; font-weight: 900; color: #1d4ed8; margin:0;">{{ $stats['total_applications'] }}</p>
                             </div>
 
                             <!-- Row 3: Additional Stats -->
@@ -475,9 +475,9 @@
                                     </p>
                                 </div>
                                 <!-- Rejection Rate -->
-                                <div style="border-radius: 12px; border: 1px solid rgba(203, 213, 225, 0.6); background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%); padding: 0.875rem; text-align: center;">
-                                    <p style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #581c87; margin:0;">Meninjau</p>
-                                    <p style="font-size: 1.25rem; font-weight: 900; color: #7e22ce; margin-top: 0.35rem; margin-bottom: 0;">
+                                    <div style="border-radius: 12px; border: 1px solid #fde68a; background: #fffbeb; padding: 0.875rem; text-align: center;">
+                                        <p style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #92400e; margin:0;">Meninjau</p>
+                                        <p style="font-size: 1.25rem; font-weight: 900; color: #b45309; margin-top: 0.35rem; margin-bottom: 0;">
                                         @php
                                             $reviewCount = $stats['pending_applications'] ?? 0;
                                         @endphp

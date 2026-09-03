@@ -1,14 +1,24 @@
-﻿<x-app-layout :full-bleed="true" title="Lowongan Kerja — BKK SMK MUTU" description="Daftar lowongan kerja terbaru dari perusahaan mitra BKK SMK MUTU. Temukan peluang karier untuk siswa dan alumni.">
+﻿<x-app-layout :full-bleed="true" :hide-sidebar="true" title="Lowongan Kerja — BKK SMK MUTU" description="Daftar lowongan kerja terbaru dari perusahaan mitra BKK SMK MUTU. Temukan peluang karier untuk siswa dan alumni.">
     <div class="page-shell">
     <!-- Hero Search Section -->
     <section class="jobs-search-hero border-b border-slate-200">
         <div class="page-container">
-            <div class="w-full">
+            <div class="w-full flex flex-wrap items-start justify-between gap-4">
+                <div>
                 <div class="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white border border-white/20 mb-3">
                     Lowongan aktif · Filter cepat · Siap dilamar
                 </div>
                 <h1 class="text-3xl font-bold text-white">Temukan Pekerjaan Impian Anda</h1>
                 <p class="mt-2 text-blue-100 max-w-2xl">Temukan {{ $jobs->total() }} peluang yang menunggu Anda, lalu saring hasilnya agar lebih sesuai dengan posisi, lokasi, dan jenis pekerjaan yang dicari.</p>
+                </div>
+                @auth
+                <x-ui.btn href="{{ route('dashboard') }}" variant="white" size="sm" class="shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    Kembali ke Dasbor
+                </x-ui.btn>
+                @endauth
             </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 mt-5">
                     <div class="bg-white/10 border border-white/20 rounded-xl p-4 backdrop-blur-sm">

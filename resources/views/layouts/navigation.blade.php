@@ -7,11 +7,13 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <!-- Sidebar Toggle -->
+                    @if(!($hideSidebar ?? false))
                     <button @click="sidebarOpen = !sidebarOpen" class="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors" aria-label="Buka/tutup menu navigasi" :aria-expanded="sidebarOpen.toString()">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
                     </button>
+                    @endif
 
                     <!-- Logo -->
                     <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="flex items-center ml-4">
@@ -147,6 +149,7 @@
         </div>
     </nav>
     @auth
+    @if(!($hideSidebar ?? false))
     <!-- Desktop Sidebar -->
     <aside x-show="sidebarOpen" x-cloak x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="sidebar-container fixed left-0 top-16 w-64 bg-white border-r border-gray-200 shadow-sm z-40 hidden lg:block">
         <div class="sidebar-content sidebar-scroll">
@@ -199,4 +202,5 @@
             </div>
         </div>
     </div>
+    @endif
     @endauth

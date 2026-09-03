@@ -9,6 +9,7 @@ class AppLayout extends Component
 {
     public function __construct(
         public bool $fullBleed = false,
+        public bool $hideSidebar = false,
         public ?string $title = null,
         public ?string $description = null,
     ) {}
@@ -21,6 +22,7 @@ class AppLayout extends Component
         return view('layouts.app', [
             'seoTitle' => $this->title,
             'seoDescription' => $this->description,
+            'hideSidebar' => $this->hideSidebar,
         ]);
     }
 }

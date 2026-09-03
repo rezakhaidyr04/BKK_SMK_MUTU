@@ -5,8 +5,6 @@
 
 /* 1. FONT
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
 /* 2. ROOT VARIABLES
    ============================================================ */
 :root {
@@ -195,6 +193,24 @@ a:focus-visible { outline: 2px solid #60a5fa; outline-offset: 3px; }
     }
     50% {
         transform: translate(15px, -20px);
+    }
+}
+
+/* Keep decorative effects cheap on devices that prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .hero-orb,
+    .hero-deco,
+    .floating-card {
+        filter: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
     }
 }
 
@@ -555,6 +571,7 @@ section.hero::after {
 .hero-orb-1 {
     width: 600px;
     height: 600px;
+    filter: blur(90px);
     top: -250px;
     right: -150px;
     background: radial-gradient(circle, rgba(96,165,250,.55), transparent 68%);
@@ -564,6 +581,7 @@ section.hero::after {
 .hero-orb-2 {
     width: 420px;
     height: 420px;
+    filter: blur(70px);
     bottom: -180px;
     left: -140px;
     background: radial-gradient(circle, rgba(59,130,246,.45), transparent 68%);
@@ -573,6 +591,7 @@ section.hero::after {
 .hero-orb-3 {
     width: 320px;
     height: 320px;
+    filter: blur(35px);
     top: 35%;
     left: 45%;
     background: radial-gradient(circle, rgba(96,165,250,.35), transparent 70%);
@@ -883,9 +902,7 @@ section.hero::after {
     position: relative;
     z-index: 2;
     margin-bottom: -6px;
-    filter: drop-shadow(0 25px 50px rgba(0,0,0,.35))
-            drop-shadow(0 0 60px rgba(59, 130, 246, 0.35))
-            drop-shadow(0 0 100px rgba(37, 99, 235, 0.2));
+    filter: drop-shadow(0 16px 32px rgba(0,0,0,.25));
 }
 
 /* ============================================================
@@ -1694,7 +1711,7 @@ footer a:hover {
     .hero-visual { padding-right: 170px; }
     .floating-card-1,
     .floating-card-2,
-    .floating-card-3 { right: -150px; }
+    .floating-card-3 { right: 0; }
 }
 
 /* ============================================================
@@ -1706,8 +1723,34 @@ footer a:hover {
     .floating-card { width: 180px; }
     .floating-card-1,
     .floating-card-2,
-    .floating-card-3 { right: -120px; }
+    .floating-card-3 { right: 0; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Laptop and desktop: anchor the student photo to the hero bottom. */
+@media (min-width: 1025px) {
+    .hero-inner {
+        align-items: stretch;
+    }
+
+    .hero-visual,
+    .hero-image {
+        height: 100%;
+    }
+
+    .hero-image img {
+        align-self: flex-end;
+    }
+}
+
+/* Desktop: keep floating cards beside the image, never over the student. */
+@media (min-width: 1025px) {
+    .floating-card-1,
+    .floating-card-2,
+    .floating-card-3 {
+        right: auto;
+        left: calc(100% - 20px);
+    }
 }
 
 /* ============================================================
@@ -1738,14 +1781,32 @@ footer a:hover {
         padding-right: 0;
         justify-content: center;
         height: auto;
-        min-height: 420px;
+        min-height: auto;
     }
-    .hero-image { height: auto; min-height: 350px; }
+    .hero-image {
+        height: auto;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        padding: 0 8px 12px;
+    }
     .hero-image img { height: auto; max-width: 330px; max-height: 430px; }
-    .floating-card { width: 170px; min-height: 56px; padding: 9px 12px; gap: 8px; }
+    .hero-image img { grid-column: 1 / -1; justify-self: center; }
+    .floating-card {
+        position: static;
+        width: auto;
+        min-width: 0;
+        min-height: 56px;
+        padding: 9px 12px;
+        gap: 8px;
+        box-shadow: 0 8px 20px rgba(3, 15, 40, .16);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
     .floating-card-1,
     .floating-card-2,
-    .floating-card-3 { right: -20px; }
+    .floating-card-3 { right: auto; top: auto; bottom: auto; left: auto; }
 
     .features-grid      { grid-template-columns: repeat(2, 1fr); }
     .testimonials-grid  { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto 40px; }
@@ -1767,13 +1828,32 @@ footer a:hover {
     .hero-desc  { font-size: .95rem !important; }
     .hero-cta .btn { padding: 12px 22px; font-size: .9rem; }
 
-    .hero-visual { padding-right: 0; height: auto; min-height: 340px; }
-    .hero-image  { min-height: 280px; height: auto; }
+    .hero-visual { padding-right: 0; height: auto; min-height: auto; }
+    .hero-image  {
+        min-height: 0;
+        height: auto;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        padding: 0 8px 12px;
+    }
     .hero-image img { height: auto; max-width: 260px; max-height: 320px; }
-    .floating-card { width: 148px; min-height: 50px; padding: 8px 10px; gap: 7px; border-radius: 12px; }
+    .hero-image img { grid-column: 1 / -1; justify-self: center; }
+    .floating-card {
+        position: static;
+        width: auto;
+        min-width: 0;
+        min-height: 50px;
+        padding: 8px 10px;
+        gap: 7px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(3, 15, 40, .16);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
     .floating-card-1,
     .floating-card-2,
-    .floating-card-3 { right: 8px; }
+    .floating-card-3 { right: auto; top: auto; bottom: auto; left: auto; }
     .floating-card-icon { width: 28px !important; height: 28px !important; flex: 0 0 28px; }
     .floating-card-text { font-size: .64rem; }
     .floating-card-sub  { font-size: .55rem; }
@@ -1798,8 +1878,8 @@ footer a:hover {
     .hero-title { font-size: 1.9rem !important; }
     .hero-stats { gap: 16px 24px; }
 
-    .hero-visual { padding-right: 0; min-height: 280px; }
-    .hero-image  { min-height: 260px; }
+    .hero-visual { padding-right: 0; min-height: auto; }
+    .hero-image  { grid-template-columns: 1fr; min-height: 0; }
     .hero-image img { max-width: 220px; max-height: 290px; }
     .floating-card { width: 125px; min-height: 44px; padding: 6px 8px; gap: 6px; }
     .floating-card-1,

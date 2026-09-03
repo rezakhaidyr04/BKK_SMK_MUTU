@@ -53,22 +53,18 @@
         @stack('styles')
     </head>
     <body x-data="{ 
-        sidebarOpen: (() => {
-            const stored = localStorage.getItem('sidebarOpen');
-            if (stored !== null) return JSON.parse(stored);
-            return window.innerWidth >= 1024;
-        })(),
+        sidebarOpen: {{ ($hideSidebar ?? false) ? 'false' : '(function () { const stored = localStorage.getItem("sidebarOpen"); if (stored !== null) return JSON.parse(stored); return window.innerWidth >= 1024; })()' }},
         init() {
             this.$watch('sidebarOpen', (val) => {
                 localStorage.setItem('sidebarOpen', JSON.stringify(val));
             });
         }
-    }" @resize.window="sidebarOpen = window.innerWidth >= 1024 ? sidebarOpen : false" class="font-sans antialiased bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-50 @auth authenticated @endauth">
+    }" @resize.window="sidebarOpen = {{ ($hideSidebar ?? false) ? 'false' : '(window.innerWidth >= 1024 ? sidebarOpen : false)' }}" class="font-sans antialiased bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-50 @auth authenticated @endauth">
         {{-- Toast notification portal --}}
         <x-ui.toast />
         
         <div class="min-h-screen bg-neutral-50 dark:bg-neutral-950 flex flex-col">
-            @include('layouts.navigation')
+            @include('layouts.navigation', ['hideSidebar' => $hideSidebar ?? false])
 
             <!-- Content area: .app-main-wrapper TIDAK memiliki spacing agar konsisten -->
             <div :class="['app-main-wrapper transition-all duration-300', sidebarOpen ? 'lg:ml-64' : 'lg:ml-0']">
@@ -76,7 +72,7 @@
                 <main class="main-content">@isset($header)<header class="app-page-header relative overflow-hidden shadow-sm"><div class="pointer-events-none absolute inset-0"></div><div class="page-container py-6 relative">{{ $header }}</div></header>@elseif(View::hasSection('header'))<header class="app-page-header relative overflow-hidden shadow-sm"><div class="pointer-events-none absolute inset-0"></div><div class="page-container py-6 relative">@yield('header')</div></header>@endif
 
                     <!-- PAGE CONTENT -->
-                    <div class="fade-in">
+                    <div>
                         @hasSection('content')
                             @yield('content')
                         @else
