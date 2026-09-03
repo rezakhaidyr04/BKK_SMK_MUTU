@@ -177,7 +177,7 @@
                 <div>
                     <x-input-label for="birth_date" value="Tanggal Lahir" class="text-slate-700 font-semibold mb-1" />
                     <x-text-input id="birth_date" name="birth_date" type="date" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
-                                  :value="old('birth_date', $user->birth_date ?? '')" />
+                                  :value="old('birth_date', $user->birth_date?->format('Y-m-d') ?? '')" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('birth_date')" />
                 </div>
             </div>

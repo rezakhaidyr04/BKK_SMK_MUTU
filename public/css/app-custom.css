@@ -551,6 +551,93 @@ body {
     flex-shrink: 0;
 }
 
+/* CV preview follows the same portrait ratio as the generated A4 PDF. */
+.preview-sheet {
+    width: 100%;
+    aspect-ratio: 210 / 297;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    color: #1f2937;
+}
+
+.preview-modern {
+    font-size: 0.7rem;
+}
+
+.preview-modern .preview-hero {
+    padding: 1rem;
+    background: #1f4f8a;
+    color: #ffffff;
+}
+
+.preview-modern .preview-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.preview-modern .preview-avatar {
+    display: flex;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex: 0 0 2.25rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background: #2c5c94;
+    font-weight: 700;
+}
+
+.preview-modern .preview-name {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.preview-modern .preview-headline {
+    margin: 0.15rem 0 0;
+    color: #dbe7f5;
+    font-size: 0.65rem;
+}
+
+.preview-modern .preview-pill,
+.preview-modern .preview-skill {
+    display: inline-block;
+    border-radius: 0.4rem;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.55rem;
+}
+
+.preview-modern .preview-pill {
+    margin-top: 0.6rem;
+    background: #2c5c94;
+    color: #ffffff;
+}
+
+.preview-modern .preview-section-title {
+    margin-bottom: 0.25rem;
+    border-bottom: 1px solid #dbe7f5;
+    padding-bottom: 0.2rem;
+    color: #163b66;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.preview-modern .preview-section-body {
+    color: #475569;
+    font-size: 0.62rem;
+    line-height: 1.45;
+}
+
+.preview-modern .preview-skill {
+    margin: 0 0.2rem 0.2rem 0;
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
 /* ============================================================
    12. EMPTY STATE
    ============================================================ */

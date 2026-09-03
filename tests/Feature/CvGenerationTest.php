@@ -2,19 +2,18 @@
 
 namespace Tests\Feature;
 
-use App\Jobs\GenerateCvJob;
 use App\Services\CvBuilderService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class CvGenerationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_cv_generate_endpoint_dispatches_job(): void
+    public function test_cv_generate_endpoint_creates_cv_file(): void
     {
-        Queue::fake();
+        Storage::fake('private');
 
         $user = \App\Models\User::factory()->create(['role' => 'umum']);
         $user->skills()->create(['name' => 'PHP']);
@@ -26,12 +25,13 @@ class CvGenerationTest extends TestCase
             ]);
 
         $response->assertRedirect();
-        Queue::assertPushed(GenerateCvJob::class);
+        $response->assertSessionHas('success', 'CV berhasil dibuat dan tersimpan.');
+        $this->assertDatabaseHas('cv_files', ['user_id' => $user->id]);
     }
 
-    public function test_cv_builder_service_dispatches_job_with_user_payload(): void
+    public function test_cv_builder_service_creates_cv_file(): void
     {
-        Queue::fake();
+        Storage::fake('private');
 
         $user = \App\Models\User::factory()->create(['role' => 'umum']);
         $this->actingAs($user);
@@ -41,10 +41,6 @@ class CvGenerationTest extends TestCase
             'include_certificates' => true,
         ]);
 
-        Queue::assertPushed(GenerateCvJob::class, function (GenerateCvJob $job) use ($user) {
-            return $job->userId === $user->id
-                && ($job->data['include_skills'] ?? null) === true
-                && ($job->data['include_certificates'] ?? null) === true;
-        });
+        $this->assertDatabaseHas('cv_files', ['user_id' => $user->id]);
     }
 }

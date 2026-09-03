@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <title>CV - {{ $user->name }}</title>
     <style>
+        @page { size: A4 portrait; margin: 0; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: DejaVu Sans, sans-serif; color: #0f172a; background: #ffffff; }
+        body { font-family: DejaVu Sans, sans-serif; color: #0f172a; background: #f3f6fa; }
 
-        .sheet { border: 1px solid #e6eef6; }
+        .sheet { border: 1px solid #dce6f0; background: #ffffff; }
 
         /* Hero header - tabel 2 kolom: identitas kiri, kontak kanan */
-        .hero { background-color: #1f4f8a; color: #fff; padding: 22px 26px; }
+        .hero { background-color: #163f73; color: #fff; padding: 24px 28px 20px; border-bottom: 5px solid #38bdf8; }
         .hero-table { width: 100%; border-collapse: collapse; }
         .hero-table td { vertical-align: top; }
         .avatar { width: 72px; height: 72px; border-radius: 8px; }
@@ -19,8 +20,8 @@
             background-color: #2c5c94; color: #fff; font-size: 26px; font-weight: bold;
             border-radius: 8px;
         }
-        .name { font-size: 20px; font-weight: bold; }
-        .headline { font-size: 12px; margin-top: 4px; color: #dbe7f5; }
+        .name { font-size: 22px; font-weight: bold; letter-spacing: .2px; }
+        .headline { font-size: 12px; margin-top: 5px; color: #dbe7f5; }
         .hero-contact { text-align: right; font-size: 11px; color: #dbe7f5; line-height: 1.6; }
         .pill {
             display: inline-block; background-color: #2c5c94; color: #fff;
@@ -28,21 +29,27 @@
         }
 
         /* Body - tabel 2 kolom untuk layout utama */
-        .content { padding: 20px 26px 26px; }
+        .profile-strip { background-color: #f7fbff; border-bottom: 1px solid #dce8f3; padding: 10px 28px; }
+        .profile-strip table { width: 100%; border-collapse: collapse; }
+        .profile-strip td { width: 33.33%; color: #52677e; font-size: 9.5px; vertical-align: top; }
+        .profile-strip strong { display: block; color: #163f73; font-size: 8px; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 2px; }
+        .content { padding: 22px 28px 30px; }
         .body-table { width: 100%; border-collapse: collapse; }
         .col-left { width: 58%; vertical-align: top; padding-right: 20px; }
         .col-right { width: 42%; vertical-align: top; }
 
-        .section { margin-bottom: 14px; }
+        .section { margin-bottom: 18px; }
         .section-title {
             font-weight: bold; font-size: 11px; text-transform: uppercase;
-            letter-spacing: 1px; color: #163b66; margin-bottom: 6px;
-            border-bottom: 1px solid #dbe7f5; padding-bottom: 3px;
+            letter-spacing: 1px; color: #163b66; margin-bottom: 7px;
+            border-bottom: 2px solid #dbe7f5; padding-bottom: 4px;
+            position: relative;
         }
+        .section-title:after { content: ''; display: block; width: 34px; height: 2px; background: #38bdf8; position: absolute; left: 0; bottom: -2px; }
         .section-body { font-size: 10.5px; line-height: 1.6; color: #334155; }
         .muted { color: #94a3b8; }
 
-        .card { background-color: #f8fafc; border: 1px solid #eef6fb; padding: 10px 12px; margin-bottom: 12px; }
+        .card { background-color: #f7fbff; border: 1px solid #dce8f3; border-left: 3px solid #60a5fa; padding: 11px 13px; margin-bottom: 13px; }
 
         .skill {
             display: inline-block; background-color: #eff6ff; color: #1d4ed8;
@@ -51,7 +58,10 @@
         .skill-empty { color: #94a3b8; font-size: 10px; }
 
         .list { margin: 0; padding-left: 16px; }
-        .list li { margin-bottom: 4px; }
+        .list li { margin-bottom: 5px; }
+        .contact-line { margin-bottom: 3px; }
+        .education-line { border-left: 2px solid #bfdbfe; padding-left: 9px; margin-bottom: 7px; }
+        .education-line:last-child { margin-bottom: 0; }
     </style>
 </head>
 <body>
@@ -82,6 +92,16 @@
                         @if(!empty($user->linkedin_url))<div>LinkedIn tersedia</div>@endif
                         @if(!empty($user->portfolio_url))<div>Portofolio tersedia</div>@endif
                     </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="profile-strip">
+            <table>
+                <tr>
+                    <td><strong>Posisi Target</strong>{{ $target_position ?: ($user->preferred_position ?: 'Frontend Developer') }}</td>
+                    <td><strong>Domisili</strong>{{ $user->address ?: 'Blanakan, Subang, Jawa Barat' }}</td>
+                    <td><strong>Tempat, Tanggal Lahir</strong>{{ $user->birth_place ?: 'Subang' }}, {{ $user->birth_date ? $user->birth_date->format('d M Y') : '15 Des 2004' }}</td>
                 </tr>
             </table>
         </div>
@@ -151,8 +171,8 @@
                         <div class="card">
                             <div class="section-title">Kontak</div>
                             <div class="section-body">
-                                <div>{{ $user->email }}</div>
-                                <div>{{ $user->phone ?? '-' }}</div>
+                                <div class="contact-line">{{ $user->email }}</div>
+                                <div class="contact-line">{{ $user->phone ?? '-' }}</div>
                                 <div>{{ $user->address ?? 'Alamat belum diisi' }}</div>
                             </div>
                         </div>
@@ -174,7 +194,11 @@
                             <div class="section-title">Pendidikan</div>
                             <div class="section-body">
                                 @if(!empty($user->education_history))
-                                    {!! nl2br(e($user->education_history)) !!}
+                                    @foreach(preg_split('/\r\n|\r|\n/', $user->education_history) as $education)
+                                        @if(trim($education))
+                                            <div class="education-line">{{ trim($education) }}</div>
+                                        @endif
+                                    @endforeach
                                 @else
                                     Riwayat pendidikan belum diisi.
                                 @endif

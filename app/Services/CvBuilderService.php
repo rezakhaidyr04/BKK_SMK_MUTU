@@ -28,7 +28,7 @@ class CvBuilderService
         $template = 'modern';
         $fileName = 'cv-files/generated-cv-' . $user->id . '-' . time() . '.pdf';
 
-        // Dispatch job to queue
-        GenerateCvJob::dispatch($user->id, $data, $template, $fileName);
+        // Generate immediately so the user receives the PDF without a queue worker.
+        GenerateCvJob::dispatchSync($user->id, $data, $template, $fileName);
     }
 }

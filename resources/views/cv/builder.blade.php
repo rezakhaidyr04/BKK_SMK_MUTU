@@ -29,7 +29,7 @@
             headline: @js($previewData['headline']),
             summary: @js($previewData['summary']),
             experience: @js($previewData['experience']),
-            achievement: ''
+            achievement: @js($previewData['achievement'])
         }" class="page-container page-section">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div class="lg:col-span-8 xl:col-span-9 space-y-6">
@@ -82,7 +82,7 @@
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Kata kunci ATS</label>
-                                    <input type="text" name="ats_keywords" maxlength="300" placeholder="Contoh: administrasi, microsoft excel, komunikasi, kantor" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">
+                                    <input type="text" name="ats_keywords" maxlength="300" value="{{ old('ats_keywords', $previewData['ats_keywords'] ?? '') }}" placeholder="Contoh: administrasi, microsoft excel, komunikasi, kantor" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Ringkasan singkat</label>
@@ -90,11 +90,11 @@
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Pengalaman / proyek / organisasi paling relevan</label>
-                                    <textarea name="custom_experience" rows="4" maxlength="2000" placeholder="Contoh:\n- Magang di toko retail selama 3 bulan\n- Membantu administrasi OSIS\n- Membuat website sekolah sederhana" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                                    <textarea name="custom_experience" rows="4" maxlength="2000" placeholder="Contoh:\n- Magang di toko retail selama 3 bulan\n- Membantu administrasi OSIS\n- Membuat website sekolah sederhana" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">{{ old('custom_experience', $previewData['experience'] ?? '') }}</textarea>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Pencapaian utama</label>
-                                    <textarea name="custom_achievement" rows="2" maxlength="500" x-model="achievement" placeholder="Contoh: Juara 2 lomba desain poster, lulus PKL dengan predikat baik, memimpin proyek kelas." class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                                    <textarea name="custom_achievement" rows="2" maxlength="500" x-model="achievement" placeholder="Contoh: Juara 2 lomba desain poster, lulus PKL dengan predikat baik, memimpin proyek kelas." class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">{{ old('custom_achievement', $previewData['achievement'] ?? '') }}</textarea>
                                 </div>
                             </div>
 

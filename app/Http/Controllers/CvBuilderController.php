@@ -28,7 +28,7 @@ class CvBuilderController extends Controller
     {
         $cvService->generateCv($request->validated());
 
-        return back()->with('success', 'CV sedang diproses di latar belakang. Silakan muat ulang halaman ini dalam beberapa saat untuk melihat hasilnya.');
+        return back()->with('success', 'CV berhasil dibuat dan tersimpan.');
     }
 
     public function download(CvFile $cvFile)
@@ -71,6 +71,8 @@ class CvBuilderController extends Controller
             'portfolio_url' => $user->portfolio_url ?? null,
             'preferred_position' => $user->preferred_position ?: 'Posisi yang diinginkan belum diisi',
             'target_position' => $user->preferred_position ?: '',
+            'ats_keywords' => 'Frontend Development, HTML, CSS, JavaScript, Responsive Web Design, UI/UX, Git, Problem Solving, Teamwork, Leadership',
+            'achievement' => 'Memimpin kegiatan organisasi dan mengoordinasikan komunikasi publik untuk mendukung kolaborasi serta kelancaran program kerja.',
             'education' => [
                 'school' => $user->education_history ? 'Lihat riwayat pendidikan' : 'Sekolah atau pendidikan terakhir belum diisi',
                 'major' => 'Bidang studi atau keahlian belum diisi',

@@ -1,4 +1,4 @@
-﻿<x-app-layout :full-bleed="true" :hide-sidebar="true" title="Lowongan Kerja — BKK SMK MUTU" description="Daftar lowongan kerja terbaru dari perusahaan mitra BKK SMK MUTU. Temukan peluang karier untuk siswa dan alumni.">
+﻿<x-app-layout :full-bleed="true" :hide-sidebar="!auth()->check()" title="Lowongan Kerja — BKK SMK MUTU" description="Daftar lowongan kerja terbaru dari perusahaan mitra BKK SMK MUTU. Temukan peluang karier untuk siswa dan alumni.">
     <div class="page-shell">
     <!-- Hero Search Section -->
     <section class="jobs-search-hero border-b border-slate-200">
