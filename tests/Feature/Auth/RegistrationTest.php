@@ -17,7 +17,7 @@ class RegistrationTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Daftar sebagai Pencari Kerja');
-        $response->assertSee('Buat akun pencari kerja');
+        $response->assertSee('Buat akun untuk mulai mencari lowongan, membuat CV, dan melamar pekerjaan.');
         $response->assertDontSee('Perusahaan');
         $response->assertDontSee('Admin');
         $response->assertDontSee('Teacher');

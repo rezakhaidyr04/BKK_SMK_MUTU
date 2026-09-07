@@ -22,8 +22,14 @@
                 <h1 class="text-xl font-bold text-slate-900 m-0">Profil Perusahaan</h1>
                 <p class="text-xs text-slate-500 mt-1 mb-0">Kelola data perusahaan Anda.</p>
             </div>
-            <div style="width: 3rem; height: 3rem; border-radius: 0.75rem; background: linear-gradient(135deg, #3b82f6, var(--primary-dark)); color: var(--white); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.25rem; box-shadow: 0 4px 6px -1px rgba(37,99,235,0.3);">
-                {{ strtoupper(substr($company->name ?? auth()->user()->name, 0, 1)) }}
+            <div style="width: 3rem; height: 3rem; border-radius: 0.75rem; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 6px -1px rgba(37,99,235,0.3);">
+                @if($company->logo)
+                    <img src="{{ asset('storage/' . $company->logo) }}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover;" />
+                @else
+                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #3b82f6, var(--primary-dark)); color: var(--white); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.25rem;">
+                        {{ strtoupper(substr($company->name ?? auth()->user()->name, 0, 1)) }}
+                    </div>
+                @endif
             </div>
         </div>
 

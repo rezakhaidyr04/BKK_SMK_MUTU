@@ -15,11 +15,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(
-            \App\Interfaces\ApplicationRepositoryInterface::class,
-            \App\Repositories\ApplicationRepository::class
-        );
-
         $this->app->singleton(ABTestingService::class, function () {
             return new ABTestingService();
         });

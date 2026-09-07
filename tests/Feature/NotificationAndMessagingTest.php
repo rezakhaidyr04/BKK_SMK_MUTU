@@ -65,7 +65,7 @@ class NotificationAndMessagingTest extends TestCase
         ]);
 
         Event::assertDispatched(MessageSent::class, function ($event) use ($conv) {
-            return $event->message->conversation_id === $conv->id;
+            return $event->payload['conversation_id'] === $conv->id;
         });
     }
 

@@ -49,13 +49,13 @@ Route::get("/sitemap.xml", function () {
         route("news.index"),
     ]);
 
-    foreach (\App\Models\Job::where("status", "active")->latest()->get() as $job) {
+    foreach (\App\Models\Job::where("status", "active")->latest('created_at')->get() as $job) {
         $urls->push(route("jobs.show", $job));
     }
-    foreach (\App\Models\News::where("is_published", true)->latest()->get() as $news) {
+    foreach (\App\Models\News::where("is_published", true)->latest('created_at')->get() as $news) {
         $urls->push(route("news.show", $news));
     }
-    foreach (\App\Models\Event::latest()->get() as $event) {
+    foreach (\App\Models\Event::latest('start_time')->get() as $event) {
         $urls->push(route("events.show", $event));
     }
 

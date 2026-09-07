@@ -203,7 +203,7 @@
                             </div>
                         </div>
 
-                        <div x-show="recommendationsOpen" x-collapse class="p-5">
+                        <div x-show="recommendationsOpen" class="p-5">
                             @if($recommendedJobs->count() > 0)
                                 <div class="grid gap-4">
                                     @foreach($recommendedJobs->take(3) as $job)
@@ -349,7 +349,7 @@
                             </div>
                         </div>
 
-                        <div x-show="applicationsOpen" x-collapse class="p-5">
+                        <div x-show="applicationsOpen" class="p-5">
                             @if($myApplications->count() > 0)
                                 <div class="space-y-4">
                                     @foreach($myApplications as $application)
@@ -429,7 +429,7 @@
                             </div>
                         </div>
 
-                        <div x-show="activitiesOpen" x-collapse class="p-6">
+                        <div x-show="activitiesOpen" class="p-6">
                             @if(count($activities) > 0)
                                 <div class="relative space-y-4">
                                     @foreach($activities as $activity)
@@ -505,7 +505,7 @@
                             </div>
                         </div>
 
-                        <div x-show="eventsOpen" x-collapse class="p-6">
+                        <div x-show="eventsOpen" class="p-6">
                             @if($upcomingEvents->count() > 0)
                                 <div class="space-y-4">
                                     @foreach($upcomingEvents as $event)

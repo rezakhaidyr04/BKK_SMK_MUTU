@@ -7,34 +7,35 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Queue\SerializesModels;
 use App\Models\Message;
 
 class MessageSent implements ShouldBroadcast
 {
-    use InteractsWithSockets, SerializesModels;
+    use InteractsWithSockets;
 
-    public Message $message;
+    public int $conversationId;
+    public array $payload;
 
     public function __construct(Message $message)
     {
-        $this->message = $message;
+        $this->conversationId = $message->conversation_id;
+        $this->payload = [
+            'id' => $message->id,
+            'conversation_id' => $message->conversation_id,
+            'sender_id' => $message->sender_id,
+            'sender_name' => $message->sender->name ?? 'Pengguna',
+            'body' => $message->body,
+            'created_at_formatted' => $message->created_at->format('d M Y, H:i'),
+        ];
     }
 
     public function broadcastOn()
     {
-        return new Channel('conversation.' . $this->message->conversation_id);
+        return new Channel('conversation.' . $this->conversationId);
     }
 
     public function broadcastWith()
     {
-        return [
-            'id' => $this->message->id,
-            'conversation_id' => $this->message->conversation_id,
-            'sender_id' => $this->message->sender_id,
-            'sender_name' => $this->message->sender->name ?? 'Pengguna',
-            'body' => $this->message->body,
-            'created_at_formatted' => $this->message->created_at->format('d M Y, H:i'),
-        ];
+        return $this->payload;
     }
 }

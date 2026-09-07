@@ -2,11 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\ApplicationRepositoryInterface;
 use App\Models\Application;
 use App\Notifications\ApplicationReceived;
 
-class ApplicationRepository implements ApplicationRepositoryInterface 
+class ApplicationRepository 
 {
     public function getApplicationById($applicationId) 
     {

@@ -149,7 +149,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div x-show="chartsOpen" x-collapse class="p-6">
+                    <div x-show="chartsOpen" class="p-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <h4 class="text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-3">Tren Lamaran</h4>
@@ -187,7 +187,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div x-show="statusOpen" x-collapse class="p-6">
+                    <div x-show="statusOpen" class="p-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <h4 class="text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-3">Status Lamaran</h4>

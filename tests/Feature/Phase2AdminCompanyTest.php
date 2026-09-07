@@ -116,6 +116,8 @@ class Phase2AdminCompanyTest extends TestCase
         $this->assertNotNull($company);
         $this->assertNotNull($company->mou_path);
         $this->assertEquals('MOU/BKK/2024/001', $company->mou_number);
+        $this->assertTrue($company->is_verified);
+        $this->assertEquals('verified', $company->verification_status);
 
         // File harus tersimpan di disk local (private)
         Storage::disk('local')->assertExists($company->mou_path);

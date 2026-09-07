@@ -68,6 +68,14 @@
                             <x-ui.status-badge :status="$company->verification_status" />
                             @if($company->mou_path)
                             <span class="block mt-1 text-xs text-green-600 font-medium">Ada MoU</span>
+                            <a href="{{ route('admin.companies.mou.download', $company) }}"
+                               class="inline-flex items-center gap-1 mt-1 text-xs text-blue-600 font-semibold hover:text-blue-800 hover:underline">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                                Lihat MOU
+                            </a>
                             @endif
                             @if($company->verification_status === 'rejected' && $company->rejection_reason)
                             <p class="text-xs text-red-500 mt-1 max-w-[180px]">{{ Str::limit($company->rejection_reason, 50) }}</p>
@@ -89,6 +97,17 @@
                                     onclick="openRejectModal({{ $company->id }}, '{{ addslashes($company->name) }}')">
                                     Tolak
                                 </x-ui.btn>
+                                @endif
+
+                                @if($company->mou_path)
+                                <a href="{{ route('admin.companies.mou.download', $company) }}" target="_blank"
+                                   class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 font-semibold" title="Lihat MOU">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7z"/>
+                                    </svg>
+                                    Lihat MOU
+                                </a>
                                 @endif
 
                                 <a href="{{ route('admin.companies.show', $company) }}" class="text-blue-600 hover:text-blue-800">Detail</a>

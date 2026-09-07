@@ -21,7 +21,7 @@
           class="max-w-3xl mx-auto space-y-6">
                 @csrf
 
-                {{-- ── Informasi Perusahaan ──────────────────────────── --}}
+                {{-- Nama tetap diperlukan agar MOU dapat diidentifikasi di daftar perusahaan. --}}
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                     <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-violet-50">
                         <div class="flex items-center gap-3">
@@ -31,71 +31,20 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-bold text-gray-900">Informasi Perusahaan</h3>
-                                <p class="text-xs text-gray-500">Data dasar perusahaan mitra</p>
+                                <h3 class="font-bold text-gray-900">Identitas MOU</h3>
+                                <p class="text-xs text-gray-500">Masukkan nama agar dokumen mudah ditemukan</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
-                        {{-- Nama --}}
-                        <div class="md:col-span-2">
+                    <div class="p-6">
+                        <div>
                             <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
                                 Nama Perusahaan <span class="text-red-500">*</span>
                             </label>
                             <input type="text" id="name" name="name" value="{{ old('name') }}" required
                                    placeholder="PT. Contoh Indonesia"
                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition {{ $errors->has('name') ? 'border-red-400 bg-red-50' : '' }}">
-                        </div>
-
-                        {{-- Industri --}}
-                        <div>
-                            <label for="industry" class="block text-sm font-semibold text-gray-700 mb-2">Industri</label>
-                            <input type="text" id="industry" name="industry" value="{{ old('industry') }}"
-                                   placeholder="Manufaktur, Teknologi, dll."
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                        </div>
-
-                        {{-- Website --}}
-                        <div>
-                            <label for="website" class="block text-sm font-semibold text-gray-700 mb-2">Website</label>
-                            <input type="url" id="website" name="website" value="{{ old('website') }}"
-                                   placeholder="https://contoh.com"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                        </div>
-
-                        {{-- Email --}}
-                        <div>
-                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Perusahaan</label>
-                            <input type="email" id="email" name="email" value="{{ old('email') }}"
-                                   placeholder="hrd@contoh.com"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                            <p class="text-xs text-gray-400 mt-1">Email ini akan digunakan sebagai login akun perusahaan.</p>
-                        </div>
-
-                        {{-- Phone --}}
-                        <div>
-                            <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Nomor Telepon</label>
-                            <input type="text" id="phone" name="phone" value="{{ old('phone') }}"
-                                   placeholder="021-12345678"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                        </div>
-
-                        {{-- Alamat --}}
-                        <div class="md:col-span-2">
-                            <label for="address" class="block text-sm font-semibold text-gray-700 mb-2">Alamat</label>
-                            <input type="text" id="address" name="address" value="{{ old('address') }}"
-                                   placeholder="Jl. Contoh No. 1, Kota"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                        </div>
-
-
-                        {{-- Deskripsi --}}
-                        <div class="md:col-span-2">
-                            <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">Deskripsi Perusahaan</label>
-                            <textarea id="description" name="description" rows="4"
-                                      placeholder="Ceritakan tentang perusahaan ini..."
-                                      class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none">{{ old('description') }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -116,7 +65,7 @@
                         </div>
                     </div>
 
-                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="p-6">
                         {{-- Upload MoU --}}
                         <div class="md:col-span-2">
                             <label for="mou_path" class="block text-sm font-semibold text-gray-700 mb-2">File MoU</label>
@@ -140,31 +89,10 @@
                             @enderror
                         </div>
 
-                        {{-- Nomor MoU --}}
-                        <div>
-                            <label for="mou_number" class="block text-sm font-semibold text-gray-700 mb-2">Nomor MoU</label>
-                            <input type="text" id="mou_number" name="mou_number" value="{{ old('mou_number') }}"
-                                   placeholder="MOU/BKK/2024/001"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition">
-                        </div>
-
-                        {{-- Tanggal Berlaku --}}
-                        <div>
-                            <label for="mou_signed_at" class="block text-sm font-semibold text-gray-700 mb-2">Tanggal Ditandatangani</label>
-                            <input type="date" id="mou_signed_at" name="mou_signed_at" value="{{ old('mou_signed_at') }}"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition">
-                        </div>
-
-                        {{-- Tanggal Berakhir --}}
-                        <div>
-                            <label for="mou_expires_at" class="block text-sm font-semibold text-gray-700 mb-2">Tanggal Berakhir</label>
-                            <input type="date" id="mou_expires_at" name="mou_expires_at" value="{{ old('mou_expires_at') }}"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition">
-                        </div>
                     </div>
                 </div>
 
-                {{-- Info: Akun dibuat setelah approval --}}
+                {{-- Info: MOU membuat perusahaan aktif otomatis --}}
                 <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 flex items-start gap-4">
                     <div class="flex-shrink-0">
                         <svg class="w-6 h-6 text-blue-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -174,8 +102,8 @@
                     <div>
                         <p class="text-sm font-semibold text-blue-800">Tentang Pembuatan Akun</p>
                         <p class="text-sm text-blue-700 mt-1">
-                            Data perusahaan akan tersimpan dengan status <strong>Menunggu</strong>.
-                            Akun login hanya dapat dibuat setelah perusahaan <strong>disetujui (approved)</strong> oleh admin.
+                            Jika file MOU diunggah, perusahaan langsung berstatus <strong>Aktif</strong>.
+                            Jika MOU belum diunggah, statusnya tetap <strong>Menunggu</strong> sampai dokumen dilengkapi.
                         </p>
                     </div>
                 </div>

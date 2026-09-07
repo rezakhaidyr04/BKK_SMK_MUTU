@@ -357,8 +357,14 @@
                                     <p style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #64748b; margin:0;">👤 Profil Perusahaan</p>
                                     <h2 style="margin-top: 0.5rem; font-size: 1.25rem; font-weight: 800; color: #0f172a; margin:0;">{{ $company?->name ?? Auth::user()->name }}</h2>
                                 </div>
-                                <div class="profile-avatar flex-shrink-0" style="display: flex; align-items: center; justify-content: center; width: 3rem; height: 3rem; border-radius: 12px; color: white; font-weight: 800; font-size: 1.125rem;">
-                                    {{ strtoupper(substr($company?->name ?? Auth::user()->name, 0, 1)) }}
+                                <div class="profile-avatar flex-shrink-0" style="width: 3rem; height: 3rem; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    @if($company?->logo)
+                                        <img src="{{ asset('storage/' . $company->logo) }}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover;" />
+                                    @else
+                                        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1e40af 100%); color: white; font-weight: 800; font-size: 1.125rem;">
+                                            {{ strtoupper(substr($company?->name ?? Auth::user()->name, 0, 1)) }}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                             

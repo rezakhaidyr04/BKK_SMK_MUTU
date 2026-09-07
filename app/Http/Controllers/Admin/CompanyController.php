@@ -82,8 +82,10 @@ class CompanyController extends Controller
             'mou_number'          => $validated['mou_number'] ?? null,
             'mou_signed_at'       => $validated['mou_signed_at'] ?? null,
             'mou_expires_at'      => $validated['mou_expires_at'] ?? null,
-            'is_verified'         => false,
-            'verification_status' => 'pending',
+            'is_verified'         => $mouPath !== null,
+            'verification_status' => $mouPath !== null ? 'verified' : 'pending',
+            'reviewed_by'         => $mouPath !== null ? auth()->id() : null,
+            'reviewed_at'         => $mouPath !== null ? now() : null,
         ]);
 
         return redirect()
@@ -197,7 +199,9 @@ class CompanyController extends Controller
                     now()->format('Ymd') . '.' .
                     pathinfo($company->mou_path, PATHINFO_EXTENSION);
 
-        return Storage::disk('local')->download($company->mou_path, $fileName);
+        return response()->file(Storage::disk('local')->path($company->mou_path), [
+            'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+        ]);
     }
 
     public function downloadLegalDocument(Company $company, string $document)

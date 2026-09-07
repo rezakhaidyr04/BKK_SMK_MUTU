@@ -21,7 +21,7 @@
                 @csrf
                 @method('PUT')
 
-                {{-- ── Informasi Perusahaan ──────────────────────────────── --}}
+                {{-- Nama dan status verifikasi tetap diperlukan untuk pengelolaan record. --}}
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                     <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-violet-50">
                         <div class="flex items-center gap-3">
@@ -29,51 +29,19 @@
                                 {{ substr($company->name, 0, 1) }}
                             </div>
                             <div>
-                                <h3 class="font-bold text-gray-900">Informasi Perusahaan</h3>
-                                <p class="text-xs text-gray-500">Edit informasi dasar perusahaan</p>
+                                <h3 class="font-bold text-gray-900">Identitas MOU</h3>
+                                <p class="text-xs text-gray-500">Kelola nama, dokumen, dan status verifikasi</p>
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="p-6">
                         <div class="md:col-span-2">
                             <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Nama Perusahaan <span class="text-red-500">*</span></label>
                             <input type="text" id="name" name="name" value="{{ old('name', $company->name) }}" required
                                    class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                         </div>
-                        <div>
-                            <label for="industry" class="block text-sm font-semibold text-gray-700 mb-2">Industri</label>
-                            <input type="text" id="industry" name="industry" value="{{ old('industry', $company->industry) }}"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                        </div>
-                        <div>
-                            <label for="website" class="block text-sm font-semibold text-gray-700 mb-2">Website</label>
-                            <input type="url" id="website" name="website" value="{{ old('website', $company->website) }}"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Perusahaan</label>
-                            <input type="email" id="email" name="email" value="{{ old('email', $company->email) }}"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                        </div>
-                        <div>
-                            <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Telepon</label>
-                            <input type="text" id="phone" name="phone" value="{{ old('phone', $company->phone) }}"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label for="address" class="block text-sm font-semibold text-gray-700 mb-2">Alamat</label>
-                            <input type="text" id="address" name="address" value="{{ old('address', $company->address) }}"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                        </div>
-
-                        <div class="md:col-span-2">
-                            <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">Deskripsi</label>
-                            <textarea id="description" name="description" rows="4"
-                                      class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none">{{ old('description', $company->description) }}</textarea>
-                        </div>
-
                         {{-- Verifikasi manual --}}
-                        <div class="md:col-span-2 flex items-center gap-2 py-2">
+                        <div class="flex items-center gap-2 py-2">
                             <input type="checkbox" id="is_verified" name="is_verified" value="1"
                                    {{ old('is_verified', $company->is_verified) ? 'checked' : '' }}
                                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
@@ -97,7 +65,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="p-6">
                         {{-- Current MoU Status --}}
                         @if($company->mou_path)
                         <div class="md:col-span-2 flex items-center justify-between bg-green-50 border border-green-200 rounded-xl px-4 py-3">
@@ -141,23 +109,6 @@
                             @enderror
                         </div>
 
-                        <div>
-                            <label for="mou_number" class="block text-sm font-semibold text-gray-700 mb-2">Nomor MoU</label>
-                            <input type="text" id="mou_number" name="mou_number" value="{{ old('mou_number', $company->mou_number) }}"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition">
-                        </div>
-                        <div>
-                            <label for="mou_signed_at" class="block text-sm font-semibold text-gray-700 mb-2">Tanggal Ditandatangani</label>
-                            <input type="date" id="mou_signed_at" name="mou_signed_at"
-                                   value="{{ old('mou_signed_at', optional($company->mou_signed_at)->format('Y-m-d')) }}"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition">
-                        </div>
-                        <div>
-                            <label for="mou_expires_at" class="block text-sm font-semibold text-gray-700 mb-2">Tanggal Berakhir</label>
-                            <input type="date" id="mou_expires_at" name="mou_expires_at"
-                                   value="{{ old('mou_expires_at', optional($company->mou_expires_at)->format('Y-m-d')) }}"
-                                   class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition">
-                        </div>
                     </div>
                 </div>
 
