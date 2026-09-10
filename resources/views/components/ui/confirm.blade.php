@@ -1,5 +1,5 @@
 {{-- Global Confirm Modal - sesuai referensi email broadcast --}}
-<div id="confirmModal" class="fixed inset-0 z-[100] hidden" aria-modal="true" role="dialog">
+<div id="confirmModal" class="fixed inset-0 z-[9999] hidden" aria-modal="true" role="dialog">
     <div class="absolute inset-0 bg-[#0a1a3a]/60 backdrop-blur-sm" onclick="closeConfirm(false)"></div>
     <div class="absolute inset-0 flex items-center justify-center p-4">
         <div class="bg-white rounded-[24px] shadow-[0_24px_64px_rgba(10,22,51,0.35)] w-full max-w-[640px] overflow-hidden animate-[scaleIn_0.22s_cubic-bezier(0.34,1.56,0.64,1)] relative">
