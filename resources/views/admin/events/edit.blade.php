@@ -1,6 +1,13 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Edit Acara" subtitle="Perbarui informasi acara karir.">
+        <x-ui.page-banner title="Edit Acara" subtitle="Perbarui informasi acara karir." eyebrow="Admin › Acara">
+                        <x-slot:chips>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    Edit Acara
+                </span>
+                <span class="page-banner__chip">{{ Str::limit($event->title, 24) }}</span>
+            </x-slot:chips>
             <x-slot:actions>
                 <x-ui.btn variant="secondary" href="{{ route('admin.events.index') }}" size="sm">
                     Kembali

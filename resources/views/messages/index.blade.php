@@ -3,8 +3,14 @@
         <x-ui.page-banner 
             title="Pesan" 
             subtitle="Kelola percakapan dengan perusahaan dari satu tempat."
-            variant="default"
-        >
+            variant="default" eyebrow="Dashboard › Pesan">
+                        <x-slot:chips>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                    {{ $conversations->count() }} Percakapan
+                </span>
+                <span class="page-banner__chip">Pencari Kerja & Perusahaan</span>
+            </x-slot:chips>
             <x-slot:actions>
                 <x-ui.btn href="{{ route('jobs.index') }}" variant="secondary" size="sm">Cari Lowongan</x-ui.btn>
             </x-slot:actions>

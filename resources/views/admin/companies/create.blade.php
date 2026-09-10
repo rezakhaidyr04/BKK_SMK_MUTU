@@ -1,6 +1,16 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Tambah Perusahaan" subtitle="Tambahkan data perusahaan mitra baru. Akun login dibuat setelah perusahaan disetujui.">
+        <x-ui.page-banner title="Tambah Perusahaan" subtitle="Tambahkan data perusahaan mitra baru. Akun login dibuat setelah perusahaan disetujui." eyebrow="Admin › Perusahaan">
+                        <x-slot:chips>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    Tambah Mitra Baru
+                </span>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/></svg>
+                    Admin Area
+                </span>
+            </x-slot:chips>
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.companies.index') }}" variant="white" size="sm">← Kembali</x-ui.btn>
             </x-slot:actions>

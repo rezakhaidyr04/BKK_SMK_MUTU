@@ -1,6 +1,13 @@
 <x-app-layout title="Token API — BKK SMK MUTU" description="Buat personal access token (Sanctum) untuk mengakses API BKK SMK MUTU." :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Token API" subtitle="Buat personal access token untuk mengakses API dari aplikasi eksternal.">
+        <x-ui.page-banner title="Token API" subtitle="Buat personal access token untuk mengakses API dari aplikasi eksternal." eyebrow="Admin › API">
+                        <x-slot:chips>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h10a2 2 0 012 2z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/></svg>
+                    API Sanctum
+                </span>
+                <span class="page-banner__chip">Admin Area</span>
+            </x-slot:chips>
             <x-slot:actions>
                 <x-ui.btn variant="white" size="sm" href="{{ route('admin.activities.index') }}">Kembali ke Log</x-ui.btn>
             </x-slot:actions>

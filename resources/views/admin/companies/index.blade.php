@@ -1,6 +1,18 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Daftar Perusahaan" subtitle="Kelola dan verifikasi akun perusahaan mitra BKK.">
+        <x-ui.page-banner title="Daftar Perusahaan" subtitle="Kelola dan verifikasi akun perusahaan mitra BKK." eyebrow="Admin › Perusahaan">
+                        <x-slot:chips>
+                @if(($pendingCount ?? 0) > 0)
+                <span class="page-banner__chip">
+                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                    {{ $pendingCount }} Menunggu Verifikasi
+                </span>
+                @endif
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    {{ $companies->total() }} Perusahaan · Kelola Perusahaan
+                </span>
+            </x-slot:chips>
             <x-slot:actions>
                 @if($pendingCount > 0)
                 <x-ui.status-badge :status="'pending'">{{ $pendingCount }} menunggu verifikasi</x-ui.status-badge>

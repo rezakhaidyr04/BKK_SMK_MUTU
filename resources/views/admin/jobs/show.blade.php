@@ -1,6 +1,16 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="{{ $job->title }}" subtitle="{{ $job->company_name ?? '-' }}">
+        <x-ui.page-banner title="{{ $job->title }}" subtitle="{{ $job->company_name ?? '-' }}" eyebrow="Admin › Lowongan">
+                        <x-slot:chips>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    {{ \App\Support\Label::jobStatus($job->status) }}
+                </span>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/></svg>
+                    {{ $job->company_name ?? 'Perusahaan' }}
+                </span>
+            </x-slot:chips>
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.jobs.edit', $job) }}" variant="white" size="sm">Edit</x-ui.btn>
                 <x-ui.btn href="{{ route('admin.jobs.index') }}" variant="white" size="sm">← Kembali</x-ui.btn>

@@ -1,6 +1,17 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Lowongan Tersimpan" subtitle="Lowongan yang Anda tandai untuk dilihat nanti." />
+        <x-ui.page-banner title="Lowongan Tersimpan" subtitle="Lowongan yang Anda tandai untuk dilihat nanti." eyebrow="Dashboard › Tersimpan">
+            <x-slot:chips>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                    {{ $bookmarks->total() ?? $bookmarks->count() }} Tersimpan · Shortlist
+                </span>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    Pencari Kerja
+                </span>
+            </x-slot:chips>
+        </x-ui.page-banner>
 
         <div class="page-container page-section">
             <div class="mb-6 rounded-2xl border border-green-100 bg-green-50 p-5">

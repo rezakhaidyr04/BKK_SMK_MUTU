@@ -1,6 +1,16 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Detail Perusahaan" subtitle="{{ $company->name }}">
+        <x-ui.page-banner title="Detail Perusahaan" subtitle="{{ $company->name }}" eyebrow="Admin › Perusahaan">
+                        <x-slot:chips>
+                <span class="page-banner__chip">
+                    <span class="w-2 h-2 rounded-full {{ ($company->verification_status ?? 'pending') === 'verified' ? 'bg-emerald-400' : (($company->verification_status ?? 'pending') === 'pending' ? 'bg-amber-400 animate-pulse' : 'bg-red-400') }}"></span>
+                    {{ ucfirst($company->verification_status ?? 'pending') }}
+                </span>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    Detail Perusahaan · Admin Area
+                </span>
+            </x-slot:chips>
             <x-slot:actions>
                 <x-ui.status-badge :status="$company->verification_status ?? ($company->is_verified ? 'verified' : 'pending')" />
                 <x-ui.btn href="{{ route('admin.companies.edit', $company) }}" variant="white" size="sm">

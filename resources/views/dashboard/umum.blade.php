@@ -1,6 +1,17 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell dashboard-user-page">
-        <x-ui.page-banner title="Selamat datang kembali, {{ Auth::user()->name }}!" subtitle="Mari temukan pekerjaan impian Anda hari ini" />
+        <x-ui.page-banner title="Selamat datang kembali, {{ Auth::user()->name }}!" subtitle="Mari temukan pekerjaan impian Anda hari ini" eyebrow="Beranda › Dasbor">
+            <x-slot:chips>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    Pencari Kerja
+                </span>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    {{ $stats['profile_completion'] }}% Profil Lengkap
+                </span>
+            </x-slot:chips>
+        </x-ui.page-banner>
         <div class="page-container pt-4 pb-2">
                 {{-- Profile Completion Card --}}
                 <div class="rounded-2xl p-3 border border-slate-200 bg-white min-w-[240px]">

@@ -1,6 +1,13 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Acara Saya" subtitle="Acara yang kamu daftarkan.">
+        <x-ui.page-banner title="Acara Saya" subtitle="Acara yang kamu daftarkan." eyebrow="Beranda › Acara">
+                        <x-slot:chips>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    {{ $registrations->total() ?? $registrations->count() }} Acara Terdaftar
+                </span>
+                <span class="page-banner__chip">Kelola Pendaftaran</span>
+            </x-slot:chips>
             <x-slot:actions>
                 <x-ui.btn href="{{ route('events.index') }}" variant="secondary" size="sm">Jelajahi Acara Lain</x-ui.btn>
             </x-slot:actions>

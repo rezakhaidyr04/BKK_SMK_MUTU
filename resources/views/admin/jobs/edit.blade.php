@@ -1,6 +1,13 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Ubah Lowongan" subtitle="Perbarui detail lowongan kerja.">
+        <x-ui.page-banner title="Ubah Lowongan" subtitle="Perbarui detail lowongan kerja." eyebrow="Admin › Lowongan">
+                        <x-slot:chips>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    Edit Lowongan
+                </span>
+                <span class="page-banner__chip">{{ Str::limit($job->title, 24) }}</span>
+            </x-slot:chips>
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.jobs.index') }}" variant="white" size="sm">← Kembali</x-ui.btn>
             </x-slot:actions>

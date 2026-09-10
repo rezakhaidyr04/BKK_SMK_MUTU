@@ -1,6 +1,13 @@
 <x-app-layout title="Log Aktivitas — BKK SMK MUTU" description="Riwayat aktivitas admin pada sistem BKK SMK MUTU." :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Log Aktivitas" subtitle="Riwayat tindakan mutasi yang dilakukan oleh admin.">
+        <x-ui.page-banner title="Log Aktivitas" subtitle="Riwayat tindakan mutasi yang dilakukan oleh admin." eyebrow="Admin › Aktivitas">
+                        <x-slot:chips>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Audit Trail
+                </span>
+                <span class="page-banner__chip">Admin Area · {{ $activities->total() }} Log</span>
+            </x-slot:chips>
             <x-slot:actions>
                 <x-ui.btn variant="white" size="sm" href="{{ route('admin.reports.index') }}">Kembali ke Laporan</x-ui.btn>
             </x-slot:actions>

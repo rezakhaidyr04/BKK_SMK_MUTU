@@ -1,6 +1,16 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Ubah Perusahaan" subtitle="{{ $company->name }}">
+        <x-ui.page-banner title="Ubah Perusahaan" subtitle="{{ $company->name }}" eyebrow="Admin › Perusahaan">
+                        <x-slot:chips>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    Edit Data Perusahaan
+                </span>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    {{ Str::limit($company->name, 24) }}
+                </span>
+            </x-slot:chips>
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.companies.show', $company) }}" variant="white" size="sm">← Kembali</x-ui.btn>
             </x-slot:actions>

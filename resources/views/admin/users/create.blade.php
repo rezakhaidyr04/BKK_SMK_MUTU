@@ -1,6 +1,13 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Buat Pengguna Baru" subtitle="Tambahkan akun pengguna baru ke sistem.">
+        <x-ui.page-banner title="Buat Pengguna Baru" subtitle="Tambahkan akun pengguna baru ke sistem." eyebrow="Admin › Pengguna">
+                        <x-slot:chips>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+                    Buat Akun Baru
+                </span>
+                <span class="page-banner__chip">Admin Area</span>
+            </x-slot:chips>
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.users.index') }}" variant="white" size="sm">← Kembali</x-ui.btn>
             </x-slot:actions>

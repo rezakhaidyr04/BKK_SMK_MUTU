@@ -1,6 +1,13 @@
 ﻿<x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Detail Pengguna" subtitle="{{ $user->name }}">
+        <x-ui.page-banner title="Detail Pengguna" subtitle="{{ $user->name }}" eyebrow="Admin › Pengguna">
+                        <x-slot:chips>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    {{ ucfirst($user->role) }} · {{ $user->is_active ? 'Aktif' : 'Nonaktif' }}
+                </span>
+                <span class="page-banner__chip">Admin Area</span>
+            </x-slot:chips>
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.users.edit', $user) }}" variant="white" size="sm">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
