@@ -1,8 +1,8 @@
 {{-- Global Confirm Modal - sesuai referensi email broadcast --}}
 <div id="confirmModal" class="fixed inset-0 z-[9999] hidden" aria-modal="true" role="dialog">
     <div class="absolute inset-0 bg-[#0a1a3a]/60 backdrop-blur-sm" onclick="closeConfirm(false)"></div>
-    <div class="absolute inset-0 flex items-center justify-center p-4">
-        <div class="bg-white rounded-[24px] shadow-[0_24px_64px_rgba(10,22,51,0.35)] w-full max-w-[640px] overflow-hidden animate-[scaleIn_0.22s_cubic-bezier(0.34,1.56,0.64,1)] relative">
+    <div class="absolute inset-0 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-[20px] shadow-[0_20px_48px_rgba(10,22,51,0.3)] w-full max-w-[560px] overflow-hidden animate-[scaleIn_0.22s_cubic-bezier(0.34,1.56,0.64,1)] relative my-4">
             {{-- Close X --}}
             <button onclick="closeConfirm(false)" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow-md border border-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition z-10">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -10,13 +10,13 @@
 
             <div class="flex flex-col md:flex-row">
                 {{-- Kiri: Ilustrasi --}}
-                <div class="md:w-[38%] bg-gradient-to-br from-blue-50 via-white to-blue-100/50 p-6 flex items-center justify-center relative overflow-hidden min-h-[220px] md:min-h-[320px]">
+                <div class="md:w-[36%] bg-gradient-to-br from-blue-50 via-white to-blue-100/60 p-5 flex items-center justify-center relative overflow-hidden min-h-[180px] md:min-h-[280px]">
                     {{-- Dekor blob atas --}}
                     <div class="absolute -top-10 -left-10 w-32 h-32 bg-blue-200/40 rounded-full blur-2xl"></div>
                     <div class="absolute -bottom-8 -right-8 w-24 h-24 bg-blue-100/60 rounded-full"></div>
                     {{-- Ilustrasi amplop --}}
                     <div class="relative">
-                        <svg viewBox="0 0 200 180" class="w-[170px] h-[150px] drop-shadow-xl">
+                        <svg viewBox="0 0 200 180" class="w-[150px] h-[130px] drop-shadow-lg">
                             {{-- Glow bulat belakang --}}
                             <ellipse cx="100" cy="105" rx="75" ry="65" fill="#dbeafe" opacity="0.45"/>
                             <ellipse cx="100" cy="105" rx="55" ry="48" fill="#eff6ff" opacity="0.7"/>
@@ -54,7 +54,7 @@
                 </div>
 
                 {{-- Kanan: Konten --}}
-                <div class="flex-1 p-6 md:p-7 flex flex-col">
+                <div class="flex-1 p-5 md:p-6 flex flex-col">
                     <div class="flex items-center gap-2 text-blue-600">
                         <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white">
                             <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
