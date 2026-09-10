@@ -77,6 +77,9 @@ class ProfileController extends Controller
         }
 
         if ($request->hasFile('business_license')) {
+            if ($company->business_license_path && Storage::disk('private')->exists($company->business_license_path)) {
+                Storage::disk('private')->delete($company->business_license_path);
+            }
             $path = $request->file('business_license')->storeAs(
                 "company_verifications/{$company->id}", 'business_license_' . time() . '.' . $request->file('business_license')->getClientOriginalExtension(),
                 'private'
@@ -85,6 +88,9 @@ class ProfileController extends Controller
         }
 
         if ($request->hasFile('operating_license')) {
+            if ($company->operating_license_path && Storage::disk('private')->exists($company->operating_license_path)) {
+                Storage::disk('private')->delete($company->operating_license_path);
+            }
             $path2 = $request->file('operating_license')->storeAs(
                 "company_verifications/{$company->id}", 'operating_license_' . time() . '.' . $request->file('operating_license')->getClientOriginalExtension(),
                 'private'

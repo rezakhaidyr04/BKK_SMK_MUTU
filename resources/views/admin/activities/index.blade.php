@@ -1,14 +1,11 @@
-<x-app-layout title="Log Aktivitas — BKK SMK MUTU" description="Riwayat aktivitas admin pada sistem BKK SMK MUTU.">
+<x-app-layout title="Log Aktivitas — BKK SMK MUTU" description="Riwayat aktivitas admin pada sistem BKK SMK MUTU." :full-bleed="true">
     <div class="page-shell">
-        <div class="page-container py-8">
-            <div class="flex items-center justify-between mb-6">
-                <div>
-                    <h1 class="text-2xl font-black text-slate-900">Log Aktivitas</h1>
-                    <p class="text-sm text-slate-500 mt-1">Riwayat tindakan mutasi yang dilakukan oleh admin.</p>
-                </div>
-                <a href="{{ route('admin.reports.index') }}" class="text-sm font-semibold text-blue-600 hover:underline">Kembali ke Laporan</a>
-            </div>
-
+        <x-ui.page-banner title="Log Aktivitas" subtitle="Riwayat tindakan mutasi yang dilakukan oleh admin.">
+            <x-slot:actions>
+                <x-ui.btn variant="white" size="sm" href="{{ route('admin.reports.index') }}">Kembali ke Laporan</x-ui.btn>
+            </x-slot:actions>
+        </x-ui.page-banner>
+        <div class="page-container page-section">
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                 <table class="w-full text-sm">
                     <thead class="bg-slate-50 text-slate-500">

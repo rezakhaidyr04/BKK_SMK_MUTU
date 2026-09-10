@@ -1,6 +1,6 @@
-﻿<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Daftar Perusahaan" subtitle="Kelola dan verifikasi akun perusahaan mitra BKK.">
+﻿<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Daftar Perusahaan" subtitle="Kelola dan verifikasi akun perusahaan mitra BKK.">
             <x-slot:actions>
                 @if($pendingCount > 0)
                 <x-ui.status-badge :status="'pending'">{{ $pendingCount }} menunggu verifikasi</x-ui.status-badge>
@@ -13,8 +13,8 @@
                     Tambah Perusahaan
                 </a>
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
+        </x-ui.page-banner>
+        <div class="page-container page-section">
 
     <div class="ui-filter-bar">
         <form method="GET" action="{{ route('admin.companies.index') }}" class="flex flex-wrap gap-4 items-end w-full">
@@ -86,7 +86,7 @@
                                 @if($company->verification_status !== 'verified')
                                 <form method="POST" action="{{ route('admin.companies.approve', $company) }}">
                                     @csrf
-                                    <x-ui.btn type="submit" size="sm" onclick="return confirm('Setujui verifikasi {{ addslashes($company->name) }}?')">
+                                    <x-ui.btn type="submit" variant="success" size="sm" onclick="return confirm('Setujui verifikasi ' + {{ Js::from($company->name) }} + '?')">
                                         Setujui
                                     </x-ui.btn>
                                 </form>
@@ -94,24 +94,23 @@
 
                                 @if($company->verification_status !== 'rejected')
                                 <x-ui.btn variant="danger" size="sm" type="button"
-                                    onclick="openRejectModal({{ $company->id }}, '{{ addslashes($company->name) }}')">
+                                    onclick="openRejectModal({{ $company->id }}, {{ Js::from($company->name) }})">
                                     Tolak
                                 </x-ui.btn>
                                 @endif
 
                                 @if($company->mou_path)
-                                <a href="{{ route('admin.companies.mou.download', $company) }}" target="_blank"
-                                   class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 font-semibold" title="Lihat MOU">
+                                <x-ui.btn href="{{ route('admin.companies.mou.download', $company) }}" target="_blank" variant="secondary" size="sm" title="Lihat MOU">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                     </svg>
                                     Lihat MOU
-                                </a>
+                                </x-ui.btn>
                                 @endif
 
-                                <a href="{{ route('admin.companies.show', $company) }}" class="text-blue-600 hover:text-blue-800">Detail</a>
-                                <a href="{{ route('admin.companies.edit', $company) }}" class="text-blue-600 hover:text-blue-800">Edit</a>
+                                <x-ui.btn href="{{ route('admin.companies.show', $company) }}" variant="secondary" size="sm">Detail</x-ui.btn>
+                                <x-ui.btn href="{{ route('admin.companies.edit', $company) }}" variant="secondary" size="sm">Edit</x-ui.btn>
                             </div>
                         </td>
                     </tr>
@@ -168,4 +167,6 @@
     });
     </script>
     @endpush
+        </div>
+    </div>
 </x-app-layout>

@@ -1,6 +1,6 @@
-﻿<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Daftar Pengguna" subtitle="Kelola semua akun pengguna di sistem.">
+﻿<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Daftar Pengguna" subtitle="Kelola semua akun pengguna di sistem.">
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.users.create') }}" size="sm">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -9,8 +9,8 @@
                     Tambah Pengguna
                 </x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
+        </x-ui.page-banner>
+        <div class="page-container page-section">
 
     <div class="ui-filter-bar">
         <form method="GET" action="{{ route('admin.users.index') }}" class="grid gap-4 md:grid-cols-4 w-full">
@@ -67,12 +67,12 @@
                         </td>
                         <td>
                             <div class="ui-table-actions">
-                                <a href="{{ route('admin.users.show', $user) }}" class="text-blue-600 hover:text-blue-800">Lihat</a>
-                                <a href="{{ route('admin.users.edit', $user) }}" class="text-blue-600 hover:text-blue-800">Ubah</a>
+                                <x-ui.btn href="{{ route('admin.users.show', $user) }}" variant="secondary" size="sm">Lihat</x-ui.btn>
+                                <x-ui.btn href="{{ route('admin.users.edit', $user) }}" variant="secondary" size="sm">Ubah</x-ui.btn>
                                 <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline" onsubmit="return confirm('Hapus pengguna ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-800 font-semibold text-sm">Hapus</button>
+                                    <x-ui.btn type="submit" variant="danger" size="sm">Hapus</x-ui.btn>
                                 </form>
                             </div>
                         </td>
@@ -94,4 +94,6 @@
             {{ $users->links() }}
         </div>
     </x-ui.panel>
+        </div>
+    </div>
 </x-app-layout>

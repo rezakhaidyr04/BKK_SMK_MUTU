@@ -68,8 +68,11 @@ class ImageProcessor
         $src       = @imagecreatefromstring($imageData);
 
         if ($src === false) {
-            // Fallback: simpan file asli tanpa konversi
-            $stored = $file->storeAs($directory, $filename, 'public');
+            // Fallback: simpan file asli tanpa konversi (pertahankan ekstensi asli)
+            $originalExtension = $file->getClientOriginalExtension();
+            $fallbackFilename = ($filename ?? Str::uuid()->toString()) . '.' . $originalExtension;
+            $fallbackSubPath = trim($directory, '/') . '/' . $fallbackFilename;
+            $stored = $file->storeAs($directory, $fallbackFilename, 'public');
             return $stored ?: null;
         }
 

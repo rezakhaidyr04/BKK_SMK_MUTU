@@ -3,12 +3,10 @@
         <x-ui.page-banner 
             title="{{ $job->title }}" 
             subtitle="{{ $job->company_name ?? 'Detail lowongan pekerjaan' }}"
-            :back-url="auth()->user()->isCompany() ? route('company.jobs.index') : route('jobs.index')"
+            :back-url="(auth()->check() && auth()->user()->isCompany()) ? route('company.jobs.index') : route('jobs.index')"
             back-label="Kembali ke Lowongan"
         />
-        <div class="min-h-screen bg-[#F8FAFC] pb-12" x-data="{ activeTab: 'deskripsi' }">
-            <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-
+        <div class="page-container page-section" x-data="{ activeTab: 'deskripsi' }">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Main Content (Left Column) -->
                 <div class="lg:col-span-2 space-y-6">
@@ -34,11 +32,6 @@
                                         </div>
                                         <!-- Ringkasan data yang memang tersedia -->
                                         <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500">
-                                            @if(!is_null($matchScore))
-                                            <span class="flex items-center gap-1">
-                                                <span class="text-blue-500">◎</span> <span class="font-semibold text-gray-700">Kecocokan {{ $matchScore }}%</span>
-                                            </span>
-                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -52,10 +45,6 @@
                                     <button onclick="shareJob()" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50 flex items-center gap-2 transition-colors" id="shareBtn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
                                         <span>Bagikan</span>
-                                    </button>
-                                    <button class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50 flex items-center gap-2 transition-colors">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                        <span>Download PDF</span>
                                     </button>
                                 </div>
                             </div>
@@ -168,42 +157,6 @@
                                                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Menjaga kualitas produk sesuai standar</li>
                                                 </ul>
                                             @endif
-                                        </div>
-                                    </div>
-
-                                    <!-- Right Box Content -->
-                                    <div class="md:col-span-1">
-                                        <div class="bg-[#F8FAFC] border border-gray-100 rounded-xl p-5 mb-4">
-                                            <h3 class="text-sm font-bold text-gray-900 mb-3">Info Kecocokan</h3>
-                                            <div class="flex flex-wrap gap-2">
-                                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded border border-blue-100">Profil</span>
-                                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded border border-blue-100">Lokasi</span>
-                                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded border border-blue-100">Pengalaman</span>
-                                                <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded border border-blue-100">CV</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="bg-[#F8FAFC] border border-blue-100 rounded-xl p-5">
-                                            <h3 class="text-sm font-bold text-gray-900 mb-4">Kecocokan Profil Anda</h3>
-                                            <div class="flex items-center gap-4">
-                                                <!-- Circular Progress -->
-                                                <div class="relative w-16 h-16">
-                                                    <svg class="w-full h-full" viewBox="0 0 36 36">
-                                                        <path class="text-gray-200" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.8"/>
-                                                        <path class="text-blue-600" stroke-dasharray="{{ $matchScore ?? 0 }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.8"/>
-                                                    </svg>
-                                                    <div class="absolute inset-0 flex items-center justify-center font-bold text-lg text-blue-600">{{ $matchScore ?? 0 }}%</div>
-                                                </div>
-                                                <div class="flex-1 text-[11px] text-gray-600 space-y-1.5">
-                                                    @if(!is_null($matchScore))
-                                                        <p class="font-medium text-gray-700">Skor dihitung dari profil, lokasi, pengalaman, dan skill yang tersimpan di akun Anda.</p>
-                                                        <p>Lengkapi profil dan unggah CV untuk menaikkan skor kecocokan.</p>
-                                                    @else
-                                                        <p class="font-medium text-gray-700">Masuk sebagai pencari kerja untuk melihat skor kecocokan personal.</p>
-                                                        <p>Detail ini tidak ditampilkan ke tamu agar tidak menyesatkan.</p>
-                                                    @endif
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -402,14 +355,21 @@
 
                                 <div class="mb-6">
                                     <div class="text-sm font-semibold mb-2 text-gray-700">Persiapan Lamaran</div>
+
+                                    @php
+                                        $profileScore = 0;
+                                        if($hasNameAndEmail) $profileScore += 25;
+                                        if($hasAvatar) $profileScore += 25;
+                                        if($hasCv) $profileScore += 50;
+                                    @endphp
+
                                     <div class="flex items-center gap-3 mb-4">
                                         <div class="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
-                                            <div class="ui-progress-fill bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="--progress: {{ $matchScore ?? 0 }}%;"></div>
+                                            <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: {{ $profileScore }}%"></div>
                                         </div>
-                                        <span class="text-sm font-bold text-gray-900">{{ $matchScore ?? 0 }}%</span>
+                                        <span class="text-sm font-bold text-gray-900">{{ $profileScore }}%</span>
                                     </div>
-
-                                    <p class="text-xs text-gray-500 mb-4">Skor dihitung dari kecocokan profil, lokasi, pengalaman, dan skill yang tersedia di akun Anda.</p>
+                                    <p class="text-xs text-gray-500 mb-4">Kelengkapan profil Anda untuk melamar pekerjaan.</p>
 
                                     <ul class="space-y-3 text-sm">
                                         <li class="flex items-center justify-between">
@@ -605,8 +565,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    </div>
 
     @push('scripts')
     <script>

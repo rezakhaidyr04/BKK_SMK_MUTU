@@ -1,13 +1,10 @@
-<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Buat Lowongan" subtitle="Tambah lowongan baru untuk perusahaan Anda.">
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Buat Lowongan" subtitle="Tambah lowongan baru untuk perusahaan Anda.">
             <x-slot:actions>
                 <x-ui.btn href="{{ route('company.jobs.index') }}" variant="secondary">Kembali</x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
-
-    <div class="page-shell">
+        </x-ui.page-banner>
         <div class="page-container page-section max-w-5xl mx-auto">
             @if($errors->any())
                 <x-ui.alert type="danger" class="mb-6">
@@ -43,7 +40,14 @@
                         </div>
                         <div>
                             <label class="ui-label">Lokasi</label>
-                            <input type="text" name="location" value="{{ old('location') }}" class="ui-input">
+                            <select name="location" class="ui-select">
+                                <option value="">Pilih Lokasi</option>
+                                @foreach(config('locations.locations') as $location)
+                                <option value="{{ $location }}" {{ old('location') == $location ? 'selected' : '' }}>
+                                    {{ $location }}
+                                </option>
+                                @endforeach
+                            </select>
                             @error('location')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>

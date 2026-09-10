@@ -1,9 +1,9 @@
-﻿<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Dasbor Admin" subtitle="Ringkasan lengkap sistem dan analitik." />
-    </x-slot>
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Dasbor Admin" subtitle="Ringkasan lengkap sistem dan analitik." />
+        <div class="page-container page-section">
 
-        <div class="pt-2">
+        <div class="mb-6">
             <div class="rounded-2xl border border-blue-100 bg-blue-50 px-5 py-4 shadow-sm">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                     <div>
@@ -21,39 +21,39 @@
 
         <div class="page-container page-section">
             {{-- Quick Actions --}}
-            <div class="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-neutral-100 dark:border-neutral-800 p-6 mb-8" data-reveal>
+            <div class="bg-white rounded-2xl shadow-sm border border-neutral-100 p-6 mb-8" data-reveal>
                 <div class="flex items-center justify-between mb-5">
                     <div>
-                        <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-50">Aksi Cepat</h3>
-                        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-0.5">Pintasan untuk tugas umum</p>
+                        <h3 class="text-base font-bold text-neutral-900">Aksi Cepat</h3>
+                        <p class="text-sm text-neutral-500 mt-0.5">Pintasan untuk tugas umum</p>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-3" data-stagger>
-                    <a href="{{ route('admin.jobs.create') }}" class="group flex items-center gap-3 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl hover:bg-primary-100 dark:hover:bg-primary-900/30 transition-all duration-200 hover:-translate-y-0.5 border border-transparent hover:border-primary-200 dark:hover:border-primary-800">
-                        <div class="w-10 h-10 bg-primary-600 dark:bg-primary-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 shadow-sm">
+                    <a href="{{ route('admin.jobs.create') }}" class="group flex items-center gap-3 p-4 bg-primary-50 rounded-xl hover:bg-primary-100 transition-all duration-200 hover:-translate-y-0.5 border border-transparent hover:border-primary-200">
+                        <div class="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 shadow-sm">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                         </div>
                         <div>
-                            <p class="text-sm font-semibold text-neutral-900 dark:text-neutral-50">Posting Lowongan</p>
-                            <p class="text-xs text-neutral-500 dark:text-neutral-400">Buat lowongan baru</p>
+                            <p class="text-sm font-semibold text-neutral-900">Posting Lowongan</p>
+                            <p class="text-xs text-neutral-500">Buat lowongan baru</p>
                         </div>
                     </a>
-                    <a href="{{ route('admin.users.index') }}" class="group flex items-center gap-3 p-4 bg-success-50 dark:bg-success-900/20 rounded-xl hover:bg-success-100 dark:hover:bg-success-900/30 transition-all duration-200 hover:-translate-y-0.5 border border-transparent hover:border-success-200 dark:hover:border-success-800">
-                        <div class="w-10 h-10 bg-success-600 dark:bg-success-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 shadow-sm">
+                    <a href="{{ route('admin.users.index') }}" class="group flex items-center gap-3 p-4 bg-success-50 rounded-xl hover:bg-success-100 transition-all duration-200 hover:-translate-y-0.5 border border-transparent hover:border-success-200">
+                        <div class="w-10 h-10 bg-success-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 shadow-sm">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                         </div>
                         <div>
-                            <p class="text-sm font-semibold text-neutral-900 dark:text-neutral-50">Kelola User</p>
-                            <p class="text-xs text-neutral-500 dark:text-neutral-400">Manajemen pengguna</p>
+                            <p class="text-sm font-semibold text-neutral-900">Kelola User</p>
+                            <p class="text-xs text-neutral-500">Manajemen pengguna</p>
                         </div>
                     </a>
-                    <a href="{{ route('admin.reports.index') }}" class="group flex items-center gap-3 p-4 bg-violet-50 dark:bg-violet-900/20 rounded-xl hover:bg-violet-100 dark:hover:bg-violet-900/30 transition-all duration-200 hover:-translate-y-0.5 border border-transparent hover:border-violet-200 dark:hover:border-violet-800">
-                        <div class="w-10 h-10 bg-violet-600 dark:bg-violet-500 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 shadow-sm">
+                    <a href="{{ route('admin.reports.index') }}" class="group flex items-center gap-3 p-4 bg-violet-50 rounded-xl hover:bg-violet-100 transition-all duration-200 hover:-translate-y-0.5 border border-transparent hover:border-violet-200">
+                        <div class="w-10 h-10 bg-violet-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 shadow-sm">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                         </div>
                         <div>
-                            <p class="text-sm font-semibold text-neutral-900 dark:text-neutral-50">Laporan</p>
-                            <p class="text-xs text-neutral-500 dark:text-neutral-400">Ekspor & analitik</p>
+                            <p class="text-sm font-semibold text-neutral-900">Laporan</p>
+                            <p class="text-xs text-neutral-500">Ekspor & analitik</p>
                         </div>
                     </a>
                 </div>
@@ -75,11 +75,11 @@
                     <x-slot:footer>
                         <div class="flex items-center text-sm">
                             @if($growth['users'] >= 0)
-                                <span class="text-green-600 dark:text-green-400 font-semibold">+{{ $growth['users'] }}%</span>
+                                <span class="text-green-600 font-semibold">+{{ $growth['users'] }}%</span>
                             @else
-                                <span class="text-red-500 dark:text-red-400 font-semibold">{{ $growth['users'] }}%</span>
+                                <span class="text-red-500 font-semibold">{{ $growth['users'] }}%</span>
                             @endif
-                            <span class="text-gray-600 dark:text-gray-400 ml-2">dari bulan lalu</span>
+                            <span class="text-gray-600 ml-2">dari bulan lalu</span>
                         </div>
                     </x-slot:footer>
                 </x-ui.dashboard-stat-card>
@@ -97,8 +97,8 @@
                     </x-slot:icon>
                     <x-slot:footer>
                         <div class="flex items-center text-sm">
-                            <span class="text-green-600 dark:text-green-400 font-semibold">+{{ $growth['jobs_new'] }}</span>
-                            <span class="text-gray-600 dark:text-gray-400 ml-2">posting baru bulan ini</span>
+                            <span class="text-green-600 font-semibold">+{{ $growth['jobs_new'] }}</span>
+                            <span class="text-gray-600 ml-2">posting baru bulan ini</span>
                         </div>
                     </x-slot:footer>
                 </x-ui.dashboard-stat-card>
@@ -106,21 +106,21 @@
 
             {{-- Application Stats --}}
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" data-stagger>
-                <div class="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-100 dark:border-neutral-800 shadow-sm p-5 text-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" data-reveal>
-                    <p class="text-3xl font-bold text-primary-600 dark:text-primary-400">{{ $stats['total_applications'] }}</p>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1 font-medium">Total Lamaran</p>
+                <div class="bg-white rounded-2xl border border-neutral-100 shadow-sm p-5 text-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" data-reveal>
+                    <p class="text-3xl font-bold text-primary-600">{{ $stats['total_applications'] }}</p>
+                    <p class="text-sm text-neutral-600 mt-1 font-medium">Total Lamaran</p>
                 </div>
-                <div class="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-100 dark:border-neutral-800 shadow-sm p-5 text-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" data-reveal>
-                    <p class="text-3xl font-bold text-warning-600 dark:text-warning-400">{{ $stats['pending_applications'] }}</p>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1 font-medium">Menunggu Tinjauan</p>
+                <div class="bg-white rounded-2xl border border-neutral-100 shadow-sm p-5 text-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" data-reveal>
+                    <p class="text-3xl font-bold text-warning-600">{{ $stats['pending_applications'] }}</p>
+                    <p class="text-sm text-neutral-600 mt-1 font-medium">Menunggu Tinjauan</p>
                 </div>
-                <div class="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-100 dark:border-neutral-800 shadow-sm p-5 text-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" data-reveal>
-                    <p class="text-3xl font-bold text-violet-600 dark:text-violet-400">{{ $stats['interviews_scheduled'] }}</p>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1 font-medium">Wawancara</p>
+                <div class="bg-white rounded-2xl border border-neutral-100 shadow-sm p-5 text-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" data-reveal>
+                    <p class="text-3xl font-bold text-violet-600">{{ $stats['interviews_scheduled'] }}</p>
+                    <p class="text-sm text-neutral-600 mt-1 font-medium">Wawancara</p>
                 </div>
-                <div class="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-100 dark:border-neutral-800 shadow-sm p-5 text-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" data-reveal>
-                    <p class="text-3xl font-bold text-success-600 dark:text-success-400">{{ $stats['accepted_applications'] }}</p>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1 font-medium">Diterima</p>
+                <div class="bg-white rounded-2xl border border-neutral-100 shadow-sm p-5 text-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" data-reveal>
+                    <p class="text-3xl font-bold text-success-600">{{ $stats['accepted_applications'] }}</p>
+                    <p class="text-sm text-neutral-600 mt-1 font-medium">Diterima</p>
                 </div>
             </div>
 
@@ -130,8 +130,8 @@
                 chartsOpen: true,
                 statusOpen: true
             }" x-init="$nextTick(() => { chartsLoaded = true; setTimeout(() => initCharts(), 150); })">
-                <div class="min-w-0 bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-neutral-100 dark:border-neutral-800 overflow-hidden" data-reveal>
-                    <div class="px-6 py-5 border-b border-neutral-100 dark:border-neutral-800 cursor-pointer select-none" @click="chartsOpen = !chartsOpen">
+                <div class="min-w-0 bg-white rounded-2xl shadow-sm border border-neutral-100 overflow-hidden" data-reveal>
+                    <div class="px-6 py-5 border-b border-neutral-100 cursor-pointer select-none" @click="chartsOpen = !chartsOpen">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center">
@@ -140,8 +140,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-50">Tren Lamaran & Lowongan</h3>
-                                    <p class="text-sm text-neutral-500 dark:text-neutral-400">Statistik 6 bulan terakhir</p>
+                                    <h3 class="text-base font-bold text-neutral-900">Tren Lamaran & Lowongan</h3>
+                                    <p class="text-sm text-neutral-500">Statistik 6 bulan terakhir</p>
                                 </div>
                             </div>
                             <svg class="w-5 h-5 text-neutral-400 transition-transform duration-200" :class="chartsOpen ? 'rotate-0' : '-rotate-90'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -152,13 +152,13 @@
                     <div x-show="chartsOpen" class="p-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-3">Tren Lamaran</h4>
+                                <h4 class="text-sm font-semibold text-neutral-700 mb-3">Tren Lamaran</h4>
                                 <div class="h-48">
                                     <canvas id="applicationChart"></canvas>
                                 </div>
                             </div>
                             <div>
-                                <h4 class="text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-3">Tren Lowongan</h4>
+                                <h4 class="text-sm font-semibold text-neutral-700 mb-3">Tren Lowongan</h4>
                                 <div class="h-48">
                                     <canvas id="jobChart"></canvas>
                                 </div>
@@ -167,8 +167,8 @@
                     </div>
                 </div>
 
-                <div class="min-w-0 bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-neutral-100 dark:border-neutral-800 overflow-hidden" data-reveal>
-                    <div class="px-6 py-5 border-b border-neutral-100 dark:border-neutral-800 cursor-pointer select-none" @click="statusOpen = !statusOpen">
+                <div class="min-w-0 bg-white rounded-2xl shadow-sm border border-neutral-100 overflow-hidden" data-reveal>
+                    <div class="px-6 py-5 border-b border-neutral-100 cursor-pointer select-none" @click="statusOpen = !statusOpen">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 bg-success-600 rounded-xl flex items-center justify-center">
@@ -178,8 +178,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-50">Sebaran Status & Role</h3>
-                                    <p class="text-sm text-neutral-500 dark:text-neutral-400">Distribusi data sistem</p>
+                                    <h3 class="text-base font-bold text-neutral-900">Sebaran Status & Role</h3>
+                                    <p class="text-sm text-neutral-500">Distribusi data sistem</p>
                                 </div>
                             </div>
                             <svg class="w-5 h-5 text-neutral-400 transition-transform duration-200" :class="statusOpen ? 'rotate-0' : '-rotate-90'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -190,13 +190,13 @@
                     <div x-show="statusOpen" class="p-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-3">Status Lamaran</h4>
+                                <h4 class="text-sm font-semibold text-neutral-700 mb-3">Status Lamaran</h4>
                                 <div class="h-48">
                                     <canvas id="statusChart"></canvas>
                                 </div>
                             </div>
                             <div>
-                                <h4 class="text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-3">Role Pengguna</h4>
+                                <h4 class="text-sm font-semibold text-neutral-700 mb-3">Role Pengguna</h4>
                                 <div class="h-48">
                                     <canvas id="userRoleChart"></canvas>
                                 </div>
@@ -211,8 +211,8 @@
                 applicationsOpen: true,
                 companiesOpen: true
             }">
-                <div class="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-neutral-100 dark:border-neutral-800 overflow-hidden" data-reveal>
-                    <div class="px-6 py-5 border-b border-neutral-100 dark:border-neutral-800">
+                <div class="bg-white rounded-2xl shadow-sm border border-neutral-100 overflow-hidden" data-reveal>
+                    <div class="px-6 py-5 border-b border-neutral-100">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 bg-violet-600 rounded-xl flex items-center justify-center flex-shrink-0">
                                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -220,23 +220,23 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-50">Lamaran Terbaru</h3>
-                                <p class="text-sm text-neutral-500 dark:text-neutral-400">Aktivitas lamaran terbaru</p>
+                                <h3 class="text-base font-bold text-neutral-900">Lamaran Terbaru</h3>
+                                <p class="text-sm text-neutral-500">Aktivitas lamaran terbaru</p>
                             </div>
                         </div>
                     </div>
                     <div class="p-6">
                     <div class="space-y-3">
                         @forelse($recentApplications->take(5) as $app)
-                        <div class="flex items-center gap-4 p-3 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:-translate-y-0.5 transition-all duration-200 cursor-default">
-                            <div class="w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                                <span class="text-primary-600 dark:text-primary-400 font-bold text-sm">{{ substr($app->user->name, 0, 1) }}</span>
+                        <div class="flex items-center gap-4 p-3 rounded-xl hover:bg-neutral-50 hover:-translate-y-0.5 transition-all duration-200 cursor-default">
+                            <div class="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0" aria-hidden="true">
+                                <span class="text-primary-600 font-bold text-sm">{{ substr($app->user->name, 0, 1) }}</span>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="font-semibold text-sm text-neutral-900 dark:text-neutral-50 truncate">{{ $app->user->name }}</p>
-                                <p class="text-xs text-neutral-500 dark:text-neutral-400 truncate">{{ $app->job?->title ?? 'Pekerjaan Dihapus' }}</p>
+                                <p class="font-semibold text-sm text-neutral-900 truncate">{{ $app->user->name }}</p>
+                                <p class="text-xs text-neutral-500 truncate">{{ $app->job?->title ?? 'Pekerjaan Dihapus' }}</p>
                             </div>
-                            <span class="px-2.5 py-1 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 text-xs font-semibold rounded-full shrink-0">
+                            <span class="px-2.5 py-1 bg-primary-50 text-primary-700 text-xs font-semibold rounded-full shrink-0">
                                 {{ \App\Support\Label::applicationStatus($app->status) }}
                             </span>
                         </div>
@@ -253,6 +253,9 @@
                 </div>
             </div>
         </div>
+        </div>
+    </div>
+
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>

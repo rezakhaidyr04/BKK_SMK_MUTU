@@ -1,13 +1,13 @@
-<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Manajemen Berita" subtitle="Kelola artikel dan berita karir untuk platform.">
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Manajemen Berita" subtitle="Kelola artikel dan berita karir untuk platform.">
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.news.create') }}" size="sm">
                     Tulis Berita
                 </x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
+        </x-ui.page-banner>
+        <div class="page-container page-section">
 
     <!-- Stats -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
@@ -91,10 +91,10 @@
                         <td class="text-sm text-slate-500">{{ $item->created_at->format('d M Y') }}</td>
                         <td>
                             <div class="ui-table-actions justify-end">
-                                <a href="{{ route('admin.news.edit', $item) }}" class="text-blue-600 hover:text-blue-800">Edit</a>
+                                <x-ui.btn href="{{ route('admin.news.edit', $item) }}" variant="secondary" size="sm">Edit</x-ui.btn>
                                 <form method="POST" action="{{ route('admin.news.destroy', $item) }}" class="inline" onsubmit="return confirm('Hapus berita ini?')">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-800 font-semibold text-sm">Hapus</button>
+                                    <x-ui.btn type="submit" variant="danger" size="sm">Hapus</x-ui.btn>
                                 </form>
                             </div>
                         </td>
@@ -113,4 +113,6 @@
             {{ $news->links() }}
         </div>
     </x-ui.panel>
+        </div>
+    </div>
 </x-app-layout>

@@ -1,13 +1,13 @@
-<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Edit Acara" subtitle="Perbarui informasi acara karir.">
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Edit Acara" subtitle="Perbarui informasi acara karir.">
             <x-slot:actions>
                 <x-ui.btn variant="secondary" href="{{ route('admin.events.index') }}" size="sm">
                     Kembali
                 </x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
+        </x-ui.page-banner>
+        <div class="page-container page-section">
 
     <x-ui.form-errors />
 
@@ -115,4 +115,6 @@
     });
     </script>
     @endpush
+        </div>
+    </div>
 </x-app-layout>

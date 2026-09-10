@@ -12,6 +12,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        if (app()->environment('production')) {
+            $this->call([
+                RoleAndAdminSeeder::class,
+                CompanyRolePermissionSeeder::class,
+            ]);
+            if (isset($this->command)) {
+                $this->command->warn('Production: DummyDataSeeder, EventAndNewsSeeder, ReviewSeeder skipped. Jangan jalankan dummy di production!');
+            }
+            return;
+        }
+
         $this->call([
             RoleAndAdminSeeder::class,
             CompanyRolePermissionSeeder::class,

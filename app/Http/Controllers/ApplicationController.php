@@ -86,6 +86,11 @@ class ApplicationController extends Controller
             return back()->with('error', 'Lamaran ini tidak dapat ditarik.');
         }
 
+        // Hapus file attachment jika ada
+        if ($application->attachment_path && Storage::disk('private')->exists($application->attachment_path)) {
+            Storage::disk('private')->delete($application->attachment_path);
+        }
+
         $application->delete();
 
         return redirect()->route('applications.index')

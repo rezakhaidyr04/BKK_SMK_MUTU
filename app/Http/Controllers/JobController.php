@@ -7,7 +7,7 @@ use App\Models\Bookmark;
 use App\Models\Application;
 use App\Http\Requests\ApplicationRequest;
 use App\Notifications\ApplicationReceived;
-use App\Services\JobMatchingService;use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -68,9 +68,9 @@ class JobController extends Controller
         $jobTypes = Job::select("job_type")
             ->distinct()
             ->pluck("job_type");
-        $locations = Job::select("location")
-            ->distinct()
-            ->pluck("location");
+
+        // Use predefined locations from config
+        $locations = collect(config('locations.locations', []));
 
         $activeJobsCount = Job::where("status", "active")
             ->where("deadline", ">=", now())
@@ -106,11 +106,6 @@ class JobController extends Controller
         }
 
         $savedCount = Bookmark::where("job_id", $job->id)->count();
-        $matchScore = null;
-
-        if (Auth::check() && Auth::user()->role === "umum") {
-            $matchScore = (new JobMatchingService())->score($job, Auth::user());
-        }
 
         // Similar jobs
         $similarJobs = Job::where("id", "!=", $job->id)
@@ -125,7 +120,7 @@ class JobController extends Controller
 
         return view(
             "jobs.show",
-            compact("job", "hasApplied", "isBookmarked", "savedCount", "similarJobs", "matchScore"),
+            compact("job", "hasApplied", "isBookmarked", "savedCount", "similarJobs"),
         );
     }
 

@@ -1,11 +1,11 @@
-﻿<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Ubah Pengguna" subtitle="Perbarui data dan kontrol akses pengguna.">
+﻿<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Ubah Pengguna" subtitle="Perbarui data dan kontrol akses pengguna.">
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.users.index') }}" variant="white" size="sm">← Kembali</x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
+        </x-ui.page-banner>
+        <div class="page-container page-section">
 
     @if($errors->any())
     <x-ui.alert type="danger" class="mb-6 max-w-xl mx-auto">
@@ -59,5 +59,7 @@
                 </div>
             </form>
         </x-ui.panel>
+    </div>
+        </div>
     </div>
 </x-app-layout>

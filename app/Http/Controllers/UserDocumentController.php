@@ -10,6 +10,8 @@ class UserDocumentController extends Controller
 {
     public function store(Request $request)
     {
+        abort_unless(auth()->user()->role === 'umum', 403);
+
         $request->validate([
             'document_type' => 'required|string|max:255',
             'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120', // Max 5MB

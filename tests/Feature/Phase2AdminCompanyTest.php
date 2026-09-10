@@ -98,7 +98,7 @@ class Phase2AdminCompanyTest extends TestCase
     /** @test */
     public function admin_can_upload_mou_when_creating_company(): void
     {
-        Storage::fake('local');
+        Storage::fake('private');
 
         $file = UploadedFile::fake()->create('mou.pdf', 500, 'application/pdf');
 
@@ -119,8 +119,8 @@ class Phase2AdminCompanyTest extends TestCase
         $this->assertTrue($company->is_verified);
         $this->assertEquals('verified', $company->verification_status);
 
-        // File harus tersimpan di disk local (private)
-        Storage::disk('local')->assertExists($company->mou_path);
+        // File harus tersimpan di disk private
+        Storage::disk('private')->assertExists($company->mou_path);
     }
 
     // ─────────────────────────────────────────────────────────────

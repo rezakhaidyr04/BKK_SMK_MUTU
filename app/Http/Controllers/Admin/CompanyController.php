@@ -64,7 +64,7 @@ class CompanyController extends Controller
         if ($request->hasFile('mou_path')) {
             $mouPath = $request->file('mou_path')->store(
                 'company_mou',
-                'local'          // private — tidak dapat diakses via URL langsung
+                'private'
             );
         }
 
@@ -121,10 +121,12 @@ class CompanyController extends Controller
         // Handle MoU file upload
         if ($request->hasFile('mou_path')) {
             // Hapus file MoU lama jika ada
-            if ($company->mou_path && Storage::disk('local')->exists($company->mou_path)) {
+            if ($company->mou_path && Storage::disk('private')->exists($company->mou_path)) {
+                Storage::disk('private')->delete($company->mou_path);
+            } elseif ($company->mou_path && Storage::disk('local')->exists($company->mou_path)) {
                 Storage::disk('local')->delete($company->mou_path);
             }
-            $validated['mou_path'] = $request->file('mou_path')->store('company_mou', 'local');
+            $validated['mou_path'] = $request->file('mou_path')->store('company_mou', 'private');
         } else {
             unset($validated['mou_path']); // Jangan overwrite jika tidak upload baru
         }
@@ -190,7 +192,8 @@ class CompanyController extends Controller
             abort(404, 'File MoU tidak ditemukan.');
         }
 
-        if (! Storage::disk('local')->exists($company->mou_path)) {
+        $disk = Storage::disk('private')->exists($company->mou_path) ? 'private' : 'local';
+        if (! Storage::disk($disk)->exists($company->mou_path)) {
             abort(404, 'File MoU tidak ditemukan di storage.');
         }
 
@@ -199,7 +202,7 @@ class CompanyController extends Controller
                     now()->format('Ymd') . '.' .
                     pathinfo($company->mou_path, PATHINFO_EXTENSION);
 
-        return response()->file(Storage::disk('local')->path($company->mou_path), [
+        return response()->file(Storage::disk($disk)->path($company->mou_path), [
             'Content-Disposition' => 'inline; filename="' . $fileName . '"',
         ]);
     }

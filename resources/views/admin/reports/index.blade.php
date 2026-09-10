@@ -2,8 +2,8 @@
 <div class="min-h-screen bg-slate-50">
 
     {{-- ===== HERO HEADER ===== --}}
-    <div style="background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 60%, var(--navy-2) 100%); position:relative; overflow:hidden;">
-        <div style="position:absolute;inset:0;background:radial-gradient(circle at 20% 50%,rgba(99,102,241,0.3) 0%,transparent 60%),radial-gradient(circle at 80% 20%,rgba(59,130,246,0.2) 0%,transparent 50%);pointer-events:none;"></div>
+    <div style="background: #0a1633; position:relative; overflow:hidden;">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 85% 10%,rgba(37,99,235,0.20) 0%,transparent 40%),radial-gradient(circle at 70% 110%,rgba(6,182,212,0.10) 0%,transparent 45%);pointer-events:none;"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" style="position:relative;">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                 <div>

@@ -1,12 +1,12 @@
-﻿<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="{{ $job->title }}" subtitle="{{ $job->company_name ?? '-' }}">
+﻿<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="{{ $job->title }}" subtitle="{{ $job->company_name ?? '-' }}">
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.jobs.edit', $job) }}" variant="white" size="sm">Edit</x-ui.btn>
                 <x-ui.btn href="{{ route('admin.jobs.index') }}" variant="white" size="sm">← Kembali</x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
+        </x-ui.page-banner>
+        <div class="page-container page-section">
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Info Sidebar -->
@@ -140,4 +140,6 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 </x-app-layout>

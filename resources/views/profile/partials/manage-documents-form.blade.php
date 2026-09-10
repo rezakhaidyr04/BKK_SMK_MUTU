@@ -1,9 +1,17 @@
 <section>
-    <header class="border-b border-slate-100 pb-4 mb-6">
-        <h2 class="text-lg font-bold text-slate-900 tracking-tight">
-            {{ __('Kelengkapan Berkas') }}
-        </h2>
-        <p class="mt-1 text-sm text-slate-500">
+    <header class="border-b border-slate-100 pb-5 mb-6">
+        <div class="flex items-center gap-3">
+            <div class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-500 text-white shadow-sm">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div>
+                <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-emerald-600">Langkah 3 · Pelengkap</p>
+                <h2 class="text-lg font-bold text-slate-900 tracking-tight">
+                    {{ __('Kelengkapan Berkas') }}
+                </h2>
+            </div>
+        </div>
+        <p class="mt-3 text-sm text-slate-500">
             {{ __('Unggah berkas pendukung untuk melengkapi profil lamaran Anda seperti CV, KTP, atau Ijazah.') }}
         </p>
     </header>
@@ -68,7 +76,7 @@
         <div>
             <x-input-label for="file" :value="__('File Dokumen')" class="text-slate-700 font-semibold mb-1" />
             <div class="mt-1">
-                <input id="file" name="file" type="file" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition cursor-pointer" required />
+                <input id="file" name="file" type="file" accept=".pdf,.jpg,.jpeg,.png" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition cursor-pointer" required />
             </div>
             <p class="text-[10px] text-slate-400 mt-1.5">Mendukung format PDF, JPG, PNG. Ukuran maksimal file 5MB.</p>
             <x-input-error class="mt-1.5" :messages="$errors->get('file')" />

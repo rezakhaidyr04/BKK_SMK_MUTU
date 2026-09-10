@@ -1,9 +1,17 @@
 <section class="space-y-6">
-    <header class="border-b border-red-100/50 pb-4 mb-4">
-        <h2 class="text-lg font-bold text-red-600 tracking-tight">
-            {{ __('Zona Bahaya') }}
-        </h2>
-        <p class="mt-1 text-sm text-slate-500">
+    <header class="border-b border-red-100 pb-5 mb-4">
+        <div class="flex items-center gap-3">
+            <div class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-red-600 to-rose-500 text-white shadow-sm">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+            </div>
+            <div>
+                <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-red-500">Perhatian · Ireversibel</p>
+                <h2 class="text-lg font-bold text-red-600 tracking-tight">
+                    {{ __('Zona Bahaya') }}
+                </h2>
+            </div>
+        </div>
+        <p class="mt-3 text-sm text-slate-500">
             {{ __('Setelah akun Anda dihapus, semua sumber daya dan datanya akan dihapus secara permanen. Tindakan ini tidak dapat dibatalkan.') }}
         </p>
     </header>

@@ -40,31 +40,41 @@ Route::get("/news/{news}", [NewsController::class, "show"])->name("news.show");
 Route::get("/reviews/create", [ReviewController::class, "create"])->name("reviews.create");
 Route::post("/reviews", [ReviewController::class, "store"])->middleware('throttle:submit-review')->name("reviews.store");
 
-// SEO: Sitemap
+// SEO: Sitemap (cached 1 hour, chunked + select id only)
 Route::get("/sitemap.xml", function () {
-    $urls = collect([
-        url("/"),
-        route("jobs.index"),
-        route("events.index"),
-        route("news.index"),
-    ]);
+    $xml = \Illuminate\Support\Facades\Cache::remember('sitemap.xml', 3600, function () {
+        $urls = collect([
+            url("/"),
+            route("jobs.index"),
+            route("events.index"),
+            route("news.index"),
+        ]);
 
-    foreach (\App\Models\Job::where("status", "active")->latest('created_at')->get() as $job) {
-        $urls->push(route("jobs.show", $job));
-    }
-    foreach (\App\Models\News::where("is_published", true)->latest('created_at')->get() as $news) {
-        $urls->push(route("news.show", $news));
-    }
-    foreach (\App\Models\Event::latest('start_time')->get() as $event) {
-        $urls->push(route("events.show", $event));
-    }
+        \App\Models\Job::where("status", "active")->select('id')->latest('created_at')->chunk(500, function ($jobs) use ($urls) {
+            foreach ($jobs as $job) {
+                $urls->push(route("jobs.show", $job));
+            }
+        });
+        \App\Models\News::where("is_published", true)->select('id')->latest('created_at')->chunk(500, function ($items) use ($urls) {
+            foreach ($items as $news) {
+                $urls->push(route("news.show", $news));
+            }
+        });
+        \App\Models\Event::select('id')->latest('start_time')->chunk(500, function ($items) use ($urls) {
+            foreach ($items as $event) {
+                $urls->push(route("events.show", $event));
+            }
+        });
 
-    $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
-    foreach ($urls->unique() as $url) {
-        $xml .= '  <url><loc>' . e($url) . '</loc></url>' . "\n";
-    }
-    $xml .= '</urlset>';
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+        foreach ($urls->unique() as $url) {
+            $xml .= '  <url><loc>' . e($url) . '</loc></url>' . "\n";
+        }
+        $xml .= '</urlset>';
+
+        return $xml;
+    });
 
     return response($xml, 200, ["Content-Type" => "application/xml"]);
 });

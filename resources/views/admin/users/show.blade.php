@@ -1,6 +1,6 @@
-﻿<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Detail Pengguna" subtitle="{{ $user->name }}">
+﻿<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Detail Pengguna" subtitle="{{ $user->name }}">
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.users.edit', $user) }}" variant="white" size="sm">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -10,8 +10,8 @@
                 </x-ui.btn>
                 <x-ui.btn href="{{ route('admin.users.index') }}" variant="white" size="sm">← Kembali</x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
+        </x-ui.page-banner>
+        <div class="page-container page-section">
             <div class="max-w-3xl mx-auto space-y-6">
                 <!-- Profil Card -->
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
@@ -57,4 +57,5 @@
                 </div>
             </div>
         </div>
+    </div>
 </x-app-layout>

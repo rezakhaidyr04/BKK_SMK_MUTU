@@ -1,6 +1,6 @@
 ﻿<x-app-layout :full-bleed="true">
-    <x-slot name="header">
-        <x-ui.page-header title="Daftar Lowongan" subtitle="Kelola lowongan kerja yang diposting oleh perusahaan.">
+    <div class="page-shell">
+        <x-ui.page-banner title="Daftar Lowongan" subtitle="Kelola lowongan kerja yang diposting oleh perusahaan.">
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.jobs.create') }}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -9,9 +9,7 @@
                     Tambah Lowongan
                 </x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
-    <div class="page-shell">
+        </x-ui.page-banner>
         <div class="page-container page-section">
             <!-- Filter -->
             <x-ui.card class="mb-6">
@@ -62,18 +60,18 @@
                                 <td>{{ optional($job->deadline)->format('d M Y') ?? '-' }}</td>
                                 <td>
                                     <div class="ui-table-actions">
-                                        <a href="{{ route('admin.jobs.show', $job) }}" class="text-blue-600 hover:text-blue-800">Lihat</a>
-                                        <a href="{{ route('admin.jobs.edit', $job) }}" class="text-blue-600 hover:text-blue-800">Ubah</a>
+                                        <x-ui.btn href="{{ route('admin.jobs.show', $job) }}" variant="secondary" size="sm">Lihat</x-ui.btn>
+                                        <x-ui.btn href="{{ route('admin.jobs.edit', $job) }}" variant="secondary" size="sm">Ubah</x-ui.btn>
                                         @if($job->status === 'pending')
                                         <form action="{{ route('admin.jobs.approve', $job) }}" method="POST" class="inline"
                                               onsubmit="return confirm('Setujui dan publikasikan lowongan ini?');">
                                             @csrf
-                                            <button type="submit" class="text-green-600 hover:text-green-800 font-semibold text-sm">Setujui</button>
+                                            <x-ui.btn type="submit" variant="success" size="sm">Setujui</x-ui.btn>
                                         </form>
                                         <form action="{{ route('admin.jobs.reject', $job) }}" method="POST" class="inline"
                                               onsubmit="return confirm('Tolak lowongan ini?');">
                                             @csrf
-                                            <button type="submit" class="text-red-600 hover:text-red-800 font-semibold text-sm">Tolak</button>
+                                            <x-ui.btn type="submit" variant="danger" size="sm">Tolak</x-ui.btn>
                                         </form>
                                         @endif
                                         <form action="{{ route('admin.jobs.destroy', $job) }}" method="POST" class="inline"

@@ -1,6 +1,6 @@
-<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Lowongan Saya" subtitle="Kelola dan pantau lowongan pekerjaan perusahaan Anda.">
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Lowongan Saya" subtitle="Kelola dan pantau lowongan pekerjaan perusahaan Anda.">
             <x-slot:actions>
                 @if(auth()->user()->company?->is_verified)
                     <x-ui.btn href="{{ route('company.jobs.create') }}" variant="company">
@@ -13,8 +13,8 @@
                     <x-ui.status-badge status="pending">Perusahaan belum terverifikasi</x-ui.status-badge>
                 @endif
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
+        </x-ui.page-banner>
+        <div class="page-container page-section">
 
     @if(!auth()->user()->company?->is_verified)
     <x-ui.alert type="warning" class="mb-6">
@@ -91,7 +91,7 @@
                         </td>
                         <td>
                             <div class="ui-table-actions">
-                                <a href="{{ route('jobs.show', $job->id) }}" class="text-blue-600 hover:text-blue-800">Lihat</a>
+                                <x-ui.btn href="{{ route('jobs.show', $job->id) }}" variant="secondary" size="sm">Lihat</x-ui.btn>
                             </div>
                         </td>
                     </tr>
@@ -116,4 +116,6 @@
         </div>
         @endif
     </x-ui.panel>
+        </div>
+    </div>
 </x-app-layout>

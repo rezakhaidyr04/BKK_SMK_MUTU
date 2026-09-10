@@ -1,4 +1,4 @@
-﻿@props([
+@props([
     'label',
     'value',
     'color' => 'blue',
@@ -19,14 +19,14 @@ $palette = match($color) {
     default  => ['iconBg' => 'bg-blue-100',   'iconClr' => 'text-blue-600',   'linkClr' => 'text-blue-600'],
 };
 
-$labelClass = 'mb-1 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-neutral-500';
+$labelClass = 'mb-1 text-xs font-semibold uppercase tracking-widest text-slate-400';
 $valueClass = $size === 'sm'
-    ? 'text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-3xl'
-    : 'text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl';
+    ? 'text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl'
+    : 'text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl';
 @endphp
 
 <div {{ $attributes->merge([
-    'class' => 'ui-stat-card ui-stat-card-' . $color . ' flex flex-col min-w-0 dark:bg-neutral-900'
+    'class' => 'ui-stat-card ui-stat-card-' . $color . ' flex flex-col min-w-0'
 ]) }}>
     <div class="flex items-start justify-between gap-3 flex-1">
         <div class="min-w-0 flex-1">
@@ -41,14 +41,14 @@ $valueClass = $size === 'sm'
         </div>
         @endisset
     </div>
-    <div class="mt-4 border-t border-slate-100 pt-3 dark:border-neutral-800">
+    <div class="mt-4 border-t border-slate-100 pt-3">
         @isset($footer)
             {{ $footer }}
         @else
             @if($href && $hrefLabel)
                 <a href="{{ $href }}" class="{{ $palette['linkClr'] }} text-xs font-semibold inline-flex items-center gap-1 hover:underline">{{ $hrefLabel }}</a>
             @elseif($footnote)
-                <p class="text-xs text-slate-400 dark:text-gray-500">{{ $footnote }}</p>
+                <p class="text-xs text-slate-400">{{ $footnote }}</p>
             @endif
         @endisset
     </div>

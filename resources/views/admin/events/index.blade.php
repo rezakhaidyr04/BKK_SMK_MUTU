@@ -1,13 +1,13 @@
-﻿<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Manajemen Acara" subtitle="Kelola acara karier, job fair, dan seminar untuk pencari kerja dan komunitas sekolah.">
+﻿<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Manajemen Acara" subtitle="Kelola acara karier, job fair, dan seminar untuk pencari kerja dan komunitas sekolah.">
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.events.create') }}" size="sm">
                     Buat Acara
                 </x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
+        </x-ui.page-banner>
+        <div class="page-container page-section">
 
     <!-- Stats -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
@@ -103,11 +103,11 @@
                         </td>
                         <td>
                             <div class="ui-table-actions justify-end">
-                                <a href="{{ route('admin.events.registrants', $event) }}" class="text-green-600 hover:text-green-800">Peserta</a>
-                                <a href="{{ route('admin.events.edit', $event) }}" class="text-blue-600 hover:text-blue-800">Edit</a>
+                                <x-ui.btn href="{{ route('admin.events.registrants', $event) }}" variant="secondary" size="sm">Peserta</x-ui.btn>
+                                <x-ui.btn href="{{ route('admin.events.edit', $event) }}" variant="secondary" size="sm">Edit</x-ui.btn>
                                 <form method="POST" action="{{ route('admin.events.destroy', $event) }}" class="inline" onsubmit="return confirm('Hapus acara ini?')">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-800 font-semibold text-sm">Hapus</button>
+                                    <x-ui.btn type="submit" variant="danger" size="sm">Hapus</x-ui.btn>
                                 </form>
                             </div>
                         </td>
@@ -126,4 +126,6 @@
             {{ $events->links() }}
         </div>
     </x-ui.panel>
+        </div>
+    </div>
 </x-app-layout>

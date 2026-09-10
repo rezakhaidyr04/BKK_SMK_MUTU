@@ -1,6 +1,6 @@
-﻿<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Detail Perusahaan" subtitle="{{ $company->name }}">
+﻿<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Detail Perusahaan" subtitle="{{ $company->name }}">
             <x-slot:actions>
                 <x-ui.status-badge :status="$company->verification_status ?? ($company->is_verified ? 'verified' : 'pending')" />
                 <x-ui.btn href="{{ route('admin.companies.edit', $company) }}" variant="white" size="sm">
@@ -11,11 +11,8 @@
                 </x-ui.btn>
                 <x-ui.btn href="{{ route('admin.companies.index') }}" variant="white" size="sm">← Kembali</x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
-
-<div class="page-container page-section">
-
+        </x-ui.page-banner>
+        <div class="page-container page-section">
             {{-- ════════════════════════════════════════════════════════
                  Account created notification
                  ═══════════════════════════════════════════════════════ --}}
@@ -160,7 +157,7 @@
                         <form method="POST" action="{{ route('admin.companies.approve', $company) }}">
                             @csrf
                             <button type="submit"
-                                    onclick="return confirm('Setujui verifikasi {{ addslashes($company->name) }}?')"
+                                    onclick="return confirm('Setujui verifikasi ' + {{ Js::from($company->name) }} + '?')"
                                     class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-green-600 text-white text-sm font-semibold rounded-xl hover:bg-green-700 transition">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -174,7 +171,7 @@
                     @if($company->verification_status !== 'rejected')
                     <div class="bg-white rounded-2xl shadow-lg p-5">
                         <button type="button"
-                                onclick="openRejectModal({{ $company->id }}, '{{ addslashes($company->name) }}')"
+                                onclick="openRejectModal({{ $company->id }}, {{ Js::from($company->name) }})"
                                 class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-xl hover:bg-red-700 transition">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -218,7 +215,7 @@
                                 <p class="text-xs text-gray-400 mt-1">Email ini akan menjadi username login perusahaan.</p>
                             </div>
                             <button type="submit"
-                                    onclick="return confirm('Buat akun login untuk {{ addslashes($company->name) }}?\n\nPassword sementara akan ditampilkan SEKALI. Pastikan Anda siap mencatatnya.')"
+                                    onclick="return confirm('Buat akun login untuk ' + {{ Js::from($company->name) }} + '?\n\nPassword sementara akan ditampilkan SEKALI. Pastikan Anda siap mencatatnya.')"
                                     class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -409,6 +406,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
     {{-- Reject Modal --}}
     <x-ui.modal id="rejectModal" title="Tolak Verifikasi">

@@ -1,8 +1,6 @@
-﻿<x-app-layout :full-bleed="true">
-    <x-slot name="header">
-        <x-ui.page-header title="Selamat datang kembali, {{ Auth::user()->name }}!" subtitle="Mari temukan pekerjaan impian Anda hari ini" />
-    </x-slot>
+<x-app-layout :full-bleed="true">
     <div class="page-shell dashboard-user-page">
+        <x-ui.page-banner title="Selamat datang kembali, {{ Auth::user()->name }}!" subtitle="Mari temukan pekerjaan impian Anda hari ini" />
         <div class="page-container pt-4 pb-2">
                 {{-- Profile Completion Card --}}
                 <div class="rounded-2xl p-3 border border-slate-200 bg-white min-w-[240px]">
@@ -15,7 +13,7 @@
                     </div>
                     @if($stats['profile_completion'] < 100)
                     <a href="{{ route('profile.edit') }}" class="mt-3 inline-block text-sm text-primary-700 hover:text-primary-900 underline">
-                        Lengkapi profil Anda →
+                        Lengkapi profil Anda ?
                     </a>
                     @endif
                 </div>
@@ -39,8 +37,8 @@
 
         <div class="page-container page-section">
             {{-- Quick Actions --}}
-            <div class="bg-white dark:bg-gray-800/80 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 p-5 mb-6">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Aksi Cepat</h3>
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6">
+                <h3 class="text-lg font-bold text-gray-900 mb-4">Aksi Cepat</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <a href="{{ route('jobs.index') }}" class="group flex flex-col items-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl hover:shadow-md hover:-translate-y-1 transition-all duration-200">
                         <div class="w-12 h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center mb-2 shadow-md group-hover:scale-105 transition-all duration-200">
@@ -172,8 +170,8 @@
                     eventsOpen: false
                 }">
                     {{-- Job Recommendations Section --}}
-                    <div class="dashboard-content-panel bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
-                        <div class="dashboard-panel-header px-5 py-4 border-b border-gray-100 dark:border-gray-700 bg-slate-50 dark:bg-neutral-800 cursor-pointer" @click="recommendationsOpen = !recommendationsOpen">
+                    <div class="dashboard-content-panel bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="dashboard-panel-header px-5 py-4 border-b border-gray-100 bg-slate-50 cursor-pointer" @click="recommendationsOpen = !recommendationsOpen">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
@@ -182,12 +180,12 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Rekomendasi Lowongan</h3>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">Disesuaikan dengan keahlian dan profil Anda</p>
+                                        <h3 class="text-lg font-bold text-gray-900">Rekomendasi Lowongan</h3>
+                                        <p class="text-sm text-gray-600">Disesuaikan dengan keahlian dan profil Anda</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <a href="{{ route('jobs.index') }}" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1 group" @click.stop>
+                                    <a href="{{ route('jobs.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 group" @click.stop>
                                         Lihat Semua
                                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -208,7 +206,7 @@
                                 <div class="grid gap-4">
                                     @foreach($recommendedJobs->take(3) as $job)
                                     @if($job)
-                                    <div class="group relative bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                                    <div class="group relative bg-white rounded-xl p-4 border border-gray-200 hover:border-blue-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                                         <div class="flex items-start gap-4">
                                             <div class="flex-shrink-0">
                                                 <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-md" aria-hidden="true">
@@ -217,27 +215,27 @@
                                             </div>
                                             
                                             <div class="flex-1 min-w-0">
-                                                <h4 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-1">
+                                                <h4 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
                                                     {{ $job->title }}
                                                 </h4>
-                                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{{ $job->company_name ?? 'Perusahaan' }}</p>
+                                                <p class="text-sm text-gray-600 mb-2">{{ $job->company_name ?? 'Perusahaan' }}</p>
                                                 
                                                 <div class="flex flex-wrap items-center gap-2 mb-3">
-                                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
+                                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
                                                         <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                                         </svg>
                                                         {{ $job->location }}
                                                     </span>
-                                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">
+                                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
                                                         <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                                         </svg>
                                                         {{ \App\Support\Label::jobType($job->job_type) }}
                                                     </span>
                                                     @if($job->salary_min && $job->salary_max)
-                                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400">
+                                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
                                                         <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                                         </svg>
@@ -250,48 +248,11 @@
                                                     <a href="{{ route('jobs.show', $job->id) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
                                                         Lihat Detail
                                                     </a>
-                                                    <button class="p-2 text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors" aria-label="Simpan Lowongan">
+                                                    <button class="p-2 text-gray-400 hover:text-red-500 transition-colors" aria-label="Simpan Lowongan">
                                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                                                         </svg>
                                                     </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Match Score Badge -->
-                                        <div class="absolute top-3 right-3" x-data="{ tooltipOpen: false }">
-                                            @php $score = $job->match_score ?? 0; @endphp
-                                            @if($score >= 75)
-                                                @php $badgeBg = 'bg-green-500'; $text = 'text-white'; @endphp
-                                            @elseif($score >= 50)
-                                                @php $badgeBg = 'bg-yellow-400'; $text = 'text-gray-900'; @endphp
-                                            @else
-                                                @php $badgeBg = 'bg-gray-200 dark:bg-gray-700'; $text = 'text-gray-700 dark:text-gray-300'; @endphp
-                                            @endif
-                                            <div class="relative">
-                                                <div class="px-3 py-1 {{ $badgeBg }} {{ $text }} text-xs font-bold rounded-full shadow-lg cursor-help" 
-                                                     @mouseenter="tooltipOpen = true" 
-                                                     @mouseleave="tooltipOpen = false"
-                                                     aria-label="Kecocokan {{ $score }}%">
-                                                    {{ $score }}% Kecocokan
-                                                </div>
-                                                <!-- Tooltip -->
-                                                <div x-show="tooltipOpen" 
-                                                     x-transition:enter="transition ease-out duration-200"
-                                                     x-transition:enter-start="opacity-0 scale-95"
-                                                     x-transition:enter-end="opacity-100 scale-100"
-                                                     x-transition:leave="transition ease-in duration-150"
-                                                     x-transition:leave-start="opacity-100 scale-100"
-                                                     x-transition:leave-end="opacity-0 scale-95"
-                                                     class="absolute right-0 mt-2 w-64 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-10">
-                                                    <p class="font-semibold mb-1">Tentang Kecocokan</p>
-                                                    <p class="text-gray-300">Skor kecocokan dihitung berdasarkan keahlian, pengalaman, dan preferensi Anda dengan kebutuhan lowongan ini.</p>
-                                                    <div class="mt-2 pt-2 border-t border-gray-700">
-                                                        <p class="text-green-400">75%+ = Sangat Cocok</p>
-                                                        <p class="text-yellow-400">50-74% = Cukup Cocok</p>
-                                                        <p class="text-gray-400">&lt;50% = Perlu Pertimbangan</p>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -302,13 +263,13 @@
                             @else
                                 <!-- Empty State -->
                                 <div class="text-center py-12">
-                                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-blue-100 dark:from-blue-900/30 dark:to-blue-900/30 rounded-full flex items-center justify-center animate-gentle-float" aria-hidden="true">
-                                        <svg class="w-10 h-10 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-blue-100 rounded-full flex items-center justify-center animate-gentle-float" aria-hidden="true">
+                                        <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                         </svg>
                                     </div>
-                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Belum ada rekomendasi</h4>
-                                    <p class="text-gray-600 dark:text-gray-400 mb-4 max-w-sm mx-auto">Lengkapi profil dan tambahkan keahlian untuk mendapatkan rekomendasi lowongan yang akurat.</p>
+                                    <h4 class="text-lg font-semibold text-gray-900 mb-2">Belum ada rekomendasi</h4>
+                                    <p class="text-gray-600 mb-4 max-w-sm mx-auto">Lengkapi profil dan tambahkan keahlian untuk mendapatkan rekomendasi lowongan yang akurat.</p>
                                     <a href="{{ route('profile.edit') }}" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
                                         Lengkapi Profil
                                     </a>
@@ -318,8 +279,8 @@
                     </div>
 
                     <!-- My Applications Section -->
-                    <div class="dashboard-content-panel bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
-                        <div class="dashboard-panel-header px-5 py-4 border-b border-gray-100 dark:border-gray-700 bg-slate-50 dark:bg-neutral-800 cursor-pointer" @click="applicationsOpen = !applicationsOpen">
+                    <div class="dashboard-content-panel bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="dashboard-panel-header px-5 py-4 border-b border-gray-100 bg-slate-50 cursor-pointer" @click="applicationsOpen = !applicationsOpen">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
@@ -328,12 +289,12 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Lamaran Saya</h3>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">Lacak status lamaran Anda</p>
+                                        <h3 class="text-lg font-bold text-gray-900">Lamaran Saya</h3>
+                                        <p class="text-sm text-gray-600">Lacak status lamaran Anda</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <a href="{{ route('applications.index') }}" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1 group" @click.stop>
+                                    <a href="{{ route('applications.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 group" @click.stop>
                                         Lihat Semua
                                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -354,21 +315,21 @@
                                 <div class="space-y-4">
                                     @foreach($myApplications as $application)
                                     @if($application->job)
-                                    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                                    <div class="bg-white rounded-xl p-4 border border-gray-200 hover:border-blue-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                                         <div class="flex items-start justify-between mb-3">
                                             <div class="flex-1">
-                                                <h4 class="text-base font-bold text-gray-900 dark:text-white mb-1">{{ $application->job->title }}</h4>
-                                                <p class="text-sm text-gray-600 dark:text-gray-400">{{ $application->job->company_name ?? 'Perusahaan' }}</p>
+                                                <h4 class="text-base font-bold text-gray-900 mb-1">{{ $application->job->title }}</h4>
+                                                <p class="text-sm text-gray-600">{{ $application->job->company_name ?? 'Perusahaan' }}</p>
                                             </div>
                                             @php
                                                 $statusConfig = [
-                                                    'submitted' => ['bg' => 'bg-blue-100 dark:bg-blue-900/30', 'text' => 'text-blue-700 dark:text-blue-400', 'label' => 'Terkirim'],
-                                                    'under_review' => ['bg' => 'bg-yellow-100 dark:bg-yellow-900/30', 'text' => 'text-yellow-700 dark:text-yellow-400', 'label' => 'Sedang Ditinjau'],
-                                                    'interviewed' => ['bg' => 'bg-blue-100 dark:bg-blue-900/30', 'text' => 'text-blue-700 dark:text-blue-400', 'label' => 'Wawancara'],
-                                                    'accepted' => ['bg' => 'bg-green-100 dark:bg-green-900/30', 'text' => 'text-green-700 dark:text-green-400', 'label' => 'Diterima'],
-                                                    'rejected' => ['bg' => 'bg-red-100 dark:bg-red-900/30', 'text' => 'text-red-700 dark:text-red-400', 'label' => 'Ditolak'],
+                                                    'submitted' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-700', 'label' => 'Terkirim'],
+                                                    'under_review' => ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-700', 'label' => 'Sedang Ditinjau'],
+                                                    'interviewed' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-700', 'label' => 'Wawancara'],
+                                                    'accepted' => ['bg' => 'bg-green-100', 'text' => 'text-green-700', 'label' => 'Diterima'],
+                                                    'rejected' => ['bg' => 'bg-red-100', 'text' => 'text-red-700', 'label' => 'Ditolak'],
                                                 ];
-                                                $status = $statusConfig[$application->status] ?? ['bg' => 'bg-gray-100 dark:bg-gray-700', 'text' => 'text-gray-700 dark:text-gray-300', 'label' => 'Tidak Diketahui'];
+                                                $status = $statusConfig[$application->status] ?? ['bg' => 'bg-gray-100', 'text' => 'text-gray-700', 'label' => 'Tidak Diketahui'];
                                             @endphp
                                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $status['bg'] }} {{ $status['text'] }}">
                                                 {{ $status['label'] }}
@@ -376,9 +337,9 @@
                                         </div>
                                         
                                         <div class="flex items-center justify-between text-sm">
-                                            <span class="text-gray-500 dark:text-gray-400">Melamar {{ $application->created_at->diffForHumans() }}</span>
-                                            <a href="{{ route('applications.show', $application->id) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
-                                                Lihat Detail →
+                                            <span class="text-gray-500">Melamar {{ $application->created_at->diffForHumans() }}</span>
+                                            <a href="{{ route('applications.show', $application->id) }}" class="text-blue-600 hover:text-blue-700 font-medium">
+                                                Lihat Detail ?
                                             </a>
                                         </div>
                                     </div>
@@ -387,13 +348,13 @@
                                 </div>
                             @else
                                 <div class="text-center py-12">
-                                    <div class="w-20 h-20 mx-auto mb-4 bg-blue-50 dark:bg-blue-900/30 rounded-full flex items-center justify-center" aria-hidden="true">
-                                        <svg class="w-10 h-10 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-20 h-20 mx-auto mb-4 bg-blue-50 rounded-full flex items-center justify-center" aria-hidden="true">
+                                        <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
                                     </div>
-                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Belum ada lamaran</h4>
-                                    <p class="text-gray-600 dark:text-gray-400 mb-4">Mulai melamar lowongan yang sesuai keahlian Anda</p>
+                                    <h4 class="text-lg font-semibold text-gray-900 mb-2">Belum ada lamaran</h4>
+                                    <p class="text-gray-600 mb-4">Mulai melamar lowongan yang sesuai keahlian Anda</p>
                                     <a href="{{ route('jobs.index') }}" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
                                         Jelajahi Lowongan
                                     </a>
@@ -456,26 +417,26 @@
                                                 </svg>
                                             </div>
                                             @if(!$loop->last)
-                                            <div class="w-0.5 h-full bg-gray-200 dark:bg-gray-700 flex-1"></div>
+                                            <div class="w-0.5 h-full bg-gray-200 flex-1"></div>
                                             @endif
                                         </div>
                                         
                                         <div class="flex-1 pb-6">
-                                            <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $activity['title'] }}</p>
-                                            <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">{{ $activity['description'] }}</p>
-                                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ $activity['timestamp']->diffForHumans() }}</p>
+                                            <p class="text-sm font-semibold text-gray-900">{{ $activity['title'] }}</p>
+                                            <p class="text-xs text-gray-600 mt-1">{{ $activity['description'] }}</p>
+                                            <p class="text-xs text-gray-400 mt-1">{{ $activity['timestamp']->diffForHumans() }}</p>
                                         </div>
                                     </div>
                                     @endforeach
                                 </div>
                             @else
                                 <div class="text-center py-8">
-                                    <div class="w-16 h-16 mx-auto mb-3 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center animate-gentle-float" aria-hidden="true">
-                                        <svg class="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-16 h-16 mx-auto mb-3 bg-gray-100 rounded-full flex items-center justify-center animate-gentle-float" aria-hidden="true">
+                                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
                                     </div>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Belum ada aktivitas</p>
+                                    <p class="text-sm text-gray-600">Belum ada aktivitas</p>
                                 </div>
                             @endif
                         </div>
@@ -519,9 +480,9 @@
                                             </div>
                                             
                                             <div class="flex-1 min-w-0">
-                                                <h4 class="text-sm font-bold text-gray-900 dark:text-white mb-1 truncate">{{ $event->title }}</h4>
-                                                <p class="text-xs text-gray-600 dark:text-gray-400 mb-2">{{ \App\Support\Label::eventType($event->type) }}</p>
-                                                <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                                                <h4 class="text-sm font-bold text-gray-900 mb-1 truncate">{{ $event->title }}</h4>
+                                                <p class="text-xs text-gray-600 mb-2">{{ \App\Support\Label::eventType($event->type) }}</p>
+                                                <div class="flex items-center gap-2 text-xs text-gray-500">
                                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                                     </svg>
@@ -539,7 +500,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                         </svg>
                                     </div>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Belum ada acara mendatang</p>
+                                    <p class="text-sm text-gray-600">Belum ada acara mendatang</p>
                                 </div>
                             @endif
                         </div>

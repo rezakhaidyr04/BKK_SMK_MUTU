@@ -1,6 +1,7 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Profil Perusahaan" subtitle="Kelola data dan verifikasi perusahaan Anda." />
+        <div class="page-container page-section">
 <div class="company-profile-container">
 
     @if (session('success'))
@@ -56,7 +57,7 @@
                             <p id="logo-label" style="font-size:0.8rem; font-weight:600; color:#64748b; margin:0;">Klik untuk pilih logo</p>
                             <p style="font-size:0.7rem; color:var(--text-3); margin:0;">Akan dikompresi otomatis ke WebP</p>
                         </div>
-                        <input id="logo-input" type="file" name="logo" accept="image/*" class="sr-only" onchange="previewLogo(this)" />
+                        <input id="logo-input" type="file" name="logo" accept="image/jpeg,image/png,image/webp" class="sr-only" onchange="previewLogo(this)" />
                     </label>
                 </div>
                 @error('logo')<p style="margin-top:0.375rem; font-size:0.75rem; color:#dc2626;">{{ $message }}</p>@enderror
@@ -175,7 +176,8 @@
         @endif
     </div>
 </div>
-@endsection
+        </div>
+    </div>
 
 @push('scripts')
 <script>
@@ -198,3 +200,4 @@ function previewLogo(input) {
 }
 </script>
 @endpush
+</x-app-layout>

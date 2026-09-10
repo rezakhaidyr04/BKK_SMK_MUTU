@@ -1,13 +1,11 @@
-<x-app-layout title="Token API — BKK SMK MUTU" description="Buat personal access token (Sanctum) untuk mengakses API BKK SMK MUTU.">
+<x-app-layout title="Token API — BKK SMK MUTU" description="Buat personal access token (Sanctum) untuk mengakses API BKK SMK MUTU." :full-bleed="true">
     <div class="page-shell">
-        <div class="page-container py-8">
-            <div class="flex items-center justify-between mb-6">
-                <div>
-                    <h1 class="text-2xl font-black text-slate-900">Token API</h1>
-                    <p class="text-sm text-slate-500 mt-1">Buat personal access token untuk mengakses API (mis. <code>/api/jobs</code>) dari aplikasi eksternal.</p>
-                </div>
-                <a href="{{ route('admin.activities.index') }}" class="text-sm font-semibold text-blue-600 hover:underline">Kembali ke Log</a>
-            </div>
+        <x-ui.page-banner title="Token API" subtitle="Buat personal access token untuk mengakses API dari aplikasi eksternal.">
+            <x-slot:actions>
+                <x-ui.btn variant="white" size="sm" href="{{ route('admin.activities.index') }}">Kembali ke Log</x-ui.btn>
+            </x-slot:actions>
+        </x-ui.page-banner>
+        <div class="page-container page-section">
 
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
                 <form method="POST" action="{{ route('admin.api-tokens.store') }}">

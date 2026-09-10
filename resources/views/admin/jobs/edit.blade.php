@@ -1,11 +1,11 @@
-﻿<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Ubah Lowongan" subtitle="Perbarui detail lowongan kerja.">
+﻿<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Ubah Lowongan" subtitle="Perbarui detail lowongan kerja.">
             <x-slot:actions>
                 <x-ui.btn href="{{ route('admin.jobs.index') }}" variant="white" size="sm">← Kembali</x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
+        </x-ui.page-banner>
+        <div class="page-container page-section">
 
     @if($errors->any())
     <x-ui.alert type="danger" class="mb-6 max-w-3xl mx-auto">
@@ -41,8 +41,15 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Lokasi</label>
-                                <input type="text" name="location" value="{{ old('location', $job->location) }}"
-                                       class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                                <select name="location"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                                    <option value="">Pilih Lokasi</option>
+                                    @foreach(config('locations.locations') as $location)
+                                    <option value="{{ $location }}" {{ old('location', $job->location) == $location ? 'selected' : '' }}>
+                                        {{ $location }}
+                                    </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Tipe Kerja</label>
@@ -106,4 +113,6 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
 </x-app-layout>

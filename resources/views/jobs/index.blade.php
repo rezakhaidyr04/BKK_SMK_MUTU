@@ -107,7 +107,7 @@
         </div>
     </section>
 
-        <div class="page-container page-section">
+        <div class="page-container page-section mt-6">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
                 <div class="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl px-5 py-4 text-white shadow-md">
                     <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue-200">Lowongan Aktif</p>

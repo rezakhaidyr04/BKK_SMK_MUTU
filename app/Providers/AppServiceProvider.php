@@ -6,6 +6,7 @@ use App\Services\ABTestingService;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,5 +31,10 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::defaultView('vendor.pagination.bkk');
         Paginator::defaultSimpleView('vendor.pagination.bkk');
+
+        // Force HTTPS in production
+        if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }

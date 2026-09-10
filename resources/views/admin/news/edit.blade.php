@@ -1,13 +1,13 @@
-<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Edit Berita" subtitle="Perbarui artikel berita karir.">
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Edit Berita" subtitle="Perbarui artikel berita karir.">
             <x-slot:actions>
                 <x-ui.btn variant="secondary" href="{{ route('admin.news.index') }}" size="sm">
                     Kembali
                 </x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
+        </x-ui.page-banner>
+        <div class="page-container page-section">
 
     <x-ui.form-errors />
 
@@ -133,6 +133,15 @@
     function execCmd(cmd) { document.getElementById('editor').focus(); document.execCommand(cmd, false, null); }
     function execCmdValue(cmd, val) { if (!val) return; document.getElementById('editor').focus(); document.execCommand(cmd, false, val); }
     
+    function sanitizeUrl(url) {
+        if (!url || typeof url !== 'string') return '';
+        const decoded = url.replace(/&amp;/g, '&').replace(/&#039;/g, "'").replace(/&quot;/g, '"');
+        if (!decoded.match(/^https?:\/\/|^\/storage\/|^\/images\//)) return '';
+        const div = document.createElement('div');
+        div.textContent = decoded;
+        return div.innerHTML;
+    }
+    
     let savedRange = null;
     document.getElementById('editor').addEventListener('keyup mouseup', function() {
         const sel = window.getSelection();
@@ -161,7 +170,10 @@
             if (data.url) {
                 restoreSelection();
                 document.getElementById('editor').focus();
-                document.execCommand('insertHTML', false, `<img src="${data.url}" alt="Gambar" class="inline-rich-img" />`);
+                const safeUrl = sanitizeUrl(data.url);
+                if (safeUrl) {
+                    document.execCommand('insertHTML', false, `<img src="${safeUrl}" alt="Gambar" class="inline-rich-img" />`);
+                }
             }
             status.classList.add('hidden');
             e.target.value = '';
@@ -191,4 +203,6 @@
     });
     </script>
     @endpush
+        </div>
+    </div>
 </x-app-layout>

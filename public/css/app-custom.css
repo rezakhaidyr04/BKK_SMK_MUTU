@@ -202,7 +202,7 @@ body {
     position: relative;
     overflow: hidden;
     padding: 2rem 0 2.5rem;
-    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 60%, var(--navy-2) 100%);
+    background: #0a1633;
 }
 
 .jobs-search-hero::before {
@@ -211,8 +211,8 @@ body {
     inset: 0;
     pointer-events: none;
     background:
-        radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.1), transparent 34%),
-        linear-gradient(90deg, transparent 0 70%, rgba(255, 255, 255, 0.04) 70% 70.2%, transparent 70.2% 100%);
+        radial-gradient(circle at 85% 10%, rgba(37, 99, 235, 0.20) 0%, transparent 40%),
+        radial-gradient(circle at 70% 110%, rgba(6, 182, 212, 0.10) 0%, transparent 45%);
 }
 
 .jobs-search-hero > .page-container {
@@ -231,9 +231,9 @@ body {
    4. PAGE HERO (digunakan oleh komponen ui/page-hero.blade.php)
    ============================================================ */
 
-/* Header halaman dalam layout app.blade.php */
+/* Header halaman dalam layout app.blade.php — navy ala footer */
 .app-page-header {
-    background: linear-gradient(120deg, #102a72 0%, #1d4ed8 52%, #0891b2 100%);
+    background: #0a1633;
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 24px rgba(7,23,51,0.25);
@@ -243,18 +243,18 @@ body {
     margin-bottom: 24px;
 }
 
-/* Shared page-level banner treatment for legacy header slots and dashboard hero. */
+/* Shared page-level banner treatment for legacy header slots and dashboard hero — navy ala footer. */
 .app-page-header,
-.dashboard-hero,
-.page-banner {
+.dashboard-hero {
     position: relative;
     overflow: hidden;
     min-height: 180px;
     margin-bottom: 2rem;
-    background: linear-gradient(135deg, #102a72 0%, #1d4ed8 50%, #0891b2 100%);
+    background: #0a1633;
     border-radius: var(--radius-lg);
     box-shadow: 0 8px 32px rgba(16, 42, 114, 0.12), 0 2px 8px rgba(7, 23, 51, 0.08);
 }
+/* Catatan: .page-banner diatur penuh oleh resources/css/page-banner.css (navy ala footer) agar tidak tertimpa. */
 
 .app-page-header::before,
 .dashboard-hero::before {
@@ -262,7 +262,9 @@ body {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.12), transparent 35%);
+    background:
+        radial-gradient(circle at 85% 10%, rgba(37, 99, 235, 0.20) 0%, transparent 40%),
+        radial-gradient(circle at 70% 110%, rgba(6, 182, 212, 0.10) 0%, transparent 45%);
 }
 
 .app-page-header .page-container {
@@ -314,14 +316,14 @@ body {
     .dashboard-hero h1 { font-size: 1.75rem; }
 }
 
-/* Dekorasi gelombang kanan */
+/* Dekorasi titik kanan ala footer */
 .app-page-header::before {
     content: '';
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse 60% 80% at 85% 50%, rgba(255,255,255,0.07) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 60% at 95% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
+        radial-gradient(circle at 85% 10%, rgba(37, 99, 235, 0.20) 0%, transparent 40%),
+        radial-gradient(circle at 70% 110%, rgba(6, 182, 212, 0.10) 0%, transparent 45%);
     pointer-events: none;
 }
 
@@ -332,14 +334,11 @@ body {
     top: 0;
     bottom: 0;
     width: 45%;
-    background-image:
-        radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px),
-        radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
-    background-size: 24px 24px, 48px 48px;
-    background-position: 0 0, 12px 12px;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.14) 1px, transparent 1px);
+    background-size: 22px 22px;
     pointer-events: none;
-    mask-image: linear-gradient(to left, rgba(0,0,0,0.5) 0%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.5) 0%, transparent 100%);
+    mask-image: linear-gradient(to left, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.35) 45%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.35) 45%, transparent 100%);
 }
 
 .app-page-header .page-container {
@@ -368,6 +367,10 @@ body {
 .ui-alert-green  { background-color: #f0fdf4; border-left-color: var(--color-success); color: #166534; }
 .ui-alert-yellow { background-color: #fefce8; border-left-color: var(--color-warning); color: #92400e; }
 .ui-alert-info   { background-color: #eff6ff; border-left-color: var(--color-info);    color: #0c4a6e; }
+
+.ui-alert-success { background-color: #f0fdf4; border-left-color: var(--color-success); color: #166534; }
+.ui-alert-error   { background-color: #fef2f2; border-left-color: var(--color-danger);  color: #991b1b; }
+.ui-alert-warning { background-color: #fefce8; border-left-color: var(--color-warning); color: #92400e; }
 
 .ui-alert-icon {
     width: 1.5rem;
@@ -3079,97 +3082,3 @@ aside.sidebar-container { z-index: 40; }
     .home-marquee-track { animation: none; }
 }
 
-/* ============================================================
-   41. DARK MODE TOGGLE BUTTON
-   ============================================================ */
-.dark-mode-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 0.625rem;
-    background: transparent;
-    border: 1px solid var(--color-border);
-    color: var(--color-text-muted);
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.dark-mode-toggle:hover {
-    background: var(--color-primary-light);
-    color: var(--color-primary);
-    border-color: var(--color-primary);
-}
-
-/* ============================================================
-   42. DARK MODE
-   ============================================================ */
-.dark {
-    --color-surface:     #1e293b;
-    --color-background:  #0f172a;
-    --color-text:        #f1f5f9;
-    --color-text-muted:  #94a3b8;
-    --color-border:      #334155;
-    --shadow-sm:  0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-md:  0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
-    --shadow-lg:  0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
-}
-
-.dark body        { background-color: var(--color-background); color: var(--color-text); }
-.dark .page-shell { background-color: #0f172a; }
-
-.dark .ui-panel         { background: var(--color-surface); border-color: var(--color-border); }
-.dark .ui-panel-header  { background: linear-gradient(to right, #1e293b, #1e293b); border-bottom-color: var(--color-border); }
-.dark .ui-panel-title   { color: #f1f5f9; }
-.dark .ui-stat-card     { background: var(--color-surface); border-color: var(--color-border); }
-.dark .ui-stat-card-value { color: #f1f5f9; }
-
-.dark .ui-table thead   { background: #1e293b; }
-.dark .ui-table th      { color: #94a3b8; border-bottom-color: var(--color-border); }
-.dark .ui-table td      { border-bottom-color: #1e293b; color: #cbd5e1; }
-.dark .ui-table tbody tr:hover { background: #334155; }
-
-.dark .ui-input,
-.dark .ui-select,
-.dark .ui-textarea,
-.dark .form-input,
-.dark .form-select {
-    background: #1e293b;
-    border-color: #475569;
-    color: #f1f5f9;
-}
-
-.dark .ui-input:focus,
-.dark .ui-select:focus,
-.dark .ui-textarea:focus,
-.dark .form-input:focus,
-.dark .form-select:focus {
-    border-color: #60a5fa;
-    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
-}
-
-.dark .ui-empty-state-icon  { background: #334155; color: #64748b; }
-.dark .ui-empty-state-title { color: #f1f5f9; }
-.dark .card                 { background: var(--color-surface); border-color: var(--color-border); }
-.dark .card:hover           { border-color: #475569; }
-
-.dark .ui-badge-blue   { background: #1e3a5f; color: #93c5fd; }
-.dark .ui-badge-green  { background: #14532d; color: #86efac; }
-.dark .ui-badge-red    { background: #450a0a; color: #fca5a5; }
-.dark .ui-badge-yellow { background: #451a03; color: #fcd34d; }
-.dark .ui-badge-purple { background: #3b0764; color: #c4b5fd; }
-.dark .ui-badge-gray   { background: #334155; color: #94a3b8; }
-
-.dark .ui-alert-success { background: #052e16; border-color: #166534; color: #86efac; }
-.dark .ui-alert-error   { background: #450a0a; border-color: #991b1b; color: #fca5a5; }
-.dark .ui-alert-warning { background: #451a03; border-color: #92400e; color: #fcd34d; }
-.dark .ui-alert-info    { background: #1e3a5f; border-color: #1d4ed8; color: #93c5fd; }
-
-.dark .ui-filter-bar    { background: var(--color-surface); border-color: var(--color-border); }
-
-.dark .dark-mode-toggle:hover {
-    background: #334155;
-    color: #fbbf24;
-    border-color: #fbbf24;
-}

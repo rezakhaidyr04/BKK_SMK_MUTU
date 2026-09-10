@@ -1,13 +1,13 @@
-<x-app-layout>
-    <x-slot name="header">
-        <x-ui.page-header title="Peserta Acara" subtitle="{{ $event->title }}">
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner title="Peserta Acara" subtitle="{{ $event->title }}">
             <x-slot:actions>
                 <x-ui.btn variant="secondary" href="{{ route('admin.events.index') }}" size="sm">
                     Kembali
                 </x-ui.btn>
             </x-slot:actions>
-        </x-ui.page-header>
-    </x-slot>
+        </x-ui.page-banner>
+        <div class="page-container page-section">
 
     <!-- Info Acara -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
@@ -86,4 +86,6 @@
         <div class="mt-6 pt-4 border-t border-slate-100">{{ $registrations->links() }}</div>
         @endif
     </x-ui.panel>
+        </div>
+    </div>
 </x-app-layout>
