@@ -1,24 +1,4 @@
-﻿<x-app-layout :full-bleed="true">
-    <div class="page-shell">
-        <x-ui.page-banner
-            title="{{ __('Pengaturan Akun') }}"
-            subtitle="Kelola profil, keamanan, dan dokumen akun Anda."
-            :back-url="route('dashboard')"
-            back-label="Kembali ke Dasbor" eyebrow="Dashboard › Profil">
-            <x-slot:chips>
-                <span class="page-banner__chip">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                    {{ $roleLabel }} · {{ $isVerified ? 'Terverifikasi' : 'Belum Verifikasi' }}
-                </span>
-                <span class="page-banner__chip">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    {{ $completion }}% Profil Lengkap
-                </span>
-            </x-slot:chips>
-        </x-ui.page-banner>
-
-        <div class="page-container page-section" x-data="{ currentTab: 'profile' }">
-            @php
+﻿        @php
                 $avatarUrl = $user->avatar ? asset('storage/' . ltrim($user->avatar, '/')) : null;
                 $roleLabel = match ($user->role) {
                     'company' => 'Perusahaan',
@@ -50,6 +30,26 @@
                 $completion = (int) round($doneCount / $totalCount * 100);
                 $missingItems = array_keys(array_filter($completionItems, fn ($v) => !$v));
             @endphp
+<x-app-layout :full-bleed="true">
+    <div class="page-shell">
+        <x-ui.page-banner
+            title="{{ __('Pengaturan Akun') }}"
+            subtitle="Kelola profil, keamanan, dan dokumen akun Anda."
+            :back-url="route('dashboard')"
+            back-label="Kembali ke Dasbor" eyebrow="Dashboard › Profil">
+            <x-slot:chips>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    {{ $roleLabel }} · {{ $isVerified ? 'Terverifikasi' : 'Belum Verifikasi' }}
+                </span>
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    {{ $completion }}% Profil Lengkap
+                </span>
+            </x-slot:chips>
+        </x-ui.page-banner>
+
+        <div class="page-container page-section" x-data="{ currentTab: 'profile' }">
 
             {{-- Ringkasan akun --}}
             <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
