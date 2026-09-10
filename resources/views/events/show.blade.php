@@ -167,8 +167,7 @@
                                     <p class="text-green-700 font-bold">Kamu sudah terdaftar!</p>
                                     <p class="text-gray-500 text-xs mt-1">Terdaftar pada {{ $registration->registered_at->format('d M Y, H:i') }}</p>
                                 </div>
-                                <form method="POST" action="{{ route('events.cancel', $event) }}"
-                                      onsubmit="return confirm('Batalkan pendaftaran acara ini?')">
+                                <form method="POST" action="{{ route('events.cancel', $event) }}" data-confirm="Batalkan pendaftaran acara ini?" data-confirm-title="Batalkan" data-confirm-ok="Batalkan" data-confirm-variant="danger">
                                     @csrf @method('DELETE')
                                     <button type="submit"
                                             class="w-full px-5 py-2.5 border border-red-200 text-red-600 text-sm font-semibold rounded-xl hover:bg-red-50 transition">

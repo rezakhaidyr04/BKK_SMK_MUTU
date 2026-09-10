@@ -99,7 +99,7 @@
                         <td>
                             <div class="ui-table-actions justify-end">
                                 <x-ui.btn href="{{ route('admin.news.edit', $item) }}" variant="secondary" size="sm">Edit</x-ui.btn>
-                                <form method="POST" action="{{ route('admin.news.destroy', $item) }}" class="inline" onsubmit="return confirm('Hapus berita ini?')">
+                                <form method="POST" action="{{ route('admin.news.destroy', $item) }}" class="inline" data-confirm="Hapus berita ini?" data-confirm-title="Hapus" data-confirm-ok="Hapus" data-confirm-variant="danger">
                                     @csrf @method('DELETE')
                                     <x-ui.btn type="submit" variant="danger" size="sm">Hapus</x-ui.btn>
                                 </form>

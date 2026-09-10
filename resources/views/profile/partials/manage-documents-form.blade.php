@@ -43,7 +43,7 @@
                                 </a>
                             </div>
                         </div>
-                        <form action="{{ route('documents.destroy', $doc) }}" method="POST" onsubmit="return confirm('Hapus dokumen ini?');" class="flex-shrink-0 pl-2">
+                        <form action="{{ route('documents.destroy', $doc) }}" method="POST" data-confirm="Hapus dokumen ini?" data-confirm-title="Hapus" data-confirm-ok="Hapus" data-confirm-variant="danger" class="flex-shrink-0 pl-2">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-slate-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-lg transition" title="Hapus Dokumen">

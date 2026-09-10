@@ -124,7 +124,7 @@
             <div>
                 <p class="font-semibold text-slate-900 mb-1">Hapus Berita</p>
                 <p class="text-sm text-slate-500 mb-4">Berita akan dihapus secara permanen.</p>
-                <form method="POST" action="{{ route('admin.news.destroy', $news) }}" onsubmit="return confirm('Yakin ingin menghapus berita ini?')">
+                <form method="POST" action="{{ route('admin.news.destroy', $news) }}" data-confirm="Yakin ingin menghapus berita ini?" data-confirm-title="Hapus" data-confirm-ok="Hapus" data-confirm-variant="danger">
                     @csrf @method('DELETE')
                     <x-ui.btn variant="danger" type="submit">Hapus Berita</x-ui.btn>
                 </form>

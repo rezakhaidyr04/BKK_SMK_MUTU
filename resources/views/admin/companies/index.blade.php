@@ -96,9 +96,9 @@
                         <td>
                             <div class="ui-table-actions flex-wrap">
                                 @if($company->verification_status !== 'verified')
-                                <form method="POST" action="{{ route('admin.companies.approve', $company) }}">
+                                <form method="POST" action="{{ route('admin.companies.approve', $company) }}" data-confirm="Setujui verifikasi {{ $company->name }}?" data-confirm-title="Setujui" data-confirm-ok="Setujui">
                                     @csrf
-                                    <x-ui.btn type="submit" variant="success" size="sm" onclick="return confirm('Setujui verifikasi ' + {{ Js::from($company->name) }} + '?')">
+                                    <x-ui.btn type="submit" variant="success" size="sm">
                                         Setujui
                                     </x-ui.btn>
                                 </form>

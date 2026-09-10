@@ -58,7 +58,7 @@
                         </div>
                     </div>
 
-                    <form action="{{ route('admin.jobs.broadcast', $job) }}" method="POST" class="mt-4" onsubmit="return confirm('Yakin ingin membroadcast notifikasi lowongan ini ke semua pencari kerja melalui email?');">
+                    <form action="{{ route('admin.jobs.broadcast', $job) }}" method="POST" class="mt-4" data-confirm="Yakin ingin membroadcast notifikasi lowongan ini ke semua pencari kerja melalui email?" data-confirm-title="Broadcast Lowongan" data-confirm-ok="Broadcast">
                         @csrf
                         <button type="submit" class="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 px-4 rounded-xl shadow-md transition">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,11 +70,11 @@
 
                         @if($job->status === 'pending')
                         <div class="flex gap-2 mt-3">
-                            <form action="{{ route('admin.jobs.approve', $job) }}" method="POST" class="flex-1" onsubmit="return confirm('Setujui dan publikasikan lowongan ini?');">
+                            <form action="{{ route('admin.jobs.approve', $job) }}" method="POST" class="flex-1" data-confirm="Setujui dan publikasikan lowongan ini?" data-confirm-title="Setujui" data-confirm-ok="Setujui">
                                 @csrf
                                 <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-2.5 px-4 rounded-xl transition">Setujui</button>
                             </form>
-                            <form action="{{ route('admin.jobs.reject', $job) }}" method="POST" class="flex-1" onsubmit="return confirm('Tolak lowongan ini?');">
+                            <form action="{{ route('admin.jobs.reject', $job) }}" method="POST" class="flex-1" data-confirm="Tolak lowongan ini?" data-confirm-title="Tolak" data-confirm-ok="Tolak" data-confirm-variant="danger">
                                 @csrf
                                 <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-2.5 px-4 rounded-xl transition">Tolak</button>
                             </form>

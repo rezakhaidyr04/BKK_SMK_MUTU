@@ -67,8 +67,7 @@
                                 Detail
                             </a>
                             @if($reg->status === 'registered' && !$isPast)
-                            <form method="POST" action="{{ route('events.cancel', $event) }}"
-                                  onsubmit="return confirm('Batalkan pendaftaran ini?')">
+                            <form method="POST" action="{{ route('events.cancel', $event) }}" data-confirm="Batalkan pendaftaran ini?" data-confirm-title="Batalkan" data-confirm-ok="Batalkan" data-confirm-variant="danger">
                                 @csrf @method('DELETE')
                                 <button type="submit"
                                         class="px-4 py-2 border border-red-200 text-red-600 text-sm font-semibold rounded-xl hover:bg-red-50 transition">

@@ -112,7 +112,7 @@
                             <div class="ui-table-actions justify-end">
                                 <x-ui.btn href="{{ route('admin.events.registrants', $event) }}" variant="secondary" size="sm">Peserta</x-ui.btn>
                                 <x-ui.btn href="{{ route('admin.events.edit', $event) }}" variant="secondary" size="sm">Edit</x-ui.btn>
-                                <form method="POST" action="{{ route('admin.events.destroy', $event) }}" class="inline" onsubmit="return confirm('Hapus acara ini?')">
+                                <form method="POST" action="{{ route('admin.events.destroy', $event) }}" class="inline" data-confirm="Hapus acara ini?" data-confirm-title="Hapus" data-confirm-ok="Hapus" data-confirm-variant="danger">
                                     @csrf @method('DELETE')
                                     <x-ui.btn type="submit" variant="danger" size="sm">Hapus</x-ui.btn>
                                 </form>

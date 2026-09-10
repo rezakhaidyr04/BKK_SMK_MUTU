@@ -97,7 +97,7 @@
                 <div>
                     <p class="font-semibold text-slate-900 mb-1">Hapus Acara</p>
                     <p class="text-sm text-slate-500 mb-4">Acara akan dihapus secara permanen dari sistem beserta data pesertanya.</p>
-                    <form method="POST" action="{{ route('admin.events.destroy', $event) }}" onsubmit="return confirm('Yakin ingin menghapus acara ini? Tindakan tidak dapat dibatalkan.')">
+                    <form method="POST" action="{{ route('admin.events.destroy', $event) }}" data-confirm="Yakin ingin menghapus acara ini? Tindakan tidak dapat dibatalkan." data-confirm-title="Hapus" data-confirm-ok="Hapus" data-confirm-variant="danger">
                         @csrf @method('DELETE')
                         <x-ui.btn variant="danger" type="submit" class="w-full justify-center">Hapus Acara</x-ui.btn>
                     </form>

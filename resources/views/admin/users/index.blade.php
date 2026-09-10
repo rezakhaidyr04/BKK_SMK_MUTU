@@ -76,7 +76,7 @@
                             <div class="ui-table-actions">
                                 <x-ui.btn href="{{ route('admin.users.show', $user) }}" variant="secondary" size="sm">Lihat</x-ui.btn>
                                 <x-ui.btn href="{{ route('admin.users.edit', $user) }}" variant="secondary" size="sm">Ubah</x-ui.btn>
-                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline" onsubmit="return confirm('Hapus pengguna ini?');">
+                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline" data-confirm="Hapus pengguna ini?" data-confirm-title="Hapus" data-confirm-ok="Hapus" data-confirm-variant="danger">
                                     @csrf
                                     @method('DELETE')
                                     <x-ui.btn type="submit" variant="danger" size="sm">Hapus</x-ui.btn>

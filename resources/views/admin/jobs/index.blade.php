@@ -73,19 +73,16 @@
                                         <x-ui.btn href="{{ route('admin.jobs.show', $job) }}" variant="secondary" size="sm">Lihat</x-ui.btn>
                                         <x-ui.btn href="{{ route('admin.jobs.edit', $job) }}" variant="secondary" size="sm">Ubah</x-ui.btn>
                                         @if($job->status === 'pending')
-                                        <form action="{{ route('admin.jobs.approve', $job) }}" method="POST" class="inline"
-                                              onsubmit="return confirm('Setujui dan publikasikan lowongan ini?');">
+                                        <form action="{{ route('admin.jobs.approve', $job) }}" method="POST" class="inline" data-confirm="Setujui dan publikasikan lowongan ini?" data-confirm-title="Setujui" data-confirm-ok="Setujui">
                                             @csrf
                                             <x-ui.btn type="submit" variant="success" size="sm">Setujui</x-ui.btn>
                                         </form>
-                                        <form action="{{ route('admin.jobs.reject', $job) }}" method="POST" class="inline"
-                                              onsubmit="return confirm('Tolak lowongan ini?');">
+                                        <form action="{{ route('admin.jobs.reject', $job) }}" method="POST" class="inline" data-confirm="Tolak lowongan ini?" data-confirm-title="Tolak" data-confirm-ok="Tolak" data-confirm-variant="danger">
                                             @csrf
                                             <x-ui.btn type="submit" variant="danger" size="sm">Tolak</x-ui.btn>
                                         </form>
                                         @endif
-                                        <form action="{{ route('admin.jobs.destroy', $job) }}" method="POST" class="inline"
-                                              onsubmit="return confirm('Hapus lowongan ini?');">
+                                        <form action="{{ route('admin.jobs.destroy', $job) }}" method="POST" class="inline" data-confirm="Hapus lowongan ini?" data-confirm-title="Hapus" data-confirm-ok="Hapus" data-confirm-variant="danger">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:text-red-800 font-semibold text-sm">Hapus</button>
                                         </form>

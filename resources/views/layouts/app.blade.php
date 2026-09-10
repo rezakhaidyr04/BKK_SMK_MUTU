@@ -60,8 +60,9 @@
             });
         }
     }" @resize.window="sidebarOpen = {{ ($hideSidebar ?? false) ? 'false' : '(window.innerWidth >= 1024 ? sidebarOpen : false)' }}" class="font-sans antialiased bg-neutral-50 text-neutral-900 @auth authenticated @endauth">
-        {{-- Toast notification portal --}}
+        {{-- Toast + Confirm portals --}}
         <x-ui.toast />
+        <x-ui.confirm />
         
         <div class="min-h-screen bg-neutral-50 flex flex-col">
             @include('layouts.navigation', ['hideSidebar' => $hideSidebar ?? false])

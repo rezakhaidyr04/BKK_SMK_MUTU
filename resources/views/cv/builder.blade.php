@@ -171,7 +171,7 @@
                                         </div>
                                         <div class="shrink-0 flex items-center gap-2">
                                             <a href="{{ route('cv.download', $cv->id) }}" class="inline-flex items-center px-3 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition">Unduh</a>
-                                            <form action="{{ route('cv.destroy', $cv->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus CV ini?');">
+                                            <form action="{{ route('cv.destroy', $cv->id) }}" method="POST" class="inline-block" data-confirm="Apakah Anda yakin ingin menghapus CV ini?" data-confirm-title="Hapus" data-confirm-ok="Hapus" data-confirm-variant="danger">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="inline-flex items-center p-2 rounded-lg bg-red-100 text-red-600 text-xs font-semibold hover:bg-red-200 transition" title="Hapus CV">
