@@ -129,12 +129,7 @@
                                         <svg class="w-3.5 h-3.5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
                                         Telepon
                                     </label>
-                                    <div class="relative">
-                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <span class="text-xs font-bold text-slate-400">+62</span>
-                                        </div>
-                                        <input type="text" name="phone" value="{{ old('phone', $company->phone ?? '') }}" class="w-full pl-12 pr-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 shadow-sm hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition" placeholder="812 3456 0007" />
-                                    </div>
+                                    <input type="text" name="phone" value="{{ old('phone', $company->phone ?? '') }}" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 shadow-sm hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition" placeholder="0812 3456 0007" />
                                 </div>
                                 <div class="group">
                                     <label class="flex items-center gap-1.5 text-xs font-bold tracking-wide uppercase text-slate-600 mb-1.5">
