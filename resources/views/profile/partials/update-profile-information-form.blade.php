@@ -369,12 +369,15 @@ function previewAvatar(event) {
             aspectRatio: 1,
             viewMode: 1,
             dragMode: 'move',
-            autoCropArea: 1,
-            cropBoxMovable: false,
-            cropBoxResizable: false,
-            guides: false,
-            center: false,
+            autoCropArea: 0.85,
+            cropBoxMovable: true,
+            cropBoxResizable: true,
+            guides: true,
+            center: true,
             highlight: false,
+            zoomable: true,
+            scalable: true,
+            background: false,
         });
     };
     reader.readAsDataURL(file);

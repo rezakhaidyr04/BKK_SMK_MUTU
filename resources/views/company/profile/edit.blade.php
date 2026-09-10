@@ -41,24 +41,35 @@
             {{-- Logo Perusahaan --}}
             <div>
                 <label class="form-label">Logo Perusahaan
-                    <span class="text-slate-400 font-normal normal-case tracking-normal">(JPG, PNG, WebP - maks 2MB, otomatis dikompresi)</span>
+                    <span class="text-slate-400 font-normal normal-case tracking-normal">(JPG, PNG, WebP - maks 2MB, geser & zoom untuk menyesuaikan)</span>
                 </label>
                 <div class="flex items-center gap-4 flex-wrap">
                     <div id="logo-preview-wrap" style="width:4rem; height:4rem; border-radius:0.75rem; border:1.5px solid var(--border); overflow:hidden; background:var(--bg-soft); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                         @if($company->logo)
-                            <img id="logo-preview" src="{{ asset('storage/' . $company->logo) }}" alt="Logo" style="width:100%; height:100%; object-fit:contain;" />
+                            <img id="logo-preview-static" src="{{ asset('storage/' . $company->logo) }}" alt="Logo" style="width:100%; height:100%; object-fit:contain;" />
                         @else
-                            <span id="logo-preview" style="font-size:1rem; color:var(--text-3);">Logo</span>
+                            <span id="logo-preview-static" style="font-size:1rem; color:var(--text-3);">Logo</span>
                         @endif
                     </div>
-                    <label for="logo-input" class="file-upload-area flex-1 min-w-48">
+                    <label for="logo-input" class="file-upload-area flex-1 min-w-48 cursor-pointer">
                         <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.25rem; pointer-events:none;">
                             <svg style="width:1.5rem;height:1.5rem;color:var(--text-3);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
                             <p id="logo-label" style="font-size:0.8rem; font-weight:600; color:#64748b; margin:0;">Klik untuk pilih logo</p>
-                            <p style="font-size:0.7rem; color:var(--text-3); margin:0;">Akan dikompresi otomatis ke WebP</p>
+                            <p style="font-size:0.7rem; color:var(--text-3); margin:0;">Bisa digeser & di-zoom, otomatis WebP</p>
                         </div>
-                        <input id="logo-input" type="file" name="logo" accept="image/jpeg,image/png,image/webp" class="sr-only" onchange="previewLogo(this)" />
+                        <input id="logo-input" type="file" accept="image/jpeg,image/png,image/webp" class="sr-only" onchange="previewLogoWithCrop(event)" />
+                        <input type="hidden" name="logo_cropped" id="logo-cropped-flag" value="0">
                     </label>
+                    {{-- Hidden actual file input that will be submitted --}}
+                    <input type="file" name="logo" id="logo-file-input" class="sr-only" />
+                </div>
+                <div id="logo-crop-preview" class="hidden mt-3 flex items-center gap-3 p-3 bg-blue-50 border border-blue-100 rounded-xl">
+                    <img id="logo-crop-thumb" src="" alt="Preview crop" class="w-12 h-12 rounded-lg object-cover border border-blue-200 bg-white">
+                    <div class="flex-1">
+                        <p class="text-xs font-semibold text-blue-700">Preview terpotong siap upload</p>
+                        <p class="text-[11px] text-blue-600/70">Geser/zoom di modal untuk menyesuaikan. Klik simpan jika sudah pas.</p>
+                    </div>
+                    <button type="button" onclick="clearLogoCrop()" class="text-xs text-slate-500 hover:text-red-600">Hapus</button>
                 </div>
                 @error('logo')<p style="margin-top:0.375rem; font-size:0.75rem; color:#dc2626;">{{ $message }}</p>@enderror
             </div>
@@ -179,25 +190,116 @@
         </div>
     </div>
 
-@push('scripts')
-<script>
-function previewLogo(input) {
-    if (!input.files || !input.files[0]) return;
-    const file = input.files[0];
-    document.getElementById('logo-label').textContent = file.name;
+@push('styles')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+<style>
+    .cropper-view-box, .cropper-face { border-radius: 0.75rem; }
+    #logoCropperModal .cropper-container { max-height: 60vh; }
+</style>
+@endpush
 
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<script>
+let logoCropper = null;
+
+function previewLogoWithCrop(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    document.getElementById('logo-label').textContent = file.name;
     const reader = new FileReader();
     reader.onload = function(e) {
-        const wrap = document.getElementById('logo-preview-wrap');
-        // Selalu ganti dengan <img> preview
-        wrap.innerHTML = '<img id="logo-preview" src="' + e.target.result + '" alt="Preview" style="width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 0.3s;" />';
-        setTimeout(() => {
-            const img = wrap.querySelector('img');
-            if (img) img.style.opacity = '1';
-        }, 50);
+        const modal = document.getElementById('logoCropperModal');
+        const img = document.getElementById('logoImageToCrop');
+        img.src = e.target.result;
+        img.classList.remove('hidden');
+        modal.classList.remove('hidden');
+        if (logoCropper) { logoCropper.destroy(); logoCropper = null; }
+        logoCropper = new Cropper(img, {
+            aspectRatio: 1,
+            viewMode: 1,
+            dragMode: 'move',
+            autoCropArea: 0.85,
+            cropBoxMovable: true,
+            cropBoxResizable: true,
+            guides: true,
+            center: true,
+            zoomable: true,
+            scalable: true,
+            background: false,
+        });
     };
     reader.readAsDataURL(file);
+    event.target.value = '';
 }
+
+function closeLogoCropper() {
+    document.getElementById('logoCropperModal').classList.add('hidden');
+    if (logoCropper) { logoCropper.destroy(); logoCropper = null; }
+}
+
+function applyLogoCrop() {
+    if (!logoCropper) return;
+    logoCropper.getCroppedCanvas({ width: 400, height: 400, imageSmoothingQuality: 'high' }).toBlob((blob) => {
+        const file = new File([blob], 'logo_cropped.webp', { type: 'image/webp' });
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        const realInput = document.getElementById('logo-file-input');
+        realInput.files = dt.files;
+        document.getElementById('logo-cropped-flag').value = '1';
+        // Preview
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const wrap = document.getElementById('logo-preview-wrap');
+            wrap.innerHTML = '<img src="' + e.target.result + '" alt="Preview" style="width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 0.3s;" />';
+            setTimeout(() => { const img = wrap.querySelector('img'); if(img) img.style.opacity='1'; }, 50);
+            const thumb = document.getElementById('logo-crop-thumb');
+            const box = document.getElementById('logo-crop-preview');
+            thumb.src = e.target.result;
+            box.classList.remove('hidden');
+            document.getElementById('logo-label').textContent = 'Logo siap upload (sudah dipotong)';
+        };
+        reader.readAsDataURL(file);
+        closeLogoCropper();
+    }, 'image/webp', 0.85);
+}
+
+function clearLogoCrop() {
+    document.getElementById('logo-file-input').value = '';
+    document.getElementById('logo-cropped-flag').value = '0';
+    document.getElementById('logo-crop-preview').classList.add('hidden');
+    document.getElementById('logo-label').textContent = 'Klik untuk pilih logo';
+}
+
+function previewLogo(input) {
+    // fallback lama jika dipanggil
+    previewLogoWithCrop({ target: input });
+}
+
+// Zoom controls
+function logoZoomIn(){ if(logoCropper) logoCropper.zoom(0.1); }
+function logoZoomOut(){ if(logoCropper) logoCropper.zoom(-0.1); }
+function logoReset(){ if(logoCropper) logoCropper.reset(); }
 </script>
 @endpush
+
+{{-- Modal Cropper Logo Perusahaan --}}
+<div id="logoCropperModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+    <div class="bg-white p-6 rounded-3xl shadow-2xl w-full max-w-lg mx-4">
+        <h3 class="text-lg font-bold text-slate-900 mb-1">Sesuaikan Logo Perusahaan</h3>
+        <p class="text-xs text-slate-500 mb-4">Geser untuk mengatur posisi, pinch/scroll untuk zoom, tarik sudut untuk ubah ukuran kotak.</p>
+        <div class="max-h-[60vh] overflow-hidden rounded-xl bg-slate-50 flex items-center justify-center border border-slate-200">
+            <img id="logoImageToCrop" src="" class="max-w-full hidden">
+        </div>
+        <div class="mt-3 flex items-center justify-center gap-2">
+            <button type="button" onclick="logoZoomOut()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-sm font-semibold">− Zoom</button>
+            <button type="button" onclick="logoReset()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-sm">Reset</button>
+            <button type="button" onclick="logoZoomIn()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-sm font-semibold">+ Zoom</button>
+        </div>
+        <div class="mt-4 flex justify-end gap-3">
+            <button type="button" onclick="closeLogoCropper()" class="px-5 py-2.5 text-slate-600 font-medium hover:text-slate-800 hover:bg-slate-100 rounded-xl transition">Batal</button>
+            <button type="button" onclick="applyLogoCrop()" class="px-5 py-2.5 bg-blue-600 text-white font-medium rounded-xl shadow-sm hover:bg-blue-700 transition">Simpan Potongan</button>
+        </div>
+    </div>
+</div>
 </x-app-layout>
