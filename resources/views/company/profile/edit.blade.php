@@ -1,6 +1,38 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Profil Perusahaan" subtitle="Kelola data dan verifikasi perusahaan Anda." />
+        <x-ui.page-banner title="Profil Perusahaan" subtitle="Kelola data dan verifikasi perusahaan Anda." eyebrow="Dashboard › Profil Perusahaan">
+            <x-slot:chips>
+                @php
+                    $vs = $company->verification_status ?? 'not_submitted';
+                    $chipLabel = match($vs) {
+                        'verified' => 'Terverifikasi',
+                        'pending' => 'Menunggu Review',
+                        'rejected' => 'Perlu Perbaikan',
+                        default => 'Belum Diajukan',
+                    };
+                    $chipDot = match($vs) {
+                        'verified' => 'bg-emerald-400',
+                        'pending' => 'bg-amber-400',
+                        'rejected' => 'bg-red-400',
+                        default => 'bg-slate-400',
+                    };
+                @endphp
+                <span class="page-banner__chip">
+                    <span class="w-2 h-2 rounded-full {{ $chipDot }} animate-pulse"></span>
+                    {{ $chipLabel }}
+                </span>
+                @if($company->mou_path)
+                <span class="page-banner__chip page-banner__chip--accent">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    MoU Tersedia
+                </span>
+                @endif
+                <span class="page-banner__chip">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/></svg>
+                    {{ $company->name ?? 'Perusahaan' }}
+                </span>
+            </x-slot:chips>
+        </x-ui.page-banner>
         <div class="page-container page-section">
 
     @if (session('success'))

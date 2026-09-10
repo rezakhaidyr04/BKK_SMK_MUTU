@@ -6,6 +6,7 @@
     'backLabel' => 'Kembali',
     'variant' => 'default', // default, compact, accent
     'actions' => null,
+    'chips' => null,
 ])
 
 <div class="page-banner page-banner--{{ $variant }}">
@@ -34,6 +35,13 @@
             {{-- Subtitle --}}
             @if($subtitle)
             <p class="page-banner__subtitle">{{ $subtitle }}</p>
+            @endif
+
+            {{-- Chips --}}
+            @if($chips)
+            <div class="page-banner__chips">
+                {{ $chips }}
+            </div>
             @endif
         </div>
 

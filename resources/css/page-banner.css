@@ -43,7 +43,7 @@
    DECORATIVE BACKGROUND ELEMENTS
    ============================================================ */
 
-/* Cahaya biru/cyan ala footer */
+/* AURORA MESH - 3 blob + cahaya biru/cyan */
 .page-banner::before {
     content: '';
     position: absolute;
@@ -51,21 +51,56 @@
     z-index: 0;
     background:
         radial-gradient(
-            circle at 85% 10%,
-            rgba(37, 99, 235, 0.20) 0%,
-            transparent 40%
+            circle 480px at 88% 8%,
+            rgba(37, 99, 235, 0.22) 0%,
+            transparent 60%
         ),
         radial-gradient(
-            circle at 70% 110%,
-            rgba(6, 182, 212, 0.10) 0%,
-            transparent 45%
+            circle 380px at 75% 105%,
+            rgba(6, 182, 212, 0.14) 0%,
+            transparent 55%
+        ),
+        radial-gradient(
+            circle 320px at 18% 92%,
+            rgba(139, 92, 246, 0.10) 0%,
+            transparent 55%
         ),
         radial-gradient(
             ellipse 50% 100% at 100% 0%,
-            rgba(255, 255, 255, 0.07) 0%,
+            rgba(255, 255, 255, 0.06) 0%,
             transparent 55%
         );
     pointer-events: none;
+}
+
+/* Pola titik kanan memudar ke kiri — tetap + aurora */
+.page-banner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45%;
+    height: 100%;
+    z-index: 0;
+    background-image: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.13) 1px,
+        transparent 1px
+    );
+    background-size: 22px 22px;
+    pointer-events: none;
+    mask-image: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0.65) 0%,
+        rgba(0, 0, 0, 0.30) 45%,
+        transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0.65) 0%,
+        rgba(0, 0, 0, 0.30) 45%,
+        transparent 100%
+    );
 }
 
 /* Pola titik kanan memudar ke kiri — sama seperti footer */
@@ -135,6 +170,39 @@
     color: rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.15);
     margin-bottom: 4px;
+}
+
+.page-banner__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.page-banner__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1;
+}
+
+.page-banner__chip svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0.9;
+}
+
+.page-banner__chip--accent {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.25);
 }
 
 .page-banner__title {
