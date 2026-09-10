@@ -175,9 +175,9 @@
                                 <p class="text-sm text-slate-600 font-medium mt-1.5">{{ $job->company_name ?? 'Perusahaan' }}</p>
                             </div>
                             @if($job->company?->logo)
-                            <img src="{{ asset('storage/' . $job->company->logo) }}" alt="Logo {{ $job->company->name }}" class="shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-xl object-cover border border-slate-200 bg-white">
+                            <img src="{{ asset('storage/' . $job->company->logo) }}" alt="Logo {{ $job->company->name }}" class="shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover border border-slate-200 bg-white">
                             @else
-                            <div class="shrink-0 rounded-xl bg-slate-100 px-3 py-2 sm:px-3.5 sm:py-2.5 text-slate-700 text-sm sm:text-base font-semibold border border-slate-200">
+                            <div class="shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 text-sm sm:text-base font-semibold border border-slate-200">
                                 {{ strtoupper(substr($job->company_name ?? $job->company->name ?? 'C', 0, 1)) }}
                             </div>
                             @endif

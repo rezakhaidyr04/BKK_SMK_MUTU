@@ -23,7 +23,7 @@
                 <h1 class="text-xl font-bold text-slate-900 m-0">Profil Perusahaan</h1>
                 <p class="text-xs text-slate-500 mt-1 mb-0">Kelola data perusahaan Anda.</p>
             </div>
-            <div style="width: 3rem; height: 3rem; border-radius: 0.75rem; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 6px -1px rgba(37,99,235,0.3);">
+            <div style="width: 3rem; height: 3rem; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 6px -1px rgba(37,99,235,0.3);">
                 @if($company->logo)
                     <img src="{{ asset('storage/' . $company->logo) }}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover;" />
                 @else
@@ -44,9 +44,9 @@
                     <span class="text-slate-400 font-normal normal-case tracking-normal">(JPG, PNG, WebP - maks 2MB, geser & zoom untuk menyesuaikan)</span>
                 </label>
                 <div class="flex items-center gap-4 flex-wrap">
-                    <div id="logo-preview-wrap" style="width:4rem; height:4rem; border-radius:0.75rem; border:1.5px solid var(--border); overflow:hidden; background:var(--bg-soft); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                    <div id="logo-preview-wrap" style="width:4rem; height:4rem; border-radius:50%; border:1.5px solid var(--border); overflow:hidden; background:var(--bg-soft); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                         @if($company->logo)
-                            <img id="logo-preview-static" src="{{ asset('storage/' . $company->logo) }}" alt="Logo" style="width:100%; height:100%; object-fit:contain;" />
+                            <img id="logo-preview-static" src="{{ asset('storage/' . $company->logo) }}" alt="Logo" style="width:100%; height:100%; object-fit:cover;" />
                         @else
                             <span id="logo-preview-static" style="font-size:1rem; color:var(--text-3);">Logo</span>
                         @endif
@@ -64,7 +64,7 @@
                     <input type="file" name="logo" id="logo-file-input" class="sr-only" />
                 </div>
                 <div id="logo-crop-preview" class="hidden mt-3 flex items-center gap-3 p-3 bg-blue-50 border border-blue-100 rounded-xl">
-                    <img id="logo-crop-thumb" src="" alt="Preview crop" class="w-12 h-12 rounded-lg object-cover border border-blue-200 bg-white">
+                    <img id="logo-crop-thumb" src="" alt="Preview crop" class="w-12 h-12 rounded-full object-cover border border-blue-200 bg-white">
                     <div class="flex-1">
                         <p class="text-xs font-semibold text-blue-700">Preview terpotong siap upload</p>
                         <p class="text-[11px] text-blue-600/70">Geser/zoom di modal untuk menyesuaikan. Klik simpan jika sudah pas.</p>
@@ -193,7 +193,7 @@
 @push('styles')
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
 <style>
-    .cropper-view-box, .cropper-face { border-radius: 0.75rem; }
+    .cropper-view-box, .cropper-face { border-radius: 50%; }
     #logoCropperModal .cropper-container { max-height: 60vh; }
 </style>
 @endpush
@@ -247,11 +247,11 @@ function applyLogoCrop() {
         const realInput = document.getElementById('logo-file-input');
         realInput.files = dt.files;
         document.getElementById('logo-cropped-flag').value = '1';
-        // Preview
+        // Preview bulat
         const reader = new FileReader();
         reader.onload = function(e) {
             const wrap = document.getElementById('logo-preview-wrap');
-            wrap.innerHTML = '<img src="' + e.target.result + '" alt="Preview" style="width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 0.3s;" />';
+            wrap.innerHTML = '<img src="' + e.target.result + '" alt="Preview" style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.3s;" />';
             setTimeout(() => { const img = wrap.querySelector('img'); if(img) img.style.opacity='1'; }, 50);
             const thumb = document.getElementById('logo-crop-thumb');
             const box = document.getElementById('logo-crop-preview');

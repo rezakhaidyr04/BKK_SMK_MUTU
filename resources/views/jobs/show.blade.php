@@ -20,9 +20,9 @@
                                     <!-- Company Logo -->
                                     <div class="relative flex-shrink-0">
                                         @if($job->company?->logo)
-                                        <img src="{{ asset('storage/' . $job->company->logo) }}" alt="Logo {{ $job->company->name }}" class="w-24 h-24 rounded-2xl object-cover border border-blue-200 shadow-sm bg-white">
+                                        <img src="{{ asset('storage/' . $job->company->logo) }}" alt="Logo {{ $job->company->name }}" class="w-24 h-24 rounded-full object-cover border border-blue-200 shadow-sm bg-white">
                                         @else
-                                        <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 flex items-center justify-center font-bold text-3xl border border-blue-200 shadow-sm">
+                                        <div class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 flex items-center justify-center font-bold text-3xl border border-blue-200 shadow-sm">
                                             {{ strtoupper(substr($job->company_name ?? $job->company->name ?? 'C', 0, 1)) }}
                                         </div>
                                         @endif
@@ -480,16 +480,16 @@
                         <div class="flex flex-col mb-4 items-start gap-4">
                             <div class="flex gap-4">
                                 <div class="flex-shrink-0">
-                                    @if($job->company?->logo)
-                                    <img src="{{ asset('storage/' . $job->company->logo) }}" alt="Logo {{ $job->company->name }}" class="w-14 h-14 rounded-xl object-cover border border-gray-100 shadow-sm">
-                                    @elseif($job->company->user->avatar ?? null)
-                                    <img src="{{ asset('storage/' . $job->company->user->avatar) }}" alt="Logo {{ $job->company->name }}" class="w-14 h-14 rounded-xl object-cover border border-gray-100 shadow-sm">
-                                    @else
-                                    <div class="w-14 h-14 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xl border border-blue-100 shadow-sm" aria-hidden="true">
-                                        {{ substr($job->company->name ?? 'C', 0, 1) }}
+                                        @if($job->company?->logo)
+                                        <img src="{{ asset('storage/' . $job->company->logo) }}" alt="Logo {{ $job->company->name }}" class="w-14 h-14 rounded-full object-cover border border-gray-100 shadow-sm bg-white">
+                                        @elseif($job->company->user->avatar ?? null)
+                                        <img src="{{ asset('storage/' . $job->company->user->avatar) }}" alt="Logo {{ $job->company->name }}" class="w-14 h-14 rounded-full object-cover border border-gray-100 shadow-sm">
+                                        @else
+                                        <div class="w-14 h-14 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xl border border-blue-100 shadow-sm" aria-hidden="true">
+                                            {{ strtoupper(substr($job->company->name ?? 'C', 0, 1)) }}
+                                        </div>
+                                        @endif
                                     </div>
-                                    @endif
-                                </div>
                                 <div>
                                     <h4 class="font-bold text-gray-900 leading-tight mb-1">{{ $job->company->name ?? 'Perusahaan' }}</h4>
                                         <div class="flex items-center gap-1 text-[11px] text-gray-500 mb-2">
@@ -537,10 +537,10 @@
                                 <div class="flex gap-3">
                                     <div class="flex-shrink-0">
                                         @if($similar->company?->logo)
-                                        <img src="{{ asset('storage/' . $similar->company->logo) }}" alt="Logo {{ $similar->company->name }}" class="w-12 h-12 rounded-lg object-cover border border-gray-100">
+                                        <img src="{{ asset('storage/' . $similar->company->logo) }}" alt="Logo {{ $similar->company->name }}" class="w-12 h-12 rounded-full object-cover border border-gray-100 bg-white">
                                         @else
-                                        <div class="w-12 h-12 rounded-lg bg-gray-50 text-gray-600 flex items-center justify-center font-bold border border-gray-100" aria-hidden="true">
-                                            {{ substr($similar->company->name ?? 'C', 0, 1) }}
+                                        <div class="w-12 h-12 rounded-full bg-gray-50 text-gray-600 flex items-center justify-center font-bold border border-gray-100" aria-hidden="true">
+                                            {{ strtoupper(substr($similar->company->name ?? 'C', 0, 1)) }}
                                         </div>
                                         @endif
                                     </div>
