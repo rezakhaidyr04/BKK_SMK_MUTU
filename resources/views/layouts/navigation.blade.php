@@ -63,14 +63,17 @@
                     <!-- User Dropdown -->
                     <div class="relative" x-data="{ userOpen: false }">
                         <button @click="userOpen = !userOpen" class="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu pengguna" :aria-expanded="userOpen.toString()">
-                        @if(Auth::user()->avatar)
+                        @php $navCompany = Auth::user()->role === 'company' ? Auth::user()->company : null; @endphp
+                        @if($navCompany?->logo)
+                        <img src="{{ asset('storage/' . $navCompany->logo) }}" alt="Logo {{ $navCompany->name }}" class="w-8 h-8 rounded-full object-cover border border-gray-200 bg-white">
+                        @elseif(Auth::user()->avatar)
                         <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 rounded-full object-cover">
                         @else
                         <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-semibold text-sm" aria-hidden="true">
-                            {{ substr(Auth::user()->name, 0, 1) }}
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                         </div>
                         @endif
-                        <span class="hidden sm:block text-sm font-medium text-gray-700">{{ Auth::user()->name }}</span>
+                        <span class="hidden sm:block text-sm font-medium text-gray-700">{{ $navCompany->name ?? Auth::user()->name }}</span>
                             <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                             </svg>
@@ -178,15 +181,18 @@
             <!-- Mobile Header -->
             <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-slate-50">
                 <div class="flex items-center gap-3 overflow-hidden">
-                    @if(Auth::user()->avatar)
+                    @php $navCompanyMobile = Auth::user()->role === 'company' ? Auth::user()->company : null; @endphp
+                    @if($navCompanyMobile?->logo)
+                        <img src="{{ asset('storage/' . $navCompanyMobile->logo) }}" alt="Logo {{ $navCompanyMobile->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm flex-shrink-0 bg-white">
+                    @elseif(Auth::user()->avatar)
                         <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm flex-shrink-0">
                     @else
                         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-sm flex-shrink-0" aria-hidden="true">
-                            {{ substr(Auth::user()->name, 0, 1) }}
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                         </div>
                     @endif
                     <div class="overflow-hidden">
-                        <p class="text-sm font-bold text-gray-900 truncate">{{ Auth::user()->name }}</p>
+                        <p class="text-sm font-bold text-gray-900 truncate">{{ $navCompanyMobile->name ?? Auth::user()->name }}</p>
                         <p class="text-xs text-gray-500 truncate">{{ Auth::user()->email }}</p>
                     </div>
                 </div>

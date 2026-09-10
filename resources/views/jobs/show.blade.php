@@ -19,9 +19,13 @@
                                 <div class="flex gap-6 items-start">
                                     <!-- Company Logo -->
                                     <div class="relative flex-shrink-0">
+                                        @if($job->company?->logo)
+                                        <img src="{{ asset('storage/' . $job->company->logo) }}" alt="Logo {{ $job->company->name }}" class="w-24 h-24 rounded-2xl object-cover border border-blue-200 shadow-sm bg-white">
+                                        @else
                                         <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 flex items-center justify-center font-bold text-3xl border border-blue-200 shadow-sm">
-                                            {{ substr($job->company_name ?? 'C', 0, 1) }}
+                                            {{ strtoupper(substr($job->company_name ?? $job->company->name ?? 'C', 0, 1)) }}
                                         </div>
+                                        @endif
                                     </div>
 
                                     <!-- Title & Company Info -->
