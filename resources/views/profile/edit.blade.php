@@ -84,6 +84,7 @@
                         </div>
                     </div>
 
+                    @if($isUmum)
                     <div class="flex flex-wrap items-center gap-2.5">
                         <a href="{{ route('applications.index') }}" class="group flex items-center gap-2.5 rounded-2xl border border-slate-100 bg-slate-50/70 px-3.5 py-2.5 transition hover:border-blue-200 hover:bg-blue-50/70">
                             <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
@@ -116,8 +117,10 @@
                             <svg class="ml-1 h-4 w-4 text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                         </a>
                     </div>
+                    @endif
                 </div>
 
+                @if($isUmum)
                 <div class="mt-5 border-t border-slate-100 pt-4">
                     <div class="flex items-center justify-between text-xs">
                         <p class="font-semibold text-slate-600">Kelengkapan profil</p>
@@ -132,6 +135,7 @@
                         <p class="mt-2 text-xs font-semibold text-green-600">Profil sudah lengkap.</p>
                     @endif
                 </div>
+                @endif
             </div>
 
             {{-- Navigasi tab --}}
