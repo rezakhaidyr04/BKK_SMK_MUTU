@@ -191,6 +191,7 @@
         </div>
         @endif
 
+        @if(Auth::user()->role === 'umum')
         <div class="border-t border-slate-100 pt-6">
             <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4">Data Diri & CV</h3>
 
@@ -305,6 +306,7 @@
                 <x-input-error class="mt-1.5" :messages="$errors->get('experience_organization')" />
             </div>
         </div>
+        @endif
 
         <div class="sticky bottom-4 z-10 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 shadow-lg backdrop-blur sm:flex-row sm:items-center sm:justify-between">
             <p class="hidden items-center gap-1.5 text-xs text-slate-400 sm:flex">
