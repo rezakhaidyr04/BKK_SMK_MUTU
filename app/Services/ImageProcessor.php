@@ -69,9 +69,9 @@ class ImageProcessor
 
         if ($src === false) {
             // Fallback: simpan file asli tanpa konversi (pertahankan ekstensi asli)
-            $originalExtension = $file->getClientOriginalExtension();
-            $fallbackFilename = ($filename ?? Str::uuid()->toString()) . '.' . $originalExtension;
-            $fallbackSubPath = trim($directory, '/') . '/' . $fallbackFilename;
+            $originalExtension = strtolower($file->getClientOriginalExtension() ?: $file->extension() ?: 'bin');
+            $baseName = $filename ? pathinfo($filename, PATHINFO_FILENAME) : Str::uuid()->toString();
+            $fallbackFilename = $baseName . '.' . $originalExtension;
             $stored = $file->storeAs($directory, $fallbackFilename, 'public');
             return $stored ?: null;
         }
