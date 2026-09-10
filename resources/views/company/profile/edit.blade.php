@@ -59,20 +59,22 @@
                         </div>
                     </div>
 
-                    {{-- Upload Area bulat --}}
-                    <div class="flex items-center gap-4">
-                        <div id="logo-preview-wrap" class="w-16 h-16 rounded-full border-2 border-dashed border-slate-300 overflow-hidden bg-slate-50 flex items-center justify-center flex-shrink-0">
+                    {{-- Upload Area bulat - compact --}}
+                    <div class="flex items-center gap-3">
+                        <div id="logo-preview-wrap" class="w-10 h-10 rounded-full border border-dashed border-slate-300 overflow-hidden bg-slate-50 flex items-center justify-center flex-shrink-0">
                             @if($company->logo)
                                 <img id="logo-preview-static" src="{{ asset('storage/' . $company->logo) }}" alt="Logo" class="w-full h-full object-cover">
                             @else
-                                <span id="logo-preview-static" class="text-xs text-slate-400">Logo</span>
+                                <span id="logo-preview-static" class="text-[10px] text-slate-400">Logo</span>
                             @endif
                         </div>
                         <label for="logo-input" class="flex-1 cursor-pointer">
-                            <div class="border border-slate-200 rounded-xl bg-white px-4 py-3 flex flex-col items-center justify-center gap-1 hover:border-blue-300 hover:bg-blue-50/30 transition">
-                                <svg class="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
-                                <p id="logo-label" class="text-xs font-semibold text-slate-600">Klik untuk pilih logo</p>
-                                <p class="text-[10px] text-slate-400">Geser & zoom, otomatis WebP bulat</p>
+                            <div class="border border-slate-200 rounded-lg bg-white px-3 py-2 flex items-center justify-center gap-2 hover:border-blue-300 hover:bg-blue-50/30 transition">
+                                <svg class="w-4 h-4 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+                                <div class="text-left">
+                                    <p id="logo-label" class="text-xs font-semibold text-slate-600 leading-none">Klik untuk pilih logo</p>
+                                    <p class="text-[10px] text-slate-400 leading-none mt-0.5">Geser & zoom, WebP bulat</p>
+                                </div>
                             </div>
                             <input id="logo-input" type="file" accept="image/jpeg,image/png,image/webp" class="sr-only" onchange="previewLogoWithCrop(event)" />
                             <input type="hidden" name="logo_cropped" id="logo-cropped-flag" value="0">
