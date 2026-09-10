@@ -1,0 +1,368 @@
+/**
+ * Premium Form Design System — BKK SMK MUTU
+ * Global, tanpa ubah setiap blade satu-satu.
+ * Di-import di resources/css/app.css (@import './forms.css')
+ * dan juga disalin ke public/css/app-custom.css agar efek instan tanpa npm build.
+ */
+
+/* ============================================================
+   LABEL — premium uppercase 11px, slate-600, icon gap, star merah
+   ============================================================ */
+.ui-label,
+.form-label,
+label.ui-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-bottom: 0.4rem;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #475569; /* slate-600 */
+    line-height: 1.4;
+}
+
+.ui-label svg,
+.form-label svg {
+    width: 0.875rem;
+    height: 0.875rem;
+    color: #94a3b8;
+    flex-shrink: 0;
+}
+
+.ui-label .text-red-500,
+.ui-label .text-red-600,
+.form-label .text-red-500 {
+    color: #ef4444;
+    margin-left: 1px;
+}
+
+/* ============================================================
+   INPUT / SELECT / TEXTAREA — premium rounded-xl
+   ============================================================ */
+.ui-input,
+.ui-select,
+.ui-textarea,
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    padding: 0.625rem 0.875rem; /* 10px 14px = px-3.5 py-2.5 */
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.5;
+    color: #0f172a;
+    background-color: #ffffff;
+    border: 1.5px solid #e2e8f0; /* slate-200 */
+    border-radius: 0.75rem; /* rounded-xl */
+    box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+    transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.ui-input::placeholder,
+.ui-textarea::placeholder,
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: #94a3b8; /* slate-400 */
+    opacity: 1;
+}
+
+.ui-input:hover,
+.ui-select:hover,
+.ui-textarea:hover,
+.form-input:hover,
+.form-select:hover,
+.form-textarea:hover {
+    border-color: #cbd5e1; /* slate-300 */
+}
+
+.ui-input:focus,
+.ui-select:focus,
+.ui-textarea:focus,
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: #3b82f6; /* blue-500 */
+    box-shadow: 0 0 0 4px rgba(59,130,246,0.10);
+    background-color: #ffffff;
+}
+
+.ui-input:disabled,
+.ui-select:disabled,
+.ui-textarea:disabled,
+.form-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #f8fafc;
+}
+
+/* Select — custom chevron */
+.ui-select,
+.form-select {
+    padding-right: 2.25rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.25rem 1.25rem;
+}
+
+.ui-select:focus,
+.form-select:focus {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%233b82f6' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+}
+
+/* Textarea — spacing & resize */
+.ui-textarea,
+.form-textarea,
+textarea.ui-input {
+    min-height: 96px;
+    resize: vertical;
+    line-height: 1.6;
+    padding-top: 0.7rem;
+}
+
+/* Date / number / email etc keep same height */
+input[type="date"].ui-input,
+input[type="datetime-local"].ui-input,
+input[type="number"].ui-input {
+    min-height: 42px;
+}
+
+/* File input prettify (Tailwind file: variant fallback) */
+.ui-input[type="file"] {
+    padding: 0.35rem 0.5rem;
+    cursor: pointer;
+}
+.ui-input[type="file"]::file-selector-button {
+    margin-right: 0.75rem;
+    border: 0;
+    border-radius: 0.5rem;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.75rem;
+    cursor: pointer;
+}
+
+/* ============================================================
+   ERROR STATE — border merah + ring merah + icon+text merah
+   ============================================================ */
+.ui-input.is-error,
+.ui-input--error,
+.ui-select.is-error,
+.ui-select--error,
+.ui-textarea.is-error,
+.ui-textarea--error,
+.form-input.is-error,
+.has-error .ui-input,
+.has-error .ui-select,
+.has-error .ui-textarea,
+.ui-input[aria-invalid="true"],
+.ui-select[aria-invalid="true"],
+.ui-textarea[aria-invalid="true"],
+.was-validated .ui-input:invalid {
+    border-color: #fca5a5; /* red-300 */
+    background-color: #fef2f2; /* red-50/60 */
+    box-shadow: 0 0 0 4px rgba(239,68,68,0.08);
+}
+
+.ui-input.is-error:focus,
+.ui-input--error:focus,
+.ui-textarea.is-error:focus,
+.ui-select.is-error:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 4px rgba(239,68,68,0.12);
+}
+
+/* Field error text — icon + 12px red */
+.ui-error,
+.field-error,
+.form-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.375rem;
+    margin-top: 0.4rem;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #dc2626;
+}
+
+.ui-error svg,
+.field-error svg {
+    width: 0.875rem;
+    height: 0.875rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+/* Auto error border when error element follows input (modern :has) */
+div:has(> .ui-error) > .ui-input,
+div:has(> .ui-error) > .ui-select,
+div:has(> .ui-error) > .ui-textarea,
+div:has(> .field-error) > .ui-input,
+div:has(> .form-error) > .ui-input {
+    border-color: #fca5a5;
+    background-color: #fef2f2;
+    box-shadow: 0 0 0 4px rgba(239,68,68,0.08);
+}
+
+/* ============================================================
+   FORM GROUP CARD — bg-slate-50 border rounded-xl p-4 + accent dot
+   (seperti company profile yang sudah premium)
+   ============================================================ */
+.form-group,
+.ui-form-group,
+.form-section-card {
+    background: #f8fafc; /* slate-50 */
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 1rem;
+}
+
+.form-group-title,
+.ui-form-group-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 0.875rem;
+}
+
+.form-group-title::before,
+.ui-form-group-title::before {
+    content: '';
+    width: 4px;
+    height: 14px;
+    border-radius: 9999px;
+    background: #2563eb;
+    flex-shrink: 0;
+}
+
+.form-group--blue .form-group-title::before { background: #2563eb; }
+.form-group--emerald .form-group-title::before { background: #10b981; }
+.form-group--amber .form-group-title::before { background: #f59e0b; }
+.form-group--violet .form-group-title::before { background: #8b5cf6; }
+
+/* ============================================================
+   BUTTON — gradient blue, rounded-xl, shadow, hover lift
+   (mempoles .ui-btn-primary & .btn-primary & button[type=submit] premium)
+   ============================================================ */
+.ui-btn-primary,
+.btn-primary,
+.auth-btn,
+button.bg-blue-600 {
+    border-radius: 0.75rem !important;
+}
+
+.ui-btn-primary {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid transparent !important;
+    border-radius: 0.75rem !important;
+    box-shadow: 0 4px 14px rgba(37,99,235,0.28), 0 1px 2px rgba(15,23,42,0.06) !important;
+    font-weight: 700 !important;
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease !important;
+}
+
+.ui-btn-primary:hover,
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(37,99,235,0.32), 0 2px 6px rgba(15,23,42,0.08) !important;
+    filter: brightness(1.02);
+}
+
+.ui-btn-primary:active,
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(37,99,235,0.22) !important;
+}
+
+/* Secondary tetap premium */
+.ui-btn-secondary {
+    border-radius: 0.75rem !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #334155 !important;
+    box-shadow: 0 1px 2px rgba(15,23,42,0.04) !important;
+    font-weight: 600 !important;
+}
+
+.ui-btn-secondary:hover {
+    border-color: #cbd5e1 !important;
+    background: #f8fafc !important;
+}
+
+/* Filter bar & form stack polish */
+.ui-filter-bar .ui-input,
+.ui-filter-bar .ui-select {
+    background: #ffffff;
+}
+
+/* Checkbox / radio premium */
+input[type="checkbox"].ui-input,
+input[type="checkbox"].rounded,
+input[type="radio"] {
+    accent-color: #2563eb;
+}
+
+/* Help / hint text */
+.form-hint,
+.ui-hint {
+    margin-top: 0.35rem;
+    font-size: 11px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* Ensure label + input spacing consistent */
+.ui-form-stack .space-y-4 > div > .ui-label + .ui-input,
+.ui-form-stack .space-y-4 > div > .ui-label + .ui-select,
+.ui-form-stack .space-y-4 > div > .ui-label + .ui-textarea {
+    margin-top: 0;
+}
+
+/* Fallback premium for legacy inline forms (tanpa .ui-input) — otomatis cantik */
+.page-section input[type="text"].rounded-xl,
+.page-section input[type="email"].rounded-xl,
+.page-section input[type="password"].rounded-xl,
+.page-section input[type="number"].rounded-xl,
+.page-section input[type="date"].rounded-xl,
+.page-section input[type="datetime-local"].rounded-xl,
+.page-section select.rounded-xl,
+.page-section textarea.rounded-xl {
+    box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+    transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+.page-section input.rounded-xl:hover,
+.page-section select.rounded-xl:hover,
+.page-section textarea.rounded-xl:hover {
+    border-color: #cbd5e1 !important;
+}
+.page-section input.rounded-xl:focus,
+.page-section select.rounded-xl:focus,
+.page-section textarea.rounded-xl:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 4px rgba(59,130,246,0.10) !important;
+}
+
+/* Dark mode considerations (keep readable) */
+.dark .ui-input,
+.dark .ui-select,
+.dark .ui-textarea {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+}
