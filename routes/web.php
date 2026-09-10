@@ -135,6 +135,7 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
         Route::get("/profile", [App\Http\Controllers\Company\ProfileController::class, "edit"])->name("profile.edit");
         Route::put("/profile", [App\Http\Controllers\Company\ProfileController::class, "update"])->name("profile.update");
         Route::post("/profile/verify", [App\Http\Controllers\Company\ProfileController::class, "verify"])->name("profile.verify");
+        Route::get("/mou/download", [App\Http\Controllers\Company\ProfileController::class, "downloadMou"])->name("mou.download");
     });
 
     // Applications Management

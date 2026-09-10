@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\ImageProcessor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -104,5 +105,26 @@ class ProfileController extends Controller
         $company->save();
 
         return redirect()->route('company.profile.edit')->with('success', 'Permintaan verifikasi telah dikirim. Tim admin akan meninjaunya.');
+    }
+
+    public function downloadMou(Request $request)
+    {
+        $company = auth()->user()->company;
+        abort_unless($company, 404, 'Profil perusahaan tidak ditemukan.');
+        $this->authorize('downloadMou', $company);
+
+        abort_unless($company->mou_path, 404, 'File MoU tidak ditemukan.');
+
+        $disk = Storage::disk('private')->exists($company->mou_path) ? 'private' : 'local';
+        abort_unless(Storage::disk($disk)->exists($company->mou_path), 404, 'File MoU tidak ditemukan di storage.');
+
+        $fileName = 'MoU_' . Str::slug($company->name) . '_' .
+                    ($company->mou_number ? Str::slug($company->mou_number) . '_' : '') .
+                    now()->format('Ymd') . '.' .
+                    pathinfo($company->mou_path, PATHINFO_EXTENSION);
+
+        return response()->file(Storage::disk($disk)->path($company->mou_path), [
+            'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+        ]);
     }
 }

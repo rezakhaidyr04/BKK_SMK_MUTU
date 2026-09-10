@@ -14,6 +14,6 @@ class CompanyPolicy
 
     public function downloadMou(User $user, Company $company): bool
     {
-        return $user->role === 'admin';
+        return $user->role === 'admin' || $user->id === $company->user_id;
     }
 }
