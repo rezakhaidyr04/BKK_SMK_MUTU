@@ -2,15 +2,15 @@
 <div id="confirmModal" class="fixed inset-0 z-[9999] hidden" aria-modal="true" role="dialog">
     <div class="absolute inset-0 bg-[#0a1a3a]/60 backdrop-blur-sm" onclick="closeConfirm(false)"></div>
     <div class="absolute inset-0 flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-2xl shadow-2xl w-full overflow-hidden animate-[scaleIn_0.22s_cubic-bezier(0.34,1.56,0.64,1)] relative my-4" style="max-width:560px; border-radius:20px; box-shadow:0 20px 48px rgba(10,22,51,0.3);">
+        <div class="bg-white rounded-2xl shadow-2xl w-full overflow-hidden animate-[scaleIn_0.22s_cubic-bezier(0.34,1.56,0.64,1)] relative my-4 flex flex-col" style="max-width:560px; border-radius:20px; box-shadow:0 20px 48px rgba(10,22,51,0.3); max-height:90vh;">
             {{-- Close X --}}
             <button onclick="closeConfirm(false)" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow-md border border-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition z-10">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
 
-            <div class="flex flex-col md:flex-row">
+            <div class="flex flex-col md:flex-row flex-1 overflow-y-auto">
                 {{-- Kiri: Ilustrasi --}}
-                <div class="md:w-1/3 bg-gradient-to-br from-blue-50 via-white to-blue-100/60 p-5 flex items-center justify-center relative overflow-hidden min-h-[180px] md:min-h-[280px]">
+                <div class="hidden md:flex md:w-1/3 bg-gradient-to-br from-blue-50 via-white to-blue-100/60 p-5 items-center justify-center relative overflow-hidden min-h-[280px]">
                     {{-- Dekor blob atas --}}
                     <div class="absolute -top-10 -left-10 w-32 h-32 bg-blue-200/40 rounded-full blur-2xl"></div>
                     <div class="absolute -bottom-8 -right-8 w-24 h-24 bg-blue-100/60 rounded-full"></div>
@@ -54,7 +54,7 @@
                 </div>
 
                 {{-- Kanan: Konten --}}
-                <div class="flex-1 p-5 md:p-6 flex flex-col">
+                <div class="flex-1 p-5 md:p-6 flex flex-col overflow-y-auto">
                     <div class="flex items-center gap-2 text-blue-600">
                         <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white">
                             <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
@@ -77,11 +77,11 @@
                         </div>
                     </div>
 
-                    <div class="mt-auto pt-6 flex gap-3 justify-end">
-                        <button type="button" onclick="closeConfirm(false)" class="px-7 py-2.5 bg-white border border-slate-200 text-slate-600 text-sm font-semibold rounded-full hover:bg-slate-50 hover:border-slate-300 transition">Batal</button>
-                        <button type="button" onclick="closeConfirm(true)" id="confirmOkBtn" class="px-7 py-2.5 bg-gradient-to-b from-blue-500 to-blue-700 text-white text-sm font-bold rounded-full shadow-[0_8px_20px_rgba(37,99,235,0.35)] hover:from-blue-600 hover:to-blue-800 hover:shadow-[0_10px_24px_rgba(37,99,235,0.4)] hover:-translate-y-px active:translate-y-0 transition-all inline-flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                            Oke
+                    <div class="mt-auto pt-6 flex flex-wrap gap-3 justify-end shrink-0">
+                        <button type="button" onclick="closeConfirm(false)" class="px-7 py-2.5 bg-white border border-slate-200 text-slate-600 text-sm font-semibold rounded-full hover:bg-slate-50 hover:border-slate-300 transition whitespace-nowrap shrink-0">Batal</button>
+                        <button type="button" onclick="closeConfirm(true)" id="confirmOkBtn" class="px-7 py-2.5 bg-gradient-to-b from-blue-500 to-blue-700 text-white text-sm font-bold rounded-full shadow-[0_8px_20px_rgba(37,99,235,0.35)] hover:from-blue-600 hover:to-blue-800 hover:shadow-[0_10px_24px_rgba(37,99,235,0.4)] hover:-translate-y-px active:translate-y-0 transition-all inline-flex items-center gap-2 whitespace-nowrap shrink-0">
+                            <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                            <span>Oke</span>
                         </button>
                     </div>
                 </div>
@@ -111,7 +111,9 @@ function showConfirm(message, opts = {}) {
     document.getElementById('confirmInfoMain').textContent = infoMain;
     document.getElementById('confirmInfoBox').querySelector('p:last-child').textContent = infoSub;
     const btn = document.getElementById('confirmOkBtn');
-    btn.childNodes[btn.childNodes.length-1].textContent = ' ' + okText;
+    const span = btn.querySelector('span');
+    if (span) span.textContent = okText;
+    else btn.childNodes[btn.childNodes.length-1].textContent = ' ' + okText;
     // variant colors
     if (variant === 'danger') {
         btn.className = 'px-7 py-2.5 bg-gradient-to-b from-red-500 to-red-700 text-white text-sm font-bold rounded-full shadow-[0_8px_20px_rgba(220,38,38,0.35)] hover:from-red-600 hover:to-red-800 transition-all inline-flex items-center gap-2';
