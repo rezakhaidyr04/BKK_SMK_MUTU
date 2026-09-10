@@ -9,6 +9,9 @@
 .env.backup
 .env.production
 .phpunit.result.cache
+/dashboard_output.html
+/temp_css_head.txt
+/check_reviews.php
 Homestead.json
 Homestead.yaml
 auth.json
