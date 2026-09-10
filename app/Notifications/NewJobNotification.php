@@ -41,10 +41,11 @@ class NewJobNotification extends Notification implements ShouldQueue
                     ->subject('Lowongan Kerja Baru: ' . $this->job->title)
                     ->greeting('Halo, ' . $notifiable->name . '!')
                     ->line('Ada lowongan pekerjaan baru yang mungkin cocok untuk Anda.')
-                    ->line('**Posisi:** ' . $this->job->title)
-                    ->line('**Perusahaan:** ' . ($this->job->company_name ?? 'Perusahaan'))
-                    ->line('**Tipe:** ' . $this->job->type)
+                    ->line('**Posisi:** ' . ($this->job->position ?? $this->job->title))
+                    ->line('**Perusahaan:** ' . ($this->job->company_name ?? $this->job->company->name ?? 'Perusahaan'))
+                    ->line('**Tipe:** ' . \App\Support\Label::jobType($this->job->job_type ?? 'full_time'))
                     ->line('**Lokasi:** ' . $this->job->location)
+                    ->line('**Gaji:** Rp ' . number_format($this->job->salary_min ?? 0, 0, ',', '.') . ' - Rp ' . number_format($this->job->salary_max ?? 0, 0, ',', '.'))
                     ->action('Lihat Detail Lowongan', route('jobs.show', $this->job->id))
                     ->line('Terima kasih telah menggunakan aplikasi BKK SMK MUTU!');
     }
