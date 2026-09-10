@@ -2,7 +2,7 @@
 <div id="confirmModal" class="fixed inset-0 z-[9999] hidden" aria-modal="true" role="dialog">
     <div class="absolute inset-0 bg-[#0a1a3a]/60 backdrop-blur-sm" onclick="closeConfirm(false)"></div>
     <div class="absolute inset-0 flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-[20px] shadow-[0_20px_48px_rgba(10,22,51,0.3)] w-full max-w-[560px] overflow-hidden animate-[scaleIn_0.22s_cubic-bezier(0.34,1.56,0.64,1)] relative my-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full overflow-hidden animate-[scaleIn_0.22s_cubic-bezier(0.34,1.56,0.64,1)] relative my-4" style="max-width:560px; border-radius:20px; box-shadow:0 20px 48px rgba(10,22,51,0.3);">
             {{-- Close X --}}
             <button onclick="closeConfirm(false)" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow-md border border-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition z-10">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -10,13 +10,13 @@
 
             <div class="flex flex-col md:flex-row">
                 {{-- Kiri: Ilustrasi --}}
-                <div class="md:w-[36%] bg-gradient-to-br from-blue-50 via-white to-blue-100/60 p-5 flex items-center justify-center relative overflow-hidden min-h-[180px] md:min-h-[280px]">
+                <div class="md:w-1/3 bg-gradient-to-br from-blue-50 via-white to-blue-100/60 p-5 flex items-center justify-center relative overflow-hidden min-h-[180px] md:min-h-[280px]">
                     {{-- Dekor blob atas --}}
                     <div class="absolute -top-10 -left-10 w-32 h-32 bg-blue-200/40 rounded-full blur-2xl"></div>
                     <div class="absolute -bottom-8 -right-8 w-24 h-24 bg-blue-100/60 rounded-full"></div>
                     {{-- Ilustrasi amplop --}}
                     <div class="relative">
-                        <svg viewBox="0 0 200 180" class="w-[150px] h-[130px] drop-shadow-lg">
+                        <svg viewBox="0 0 200 180" class="w-36 h-32 drop-shadow-lg">
                             {{-- Glow bulat belakang --}}
                             <ellipse cx="100" cy="105" rx="75" ry="65" fill="#dbeafe" opacity="0.45"/>
                             <ellipse cx="100" cy="105" rx="55" ry="48" fill="#eff6ff" opacity="0.7"/>
@@ -60,10 +60,10 @@
                             <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
                         </div>
                         <span class="w-px h-4 bg-blue-200"></span>
-                        <span id="confirmEyebrow" class="text-[11px] font-bold tracking-widest uppercase text-blue-600">KONFIRMASI PENGIRIMAN EMAIL</span>
+                        <span id="confirmEyebrow" class="text-xs font-bold tracking-widest uppercase text-blue-600">KONFIRMASI PENGIRIMAN EMAIL</span>
                     </div>
 
-                    <h3 id="confirmTitle" class="text-[22px] md:text-[24px] font-bold text-[#0a1a3a] mt-3 leading-tight">Kirim Notifikasi Lowongan ke Semua Pencari Kerja?</h3>
+                    <h3 id="confirmTitle" class="text-xl md:text-2xl font-bold text-[#0a1a3a] mt-3 leading-tight">Kirim Notifikasi Lowongan ke Semua Pencari Kerja?</h3>
                     <p id="confirmMessage" class="text-sm text-slate-500 mt-2.5 leading-relaxed">Yakin ingin membroadcast notifikasi lowongan ini ke semua pencari kerja melalui email?</p>
 
                     <div id="confirmInfoBox" class="mt-5 bg-blue-50/70 border border-blue-100 rounded-2xl p-3.5 flex gap-3">
