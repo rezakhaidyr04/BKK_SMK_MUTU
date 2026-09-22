@@ -22,7 +22,7 @@ class AdminCompanyUpdateRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:50'],
             'address' => ['nullable', 'string', 'max:500'],
             'tax_number' => ['nullable', 'string', 'max:100'],
-            'mou_path' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
+            'mou_path' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'mimetypes:application/pdf,image/jpeg,image/png', 'max:10240'],
             'mou_number' => ['nullable', 'string', 'max:255'],
             'mou_signed_at' => ['nullable', 'date'],
             'mou_expires_at' => ['nullable', 'date', 'after_or_equal:mou_signed_at'],

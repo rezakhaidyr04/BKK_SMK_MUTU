@@ -9,8 +9,8 @@ class ReviewController extends Controller
 {
     public function __construct()
     {
-        // Require authentication for create method
-        $this->middleware('auth')->only(['create']);
+        // P0 H-01: create DAN store wajib auth — cegah spam anonim via direct POST.
+        $this->middleware('auth')->only(['create', 'store']);
     }
 
     /**
@@ -38,7 +38,7 @@ class ReviewController extends Controller
 
         try {
             Review::create([
-                'user_id' => auth()->id() ?? null,
+                'user_id' => auth()->id(),
                 'rating' => $validated['rating'],
                 'comment' => $validated['comment'],
                 'job_title' => $validated['job_title'],
@@ -51,6 +51,8 @@ class ReviewController extends Controller
 
             return back()->with('success', 'Terima kasih! Review Anda sedang ditinjau dan akan ditampilkan segera.');
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Review store failed: '.$e->getMessage(), ['exception' => $e]);
+
             return back()->with('error', 'Terjadi kesalahan saat menyimpan review. Silakan coba lagi.')->withInput();
         }
     }

@@ -11,6 +11,11 @@ class Job extends Model
 {
     use HasFactory, SoftDeletes;
 
+    /**
+     * P0 H-14: company_id/status/company_name diisi server-side dari auth company.
+     * Request 'status' dari client diabaikan (Company\JobController memaksa active
+     * setelah cek verified; admin via role:admin saja).
+     */
     protected $fillable = [
         'company_id',
         'company_name',

@@ -10,6 +10,8 @@ use App\Http\Requests\AdminCompanyUpdateRequest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -131,11 +133,22 @@ class CompanyController extends Controller
             unset($validated['mou_path']); // Jangan overwrite jika tidak upload baru
         }
 
+        // P1 H-09A: cegah desync verified+false. Jika admin mencabut centang
+        // verified padahal status masih verified, kembalikan ke pending
+        // (perlu review ulang), bukan mempertahankan verified.
         $isVerified = (bool) ($validated['is_verified'] ?? false);
+
+        if ($isVerified) {
+            $newStatus = 'verified';
+        } else {
+            $newStatus = $company->verification_status === 'verified'
+                ? 'pending'
+                : $company->verification_status;
+        }
 
         $company->update(array_merge($validated, [
             'is_verified'         => $isVerified,
-            'verification_status' => $isVerified ? 'verified' : $company->verification_status,
+            'verification_status' => $newStatus,
         ]));
 
         return redirect()
@@ -203,7 +216,8 @@ class CompanyController extends Controller
                     pathinfo($company->mou_path, PATHINFO_EXTENSION);
 
         return response()->file(Storage::disk($disk)->path($company->mou_path), [
-            'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            'X-Content-Type-Options' => 'nosniff',
         ]);
     }
 
@@ -251,32 +265,46 @@ class CompanyController extends Controller
         // 4. Generate password sementara yang aman (12 karakter)
         $plainPassword = Str::password(12, letters: true, numbers: true, symbols: false);
 
-        // 5. Buat user — simpan password HANYA dalam bentuk hash
-        // must_change_password = true paksa company login pertama kali
-        // dan mengarahkan ke halaman ganti password via ForcePasswordChange middleware.
-        $user = User::create([
-            'name'                => $company->name,
-            'email'               => $validated['email'],
-            'password'            => Hash::make($plainPassword),   // NEVER store plaintext
-            'role'                => 'company',
-            'is_active'           => true,
-            'email_verified_at'   => now(),
-            'must_change_password' => true,
-        ]);
+        // 5-7. Buat user + hubungkan ke perusahaan dalam SATU transaksi
+        // agar tidak ada user yatim jika update company gagal (P0 C-06).
+        // Password disimpan HANYA dalam bentuk hash. Plaintext TIDAK pernah
+        // di-log dan TIDAK disimpan di DB selain sebagai hash.
+        $user = DB::transaction(function () use ($company, $validated, $plainPassword) {
+            $created = User::create([
+                'name'                => $company->name,
+                'email'               => $validated['email'],
+                'password'            => Hash::make($plainPassword),   // NEVER store plaintext
+                'role'                => 'company',
+                'is_active'           => true,
+                'email_verified_at'   => now(),
+                'must_change_password' => true,
+            ]);
 
-        // 6. Sync Spatie role = 'company'
-        $user->syncRoles(['company']);
+            // 6. Sync Spatie role = 'company'
+            $created->syncRoles(['company']);
 
-        // 7. Hubungkan user ke perusahaan
-        $company->update(['user_id' => $user->id]);
+            // 7. Hubungkan user ke perusahaan
+            $company->update(['user_id' => $created->id]);
 
-        // 8. Password awal akan ditampilkan SATU KALI di halaman berikutnya
-        // menggunakan session Laravel — akan otomatis hilang setelah ditampilkan.
+            return $created;
+        });
+
+        // 8. Password awal ditampilkan SATU KALI via flash.
+        // P0 C-06: JANGAN simpan plaintext di session DB (SESSION_DRIVER=database,
+        // encrypt=false). Simpan versi terenkripsi dengan Crypt (APP_KEY),
+        // sehingga tabel sessions hanya berisi ciphertext. Blade mendekripsi
+        // hanya untuk ditampilkan sekali, lalu flash otomatis hilang.
+        // Key tetap 'initial_password' agar kontrak test tidak berubah,
+        // tetapi isinya BUKAN plaintext.
+        $encryptedPassword = Crypt::encryptString($plainPassword);
+        // Hapus referensi plaintext dari memori secepatnya.
+        unset($plainPassword);
+
         return redirect()
             ->route('admin.companies.show', $company)
             ->with('account_created', true)
             ->with('account_email', $validated['email'])
-            ->with('initial_password', $plainPassword)
-            ->with('success', "Akun berhasil dibuat untuk {$company->name}. Password awal telah dibuat. <strong>Disarankan</strong> mengganti password setelah login pertama untuk keamanan maksimal.");
+            ->with('initial_password', $encryptedPassword)
+            ->with('success', "Akun berhasil dibuat untuk {$company->name}. Password awal telah dibuat. Disarankan mengganti password setelah login pertama untuk keamanan maksimal.");
     }
 }

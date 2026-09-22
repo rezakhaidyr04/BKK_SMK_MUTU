@@ -113,7 +113,7 @@
                         <div class="section">
                             <div class="section-title">Ringkasan Profesional</div>
                             <div class="section-body">
-                                {{ $custom_summary ?: ($user->bio ?? 'Ringkasan belum diisi. Tambahkan 2-3 kalimat tentang minat, keahlian utama, dan tujuan karir agar CV tidak terlihat kosong.') }}
+                                {!! nl2br(e(str_replace(['\\r\\n', '\\n', '\\r'], "\n", $custom_summary ?: ($user->bio ?? 'Ringkasan belum diisi. Tambahkan 2-3 kalimat tentang minat, keahlian utama, dan tujuan karir agar CV tidak terlihat kosong.')))) !!}
                             </div>
                         </div>
 
@@ -122,7 +122,7 @@
                             @if($custom_experience)
                                 <div class="section-body">{!! nl2br(e($custom_experience)) !!}</div>
                             @elseif(!empty($user->experience_organization))
-                                <div class="section-body">{!! nl2br(e($user->experience_organization)) !!}</div>
+                                <div class="section-body">{!! nl2br(e(str_replace(['\\r\\n', '\\n', '\\r'], "\n", $user->experience_organization))) !!}</div>
                             @else
                                 <div class="section-body muted">Belum ada pengalaman yang ditambahkan. Isi pengalaman magang, organisasi, atau proyek sekolah agar lebih kuat di mata perekrut.</div>
                             @endif
@@ -194,7 +194,7 @@
                             <div class="section-title">Pendidikan</div>
                             <div class="section-body">
                                 @if(!empty($user->education_history))
-                                    @foreach(preg_split('/\r\n|\r|\n/', $user->education_history) as $education)
+                                    @foreach(preg_split('/\r\n|\r|\n|\\\\r\\\\n|\\\\n|\\\\r/', $user->education_history) as $education)
                                         @if(trim($education))
                                             <div class="education-line">{{ trim($education) }}</div>
                                         @endif

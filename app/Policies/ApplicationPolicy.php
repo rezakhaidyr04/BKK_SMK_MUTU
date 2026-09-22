@@ -34,8 +34,11 @@ class ApplicationPolicy
     public function update(User $user, Application $application)
     {
         // admin can do anything, handled in before()
+        // P0 H-04: null-safe + loadMissing seperti view() — cegah 500 jika job terhapus.
         if ($user->role === 'company' && $user->company) {
-            return $user->company->id === $application->job->company_id;
+            $application->loadMissing('job');
+
+            return $user->company->id === $application->job?->company_id;
         }
 
         return false;

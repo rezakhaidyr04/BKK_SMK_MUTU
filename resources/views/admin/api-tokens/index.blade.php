@@ -34,7 +34,33 @@
                 @endif
             </div>
 
-            <div class="text-sm text-slate-500">
+            {{-- P0 H-08: daftar token + revoke. Plaintext hanya muncul sekali via session. --}}
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mt-6">
+                <h3 class="text-sm font-bold text-slate-800 mb-3">Token Aktif ({{ ($tokens ?? collect())->count() }})</h3>
+                @if(($tokens ?? collect())->isEmpty())
+                    <p class="text-sm text-slate-500">Belum ada token.</p>
+                @else
+                    <div class="space-y-2">
+                        @foreach($tokens as $t)
+                            <div class="flex items-center justify-between gap-3 rounded-lg border border-slate-200 px-3 py-2">
+                                <div class="text-sm">
+                                    <span class="font-semibold text-slate-800">{{ $t->name }}</span>
+                                    <span class="text-slate-500">· {{ implode(',', (array) ($t->abilities ?? [])) }}</span>
+                                    <span class="text-slate-400">· expires {{ $t->expires_at ? $t->expires_at->format('Y-m-d') : '-' }}</span>
+                                    <span class="text-slate-400">· last used {{ $t->last_used_at ? $t->last_used_at->diffForHumans() : 'never' }}</span>
+                                </div>
+                                <form method="POST" action="{{ route('admin.api-tokens.destroy', $t->id) }}" onsubmit="return confirm('Cabut token ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="rounded-lg bg-red-50 text-red-700 px-3 py-1.5 text-xs font-semibold hover:bg-red-100">Cabut</button>
+                                </form>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+
+            <div class="text-sm text-slate-500 mt-6">
                 Endpoint publik: <code>GET /api/jobs</code> · <code>GET /api/jobs/{id}</code><br>
                 Endpoint terlindungi: <code>GET /api/user</code> (butuh token).
             </div>

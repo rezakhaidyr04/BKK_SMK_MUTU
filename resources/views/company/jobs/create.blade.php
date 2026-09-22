@@ -85,8 +85,8 @@
                             <input type="date" name="deadline" value="{{ old('deadline') }}" class="ui-input">
                             @error('deadline')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
-                        <div class="job-form-notice rounded-xl bg-blue-50 border border-blue-100 p-4 text-sm text-blue-800">
-                            Lowongan yang Anda buat akan berstatus <strong>Menunggu Persetujuan</strong> dan baru dipublikasikan setelah diverifikasi oleh admin BKK.
+                        <div class="job-form-notice rounded-xl bg-green-50 border border-green-100 p-4 text-sm text-green-800">
+                            Lowongan yang Anda buat akan <strong>menunggu persetujuan admin</strong> sebelum dipublikasikan.
                         </div>
                     </div>
                 </x-ui.panel>

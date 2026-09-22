@@ -18,7 +18,15 @@ npm ci
 npm run build
 
 Write-Host "[3/7] Laravel optimize..." -ForegroundColor Yellow
-php artisan key:generate --force 2>$null; if (-not $?) { Write-Host "APP_KEY sudah ada" }
+# P1-H07: jangan regenerate APP_KEY jika sudah ada
+$envContent = Get-Content ".env" -Raw -ErrorAction SilentlyContinue
+if (-not $envContent -or $envContent -notmatch "(?m)^APP_KEY=.+") {
+  php artisan key:generate --force
+  Write-Host "APP_KEY generated (baru)"
+} else {
+  Write-Host "APP_KEY sudah ada — skip (jangan overwrite)"
+}
+Write-Host "[!] Pre-migrate safety: backup database sebelum migrate!" -ForegroundColor Red
 php artisan migrate --force
 php artisan storage:link; if (-not $?) { Write-Host "storage:link skip" }
 

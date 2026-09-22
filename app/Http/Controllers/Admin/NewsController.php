@@ -8,6 +8,7 @@ use App\Http\Requests\AdminNewsUpdateRequest;
 use App\Http\Requests\AdminNewsUploadImageRequest;
 use App\Models\News;
 use App\Services\ImageProcessor;
+use App\Support\HtmlSanitizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -68,7 +69,8 @@ class NewsController extends Controller
             'title'        => $validated['title'],
             'slug'         => $slug,
             'category'     => $validated['category'],
-            'content'      => $validated['content'],
+            // P0 H-10: sanitasi server-side sebelum simpan (stored XSS).
+            'content'      => HtmlSanitizer::cleanNews($validated['content']),
             'thumbnail'    => $thumbnailPath,
             'is_published' => $request->boolean('is_published'),
         ]);
@@ -103,7 +105,8 @@ class NewsController extends Controller
         $news->update([
             'title'        => $validated['title'],
             'category'     => $validated['category'],
-            'content'      => $validated['content'],
+            // P0 H-10: sanitasi server-side sebelum simpan.
+            'content'      => HtmlSanitizer::cleanNews($validated['content']),
             'thumbnail'    => $validated['thumbnail'] ?? $news->thumbnail,
             'is_published' => $request->boolean('is_published'),
         ]);

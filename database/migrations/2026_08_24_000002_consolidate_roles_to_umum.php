@@ -2,7 +2,9 @@
 
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
@@ -73,8 +75,14 @@ return new class extends Migration
                 ->delete();
         }
 
-        // 4) Role default kolom users.role menjadi "umum" (DDL di luar transaksi).
-        DB::statement("ALTER TABLE users ALTER COLUMN role SET DEFAULT 'umum'");
+        // 4) Role default kolom users.role menjadi "umum".
+        // P0 C-05: sintaks Postgres "ALTER COLUMN ... SET DEFAULT" tidak valid di MySQL.
+        // Gunakan Schema Builder agar kompatibel MySQL (membutuhkan doctrine/dbal
+        // untuk ->change(), sudah ada di composer.json). Aman untuk DB kosong
+        // (hanya ubah default kolom, tidak menghapus data).
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('role')->default('umum')->change();
+        });
 
         app(PermissionRegistrar::class)->forgetCachedPermissions();
     }

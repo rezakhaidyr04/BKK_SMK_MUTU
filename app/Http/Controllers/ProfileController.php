@@ -49,6 +49,14 @@ class ProfileController extends Controller
 
         $validated = $request->validated();
 
+        // Normalisasi: ubah literal "\n" (backslash + n) jadi newline asli.
+        // Terjadi kalau data lama / input API menyimpan "\n" sebagai teks.
+        foreach (["bio", "address", "education_history", "experience_organization"] as $multilineField) {
+            if (! empty($validated[$multilineField]) && is_string($validated[$multilineField])) {
+                $validated[$multilineField] = str_replace(['\\r\\n', '\\n', '\\r'], "\n", $validated[$multilineField]);
+            }
+        }
+
         // Handle avatar upload
         if ($request->hasFile("avatar")) {
             // Hapus avatar lama jika ada
@@ -88,17 +96,26 @@ class ProfileController extends Controller
 
         $user->save();
 
-        // Sync skills
+        // Sync skills — P0 H-03: validated berupa array max 20, tiap item max 50.
+        // Defense-in-depth: potong berlebih + abaikan non-string/kosong.
         $submittedSkills = $request->input("skills", []);
+        if (! is_array($submittedSkills)) {
+            $submittedSkills = [];
+        }
+        $submittedSkills = array_slice($submittedSkills, 0, 20);
         $skillIds = [];
         foreach ($submittedSkills as $skillName) {
-            $skillName = trim($skillName);
-            if ($skillName !== "") {
-                $skill = \App\Models\Skill::firstOrCreate([
-                    "name" => $skillName,
-                ]);
-                $skillIds[$skill->id] = ["proficiency" => 3];
+            if (! is_string($skillName)) {
+                continue;
             }
+            $skillName = trim($skillName);
+            if ($skillName === '' || strlen($skillName) > 50) {
+                continue;
+            }
+            $skill = \App\Models\Skill::firstOrCreate([
+                "name" => $skillName,
+            ]);
+            $skillIds[$skill->id] = ["proficiency" => 3];
         }
         $user->skills()->sync($skillIds);
 

@@ -10,6 +10,10 @@ class Application extends Model
 {
     use HasFactory, SoftDeletes;
 
+    /**
+     * P0 H-14: status/interview_* hanya company pemilik (via policy) / admin.
+     * JobController@apply memaksa status=submitted server-side.
+     */
     protected $fillable = [
         'job_id',
         'user_id',

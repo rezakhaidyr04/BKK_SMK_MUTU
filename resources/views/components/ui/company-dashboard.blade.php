@@ -237,9 +237,9 @@
                                 </svg>
                             </div>
                             <div>
-                                <p style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255, 255, 255, 0.8); margin:0;">⚠ Verifikasi Diperlukan</p>
+                                <p style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255, 255, 255, 0.8); margin:0;">💡 Tingkatkan Kepercayaan</p>
                                 <h2 style="margin-top: 0.25rem; margin-bottom: 0.5rem; font-size: 1.25rem; font-weight: 700; color: white;">Lengkapi Verifikasi Perusahaan Anda</h2>
-                                <p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.9); font-weight: 500; margin:0; line-height: 1.6;">Dokumen legal dan profil lengkap diperlukan untuk membuka akses penuh ke semua fitur perekrutan dan meningkatkan kepercayaan kandidat.</p>
+                                <p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.9); font-weight: 500; margin:0; line-height: 1.6;">Lowongan Anda langsung tayang tanpa menunggu admin. Lengkapi dokumen legal dan profil untuk meningkatkan kepercayaan kandidat.</p>
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-3 shrink-0 lg:flex-col">

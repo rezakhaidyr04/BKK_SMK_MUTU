@@ -42,7 +42,11 @@ class ProfileUpdateRequest extends FormRequest
                 "image",
                 "max:3072",
                 "mimes:jpg,jpeg,png,webp,gif",
+                "mimetypes:image/jpeg,image/png,image/webp,image/gif",
             ],
+            // P0 H-03: batasi skills agar tidak pollution/DoS/XSS tersimpan.
+            "skills" => ["nullable", "array", "max:20"],
+            "skills.*" => ["string", "max:50", "regex:/^[a-zA-Z0-9 .+#\\-]+$/"],
         ];
     }
 
@@ -56,6 +60,9 @@ class ProfileUpdateRequest extends FormRequest
             "phone.max" => "Nomor HP maksimal 20 karakter.",
             "linkedin_url.url" => "Format LinkedIn URL tidak valid.",
             "portfolio_url.url" => "Format URL portofolio tidak valid.",
+            "skills.max" => "Maksimal 20 keahlian.",
+            "skills.*.max" => "Setiap keahlian maksimal 50 karakter.",
+            "skills.*.regex" => "Format keahlian tidak valid.",
         ];
     }
 }

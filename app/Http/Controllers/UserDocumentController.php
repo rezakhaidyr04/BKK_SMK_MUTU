@@ -14,7 +14,7 @@ class UserDocumentController extends Controller
 
         $request->validate([
             'document_type' => 'required|string|max:255',
-            'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120', // Max 5MB
+            'file' => 'required|file|mimes:pdf,jpg,jpeg,png|mimetypes:application/pdf,image/jpeg,image/png|max:5120',
         ]);
 
         $file = $request->file('file');

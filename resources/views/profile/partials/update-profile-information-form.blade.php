@@ -144,7 +144,7 @@
             <textarea id="bio" name="bio" rows="3"
                       class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm text-slate-900 bg-white"
                       placeholder="Ceritakan singkat mengenai latar belakang, minat, dan tujuan karir Anda..."
-                      maxlength="500">{{ old('bio', $user->bio ?? '') }}</textarea>
+                      maxlength="500">{{ old('bio', isset($user->bio) ? str_replace(['\\r\\n', '\\n', '\\r'], "\n", $user->bio) : '') }}</textarea>
             <div class="flex justify-between mt-1.5">
                 <span class="text-xs text-slate-400">Digunakan untuk profil CV lamaran kerja Anda.</span>
                 <span class="text-xs text-slate-400">Maks. 500 karakter</span>
@@ -237,7 +237,7 @@
                     </span>
                     <textarea id="address" name="address" rows="2"
                               class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm text-slate-900 bg-white"
-                              placeholder="Masukkan alamat domisili lengkap Anda...">{{ old('address', $user->address ?? '') }}</textarea>
+                              placeholder="Masukkan alamat domisili lengkap Anda...">{{ old('address', isset($user->address) ? str_replace(['\\r\\n', '\\n', '\\r'], "\n", $user->address) : '') }}</textarea>
                     <x-input-error class="mt-1.5" :messages="$errors->get('address')" />
                 </div>
             </div>
@@ -291,7 +291,7 @@
                 </div>
                 <textarea id="education_history" name="education_history" rows="4"
                           class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm text-slate-900 bg-white"
-                          placeholder="Contoh:&#10;SD Negeri 1 Cikampek (2016-2022)&#10;SMP Negeri 2 Cikampek (2022-2025)&#10;SMK MUTU Cikampek (2025-sekarang)&#10;Jurusan: Akuntansi">{{ old('education_history', $user->education_history ?? '') }}</textarea>
+                          placeholder="Contoh:&#10;SD Negeri 1 Cikampek (2016-2022)&#10;SMP Negeri 2 Cikampek (2022-2025)&#10;SMK MUTU Cikampek (2025-sekarang)&#10;Jurusan: Akuntansi">{{ old('education_history', isset($user->education_history) ? str_replace(['\\r\\n', '\\n', '\\r'], "\n", $user->education_history) : '') }}</textarea>
                 <x-input-error class="mt-1.5" :messages="$errors->get('education_history')" />
             </div>
 
@@ -302,7 +302,7 @@
                 </span>
                 <textarea id="experience_organization" name="experience_organization" rows="4"
                           class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm text-slate-900 bg-white"
-                          placeholder="Contoh: Magang di toko online&#10;Ketua OSIS&#10;Anggota Pramuka">{{ old('experience_organization', $user->experience_organization ?? '') }}</textarea>
+                          placeholder="Contoh: Magang di toko online&#10;Ketua OSIS&#10;Anggota Pramuka">{{ old('experience_organization', isset($user->experience_organization) ? str_replace(['\\r\\n', '\\n', '\\r'], "\n", $user->experience_organization) : '') }}</textarea>
                 <x-input-error class="mt-1.5" :messages="$errors->get('experience_organization')" />
             </div>
         </div>

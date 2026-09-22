@@ -5,7 +5,6 @@
 
 @php
     $role = Auth::user()->role;
-    $isCompanyVerified = Auth::user()->company?->is_verified;
 @endphp
 
 @if($role !== 'company')
@@ -175,23 +174,13 @@
         <span class="nav-badge blue ml-auto">Daftar</span>
     </a>
 
-    @if($isCompanyVerified)
-        <a href="{{ route('company.jobs.create') }}" @click="sidebarOpen = false" class="nav-link {{ request()->routeIs('company.jobs.create') ? 'active' : '' }} flex items-center gap-3">
-            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-            </svg>
-            <span class="font-medium">Publish Lowongan</span>
-            <span class="nav-badge orange ml-auto">Posting</span>
-        </a>
-    @else
-        <div class="nav-link flex items-center gap-3 opacity-50 cursor-not-allowed" title="Menunggu verifikasi perusahaan">
-            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-            </svg>
-            <span class="font-medium">Publish Lowongan</span>
-            <span class="nav-badge gray ml-auto">Menunggu</span>
-        </div>
-    @endif
+    <a href="{{ route('company.jobs.create') }}" @click="sidebarOpen = false" class="nav-link {{ request()->routeIs('company.jobs.create') ? 'active' : '' }} flex items-center gap-3">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        <span class="font-medium">Publish Lowongan</span>
+        <span class="nav-badge orange ml-auto">Posting</span>
+    </a>
 
     <a href="{{ route('company.applicants.index') }}" @click="sidebarOpen = false" class="nav-link {{ request()->routeIs('company.applicants.*') ? 'active' : '' }} flex items-center gap-3">
         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">

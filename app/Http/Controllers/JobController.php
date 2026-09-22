@@ -89,7 +89,20 @@ class JobController extends Controller
 
     public function show(Job $job)
     {
-        $job->load(["applications"]);
+        // P0 C-04: guest hanya boleh melihat job active + deadline belum lewat.
+        // Konsisten dengan index() dan Api\JobController@show().
+        if ($job->status !== 'active') {
+            abort(404);
+        }
+
+        if ($job->deadline && $job->deadline->lt(now()->startOfDay())) {
+            abort(404);
+        }
+
+        // P0 C-04: JANGAN load seluruh applications di halaman publik.
+        // Hanya hitung + cek existence milik user login.
+        $job->loadCount(['applications']);
+        $applicationsCount = $job->applications_count ?? 0;
 
         // Check if user has already applied
         $hasApplied = false;
@@ -107,6 +120,26 @@ class JobController extends Controller
 
         $savedCount = Bookmark::where("job_id", $job->id)->count();
 
+        // Stat owner (Ditinjau/Diterima) hanya dihitung untuk pemilik lowongan,
+        // agar tidak membocorkan pipeline rekrutmen ke publik.
+        $reviewedCount = null;
+        $acceptedCount = null;
+        $ownerApplicationsCount = null;
+        $isOwner = Auth::check()
+            && Auth::user()->isCompany()
+            && $job->company_id
+            && Auth::user()->company?->id === $job->company_id;
+
+        if ($isOwner) {
+            $ownerApplicationsCount = $applicationsCount;
+            $reviewedCount = Application::where('job_id', $job->id)
+                ->where('status', 'under_review')
+                ->count();
+            $acceptedCount = Application::where('job_id', $job->id)
+                ->where('status', 'accepted')
+                ->count();
+        }
+
         // Similar jobs
         $similarJobs = Job::where("id", "!=", $job->id)
             ->where("status", "active")
@@ -120,13 +153,22 @@ class JobController extends Controller
 
         return view(
             "jobs.show",
-            compact("job", "hasApplied", "isBookmarked", "savedCount", "similarJobs"),
+            compact("job", "hasApplied", "isBookmarked", "savedCount", "similarJobs", "applicationsCount", "reviewedCount", "acceptedCount", "ownerApplicationsCount", "isOwner"),
         );
     }
 
     public function apply(ApplicationRequest $request, Job $job)
     {
         abort_unless(Auth::user()?->role === "umum", 403);
+
+        // P0 C-03: server-side guard — draft/closed/rejected/expired tidak boleh dilamar.
+        if ($job->status !== 'active') {
+            return back()->with('error', 'Lowongan sudah ditutup atau tidak aktif.');
+        }
+
+        if ($job->deadline && $job->deadline->lt(now()->startOfDay())) {
+            return back()->with('error', 'Lowongan sudah ditutup atau masa berlaku telah berakhir.');
+        }
 
         // Check if already applied
         $existingApplication = Application::where("job_id", $job->id)
@@ -146,14 +188,15 @@ class JobController extends Controller
         if ($attachment) {
             $attachmentPath = $attachment->store("applications", "private");
             $attachmentName = basename($attachment->getClientOriginalName());
-            $attachmentMime = $attachment->getClientMimeType();
+            // P1-H05: server-side MIME detection, jangan percaya client
+            $attachmentMime = $attachment->getMimeType() ?: $attachment->getClientMimeType();
             $attachmentSize = $attachment->getSize();
         }
 
         $application = Application::create([
             "job_id" => $job->id,
             "user_id" => Auth::id(),
-            "cover_letter" => $request->cover_letter,
+            "cover_letter" => str_replace(['\\r\\n', '\\n', '\\r'], "\n", $request->cover_letter ?? ''),
             "attachment_path" => $attachmentPath,
             "attachment_name" => $attachmentName,
             "attachment_mime" => $attachmentMime,

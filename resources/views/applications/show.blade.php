@@ -30,7 +30,7 @@
             @endphp
 
             <div class="grid gap-6 lg:grid-cols-3">
-                <div class="lg:col-span-2 space-y-6">
+                <div class="lg:col-span-2 space-y-6 min-w-0">
                     <x-ui.panel>
                         <div class="flex items-start justify-between gap-4">
                             <div>
@@ -61,7 +61,7 @@
                     </x-ui.panel>
 
                     <x-ui.panel title="Surat Lamaran">
-                        <div class="prose max-w-none text-slate-700 whitespace-pre-line text-sm">{{ $application->cover_letter ?: 'Tidak ada surat lamaran.' }}</div>
+                        <div class="rounded-xl border border-slate-100 bg-slate-50/70 p-4 text-sm leading-relaxed text-slate-700 whitespace-pre-line break-words [overflow-wrap:anywhere] min-w-0 overflow-hidden" style="text-align: left;">{{ str_replace(['\\r\\n', '\\n', '\\r'], "\n", trim($application->cover_letter)) ?: 'Tidak ada surat lamaran.' }}</div>
                     </x-ui.panel>
 
                     @if($application->attachment_path)

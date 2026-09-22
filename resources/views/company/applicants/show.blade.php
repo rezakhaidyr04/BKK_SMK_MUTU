@@ -135,7 +135,7 @@
                 </div>
 
                 {{-- MAIN CONTENT --}}
-                <div class="lg:col-span-2 space-y-6">
+                <div class="lg:col-span-2 space-y-6 min-w-0">
                     {{-- LAMARAN INFO --}}
                     <x-ui.panel>
                         <div class="flex items-start justify-between gap-4">
@@ -161,9 +161,7 @@
                     {{-- BIO --}}
                     @if($application->user->bio)
                     <x-ui.panel title="Profil Singkat">
-                        <div class="prose max-w-none text-sm text-slate-700 whitespace-pre-line">
-                            {{ $application->user->bio }}
-                        </div>
+                        <div class="rounded-xl border border-slate-100 bg-slate-50/70 p-4 text-sm text-slate-700 whitespace-pre-line break-words [overflow-wrap:anywhere] min-w-0 overflow-hidden leading-relaxed" style="text-align: left;">{{ str_replace(['\\r\\n', '\\n', '\\r'], "\n", trim($application->user->bio)) }}</div>
                     </x-ui.panel>
                     @endif
 
@@ -172,20 +170,50 @@
                     <x-ui.panel title="Pendidikan & Pengalaman">
                         <div class="grid gap-6 sm:grid-cols-2">
                             @if($application->user->education_history)
-                            <div>
-                                <h3 class="mb-2 text-sm font-bold text-slate-900">Pendidikan</h3>
-                                <div class="prose max-w-none text-sm text-slate-700 whitespace-pre-line">
-                                    {{ $application->user->education_history }}
-                                </div>
+                            <div class="min-w-0">
+                                <h3 class="mb-3 text-sm font-bold text-slate-900">Pendidikan</h3>
+                                @php
+                                    $eduLines = collect(preg_split('/\r\n|\r|\n|\\\\r\\\\n|\\\\n|\\\\r/', $application->user->education_history ?? ''))
+                                        ->map(fn ($l) => trim($l))
+                                        ->filter()
+                                        ->values();
+                                @endphp
+                                @if($eduLines->isNotEmpty())
+                                <ul class="space-y-2.5">
+                                    @foreach($eduLines as $line)
+                                    <li class="flex items-start gap-2.5 text-sm leading-relaxed text-slate-700 min-w-0">
+                                        <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500"></span>
+                                        <span class="break-words [overflow-wrap:anywhere] min-w-0">{{ $line }}</span>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                                @else
+                                <p class="text-sm text-slate-400">-</p>
+                                @endif
                             </div>
                             @endif
 
                             @if($application->user->experience_organization)
-                            <div>
-                                <h3 class="mb-2 text-sm font-bold text-slate-900">Pengalaman Organisasi</h3>
-                                <div class="prose max-w-none text-sm text-slate-700 whitespace-pre-line">
-                                    {{ $application->user->experience_organization }}
-                                </div>
+                            <div class="min-w-0">
+                                <h3 class="mb-3 text-sm font-bold text-slate-900">Pengalaman Organisasi</h3>
+                                @php
+                                    $expLines = collect(preg_split('/\r\n|\r|\n|\\\\r\\\\n|\\\\n|\\\\r/', $application->user->experience_organization ?? ''))
+                                        ->map(fn ($l) => trim($l))
+                                        ->filter()
+                                        ->values();
+                                @endphp
+                                @if($expLines->isNotEmpty())
+                                <ul class="space-y-2.5">
+                                    @foreach($expLines as $line)
+                                    <li class="flex items-start gap-2.5 text-sm leading-relaxed text-slate-700 min-w-0">
+                                        <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"></span>
+                                        <span class="break-words [overflow-wrap:anywhere] min-w-0">{{ $line }}</span>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                                @else
+                                <p class="text-sm text-slate-400">-</p>
+                                @endif
                             </div>
                             @endif
                         </div>
@@ -195,9 +223,7 @@
                     {{-- SURAT LAMARAN --}}
                     @if($application->cover_letter)
                     <x-ui.panel title="Surat Lamaran">
-                        <div class="prose max-w-none text-sm text-slate-700 whitespace-pre-line">
-                            {{ $application->cover_letter }}
-                        </div>
+                        <div class="rounded-xl border border-slate-100 bg-slate-50/70 p-4 text-sm leading-relaxed text-slate-700 whitespace-pre-line break-words [overflow-wrap:anywhere] min-w-0 overflow-hidden" style="text-align: left;">{{ str_replace(['\\r\\n', '\\n', '\\r'], "\n", trim($application->cover_letter)) }}</div>
                     </x-ui.panel>
                     @endif
 

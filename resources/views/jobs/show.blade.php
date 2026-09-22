@@ -92,7 +92,7 @@
                                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
                                     </div>
                                     <div>
-                                        <div class="text-xl font-bold text-gray-900">{{ $job->applications->count() }}</div>
+                                        <div class="text-xl font-bold text-gray-900">{{ $applicationsCount ?? 0 }}</div>
                                         <div class="text-sm text-gray-500">Pelamar</div>
                                     </div>
                                 </div>
@@ -119,7 +119,7 @@
                                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
                                     </div>
                                     <div>
-                                        <div class="text-xl font-bold text-gray-900">{{ $job->deadline->diffInDays() }} hari</div>
+                                        <div class="text-xl font-bold text-gray-900">{{ $job->deadline ? $job->deadline->diffInDays() . ' hari' : '-' }}</div>
                                         <div class="text-sm text-gray-500">Sisa Waktu</div>
                                     </div>
                                 </div>
@@ -312,20 +312,20 @@
                                      <h3 class="text-lg font-bold text-slate-900">Lowongan Anda</h3>
                                      <x-ui.status-badge :status="$job->status" />
                                  </div>
-                                 <div class="grid grid-cols-3 gap-4 mb-6">
-                                     <div class="text-center p-3 bg-blue-50 rounded-xl">
-                                         <p class="text-2xl font-bold text-blue-600">{{ $job->applications->count() }}</p>
-                                         <p class="text-xs text-blue-600 font-semibold">Pelamar</p>
-                                     </div>
-                                     <div class="text-center p-3 bg-violet-50 rounded-xl">
-                                         <p class="text-2xl font-bold text-violet-600">{{ $job->applications->where('status', 'under_review')->count() }}</p>
-                                         <p class="text-xs text-violet-600 font-semibold">Ditinjau</p>
-                                     </div>
-                                     <div class="text-center p-3 bg-green-50 rounded-xl">
-                                         <p class="text-2xl font-bold text-green-600">{{ $job->applications->where('status', 'accepted')->count() }}</p>
-                                         <p class="text-xs text-green-600 font-semibold">Diterima</p>
-                                     </div>
-                                 </div>
+                                  <div class="grid grid-cols-3 gap-4 mb-6">
+                                      <div class="text-center p-3 bg-blue-50 rounded-xl">
+                                          <p class="text-2xl font-bold text-blue-600">{{ $ownerApplicationsCount ?? 0 }}</p>
+                                          <p class="text-xs text-blue-600 font-semibold">Pelamar</p>
+                                      </div>
+                                      <div class="text-center p-3 bg-violet-50 rounded-xl">
+                                          <p class="text-2xl font-bold text-violet-600">{{ $reviewedCount ?? 0 }}</p>
+                                          <p class="text-xs text-violet-600 font-semibold">Ditinjau</p>
+                                      </div>
+                                      <div class="text-center p-3 bg-green-50 rounded-xl">
+                                          <p class="text-2xl font-bold text-green-600">{{ $acceptedCount ?? 0 }}</p>
+                                          <p class="text-xs text-green-600 font-semibold">Diterima</p>
+                                      </div>
+                                  </div>
                                  <div class="flex flex-col gap-2">
                                      <a href="{{ route('company.applicants.index') }}" class="w-full px-4 py-2.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors text-center">
                                          Lihat Semua Pelamar

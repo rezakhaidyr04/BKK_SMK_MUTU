@@ -52,9 +52,11 @@ return [
     */
 
     'channels' => [
+        // P1-H08: stack sekarang ke daily agar tidak unbounded single file di production.
+        // Local dev tetap bisa set LOG_CHANNEL=single jika butuh.
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily'],
             'ignore_exceptions' => false,
         ],
 

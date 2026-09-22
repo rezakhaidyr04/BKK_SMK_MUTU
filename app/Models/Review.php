@@ -10,6 +10,10 @@ class Review extends Model
 {
     use HasFactory, SoftDeletes;
 
+    /**
+     * P0 H-14: status/featured/rejection_reason hanya moderasi server-side.
+     * ReviewController@store memaksa status=pending, user_id=auth()->id().
+     */
     protected $fillable = [
         'user_id',
         'rating',
@@ -98,6 +102,7 @@ class Review extends Model
      */
     public function getDisplayNameAttribute()
     {
-        return $this->name ?? $this->user->name ?? 'Anonymous';
+        // P0 H-06: null-safe — user bisa null (anonim / soft-deleted / set null).
+        return $this->name ?? $this->user?->name ?? 'Anonymous';
     }
 }

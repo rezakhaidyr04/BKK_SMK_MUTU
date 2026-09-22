@@ -36,48 +36,12 @@ Route::get("/events/{event}", [EventController::class, "show"])->name("events.sh
 Route::get("/news", [NewsController::class, "index"])->name("news.index");
 Route::get("/news/{news}", [NewsController::class, "show"])->name("news.show");
 
-// Reviews (Public)
+// Reviews — P0 H-01: store wajib auth (defense-in-depth: route + controller).
 Route::get("/reviews/create", [ReviewController::class, "create"])->name("reviews.create");
-Route::post("/reviews", [ReviewController::class, "store"])->middleware('throttle:submit-review')->name("reviews.store");
+Route::post("/reviews", [ReviewController::class, "store"])->middleware(['auth', 'throttle:submit-review'])->name("reviews.store");
 
 // SEO: Sitemap (cached 1 hour, chunked + select id only)
-Route::get("/sitemap.xml", function () {
-    $xml = \Illuminate\Support\Facades\Cache::remember('sitemap.xml', 3600, function () {
-        $urls = collect([
-            url("/"),
-            route("jobs.index"),
-            route("events.index"),
-            route("news.index"),
-        ]);
-
-        \App\Models\Job::where("status", "active")->select('id')->latest('created_at')->chunk(500, function ($jobs) use ($urls) {
-            foreach ($jobs as $job) {
-                $urls->push(route("jobs.show", $job));
-            }
-        });
-        \App\Models\News::where("is_published", true)->select('id')->latest('created_at')->chunk(500, function ($items) use ($urls) {
-            foreach ($items as $news) {
-                $urls->push(route("news.show", $news));
-            }
-        });
-        \App\Models\Event::select('id')->latest('start_time')->chunk(500, function ($items) use ($urls) {
-            foreach ($items as $event) {
-                $urls->push(route("events.show", $event));
-            }
-        });
-
-        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
-        foreach ($urls->unique() as $url) {
-            $xml .= '  <url><loc>' . e($url) . '</loc></url>' . "\n";
-        }
-        $xml .= '</urlset>';
-
-        return $xml;
-    });
-
-    return response($xml, 200, ["Content-Type" => "application/xml"]);
-});
+Route::get("/sitemap.xml", [\App\Http\Controllers\SitemapController::class, "index"])->name("sitemap");
 
 // Auth Routes
 require __DIR__ . "/auth.php";
@@ -89,8 +53,8 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
         "dashboard",
     );
 
-    // Event Registration (auth required)
-    Route::post("/events/{event}/register", [EventController::class, "register"])->name("events.register");
+    // Event Registration — P0 H-02: tulis sensitif wajib verified.
+    Route::post("/events/{event}/register", [EventController::class, "register"])->middleware('verified')->name("events.register");
     Route::delete("/events/{event}/register", [EventController::class, "cancel"])->name("events.cancel");
     Route::get("/my-events", [EventController::class, "myEvents"])->name("events.my");
 
@@ -105,18 +69,15 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
         "profile.destroy",
     );
 
-    // Documents
-    Route::post("/documents", [\App\Http\Controllers\UserDocumentController::class, "store"])->name("documents.store");
+    // Documents — P0 H-02: upload sensitif wajib verified.
+    Route::post("/documents", [\App\Http\Controllers\UserDocumentController::class, "store"])->middleware('verified')->name("documents.store");
     Route::get("/documents/{document}/download", [\App\Http\Controllers\UserDocumentController::class, "download"])->name("documents.download");
     Route::delete("/documents/{document}", [\App\Http\Controllers\UserDocumentController::class, "destroy"])->name("documents.destroy");
 
-    Route::get('/notifications/mark-read', function () {
-        auth()->user()->unreadNotifications->markAsRead();
-        return back();
-    })->name('notifications.markAllRead');
+    Route::get('/notifications/mark-read', [\App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.markAllRead');
 
-    // Job Applications
-    Route::post("/jobs/{job}/apply", [JobController::class, "apply"])->name(
+    // Job Applications — P0 H-02: melamar wajib verified.
+    Route::post("/jobs/{job}/apply", [JobController::class, "apply"])->middleware('verified')->name(
         "jobs.apply",
     );
     Route::post("/jobs/{job}/bookmark", [
@@ -129,6 +90,11 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
         Route::get("/jobs", [App\Http\Controllers\Company\JobController::class, "index"])->name("jobs.index");
         Route::get("/jobs/create", [App\Http\Controllers\Company\JobController::class, "create"])->name("jobs.create");
         Route::post("/jobs", [App\Http\Controllers\Company\JobController::class, "store"])->name("jobs.store");
+        // P1 H-11/H-12: management milik sendiri (policy owner di controller).
+        Route::get("/jobs/{job}/edit", [App\Http\Controllers\Company\JobController::class, "edit"])->name("jobs.edit");
+        Route::put("/jobs/{job}", [App\Http\Controllers\Company\JobController::class, "update"])->name("jobs.update");
+        Route::post("/jobs/{job}/close", [App\Http\Controllers\Company\JobController::class, "close"])->name("jobs.close");
+        Route::delete("/jobs/{job}", [App\Http\Controllers\Company\JobController::class, "destroy"])->name("jobs.destroy");
         Route::get("/applicants", [App\Http\Controllers\Company\ApplicantController::class, "index"])->name("applicants.index");
         Route::get("/applicants/{application}", [App\Http\Controllers\Company\ApplicantController::class, "show"])->name("applicants.show");
         Route::patch("/applications/{application}", [App\Http\Controllers\Company\ApplicantController::class, "update"])->name("applications.update");
@@ -138,28 +104,30 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
         Route::get("/mou/download", [App\Http\Controllers\Company\ProfileController::class, "downloadMou"])->name("mou.download");
     });
 
-    // Applications Management
-    Route::get("/applications", [ApplicationController::class, "index"])->name(
-        "applications.index",
-    );
-    Route::get("/applications/{application}", [
-        ApplicationController::class,
-        "show",
-    ])->name("applications.show");
-    
-    Route::get("/applications/{application}/surat-pengantar", [
-        SuratPengantarController::class,
-        "download",
-    ])->name("applications.surat-pengantar");
-    Route::get("/applications/{application}/attachment", [
-        ApplicationController::class,
-        "downloadAttachment",
-    ])->name("applications.attachment.download");
+    // Applications Management — P0 H-02: baca/tulis lamaran wajib verified.
+    Route::middleware('verified')->group(function () {
+        Route::get("/applications", [ApplicationController::class, "index"])->name(
+            "applications.index",
+        );
+        Route::get("/applications/{application}", [
+            ApplicationController::class,
+            "show",
+        ])->name("applications.show");
 
-    Route::delete("/applications/{application}", [
-        ApplicationController::class,
-        "destroy",
-    ])->name("applications.destroy");
+        Route::get("/applications/{application}/surat-pengantar", [
+            SuratPengantarController::class,
+            "download",
+        ])->name("applications.surat-pengantar");
+        Route::get("/applications/{application}/attachment", [
+            ApplicationController::class,
+            "downloadAttachment",
+        ])->name("applications.attachment.download");
+
+        Route::delete("/applications/{application}", [
+            ApplicationController::class,
+            "destroy",
+        ])->name("applications.destroy");
+    });
 
     // Bookmarks
     Route::get("/bookmarks", [BookmarkController::class, "index"])->name(
@@ -170,12 +138,12 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
         "destroy",
     ])->name("bookmarks.destroy");
 
-    // CV Builder
+    // CV Builder — P0 H-02: generate wajib verified.
     Route::get("/cv/builder", [CvBuilderController::class, "index"])->name(
         "cv.builder",
     );
     Route::post("/cv/generate", [CvBuilderController::class, "generate"])
-        ->middleware('throttle:cv-generate')
+        ->middleware(['verified', 'throttle:cv-generate'])
         ->name("cv.generate");
     Route::get("/cv/download/{cvFile}", [
         CvBuilderController::class,
@@ -190,7 +158,7 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
     Route::get("/certificates", [CertificateController::class, "index"])->name(
         "certificates.index",
     );
-    Route::post("/certificates", [CertificateController::class, "store"])->name(
+    Route::post("/certificates", [CertificateController::class, "store"])->middleware('verified')->name(
         "certificates.store",
     );
     Route::get("/certificates/{certificate}/download", [CertificateController::class, "download"])->name("certificates.download");
@@ -199,25 +167,27 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
         "destroy",
     ])->name("certificates.destroy");
 
-    // Messages
-    Route::get("/messages", [MessageController::class, "index"])->name(
-        "messages.index",
-    );
-    Route::post("/messages/start", [MessageController::class, "start"])
-        ->middleware('throttle:send-message')
-        ->name("messages.start");
-    Route::get("/messages/{conversation}", [
-        MessageController::class,
-        "show",
-    ])->name("messages.show");
-    Route::get("/messages/{conversation}/fetch", [
-        MessageController::class,
-        "fetch",
-    ])->name("messages.fetch");
-    Route::post("/messages/{conversation}", [
-        MessageController::class,
-        "send",
-    ])->middleware('throttle:send-message')->name("messages.send");
+    // Messages — P0 H-02: chat sensitif wajib verified.
+    Route::middleware('verified')->group(function () {
+        Route::get("/messages", [MessageController::class, "index"])->name(
+            "messages.index",
+        );
+        Route::post("/messages/start", [MessageController::class, "start"])
+            ->middleware('throttle:send-message')
+            ->name("messages.start");
+        Route::get("/messages/{conversation}", [
+            MessageController::class,
+            "show",
+        ])->name("messages.show");
+        Route::get("/messages/{conversation}/fetch", [
+            MessageController::class,
+            "fetch",
+        ])->name("messages.fetch");
+        Route::post("/messages/{conversation}", [
+            MessageController::class,
+            "send",
+        ])->middleware('throttle:send-message')->name("messages.send");
+    });
 
     // Admin Routes
     Route::middleware(["role:admin", "log.activity"])
@@ -324,7 +294,7 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
                 "index",
             ])->name("activities.index");
 
-            // Personal Access Token (Sanctum) untuk admin
+            // Personal Access Token (Sanctum) untuk admin — P0 H-08: + revoke.
             Route::get("/api-tokens", [
                 App\Http\Controllers\Admin\ApiTokenController::class,
                 "index",
@@ -333,38 +303,18 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
                 App\Http\Controllers\Admin\ApiTokenController::class,
                 "store",
             ])->name("api-tokens.store");
+            Route::delete("/api-tokens/{tokenId}", [
+                App\Http\Controllers\Admin\ApiTokenController::class,
+                "destroy",
+            ])->name("api-tokens.destroy");
         });
 });
 
 // A/B Testing Tracking
-Route::post('/ab-test/track', function (\Illuminate\Http\Request $request) {
-    $validated = $request->validate([
-        'event' => 'required|string',
-        'variations' => 'array',
-        'variant' => 'string',
-    ]);
-
-    $abTest = app(\App\Services\ABTestingService::class);
-    $abTest->trackEvent($validated['event'], [
-        'variant' => $validated['variant'] ?? null,
-        'variations' => $validated['variations'] ?? [],
-        'url' => $request->header('referer'),
-        'user_agent' => $request->userAgent(),
-    ]);
-
-    return response()->json(['success' => true]);
-})->name('ab-test.track');
+Route::post('/ab-test/track', [\App\Http\Controllers\AbTestController::class, 'track'])->name('ab-test.track');
 
 // Debug playground: preview status badges for different status values
 // Only registered in local environment — not accessible in production or staging
 if (app()->environment('local')) {
-    Route::get('/_debug/status-playground', function () {
-        $statuses = [
-            'not_submitted', 'submitted', 'under_review', 'interviewed',
-            'accepted', 'rejected', 'pending', 'verified', 'draft', 'closed',
-            'unknown_status'
-        ];
-
-        return view('debug.status-playground', compact('statuses'));
-    });
+    Route::get('/_debug/status-playground', [\App\Http\Controllers\DebugController::class, 'statusPlayground']);
 }

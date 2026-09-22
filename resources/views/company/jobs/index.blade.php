@@ -12,31 +12,27 @@
                 </span>
             </x-slot:chips>
             <x-slot:actions>
-                @if(auth()->user()->company?->is_verified)
-                    <x-ui.btn href="{{ route('company.jobs.create') }}" variant="company">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                        Buat Lowongan
-                    </x-ui.btn>
-                @else
-                    <x-ui.status-badge status="pending">Perusahaan belum terverifikasi</x-ui.status-badge>
-                @endif
+                <x-ui.btn href="{{ route('company.jobs.create') }}" variant="company">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Buat Lowongan
+                </x-ui.btn>
             </x-slot:actions>
         </x-ui.page-banner>
         <div class="page-container page-section">
 
-    @if(!auth()->user()->company?->is_verified)
-    <x-ui.alert type="warning" class="mb-6">
+    @if(!auth()->user()->company?->isApproved())
+    <x-ui.alert type="info" class="mb-6">
         <div class="space-y-1">
-            <p class="font-semibold">Perusahaan Anda belum terverifikasi.</p>
-            <p class="text-sm">Verifikasi akan membantu meningkatkan kepercayaan pelamar dan memungkinkan Anda mengelola lowongan dengan lebih baik.</p>
+            <p class="font-semibold">Lowongan yang Anda buat menunggu persetujuan admin sebelum tayang.</p>
+            <p class="text-sm">Verifikasi perusahaan diperlukan untuk memposting lowongan.</p>
             @if(auth()->user()->company?->verification_status === 'pending')
-                <p class="text-sm">Permintaan verifikasi Anda sedang ditinjau. Silakan tunggu konfirmasi admin.</p>
+                <p class="text-sm">Permintaan verifikasi Anda sedang ditinjau.</p>
             @elseif(auth()->user()->company?->verification_status === 'rejected')
                 <p class="text-sm">Permintaan verifikasi sebelumnya ditolak. Mohon perbarui profil dan ajukan kembali.</p>
             @else
-                <p class="text-sm">Lengkapi verifikasi perusahaan di halaman profil agar akun Anda bisa diverifikasi.</p>
+                <p class="text-sm">Lengkapi verifikasi perusahaan di halaman profil.</p>
             @endif
         </div>
     </x-ui.alert>
@@ -102,6 +98,24 @@
                         <td>
                             <div class="ui-table-actions">
                                 <x-ui.btn href="{{ route('jobs.show', $job->id) }}" variant="secondary" size="sm">Lihat</x-ui.btn>
+                                @can('update', $job)
+                                    <x-ui.btn href="{{ route('company.jobs.edit', $job->id) }}" variant="secondary" size="sm">Edit</x-ui.btn>
+                                @endcan
+                                @can('close', $job)
+                                    @if($job->status === 'active')
+                                        <form method="POST" action="{{ route('company.jobs.close', $job->id) }}" class="inline" onsubmit="return confirm('Tutup lowongan ini? Lamaran baru tidak lagi diterima.')">
+                                            @csrf
+                                            <x-ui.btn type="submit" variant="secondary" size="sm">Tutup</x-ui.btn>
+                                        </form>
+                                    @endif
+                                @endcan
+                                @can('delete', $job)
+                                    <form method="POST" action="{{ route('company.jobs.destroy', $job->id) }}" class="inline" onsubmit="return confirm('Hapus lowongan ini? Hanya bisa jika belum ada lamaran.')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <x-ui.btn type="submit" variant="secondary" size="sm">Hapus</x-ui.btn>
+                                    </form>
+                                @endcan
                             </div>
                         </td>
                     </tr>

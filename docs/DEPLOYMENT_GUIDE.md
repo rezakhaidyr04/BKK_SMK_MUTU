@@ -246,8 +246,13 @@ php artisan up
 
 ## 🔄 UPDATE PROCEDURE
 
-### When Updating Application
+### When Updating Application — P1-M04 DB SAFETY
 ```bash
+# 0. PRE-MIGRATE BACKUP — WAJIB sebelum migrate production!
+#    Jangan hardcode password di history; pakai .env atau --defaults-extra-file
+#    Linux: mysqldump -u $DB_USERNAME -p"$DB_PASSWORD" $DB_DATABASE > backup_$(date +%Y%m%d_%H%M).sql
+#    Windows: mysqldump -u %DB_USERNAME% -p%DB_PASSWORD% %DB_DATABASE% > backup_%date%.sql
+#    Simpan backup di luar project, JANGAN commit, JANGAN auto-hapus backup lama.
 # 1. Enable maintenance mode
 php artisan down
 
@@ -257,7 +262,7 @@ git pull origin main
 # 3. Install dependencies
 composer install --no-dev --optimize-autoloader
 
-# 4. Run migrations
+# 4. Run migrations — HANYA migrate --force, JANGAN migrate:fresh/refresh/db:wipe
 php artisan migrate --force
 
 # 5. Clear & rebuild cache

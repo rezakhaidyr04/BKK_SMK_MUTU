@@ -26,6 +26,8 @@ class TempCompanySeeder extends Seeder
         Company::create([
             'user_id' => $user->id,
             'name' => 'Temp Company Inc',
+            // P1 H-09A: jaga konsistensi canonical (saving hook juga sync).
+            'is_verified' => true,
             'verification_status' => 'verified',
         ]);
 

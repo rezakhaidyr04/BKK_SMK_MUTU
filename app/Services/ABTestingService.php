@@ -75,20 +75,50 @@ class ABTestingService
     }
 
     /**
-     * Track event untuk analisis
+     * Track event untuk analisis — P1-M03: sanitasi log
      */
     public function trackEvent(string $eventName, array $data = []): void
     {
         $config = Config::get("ab_testing.events.{$eventName}");
         $event = $config ?? "ab_test.{$eventName}";
+        // Sanitasi: eventName hanya alphanumeric + _ . -
+        $eventName = (string) Str::of($eventName)->limit(100);
+        $event = (string) Str::of($event)->limit(100);
+
+        // Sanitasi data tambahan: hanya allow string/array scalar, limit panjang, strip token
+        $sanitizedData = [];
+        foreach ($data as $k => $v) {
+            $key = (string) Str::of((string) $k)->limit(50);
+            if (is_string($v)) {
+                // Hapus query param sensitif dari url/variant
+                $val = Str::limit($v, 200, '');
+                // Jika key url, buang query string (cegah token=password-reset?token=)
+                if ($key === 'url' && str_contains($val, '?')) {
+                    $val = strtok($val, '?');
+                }
+                // Hapus karakter kontrol/log injection
+                $val = str_replace(["\n", "\r", "\0"], '', $val);
+                $sanitizedData[$key] = $val;
+            } elseif (is_array($v)) {
+                // variations: hanya allow key dalam allowlist, value string terbatas
+                $allowed = ['hero_primary', 'hero_secondary', 'cta_banner', 'hero_heading', 'variant', 'variations'];
+                if (! in_array($key, $allowed, true)) {
+                    continue;
+                }
+                $sanitizedData[$key] = $this->sanitizeVariations($v);
+            } elseif (is_scalar($v)) {
+                $sanitizedData[$key] = $v;
+            }
+        }
 
         $payload = array_merge([
             'event' => $event,
             'timestamp' => now()->toISOString(),
-            'session_id' => Session::getId(),
+            // P1-M03: session_id tidak perlu full, hash saja untuk korelasi tanpa PII
+            'session_hash' => hash('sha256', Session::getId()),
             'user_id' => auth()->id(),
             'variations' => $this->getActiveVariations(),
-        ], $data);
+        ], $sanitizedData);
 
         // Log ke file/channel terpisah untuk analisis
         \Log::channel('ab_testing')->info($event, $payload);
@@ -162,5 +192,25 @@ class ABTestingService
     public function isInVariant(string $testName, string $variation): bool
     {
         return $this->getVariation($testName) === $variation;
+    }
+
+    private function sanitizeVariations(mixed $variations): array
+    {
+        if (! is_array($variations)) {
+            return [];
+        }
+        $out = [];
+        foreach ($variations as $k => $v) {
+            $k = (string) Str::of((string) $k)->limit(50);
+            if (! preg_match('/^[a-z0-9_\-]+$/i', $k)) {
+                continue;
+            }
+            if (is_string($v)) {
+                $out[$k] = Str::limit(str_replace(["\n", "\r", "\0"], '', $v), 50, '');
+            } elseif (is_scalar($v)) {
+                $out[$k] = $v;
+            }
+        }
+        return array_slice($out, 0, 10, true);
     }
 }

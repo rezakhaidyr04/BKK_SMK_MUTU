@@ -20,7 +20,7 @@ class AdminEventStoreRequest extends FormRequest
             'start_time' => ['required', 'date'],
             'end_time' => ['nullable', 'date', 'after:start_time'],
             'location' => ['required', 'string', 'max:255'],
-            'poster' => ['nullable', 'image', 'max:3072', 'mimes:jpg,jpeg,png,webp'],
+            'poster' => ['nullable', 'image', 'max:3072', 'mimes:jpg,jpeg,png,webp', 'mimetypes:image/jpeg,image/png,image/webp'],
         ];
     }
 }

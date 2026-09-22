@@ -20,7 +20,14 @@ npm ci
 npm run build
 
 echo "[3/7] Laravel optimize..."
-php artisan key:generate --force 2>/dev/null || echo "APP_KEY sudah ada"
+# P1-H07: jangan regenerate APP_KEY jika sudah ada (session/Crypt tidak invalid)
+if ! grep -q "^APP_KEY=.\+" .env 2>/dev/null; then
+  php artisan key:generate --force
+  echo "APP_KEY generated (baru)"
+else
+  echo "APP_KEY sudah ada — skip (jangan overwrite)"
+fi
+echo "[!] Pre-migrate safety: backup database sebelum migrate (mysqldump / pg_dump)!"
 php artisan migrate --force
 php artisan storage:link || true
 

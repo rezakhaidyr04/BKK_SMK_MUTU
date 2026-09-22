@@ -17,7 +17,7 @@ class AdminNewsStoreRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'category' => ['nullable', 'string', 'max:100'],
             'content' => ['required', 'string'],
-            'thumbnail' => ['nullable', 'image', 'max:2048', 'mimes:jpg,jpeg,png,webp'],
+            'thumbnail' => ['nullable', 'image', 'max:2048', 'mimes:jpg,jpeg,png,webp', 'mimetypes:image/jpeg,image/png,image/webp'],
             'is_published' => ['nullable', 'boolean'],
         ];
     }

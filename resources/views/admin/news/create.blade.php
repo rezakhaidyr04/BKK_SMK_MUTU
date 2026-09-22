@@ -62,7 +62,7 @@
                                 <span id="uploadStatus" class="text-xs text-blue-600 hidden">Mengupload...</span>
                             </div>
                             <div id="editor" contenteditable="true" class="min-h-[300px] w-full px-4 py-3 border border-slate-200 border-t-0 rounded-b-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition prose max-w-none">
-                                {!! old('content') !!}
+                                {!! \App\Support\HtmlSanitizer::cleanNews(old('content')) !!}
                             </div>
                             <textarea name="content" id="contentInput" class="hidden" required>{{ old('content') }}</textarea>
                         </div>

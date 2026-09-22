@@ -35,7 +35,8 @@
                             <img src="{{ asset('storage/' . $news->thumbnail) }}" alt="{{ $news->title }}" class="mt-6 w-full rounded-xl object-cover max-h-96">
                         @endif
 
-                        <div class="prose max-w-none mt-6 text-slate-700 whitespace-pre-line">{{ $news->content }}</div>
+                        {{-- P0 H-10: konten sudah disanitasi server-side, aman dirender sebagai HTML. --}}
+                        <div class="prose max-w-none mt-6 text-slate-700">{!! \App\Support\HtmlSanitizer::cleanNews($news->content) !!}</div>
                     </div>
                 </article>
 

@@ -13,6 +13,12 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles;
 
+    /**
+     * P0 H-14: role/is_active/must_change_password/password_changed_at adalah
+     * privileged — HANYA boleh diisi server-side / admin (role:admin).
+     * Public controller (register/profile) memakai allowlist eksplisit +
+     * hardcode, TIDAK boleh memakai $request->all() / validated bebas.
+     */
     protected $fillable = [
         "name",
         "email",

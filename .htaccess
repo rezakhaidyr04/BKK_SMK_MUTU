@@ -3,3 +3,24 @@
     RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ /public/$1 [L,QSA]
 </IfModule>
+
+# P0 H-13: jika vhost salah menunjuk ke project root (bukan public/),
+# tolak akses langsung ke file sensitif. Vhost yang benar tetap ke public/.
+<FilesMatch "^(\.env(\..*)?|\.git.*|composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|vite\.config\.js)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+RedirectMatch 404 ^/storage/logs/.*$
+RedirectMatch 404 ^/\.git/.*$
+
+# P1-C02: Security headers (root fallback jika vhost salah ke project root)
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

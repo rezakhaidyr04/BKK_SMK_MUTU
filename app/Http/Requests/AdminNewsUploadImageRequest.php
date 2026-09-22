@@ -14,7 +14,7 @@ class AdminNewsUploadImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => ['required', 'image', 'max:5120', 'mimes:jpg,jpeg,png,webp,gif'],
+            'image' => ['required', 'image', 'max:5120', 'mimes:jpg,jpeg,png,webp,gif', 'mimetypes:image/jpeg,image/png,image/webp,image/gif'],
         ];
     }
 }

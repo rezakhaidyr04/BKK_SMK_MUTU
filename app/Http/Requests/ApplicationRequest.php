@@ -20,6 +20,7 @@ class ApplicationRequest extends FormRequest
                 'nullable',
                 'file',
                 'mimes:pdf,doc,docx,jpg,jpeg,png',
+                'mimetypes:application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/zip,image/jpeg,image/png',
                 'max:5120',
             ],
         ];

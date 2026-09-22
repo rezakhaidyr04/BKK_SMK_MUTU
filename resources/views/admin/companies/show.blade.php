@@ -54,9 +54,18 @@
             </div>
             @endif
 
-            {{-- Password awal hanya ditampilkan sekali — session data akan otomatis hilang setelah dibaca --}}
+            {{-- P0 C-06: password awal hanya ditampilkan sekali. Session hanya berisi
+                 ciphertext (Crypt::encryptString), didekripsi di sini lalu flash hilang. --}}
             @if(session('initial_password'))
-            <div class="mb-6 bg-blue-50 border-2 border-blue-400 rounded-2xl overflow-hidden shadow-lg">
+            @php
+                try {
+                    $displayPassword = \Illuminate\Support\Facades\Crypt::decryptString(session('initial_password'));
+                } catch (\Throwable $e) {
+                    $displayPassword = null;
+                }
+            @endphp
+            @if($displayPassword)
+            <div class="mb-6 bg-blue-50 border-2 border-blue-400 rounded-2xl overflow-hidden shadow-lg initial-password-panel">
                 <div class="px-5 py-3 bg-blue-400 flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -64,19 +73,20 @@
                         </svg>
                         <span class="font-semibold text-blue-500">PASSWORD AWAL AKUN</span>
                     </div>
-                        <button onclick="document.querySelector('.initial-password-panel').remove()"
+                        <button type="button" onclick="this.closest('.initial-password-panel').remove()"
                             class="text-blue-500 hover:text-blue-900 transition text-lg font-bold">&times;</button>
                 </div>
                 <div class="p-5">
-                    <p class="text-sm text-blue-500 mb-3">Password ini hanya ditampilkan <strong>satu kali</strong> setelah pembuatan akun.</p>
+                    <p class="text-sm text-blue-500 mb-3">Password ini hanya ditampilkan <strong>satu kali</strong> setelah pembuatan akun. Jangan muat ulang halaman ini jika sudah mencatatnya.</p>
                     <div class="bg-white rounded-xl p-4 mb-4">
-                        <code class="text-sm font-mono text-blue-500 block word-break" id="initialPass">{{ session('initial_password') }}</code>
+                        <code class="text-sm font-mono text-blue-500 block word-break" id="initialPass">{{ $displayPassword }}</code>
                     </div>
                     <p class="text-sm text-blue-600">
                         <strong>Disarankan:</strong> Ganti password setelah login pertama untuk keamanan maksimal.
                     </p>
                 </div>
             </div>
+            @endif
             @endif
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">

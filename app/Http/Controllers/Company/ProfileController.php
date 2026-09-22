@@ -33,7 +33,7 @@ class ProfileController extends Controller
             'email' => ['nullable', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:50'],
             'address' => ['nullable', 'string', 'max:255'],
-            'logo' => ['nullable', 'image', 'max:2048', 'mimes:jpg,jpeg,png,webp'],
+            'logo' => ['nullable', 'image', 'max:2048', 'mimes:jpg,jpeg,png,webp', 'mimetypes:image/jpeg,image/png,image/webp'],
         ]);
 
         // Handle logo upload
@@ -69,8 +69,8 @@ class ProfileController extends Controller
 
         $validated = $request->validate([
             'tax_number' => ['nullable', 'string', 'max:100'],
-            'business_license' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
-            'operating_license' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
+            'business_license' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'mimetypes:application/pdf,image/jpeg,image/png', 'max:5120'],
+            'operating_license' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'mimetypes:application/pdf,image/jpeg,image/png', 'max:5120'],
         ]);
 
         if (isset($validated['tax_number'])) {
@@ -81,8 +81,10 @@ class ProfileController extends Controller
             if ($company->business_license_path && Storage::disk('private')->exists($company->business_license_path)) {
                 Storage::disk('private')->delete($company->business_license_path);
             }
-            $path = $request->file('business_license')->storeAs(
-                "company_verifications/{$company->id}", 'business_license_' . time() . '.' . $request->file('business_license')->getClientOriginalExtension(),
+            $file = $request->file('business_license');
+            $ext = $file->extension() ?: strtolower($file->getClientOriginalExtension());
+            $path = $file->storeAs(
+                "company_verifications/{$company->id}", 'business_license_' . time() . '.' . $ext,
                 'private'
             );
             $company->business_license_path = $path;
@@ -92,8 +94,10 @@ class ProfileController extends Controller
             if ($company->operating_license_path && Storage::disk('private')->exists($company->operating_license_path)) {
                 Storage::disk('private')->delete($company->operating_license_path);
             }
-            $path2 = $request->file('operating_license')->storeAs(
-                "company_verifications/{$company->id}", 'operating_license_' . time() . '.' . $request->file('operating_license')->getClientOriginalExtension(),
+            $file2 = $request->file('operating_license');
+            $ext2 = $file2->extension() ?: strtolower($file2->getClientOriginalExtension());
+            $path2 = $file2->storeAs(
+                "company_verifications/{$company->id}", 'operating_license_' . time() . '.' . $ext2,
                 'private'
             );
             $company->operating_license_path = $path2;
@@ -124,7 +128,8 @@ class ProfileController extends Controller
                     pathinfo($company->mou_path, PATHINFO_EXTENSION);
 
         return response()->file(Storage::disk($disk)->path($company->mou_path), [
-            'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            'X-Content-Type-Options' => 'nosniff',
         ]);
     }
 }
