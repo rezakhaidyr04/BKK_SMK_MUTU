@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Company;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateApplicationRequest;
 use App\Models\Application;
 use Illuminate\Http\Request;
 
@@ -42,19 +43,11 @@ class ApplicantController extends Controller
         return view('company.applicants.show', compact('application'));
     }
 
-    public function update(Request $request, Application $application)
+    public function update(UpdateApplicationRequest $request, Application $application)
     {
         $this->authorize('update', $application);
 
-        $validated = $request->validate([
-            'status' => ['required', 'string', 'in:submitted,under_review,interviewed,accepted,rejected'],
-            'interview_date' => ['nullable', 'required_if:status,interviewed', 'date'],
-            'interview_time' => ['nullable', 'required_if:status,interviewed', 'date_format:H:i'],
-            'interview_type' => ['nullable', 'required_if:status,interviewed', 'in:online,offline'],
-            'interview_link' => ['nullable', 'required_if:interview_type,online', 'url'],
-            'interview_location' => ['nullable', 'required_if:interview_type,offline', 'string', 'max:255'],
-            'interview_notes' => ['nullable', 'string'],
-        ]);
+        $validated = $request->validated();
 
         $oldStatus = $application->status;
         $application->status = $validated['status'];

@@ -26,7 +26,7 @@
                        required
                        autofocus
                        autocomplete="username"
-                       placeholder="rezahaidyr03@gmail.com"
+                       placeholder="nama@email.com"
                        class="ui-input">
             </div>
             <x-input-error :messages="$errors->get('email')" class="mt-2" />

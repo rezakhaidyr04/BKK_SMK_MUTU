@@ -133,6 +133,37 @@ php artisan view:cache
 composer dump-autoload --optimize
 ```
 
+### 8. Queue Worker & Scheduler (WAJIB — QUEUE_CONNECTION=database)
+
+Project memakai queue database untuk notifikasi email
+(`ApplicationReceived`, `InterviewScheduled`, `NewJobNotification`)
+dan schedule harian pembersih file CV (`App\Console\Kernel`).
+Tanpa worker & scheduler yang berjalan, email antrean TIDAK terkirim
+(menumpuk di tabel `jobs`) dan file CV lama tidak terhapus.
+
+```bash
+# Jalankan queue worker (pilih salah satu, JANGAN hanya mengandalkan web request)
+php artisan queue:work --tries=3 --timeout=120
+
+# Supervisor (Linux, direkomendasikan) — /etc/supervisor/conf.d/bkk-worker.conf
+# [program:bkk-worker]
+# command=php /path/to/app/artisan queue:work --sleep=3 --tries=3 --timeout=120
+# autostart=true
+# autorestart=true
+# numprocs=1
+
+# Scheduler — tambahkan SATU cron entry (menjalankan schedule:run tiap menit)
+* * * * * cd /path/to/app && php artisan schedule:run >> /dev/null 2>&1
+```
+
+Monitoring antrean:
+
+```bash
+php artisan queue:failed        # lihat job yang gagal
+php artisan queue:retry all     # ulangi job yang gagal
+php artisan queue:restart       # WAJIB setelah tiap deploy/update kode
+```
+
 ## 👤 DEFAULT USER ACCOUNTS
 
 ### Create Admin Account
@@ -201,6 +232,9 @@ $company = \App\Models\User::create([
 - [ ] Test file upload security
 - [ ] Review database user permissions
 - [ ] Set proper file permissions
+- [ ] Queue worker berjalan (`queue:work` via Supervisor/systemd)
+- [ ] Scheduler cron aktif (`schedule:run` tiap menit)
+- [ ] `queue:restart` dijalankan setiap selesai deploy
 
 ### .env Production Settings
 ```env
@@ -275,6 +309,9 @@ php artisan view:clear
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
+
+# 6b. Restart queue worker agar memakai kode terbaru
+php artisan queue:restart
 
 # 7. Disable maintenance mode
 php artisan up

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Company;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateCompanyProfileRequest;
+use App\Http\Requests\VerifyCompanyRequest;
 use App\Services\ImageProcessor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +19,7 @@ class ProfileController extends Controller
         return view('company.profile.edit', compact('company'));
     }
 
-    public function update(Request $request)
+    public function update(UpdateCompanyProfileRequest $request)
     {
         $company = auth()->user()->company;
 
@@ -25,16 +27,7 @@ class ProfileController extends Controller
             return redirect()->route('company.profile.edit')->with('error', 'Profil perusahaan belum tersedia.');
         }
 
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'industry' => ['nullable', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'website' => ['nullable', 'url', 'max:255'],
-            'email' => ['nullable', 'email', 'max:255'],
-            'phone' => ['nullable', 'string', 'max:50'],
-            'address' => ['nullable', 'string', 'max:255'],
-            'logo' => ['nullable', 'image', 'max:2048', 'mimes:jpg,jpeg,png,webp', 'mimetypes:image/jpeg,image/png,image/webp'],
-        ]);
+        $validated = $request->validated();
 
         // Handle logo upload
         if ($request->hasFile('logo')) {
@@ -59,7 +52,7 @@ class ProfileController extends Controller
         return redirect()->route('company.profile.edit')->with('success', 'Profil perusahaan berhasil diperbarui.');
     }
 
-    public function verify(Request $request)
+    public function verify(VerifyCompanyRequest $request)
     {
         $company = auth()->user()->company;
 
@@ -67,11 +60,7 @@ class ProfileController extends Controller
             return redirect()->route('company.profile.edit')->with('error', 'Profil perusahaan belum tersedia.');
         }
 
-        $validated = $request->validate([
-            'tax_number' => ['nullable', 'string', 'max:100'],
-            'business_license' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'mimetypes:application/pdf,image/jpeg,image/png', 'max:5120'],
-            'operating_license' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'mimetypes:application/pdf,image/jpeg,image/png', 'max:5120'],
-        ]);
+        $validated = $request->validated();
 
         if (isset($validated['tax_number'])) {
             $company->tax_number = $validated['tax_number'];

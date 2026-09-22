@@ -43,4 +43,62 @@ class Application extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * P2.7: query-level scopes — mirror where('status', ...) existing
+     * (ApplicationController stats, ReportService, DashboardController).
+     */
+    public function scopeSubmitted($query)
+    {
+        return $query->where('status', 'submitted');
+    }
+
+    public function scopeUnderReview($query)
+    {
+        return $query->where('status', 'under_review');
+    }
+
+    public function scopeInterviewed($query)
+    {
+        return $query->where('status', 'interviewed');
+    }
+
+    public function scopeAccepted($query)
+    {
+        return $query->where('status', 'accepted');
+    }
+
+    public function scopeRejected($query)
+    {
+        return $query->where('status', 'rejected');
+    }
+
+    /**
+     * P2.7: instance-level helpers — mirror perbandingan === existing
+     * (Company\ApplicantController, ApplicationController timeline).
+     */
+    public function isSubmitted(): bool
+    {
+        return $this->status === 'submitted';
+    }
+
+    public function isUnderReview(): bool
+    {
+        return $this->status === 'under_review';
+    }
+
+    public function isInterviewed(): bool
+    {
+        return $this->status === 'interviewed';
+    }
+
+    public function isAccepted(): bool
+    {
+        return $this->status === 'accepted';
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->status === 'rejected';
+    }
 }

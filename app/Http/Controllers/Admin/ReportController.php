@@ -3,60 +3,30 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Application;
-use App\Models\Job;
-use App\Models\User;
-use App\Models\Event;
+use App\Services\ReportService;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    public function index()
+    public function index(ReportService $reports)
     {
-        $summary = [
-            'total_umum'           => User::where('role', 'umum')->count(),
-            'total_jobs'              => Job::count(),
-            'active_jobs'             => Job::where('status', 'active')->count(),
-            'closed_jobs'             => Job::where('status', 'closed')->count(),
-            'total_applications'      => Application::count(),
-            'submitted_applications'  => Application::where('status', 'submitted')->count(),
-            'accepted_applications'   => Application::where('status', 'accepted')->count(),
-            'rejected_applications'   => Application::where('status', 'rejected')->count(),
-            'interviewed_applications'=> Application::where('status', 'interviewed')->count(),
-        ];
+        $summary = $reports->summary();
 
         // Monthly applications for chart (last 6 months)
-        $months = collect(range(5, 0))->map(function ($i) {
-            $date = now()->subMonths($i);
-            return [
-                'label' => $date->format('M Y'),
-                'count' => Application::whereYear('created_at', $date->year)
-                                      ->whereMonth('created_at', $date->month)
-                                      ->count(),
-            ];
-        });
+        $months = $reports->monthlyApplications();
 
-        $recentUsers = User::latest()->take(6)->get();
-        $recentJobs  = Job::withCount('applications')->latest()->take(6)->get();
+        $recentUsers = $reports->recentUsers();
+        $recentJobs = $reports->recentJobs();
 
         return view('admin.reports.index', compact('summary', 'recentUsers', 'recentJobs', 'months'));
     }
 
-    public function export()
+    public function export(ReportService $reports)
     {
-        $rows = [
-            ['Metrik', 'Nilai'],
-            ['Total Pencari Kerja',         User::where('role', 'umum')->count()],
-            ['Total Lowongan',              Job::count()],
-            ['Lowongan Aktif',              Job::where('status', 'active')->count()],
-            ['Lowongan Ditutup',            Job::where('status', 'closed')->count()],
-            ['Total Lamaran',               Application::count()],
-            ['Lamaran Diajukan',            Application::where('status', 'submitted')->count()],
-            ['Lamaran Diterima',            Application::where('status', 'accepted')->count()],
-            ['Lamaran Ditolak',             Application::where('status', 'rejected')->count()],
-            ['Lamaran Diwawancara',         Application::where('status', 'interviewed')->count()],
-        ];
+        $rows = array_merge(
+            [['Metrik', 'Nilai']],
+            $reports->metricRows()
+        );
 
         $filename = 'laporan-bkk-' . now()->format('YmdHis') . '.csv';
         $csv = "\xEF\xBB\xBF"; // UTF-8 BOM
@@ -76,22 +46,14 @@ class ReportController extends Controller
         ]);
     }
 
-    public function exportExcel()
+    public function exportExcel(ReportService $reports)
     {
         $filename = 'laporan-bkk-' . now()->format('YmdHis') . '.xls';
 
-        $rows = [
-            ['Metrik', 'Nilai'],
-            ['Total Pencari Kerja',         User::where('role', 'umum')->count()],
-            ['Total Lowongan',              Job::count()],
-            ['Lowongan Aktif',              Job::where('status', 'active')->count()],
-            ['Lowongan Ditutup',            Job::where('status', 'closed')->count()],
-            ['Total Lamaran',               Application::count()],
-            ['Lamaran Diajukan',            Application::where('status', 'submitted')->count()],
-            ['Lamaran Diterima',            Application::where('status', 'accepted')->count()],
-            ['Lamaran Ditolak',             Application::where('status', 'rejected')->count()],
-            ['Lamaran Diwawancara',         Application::where('status', 'interviewed')->count()],
-        ];
+        $rows = array_merge(
+            [['Metrik', 'Nilai']],
+            $reports->metricRows()
+        );
 
         // Real Excel 2003 XML (SpreadsheetML) — opens natively in Excel
         $xml = '<?xml version="1.0"?>' . "\n";
@@ -121,19 +83,9 @@ class ReportController extends Controller
         ]);
     }
 
-    public function exportPdf()
+    public function exportPdf(ReportService $reports)
     {
-        $rows = [
-            ['Total Pencari Kerja',         User::where('role', 'umum')->count()],
-            ['Total Lowongan',              Job::count()],
-            ['Lowongan Aktif',              Job::where('status', 'active')->count()],
-            ['Lowongan Ditutup',            Job::where('status', 'closed')->count()],
-            ['Total Lamaran',               Application::count()],
-            ['Lamaran Diajukan',            Application::where('status', 'submitted')->count()],
-            ['Lamaran Diterima',            Application::where('status', 'accepted')->count()],
-            ['Lamaran Ditolak',             Application::where('status', 'rejected')->count()],
-            ['Lamaran Diwawancara',         Application::where('status', 'interviewed')->count()],
-        ];
+        $rows = $reports->metricRows();
 
         $filename = 'laporan-bkk-' . now()->format('YmdHis') . '.pdf';
 

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreReviewRequest;
 use App\Models\Review;
-use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
@@ -24,17 +24,9 @@ class ReviewController extends Controller
     /**
      * Store a newly created review
      */
-    public function store(Request $request)
+    public function store(StoreReviewRequest $request)
     {
-        $validated = $request->validate([
-            'rating' => 'required|integer|min:1|max:5',
-            'comment' => 'required|string|max:1000|min:10',
-            'job_title' => 'nullable|string|max:100',
-            'company_name' => 'nullable|string|max:150',
-            'name' => 'nullable|string|max:100',
-            'email' => 'nullable|email|max:100',
-            'phone' => 'nullable|string|max:20',
-        ]);
+        $validated = $request->validated();
 
         try {
             Review::create([

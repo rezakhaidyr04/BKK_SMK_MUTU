@@ -25,11 +25,11 @@ class ApplicationController extends Controller
         // Statistics
         $stats = [
             'total'        => Application::where('user_id', Auth::id())->count(),
-            'submitted'    => Application::where('user_id', Auth::id())->where('status', 'submitted')->count(),
-            'under_review' => Application::where('user_id', Auth::id())->where('status', 'under_review')->count(),
-            'interviewed'  => Application::where('user_id', Auth::id())->where('status', 'interviewed')->count(),
-            'accepted'     => Application::where('user_id', Auth::id())->where('status', 'accepted')->count(),
-            'rejected'     => Application::where('user_id', Auth::id())->where('status', 'rejected')->count(),
+            'submitted'    => Application::where('user_id', Auth::id())->submitted()->count(),
+            'under_review' => Application::where('user_id', Auth::id())->underReview()->count(),
+            'interviewed'  => Application::where('user_id', Auth::id())->interviewed()->count(),
+            'accepted'     => Application::where('user_id', Auth::id())->accepted()->count(),
+            'rejected'     => Application::where('user_id', Auth::id())->rejected()->count(),
         ];
 
         return view('applications.index', compact('applications', 'stats'));

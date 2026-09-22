@@ -45,4 +45,44 @@ class Job extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    /**
+     * P2.6: query-level "active" — mirror pola listing publik
+     * (JobController@index, HomeController): status active DAN
+     * deadline belum lewat.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active')->where('deadline', '>=', now());
+    }
+
+    /**
+     * P2.6: query-level "expired" — terjemahan query dari guard
+     * instance existing ($job->deadline && $job->deadline->lt(...)).
+     * Job tanpa deadline TIDAK dianggap expired.
+     */
+    public function scopeExpired($query)
+    {
+        return $query->whereNotNull('deadline')->where('deadline', '<', now()->startOfDay());
+    }
+
+    /**
+     * P2.6: instance-level "active" — mirror guard show()/apply()
+     * (JobController@show, JobController@apply): status active DAN
+     * tidak expired.
+     */
+    public function isActive(): bool
+    {
+        return $this->status === 'active' && ! $this->isExpired();
+    }
+
+    /**
+     * P2.6: instance-level "expired" — mirror guard existing:
+     * punya deadline DAN deadline < awal hari ini. Job tanpa
+     * deadline TIDAK dianggap expired.
+     */
+    public function isExpired(): bool
+    {
+        return ! is_null($this->deadline) && $this->deadline->lt(now()->startOfDay());
+    }
 }

@@ -273,18 +273,13 @@
                                 </div>
                             @else
                                 <!-- Empty State -->
-                                <div class="text-center py-12">
-                                    <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-blue-100 rounded-full flex items-center justify-center animate-gentle-float" aria-hidden="true">
-                                        <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                                        </svg>
-                                    </div>
-                                    <h4 class="text-lg font-semibold text-gray-900 mb-2">Belum ada rekomendasi</h4>
-                                    <p class="text-gray-600 mb-4 max-w-sm mx-auto">Lengkapi profil dan tambahkan keahlian untuk mendapatkan rekomendasi lowongan yang akurat.</p>
-                                    <a href="{{ route('profile.edit') }}" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                                        Lengkapi Profil
-                                    </a>
-                                </div>
+                                <x-ui.empty-state
+                                    title="Belum ada rekomendasi"
+                                    description="Lengkapi profil dan tambahkan keahlian untuk mendapatkan rekomendasi lowongan yang akurat."
+                                    icon="search"
+                                    ctaLabel="Lengkapi Profil"
+                                    :ctaHref="route('profile.edit')"
+                                />
                             @endif
                         </div>
                     </div>
@@ -358,18 +353,13 @@
                                     @endforeach
                                 </div>
                             @else
-                                <div class="text-center py-12">
-                                    <div class="w-20 h-20 mx-auto mb-4 bg-blue-50 rounded-full flex items-center justify-center" aria-hidden="true">
-                                        <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                        </svg>
-                                    </div>
-                                    <h4 class="text-lg font-semibold text-gray-900 mb-2">Belum ada lamaran</h4>
-                                    <p class="text-gray-600 mb-4">Mulai melamar lowongan yang sesuai keahlian Anda</p>
-                                    <a href="{{ route('jobs.index') }}" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                                        Jelajahi Lowongan
-                                    </a>
-                                </div>
+                                <x-ui.empty-state
+                                    title="Belum ada lamaran"
+                                    description="Mulai melamar lowongan yang sesuai keahlian Anda"
+                                    icon="document"
+                                    ctaLabel="Jelajahi Lowongan"
+                                    :ctaHref="route('jobs.index')"
+                                />
                             @endif
                         </div>
                     </div>
@@ -409,17 +399,17 @@
                                         <div class="flex flex-col items-center">
                                             @php
                                                 $colorClasses = [
-                                                    'blue' => 'bg-blue-50',
-                                                    'green' => 'bg-blue-50',
-                                                    'yellow' => 'bg-blue-50',
-                                                    'red' => 'bg-blue-50',
-                                                    'purple' => 'bg-blue-50',
-                                                    'gray' => 'bg-blue-50',
+                                                    'blue' => ['bg' => 'bg-blue-50', 'text' => 'text-blue-600'],
+                                                    'green' => ['bg' => 'bg-green-50', 'text' => 'text-green-600'],
+                                                    'yellow' => ['bg' => 'bg-yellow-50', 'text' => 'text-yellow-600'],
+                                                    'red' => ['bg' => 'bg-red-50', 'text' => 'text-red-600'],
+                                                    'purple' => ['bg' => 'bg-purple-50', 'text' => 'text-purple-600'],
+                                                    'gray' => ['bg' => 'bg-gray-100', 'text' => 'text-gray-500'],
                                                 ];
-                                                $bgColor = $colorClasses[$activity['color']] ?? 'bg-blue-50';
+                                                $dotColor = $colorClasses[$activity['color']] ?? $colorClasses['gray'];
                                             @endphp
-                                            <div class="w-8 h-8 rounded-full {{ $bgColor }} flex items-center justify-center group-hover:scale-110 transition-transform">
-                                                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                            <div class="w-8 h-8 rounded-full {{ $dotColor['bg'] }} flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                <svg class="w-4 h-4 {{ $dotColor['text'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                     @if($activity['icon'] === 'briefcase')
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                                     @else

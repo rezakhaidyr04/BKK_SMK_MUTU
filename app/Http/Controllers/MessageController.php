@@ -114,15 +114,7 @@ class MessageController extends Controller
             ->update(['is_read' => true]);
 
         return response()->json([
-            'messages' => $messages->map(function ($message) {
-                return [
-                    'id' => $message->id,
-                    'body' => $message->body,
-                    'sender_id' => $message->sender_id,
-                    'sender_name' => $message->sender->name ?? 'Pengguna',
-                    'created_at_formatted' => $message->created_at->format('d M Y, H:i'),
-                ];
-            }),
+            'messages' => $messages->map(fn ($message) => $this->formatMessage($message)),
             'auth_id' => Auth::id()
         ]);
     }
@@ -133,13 +125,22 @@ class MessageController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => [
-                'id' => $message->id,
-                'body' => $message->body,
-                'sender_id' => $message->sender_id,
-                'sender_name' => $message->sender->name ?? 'Pengguna',
-                'created_at_formatted' => $message->created_at->format('d M Y, H:i'),
-            ]
+            'message' => $this->formatMessage($message)
         ]);
+    }
+
+    /**
+     * P4.4: single source bentuk JSON pesan untuk chat UI (fetch + send).
+     * Isi identik dengan mapping inline sebelumnya.
+     */
+    private function formatMessage(Message $message): array
+    {
+        return [
+            'id' => $message->id,
+            'body' => $message->body,
+            'sender_id' => $message->sender_id,
+            'sender_name' => $message->sender->name ?? 'Pengguna',
+            'created_at_formatted' => $message->created_at->format('d M Y, H:i'),
+        ];
     }
 }
