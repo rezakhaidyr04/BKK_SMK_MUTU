@@ -15,11 +15,20 @@ class EventRegistration extends Model
         'status',
         'notes',
         'registered_at',
+        'payment_status',
+        'payment_proof',
+        'paid_at',
     ];
 
     protected $casts = [
         'registered_at' => 'datetime',
+        'paid_at' => 'datetime',
     ];
+
+    public function isPaidVerified(): bool
+    {
+        return $this->payment_status === 'verified';
+    }
 
     public function event()
     {

@@ -40,6 +40,10 @@ class ApplicationController extends Controller
         $application->load(['job.company']);
         $this->authorize('view', $application);
 
+        // P5.7: blade mengakses $application->user langsung; bila akun pelamar
+        // sudah dihapus (relasi null, mis. dilihat company/admin), 404 bukan 500.
+        abort_unless($application->user, 404, 'Data pelamar tidak tersedia.');
+
         // Timeline for status tracking
         $timeline = [
             [

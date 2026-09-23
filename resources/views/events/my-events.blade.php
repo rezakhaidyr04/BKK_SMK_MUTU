@@ -42,15 +42,22 @@
                     @endif
                     <div class="flex-1 p-5 flex flex-col sm:flex-row sm:items-center gap-4">
                         <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2 mb-1">
+                            <div class="flex items-center gap-2 mb-1 flex-wrap">
                                 <span class="px-2 py-0.5 rounded-full text-xs font-medium {{ $typeColors[$event->type] ?? 'bg-gray-100 text-gray-700' }}">
                                     {{ $typeLabels[$event->type] ?? $event->type }}
                                 </span>
+                                @if($event->is_paid)
+                                    <span class="px-2 py-0.5 rounded-full text-xs font-bold {{ $reg->payment_status==='verified' ? 'bg-green-100 text-green-700' : ($reg->payment_status==='pending' ? 'bg-amber-100 text-amber-700' : ($reg->payment_status==='rejected' ? 'bg-red-100 text-red-700' : 'bg-slate-100 text-slate-600')) }}">
+                                        @if($reg->payment_status==='verified') Lunas @elseif($reg->payment_status==='pending') Menunggu Verifikasi @elseif($reg->payment_status==='rejected') Ditolak @else Belum Bayar @endif · Rp {{ number_format($event->price,0,',','.') }}
+                                    </span>
+                                @else
+                                    <span class="px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Gratis</span>
+                                @endif
                                 @if($reg->status === 'cancelled')
                                 <span class="px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700">Dibatalkan</span>
                                 @elseif($isPast)
                                 <span class="px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600">Selesai</span>
-                                @else
+                                @elseif($reg->payment_status==='verified' || !$event->is_paid)
                                 <span class="px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">Terdaftar</span>
                                 @endif
                             </div>
@@ -59,7 +66,7 @@
                                 {{ $event->start_time->format('d M Y, H:i') }} &nbsp;·&nbsp;
                                 {{ $event->location }}
                             </p>
-                            <p class="text-xs text-gray-400 mt-1">Didaftarkan: {{ $reg->registered_at->format('d M Y') }}</p>
+                            <p class="text-xs text-gray-400 mt-1">Didaftarkan: {{ $reg->registered_at->format('d M Y') }} @if($event->is_paid && $reg->payment_proof)· <a href="{{ asset('storage/'.$reg->payment_proof) }}" target="_blank" class="text-blue-600 underline">Bukti</a>@endif</p>
                         </div>
                         <div class="flex items-center gap-2 flex-shrink-0">
                             <a href="{{ route('events.show', $event) }}"

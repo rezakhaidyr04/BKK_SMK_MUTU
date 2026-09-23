@@ -64,6 +64,38 @@
                         <textarea name="description" rows="5" required class="ui-textarea">{{ old('description', $event->description) }}</textarea>
                     </div>
 
+                    <div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-4">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <p class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002 2v2a2 2 0 002 2z"/></svg>
+                                    Acara Berbayar?
+                                </p>
+                                <p class="text-xs text-slate-500 mt-1">Gratis = daftar langsung. Berbayar = upload bukti & verifikasi admin.</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+                                <input type="checkbox" name="is_paid" value="1" id="isPaidToggle" class="sr-only peer" {{ old('is_paid', $event->is_paid) ? 'checked' : '' }}>
+                                <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                            </label>
+                        </div>
+                        <div id="paidFields" class="{{ old('is_paid', $event->is_paid) ? '' : 'hidden' }} space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="ui-label">Harga (Rp) <span class="text-red-500">*</span></label>
+                                    <input type="number" name="price" value="{{ old('price', $event->price) }}" min="1000" step="1000" class="ui-input" placeholder="50000">
+                                </div>
+                                <div>
+                                    <label class="ui-label">Kuota Peserta <span class="text-slate-400 font-normal ml-1">(opsional)</span></label>
+                                    <input type="number" name="quota" value="{{ old('quota', $event->quota) }}" min="1" class="ui-input" placeholder="30">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="ui-label">Instruksi Pembayaran</label>
+                                <textarea name="payment_instructions" rows="3" class="ui-textarea" placeholder="Transfer ke BCA ...">{{ old('payment_instructions', $event->payment_instructions) }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
                     <div>
                         <label class="ui-label">Poster Acara</label>
                         @if($event->poster)
@@ -120,6 +152,13 @@
             reader.readAsDataURL(file);
         }
     });
+    const isPaidToggle = document.getElementById('isPaidToggle');
+    const paidFields = document.getElementById('paidFields');
+    if (isPaidToggle && paidFields) {
+        isPaidToggle.addEventListener('change', function() {
+            paidFields.classList.toggle('hidden', !this.checked);
+        });
+    }
     </script>
     @endpush
         </div>

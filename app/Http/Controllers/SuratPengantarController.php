@@ -12,6 +12,10 @@ class SuratPengantarController extends Controller
         // Pastikan hanya pemilik lamaran atau admin yang bisa download
         $this->authorize('view', $application);
 
+        // P5.7: pelamar yang akunnya sudah dihapus tidak memiliki relasi user;
+        // PDF + filename membutuhkan data user, jadi 404 bukan 500.
+        abort_unless($application->user, 404, 'Data pelamar tidak tersedia.');
+
         // Load relasi yang dibutuhkan
         $application->load(['user', 'job.company']);
 

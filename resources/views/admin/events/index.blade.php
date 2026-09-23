@@ -17,10 +17,11 @@
         <div class="page-container page-section">
 
     <!-- Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
         <x-ui.stat-card label="Total Acara" :value="$events->total()" icon="calendar" color="blue" />
         <x-ui.stat-card label="Acara Mendatang" :value="\App\Models\Event::where('start_time', '>=', now())->count()" icon="clock" color="green" />
-        <x-ui.stat-card label="Acara Selesai" :value="\App\Models\Event::where('start_time', '<', now())->count()" icon="check" color="slate" />
+        <x-ui.stat-card label="Berbayar" :value="\App\Models\Event::where('is_paid', true)->count()" icon="check" color="yellow" />
+        <x-ui.stat-card label="Gratis" :value="\App\Models\Event::where('is_paid', false)->orWhereNull('is_paid')->count()" icon="check" color="slate" />
     </div>
 
     <div class="ui-filter-bar">
@@ -54,6 +55,7 @@
                     <tr>
                         <th>Acara</th>
                         <th>Tipe</th>
+                        <th>Harga</th>
                         <th>Waktu</th>
                         <th>Lokasi</th>
                         <th>Status</th>
@@ -95,6 +97,16 @@
                             </span>
                         </td>
                         <td>
+                            @if($event->is_paid)
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-700 border border-amber-200">
+                                    Rp {{ number_format($event->price, 0, ',', '.') }}
+                                </span>
+                                @if($event->quota)<span class="block text-xs text-slate-400 mt-1">{{ $event->quota }} kuota</span>@endif
+                            @else
+                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700">Gratis</span>
+                            @endif
+                        </td>
+                        <td>
                             <p class="text-sm font-medium text-slate-900">{{ $event->start_time->format('d M Y') }}</p>
                             <p class="text-xs text-slate-500">{{ $event->start_time->format('H:i') }}
                                 @if($event->end_time) – {{ $event->end_time->format('H:i') }}@endif
@@ -121,7 +133,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6">
+                        <td colspan="7">
                             <x-ui.empty-state title="Belum ada acara" description="Buat acara karier pertama untuk pencari kerja dan komunitas sekolah." />
                         </td>
                     </tr>

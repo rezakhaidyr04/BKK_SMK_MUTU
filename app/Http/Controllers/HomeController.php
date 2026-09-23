@@ -10,14 +10,14 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $jobs = Job::where('status', 'active')
-            ->where('deadline', '>=', now())
+        // P5.7: reuse scopeActive() (status active + deadline >= now()) agar
+        // tidak drift dari business rule listing publik. Semantik identik.
+        $jobs = Job::active()
             ->latest()
             ->take(12)
             ->get();
 
-        $activeJobsCount = Job::where('status', 'active')
-            ->where('deadline', '>=', now())
+        $activeJobsCount = Job::active()
             ->count();
 
         $usersCount = User::where('role', 'umum')->count();

@@ -366,3 +366,152 @@ input[type="radio"] {
     border-color: #334155;
     color: #f1f5f9;
 }
+
+/* ============================================================
+   PREMIUM FORM UPGRADE — 2026-09-23
+   Membuat semua form (login, register, admin, profile, job, event)
+   auto jadi lebih menarik tanpa ubah blade satu-satu.
+   ============================================================ */
+
+/* Panel: soft gradient top accent + elevated shadow */
+.ui-panel {
+    border-radius: 1.25rem !important;
+    box-shadow: 0 8px 24px rgba(15,23,42,0.06), 0 1px 3px rgba(15,23,42,0.04) !important;
+    border: 1px solid #e2e8f0 !important;
+    overflow: hidden;
+}
+.ui-panel-header {
+    background: linear-gradient(90deg, #f8fafc 0%, #ffffff 100%) !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    padding: 1.25rem 1.5rem !important;
+}
+.ui-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1rem !important;
+    letter-spacing: -0.02em;
+}
+.ui-panel-title::before {
+    content: '';
+    width: 6px;
+    height: 18px;
+    border-radius: 9999px;
+    background: linear-gradient(180deg, #2563eb, #06b6d4);
+    flex-shrink: 0;
+}
+.ui-panel-body {
+    padding: 1.5rem !important;
+    background: #ffffff;
+}
+
+/* Form stack: more breathing, section grouping */
+.ui-form-stack {
+    gap: 1.25rem;
+}
+.ui-form-stack > div {
+    position: relative;
+}
+/* Card wrapping native inputs inside panel: subtle grouped bg */
+.ui-panel .ui-input,
+.ui-panel .ui-select,
+.ui-panel .ui-textarea {
+    background: #fbfdff !important;
+    border-color: #e2e8f0 !important;
+}
+.ui-panel .ui-input:focus,
+.ui-panel .ui-select:focus,
+.ui-panel .ui-textarea:focus {
+    background: #ffffff !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 4px rgba(59,130,246,0.11), 0 1px 2px rgba(15,23,42,0.04) !important;
+}
+
+/* Input icon prefix auto-spacing: jika label punya svg, input sedikit inset */
+.ui-label + .ui-input,
+.ui-label + .ui-select,
+.ui-label + .ui-textarea {
+    margin-top: 0.3rem;
+}
+
+/* Auth cards: add soft blob + inner border premium */
+.auth-card {
+    border: 1px solid rgba(226,232,240,0.9) !important;
+    box-shadow: 0 20px 40px rgba(15,23,42,0.08), 0 4px 12px rgba(15,23,42,0.04) !important;
+    border-radius: 1.5rem !important;
+    overflow: hidden !important;
+    position: relative;
+}
+.auth-card::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    border-radius: 50%;
+}
+.auth-input-wrapper .ui-input {
+    padding-left: 2.6rem !important;
+    background: #f8fafc !important;
+}
+.auth-input-wrapper .auth-input-icon {
+    color: #94a3b8 !important;
+    transition: color 180ms ease;
+}
+.auth-input-wrapper:focus-within .auth-input-icon {
+    color: #2563eb !important;
+}
+.auth-btn {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    box-shadow: 0 8px 20px rgba(37,99,235,0.28) !important;
+    border-radius: 0.9rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.01em;
+    transition: all 180ms ease !important;
+}
+.auth-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(37,99,235,0.34) !important;
+}
+
+/* Job form panels: accent shimmer */
+.job-form-panel {
+    border-radius: 1.25rem !important;
+    box-shadow: 0 8px 24px rgba(15,23,42,0.06) !important;
+}
+.job-form-panel .ui-panel-header {
+    background: linear-gradient(90deg, #eff6ff 0%, #ffffff 45%, #ffffff 100%) !important;
+}
+.job-form-section-icon {
+    box-shadow: 0 6px 14px rgba(37,99,235,0.22) !important;
+}
+
+/* File/drop zone premium */
+.border-dashed {
+    transition: all 180ms ease;
+}
+.border-dashed:hover {
+    border-color: #3b82f6 !important;
+    background: #f8fbff !important;
+}
+.ui-input[type="file"]::file-selector-button {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe) !important;
+    color: #1e40af !important;
+    border-radius: 0.6rem !important;
+    font-weight: 700 !important;
+}
+
+/* Small helper / hint inside forms */
+.ui-panel .text-slate-400,
+.ui-panel .text-xs.text-slate-400 {
+    color: #94a3b8 !important;
+}
+
+/* Sticky save bar premium */
+.sticky.bottom-4 {
+    box-shadow: 0 20px 40px rgba(15,23,42,0.12) !important;
+    backdrop-filter: blur(12px) saturate(180%);
+}

@@ -38,6 +38,11 @@ class EventController extends Controller
     {
         $validated = $request->validated();
 
+        if (!$validated['is_paid']) {
+            $validated['price'] = null;
+            $validated['payment_instructions'] = null;
+        }
+
         if ($request->hasFile('poster')) {
             $processor = new ImageProcessor(quality: 82, maxWidth: 1200, maxHeight: 900);
             $validated['poster'] = $processor->store(
@@ -61,6 +66,11 @@ class EventController extends Controller
     public function update(AdminEventUpdateRequest $request, Event $event)
     {
         $validated = $request->validated();
+
+        if (!$validated['is_paid']) {
+            $validated['price'] = null;
+            $validated['payment_instructions'] = null;
+        }
 
         if ($request->hasFile('poster')) {
             if ($event->poster) {
@@ -101,5 +111,25 @@ class EventController extends Controller
             ->paginate(20);
 
         return view('admin.events.registrants', compact('event', 'registrations'));
+    }
+
+    public function verifyPayment(Event $event, \App\Models\EventRegistration $registration)
+    {
+        if ($registration->event_id !== $event->id) abort(404);
+        $registration->update([
+            'payment_status' => 'verified',
+            'paid_at' => now(),
+            'status' => 'registered',
+        ]);
+        return back()->with('success', 'Pembayaran diverifikasi. Peserta kini terdaftar penuh.');
+    }
+
+    public function rejectPayment(Event $event, \App\Models\EventRegistration $registration)
+    {
+        if ($registration->event_id !== $event->id) abort(404);
+        $registration->update([
+            'payment_status' => 'rejected',
+        ]);
+        return back()->with('success', 'Pembayaran ditolak. Peserta perlu upload ulang.');
     }
 }

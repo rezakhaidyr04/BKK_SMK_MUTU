@@ -16,6 +16,12 @@ class ProfileController extends Controller
     {
         $company = auth()->user()->company;
 
+        // P6: user role company tanpa baris company (mis. role diubah admin
+        // via admin.users.update yang tidak membuat Company) → 404 seperti
+        // ApplicantController@index, bukan 500 di blade. update()/verify()
+        // sudah guard; edit() satu-satunya yang belum.
+        abort_unless($company, 404, 'Profil perusahaan tidak ditemukan.');
+
         return view('company.profile.edit', compact('company'));
     }
 

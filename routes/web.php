@@ -55,6 +55,7 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
 
     // Event Registration — P0 H-02: tulis sensitif wajib verified.
     Route::post("/events/{event}/register", [EventController::class, "register"])->middleware('verified')->name("events.register");
+    Route::post("/events/{event}/payment-proof", [EventController::class, "uploadPaymentProof"])->middleware('verified')->name("events.payment-proof");
     Route::delete("/events/{event}/register", [EventController::class, "cancel"])->name("events.cancel");
     Route::get("/my-events", [EventController::class, "myEvents"])->name("events.my");
 
@@ -271,6 +272,14 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
                 App\Http\Controllers\Admin\EventController::class,
                 "registrants",
             ])->name("events.registrants");
+            Route::post("events/{event}/registrants/{registration}/verify", [
+                App\Http\Controllers\Admin\EventController::class,
+                "verifyPayment",
+            ])->name("events.verify-payment");
+            Route::post("events/{event}/registrants/{registration}/reject", [
+                App\Http\Controllers\Admin\EventController::class,
+                "rejectPayment",
+            ])->name("events.reject-payment");
             Route::get("/reports", [
                 App\Http\Controllers\Admin\ReportController::class,
                 "index",

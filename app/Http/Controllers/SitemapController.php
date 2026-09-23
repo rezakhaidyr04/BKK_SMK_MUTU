@@ -20,7 +20,9 @@ class SitemapController extends Controller
                 route('news.index'),
             ]);
 
-            Job::where('status', 'active')->select('id')->latest('created_at')->chunk(500, function ($jobs) use ($urls) {
+            // P5.7: hanya job publik (scopeActive: active + belum expired),
+            // konsisten dengan web/API pasca-P5.6. Query-level, select id tetap.
+            Job::active()->select('id')->latest('created_at')->chunk(500, function ($jobs) use ($urls) {
                 foreach ($jobs as $job) {
                     $urls->push(route('jobs.show', $job));
                 }

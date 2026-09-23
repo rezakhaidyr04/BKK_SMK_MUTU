@@ -75,78 +75,62 @@
                     </div>
                     @endif
 
-                    <div class="p-5 flex-1 flex flex-col">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold {{ $typeColors[$event->type] ?? 'bg-gray-100 text-gray-700' }}">
+                    <div class="p-5 flex flex-col flex-1">
+                        {{-- Badges: fixed 2-row area, always same height --}}
+                        <div class="flex flex-wrap items-center gap-1.5 min-h-[28px] mb-2.5">
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold {{ $typeColors[$event->type] ?? 'bg-gray-100 text-gray-700' }}">
                                 {{ $typeLabels[$event->type] ?? $event->type }}
                             </span>
+                            @if($event->is_paid)
+                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-700 border border-amber-200">Rp {{ number_format($event->price,0,',','.') }}</span>
+                            @else
+                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-100">Gratis</span>
+                            @endif
                             @if($isRegistered)
-                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700 flex items-center gap-1">
-                                <svg class="ui-svg-icon ui-svg-icon-sm" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                                Terdaftar
-                            </span>
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700 border border-green-200">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    Terdaftar
+                                </span>
                             @endif
                         </div>
+                        @if($event->quota)
+                            <p class="text-[11px] font-medium text-slate-400 -mt-1 mb-2 tracking-wide">{{ $event->registrations_count }}/{{ $event->quota }} kuota terisi</p>
+                        @else
+                            <p class="text-[11px] font-medium text-slate-400 -mt-1 mb-2 tracking-wide">&nbsp;</p>
+                        @endif
 
-                        <h3 class="font-bold text-gray-900 mb-2 line-clamp-2 flex-1">
+                        {{-- Title: fixed 2-line height --}}
+                        <h3 class="font-bold text-[15px] leading-snug text-slate-900 min-h-[44px] line-clamp-2 mb-3">
                             <a href="{{ route('events.show', $event) }}" class="hover:text-blue-600 transition-colors">
                                 {{ $event->title }}
                             </a>
                         </h3>
 
-                        <div class="space-y-1.5 text-xs text-gray-500 mb-4">
+                        {{-- Info: fixed height --}}
+                        <div class="space-y-2 text-xs text-slate-500 mb-4">
                             <div class="flex items-center gap-2">
-                                <svg class="text-gray-400 flex-shrink-0 ui-svg-icon ui-svg-icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                </svg>
-                                {{ $event->start_time->format('d M Y, H:i') }} WIB
+                                <span class="w-7 h-7 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                </span>
+                                <span class="truncate">{{ $event->start_time->format('d M Y, H:i') }} WIB</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <svg class="text-gray-400 flex-shrink-0 ui-svg-icon ui-svg-icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                </svg>
-                                {{ Str::limit($event->location, 35) }}
+                                <span class="w-7 h-7 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+                                </span>
+                                <span class="truncate">{{ $event->location }}</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <svg class="text-gray-400 flex-shrink-0 ui-svg-icon ui-svg-icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                </svg>
-                                {{ $event->registrations_count }} peserta terdaftar
+                                <span class="w-7 h-7 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                </span>
+                                <span>{{ $event->registrations_count }} peserta terdaftar</span>
                             </div>
                         </div>
 
-                        <!-- Tombol Aksi -->
-                        <div class="flex gap-2 mt-auto">
-                            <a href="{{ route('events.show', $event) }}"
-                               class="flex-1 text-center px-4 py-2 border border-gray-200 text-gray-700 text-sm font-semibold rounded-xl hover:bg-gray-50 transition">
-                                Detail
-                            </a>
-                            @if(!$isPast)
-                                @auth
-                                    @if($isRegistered)
-                                    <form method="POST" action="{{ route('events.cancel', $event) }}" data-confirm="Batalkan pendaftaran?" data-confirm-title="Batalkan" data-confirm-ok="Batalkan" data-confirm-variant="danger">
-                                        @csrf @method('DELETE')
-                                        <button type="submit"
-                                                class="px-4 py-2 border border-red-200 text-red-600 text-sm font-semibold rounded-xl hover:bg-red-50 transition">
-                                            Batalkan
-                                        </button>
-                                    </form>
-                                    @else
-                                    <form method="POST" action="{{ route('events.register', $event) }}">
-                                        @csrf
-                                        <button type="submit"
-                                                class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition">
-                                            Daftar
-                                        </button>
-                                    </form>
-                                    @endif
-                                @else
-                                <a href="{{ route('login') }}"
-                                   class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition">
-                                    Daftar
-                                </a>
-                                @endauth
-                            @endif
+                        {{-- Actions: hanya Detail, daftar via halaman detail --}}
+                        <div class="mt-auto pt-3 border-t border-slate-100">
+                            <a href="{{ route('events.show', $event) }}" class="block w-full text-center px-4 py-2.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-xl hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 transition">Detail</a>
                         </div>
                     </div>
                 </article>

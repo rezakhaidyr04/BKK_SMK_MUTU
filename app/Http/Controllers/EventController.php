@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\EventRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -53,9 +54,17 @@ class EventController extends Controller
 
     public function register(Request $request, Event $event)
     {
-        // Pastikan acara belum selesai
+        $request->validate([
+            'notes' => ['nullable', 'string'],
+        ]);
+
         if ($event->start_time->isPast()) {
             return back()->with('error', 'Acara ini sudah selesai, pendaftaran ditutup.');
+        }
+
+        // Kuota
+        if ($event->quota && $event->registrations()->where('status', 'registered')->count() >= $event->quota) {
+            return back()->with('error', 'Kuota peserta sudah penuh.');
         }
 
         $existing = EventRegistration::where('event_id', $event->id)
@@ -64,22 +73,70 @@ class EventController extends Controller
 
         if ($existing) {
             if ($existing->status === 'cancelled') {
-                // Daftar ulang
-                $existing->update(['status' => 'registered', 'registered_at' => now()]);
+                $paymentStatus = $event->isPaid() ? 'unpaid' : 'verified';
+                $existing->update([
+                    'status' => 'registered',
+                    'registered_at' => now(),
+                    'payment_status' => $paymentStatus,
+                    'notes' => $request->notes,
+                ]);
+                if ($event->isPaid()) {
+                    return back()->with('success', 'Berhasil mendaftar ulang! Silakan lakukan pembayaran ' . $event->formattedPrice() . ' dan upload bukti di halaman ini.');
+                }
                 return back()->with('success', 'Kamu berhasil mendaftar ulang untuk acara ini!');
             }
             return back()->with('error', 'Kamu sudah terdaftar di acara ini.');
         }
 
+        $paymentStatus = $event->isPaid() ? 'unpaid' : 'verified';
+
         EventRegistration::create([
-            'event_id'      => $event->id,
-            'user_id'       => Auth::id(),
-            'status'        => 'registered',
-            'notes'         => $request->notes,
-            'registered_at' => now(),
+            'event_id'       => $event->id,
+            'user_id'        => Auth::id(),
+            'status'         => 'registered',
+            'payment_status' => $paymentStatus,
+            'notes'          => $request->notes,
+            'registered_at'  => now(),
         ]);
 
+        if ($event->isPaid()) {
+            return back()->with('success', 'Pendaftaran awal berhasil! Silakan lakukan pembayaran ' . $event->formattedPrice() . ' lalu upload bukti transfer di bawah.');
+        }
+
         return back()->with('success', 'Pendaftaran berhasil! Sampai jumpa di acara "' . $event->title . '".');
+    }
+
+    public function uploadPaymentProof(Request $request, Event $event)
+    {
+        $request->validate([
+            'payment_proof' => ['required', 'image', 'max:4096', 'mimes:jpg,jpeg,png,webp'],
+        ]);
+
+        $registration = EventRegistration::where('event_id', $event->id)
+            ->where('user_id', Auth::id())
+            ->where('status', 'registered')
+            ->firstOrFail();
+
+        if (!$event->isPaid()) {
+            return back()->with('error', 'Acara ini gratis, tidak perlu bukti pembayaran.');
+        }
+
+        if ($registration->payment_status === 'verified') {
+            return back()->with('error', 'Pembayaran sudah terverifikasi.');
+        }
+
+        if ($registration->payment_proof) {
+            Storage::disk('public')->delete($registration->payment_proof);
+        }
+
+        $path = $request->file('payment_proof')->store('event-payments', 'public');
+
+        $registration->update([
+            'payment_proof' => $path,
+            'payment_status' => 'pending',
+        ]);
+
+        return back()->with('success', 'Bukti pembayaran berhasil diupload! Menunggu verifikasi admin (1-2 jam kerja).');
     }
 
     public function cancel(Event $event)

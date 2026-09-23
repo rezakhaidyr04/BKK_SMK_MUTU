@@ -31,6 +31,11 @@ class ApplicantController extends Controller
     {
         $this->authorize('view', $application);
 
+        // P5.7: pelamar yang akunnya sudah dihapus (soft-delete) tidak lagi
+        // memiliki relasi user; blade mengakses $application->user langsung,
+        // jadi perlakukan sebagai resource yang tidak tersedia (404), bukan 500.
+        abort_unless($application->user, 404, 'Data pelamar tidak tersedia.');
+
         $application->load([
             'job.company',
             'user',
@@ -69,10 +74,12 @@ class ApplicantController extends Controller
         $application->save();
 
         if ($oldStatus !== $application->status) {
+            // P5.7: null-safe — lewati notifikasi bila akun pelamar sudah
+            // dihapus (relasi user null), status tetap diperbarui.
             if ($application->status === 'interviewed') {
-                $application->user->notify(new \App\Notifications\InterviewScheduled($application));
+                $application->user?->notify(new \App\Notifications\InterviewScheduled($application));
             } else {
-                $application->user->notify(new \App\Notifications\ApplicationStatusUpdated($application));
+                $application->user?->notify(new \App\Notifications\ApplicationStatusUpdated($application));
             }
         }
 

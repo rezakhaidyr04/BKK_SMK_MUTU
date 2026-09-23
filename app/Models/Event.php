@@ -17,12 +17,35 @@ class Event extends Model
         'end_time',
         'location',
         'poster',
+        'is_paid',
+        'price',
+        'quota',
+        'payment_instructions',
     ];
 
     protected $casts = [
         'start_time' => 'datetime',
         'end_time' => 'datetime',
+        'is_paid' => 'boolean',
+        'price' => 'decimal:2',
     ];
+
+    public function isPaid(): bool
+    {
+        return (bool) $this->is_paid && $this->price > 0;
+    }
+
+    public function isFull(): bool
+    {
+        if (!$this->quota) return false;
+        return $this->registrations()->where('status', 'registered')->count() >= $this->quota;
+    }
+
+    public function formattedPrice(): string
+    {
+        if (!$this->isPaid()) return 'Gratis';
+        return 'Rp ' . number_format($this->price, 0, ',', '.');
+    }
 
     public function registrations()
     {

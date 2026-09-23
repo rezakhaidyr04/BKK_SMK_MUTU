@@ -139,6 +139,24 @@ class ProfileController extends Controller
             Storage::disk("public")->delete($user->avatar);
         }
 
+        // P5.7: hapus file private milik akun (sertifikat, CV, dokumen,
+        // lampiran lamaran) agar tidak yatim di disk setelah forceDelete
+        // me-cascade baris DB-nya. Pola sama seperti destroy per-resource.
+        $privatePaths = $user->certificates()->pluck('file_path')
+            ->merge($user->cvFiles()->pluck('file_path'))
+            ->merge($user->documents()->pluck('file_path'))
+            ->merge(
+                $user->applications()->whereNotNull('attachment_path')->pluck('attachment_path')
+            )
+            ->filter()
+            ->unique();
+
+        foreach ($privatePaths as $path) {
+            if (Storage::disk('private')->exists($path)) {
+                Storage::disk('private')->delete($path);
+            }
+        }
+
         $user->forceDelete();
 
         $request->session()->invalidate();
