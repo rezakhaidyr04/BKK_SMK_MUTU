@@ -52,7 +52,7 @@
         <h1>BURSA KERJA KHUSUS (BKK)</h1>
         <h2>SMK MUTU</h2>
         <p>Jl. Contoh Alamat No. 123, Kota, Provinsi</p>
-        <p>Telp: (021) 1234567 | Email: bkk@smkmutu.sch.id</p>
+        <p>Telp: (021) 1234567 | Email: bkksmkmutu3@gmail.com</p>
     </div>
 
     <div class="nomor-surat">
@@ -93,7 +93,7 @@
 
     <div class="tanda-tangan">
         <p>Jakarta, {{ date('d F Y') }}</p>
-        <p>Ketua BKK SMK MUTU,</p>
+        <p>Ketua BKKMU,</p>
         <div class="ttd-space"></div>
         <p><strong><u>Nama Ketua BKK, M.Pd</u></strong></p>
         <p>NIP. 19800101 200501 1 001</p>

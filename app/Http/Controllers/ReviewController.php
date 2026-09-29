@@ -15,9 +15,14 @@ class ReviewController extends Controller
 
     /**
      * Show review submission form (if needed)
+     * Khusus pengguna umum — admin/company tidak perlu bagikan ulasan.
      */
     public function create()
     {
+        if (auth()->check() && auth()->user()->role !== 'umum') {
+            return redirect()->route('dashboard')->with('error', 'Halaman ulasan khusus untuk pengguna umum.');
+        }
+
         return view('reviews.create');
     }
 
@@ -26,6 +31,10 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request)
     {
+        if (auth()->user()->role !== 'umum') {
+            return back()->with('error', 'Hanya pengguna umum yang dapat memberikan ulasan.');
+        }
+
         $validated = $request->validated();
 
         try {
@@ -38,10 +47,10 @@ class ReviewController extends Controller
                 'name' => $validated['name'],
                 'email' => $validated['email'],
                 'phone' => $validated['phone'],
-                'status' => 'pending', // Requires approval
+                'status' => 'approved', // Langsung tampil tanpa ijin admin
             ]);
 
-            return back()->with('success', 'Terima kasih! Review Anda sedang ditinjau dan akan ditampilkan segera.');
+            return back()->with('success', 'Terima kasih! Ulasan Anda langsung ditampilkan.');
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Review store failed: '.$e->getMessage(), ['exception' => $e]);
 

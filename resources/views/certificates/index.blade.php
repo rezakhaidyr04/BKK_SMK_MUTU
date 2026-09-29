@@ -1,4 +1,4 @@
-﻿<x-app-layout :full-bleed="true">
+<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-banner title="Sertifikat Saya" subtitle="Tunjukkan pencapaian dan kualifikasi Anda." eyebrow="Dashboard › Sertifikat">
                         <x-slot:chips>

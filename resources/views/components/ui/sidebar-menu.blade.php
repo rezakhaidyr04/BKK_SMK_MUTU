@@ -1,4 +1,4 @@
-﻿{{-- Menu sidebar tunggal: dipakai oleh sidebar desktop dan drawer mobile --}}
+{{-- Menu sidebar tunggal: dipakai oleh sidebar desktop dan drawer mobile --}}
 @props([
     'mobile' => false,
 ])
@@ -150,6 +150,14 @@
         </svg>
         <span class="font-medium">Acara</span>
     </a>
+
+    <a href="{{ route('admin.reviews.index') }}" @click="sidebarOpen = false" class="nav-link {{ request()->routeIs('admin.reviews.*') ? 'active' : '' }} flex items-center gap-3">
+        <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        <span class="font-medium">Ulasan Pengguna</span>
+        <span class="nav-badge amber ml-auto">Lihat</span>
+    </a>
 </div>
 @endif
 
@@ -203,7 +211,7 @@
 <div class="help-card mt-6">
     <h4 class="text-sm font-semibold text-gray-900 mb-1">Butuh Bantuan?</h4>
     <p class="text-xs text-gray-600 mb-3">Hubungi tim support kami</p>
-    <a href="mailto:bkk@smkmutu.sch.id" class="inline-block text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors">
-        bkk@smkmutu.sch.id →
+    <a href="mailto:bkksmkmutu3@gmail.com" class="inline-block text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors">
+        bkksmkmutu3@gmail.com →
     </a>
 </div>

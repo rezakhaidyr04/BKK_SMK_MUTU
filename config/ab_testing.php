@@ -93,7 +93,7 @@ return [
     'hero_heading' => [
         'variations' => [
             'control' => [
-                'text' => 'Temukan Karier Impian Anda<br>Bersama <span class="hero-heading-accent">BKK SMK MUTU</span>',
+                'text' => 'Temukan Karier Impian Anda<br>Bersama <span class="hero-heading-accent">BKKMU</span>',
                 'description' => 'Versi asli',
                 'weight' => 50,
             ],
@@ -103,7 +103,7 @@ return [
                 'weight' => 25,
             ],
             'variant_b' => [
-                'text' => 'Ribuan Alumni Sukses<br>Melalui <span class="hero-heading-accent">BKK SMK MUTU</span>',
+                'text' => 'Ribuan Alumni Sukses<br>Melalui <span class="hero-heading-accent">BKKMU</span>',
                 'description' => 'Social proof di heading',
                 'weight' => 25,
             ],

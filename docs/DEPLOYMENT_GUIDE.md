@@ -133,13 +133,12 @@ php artisan view:cache
 composer dump-autoload --optimize
 ```
 
-### 8. Queue Worker & Scheduler (WAJIB — QUEUE_CONNECTION=database)
+### 8. Queue Worker & Scheduler
 
-Project memakai queue database untuk notifikasi email
-(`ApplicationReceived`, `InterviewScheduled`, `NewJobNotification`)
-dan schedule harian pembersih file CV (`App\Console\Kernel`).
-Tanpa worker & scheduler yang berjalan, email antrean TIDAK terkirim
-(menumpuk di tabel `jobs`) dan file CV lama tidak terhapus.
+Semua email (broadcast via `JobBroadcastMail`, lamaran, interview, verifikasi,
+reset password) dikirim **sinkron** — tidak butuh queue worker.
+Scheduler harian pembersih file CV (`App\Console\Kernel`) tetap butuh cron
+agar file CV lama terhapus.
 
 ```bash
 # Jalankan queue worker (pilih salah satu, JANGAN hanya mengandalkan web request)

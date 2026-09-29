@@ -4,11 +4,12 @@ namespace App\Notifications;
 
 use App\Models\Application;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class InterviewScheduled extends Notification implements ShouldQueue
+// Sinkron (tanpa ShouldQueue): dikirim langsung saat status diubah agar
+// tidak nyangkut di antrean database tanpa worker.
+class InterviewScheduled extends Notification
 {
     use Queueable;
 
@@ -23,44 +24,44 @@ class InterviewScheduled extends Notification implements ShouldQueue
     {
         $app  = $this->application;
         $job  = $app->job;
-        $date = $app->interview_date->locale('id')->translatedFormat('l, d F Y \p\u\k\u\l H:i');
+        // Null-safe: notifikasi antre diproses belakangan, jadwal bisa
+        // sudah diubah/dihapus setelah job dibuat (ditemukan di failed_jobs).
+        $date = $app->interview_date
+            ? $app->interview_date->locale('id')->translatedFormat('l, d F Y \p\u\k\u\l H:i')
+            : 'Jadwal menyusul — pantau halaman lamaran Anda';
 
-        $mail = (new MailMessage)
-            ->subject("📅 Undangan Wawancara: {$job->title}")
-            ->greeting("Halo {$notifiable->name},")
-            ->line("Selamat! Anda diundang untuk mengikuti **wawancara** pada lamaran posisi **{$job->title}** di **{$job->company_name}**.")
-            ->line("---")
-            ->line("**📅 Tanggal & Waktu:** {$date}")
-            ->line("**📍 Tempat:** {$app->interview_location}");
+        $jobTitle    = $job->title ?? 'Lowongan';
+        $companyName = $job->company_name ?? 'Perusahaan';
+        $isOnline    = $app->interview_type === 'online';
 
-        if ($app->interview_type === 'online' && $app->interview_link) {
-            $mail->line("**💻 Tipe:** Wawancara Online")
-                 ->line("**🔗 Link:** {$app->interview_link}");
-        } else {
-            $mail->line("**🏢 Tipe:** Wawancara Tatap Muka");
-        }
-
-        if ($app->interview_notes) {
-            $mail->line("**📝 Catatan:** {$app->interview_notes}");
-        }
-
-        return $mail
-            ->line("---")
-            ->line("Harap datang tepat waktu dan berpakaian rapi. Bawa dokumen pendukung seperti CV, KTP, dan ijazah.")
-            ->action('Lihat Detail Lamaran', url(route('applications.show', $app)))
-            ->line("Semangat dan tetap percaya diri!");
+        return (new MailMessage)
+            ->subject("Undangan Wawancara: {$jobTitle}")
+            ->markdown('emails.applications.interview', [
+                'name'        => $notifiable->name,
+                'jobTitle'    => $jobTitle,
+                'companyName' => $companyName,
+                'date'        => $date,
+                'typeLabel'   => $isOnline ? 'Online (Zoom/Meet)' : 'Tatap Muka (Offline)',
+                'placeLine'   => $isOnline
+                    ? ($app->interview_link ?: null)
+                    : ($app->interview_location ?: null),
+                'notes'       => $app->interview_notes,
+                'url'         => route('applications.show', $app),
+            ]);
     }
 
     public function toArray($notifiable): array
     {
         $app  = $this->application;
-        $date = $app->interview_date->locale('id')->translatedFormat('l, d F Y H:i');
+        $date = $app->interview_date
+            ? $app->interview_date->locale('id')->translatedFormat('l, d F Y H:i')
+            : 'Jadwal menyusul';
 
         return [
             'type'               => 'interview_scheduled',
             'application_id'     => $app->id,
             'job_id'             => $app->job_id,
-            'job_title'          => $app->job->title,
+            'job_title'          => $app->job->title ?? 'Lowongan',
             'company_name'       => $app->job->company_name ?? 'Perusahaan',
             'interview_date'     => $date,
             'interview_location' => $app->interview_location,

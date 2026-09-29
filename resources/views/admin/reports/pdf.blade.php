@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="utf-8">
-    <title>Laporan BKK SMK MUTU</title>
+    <title>Laporan BKKMU</title>
     <style>
         body { font-family: Helvetica, Arial, sans-serif; color: #0f172a; margin: 32px; }
         h1 { font-size: 20px; margin: 0 0 4px; }
@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-    <h1>Laporan &amp; Analitik BKK SMK MUTU</h1>
+    <h1>Laporan &amp; Analitik BKKMU</h1>
     <p class="meta">Dicetak pada {{ $generatedAt }}</p>
 
     <table>
@@ -35,6 +35,6 @@
         </tbody>
     </table>
 
-    <p class="footer">Dokumen ini dihasilkan otomatis oleh sistem BKK SMK MUTU.</p>
+    <p class="footer">Dokumen ini dihasilkan otomatis oleh sistem BKKMU.</p>
 </body>
 </html>

@@ -28,6 +28,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get("/jobs", [JobController::class, "index"])->name("jobs.index");
 Route::get("/jobs/{job}", [JobController::class, "show"])->name("jobs.show");
 
+// Company Profile (Public — bisa diakses semua role termasuk tamu)
+Route::get("/companies/{company}", [\App\Http\Controllers\CompanyController::class, "show"])->name("companies.show");
+
 // Events (Public)
 Route::get("/events", [EventController::class, "index"])->name("events.index");
 Route::get("/events/{event}", [EventController::class, "show"])->name("events.show");
@@ -302,6 +305,12 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
                 App\Http\Controllers\Admin\ActivityController::class,
                 "index",
             ])->name("activities.index");
+
+            // Hasil ulasan pengguna — read-only untuk admin (lihat saja)
+            Route::get("/reviews", [
+                App\Http\Controllers\Admin\ReviewController::class,
+                "index",
+            ])->name("reviews.index");
 
             // Personal Access Token (Sanctum) untuk admin — P0 H-08: + revoke.
             Route::get("/api-tokens", [

@@ -1,12 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ mobileMenuOpen: false }">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BKK SMK MUTU - Platform Pengembangan Karir</title>
+    <title>BKKMU - Platform Pengembangan Karir</title>
     <meta name="description" content="Bursa Kerja Khusus (BKK) SMK MUTU — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="BKK SMK MUTU - Platform Pengembangan Karir">
+    <meta property="og:title" content="BKKMU - Platform Pengembangan Karir">
     <meta property="og:description" content="Bursa Kerja Khusus (BKK) SMK MUTU — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta name="twitter:card" content="summary">
@@ -28,8 +28,8 @@
                 <div class="navbar-inner">
                     <!-- Logo -->
                     <a href="{{ route('home') }}" class="navbar-brand">
-                        <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" width="36" height="36">
-                        <span>BKK SMK MUTU</span>
+                        <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKKMU" width="36" height="36">
+                        <span>BKKMU</span>
                     </a>
 
                     <!-- Actions -->
@@ -84,12 +84,12 @@
                     <div class="hero-content">
                         <!-- Greeting Badge -->
                         <div id="js-hero-greeting" class="hero-badge">
-                            <span aria-hidden="true">👋</span> Selamat Datang di BKK SMK MUTU
+                            <span aria-hidden="true">👋</span> Selamat Datang di BKKMU
                         </div>
 
                         <!-- Heading -->
                         <h1 class="hero-title">
-                            Temukan Karier Impian Anda<br>Bersama <span class="highlight">BKK SMK MUTU</span>
+                            Temukan Karier Impian Anda<br>Bersama <span class="highlight">BKKMU</span>
                         </h1>
 
                         <!-- Description -->
@@ -151,7 +151,7 @@
                         <div class="hero-image">
                             <picture>
                                 <source srcset="{{ asset('images/foto_siswa/siswa.webp') }}" type="image/webp">
-                                <img src="{{ asset('images/foto_siswa/siswa.png') }}" alt="Ilustrasi pencari kerja BKK SMK MUTU" loading="eager" fetchpriority="high">
+                                <img src="{{ asset('images/foto_siswa/siswa.webp') }}" alt="Ilustrasi pencari kerja BKKMU" loading="eager" fetchpriority="high">
                             </picture>
 
                             <!-- Floating Card 1 -->
@@ -239,7 +239,7 @@
                 <div class="partner-image-wrap">
                     <img
                         src="{{ asset('images/perusahaan/perusahaan.webp') }}"
-                        alt="Perusahaan mitra BKK SMK MUTU"
+                        alt="Perusahaan mitra BKKMU"
                         class="partner-image"
                         loading="lazy"
                     >
@@ -251,7 +251,7 @@
         <section class="features-section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Mengapa Memilih BKK SMK MUTU?</h2>
+                    <h2 class="section-title">Mengapa Memilih BKKMU?</h2>
                     <p class="section-subtitle">Platform lengkap untuk pengembangan karier Anda</p>
                 </div>
                 <div class="features-grid">
@@ -343,7 +343,7 @@
                                         @if($review->job_title && $review->company_name)
                                             {{ $review->job_title }} @ {{ $review->company_name }}
                                         @else
-                                            Pengguna BKK SMK MUTU
+                                            Pengguna BKKMU
                                         @endif
                                     </span>
                                 </div>
@@ -380,12 +380,14 @@
                     <h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1rem;">Punya Pengalaman Positif?</h3>
                     <p style="color: #6b7280; margin-bottom: 1.5rem; font-size: 0.95rem;">Bagikan cerita sukses Anda dan bantu pencari kerja lain untuk membuat keputusan terbaik</p>
                     @auth
+                        @if(auth()->user()->role === 'umum')
                         <a href="{{ route('reviews.create') }}" class="ui-btn ui-btn-primary" style="display: inline-block;">
                             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="display: inline-block; margin-right: 0.5rem;">
                                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                             </svg>
                             Bagikan Ulasan Anda
                         </a>
+                        @endif
                     @else
                         <p style="font-size: 0.9rem; color: #6b7280; margin-bottom: 1rem;">Silakan login untuk membagikan ulasan Anda</p>
                         <div style="display: flex; gap: 1rem; justify-content: center;">
@@ -727,7 +729,7 @@
                     <div class="cta-deco"></div>
                     <div class="cta-content">
                         <h2 class="cta-title">Siap Memulai Karier Anda?</h2>
-                        <p class="cta-desc">Bergabunglah bersama para pencari kerja yang telah menemukan pekerjaan impian melalui BKK SMK MUTU.</p>
+                        <p class="cta-desc">Bergabunglah bersama para pencari kerja yang telah menemukan pekerjaan impian melalui BKKMU.</p>
                         @php
                             $abTest = app(\App\Services\ABTestingService::class);
                             $ctaBanner = $abTest->getCtaCopy('cta_banner');
@@ -769,12 +771,12 @@
                 <!-- Brand -->
                 <div>
                     <div class="footer-brand-name">
-                        <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKK SMK MUTU" width="40" height="40">
-                        <span>BKK SMK MUTU</span>
+                        <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKKMU" width="40" height="40">
+                        <span>BKKMU</span>
                     </div>
                     <p class="footer-brand-desc">Platform karir untuk para pencari kerja.<br>Menghubungkan talenta muda dengan perusahaan terpercaya.</p>
                     <div class="footer-socials">
-                        <a href="javascript:void(0)" class="footer-social-link" aria-label="Instagram">
+                        <a href="https://www.instagram.com/smkmutu_cikampek?stkn=cW91cXNueHpncGJq" target="_blank" rel="noopener" class="footer-social-link" aria-label="Instagram">
                             <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                         </a>
                         <a href="javascript:void(0)" class="footer-social-link" aria-label="Facebook">
@@ -814,13 +816,13 @@
                     <ul class="footer-links">
                         <li>SMK MUTU Cikampek</li>
                         <li>Cikampek, Jawa Barat</li>
-                        <li><a href="mailto:bkk@smkmutu.sch.id">bkk@smkmutu.sch.id</a></li>
+                        <li><a href="mailto:bkksmkmutu3@gmail.com">bkksmkmutu3@gmail.com</a></li>
                         <li><a href="tel:+62267123456">(0267) 123-456</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; {{ date('Y') }} BKK SMK MUTU. Hak cipta dilindungi.</p>
+                <p>&copy; {{ date('Y') }} BKKMU. Hak cipta dilindungi.</p>
                 <div class="footer-bottom-links">
                     <a href="javascript:void(0)">Privacy Policy</a>
                     <a href="javascript:void(0)">Terms of Service</a>
@@ -847,12 +849,12 @@
             var greetingEl = document.getElementById('js-hero-greeting');
             if (greetingEl) {
                 var hour = new Date().getHours();
-                var greet = 'Selamat Datang di BKK SMK MUTU';
+                var greet = 'Selamat Datang di BKKMU';
                 var emoji = '\u{1F44B}';
-                if (hour >= 4 && hour < 11) { greet = 'Selamat Pagi di BKK SMK MUTU'; emoji = '\u{1F305}'; }
-                else if (hour >= 11 && hour < 15) { greet = 'Selamat Siang di BKK SMK MUTU'; emoji = '\u2600\u{FE0F}'; }
-                else if (hour >= 15 && hour < 18) { greet = 'Selamat Sore di BKK SMK MUTU'; emoji = '\u{1F324}\u{FE0F}'; }
-                else { greet = 'Selamat Malam di BKK SMK MUTU'; emoji = '\u{1F319}'; }
+                if (hour >= 4 && hour < 11) { greet = 'Selamat Pagi di BKKMU'; emoji = '\u{1F305}'; }
+                else if (hour >= 11 && hour < 15) { greet = 'Selamat Siang di BKKMU'; emoji = '\u2600\u{FE0F}'; }
+                else if (hour >= 15 && hour < 18) { greet = 'Selamat Sore di BKKMU'; emoji = '\u{1F324}\u{FE0F}'; }
+                else { greet = 'Selamat Malam di BKKMU'; emoji = '\u{1F319}'; }
                 greetingEl.innerHTML = '<span aria-hidden="true">' + emoji + '</span> ' + greet;
                 window.requestAnimationFrame(function () { greetingEl.classList.add('is-visible'); });
             }

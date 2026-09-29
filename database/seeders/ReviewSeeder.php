@@ -24,7 +24,7 @@ class ReviewSeeder extends Seeder
         $reviews = [
             [
                 'rating' => 5,
-                'comment' => 'BKK SMK MUTU membantu saya menemukan pekerjaan impian sebagai Web Developer di PT Teknologi Nusantara. Platformnya sangat mudah digunakan!',
+                'comment' => 'BKKMU membantu saya menemukan pekerjaan impian sebagai Web Developer di PT Teknologi Nusantara. Platformnya sangat mudah digunakan!',
                 'job_title' => 'Web Developer',
                 'company_name' => 'PT Teknologi Nusantara',
                 'name' => 'Ahmad Rizky',
@@ -35,7 +35,7 @@ class ReviewSeeder extends Seeder
             ],
             [
                 'rating' => 5,
-                'comment' => 'Fitur pembuat CV-nya luar biasa! CV saya sekarang ramah ATS dan banyak perusahaan yang menghubungi. Terima kasih BKK SMK MUTU!',
+                'comment' => 'Fitur pembuat CV-nya luar biasa! CV saya sekarang ramah ATS dan banyak perusahaan yang menghubungi. Terima kasih BKKMU!',
                 'job_title' => 'Admin Staff',
                 'company_name' => 'PT Maju Bersama',
                 'name' => 'Siti Permata',

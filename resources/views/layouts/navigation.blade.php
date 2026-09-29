@@ -1,4 +1,4 @@
-﻿<!-- Custom Sidebar Styling -->
+<!-- Custom Sidebar Styling -->
 <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 
 <!-- Top Navigation Bar -->
@@ -18,8 +18,8 @@
                     <!-- Logo -->
                     <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="flex items-center ml-4">
                         <div class="flex items-center gap-3">
-                            <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Logo BKK SMK MUTU" class="w-10 h-10 rounded-xl object-cover">
-                            <span class="text-xl font-bold text-gray-900 hidden sm:block">BKK SMK MUTU</span>
+                            <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Logo BKKMU" class="w-10 h-10 rounded-xl object-cover">
+                            <span class="text-xl font-bold text-gray-900 hidden sm:block">BKKMU</span>
                         </div>
                     </a>
                 </div>
@@ -38,22 +38,22 @@
                             @endif
                         </button>
 
-                        <!-- Notifications Dropdown -->
-                        <div x-show="notifOpen" x-cloak @click.away="notifOpen = false" x-transition class="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 py-2 z-50 max-h-96 overflow-y-auto">
-                            <div class="px-4 py-3 border-b border-gray-100 flex justify-between items-center">
-                                <p class="text-sm font-semibold text-gray-900">Notifikasi</p>
+                        <!-- Notifications Dropdown — ringkas agar tidak mengganggu area utama -->
+                        <div x-show="notifOpen" x-cloak @click.away="notifOpen = false" x-transition class="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-gray-200 py-1.5 z-50 max-h-80 overflow-y-auto">
+                            <div class="px-3 py-2 border-b border-gray-100 flex justify-between items-center">
+                                <p class="text-[13px] font-semibold text-gray-900">Notifikasi</p>
                                 @if(Auth::user()->unreadNotifications->count() > 0)
-                                <a href="{{ route('notifications.markAllRead') }}" class="text-xs text-blue-600 hover:underline">Tandai sudah dibaca</a>
+                                <a href="{{ route('notifications.markAllRead') }}" class="text-[11px] text-blue-600 hover:underline">Tandai sudah dibaca</a>
                                 @endif
                             </div>
 
                             @forelse(Auth::user()->notifications()->take(5)->get() as $notification)
-                                <div class="px-4 py-3 border-b border-gray-50 {{ $notification->unread() ? 'bg-blue-50/50' : '' }}">
-                                    <p class="text-xs text-gray-800">{{ $notification->data['message'] ?? 'Ada pembaruan status lamaran Anda.' }}</p>
-                                    <p class="text-[10px] text-gray-500 mt-1">{{ $notification->created_at->diffForHumans() }}</p>
+                                <div class="px-3 py-2 border-b border-gray-50 last:border-0 {{ $notification->unread() ? 'bg-blue-50/50' : '' }}">
+                                    <p class="text-[12px] leading-snug text-gray-800 line-clamp-2">{{ $notification->data['message'] ?? 'Ada pembaruan status lamaran Anda.' }}</p>
+                                    <p class="text-[10px] text-gray-500 mt-0.5">{{ $notification->created_at->diffForHumans() }}</p>
                                 </div>
                             @empty
-                                <div class="px-4 py-6 text-center text-sm text-gray-500">
+                                <div class="px-3 py-4 text-center text-xs text-gray-500">
                                     Belum ada notifikasi
                                 </div>
                             @endforelse
@@ -112,11 +112,11 @@
                                     </svg>
                                     Verifikasi Perusahaan
                                 </a>
-                            @else
-                                <!-- Divider for non-company users -->
+                            @elseif(Auth::user()->role === 'umum')
+                                <!-- Divider for job-seeker users only (admin tidak perlu bagikan ulasan) -->
                                 <div class="border-t border-gray-100 my-2"></div>
 
-                                <!-- Leave Review Button -->
+                                <!-- Leave Review Button (khusus pengguna umum) -->
                                 <a href="{{ route('reviews.create') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-amber-600 hover:bg-amber-50 transition-colors">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>

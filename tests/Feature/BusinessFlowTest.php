@@ -324,7 +324,7 @@ class BusinessFlowTest extends TestCase
         $this->assertDatabaseHas('reviews', [
             'user_id' => $user->id,
             'rating' => 5,
-            'status' => 'pending',
+            'status' => 'approved',
             'job_title' => 'Frontend Dev',
         ]);
     }

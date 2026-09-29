@@ -1,4 +1,4 @@
-﻿<x-app-layout :full-bleed="true">
+<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-banner title="Acara Saya" subtitle="Acara yang kamu daftarkan." eyebrow="Beranda › Acara">
                         <x-slot:chips>

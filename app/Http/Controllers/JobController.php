@@ -204,9 +204,14 @@ class JobController extends Controller
             "status" => "submitted",
         ]);
 
-        // Beri tahu perusahaan pemilik lowongan.
+        // Beri tahu perusahaan pemilik lowongan (sinkron; kegagalan
+        // email tidak boleh menggagalkan lamaran yang sudah tersimpan).
         if ($job->company?->user) {
-            $job->company->user->notify(new ApplicationReceived($application));
+            try {
+                $job->company->user->notify(new ApplicationReceived($application));
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Notifikasi lamaran #' . $application->id . ' gagal dikirim: ' . $e->getMessage());
+            }
         }
 
         return redirect()

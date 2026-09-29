@@ -31,12 +31,25 @@ class CvBuilderController extends Controller
         return back()->with('success', 'CV berhasil dibuat dan tersimpan.');
     }
 
-    public function download(CvFile $cvFile)
+    public function download(CvFile $cvFile, \Illuminate\Http\Request $request)
     {
         $this->authorize('view', $cvFile);
 
         if (!Storage::disk('private')->exists($cvFile->file_path)) {
             return back()->with('error', 'File CV tidak ditemukan.');
+        }
+
+        if ($request->query('preview')) {
+            $mime = Storage::disk('private')->mimeType($cvFile->file_path);
+
+            return Storage::disk('private')->response(
+                $cvFile->file_path,
+                basename($cvFile->file_path),
+                [
+                    'Content-Type' => $mime,
+                    'Content-Disposition' => 'inline; filename="' . addslashes(basename($cvFile->file_path)) . '"',
+                ]
+            );
         }
 
         return Storage::disk('private')->download($cvFile->file_path);

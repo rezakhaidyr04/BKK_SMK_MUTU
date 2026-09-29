@@ -105,7 +105,9 @@ body {
     background-color: var(--color-background);
 }
 
-.main-content {
+/* Specificity dinaikkan (main.main-content) agar offset navbar fixed
+   tidak bisa tertimpa aturan generik lain — semua halaman butuh ini. */
+main.main-content {
     padding-top: var(--navbar-h);
     min-width: 0;
 }
@@ -243,15 +245,16 @@ body {
     margin-bottom: 24px;
 }
 
-/* Shared page-level banner treatment for legacy header slots and dashboard hero — navy ala footer. */
+/* Shared page-level banner treatment — UKURAN DISAMAKAN dengan page-banner
+   via token --banner-* (lihat resources/css/page-banner.css). */
 .app-page-header,
 .dashboard-hero {
     position: relative;
     overflow: hidden;
-    min-height: 180px;
+    min-height: var(--banner-min-h, 180px);
     margin-bottom: 2rem;
     background: #0a1633;
-    border-radius: var(--radius-lg);
+    border-radius: var(--banner-radius, var(--radius-lg));
     box-shadow: 0 8px 32px rgba(16, 42, 114, 0.12), 0 2px 8px rgba(7, 23, 51, 0.08);
 }
 /* Catatan: .page-banner diatur penuh oleh resources/css/page-banner.css (navy ala footer) agar tidak tertimpa. */
@@ -277,7 +280,7 @@ body {
 .app-page-header h2,
 .dashboard-hero h1 {
     color: #ffffff;
-    font-size: 2.5rem;
+    font-size: var(--banner-title-desktop, 2.5rem);
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: 0;
@@ -299,21 +302,24 @@ body {
     padding-bottom: 3rem;
 }
 
+/* Aturan dots dashboard-hero PINDAH ke resources/css/page-banner.css
+   (bundle Vite berversi) agar tidak terjebak cache browser. */
+
 @media (max-width: 1024px) {
     .app-page-header h2,
-    .dashboard-hero h1 { font-size: 2rem; }
+    .dashboard-hero h1 { font-size: var(--banner-title-tablet, 2rem); }
 }
 
 @media (max-width: 768px) {
     .app-page-header,
     .dashboard-hero,
-    .page-banner { min-height: 180px; margin-bottom: 1.5rem; }
+    .page-banner { min-height: var(--banner-min-h, 180px); margin-bottom: 1.5rem; }
 
     .app-page-header .page-container,
     .dashboard-hero > div { padding-top: 2rem; padding-bottom: 2rem; }
 
     .app-page-header h2,
-    .dashboard-hero h1 { font-size: 1.75rem; }
+    .dashboard-hero h1 { font-size: var(--banner-title-mobile, 1.75rem); }
 }
 
 /* Dekorasi titik kanan ala footer */
@@ -411,15 +417,16 @@ body {
 .ui-decorative-bg       { position: absolute; }
 
 .ui-notification-badge {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 0.9rem;
+    height: 0.9rem;
     background: #dc2626;
     color: #fff;
     border-radius: 9999px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
+    border: 2px solid #fff;
 }
 
 /* ============================================================
@@ -1765,8 +1772,14 @@ body {
 
 .job-form-panel .ui-panel-header {
     position: relative;
-    padding-left: 4.75rem;
+    /* !important: menang atas padding !important form global agar badge angka tidak menumpuk judul */
+    padding-left: 4.75rem !important;
     background: linear-gradient(90deg, var(--primary-light), var(--color-surface));
+}
+
+/* Badge angka menggantikan accent-bar judul di dalam panel form lowongan */
+.job-form-panel .ui-panel-title::before {
+    display: none;
 }
 
 .job-form-panel-secondary .ui-panel-header {
@@ -1820,7 +1833,7 @@ body {
 
 @media (max-width: 639px) {
     .job-form-panel .ui-panel-header {
-        padding-left: 4.25rem;
+        padding-left: 4.25rem !important;
     }
 
     .job-form-section-icon {
@@ -3047,9 +3060,10 @@ footer {
     overflow-x: hidden;         /* cegah horizontal overflow global */
 }
 
-/* Main content area */
+/* Main content area — padding-top WAJIB var(--navbar-h) sebagai
+   kompensasi navbar fixed; jangan pernah 0 (konten ketutup navbar). */
 .main-content {
-    padding-top: 0;
+    padding-top: var(--navbar-h);
     padding-bottom: 2rem;
     width: 100%;
     max-width: 100%;

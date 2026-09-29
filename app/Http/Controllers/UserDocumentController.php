@@ -43,15 +43,30 @@ class UserDocumentController extends Controller
         return redirect()->back()->with('success', 'Dokumen berhasil dihapus.');
     }
 
-    public function download(UserDocument $document)
+    public function download(UserDocument $document, \Illuminate\Http\Request $request)
     {
         $this->authorize('view', $document);
 
         abort_unless(Storage::disk('private')->exists($document->file_path), 404);
 
+        $filename = $document->original_name ?: basename($document->file_path);
+
+        if ($request->query('preview')) {
+            $mime = Storage::disk('private')->mimeType($document->file_path);
+
+            return Storage::disk('private')->response(
+                $document->file_path,
+                $filename,
+                [
+                    'Content-Type' => $mime,
+                    'Content-Disposition' => 'inline; filename="' . addslashes($filename) . '"',
+                ]
+            );
+        }
+
         return Storage::disk('private')->download(
             $document->file_path,
-            $document->original_name ?: basename($document->file_path)
+            $filename
         );
     }
 }

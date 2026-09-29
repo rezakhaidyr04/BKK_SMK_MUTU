@@ -1,4 +1,4 @@
-<x-app-layout title="Log Aktivitas — BKK SMK MUTU" description="Riwayat aktivitas admin pada sistem BKK SMK MUTU." :full-bleed="true">
+<x-app-layout title="Log Aktivitas — BKKMU" description="Riwayat aktivitas admin pada sistem BKKMU." :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-banner title="Log Aktivitas" subtitle="Riwayat tindakan mutasi yang dilakukan oleh admin." eyebrow="Admin › Aktivitas">
                         <x-slot:chips>

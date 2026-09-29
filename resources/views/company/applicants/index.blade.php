@@ -1,4 +1,4 @@
-﻿<x-app-layout :full-bleed="true">
+<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-banner 
             title="Pelamar" 
@@ -271,7 +271,7 @@
 
                                 @if($application->attachment_name)
 
-                                    <div class="flex max-w-[180px] items-center gap-2">
+                                    <a href="{{ route('applications.attachment.download', $application) }}" class="flex max-w-[180px] items-center gap-2 rounded-lg px-1 py-0.5 transition hover:bg-blue-50" title="Unduh {{ $application->attachment_name }}">
 
                                         <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
                                             <svg
@@ -296,13 +296,13 @@
                                         </div>
 
                                         <span
-                                            class="truncate text-sm text-slate-600"
+                                            class="truncate text-sm text-blue-700 underline-offset-2 hover:underline"
                                             title="{{ $application->attachment_name }}"
                                         >
                                             {{ $application->attachment_name }}
                                         </span>
 
-                                    </div>
+                                    </a>
 
                                 @else
 
@@ -450,10 +450,12 @@
                                                 </div>
 
 
-                                                {{-- MODAL FORM --}}
+                                                {{-- MODAL FORM — konfirmasi Diterima/Ditolak via showConfirm global --}}
                                                 <form
                                                     method="POST"
                                                     action="{{ route('company.applications.update', $application) }}"
+                                                    class="js-status-form"
+                                                    data-applicant-name="{{ $application->user->name }}"
                                                 >
 
                                                     @csrf
@@ -727,4 +729,52 @@
             </x-ui.panel>
         </div>
     </div>
+
+    @push('scripts')
+    <script>
+    // Konfirmasi sebelum ubah status Diterima / Ditolak (temuan testing #6).
+    // Memakai modal konfirmasi global (showConfirm + confirmForm).
+    document.addEventListener('submit', function (e) {
+        const form = e.target;
+        if (!(form instanceof HTMLFormElement) || !form.classList.contains('js-status-form')) return;
+        if (form.dataset.confirmFired === '1') {
+            form.dataset.confirmFired = '0';
+            return;
+        }
+        const select = form.querySelector('select[name="status"]');
+        const status = select ? select.value : '';
+        if (status !== 'accepted' && status !== 'rejected') return; // status lain langsung simpan
+        e.preventDefault();
+        const name = form.getAttribute('data-applicant-name') || 'pelamar ini';
+        if (typeof showConfirm !== 'function') {
+            if (confirm(status === 'accepted' ? ('Apakah Anda yakin ingin menerima ' + name + '?') : ('Apakah Anda yakin ingin menolak lamaran ' + name + '?'))) {
+                form.dataset.confirmFired = '1';
+                form.submit();
+            }
+            return;
+        }
+        if (status === 'accepted') {
+            confirmForm = form;
+            showConfirm('Apakah Anda yakin ingin menerima pelamar ini? Status akan diubah menjadi Diterima dan pelamar akan menerima notifikasi.', {
+                title: 'Terima Pelamar Ini?',
+                eyebrow: 'KONFIRMASI PENERIMAAN',
+                okText: 'Ya, Terima',
+                infoMain: name,
+                infoSub: 'Status lamaran akan diubah menjadi Diterima',
+                variant: 'success',
+            });
+        } else {
+            confirmForm = form;
+            showConfirm('Apakah Anda yakin ingin menolak lamaran ini? Status akan diubah menjadi Ditolak dan pelamar akan menerima notifikasi.', {
+                title: 'Tolak Lamaran Ini?',
+                eyebrow: 'KONFIRMASI PENOLAKAN',
+                okText: 'Ya, Tolak',
+                infoMain: name,
+                infoSub: 'Status lamaran akan diubah menjadi Ditolak',
+                variant: 'danger',
+            });
+        }
+    }, true);
+    </script>
+    @endpush
 </x-app-layout>

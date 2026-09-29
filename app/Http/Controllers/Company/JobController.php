@@ -30,7 +30,15 @@ class JobController extends Controller
 
         $jobs = $query->withCount('applications')->latest()->paginate(10)->withQueryString();
 
-        return view('company.jobs.index', compact('jobs'));
+        $companyId = $company?->id;
+        $stats = [
+            'total'      => Job::where('company_id', $companyId)->count(),
+            'active'     => Job::where('company_id', $companyId)->where('status', 'active')->count(),
+            'closed'     => Job::where('company_id', $companyId)->where('status', 'closed')->count(),
+            'applicants' => \App\Models\Application::whereHas('job', fn ($q) => $q->where('company_id', $companyId))->count(),
+        ];
+
+        return view('company.jobs.index', compact('jobs', 'stats'));
     }
 
     public function create()

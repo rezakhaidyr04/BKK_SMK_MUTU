@@ -95,7 +95,8 @@
                     label="Lamaran Aktif"
                     :value="$stats['active_applications']"
                     color="blue"
-                    footnote="Sedang diproses"
+                    :href="route('applications.index')"
+                    hrefLabel="Lihat lamaran →"
                     class="animate-slide-up animate-slide-up-1"
                 >
                     <x-slot:icon>
@@ -109,7 +110,8 @@
                     label="Wawancara"
                     :value="$stats['interview_count']"
                     color="blue"
-                    footnote="Terjadwal"
+                    :href="route('applications.index', ['status' => 'interviewed'])"
+                    hrefLabel="Lihat jadwal →"
                     class="animate-slide-up animate-slide-up-2"
                 >
                     <x-slot:icon>
@@ -123,7 +125,8 @@
                     label="Diterima"
                     :value="$stats['accepted_count']"
                     color="green"
-                    footnote="Berhasil diterima"
+                    :href="route('applications.index', ['status' => 'accepted'])"
+                    hrefLabel="Lihat hasil →"
                     class="animate-slide-up animate-slide-up-3"
                 >
                     <x-slot:icon>
@@ -137,7 +140,8 @@
                     label="Disimpan"
                     :value="$stats['bookmarked_jobs']"
                     color="yellow"
-                    footnote="Lowongan tersimpan"
+                    :href="route('bookmarks.index')"
+                    hrefLabel="Lihat simpanan →"
                     class="animate-slide-up animate-slide-up-4"
                 >
                     <x-slot:icon>
@@ -151,7 +155,8 @@
                     label="Pesan"
                     :value="$stats['unread_messages']"
                     color="red"
-                    footnote="Pesan belum dibaca"
+                    :href="route('messages.index')"
+                    hrefLabel="Buka pesan →"
                     class="animate-slide-up animate-slide-up-5"
                 >
                     <x-slot:icon>

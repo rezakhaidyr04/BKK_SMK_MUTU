@@ -85,10 +85,28 @@ class JobController extends Controller
     {
         $jobseekers = \App\Models\User::where('role', 'umum')->get();
 
-        \Illuminate\Support\Facades\Notification::send($jobseekers, new \App\Notifications\NewJobNotification($job));
+        // Kirim sinkron langsung via Mailable (bukan antrean database) agar
+        // langsung sampai ke email pencari kerja tanpa tergantung worker.
+        // Mailable membawa header List-Unsubscribe agar tidak dianggap spam.
+        $sent = 0;
+        $failed = 0;
+        foreach ($jobseekers as $user) {
+            try {
+                \Illuminate\Support\Facades\Mail::to($user->email)
+                    ->send(new \App\Mail\JobBroadcastMail($job, $user));
+                $sent++;
+            } catch (\Throwable $e) {
+                $failed++;
+                \Illuminate\Support\Facades\Log::warning('Broadcast lowongan #' . $job->id . ' gagal ke ' . $user->email . ': ' . $e->getMessage());
+            }
+        }
 
-        return redirect()->back()
-            ->with('success', 'Notifikasi lowongan kerja berhasil di-broadcast ke ' . $jobseekers->count() . ' pencari kerja melalui email.');
+        $message = 'Notifikasi lowongan kerja berhasil di-broadcast ke ' . $sent . ' pencari kerja melalui email.';
+        if ($failed > 0) {
+            $message .= ' (' . $failed . ' gagal — periksa log/email penerima.)';
+        }
+
+        return redirect()->back()->with('success', $message);
     }
 
     public function approve(Job $job)

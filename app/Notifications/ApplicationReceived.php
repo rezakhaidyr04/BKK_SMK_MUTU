@@ -5,10 +5,11 @@ namespace App\Notifications;
 use App\Models\Application;
 use App\Support\Label;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class ApplicationReceived extends Notification implements ShouldQueue
+// Sinkron (tanpa ShouldQueue): dikirim langsung saat melamar agar tidak
+// nyangkut di antrean database tanpa worker.
+class ApplicationReceived extends Notification
 {
     use Queueable;
 
@@ -17,7 +18,6 @@ class ApplicationReceived extends Notification implements ShouldQueue
     public function __construct(Application $application)
     {
         $this->application = $application;
-        $this->onQueue('notifications');
     }
 
     public function via($notifiable)
@@ -42,16 +42,23 @@ class ApplicationReceived extends Notification implements ShouldQueue
 
     public function toMail($notifiable)
     {
-        $job = $this->application->job;
+        $application = $this->application;
+        $job = $application->job;
         $jobTitle = $job->title ?? 'lowongan Anda';
-        $applicantName = optional($this->application->user)->name ?? 'Pelamar';
+        $applicant = $application->user;
 
         return (new \Illuminate\Notifications\Messages\MailMessage)
-            ->subject('Lamaran baru untuk ' . $jobTitle)
-            ->greeting('Halo ' . ($notifiable->name ?? ''))
-            ->line('Anda menerima lamaran baru dari ' . $applicantName . '.')
-            ->line('Lowongan: ' . ($job->title ?? __('bkk.fallback.not_available')))
-            ->action('Lihat Pelamar', url(route('company.applicants.index')))
-            ->line('Terima kasih telah menggunakan platform kami!');
+            ->subject('Lamaran baru dari ' . ($applicant->name ?? 'Pelamar') . ' — ' . $jobTitle)
+            ->markdown('emails.applications.received', [
+                'companyName'    => $notifiable->name ?? $job->company_name ?? 'Perusahaan',
+                'applicantName'  => $applicant->name ?? 'Pelamar',
+                'applicantEmail' => $applicant->email ?? '-',
+                'jobTitle'       => $jobTitle,
+                'company'        => $job->company_name ?? 'Perusahaan',
+                'appliedAt'      => $application->created_at
+                    ? $application->created_at->translatedFormat('d F Y, H:i')
+                    : '-',
+                'url'            => route('company.applicants.show', $application->id),
+            ]);
     }
 }

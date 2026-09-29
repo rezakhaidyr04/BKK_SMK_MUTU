@@ -6,7 +6,7 @@
 <div
     x-data="{
         toasts: [],
-        add(type, message, duration = 4000) {
+        add(type, message, duration = 3000) {
             const id = Date.now();
             this.toasts.push({ id, type, message, visible: false });
             this.$nextTick(() => {
@@ -65,7 +65,7 @@
             $nextTick(() => add('info', '{{ addslashes(session('info')) }}'));
         @endif
     "
-    class="fixed top-5 right-5 z-[9999] flex flex-col gap-3 pointer-events-none"
+    class="fixed top-4 right-4 z-[9999] flex flex-col gap-2 pointer-events-none"
     aria-live="assertive"
     aria-atomic="true"
 >
@@ -79,10 +79,10 @@
             x-transition:leave-start="opacity-100 translate-x-0 scale-100"
             x-transition:leave-end="opacity-0 translate-x-8 scale-95"
             :class="colors(toast.type)"
-            class="pointer-events-auto flex items-start gap-3 px-4 py-3 rounded-2xl border shadow-lg w-80 max-w-sm"
+            class="pointer-events-auto flex items-start gap-2 px-3 py-2.5 rounded-xl border shadow-md w-72 max-w-xs"
         >
-            <div :class="iconColors(toast.type)" class="flex-shrink-0 mt-0.5" x-html="icon(toast.type)"></div>
-            <p class="flex-1 text-sm font-medium leading-snug" x-text="toast.message"></p>
+            <div :class="iconColors(toast.type)" class="flex-shrink-0 mt-px" x-html="icon(toast.type)"></div>
+            <p class="flex-1 text-[13px] font-medium leading-snug line-clamp-3" x-text="toast.message"></p>
             <button @click="remove(toast.id)" class="flex-shrink-0 opacity-60 hover:opacity-100 transition-opacity ml-1">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>

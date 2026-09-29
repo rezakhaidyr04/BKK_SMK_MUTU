@@ -1,4 +1,4 @@
-﻿<x-app-layout :full-bleed="true" :hide-sidebar="!auth()->check()">
+<x-app-layout :full-bleed="true" :hide-sidebar="!auth()->check()">
     <div class="page-shell">
         <x-ui.page-banner 
             title="{{ $job->title }}" 
@@ -161,21 +161,18 @@
                                         </div>
 
                                         <h3 class="font-bold text-gray-900 mb-3">Kualifikasi / Tanggung Jawab</h3>
-                                        <!-- Since qualifications is raw text, we wrap it in a div that styles lists with checkmarks -->
+                                        <!-- Kualifikasi dinamis dari data perusahaan -->
                                         <div class="text-sm text-gray-700 leading-relaxed space-y-2 mb-8">
                                             @if($job->qualifications)
                                                 {!! nl2br(e($job->qualifications)) !!}
                                             @else
-                                                <ul class="space-y-2">
-                                                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Mengoperasikan mesin produksi sesuai SOP</li>
-                                                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Menjaga kualitas produk sesuai standar</li>
-                                                </ul>
+                                                <p class="text-sm text-slate-500">Kualifikasi belum diisi oleh perusahaan.</p>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Info Grid (Pendidikan, Pengalaman, dll) -->
+                                <!-- Info Grid (Pendidikan, Pengalaman, dll) — dinamis dari data perusahaan -->
                                 <div class="bg-[#FFF9E6] border border-yellow-200 rounded-2xl p-5 mb-8">
                                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                         <div class="flex items-center gap-3">
@@ -184,7 +181,7 @@
                                             </div>
                                             <div>
                                                 <div class="text-[11px] text-gray-500">Pendidikan</div>
-                                                <div class="text-sm font-semibold text-gray-900">SMK / D3</div>
+                                                <div class="text-sm font-semibold text-gray-900">{{ $job->education ?: '—' }}</div>
                                             </div>
                                         </div>
                                         <div class="flex items-center gap-3">
@@ -193,7 +190,7 @@
                                             </div>
                                             <div>
                                                 <div class="text-[11px] text-gray-500">Pengalaman</div>
-                                                <div class="text-sm font-semibold text-gray-900">1 - 2 Tahun</div>
+                                                <div class="text-sm font-semibold text-gray-900">{{ $job->experience ?: '—' }}</div>
                                             </div>
                                         </div>
                                         <div class="flex items-center gap-3">
@@ -202,7 +199,7 @@
                                             </div>
                                             <div>
                                                 <div class="text-[11px] text-gray-500">Jenis Kelamin</div>
-                                                <div class="text-sm font-semibold text-gray-900">Laki-laki / Perempuan</div>
+                                                <div class="text-sm font-semibold text-gray-900">{{ $job->gender ?: '—' }}</div>
                                             </div>
                                         </div>
                                         <div class="flex items-center gap-3">
@@ -211,42 +208,34 @@
                                             </div>
                                             <div>
                                                 <div class="text-[11px] text-gray-500">Usia</div>
-                                                <div class="text-sm font-semibold text-gray-900">18 - 25 Tahun</div>
+                                                <div class="text-sm font-semibold text-gray-900">{{ $job->age_range ?: '—' }}</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Benefit Section -->
+                                <!-- Benefit Section — dinamis dari data perusahaan -->
                                 <h3 class="font-bold text-gray-900 mb-4">Benefit</h3>
-                                <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8 border-b border-gray-100 pb-8">
-                                    <div class="flex items-center gap-3">
-                                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-                                        <div class="text-sm text-gray-700 font-medium">BPJS Kesehatan<br><span class="text-xs text-gray-500 font-normal">dan Ketenagakerjaan</span></div>
+                                @php
+                                    $benefitItems = collect(preg_split('/[\r\n,;]+/', $job->benefits ?? ''))
+                                        ->map(fn ($b) => trim($b))
+                                        ->filter()
+                                        ->values();
+                                @endphp
+                                @if($benefitItems->isNotEmpty())
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-8 border-b border-gray-100 pb-8">
+                                    @foreach($benefitItems as $benefit)
+                                    <div class="flex items-center gap-3 rounded-xl border border-green-100 bg-green-50/50 px-3 py-2.5">
+                                        <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                        <div class="text-sm text-gray-700 font-medium leading-snug">{{ $benefit }}</div>
                                     </div>
-                                    <div class="flex items-center gap-3">
-                                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>
-                                        <div class="text-sm text-gray-700 font-medium">Uang Makan<br><span class="text-xs text-gray-500 font-normal">dan Transport</span></div>
-                                    </div>
-                                    <div class="flex items-center gap-3">
-                                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                        <div class="text-sm text-gray-700 font-medium">THR</div>
-                                    </div>
-                                    <div class="flex items-center gap-3">
-                                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-                                        <div class="text-sm text-gray-700 font-medium">Bonus Kinerja</div>
-                                    </div>
-                                    <div class="flex items-center gap-3">
-                                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                        <div class="text-sm text-gray-700 font-medium">Lembur<br><span class="text-xs text-gray-500 font-normal">(jika ada)</span></div>
-                                    </div>
-                                    <div class="flex items-center gap-3">
-                                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
-                                        <div class="text-sm text-gray-700 font-medium">Jenjang Karir</div>
-                                    </div>
+                                    @endforeach
                                 </div>
+                                @else
+                                <p class="text-sm text-slate-500 mb-8 border-b border-gray-100 pb-8">Benefit belum diisi oleh perusahaan.</p>
+                                @endif
 
-                                <!-- Lokasi & Jam Kerja -->
+                                <!-- Lokasi & Jam Kerja — dinamis dari data perusahaan -->
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div class="flex items-start gap-4">
                                         <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-blue-500 flex-shrink-0">
@@ -254,7 +243,7 @@
                                         </div>
                                         <div>
                                             <div class="text-sm font-bold text-gray-900">Jam Kerja</div>
-                                            <div class="text-sm text-gray-600 mt-1">Senin - Jumat (08.00 - 17.00)</div>
+                                            <div class="text-sm text-gray-600 mt-1">{{ $job->work_hours ?: 'Belum ditentukan perusahaan' }}</div>
                                         </div>
                                     </div>
                                     <div class="flex items-start gap-4 justify-between">
@@ -288,14 +277,24 @@
                             <div x-show="activeTab === 'tentang'" x-cloak>
                                 <h3 class="font-bold text-gray-900 mb-3">Tentang Perusahaan</h3>
                                 <div class="text-sm text-gray-700 leading-relaxed">
-                                    Informasi perusahaan belum tersedia.
+                                    @if($job->company?->description)
+                                        {!! nl2br(e($job->company->description)) !!}
+                                    @else
+                                        Informasi perusahaan belum tersedia.
+                                    @endif
                                 </div>
                             </div>
                             <div x-show="activeTab === 'lokasi'" x-cloak>
                                 <h3 class="font-bold text-gray-900 mb-3">Lokasi Lengkap</h3>
                                 <div class="text-sm text-gray-700 leading-relaxed">
-                                    {{ $job->location }}
+                                    {{ $job->company?->address ?? $job->location ?? 'Lokasi belum diisi perusahaan.' }}
                                 </div>
+                                @if($job->work_hours)
+                                <h3 class="font-bold text-gray-900 mt-4 mb-2">Jam Kerja</h3>
+                                <div class="text-sm text-gray-700 leading-relaxed">
+                                    {{ $job->work_hours }}
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -345,17 +344,27 @@
                                  <h3 class="text-base font-bold text-gray-900 mb-1">Aksi tidak tersedia</h3>
                                  <p class="text-xs text-gray-500">Melamar lowongan hanya tersedia untuk akun pencari kerja.</p>
                              </div>
-                         @elseif($hasApplied)
-                                <div class="text-center py-6">
-                                    <div class="w-16 h-16 mx-auto mb-4 bg-green-50 rounded-full flex items-center justify-center">
-                                        <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                    </div>
-                                    <h3 class="text-lg font-bold text-gray-900 mb-2">Lamaran Terkirim</h3>
-                                    <p class="text-sm text-gray-500 mb-6">Anda sudah melamar posisi ini. Silakan cek status lamaran Anda.</p>
-                                    <a href="{{ route('applications.index') }}" class="block w-full px-4 py-3 bg-blue-600 text-white font-semibold text-center rounded-xl hover:bg-blue-700 transition-colors">
-                                        Lihat Lamaran Saya
-                                    </a>
-                                </div>
+                          @elseif($hasApplied)
+                                 <div class="text-center py-6">
+                                     <div class="w-16 h-16 mx-auto mb-4 bg-green-50 rounded-full flex items-center justify-center">
+                                         <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                     </div>
+                                     <h3 class="text-lg font-bold text-gray-900 mb-2">Lamaran Terkirim</h3>
+                                     <p class="text-sm text-gray-500 mb-6">Anda sudah melamar posisi ini. Silakan cek status lamaran Anda.</p>
+                                     <a href="{{ route('applications.index') }}" class="block w-full px-4 py-3 bg-blue-600 text-white font-semibold text-center rounded-xl hover:bg-blue-700 transition-colors">
+                                         Lihat Lamaran Saya
+                                     </a>
+                                     @if($job->company?->user_id)
+                                     <form action="{{ route('messages.start') }}" method="POST" class="mt-2">
+                                         @csrf
+                                         <input type="hidden" name="recipient_id" value="{{ $job->company->user_id }}">
+                                         <input type="hidden" name="job_id" value="{{ $job->id }}">
+                                         <button type="submit" class="block w-full px-4 py-2.5 border border-blue-600 text-blue-600 font-semibold text-center rounded-xl hover:bg-blue-50 transition-colors text-sm">
+                                             Chat Perusahaan
+                                         </button>
+                                     </form>
+                                     @endif
+                                 </div>
                             @else
                                 <h3 class="text-lg font-bold text-gray-900 mb-6">Lamar Posisi Ini</h3>
                                 
@@ -471,6 +480,19 @@
                                         Data Anda aman dan hanya dapat dilihat oleh perusahaan terkait.
                                     </p>
                                 </div>
+                                @if($job->company?->user_id)
+                                <div class="mt-3 border-t border-slate-100 pt-3">
+                                    <p class="text-xs text-slate-500 text-center mb-2">Belum yakin? Tanya perusahaan dulu tanpa harus melamar.</p>
+                                    <form action="{{ route('messages.start') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="recipient_id" value="{{ $job->company->user_id }}">
+                                        <input type="hidden" name="job_id" value="{{ $job->id }}">
+                                        <button type="submit" class="block w-full px-4 py-2.5 border border-slate-200 text-slate-700 font-semibold text-center rounded-xl hover:border-blue-300 hover:text-blue-700 hover:bg-blue-50 transition-colors text-sm">
+                                            Tanya via Chat
+                                        </button>
+                                    </form>
+                                </div>
+                                @endif
                             @endif
                         @else
                             <div class="text-center py-4">
@@ -518,7 +540,9 @@
                                 @endif
                             </div>
                         </div>
-                        @if(auth()->check() && auth()->user()->isUmum() && ($job->company?->user_id))
+                        {{-- Kontak perusahaan tersedia sebelum melamar: pelamar ↔ perusahaan dapat chat langsung dari halaman lowongan. --}}
+                        @if(auth()->check() && auth()->user()->isUmum() && $job->company)
+                        @if($job->company->user_id)
                         <form action="{{ route('messages.start') }}" method="POST" class="mb-2">
                             @csrf
                             <input type="hidden" name="recipient_id" value="{{ $job->company->user_id }}">
@@ -527,11 +551,21 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
                                 Hubungi Perusahaan
                             </button>
+                            <p class="mt-1.5 text-[11px] text-slate-500 text-center leading-snug">Bisa dihubungi sebelum melamar — tanya detail lowongan dulu.</p>
                         </form>
+                        @else
+                        <div class="mb-2 rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-center">
+                            <p class="text-xs font-semibold text-slate-600">Chat perusahaan belum tersedia</p>
+                            <p class="mt-0.5 text-[11px] text-slate-500">Perusahaan ini belum mengaktifkan akun chat.</p>
+                        </div>
                         @endif
-                        <button class="w-full px-4 py-2 border border-gray-200 text-gray-500 text-sm font-semibold rounded-lg cursor-not-allowed" disabled title="Halaman profil perusahaan segera hadir">
+                        @endif
+                        @if($job->company_id && $job->company && !$job->company->trashed())
+                        <a href="{{ route('companies.show', $job->company_id) }}" class="w-full px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                             Lihat Profil Perusahaan
-                        </button>
+                        </a>
+                        @endif
                     </div>
 
                     <!-- Similar Jobs -->

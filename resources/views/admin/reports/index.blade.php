@@ -8,7 +8,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                 <div>
                     <p class="text-xs font-bold uppercase tracking-[0.2em] mb-2" style="color:rgba(165,180,252,1);">
-                        &#9679; Admin Panel &mdash; BKK SMK MUTU
+                        &#9679; Admin Panel &mdash; BKKMU
                     </p>
                     <h1 class="text-3xl font-black text-white tracking-tight">Laporan &amp; Analitik</h1>
                     <p class="mt-1 text-sm" style="color:rgba(148,163,184,1);">

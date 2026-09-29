@@ -76,10 +76,16 @@ class ApplicantController extends Controller
         if ($oldStatus !== $application->status) {
             // P5.7: null-safe — lewati notifikasi bila akun pelamar sudah
             // dihapus (relasi user null), status tetap diperbarui.
-            if ($application->status === 'interviewed') {
-                $application->user?->notify(new \App\Notifications\InterviewScheduled($application));
-            } else {
-                $application->user?->notify(new \App\Notifications\ApplicationStatusUpdated($application));
+            // Sinkron + try/catch: kegagalan email tidak boleh
+            // menggagalkan update status yang sudah tersimpan.
+            try {
+                if ($application->status === 'interviewed') {
+                    $application->user?->notify(new \App\Notifications\InterviewScheduled($application));
+                } else {
+                    $application->user?->notify(new \App\Notifications\ApplicationStatusUpdated($application));
+                }
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Notifikasi status lamaran #' . $application->id . ' gagal dikirim: ' . $e->getMessage());
             }
         }
 

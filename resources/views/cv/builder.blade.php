@@ -1,4 +1,4 @@
-﻿<x-app-layout :full-bleed="true">
+<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-banner
             title="CV Profesional"

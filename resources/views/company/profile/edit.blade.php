@@ -306,7 +306,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <p class="text-sm font-handwriting text-blue-600 italic">Terima kasih telah bergabung<br>dengan BKK SMK MUTU</p>
+                        <p class="text-sm font-handwriting text-blue-600 italic">Terima kasih telah bergabung<br>dengan BKKMU</p>
                         <div class="mt-1 w-12 h-0.5 bg-blue-600 rounded-full"></div>
                     </div>
                 </div>

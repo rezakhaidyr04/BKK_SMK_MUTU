@@ -1,43 +1,32 @@
-﻿<x-app-layout :full-bleed="true" :hide-sidebar="!auth()->check()" title="Lowongan Kerja — BKK SMK MUTU" description="Daftar lowongan kerja terbaru dari perusahaan mitra BKK SMK MUTU. Temukan peluang karier untuk siswa dan alumni.">
+<x-app-layout :full-bleed="true" :hide-sidebar="!auth()->check()" title="Lowongan Kerja — BKKMU" description="Daftar lowongan kerja terbaru dari perusahaan mitra BKKMU. Temukan peluang karier untuk siswa dan alumni.">
     <div class="page-shell">
-    <!-- Hero Search Section -->
-    <section class="jobs-search-hero border-b border-slate-200">
-        <div class="page-container">
-            <div class="w-full flex flex-wrap items-start justify-between gap-4">
-                <div>
-                <div class="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white border border-white/20 mb-3">
-                    Lowongan aktif · Filter cepat · Siap dilamar
-                </div>
-                <h1 class="text-3xl font-bold text-white">Temukan Pekerjaan Impian Anda</h1>
-                <p class="mt-2 text-blue-100 max-w-2xl">Temukan {{ $jobs->total() }} peluang yang menunggu Anda, lalu saring hasilnya agar lebih sesuai dengan posisi, lokasi, dan jenis pekerjaan yang dicari.</p>
-                </div>
-                @auth
-                <x-ui.btn href="{{ route('dashboard') }}" variant="white" size="sm" class="shrink-0">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                    </svg>
-                    Kembali ke Dasbor
-                </x-ui.btn>
-                @endauth
-            </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 mt-5">
-                    <div class="bg-white/10 border border-white/20 rounded-xl p-4 backdrop-blur-sm">
-                        <p class="text-xs uppercase tracking-[0.18em] text-blue-200 font-semibold">Langkah 1</p>
-                        <p class="text-white font-semibold mt-1">Cari lowongan yang relevan</p>
-                    </div>
-                    <div class="bg-white/10 border border-white/20 rounded-xl p-4 backdrop-blur-sm">
-                        <p class="text-xs uppercase tracking-[0.18em] text-blue-200 font-semibold">Langkah 2</p>
-                        <p class="text-white font-semibold mt-1">Simpan yang paling cocok</p>
-                    </div>
-                    <div class="bg-white/10 border border-white/20 rounded-xl p-4 backdrop-blur-sm">
-                        <p class="text-xs uppercase tracking-[0.18em] text-blue-200 font-semibold">Langkah 3</p>
-                        <p class="text-white font-semibold mt-1">Lamar dan pantau progres</p>
-                    </div>
-                </div>
+    <x-ui.page-banner title="Temukan Pekerjaan Impian Anda" subtitle="Temukan peluang kerja dan saring sesuai minat Anda." eyebrow="Beranda › Lowongan">
+        <x-slot:chips>
+            <span class="page-banner__chip">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                {{ $jobs->total() }} Peluang · Siap Dilamar
+            </span>
+            <span class="page-banner__chip">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                Filter Cepat
+            </span>
+        </x-slot:chips>
+        <x-slot:actions>
+            @auth
+            <x-ui.btn href="{{ route('dashboard') }}" variant="white" size="sm" class="shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Kembali ke Dasbor
+            </x-ui.btn>
+            @endauth
+        </x-slot:actions>
+    </x-ui.page-banner>
 
-                <!-- Advanced Search Form -->
-                <form action="{{ route('jobs.index') }}" method="GET" class="w-full">
-                    <div class="bg-white shadow-lg border border-slate-100 rounded-2xl p-5 md:p-6 mt-2">
+        <div class="page-container page-section">
+            <!-- Search Filter -->
+            <form action="{{ route('jobs.index') }}" method="GET" class="w-full" data-reveal>
+                <div class="bg-white shadow-sm border border-slate-200 rounded-2xl p-5 md:p-6 mb-4">
                         <div class="flex items-center justify-between gap-3 mb-4">
                             <div>
                                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Filter pencarian</p>
@@ -104,10 +93,7 @@
                         </div>
                     </div>
                 </form>
-        </div>
-    </section>
 
-        <div class="page-container page-section mt-6">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
                 <div class="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl px-5 py-4 text-white shadow-md">
                     <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue-200">Lowongan Aktif</p>

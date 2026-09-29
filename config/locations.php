@@ -7,7 +7,7 @@ return [
     | Daftar Lokasi Lowongan Kerja
     |--------------------------------------------------------------------------
     |
-    | Daftar kabupaten di area kerja BKK SMK MUTU.
+    | Daftar kabupaten di area kerja BKKMU.
     |
     */
 

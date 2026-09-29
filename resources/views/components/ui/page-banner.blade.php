@@ -7,9 +7,22 @@
     'variant' => 'default', // default, compact, accent
     'actions' => null,
     'chips' => null,
+    'logo' => null, // opsional: logo/initial di kiri judul (tidak memengaruhi banner tanpa logo)
 ])
 
-<div class="page-banner page-banner--{{ $variant }}">
+<div class="page-banner page-banner--{{ $variant }}{{ $logo ? ' page-banner--with-logo' : '' }}">
+    {{-- Lapisan dekorasi: garis aksen + orb melayang + ring --}}
+    <div class="page-banner__decor" aria-hidden="true">
+        <span class="page-banner__orb page-banner__orb--1"></span>
+        <span class="page-banner__orb page-banner__orb--2"></span>
+        <span class="page-banner__orb page-banner__orb--3"></span>
+        <span class="page-banner__ring"></span>
+    </div>
+    @if($logo)
+    <div class="page-banner__side">
+        {{ $logo }}
+    </div>
+    @endif
     <div class="page-banner__content">
         {{-- Back Link --}}
         @if($backUrl)

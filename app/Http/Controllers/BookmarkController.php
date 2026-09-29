@@ -11,7 +11,7 @@ class BookmarkController extends Controller
     public function index()
     {
         $bookmarks = Bookmark::with(['job' => function ($query) {
-            $query->withTrashed();
+            $query->withTrashed()->with('company');
         }])
             ->where('user_id', Auth::id())
             ->latest()

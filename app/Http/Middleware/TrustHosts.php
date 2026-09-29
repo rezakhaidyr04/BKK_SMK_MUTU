@@ -15,6 +15,11 @@ class TrustHosts extends Middleware
     {
         return [
             $this->allSubdomainsOfApplicationUrl(),
+            // Testing dari laptop via Cloudflare Tunnel / LAN:
+            '.*\.trycloudflare\.com',
+            '.*\.cfargotunnel\.com',
+            '.*\.ngrok\.io',
+            '.*\.ngrok-free\.app',
         ];
     }
 }

@@ -1,4 +1,4 @@
-﻿<x-app-layout :full-bleed="true">
+<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-banner title="Buat Lowongan Baru" subtitle="Tambah lowongan kerja baru untuk perusahaan." eyebrow="Admin › Lowongan">
                         <x-slot:chips>
@@ -89,6 +89,28 @@
                                     <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Nonaktif</option>
                                     <option value="closed"   {{ old('status') == 'closed'   ? 'selected' : '' }}>Ditutup</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="grid gap-4 md:grid-cols-2">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Pendidikan Minimal</label>
+                                <input type="text" name="education" value="{{ old('education') }}" placeholder="cth: SMK / D3 / S1" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Pengalaman</label>
+                                <input type="text" name="experience" value="{{ old('experience') }}" placeholder="cth: 1 - 2 Tahun" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Jenis Kelamin</label>
+                                <input type="text" name="gender" value="{{ old('gender') }}" placeholder="cth: Laki-laki / Perempuan" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Rentang Usia</label>
+                                <input type="text" name="age_range" value="{{ old('age_range') }}" placeholder="cth: 18 - 25 Tahun" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Jam Kerja</label>
+                                <input type="text" name="work_hours" value="{{ old('work_hours') }}" placeholder="cth: Senin - Jumat (08.00 - 17.00)" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                             </div>
                         </div>
                         <div>

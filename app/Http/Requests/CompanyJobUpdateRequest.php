@@ -22,6 +22,11 @@ class CompanyJobUpdateRequest extends FormRequest
             'salary_max' => ['nullable', 'numeric', 'min:0'],
             'description' => ['required', 'string'],
             'qualifications' => ['required', 'string'],
+            'education' => ['nullable', 'string', 'max:255'],
+            'experience' => ['nullable', 'string', 'max:255'],
+            'gender' => ['nullable', 'string', 'max:255'],
+            'age_range' => ['nullable', 'string', 'max:255'],
+            'work_hours' => ['nullable', 'string', 'max:255'],
             'benefits' => ['nullable', 'string'],
             'deadline' => ['nullable', 'date'],
         ];

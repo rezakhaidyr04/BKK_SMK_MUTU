@@ -68,7 +68,7 @@
                 <label for="comment" class="block text-sm font-semibold text-gray-900 mb-2">Ulasan Anda</label>
                 <textarea name="comment" id="comment" rows="5" 
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('comment') border-red-500 @enderror"
-                    placeholder="Bagikan pengalaman Anda menggunakan BKK SMK MUTU..."
+                    placeholder="Bagikan pengalaman Anda menggunakan BKKMU..."
                     required>{{ old('comment') }}</textarea>
                 @error('comment')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -141,7 +141,7 @@
             <!-- Privacy Notice -->
             <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
                 <p class="text-sm text-blue-800">
-                    <strong>Privasi Anda:</strong> Ulasan Anda akan ditinjau terlebih dahulu sebelum ditampilkan. Nama Anda akan ditampilkan bersama ulasan kecuali Anda ingin tetap anonim.
+                    <strong>Info:</strong> Ulasan Anda langsung ditampilkan. Nama Anda akan ditampilkan bersama ulasan kecuali Anda ingin tetap anonim.
                 </p>
             </div>
 
@@ -158,7 +158,7 @@
 
         <!-- Stats Preview -->
         <div class="mt-12 text-center">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">Statistik Pengguna BKK SMK MUTU</h2>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Statistik Pengguna BKKMU</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-6">
                     <div class="text-4xl font-bold text-yellow-600 mb-2">{{ number_format(\App\Models\Review::getAverageRating(), 1) }}</div>

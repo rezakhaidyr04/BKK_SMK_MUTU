@@ -2,7 +2,15 @@
 
 <section {{ $attributes->merge(['class' => 'dashboard-hero relative text-white bg-[#0a1633]']) }}>
 
-    <div class="relative mx-auto max-w-7xl px-5 py-6 sm:px-8 sm:py-6">
+    {{-- Lapisan dekorasi yang sama persis dengan page-banner --}}
+    <div class="page-banner__decor" aria-hidden="true">
+        <span class="page-banner__orb page-banner__orb--1"></span>
+        <span class="page-banner__orb page-banner__orb--2"></span>
+        <span class="page-banner__orb page-banner__orb--3"></span>
+        <span class="page-banner__ring"></span>
+    </div>
+
+    <div class="dashboard-hero__content relative mx-auto max-w-7xl px-6 py-8 sm:px-12 sm:py-12 lg:px-14">
         <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div class="flex items-center gap-4">
                 @isset($icon)
@@ -11,8 +19,8 @@
                     </div>
                 @endisset
                 <div>
-                    <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-blue-100">BKK SMK MUTU</p>
-                    <h1 class="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">{{ $title }}</h1>
+                    <p class="mb-2"><span class="page-banner__eyebrow">BKKMU</span></p>
+                    <h1 class="text-[1.75rem] font-bold leading-[1.2] text-white sm:text-[2rem] lg:text-[2.5rem]">{{ $title }}</h1>
                     @if($subtitle)
                         <p class="mt-2 max-w-2xl text-sm font-medium leading-6 text-blue-100 sm:text-base">{{ $subtitle }}</p>
                     @endif

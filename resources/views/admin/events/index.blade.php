@@ -1,4 +1,4 @@
-﻿<x-app-layout :full-bleed="true">
+<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-banner title="Manajemen Acara" subtitle="Kelola acara karier, job fair, dan seminar untuk pencari kerja dan komunitas sekolah." eyebrow="Admin › Acara">
                         <x-slot:chips>

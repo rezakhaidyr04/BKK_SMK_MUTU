@@ -1,4 +1,4 @@
-﻿<x-app-layout :full-bleed="true">
+<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-banner title="{{ $job->title }}" subtitle="{{ $job->company_name ?? '-' }}" eyebrow="Admin › Lowongan">
                         <x-slot:chips>

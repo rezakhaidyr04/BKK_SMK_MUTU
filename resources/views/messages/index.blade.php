@@ -48,7 +48,7 @@
                     <x-ui.empty-state
                         icon="chat"
                         title="Belum ada percakapan"
-                        description="Mulai percakapan dengan perusahaan setelah melamar lowongan."
+                        description="Mulai percakapan langsung dengan perusahaan dari halaman detail lowongan — tanpa harus melamar terlebih dahulu."
                         ctaLabel="Cari Lowongan"
                         ctaHref="{{ route('jobs.index') }}"
                     />

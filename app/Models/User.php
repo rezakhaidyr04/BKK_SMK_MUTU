@@ -100,6 +100,22 @@ class User extends Authenticatable
         return $this->belongsToMany(Conversation::class, 'conversation_user')->withTimestamps();
     }
 
+    /**
+     * Pakai template email branded BKKMU (bukan bawaan Laravel).
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new \App\Notifications\VerifyEmailAddress);
+    }
+
+    /**
+     * Pakai template email branded BKKMU (bukan bawaan Laravel).
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new \App\Notifications\ResetAccountPassword($token));
+    }
+
     public function isUmum(): bool
     {
         return $this->role === 'umum';

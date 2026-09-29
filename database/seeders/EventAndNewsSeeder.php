@@ -37,7 +37,7 @@ class EventAndNewsSeeder extends Seeder
             [
                 'title'       => 'Job Fair SMK MUTU 2025',
                 'type'        => 'job_fair',
-                'description' => "Job Fair terbesar yang diselenggarakan oleh BKK SMK MUTU Cikampek!\n\nEvent ini menghadirkan lebih dari 20 perusahaan ternama dari berbagai industri yang siap merekrut lulusan SMK terbaik. Setiap peserta berkesempatan langsung mengirimkan CV dan mengikuti wawancara di tempat.\n\nApa yang bisa kamu dapatkan:\n- Bertemu langsung dengan HRD puluhan perusahaan\n- Wawancara langsung di hari yang sama\n- Informasi lowongan kerja terkini\n- Konsultasi karir gratis\n- Door prize menarik\n\nDaftarkan dirimu sekarang dan raih peluang karir impianmu!",
+                'description' => "Job Fair terbesar yang diselenggarakan oleh BKKMU Cikampek!\n\nEvent ini menghadirkan lebih dari 20 perusahaan ternama dari berbagai industri yang siap merekrut lulusan SMK terbaik. Setiap peserta berkesempatan langsung mengirimkan CV dan mengikuti wawancara di tempat.\n\nApa yang bisa kamu dapatkan:\n- Bertemu langsung dengan HRD puluhan perusahaan\n- Wawancara langsung di hari yang sama\n- Informasi lowongan kerja terkini\n- Konsultasi karir gratis\n- Door prize menarik\n\nDaftarkan dirimu sekarang dan raih peluang karir impianmu!",
                 'location'    => 'Aula Utama SMK MUTU Cikampek',
                 'start_time'  => Carbon::now()->addDays(14)->setHour(8)->setMinute(0),
                 'end_time'    => Carbon::now()->addDays(14)->setHour(16)->setMinute(0),
@@ -61,7 +61,7 @@ class EventAndNewsSeeder extends Seeder
             [
                 'title'       => 'Pelatihan Microsoft Office untuk Dunia Kerja',
                 'type'        => 'pelatihan',
-                'description' => "Kuasai Microsoft Office dan tingkatkan nilai jualmu di dunia kerja!\n\nMicrosoft Office (Word, Excel, PowerPoint) adalah skill wajib yang diminta hampir semua perusahaan. Dalam pelatihan intensif 2 hari ini, kamu akan:\n\nHari 1 - Microsoft Word & Excel:\n- Membuat surat resmi dan laporan profesional\n- Rumus Excel untuk administrasi dan keuangan\n- Pivot table dan visualisasi data\n\nHari 2 - PowerPoint & Praktik:\n- Desain presentasi yang menarik dan profesional\n- Simulasi tes Office untuk seleksi kerja\n- Studi kasus nyata dari dunia kerja\n\nSetelah lulus akan mendapat sertifikat dari BKK SMK MUTU.",
+                'description' => "Kuasai Microsoft Office dan tingkatkan nilai jualmu di dunia kerja!\n\nMicrosoft Office (Word, Excel, PowerPoint) adalah skill wajib yang diminta hampir semua perusahaan. Dalam pelatihan intensif 2 hari ini, kamu akan:\n\nHari 1 - Microsoft Word & Excel:\n- Membuat surat resmi dan laporan profesional\n- Rumus Excel untuk administrasi dan keuangan\n- Pivot table dan visualisasi data\n\nHari 2 - PowerPoint & Praktik:\n- Desain presentasi yang menarik dan profesional\n- Simulasi tes Office untuk seleksi kerja\n- Studi kasus nyata dari dunia kerja\n\nSetelah lulus akan mendapat sertifikat dari BKKMU.",
                 'location'    => 'Lab Komputer SMK MUTU Cikampek',
                 'start_time'  => Carbon::now()->addDays(28)->setHour(8)->setMinute(0),
                 'end_time'    => Carbon::now()->addDays(29)->setHour(16)->setMinute(0),
@@ -168,7 +168,7 @@ class EventAndNewsSeeder extends Seeder
 <p><strong>IT/Teknologi:</strong> HTML, CSS, JavaScript, PHP, MySQL, Laravel, React, Git, REST API</p>
 <p><strong>Akuntansi:</strong> Pembukuan, laporan keuangan, Excel, SAP, pajak, audit</p>
 <p><strong>Teknik Mesin:</strong> AutoCAD, pemeliharaan mesin, K3, SOP, quality control</p>
-<p>Gunakan fitur CV Builder di platform BKK SMK MUTU untuk membuat CV ATS-friendly secara otomatis!</p>",
+<p>Gunakan fitur CV Builder di platform BKKMU untuk membuat CV ATS-friendly secara otomatis!</p>",
             ],
             [
                 'title'        => 'Daftar Lowongan Kerja Terbanyak di Kawasan Industri Karawang-Cikampek',
@@ -200,10 +200,10 @@ class EventAndNewsSeeder extends Seeder
 <li>Administrasi dan akuntansi</li>
 </ul>
 <h3>Tips Melamar ke Perusahaan di Kawasan Industri</h3>
-<p>1. Daftarkan CV kamu di BKK SMK MUTU untuk mendapat referensi kerja.<br>
+<p>1. Daftarkan CV kamu di BKKMU untuk mendapat referensi kerja.<br>
 2. Ikuti job fair yang rutin diadakan setiap semester.<br>
 3. Pantau terus info lowongan di platform ini.</p>
-<p>Persiapkan dirimu dari sekarang dan manfaatkan semua fasilitas yang disediakan BKK SMK MUTU!</p>",
+<p>Persiapkan dirimu dari sekarang dan manfaatkan semua fasilitas yang disediakan BKKMU!</p>",
             ],
             [
                 'title'        => 'Pentingnya Sertifikat Kompetensi untuk Meningkatkan Nilai Jual di Dunia Kerja',
@@ -226,7 +226,7 @@ class EventAndNewsSeeder extends Seeder
 <p><strong>Akuntansi:</strong> Brevet Pajak A&B, Sertifikasi MYOB/Accurate</p>
 <p><strong>Teknik Mesin/Otomotif:</strong> Sertifikasi BNSP Teknisi Mesin, K3 Umum</p>
 <h3>Cara Mendapatkan Sertifikat</h3>
-<p>Gunakan fitur Sertifikat di platform BKK SMK MUTU untuk mencatat dan menampilkan sertifikat yang kamu miliki di profil lamaranmu!</p>",
+<p>Gunakan fitur Sertifikat di platform BKKMU untuk mencatat dan menampilkan sertifikat yang kamu miliki di profil lamaranmu!</p>",
             ],
             [
                 'title'        => 'Kisah Sukses: Alumni SMK MUTU yang Kini Jadi Software Engineer',
@@ -248,7 +248,7 @@ class EventAndNewsSeeder extends Seeder
 <p>Rizky melamar ke 25 perusahaan sebelum akhirnya diterima. \"Jangan menyerah. Setiap penolakan mengajarkan saya hal baru,\" katanya.</p>
 <h3>Pesan untuk Adik-Adik SMK</h3>
 <p>\"Manfaatkan waktu di SMK sebaik-baiknya. Ikuti magang sungguh-sungguh, bangun portfolio dari sekarang, dan jangan takut untuk bermimpi besar. Kalian bisa!\"</p>
-<p>BKK SMK MUTU bangga dengan pencapaian Rizky dan seluruh alumni kami yang telah membuktikan bahwa lulusan SMK bisa bersaing di tingkat nasional!</p>",
+<p>BKKMU bangga dengan pencapaian Rizky dan seluruh alumni kami yang telah membuktikan bahwa lulusan SMK bisa bersaing di tingkat nasional!</p>",
             ],
             [
                 'title'        => 'Skill yang Paling Dicari Perusahaan di Tahun 2025',
@@ -277,7 +277,7 @@ class EventAndNewsSeeder extends Seeder
 <li><strong>Manajemen waktu</strong> - Produktif dan tepat deadline</li>
 </ul>
 <h3>Cara Mengembangkan Skill Kamu</h3>
-<p>BKK SMK MUTU menyediakan berbagai program pelatihan dan workshop. Pantau terus jadwal acara kami untuk kesempatan belajar gratis!</p>",
+<p>BKKMU menyediakan berbagai program pelatihan dan workshop. Pantau terus jadwal acara kami untuk kesempatan belajar gratis!</p>",
             ],
             [
                 'title'        => 'Cara Memanfaatkan Media Sosial untuk Mencari Kerja',
@@ -330,7 +330,7 @@ class EventAndNewsSeeder extends Seeder
 <li>Mengikuti masa percobaan (biasanya 3 bulan) dengan penuh tanggung jawab</li>
 </ul>
 <h3>Apa yang Harus Dilakukan Jika Hak Tidak Dipenuhi?</h3>
-<p>Laporkan ke Dinas Ketenagakerjaan setempat atau konsultasikan dengan BKK SMK MUTU untuk mendapat panduan lebih lanjut.</p>",
+<p>Laporkan ke Dinas Ketenagakerjaan setempat atau konsultasikan dengan BKKMU untuk mendapat panduan lebih lanjut.</p>",
             ],
         ];
 

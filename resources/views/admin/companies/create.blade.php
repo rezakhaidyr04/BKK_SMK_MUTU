@@ -1,4 +1,4 @@
-﻿<x-app-layout :full-bleed="true">
+<x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-banner title="Tambah Perusahaan" subtitle="Tambahkan data perusahaan mitra baru. Akun login dibuat setelah perusahaan disetujui." eyebrow="Admin › Perusahaan">
                         <x-slot:chips>

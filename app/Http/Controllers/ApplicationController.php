@@ -20,7 +20,21 @@ class ApplicationController extends Controller
             $query->where('status', $request->status);
         }
 
-        $applications = $query->paginate(10);
+        // Search by job title / company name / location
+        if ($request->filled('q')) {
+            $q = trim($request->q);
+            $query->where(function ($sub) use ($q) {
+                $sub->whereHas('job', function ($j) use ($q) {
+                    $j->where('title', 'like', "%{$q}%")
+                        ->orWhere('company_name', 'like', "%{$q}%")
+                        ->orWhere('location', 'like', "%{$q}%");
+                })->orWhereHas('job.company', function ($c) use ($q) {
+                    $c->where('name', 'like', "%{$q}%");
+                });
+            });
+        }
+
+        $applications = $query->paginate(10)->withQueryString();
 
         // Statistics
         $stats = [
@@ -101,7 +115,7 @@ class ApplicationController extends Controller
             ->with('success', 'Lamaran berhasil ditarik.');
     }
 
-    public function downloadAttachment(Application $application)
+    public function downloadAttachment(Application $application, \Illuminate\Http\Request $request)
     {
         $this->authorize('downloadAttachment', $application);
 
@@ -109,9 +123,27 @@ class ApplicationController extends Controller
 
         abort_unless(Storage::disk('private')->exists($application->attachment_path), 404);
 
+        $filename = $application->attachment_name ?: basename($application->attachment_path);
+
+        // ?preview=1 → tampilkan inline (PDF/gambar bisa preview di browser),
+        // default tetap download agar file tersimpan dengan nama asli.
+        if ($request->query('preview')) {
+            $mime = $application->attachment_mime
+                ?: Storage::disk('private')->mimeType($application->attachment_path);
+
+            return Storage::disk('private')->response(
+                $application->attachment_path,
+                $filename,
+                [
+                    'Content-Type' => $mime,
+                    'Content-Disposition' => 'inline; filename="' . addslashes($filename) . '"',
+                ]
+            );
+        }
+
         return Storage::disk('private')->download(
             $application->attachment_path,
-            $application->attachment_name ?: basename($application->attachment_path)
+            $filename
         );
     }
 }

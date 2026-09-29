@@ -1,4 +1,4 @@
-﻿        @php
+        @php
                 $avatarUrl = $user->avatar ? asset('storage/' . ltrim($user->avatar, '/')) : null;
                 $roleLabel = match ($user->role) {
                     'company' => 'Perusahaan',

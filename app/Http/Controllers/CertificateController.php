@@ -53,11 +53,24 @@ class CertificateController extends Controller
         return back()->with('success', 'Sertifikat berhasil dihapus.');
     }
 
-    public function download(Certificate $certificate)
+    public function download(Certificate $certificate, \Illuminate\Http\Request $request)
     {
         $this->authorize('view', $certificate);
 
         abort_unless(Storage::disk('private')->exists($certificate->file_path), 404);
+
+        if ($request->query('preview')) {
+            $mime = Storage::disk('private')->mimeType($certificate->file_path);
+
+            return Storage::disk('private')->response(
+                $certificate->file_path,
+                basename($certificate->file_path),
+                [
+                    'Content-Type' => $mime,
+                    'Content-Disposition' => 'inline; filename="' . addslashes(basename($certificate->file_path)) . '"',
+                ]
+            );
+        }
 
         return Storage::disk('private')->download($certificate->file_path);
     }

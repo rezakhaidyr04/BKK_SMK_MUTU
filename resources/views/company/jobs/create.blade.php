@@ -33,14 +33,35 @@
                 @csrf
                 <input type="hidden" name="company_name" value="{{ auth()->user()->company?->name ?? '' }}">
 
-                <x-ui.panel title="Informasi Lowongan" subtitle="Lengkapi detail dasar lowongan terlebih dahulu." class="job-form-panel job-form-panel-primary">
+                {{-- Penanda langkah pengisian --}}
+                <div data-reveal class="bg-white rounded-2xl border border-slate-200 shadow-sm px-5 py-4">
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <span class="w-8 h-8 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center shadow flex-shrink-0">1</span>
+                            <div class="min-w-0">
+                                <p class="text-[13px] font-bold text-slate-900 leading-tight">Informasi Lowongan</p>
+                                <p class="text-[11px] text-slate-400">Detail dasar</p>
+                            </div>
+                        </div>
+                        <div class="flex-1 h-0.5 rounded-full bg-slate-200 mx-1"></div>
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <span class="w-8 h-8 rounded-full bg-white border-2 border-slate-200 text-slate-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+                            <div class="min-w-0">
+                                <p class="text-[13px] font-bold text-slate-500 leading-tight">Rincian Lowongan</p>
+                                <p class="text-[11px] text-slate-400">Kualifikasi & deskripsi</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <x-ui.panel title="Informasi Lowongan" subtitle="Lengkapi detail dasar lowongan terlebih dahulu." class="job-form-panel job-form-panel-primary" data-reveal>
                     <x-slot name="header">
                         <span class="job-form-section-icon" aria-hidden="true">1</span>
                     </x-slot>
                     <div class="grid gap-5 md:grid-cols-2">
                         <div>
                             <label class="ui-label">Judul Lowongan <span class="text-red-600">*</span></label>
-                            <input type="text" name="title" value="{{ old('title') }}" required class="ui-input">
+                            <input type="text" name="title" value="{{ old('title') }}" required placeholder="cth: Junior Web Developer" class="ui-input">
                             @error('title')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>
@@ -72,12 +93,20 @@
                         </div>
                         <div>
                             <label class="ui-label">Gaji Minimum</label>
-                            <input type="number" name="salary_min" value="{{ old('salary_min') }}" min="0" class="ui-input">
+                            <div class="group flex">
+                                <span class="inline-flex items-center px-3.5 rounded-l-xl border-[1.5px] border-r-0 border-slate-200 bg-slate-50 text-sm font-bold text-slate-500 transition-colors group-focus-within:border-blue-500 group-focus-within:bg-blue-50 group-focus-within:text-blue-600">Rp</span>
+                                <input type="number" name="salary_min" value="{{ old('salary_min') }}" min="0" placeholder="3000000" class="ui-input salary-rupiah" data-salary-input="salary_min" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                            </div>
+                            <p class="mt-1.5 text-xs text-slate-400">Pratinjau: <span class="font-semibold text-slate-600" data-salary-preview="salary_min">–</span></p>
                             @error('salary_min')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>
                             <label class="ui-label">Gaji Maksimum</label>
-                            <input type="number" name="salary_max" value="{{ old('salary_max') }}" min="0" class="ui-input">
+                            <div class="group flex">
+                                <span class="inline-flex items-center px-3.5 rounded-l-xl border-[1.5px] border-r-0 border-slate-200 bg-slate-50 text-sm font-bold text-slate-500 transition-colors group-focus-within:border-blue-500 group-focus-within:bg-blue-50 group-focus-within:text-blue-600">Rp</span>
+                                <input type="number" name="salary_max" value="{{ old('salary_max') }}" min="0" placeholder="5000000" class="ui-input salary-rupiah" data-salary-input="salary_max" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                            </div>
+                            <p class="mt-1.5 text-xs text-slate-400">Pratinjau: <span class="font-semibold text-slate-600" data-salary-preview="salary_max">–</span></p>
                             @error('salary_max')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>
@@ -85,40 +114,105 @@
                             <input type="date" name="deadline" value="{{ old('deadline') }}" class="ui-input">
                             @error('deadline')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
-                        <div class="job-form-notice rounded-xl bg-green-50 border border-green-100 p-4 text-sm text-green-800">
-                            Lowongan yang Anda buat akan <strong>menunggu persetujuan admin</strong> sebelum dipublikasikan.
+                        <div class="rounded-xl bg-green-50 border border-green-100 p-4">
+                            <div class="flex items-start gap-2.5">
+                                <svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <p class="text-sm leading-relaxed text-green-800">Lowongan yang Anda buat akan <strong>menunggu persetujuan admin</strong> sebelum dipublikasikan.</p>
+                            </div>
                         </div>
                     </div>
                 </x-ui.panel>
 
-                <x-ui.panel title="Rincian Lowongan" subtitle="Tambahkan kualifikasi, benefit, dan deskripsi lengkap pekerjaan." class="job-form-panel job-form-panel-secondary">
+                <x-ui.panel title="Rincian Lowongan" subtitle="Tambahkan kualifikasi, benefit, dan deskripsi lengkap pekerjaan." class="job-form-panel job-form-panel-secondary" data-reveal>
                     <x-slot name="header">
                         <span class="job-form-section-icon" aria-hidden="true">2</span>
                     </x-slot>
                     <div class="grid gap-5">
+                        <div class="grid gap-5 md:grid-cols-2">
+                            <div>
+                                <label class="ui-label">Pendidikan Minimal</label>
+                                <input type="text" name="education" value="{{ old('education') }}" placeholder="cth: SMK / D3 / S1" class="ui-input">
+                                @error('education')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
+                            </div>
+                            <div>
+                                <label class="ui-label">Pengalaman</label>
+                                <input type="text" name="experience" value="{{ old('experience') }}" placeholder="cth: 1 - 2 Tahun / Fresh Graduate" class="ui-input">
+                                @error('experience')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
+                            </div>
+                            <div>
+                                <label class="ui-label">Jenis Kelamin</label>
+                                <input type="text" name="gender" value="{{ old('gender') }}" placeholder="cth: Laki-laki / Perempuan / Keduanya" class="ui-input">
+                                @error('gender')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
+                            </div>
+                            <div>
+                                <label class="ui-label">Rentang Usia</label>
+                                <input type="text" name="age_range" value="{{ old('age_range') }}" placeholder="cth: 18 - 25 Tahun" class="ui-input">
+                                @error('age_range')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="ui-label">Jam Kerja</label>
+                                <input type="text" name="work_hours" value="{{ old('work_hours') }}" placeholder="cth: Senin - Jumat (08.00 - 17.00)" class="ui-input">
+                                @error('work_hours')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
+                            </div>
+                        </div>
                         <div>
                             <label class="ui-label">Kualifikasi</label>
-                            <textarea name="qualifications" rows="3" class="ui-textarea">{{ old('qualifications') }}</textarea>
+                            <textarea name="qualifications" rows="3" placeholder="cth: Pendidikan min. SMK, mampu bekerja dalam tim…" class="ui-textarea">{{ old('qualifications') }}</textarea>
                             @error('qualifications')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>
-                            <label class="ui-label">Benefit</label>
-                            <textarea name="benefits" rows="3" class="ui-textarea">{{ old('benefits') }}</textarea>
+                            <label class="ui-label">Benefit <span class="text-slate-400 font-normal">(pisahkan dengan koma atau baris baru — tampil otomatis di halaman lowongan)</span></label>
+                            <textarea name="benefits" rows="3" placeholder="cth: BPJS Kesehatan dan Ketenagakerjaan, Uang makan dan transport, THR" class="ui-textarea">{{ old('benefits') }}</textarea>
                             @error('benefits')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>
                             <label class="ui-label">Deskripsi Pekerjaan</label>
-                            <textarea name="description" rows="6" class="ui-textarea">{{ old('description') }}</textarea>
+                            <textarea name="description" rows="6" placeholder="Jelaskan tugas dan tanggung jawab pekerjaan…" class="ui-textarea">{{ old('description') }}</textarea>
                             @error('description')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                     </div>
                 </x-ui.panel>
 
-                <div class="job-form-actions flex flex-col gap-3 sm:flex-row sm:justify-end mt-4">
+                <div class="job-form-actions sticky bottom-4 z-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end mt-4">
                     <x-ui.btn href="{{ route('company.jobs.index') }}" variant="secondary" class="w-full sm:w-auto">Batal</x-ui.btn>
                     <x-ui.btn type="submit" variant="company" class="w-full sm:w-auto">Simpan Lowongan</x-ui.btn>
                 </div>
             </form>
         </div>
     </div>
+
+    @push('styles')
+    <style>
+        /* Hilangkan spinner jelek bawaan browser di input angka gaji */
+        input.salary-rupiah::-webkit-outer-spin-button,
+        input.salary-rupiah::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input.salary-rupiah {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+    </style>
+    @endpush
+
+    @push('scripts')
+    <script>
+        // Pratinjau nominal gaji ala Rupiah saat mengetik (tampilan saja, nilai asli tetap angka)
+        (function () {
+            function formatRp(v) {
+                if (v === '' || v === null || isNaN(Number(v))) return '–';
+                return 'Rp ' + Number(v).toLocaleString('id-ID');
+            }
+            document.querySelectorAll('[data-salary-input]').forEach(function (input) {
+                var key = input.getAttribute('data-salary-input');
+                var out = document.querySelector('[data-salary-preview="' + key + '"]');
+                if (!out) return;
+                var update = function () { out.textContent = formatRp(input.value); };
+                input.addEventListener('input', update);
+                update();
+            });
+        })();
+    </script>
+    @endpush
 </x-app-layout>

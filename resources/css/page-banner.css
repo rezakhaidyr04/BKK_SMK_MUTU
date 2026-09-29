@@ -20,19 +20,40 @@
  */
 
 /* ============================================================
+   UNIFIED BANNER SIZE SYSTEM — single source of truth.
+   Berlaku untuk SEMUA role & halaman:
+   .page-banner (umum/admin), .dashboard-hero (company),
+   .jobs-search-hero (lowongan), .app-page-header (legacy).
+   Skala judul & padding disamakan; jangan ubah nilai di satu
+   tempat tanpa menyesuaikan yang lain.
+   ============================================================ */
+:root {
+    --banner-title-desktop: 2.5rem;
+    --banner-title-tablet: 2rem;
+    --banner-title-mobile: 1.75rem;
+    --banner-title-small: 1.5rem;
+    --banner-pad-desktop: 48px;
+    --banner-pad-x-desktop: 56px;
+    --banner-pad-mobile: 32px;
+    --banner-pad-x-mobile: 24px;
+    --banner-radius: 20px;
+    --banner-min-h: 180px;
+}
+
+/* ============================================================
    BASE PAGE BANNER STYLES
    ============================================================ */
 
 .page-banner {
     position: relative;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: var(--banner-radius);
     box-shadow: 0 12px 40px rgba(7, 23, 51, 0.28),
                 0 2px 8px rgba(7, 23, 51, 0.12);
     background: #0a1633;
     margin-top: 0;
     margin-bottom: 32px;
-    padding: 48px;
+    padding: var(--banner-pad-desktop);
     min-height: 160px;
     display: flex;
     align-items: stretch;
@@ -43,7 +64,7 @@
    DECORATIVE BACKGROUND ELEMENTS
    ============================================================ */
 
-/* AURORA MESH - 3 blob + cahaya biru/cyan */
+/* AURORA MESH - blob biru/cyan/violet yang lebih hidup */
 .page-banner::before {
     content: '';
     position: absolute;
@@ -51,26 +72,38 @@
     z-index: 0;
     background:
         radial-gradient(
-            circle 480px at 88% 8%,
-            rgba(37, 99, 235, 0.22) 0%,
+            circle 520px at 88% 6%,
+            rgba(59, 130, 246, 0.32) 0%,
             transparent 60%
         ),
         radial-gradient(
-            circle 380px at 75% 105%,
-            rgba(6, 182, 212, 0.14) 0%,
+            circle 420px at 72% 108%,
+            rgba(6, 182, 212, 0.22) 0%,
             transparent 55%
         ),
         radial-gradient(
-            circle 320px at 18% 92%,
-            rgba(139, 92, 246, 0.10) 0%,
+            circle 360px at 16% 94%,
+            rgba(139, 92, 246, 0.18) 0%,
             transparent 55%
         ),
         radial-gradient(
-            ellipse 50% 100% at 100% 0%,
-            rgba(255, 255, 255, 0.06) 0%,
+            ellipse 55% 110% at 100% 0%,
+            rgba(255, 255, 255, 0.09) 0%,
             transparent 55%
+        ),
+        linear-gradient(
+            115deg,
+            transparent 55%,
+            rgba(59, 130, 246, 0.08) 78%,
+            rgba(34, 211, 238, 0.10) 100%
         );
     pointer-events: none;
+    animation: bannerAurora 9s ease-in-out infinite alternate;
+}
+
+@keyframes bannerAurora {
+    from { opacity: 0.85; }
+    to { opacity: 1; }
 }
 
 /* Pola titik kanan memudar ke kiri — tetap + aurora */
@@ -206,7 +239,7 @@
 }
 
 .page-banner__title {
-    font-size: 2.5rem;
+    font-size: var(--banner-title-desktop);
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: 0;
@@ -246,10 +279,12 @@
     .page-banner {
         display: grid;
         grid-template-columns: 1fr auto;
+        grid-template-rows: auto;
         align-items: center;
-        gap: 32px;
-        padding: 48px 56px;
-        min-height: 180px;
+        column-gap: 32px;
+        row-gap: 0;
+        padding: var(--banner-pad-desktop) var(--banner-pad-x-desktop);
+        min-height: var(--banner-min-h);
     }
 
     .page-banner__content {
@@ -258,9 +293,10 @@
 
     .page-banner__actions {
         grid-column: 2;
-        grid-row: 1 / span 2;
-        flex-direction: column;
-        align-items: flex-start;
+        grid-row: 1;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
         margin-top: 0;
     }
 }
@@ -271,7 +307,7 @@
     }
 
     .page-banner__title {
-        font-size: 2rem;
+        font-size: var(--banner-title-tablet);
     }
 
     .page-banner__subtitle {
@@ -289,7 +325,7 @@
     }
 
     .page-banner__title {
-        font-size: 1.75rem;
+        font-size: var(--banner-title-mobile);
     }
 
     .page-banner__subtitle {
@@ -298,15 +334,11 @@
     }
 
     .page-banner__actions {
-        flex-direction: column;
+        flex-direction: row;
         grid-column: 1;
-        align-items: stretch;
-        width: 100%;
+        align-items: center;
+        width: auto;
         margin-top: 8px;
-    }
-
-    .page-banner__actions > * {
-        width: 100%;
     }
 }
 
@@ -317,7 +349,7 @@
     }
 
     .page-banner__title {
-        font-size: 1.5rem;
+        font-size: var(--banner-title-small);
         line-height: 1.3;
     }
 
@@ -516,6 +548,257 @@
 .page-banner .ui-btn-secondary:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: #ffffff;
+}
+
+/* ============================================================
+   DECOR LAYER — orb melayang + ring + garis aksen atas
+   (elemen .page-banner__decor disisipkan dari blade)
+   ============================================================ */
+
+.page-banner__decor {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Garis aksen gradient di tepi atas banner */
+.page-banner__decor::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 8%;
+    right: 8%;
+    height: 2px;
+    border-radius: 9999px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(34, 211, 238, 0.9) 25%,
+        rgba(96, 165, 250, 0.9) 50%,
+        rgba(167, 139, 250, 0.9) 75%,
+        transparent 100%
+    );
+    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.55));
+}
+
+/* Orb cahaya yang melayang pelan */
+.page-banner__orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(56px);
+}
+
+.page-banner__orb--1 {
+    width: 300px;
+    height: 300px;
+    top: -140px;
+    right: 6%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.5) 0%, transparent 70%);
+    animation: orbDrift 13s ease-in-out infinite alternate;
+}
+
+.page-banner__orb--2 {
+    width: 220px;
+    height: 220px;
+    bottom: -120px;
+    right: 28%;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.35) 0%, transparent 70%);
+    animation: orbDrift 17s ease-in-out infinite alternate-reverse;
+}
+
+.page-banner__orb--3 {
+    width: 180px;
+    height: 180px;
+    bottom: -90px;
+    left: 4%;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.30) 0%, transparent 70%);
+    animation: orbDrift 15s ease-in-out infinite alternate;
+}
+
+@keyframes orbDrift {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(-26px, 22px) scale(1.08); }
+}
+
+/* Ring dekoratif di sisi kanan */
+.page-banner__ring {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    width: 340px;
+    height: 340px;
+    transform: translateY(-50%);
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow:
+        0 0 0 28px rgba(255, 255, 255, 0.025),
+        0 0 0 64px rgba(255, 255, 255, 0.015),
+        0 0 80px rgba(59, 130, 246, 0.18);
+}
+
+.page-banner__ring::after {
+    content: '';
+    position: absolute;
+    top: 12%;
+    right: 18%;
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    background: rgba(103, 232, 249, 0.9);
+    box-shadow: 0 0 14px rgba(103, 232, 249, 0.9);
+    animation: ringTwinkle 3.2s ease-in-out infinite;
+}
+
+@keyframes ringTwinkle {
+    0%, 100% { opacity: 0.35; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.15); }
+}
+
+@media (max-width: 768px) {
+    .page-banner__ring { display: none; }
+    .page-banner__orb--1 { width: 220px; height: 220px; }
+}
+
+/* ============================================================
+   DASHBOARD-HERO (role Company) — disamakan 100% dengan
+   page-banner: pola titik, orb, ring, garis aksen ikut berlaku
+   karena memakai class .page-banner__decor yang sama.
+   Catatan: aturan ditaruh di file berversi (bundle Vite) agar
+   tidak terjebak cache browser seperti file tanpa hash.
+   ============================================================ */
+
+.dashboard-hero::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 45%;
+    z-index: 0;
+    background-image: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.14) 1px,
+        transparent 1px
+    );
+    background-size: 22px 22px;
+    pointer-events: none;
+    mask-image: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.35) 45%,
+        transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.35) 45%,
+        transparent 100%
+    );
+}
+
+.dashboard-hero__content {
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================================
+   LOGO SISI KIRI (opsional) — hanya aktif bila slot logo diisi.
+   Banner tanpa logo tidak terpengaruh sama sekali.
+   ============================================================ */
+
+.page-banner__side {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.page-banner__side img,
+.page-banner__logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 18px;
+    object-fit: cover;
+    background: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 28px rgba(2, 6, 23, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+@media (min-width: 768px) {
+    .page-banner--with-logo {
+        grid-template-columns: auto 1fr auto;
+    }
+
+    .page-banner--with-logo .page-banner__content {
+        grid-column: 2;
+    }
+
+    .page-banner--with-logo .page-banner__actions {
+        grid-column: 3;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-banner--with-logo {
+        grid-template-columns: 1fr;
+    }
+
+    .page-banner__side {
+        justify-content: flex-start;
+    }
+
+    .page-banner__side img,
+    .page-banner__logo {
+        width: 64px;
+        height: 64px;
+        border-radius: 14px;
+        font-size: 1.5rem;
+    }
+}
+
+/* ============================================================
+   CHIP KACA + EYEBROW — efek glow saat hover
+   ============================================================ */
+
+.page-banner__eyebrow {
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+        0 4px 14px rgba(2, 6, 23, 0.25);
+}
+
+.page-banner__chip {
+    box-shadow: 0 2px 10px rgba(2, 6, 23, 0.22);
+    transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.page-banner__chip:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 6px 18px rgba(2, 6, 23, 0.30), 0 0 12px rgba(56, 189, 248, 0.25);
+}
+
+.page-banner__chips {
+    animation: slideInDown 0.5s ease-out 0.25s both;
+}
+
+/* Judul — bayangan lebih dalam + aksen gradient di bawah */
+.page-banner__title {
+    text-shadow: 0 3px 18px rgba(2, 6, 23, 0.45);
+}
+
+/* Tombol di banner — glow lembut */
+.page-banner .ui-btn {
+    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.35), 0 0 16px rgba(125, 211, 252, 0.18);
 }
 
 /* ============================================================

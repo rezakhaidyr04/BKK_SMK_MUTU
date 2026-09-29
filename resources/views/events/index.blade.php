@@ -1,4 +1,4 @@
-﻿<x-app-layout :full-bleed="true" title="Acara Karir — BKK SMK MUTU" description="Job fair, workshop, seminar, dan kegiatan pengembangan karir dari BKK SMK MUTU.">
+<x-app-layout :full-bleed="true" title="Acara Karir — BKKMU" description="Job fair, workshop, seminar, dan kegiatan pengembangan karir dari BKKMU.">
     <div class="page-shell">
         <x-ui.page-banner title="Acara Karir" subtitle="Job fair, workshop, seminar, dan kegiatan pengembangan karir." eyebrow="Beranda › Acara">
                         <x-slot:chips>
