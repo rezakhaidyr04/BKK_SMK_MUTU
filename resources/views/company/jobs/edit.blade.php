@@ -97,7 +97,7 @@
                             @error('deadline')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div class="rounded-xl bg-slate-50 border border-slate-200 p-4 text-sm text-slate-600">
-                            Status saat ini: <strong>{{ $job->status }}</strong>. Perubahan status hanya melalui persetujuan admin atau Tutup Lowongan.
+                            Status saat ini: <strong>{{ $job->status }}</strong>. Untuk menayangkan draf, gunakan tombol <strong>Publikasikan</strong> di halaman Lowongan Saya; untuk menutup, gunakan Tutup Lowongan.
                         </div>
                     </div>
                 </x-ui.panel>
@@ -140,8 +140,9 @@
                             @error('qualifications')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>
-                            <label class="ui-label">Benefit <span class="text-slate-400 font-normal">(pisahkan dengan koma atau baris baru — tampil otomatis di halaman lowongan)</span></label>
-                            <textarea name="benefits" rows="3" class="ui-textarea">{{ old('benefits', $job->benefits) }}</textarea>
+                            <label class="ui-label">Benefit <span class="text-slate-400 font-normal">(otomatis dinomori — cukup ketik biasa)</span></label>
+                            <textarea name="benefits" rows="4" data-autonumber class="ui-textarea">{{ old('benefits', $job->benefits) }}</textarea>
+                            <p class="mt-1.5 text-xs text-slate-400">Ketik biasa pakai koma/enter — nomor muncul sendiri saat field ditinggalkan.</p>
                             @error('benefits')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>
@@ -190,6 +191,41 @@
                 var update = function () { out.textContent = formatRp(input.value); };
                 input.addEventListener('input', update);
                 update();
+            });
+        })();
+
+        // Benefit otomatis dinomori: ketik "a, b, c" → blur → "1. a\n2. b\n3. c".
+        // (Server juga menormalisasi ulang saat disimpan sebagai pengaman.)
+        (function () {
+            function autonumber(text) {
+                var items = (text || '').split(/[\r\n,;]+/).map(function (s) { return s.trim(); })
+                    .filter(Boolean)
+                    .map(function (s) { return s.replace(/^(\d+[.)\-:]|[-•*])\s*/u, ''); });
+                if (items.length > 1) {
+                    return items.map(function (s, i) { return (i + 1) + '. ' + s; }).join('\n');
+                }
+                return items[0] || '';
+            }
+            document.querySelectorAll('textarea[data-autonumber]').forEach(function (ta) {
+                // Tekan Enter → baris baru langsung diawali nomor berikutnya.
+                ta.addEventListener('keydown', function (e) {
+                    if (e.key !== 'Enter') return;
+                    e.preventDefault();
+                    var start = ta.selectionStart, end = ta.selectionEnd;
+                    var before = ta.value.slice(0, start);
+                    var lineStart = before.lastIndexOf('\n') + 1;
+                    var m = before.slice(lineStart).match(/^\s*(\d+)[.)\-:]/);
+                    var next = m ? (parseInt(m[1], 10) + 1) : 1;
+                    if (typeof ta.setRangeText === 'function') {
+                        ta.setRangeText('\n' + next + '. ', start, end, 'end');
+                    } else {
+                        ta.value = before + '\n' + next + '. ' + ta.value.slice(end);
+                    }
+                    ta.dispatchEvent(new Event('input'));
+                });
+                ta.addEventListener('blur', function () { ta.value = autonumber(ta.value); });
+                var form = ta.closest('form');
+                if (form) form.addEventListener('submit', function () { ta.value = autonumber(ta.value); });
             });
         })();
     </script>

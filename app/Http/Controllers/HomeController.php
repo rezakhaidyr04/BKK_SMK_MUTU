@@ -40,6 +40,7 @@ class HomeController extends Controller
         
         // Get approved reviews (limit to 3 for display)
         $approvedReviews = Review::approved()
+            ->with('user')
             ->orderByRaw('featured DESC')
             ->orderBy('created_at', 'desc')
             ->limit(3)

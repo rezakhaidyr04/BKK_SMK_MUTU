@@ -151,29 +151,6 @@
                     </x-slot:icon>
                 </x-ui.dashboard-stat-card>
 
-                <x-ui.dashboard-stat-card
-                    label="Pesan"
-                    :value="$stats['unread_messages']"
-                    color="red"
-                    :href="route('messages.index')"
-                    hrefLabel="Buka pesan →"
-                    class="animate-slide-up animate-slide-up-5"
-                >
-                    <x-slot:icon>
-                        @if($stats['unread_messages'] > 0)
-                        <div class="relative">
-                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                            </svg>
-                            <span class="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full animate-pulse"></span>
-                        </div>
-                        @else
-                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
-                        @endif
-                    </x-slot:icon>
-                </x-ui.dashboard-stat-card>
             </div>
 
             {{-- Main Content Grid --}}

@@ -40,6 +40,7 @@ class JobApplicationAttachmentTest extends TestCase
 
         $response = $this->actingAs($jobseeker)->post(route('jobs.apply', $job), [
             'cover_letter' => str_repeat('Saya tertarik melamar posisi ini. ', 5),
+            'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf'),
             'attachment' => UploadedFile::fake()->create('cv-siswa.pdf', 400, 'application/pdf'),
         ]);
 

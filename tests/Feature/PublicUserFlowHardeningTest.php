@@ -7,6 +7,8 @@ use App\Models\Company;
 use App\Models\Job;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class PublicUserFlowHardeningTest extends TestCase
@@ -77,9 +79,11 @@ class PublicUserFlowHardeningTest extends TestCase
             ->get('/jobs')
             ->assertOk();
 
+        Storage::fake('private');
         $this->actingAs($user)
             ->post(route('jobs.apply', $job), [
                 'cover_letter' => str_repeat('Saya siap belajar dan bekerja dengan baik. ', 4),
+                'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf'),
             ])
             ->assertRedirect(route('jobs.show', $job));
 

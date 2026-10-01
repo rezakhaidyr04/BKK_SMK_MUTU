@@ -2,7 +2,7 @@
     <div class="page-shell">
         <x-ui.page-banner 
             title="Detail Lamaran" 
-            subtitle="{{ $application->job->title }} - {{ $application->job->company_name ?? 'Perusahaan' }}" 
+            :subtitle="$application->job->title . ' - ' . ($application->job->company_name ?? 'Perusahaan')" 
             :back-url="auth()->user()->role === 'company' ? route('company.applicants.index') : route('applications.index')"
             back-label="Kembali ke Daftar Lamaran" eyebrow="Dashboard › Lamaran">
             <x-slot:chips>
@@ -61,11 +61,27 @@
                     </x-ui.panel>
 
                     <x-ui.panel title="Surat Lamaran">
-                        <div class="rounded-xl border border-slate-100 bg-slate-50/70 p-4 text-sm leading-relaxed text-slate-700 whitespace-pre-line break-words [overflow-wrap:anywhere] min-w-0 overflow-hidden" style="text-align: left;">{{ str_replace(['\\r\\n', '\\n', '\\r'], "\n", trim($application->cover_letter)) ?: 'Tidak ada surat lamaran.' }}</div>
+                        @if($application->cover_letter_path)
+                        <div class="flex flex-wrap items-center gap-2">
+                            <x-ui.btn href="{{ route('applications.cover-letter.download', $application) }}?preview=1" variant="secondary" size="sm" target="_blank">
+                                Lihat {{ $application->cover_letter_name ?? 'Surat Lamaran' }}
+                            </x-ui.btn>
+                            <x-ui.btn href="{{ route('applications.cover-letter.download', $application) }}" variant="primary" size="sm">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                Unduh {{ $application->cover_letter_name ?? 'Surat Lamaran' }}
+                            </x-ui.btn>
+                        </div>
+                        <p class="mt-2 text-xs text-slate-500">{{ $application->cover_letter_size ? number_format($application->cover_letter_size / 1024, 1) . ' KB' : '' }} {{ $application->cover_letter_mime ? '· ' . $application->cover_letter_mime : '' }}</p>
+                        @elseif($application->cover_letter)
+                        <div class="rounded-xl border border-slate-100 bg-slate-50/70 p-4 text-sm leading-relaxed text-slate-700 whitespace-pre-line break-words [overflow-wrap:anywhere] min-w-0 overflow-hidden" style="text-align: left;">{{ str_replace(['\\r\\n', '\\n', '\\r'], "\n", trim($application->cover_letter)) }}</div>
+                        <p class="mt-2 text-xs text-amber-600">Data lama (sebelum wajib PDF).</p>
+                        @else
+                        <div class="rounded-xl border border-slate-100 bg-slate-50/70 p-4 text-sm leading-relaxed text-slate-500">Tidak ada surat lamaran.</div>
+                        @endif
                     </x-ui.panel>
 
                     @if($application->attachment_path)
-                    <x-ui.panel title="Lampiran">
+                    <x-ui.panel title="File CV">
                         <div class="flex flex-wrap items-center gap-2">
                             <x-ui.btn href="{{ route('applications.attachment.download', $application) }}?preview=1" variant="secondary" size="sm" target="_blank">
                                 Lihat {{ $application->attachment_name ?? 'Lampiran' }}
@@ -76,6 +92,21 @@
                             </x-ui.btn>
                         </div>
                         <p class="mt-2 text-xs text-slate-500">{{ $application->attachment_size ? number_format($application->attachment_size / 1024, 1) . ' KB' : '' }} {{ $application->attachment_mime ? '· ' . $application->attachment_mime : '' }}</p>
+                    </x-ui.panel>
+                    @endif
+
+                    @if($application->skck_path)
+                    <x-ui.panel title="SKCK">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <x-ui.btn href="{{ route('applications.skck.download', $application) }}?preview=1" variant="secondary" size="sm" target="_blank">
+                                Lihat {{ $application->skck_name ?? 'SKCK' }}
+                            </x-ui.btn>
+                            <x-ui.btn href="{{ route('applications.skck.download', $application) }}" variant="primary" size="sm">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                Unduh {{ $application->skck_name ?? 'SKCK' }}
+                            </x-ui.btn>
+                        </div>
+                        <p class="mt-2 text-xs text-slate-500">{{ $application->skck_size ? number_format($application->skck_size / 1024, 1) . ' KB' : '' }} {{ $application->skck_mime ? '· ' . $application->skck_mime : '' }}</p>
                     </x-ui.panel>
                     @endif
 
@@ -200,15 +231,6 @@
                         <x-ui.btn href="{{ route('jobs.show', $application->job) }}" class="w-full justify-center">
                             Lihat Detail Lowongan
                         </x-ui.btn>
-
-                        @if(auth()->user()->role === 'umum' || auth()->user()->role === 'admin')
-                        <x-ui.btn href="{{ route('applications.surat-pengantar', $application) }}" variant="secondary" class="w-full justify-center">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            Cetak Surat Pengantar
-                        </x-ui.btn>
-                        @endif
                     </div>
                 </div>
             </div>

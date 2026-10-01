@@ -100,7 +100,7 @@
                         <div>
                             <label class="ui-label">Thumbnail</label>
                             <div class="border-2 border-dashed border-slate-200 rounded-xl p-4 text-center hover:border-blue-400 transition">
-                                <img id="thumbPreview" src="" alt="" class="hidden w-full h-32 object-cover rounded-lg mb-2 border border-slate-200">
+                                <img id="thumbPreview" src="" alt="" class="hidden w-full h-32 object-contain bg-slate-50 rounded-lg mb-2 border border-slate-200">
                                 <svg id="thumbIcon" class="w-8 h-8 text-slate-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                 <input type="file" name="thumbnail" id="thumbInput" accept="image/jpeg,image/png,image/webp" class="block mx-auto text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-700 file:text-xs cursor-pointer">
                                 <p class="text-xs text-slate-400 mt-1">JPG, PNG, WebP · maks. 2MB</p>

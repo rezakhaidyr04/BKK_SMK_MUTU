@@ -68,6 +68,7 @@ class InterviewScheduled extends Notification
             'interview_type'     => $app->interview_type,
             'interview_link'     => $app->interview_link,
             'message'            => "Wawancara dijadwalkan pada {$date} di {$app->interview_location}",
+            'url'                => route('applications.show', $app->id),
         ];
     }
 }

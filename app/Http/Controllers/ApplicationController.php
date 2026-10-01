@@ -104,9 +104,15 @@ class ApplicationController extends Controller
             return back()->with('error', 'Lamaran ini tidak dapat ditarik.');
         }
 
-        // Hapus file attachment jika ada
+        // Hapus file surat lamaran + attachment + SKCK jika ada
+        if ($application->cover_letter_path && Storage::disk('private')->exists($application->cover_letter_path)) {
+            Storage::disk('private')->delete($application->cover_letter_path);
+        }
         if ($application->attachment_path && Storage::disk('private')->exists($application->attachment_path)) {
             Storage::disk('private')->delete($application->attachment_path);
+        }
+        if ($application->skck_path && Storage::disk('private')->exists($application->skck_path)) {
+            Storage::disk('private')->delete($application->skck_path);
         }
 
         $application->delete();
@@ -143,6 +149,66 @@ class ApplicationController extends Controller
 
         return Storage::disk('private')->download(
             $application->attachment_path,
+            $filename
+        );
+    }
+
+    public function downloadCoverLetter(Application $application, \Illuminate\Http\Request $request)
+    {
+        $this->authorize('downloadAttachment', $application);
+
+        abort_unless($application->cover_letter_path, 404);
+
+        abort_unless(Storage::disk('private')->exists($application->cover_letter_path), 404);
+
+        $filename = $application->cover_letter_name ?: basename($application->cover_letter_path);
+
+        if ($request->query('preview')) {
+            $mime = $application->cover_letter_mime
+                ?: Storage::disk('private')->mimeType($application->cover_letter_path);
+
+            return Storage::disk('private')->response(
+                $application->cover_letter_path,
+                $filename,
+                [
+                    'Content-Type' => $mime,
+                    'Content-Disposition' => 'inline; filename="' . addslashes($filename) . '"',
+                ]
+            );
+        }
+
+        return Storage::disk('private')->download(
+            $application->cover_letter_path,
+            $filename
+        );
+    }
+
+    public function downloadSkck(Application $application, \Illuminate\Http\Request $request)
+    {
+        $this->authorize('downloadAttachment', $application);
+
+        abort_unless($application->skck_path, 404);
+
+        abort_unless(Storage::disk('private')->exists($application->skck_path), 404);
+
+        $filename = $application->skck_name ?: basename($application->skck_path);
+
+        if ($request->query('preview')) {
+            $mime = $application->skck_mime
+                ?: Storage::disk('private')->mimeType($application->skck_path);
+
+            return Storage::disk('private')->response(
+                $application->skck_path,
+                $filename,
+                [
+                    'Content-Type' => $mime,
+                    'Content-Disposition' => 'inline; filename="' . addslashes($filename) . '"',
+                ]
+            );
+        }
+
+        return Storage::disk('private')->download(
+            $application->skck_path,
             $filename
         );
     }

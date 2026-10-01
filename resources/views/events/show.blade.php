@@ -1,7 +1,7 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-banner 
-            title="{{ $event->title }}" 
+            :title="$event->title" 
             subtitle="Detail acara karir dan pendaftaran."
             :back-url="route('events.index')"
             back-label="Kembali ke Acara" eyebrow="Beranda › Acara">
@@ -22,8 +22,11 @@
                 <div class="lg:col-span-2">
                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                         @if($event->poster)
-                        <img src="{{ asset('storage/' . $event->poster) }}" alt="{{ $event->title }}"
-                             class="w-full h-64 object-cover">
+                        <div class="poster-frame h-64 sm:h-80">
+                            <img src="{{ asset('storage/' . $event->poster) }}" alt="" aria-hidden="true" class="poster-bg">
+                            <img src="{{ asset('storage/' . $event->poster) }}" alt="{{ $event->title }}"
+                                 class="poster-main">
+                        </div>
                         @else
                         <div class="w-full h-48 bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center">
                             <svg class="w-16 h-16 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -226,7 +229,7 @@
                                             <a href="{{ asset('storage/' . $registration->payment_proof) }}" target="_blank" class="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-blue-600 hover:underline">Lihat bukti terkirim →</a>
                                         @endif
                                     </div>
-                                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-800 mb-3">Jika ada kendala hubungi panitia via menu Pesan.</div>
+                                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-800 mb-3">Jika ada kendala hubungi panitia via kontak yang tertera atau email bkksmkmutu3@gmail.com.</div>
                                     <form method="POST" action="{{ route('events.cancel', $event) }}" data-confirm="Batalkan pendaftaran acara ini?" data-confirm-title="Batalkan" data-confirm-ok="Batalkan" data-confirm-variant="danger">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="w-full px-5 py-2.5 border border-red-200 text-red-600 text-sm font-semibold rounded-xl hover:bg-red-50 transition">Batalkan Pendaftaran</button>

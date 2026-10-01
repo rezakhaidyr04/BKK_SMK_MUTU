@@ -10,9 +10,7 @@ use App\Http\Controllers\CvBuilderController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\SuratPengantarController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -78,7 +76,10 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
     Route::get("/documents/{document}/download", [\App\Http\Controllers\UserDocumentController::class, "download"])->name("documents.download");
     Route::delete("/documents/{document}", [\App\Http\Controllers\UserDocumentController::class, "destroy"])->name("documents.destroy");
 
+    Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
     Route::get('/notifications/mark-read', [\App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.markAllRead');
+    Route::get('/notifications/poll', [\App\Http\Controllers\NotificationController::class, 'poll'])->name('notifications.poll');
+    Route::get('/notifications/{id}/go', [\App\Http\Controllers\NotificationController::class, 'go'])->name('notifications.go');
 
     // Job Applications — P0 H-02: melamar wajib verified.
     Route::post("/jobs/{job}/apply", [JobController::class, "apply"])->middleware('verified')->name(
@@ -98,6 +99,7 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
         Route::get("/jobs/{job}/edit", [App\Http\Controllers\Company\JobController::class, "edit"])->name("jobs.edit");
         Route::put("/jobs/{job}", [App\Http\Controllers\Company\JobController::class, "update"])->name("jobs.update");
         Route::post("/jobs/{job}/close", [App\Http\Controllers\Company\JobController::class, "close"])->name("jobs.close");
+        Route::post("/jobs/{job}/publish", [App\Http\Controllers\Company\JobController::class, "publish"])->name("jobs.publish");
         Route::delete("/jobs/{job}", [App\Http\Controllers\Company\JobController::class, "destroy"])->name("jobs.destroy");
         Route::get("/applicants", [App\Http\Controllers\Company\ApplicantController::class, "index"])->name("applicants.index");
         Route::get("/applicants/{application}", [App\Http\Controllers\Company\ApplicantController::class, "show"])->name("applicants.show");
@@ -118,14 +120,18 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
             "show",
         ])->name("applications.show");
 
-        Route::get("/applications/{application}/surat-pengantar", [
-            SuratPengantarController::class,
-            "download",
-        ])->name("applications.surat-pengantar");
         Route::get("/applications/{application}/attachment", [
             ApplicationController::class,
             "downloadAttachment",
         ])->name("applications.attachment.download");
+        Route::get("/applications/{application}/surat-lamaran", [
+            ApplicationController::class,
+            "downloadCoverLetter",
+        ])->name("applications.cover-letter.download");
+        Route::get("/applications/{application}/skck", [
+            ApplicationController::class,
+            "downloadSkck",
+        ])->name("applications.skck.download");
 
         Route::delete("/applications/{application}", [
             ApplicationController::class,
@@ -170,28 +176,6 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
         CertificateController::class,
         "destroy",
     ])->name("certificates.destroy");
-
-    // Messages — P0 H-02: chat sensitif wajib verified.
-    Route::middleware('verified')->group(function () {
-        Route::get("/messages", [MessageController::class, "index"])->name(
-            "messages.index",
-        );
-        Route::post("/messages/start", [MessageController::class, "start"])
-            ->middleware('throttle:send-message')
-            ->name("messages.start");
-        Route::get("/messages/{conversation}", [
-            MessageController::class,
-            "show",
-        ])->name("messages.show");
-        Route::get("/messages/{conversation}/fetch", [
-            MessageController::class,
-            "fetch",
-        ])->name("messages.fetch");
-        Route::post("/messages/{conversation}", [
-            MessageController::class,
-            "send",
-        ])->middleware('throttle:send-message')->name("messages.send");
-    });
 
     // Admin Routes
     Route::middleware(["role:admin", "log.activity"])

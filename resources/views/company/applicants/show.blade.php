@@ -2,7 +2,7 @@
     <div class="page-shell">
         <x-ui.page-banner
             title="Profile Pelamar"
-            subtitle="{{ $application->user->name }} — {{ $application->job->title }}"
+            :subtitle="$application->user->name . ' — ' . $application->job->title"
             :back-url="route('company.applicants.index')"
             back-label="Kembali ke Daftar Pelamar" eyebrow="Perusahaan › Pelamar">
             <x-slot:chips>
@@ -249,15 +249,32 @@
                     @endif
 
                     {{-- SURAT LAMARAN --}}
-                    @if($application->cover_letter)
-                    <x-ui.panel title="Surat Lamaran">
+                    @if($application->cover_letter_path || $application->cover_letter)
+                    <x-ui.panel title="Surat Lamaran (PDF)">
+                        @if($application->cover_letter_path)
+                        <div class="flex items-center gap-3">
+                            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-50 text-red-500">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 3h7l5 5v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <p class="truncate text-sm font-semibold text-slate-700" title="{{ $application->cover_letter_name }}">{{ $application->cover_letter_name ?? 'Surat Lamaran' }}</p>
+                                <p class="text-xs text-slate-400">{{ $application->cover_letter_size ? number_format($application->cover_letter_size / 1024, 1) : '-' }} KB · {{ $application->cover_letter_mime ?? 'PDF' }}</p>
+                            </div>
+                            <div class="flex shrink-0 items-center gap-2">
+                                <a href="{{ route('applications.cover-letter.download', $application) }}?preview=1" target="_blank" class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700">Lihat</a>
+                                <a href="{{ route('applications.cover-letter.download', $application) }}" class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700">Unduh</a>
+                            </div>
+                        </div>
+                        @else
                         <div class="rounded-xl border border-slate-100 bg-slate-50/70 p-4 text-sm leading-relaxed text-slate-700 whitespace-pre-line break-words [overflow-wrap:anywhere] min-w-0 overflow-hidden" style="text-align: left;">{{ str_replace(['\\r\\n', '\\n', '\\r'], "\n", trim($application->cover_letter)) }}</div>
+                        <p class="mt-2 text-xs text-amber-600">Data lama (sebelum wajib PDF).</p>
+                        @endif
                     </x-ui.panel>
                     @endif
 
-                    {{-- LAMPIRAN --}}
+                    {{-- FILE CV KHUSUS LAMARAN --}}
                     @if($application->attachment_path)
-                    <x-ui.panel title="Lampiran Lamaran">
+                    <x-ui.panel title="File CV (Lamaran Ini)">
                         <div class="flex items-center gap-3">
                             <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
                                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 3h7l5 5v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/></svg>
@@ -269,6 +286,25 @@
                             <div class="flex shrink-0 items-center gap-2">
                                 <a href="{{ route('applications.attachment.download', $application) }}?preview=1" target="_blank" class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700">Lihat</a>
                                 <a href="{{ route('applications.attachment.download', $application) }}" class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700">Unduh</a>
+                            </div>
+                        </div>
+                    </x-ui.panel>
+                    @endif
+
+                    {{-- SKCK (opsional) --}}
+                    @if($application->skck_path)
+                    <x-ui.panel title="SKCK">
+                        <div class="flex items-center gap-3">
+                            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.6-2A11.9 11.9 0 0112 2.9a11.9 11.9 0 01-8.6 3.1A12 12 0 003 9c0 5.6 3.8 10.3 9 11.6 5.2-1.3 9-6 9-11.6 0-1-.1-2-.4-3z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <p class="truncate text-sm font-semibold text-slate-700" title="{{ $application->skck_name }}">{{ $application->skck_name ?? 'SKCK' }}</p>
+                                <p class="text-xs text-slate-400">{{ $application->skck_size ? number_format($application->skck_size / 1024, 1) : '-' }} KB · {{ $application->skck_mime ?? 'PDF' }}</p>
+                            </div>
+                            <div class="flex shrink-0 items-center gap-2">
+                                <a href="{{ route('applications.skck.download', $application) }}?preview=1" target="_blank" class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-amber-200 hover:bg-amber-50 hover:text-amber-700">Lihat</a>
+                                <a href="{{ route('applications.skck.download', $application) }}" class="inline-flex items-center gap-1.5 rounded-lg bg-amber-600 px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-amber-700">Unduh</a>
                             </div>
                         </div>
                     </x-ui.panel>
@@ -327,6 +363,16 @@
                         <form method="POST" action="{{ route('company.applications.update', $application) }}" class="js-status-form space-y-4" data-applicant-name="{{ $application->user->name }}" x-data="{ status: @js($application->status), type: @js($application->interview_type ?? 'offline') }">
                             @csrf
                             @method('PATCH')
+                            @if ($errors->any())
+                            <div class="rounded-xl border border-red-200 bg-red-50 p-3">
+                                <p class="text-sm font-semibold text-red-700">Status belum tersimpan, mohon perbaiki dulu:</p>
+                                <ul class="list-disc list-inside text-xs text-red-600 space-y-0.5 mt-1">
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
                             <div>
                                 <label class="mb-2 block text-sm font-semibold text-slate-700">Status Lamaran</label>
                                 <select x-model="status" name="status" class="w-full rounded-xl border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500">
@@ -374,17 +420,6 @@
                         </form>
                     </x-ui.panel>
 
-                    {{-- ACTIONS --}}
-                    <div class="flex items-center gap-3">
-                        <form action="{{ route('messages.start') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="recipient_id" value="{{ $application->user_id }}">
-                            <button type="submit" class="inline-flex items-center gap-1.5 rounded-lg border border-green-200 bg-green-50 px-4 py-2.5 text-sm font-semibold text-green-700 shadow-sm transition hover:bg-green-100">
-                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5z"/></svg>
-                                Chat Pelamar
-                            </button>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>

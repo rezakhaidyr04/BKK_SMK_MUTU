@@ -86,11 +86,11 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                                     </svg>
                                     <p class="text-sm text-gray-500 mb-1">Klik untuk upload atau drag & drop</p>
-                                    <p class="text-xs text-gray-400">PDF, JPG, PNG — maks. 10 MB</p>
+                                    <p class="text-xs text-gray-400">Wajib PDF — maks. 10 MB</p>
                                     <p id="mou_file_name" class="mt-2 text-sm font-medium text-green-600 hidden"></p>
                                 </div>
                                 <input type="file" id="mou_path" name="mou_path"
-                                       accept=".pdf,.jpg,.jpeg,.png"
+                                       accept=".pdf,application/pdf"
                                        class="absolute inset-0 opacity-0 cursor-pointer"
                                        onchange="showFileName(this, 'mou_file_name')">
                             </div>

@@ -12,3 +12,8 @@
     color: var(--text);                  /* #0f172a */
   }
 }
+
+/* Sembunyikan elemen Alpine (dropdown lonceng dll) sebelum Alpine siap */
+[x-cloak] {
+  display: none !important;
+}

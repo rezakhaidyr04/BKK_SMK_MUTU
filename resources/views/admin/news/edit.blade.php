@@ -101,9 +101,9 @@
                         <div>
                             <label class="ui-label">Thumbnail</label>
                             @if($news->thumbnail)
-                            <img id="thumbPreview" src="{{ asset('storage/' . $news->thumbnail) }}" alt="Thumbnail saat ini" class="w-full h-32 object-cover rounded-xl mb-2 border border-slate-200">
+                            <img id="thumbPreview" src="{{ asset('storage/' . $news->thumbnail) }}" alt="Thumbnail saat ini" class="w-full h-32 object-contain bg-slate-50 rounded-xl mb-2 border border-slate-200">
                             @else
-                            <img id="thumbPreview" src="" alt="" class="hidden w-full h-32 object-cover rounded-xl mb-2 border border-slate-200">
+                            <img id="thumbPreview" src="" alt="" class="hidden w-full h-32 object-contain bg-slate-50 rounded-xl mb-2 border border-slate-200">
                             @endif
                             <div class="border-2 border-dashed border-slate-200 rounded-xl p-3 text-center hover:border-blue-400 transition">
                                 <input type="file" name="thumbnail" id="thumbInput" accept="image/jpeg,image/png,image/webp" class="block mx-auto text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-700 file:text-xs cursor-pointer">

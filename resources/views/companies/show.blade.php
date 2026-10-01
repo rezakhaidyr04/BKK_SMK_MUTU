@@ -1,14 +1,12 @@
-<x-app-layout :full-bleed="true" :hide-sidebar="!auth()->check()" title="{{ $company->name }} — Profil Perusahaan BKKMU" description="Profil {{ $company->name }} beserta lowongan aktif di BKKMU.">
+<x-app-layout :full-bleed="true" :hide-sidebar="!auth()->check()" :title="$company->name . ' — Profil Perusahaan BKKMU'" :description="'Profil ' . $company->name . ' beserta lowongan aktif di BKKMU.'">
     <div class="page-shell">
         @php
-            $canMessage = (bool) $company->user_id;
-            $isUmum = auth()->check() && auth()->user()->isUmum();
             $heroSubtitle = $company->industry ?? 'Perusahaan mitra BKKMU';
             if ($company->address) $heroSubtitle .= ' • ' . Str::limit($company->address, 60);
         @endphp
         <x-ui.page-banner
-            title="{{ $company->name }}"
-            subtitle="{{ $heroSubtitle }}"
+            :title="$company->name"
+            :subtitle="$heroSubtitle"
             eyebrow="Perusahaan"
         >
             <x-slot:logo>
@@ -32,15 +30,6 @@
             </x-slot:chips>
             <x-slot:actions>
                 <x-ui.btn href="#lowongan" variant="white" size="sm">Lihat Lowongan</x-ui.btn>
-                @if($canMessage && $isUmum)
-                    <form action="{{ route('messages.start') }}" method="POST" class="inline">
-                        @csrf
-                        <input type="hidden" name="recipient_id" value="{{ $company->user_id }}">
-                        <x-ui.btn type="submit" variant="secondary" size="sm">Hubungi Perusahaan</x-ui.btn>
-                    </form>
-                @elseif($canMessage && !auth()->check())
-                    <x-ui.btn href="{{ route('login') }}" variant="secondary" size="sm">Hubungi Perusahaan</x-ui.btn>
-                @endif
             </x-slot:actions>
         </x-ui.page-banner>
 
@@ -72,7 +61,7 @@
                         @endif
                     </x-ui.panel>
 
-                    @if($company->address || $company->website)
+                    @if($company->address || $company->website || $company->maps_url)
                     <x-ui.panel title="Lokasi" data-reveal>
                         <div class="flex flex-col sm:flex-row sm:items-center gap-3">
                             @if($company->address)
@@ -83,18 +72,69 @@
                                 <div class="min-w-0">
                                     <p class="text-sm font-semibold text-slate-900">Alamat perusahaan</p>
                                     <p class="text-sm text-slate-600 mt-0.5">{{ $company->address }}</p>
+                                    @php
+                                        $coMapsLink = $company->maps_url ?? ($company->address ? 'https://www.google.com/maps/search/?api=1&query='.urlencode($company->address) : null);
+                                    @endphp
+                                    @if($coMapsLink)
+                                    <a href="{{ $coMapsLink }}" target="_blank" rel="noopener" class="mt-1.5 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:underline">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                        Buka Rute di Google Maps
+                                    </a>
+                                    @endif
                                 </div>
                             </div>
                             @endif
                             @if($company->website)
                                 <x-ui.btn href="{{ $company->website }}" target="_blank" rel="noopener" variant="secondary" size="sm" class="shrink-0">
                                     Kunjungi Website
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 00-2 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                                 </x-ui.btn>
                             @endif
                         </div>
                     </x-ui.panel>
                     @endif
+
+                    <x-ui.panel title="Ulasan Pencari Kerja" data-reveal>
+                        @if($reviewStats['count'] > 0)
+                            <div class="flex flex-wrap items-center gap-3 mb-5">
+                                <p class="text-3xl font-extrabold text-slate-900">{{ number_format($reviewStats['average'], 1) }}</p>
+                                <div>
+                                    <div class="flex items-center gap-0.5" aria-label="Rating {{ $reviewStats['average'] }} dari 5">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <svg class="w-4 h-4 {{ $i <= round($reviewStats['average']) ? 'fill-amber-400' : 'fill-slate-200' }}" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                        @endfor
+                                    </div>
+                                    <p class="text-xs text-slate-500 mt-1">Berdasarkan {{ $reviewStats['count'] }} ulasan</p>
+                                </div>
+                                <a href="{{ route('reviews.create', ['company' => $company->id]) }}" class="ml-auto inline-flex items-center gap-1.5 px-4 py-2 border border-blue-200 text-blue-700 text-sm font-semibold rounded-lg hover:bg-blue-50 transition">Beri Ulasan</a>
+                            </div>
+                            <ul class="space-y-4">
+                                @foreach($reviews as $review)
+                                    <li class="border-t border-slate-100 pt-4 first:border-0 first:pt-0">
+                                        <div class="flex items-center justify-between gap-2 mb-1">
+                                            <p class="text-sm font-bold text-slate-900">{{ $review->display_name }}</p>
+                                            <span class="flex items-center gap-0.5" aria-label="{{ $review->rating }} dari 5">
+                                                @for($i = 1; $i <= 5; $i++)
+                                                    <svg class="w-3.5 h-3.5 {{ $i <= $review->rating ? 'fill-amber-400' : 'fill-slate-200' }}" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                                @endfor
+                                            </span>
+                                        </div>
+                                        @if($review->job_title)
+                                            <p class="text-[11px] font-semibold text-blue-600 mb-1">{{ $review->job_title }}</p>
+                                        @endif
+                                        <p class="text-sm text-slate-600 leading-relaxed">{{ $review->comment }}</p>
+                                        <p class="text-[11px] text-slate-400 mt-1.5">{{ $review->created_at->diffForHumans() }}</p>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <div class="flex flex-col items-center text-center py-4">
+                                <p class="text-sm font-semibold text-slate-700">Belum ada ulasan</p>
+                                <p class="text-xs text-slate-400 mt-1 max-w-xs">Jadilah yang pertama membagikan pengalaman dengan perusahaan ini.</p>
+                                <a href="{{ route('reviews.create', ['company' => $company->id]) }}" class="mt-3 inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition">Beri Ulasan Pertama</a>
+                            </div>
+                        @endif
+                    </x-ui.panel>
 
                     <div id="lowongan" class="scroll-mt-24">
                         <div class="flex items-center justify-between mb-3 px-1">
@@ -227,17 +267,6 @@
                             @endif
                         </div>
 
-                        @if($canMessage && $isUmum)
-                        <form action="{{ route('messages.start') }}" method="POST" class="mt-4">
-                            @csrf
-                            <input type="hidden" name="recipient_id" value="{{ $company->user_id }}">
-                            <x-ui.btn type="submit" class="w-full justify-center">Hubungi Perusahaan</x-ui.btn>
-                        </form>
-                        @elseif($canMessage && !auth()->check())
-                        <div class="mt-4">
-                            <x-ui.btn href="{{ route('login') }}" variant="secondary" class="w-full justify-center">Masuk untuk Menghubungi</x-ui.btn>
-                        </div>
-                        @endif
                     </x-ui.panel>
 
                     <x-ui.panel title="Informasi" data-reveal>

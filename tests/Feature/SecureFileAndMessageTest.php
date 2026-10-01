@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Bookmark;
 use App\Models\Certificate;
 use App\Models\Company;
-use App\Models\Conversation;
 use App\Models\CvFile;
 use App\Models\Job;
 use App\Models\User;
@@ -168,71 +167,25 @@ class SecureFileAndMessageTest extends TestCase
         $this->assertDatabaseMissing('bookmarks', ['id' => $bookmark->id]);
     }
 
-    // ---------- Message ----------
-    public function test_message_show_fetch_send_forbidden_for_outsider(): void
-    {
-        $umum = $this->verifiedUmum();
-        $company = $this->verifiedCompany();
-        $outsider = $this->verifiedUmum();
-
-        // create conversation between umum and company
-        $conv = Conversation::create();
-        $conv->users()->attach([$umum->id, $company->id]);
-
-        $this->actingAs($outsider)->get(route('messages.show', $conv))->assertForbidden();
-        $this->actingAs($outsider)->get(route('messages.fetch', $conv))->assertForbidden();
-        $this->actingAs($outsider)->post(route('messages.send', $conv), ['body' => 'hi'])->assertForbidden();
-
-        // insider can access
-        $this->actingAs($umum)->get(route('messages.show', $conv))->assertOk();
-        $this->actingAs($umum)->get(route('messages.fetch', $conv))->assertOk();
-    }
-
-    public function test_message_start_blocked_for_same_role_pairs(): void
-    {
-        $umum1 = $this->verifiedUmum();
-        $umum2 = $this->verifiedUmum();
-        $comp1 = $this->verifiedCompany();
-        $comp2 = $this->verifiedCompany();
-        $admin = User::factory()->create(['role' => 'admin', 'email_verified_at' => now()]);
-
-        // umum -> umum blocked
-        $this->actingAs($umum1)->post(route('messages.start'), ['recipient_id' => $umum2->id])
-            ->assertSessionHas('error');
-
-        // company -> company blocked
-        $this->actingAs($comp1)->post(route('messages.start'), ['recipient_id' => $comp2->id])
-            ->assertSessionHas('error');
-
-        // umum -> admin blocked
-        $this->actingAs($umum1)->post(route('messages.start'), ['recipient_id' => $admin->id])
-            ->assertSessionHas('error');
-
-        // company -> admin blocked
-        $this->actingAs($comp1)->post(route('messages.start'), ['recipient_id' => $admin->id])
-            ->assertSessionHas('error');
-
-        $this->assertEquals(0, Conversation::count());
-    }
-
     public function test_duplicate_apply_blocked_and_company_cannot_apply(): void
     {
+        Storage::fake('private');
         $umum = $this->verifiedUmum();
         $companyUser = $this->verifiedCompany();
         $job = Job::factory()->create(['status' => 'active', 'deadline' => now()->addWeek()]);
 
         $cover = str_repeat('Saya sangat tertarik dengan posisi ini dan memenuhi kualifikasi. ', 3);
         // first apply success
-        $this->actingAs($umum)->post(route('jobs.apply', $job), ['cover_letter' => $cover])->assertRedirect();
+        $this->actingAs($umum)->post(route('jobs.apply', $job), ['cover_letter' => $cover, 'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf')])->assertRedirect();
         $this->assertDatabaseHas('applications', ['job_id' => $job->id, 'user_id' => $umum->id]);
 
         // second apply blocked
-        $resp = $this->actingAs($umum)->post(route('jobs.apply', $job), ['cover_letter' => $cover]);
+        $resp = $this->actingAs($umum)->post(route('jobs.apply', $job), ['cover_letter' => $cover, 'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf')]);
         $resp->assertSessionHas('error');
         $this->assertEquals(1, \App\Models\Application::where('job_id', $job->id)->where('user_id', $umum->id)->count());
 
         // company cannot apply (403)
-        $this->actingAs($companyUser)->post(route('jobs.apply', $job), ['cover_letter' => $cover])->assertForbidden();
+        $this->actingAs($companyUser)->post(route('jobs.apply', $job), ['cover_letter' => $cover, 'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf')])->assertForbidden();
     }
 
     public function test_event_register_handles_double_and_past_event(): void

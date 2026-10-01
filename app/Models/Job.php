@@ -41,6 +41,33 @@ class Job extends Model
         'deadline' => 'date',
     ];
 
+    /**
+     * Benefit otomatis dinormalisasi jadi daftar bernomor saat disimpan:
+     * dipisah per koma / titik-koma / baris baru (sesuai petunjuk form),
+     * lalu disusun "1. ... 2. ..." seperti gaya kualifikasi.
+     * Satu item dibiarkan polos tanpa nomor.
+     */
+    public function setBenefitsAttribute($value): void
+    {
+        if ($value === null || trim((string) $value) === '') {
+            $this->attributes['benefits'] = $value;
+
+            return;
+        }
+
+        $items = collect(preg_split('/[\r\n,;]+/', (string) $value))
+            ->map(fn ($b) => trim((string) $b))
+            ->filter()
+            // Buang penomoran/bullet lama agar tidak dobel ("1. 1. ...").
+            // Huruf tidak diubah — kata-kata milik perusahaan dibiarkan apa adanya.
+            ->map(fn ($b) => preg_replace('/^(\d+[.)\-:]|[-•*])\s*/u', '', $b))
+            ->values();
+
+        $this->attributes['benefits'] = $items->count() > 1
+            ? $items->map(fn ($b, $i) => ($i + 1) . '. ' . $b)->implode("\n")
+            : $items->first();
+    }
+
     public function applications()
     {
         return $this->hasMany(Application::class);

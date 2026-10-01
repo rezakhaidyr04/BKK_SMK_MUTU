@@ -1,6 +1,6 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Detail Perusahaan" subtitle="{{ $company->name }}" eyebrow="Admin › Perusahaan">
+        <x-ui.page-banner title="Detail Perusahaan" :subtitle="$company->name" eyebrow="Admin › Perusahaan">
                         <x-slot:chips>
                 <span class="page-banner__chip">
                     <span class="w-2 h-2 rounded-full {{ ($company->verification_status ?? 'pending') === 'verified' ? 'bg-emerald-400' : (($company->verification_status ?? 'pending') === 'pending' ? 'bg-amber-400 animate-pulse' : 'bg-red-400') }}"></span>

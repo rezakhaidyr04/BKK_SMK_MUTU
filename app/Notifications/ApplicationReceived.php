@@ -31,12 +31,14 @@ class ApplicationReceived extends Notification
         $jobTitle = $job->title ?? 'lowongan';
 
         return [
+            'type' => 'application_received',
             'application_id' => $this->application->id,
             'job_id' => $job->id ?? null,
             'job_title' => $job->title ?? null,
             'applicant_id' => $this->application->user_id,
             'applicant_name' => optional($this->application->user)->name,
             'message' => 'Lamaran baru diterima untuk ' . $jobTitle,
+            'url' => route('company.applicants.show', $this->application->id),
         ];
     }
 

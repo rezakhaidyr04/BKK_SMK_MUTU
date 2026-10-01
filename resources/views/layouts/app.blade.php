@@ -49,7 +49,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         {{-- ?v= bertambah setiap app-custom.css diubah agar browser tidak memakai cache lama --}}
-        <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}?v=20260930a">
+        <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}?v=20260930c">
         
         @stack('styles')
     </head>
@@ -164,6 +164,7 @@
             </div>
         </div>
         
+        @include('layouts.notification-toasts')
         @stack('scripts')
         {{-- Scroll Reveal Script --}}
         <script>

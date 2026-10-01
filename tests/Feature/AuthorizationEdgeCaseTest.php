@@ -6,7 +6,6 @@ use App\Models\Application;
 use App\Models\Bookmark;
 use App\Models\Certificate;
 use App\Models\Company;
-use App\Models\Conversation;
 use App\Models\CvFile;
 use App\Models\Event;
 use App\Models\Job;
@@ -18,7 +17,7 @@ use Tests\TestCase;
 
 /**
  * P5.2: Remaining IDOR / authorization edge cases not covered in P5.1.
- * Covers: SuratPengantar, Company Applicant, private files (cert/cv/doc/attachment) company/admin, bookmark scoping, message admin/outsider, event cancel cross-user.
+ * Covers: Company Applicant, private files (cert/cv/doc/attachment) company/admin, bookmark scoping, message admin/outsider, event cancel cross-user.
  */
 class AuthorizationEdgeCaseTest extends TestCase
 {
@@ -41,30 +40,6 @@ class AuthorizationEdgeCaseTest extends TestCase
         $a = User::factory()->create(['role' => 'admin', 'email_verified_at' => now()]);
         $a->assignRole(\Spatie\Permission\Models\Role::firstOrCreate(['name' => 'admin']));
         return $a;
-    }
-
-    // ---------- Surat Pengantar ----------
-    public function test_surat_pengantar_company_owner_allowed_other_company_forbidden(): void
-    {
-        $applicant = $this->verifiedUmum();
-        $ownerCompanyUser = $this->verifiedCompany();
-        $otherCompanyUser = $this->verifiedCompany();
-        $job = Job::factory()->create(['company_id' => $ownerCompanyUser->company->id]);
-        $app = Application::factory()->create(['user_id' => $applicant->id, 'job_id' => $job->id]);
-
-        $this->actingAs($ownerCompanyUser)->get(route('applications.surat-pengantar', $app))->assertOk();
-        $this->actingAs($otherCompanyUser)->get(route('applications.surat-pengantar', $app))->assertForbidden();
-    }
-
-    public function test_surat_pengantar_admin_allowed_other_umum_forbidden(): void
-    {
-        $applicant = $this->verifiedUmum();
-        $otherUmum = $this->verifiedUmum();
-        $admin = $this->admin();
-        $app = Application::factory()->create(['user_id' => $applicant->id]);
-
-        $this->actingAs($admin)->get(route('applications.surat-pengantar', $app))->assertOk();
-        $this->actingAs($otherUmum)->get(route('applications.surat-pengantar', $app))->assertForbidden();
     }
 
     public function test_application_attachment_admin_can_download(): void
@@ -195,30 +170,29 @@ class AuthorizationEdgeCaseTest extends TestCase
         $this->actingAs($companyUser)->get(route('company.applicants.index'))->assertOk();
     }
 
-    // ---------- Message remaining ----------
-    public function test_message_start_admin_blocked_and_company_outsider_fetch_forbidden(): void
+    public function test_company_applicants_index_filters_by_own_job_only(): void
     {
-        $umum = $this->verifiedUmum();
-        $company = $this->verifiedCompany();
-        $otherCompany = $this->verifiedCompany();
-        $admin = $this->admin();
+        $companyUser = $this->verifiedCompany();
+        $company = $companyUser->company;
+        $jobA = Job::factory()->create(['company_id' => $company->id, 'title' => 'Pekerjaan A']);
+        $jobB = Job::factory()->create(['company_id' => $company->id, 'title' => 'Pekerjaan B']);
+        $otherJob = Job::factory()->create(['title' => 'Pekerjaan Lain']);
+        $alice = $this->verifiedUmum(['name' => 'Alice Pelamar']);
+        $bob = $this->verifiedUmum(['name' => 'Bob Pelamar']);
+        Application::factory()->create(['job_id' => $jobA->id, 'user_id' => $alice->id]);
+        Application::factory()->create(['job_id' => $jobB->id, 'user_id' => $bob->id]);
 
-        // admin cannot start conversation with umum or company (allowedPair only umum<->company)
-        $this->actingAs($admin)->post(route('messages.start'), ['recipient_id' => $umum->id])->assertSessionHas('error');
-        $this->actingAs($admin)->post(route('messages.start'), ['recipient_id' => $company->id])->assertSessionHas('error');
-        $this->actingAs($umum)->post(route('messages.start'), ['recipient_id' => $admin->id])->assertSessionHas('error');
+        // Filter lowongan sendiri: hanya pelamar lowongan itu.
+        $this->actingAs($companyUser)->get(route('company.applicants.index', ['job_id' => $jobA->id]))
+            ->assertOk()
+            ->assertSee('Alice Pelamar')
+            ->assertDontSee('Bob Pelamar');
 
-        // conversation between umum and company
-        $conv = Conversation::create();
-        $conv->users()->attach([$umum->id, $company->id]);
-
-        // other company (not member) cannot fetch/send/show
-        $this->actingAs($otherCompany)->get(route('messages.show', $conv))->assertForbidden();
-        $this->actingAs($otherCompany)->get(route('messages.fetch', $conv))->assertForbidden();
-        $this->actingAs($otherCompany)->post(route('messages.send', $conv), ['body' => 'hack'])->assertForbidden();
-        // admin also not member
-        $this->actingAs($admin)->get(route('messages.show', $conv))->assertForbidden();
-        $this->actingAs($admin)->get(route('messages.fetch', $conv))->assertForbidden();
+        // job_id milik perusahaan lain diabaikan (tidak bocor, tidak error).
+        $this->actingAs($companyUser)->get(route('company.applicants.index', ['job_id' => $otherJob->id]))
+            ->assertOk()
+            ->assertSee('Alice Pelamar')
+            ->assertSee('Bob Pelamar');
     }
 
     // ---------- Event cancel cross-user ----------

@@ -76,9 +76,9 @@
         <div>
             <x-input-label for="file" :value="__('File Dokumen')" class="text-slate-700 font-semibold mb-1" />
             <div class="mt-1">
-                <input id="file" name="file" type="file" accept=".pdf,.jpg,.jpeg,.png" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition cursor-pointer" required />
+                <input id="file" name="file" type="file" accept=".pdf,application/pdf" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition cursor-pointer" required />
             </div>
-            <p class="text-[10px] text-slate-400 mt-1.5">Mendukung format PDF, JPG, PNG. Ukuran maksimal file 5MB.</p>
+            <p class="text-[10px] text-slate-400 mt-1.5">Wajib format PDF. Ukuran maksimal file 5MB.</p>
             <x-input-error class="mt-1.5" :messages="$errors->get('file')" />
         </div>
 

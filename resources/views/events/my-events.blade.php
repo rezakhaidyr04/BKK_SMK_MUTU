@@ -32,7 +32,10 @@
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-4 {{ $reg->status === 'cancelled' ? 'opacity-60' : '' }}">
                 <div class="flex flex-col sm:flex-row">
                     @if($event->poster)
-                    <img src="{{ asset('storage/' . $event->poster) }}" alt="" class="w-full sm:w-36 h-36 object-cover flex-shrink-0">
+                    <div class="poster-frame w-full sm:w-36 h-36 flex-shrink-0 sm:rounded-l-2xl">
+                        <img src="{{ asset('storage/' . $event->poster) }}" alt="" aria-hidden="true" class="poster-bg">
+                        <img src="{{ asset('storage/' . $event->poster) }}" alt="" class="poster-main">
+                    </div>
                     @else
                     <div class="w-full sm:w-36 h-36 bg-gradient-to-br from-blue-400 to-violet-500 flex items-center justify-center flex-shrink-0">
                         <svg class="text-white opacity-60 w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">

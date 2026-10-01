@@ -244,6 +244,7 @@ class FileStorageEdgeCaseTest extends TestCase
 
         $this->actingAs($user)->post(route('jobs.apply', $job), [
             'cover_letter' => $this->coverLetter(),
+            'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf'),
             'attachment' => UploadedFile::fake()->create('notes.txt', 100, 'text/plain'),
         ])->assertSessionHasErrors(['attachment']);
 
@@ -258,6 +259,7 @@ class FileStorageEdgeCaseTest extends TestCase
 
         $this->actingAs($user)->post(route('jobs.apply', $job), [
             'cover_letter' => $this->coverLetter(),
+            'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf'),
             'attachment' => UploadedFile::fake()->create('big.pdf', 6000, 'application/pdf'),
         ])->assertSessionHasErrors(['attachment']);
 
@@ -272,6 +274,7 @@ class FileStorageEdgeCaseTest extends TestCase
 
         $this->actingAs($user)->post(route('jobs.apply', $job), [
             'cover_letter' => $this->coverLetter(),
+            'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf'),
             'attachment' => UploadedFile::fake()->create('cv-siswa.pdf', 400, 'application/pdf'),
         ])->assertRedirect(route('jobs.show', $job));
 

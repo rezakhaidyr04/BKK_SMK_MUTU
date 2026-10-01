@@ -24,7 +24,10 @@ class CertificateController extends Controller
             'title' => 'required|string|max:255',
             'issuer' => 'required|string|max:255',
             'issue_date' => 'required|date',
-            'file' => 'required|file|mimes:pdf,jpg,jpeg,png|mimetypes:application/pdf,image/jpeg,image/png|max:5120',
+            'file' => 'required|file|mimes:pdf|mimetypes:application/pdf|max:5120',
+        ], [
+            'file.mimes' => 'Sertifikat wajib berformat PDF.',
+            'file.mimetypes' => 'Sertifikat wajib berformat PDF.',
         ]);
 
         $filePath = $request->file('file')->store('certificates', 'private');

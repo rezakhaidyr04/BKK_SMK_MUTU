@@ -11,7 +11,7 @@
             <x-slot:actions>
                 <button
                     type="button"
-                    onclick="document.getElementById('uploadModal').classList.remove('hidden')"
+                    onclick="openUploadModal()"
                     class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
                 >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,14 +33,32 @@
                         </svg>
                     </div>
                     <div class="ui-panel-body">
-                        <h3 class="font-bold text-slate-900 mb-1">{{ $cert->title }}</h3>
+                        <div class="flex items-start justify-between gap-2 mb-1">
+                            <h3 class="font-bold text-slate-900">{{ $cert->title }}</h3>
+                            @php $ext = strtoupper(pathinfo($cert->file_path, PATHINFO_EXTENSION)); @endphp
+                            @if($ext)
+                                <span class="shrink-0 rounded-md bg-blue-50 px-2 py-0.5 text-[11px] font-bold text-blue-700">{{ $ext }}</span>
+                            @endif
+                        </div>
                         <p class="text-sm text-slate-600 mb-1">{{ $cert->issuer }}</p>
                         <p class="text-xs text-slate-400 mb-4">{{ $cert->issue_date->format('M Y') }}</p>
-                        <form action="{{ route('certificates.destroy', $cert->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-500 text-sm font-medium hover:text-red-700 transition-colors">Hapus</button>
-                        </form>
+                        <div class="flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3">
+                            <a href="{{ route('certificates.download', $cert->id) }}?preview=1" target="_blank" rel="noopener"
+                               class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white transition hover:bg-blue-700">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                Lihat
+                            </a>
+                            <a href="{{ route('certificates.download', $cert->id) }}"
+                               class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3.5 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                Unduh
+                            </a>
+                            <form action="{{ route('certificates.destroy', $cert->id) }}" method="POST" class="ml-auto" onsubmit="return confirm('Hapus sertifikat ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-red-600 transition hover:bg-red-50 hover:text-red-700">Hapus</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 @endforeach
@@ -55,7 +73,7 @@
                     <x-slot:action>
                         <button
                             type="button"
-                            onclick="document.getElementById('uploadModal').classList.remove('hidden')"
+                            onclick="openUploadModal()"
                             class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
                         >
                             Unggah Sertifikat Pertama
@@ -68,37 +86,60 @@
     </div>
 
     <!-- Upload Modal -->
-    <div id="uploadModal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-        <div class="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="text-xl font-bold text-slate-900">Unggah Sertifikat</h3>
-                <button type="button" onclick="document.getElementById('uploadModal').classList.add('hidden')" class="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
+    <div id="uploadModal" class="hidden fixed inset-0 z-[100] overflow-y-auto" role="dialog" aria-modal="true" aria-label="Unggah Sertifikat">
+        <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm" onclick="closeUploadModal()" aria-hidden="true"></div>
+        <div class="relative min-h-full flex items-start sm:items-center justify-center p-4 py-8">
+            <div class="relative bg-white rounded-2xl w-full max-w-md shadow-2xl max-h-[calc(100vh-4rem)] overflow-y-auto">
+                <div class="p-6 sm:p-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold text-slate-900">Unggah Sertifikat</h3>
+                        <button type="button" onclick="closeUploadModal()" class="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition" aria-label="Tutup">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                    <form action="{{ route('certificates.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        @csrf
+                        <div>
+                            <label class="ui-label">Judul</label>
+                            <input type="text" name="title" required class="ui-input" placeholder="Contoh: Sertifikat Web Development">
+                        </div>
+                        <div>
+                            <label class="ui-label">Penerbit</label>
+                            <input type="text" name="issuer" required class="ui-input" placeholder="Contoh: Dicoding, Coursera, dll.">
+                        </div>
+                        <div>
+                            <label class="ui-label">Tanggal Terbit</label>
+                            <input type="date" name="issue_date" required class="ui-input">
+                        </div>
+                        <div>
+                            <label class="ui-label">File <span class="font-normal text-slate-400">(Wajib PDF – Maks 5MB)</span></label>
+                            <input type="file" name="file" required accept=".pdf,application/pdf" class="ui-input file:mr-3 file:rounded-lg file:border-0 file:bg-blue-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-blue-700">
+                        </div>
+                        <div class="flex gap-3 pt-2 pb-1">
+                            <button type="submit" class="flex-1 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700">Unggah</button>
+                            <button type="button" onclick="closeUploadModal()" class="flex-1 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Batal</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <form action="{{ route('certificates.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
-                @csrf
-                <div>
-                    <label class="ui-label">Judul</label>
-                    <input type="text" name="title" required class="ui-input" placeholder="Contoh: Sertifikat Web Development">
-                </div>
-                <div>
-                    <label class="ui-label">Penerbit</label>
-                    <input type="text" name="issuer" required class="ui-input" placeholder="Contoh: Dicoding, Coursera, dll.">
-                </div>
-                <div>
-                    <label class="ui-label">Tanggal Terbit</label>
-                    <input type="date" name="issue_date" required class="ui-input">
-                </div>
-                <div>
-                    <label class="ui-label">File <span class="font-normal text-slate-400">(PDF, JPG, PNG – Maks 5MB)</span></label>
-                    <input type="file" name="file" required accept=".pdf,.jpg,.jpeg,.png" class="ui-input file:mr-3 file:rounded-lg file:border-0 file:bg-blue-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-blue-700">
-                </div>
-                <div class="flex gap-3 pt-2">
-                    <button type="submit" class="flex-1 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700">Unggah</button>
-                    <button type="button" onclick="document.getElementById('uploadModal').classList.add('hidden')" class="flex-1 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Batal</button>
-                </div>
-            </form>
         </div>
     </div>
+
+    @push('scripts')
+    <script>
+    function openUploadModal() {
+        document.getElementById('uploadModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeUploadModal() {
+        document.getElementById('uploadModal').classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !document.getElementById('uploadModal').classList.contains('hidden')) {
+            closeUploadModal();
+        }
+    });
+    </script>
+    @endpush
 </x-app-layout>

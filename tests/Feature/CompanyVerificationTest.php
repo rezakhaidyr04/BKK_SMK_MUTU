@@ -167,6 +167,7 @@ class CompanyVerificationTest extends TestCase
             'title' => 'Senior Backend Engineer',
             'company_id' => $company->id,
             'company_name' => $company->name,
+            'status' => 'active',
         ]);
     }
 
@@ -182,7 +183,7 @@ class CompanyVerificationTest extends TestCase
         ]);
 
         $businessLicense = UploadedFile::fake()->create('business_license.pdf', 100, 'application/pdf');
-        $operatingLicense = UploadedFile::fake()->image('operating_license.png');
+        $operatingLicense = UploadedFile::fake()->create('operating_license.pdf', 100, 'application/pdf');
 
         $response = $this->actingAs($companyUser)
             ->post(route('company.profile.verify'), [

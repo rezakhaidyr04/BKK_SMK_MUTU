@@ -140,6 +140,18 @@ class JobController extends Controller
                 ->count();
         }
 
+        // Ringkasan ulasan perusahaan (publik, disetujui, cocok nama).
+        $companyRating = ['count' => 0, 'average' => 0];
+        if ($job->company) {
+            $companyReviews = \App\Models\Review::approved()
+                ->where('company_name', $job->company->name)
+                ->get(['rating']);
+            $companyRating['count'] = $companyReviews->count();
+            $companyRating['average'] = $companyReviews->count() > 0
+                ? round($companyReviews->avg('rating'), 1)
+                : 0;
+        }
+
         // Similar jobs
         $similarJobs = Job::where("id", "!=", $job->id)
             ->where("status", "active")
@@ -153,7 +165,7 @@ class JobController extends Controller
 
         return view(
             "jobs.show",
-            compact("job", "hasApplied", "isBookmarked", "savedCount", "similarJobs", "applicationsCount", "reviewedCount", "acceptedCount", "ownerApplicationsCount", "isOwner"),
+            compact("job", "hasApplied", "isBookmarked", "savedCount", "similarJobs", "applicationsCount", "reviewedCount", "acceptedCount", "ownerApplicationsCount", "isOwner", "companyRating"),
         );
     }
 
@@ -179,6 +191,13 @@ class JobController extends Controller
             return back()->with("error", "Anda sudah melamar lowongan ini.");
         }
 
+        // Surat lamaran wajib PDF (ganti ketik manual)
+        $coverFile = $request->file("cover_letter_file");
+        $coverPath = $coverFile->store("cover_letters", "private");
+        $coverName = basename($coverFile->getClientOriginalName());
+        $coverMime = $coverFile->getMimeType() ?: $coverFile->getClientMimeType();
+        $coverSize = $coverFile->getSize();
+
         $attachment = $request->file("attachment");
         $attachmentPath = null;
         $attachmentName = null;
@@ -193,14 +212,39 @@ class JobController extends Controller
             $attachmentSize = $attachment->getSize();
         }
 
+        // SKCK opsional (PDF) — boleh diisi, boleh dikosongkan
+        $skck = $request->file("skck_file");
+        $skckPath = null;
+        $skckName = null;
+        $skckMime = null;
+        $skckSize = null;
+
+        if ($skck) {
+            $skckPath = $skck->store("skck", "private");
+            $skckName = basename($skck->getClientOriginalName());
+            $skckMime = $skck->getMimeType() ?: $skck->getClientMimeType();
+            $skckSize = $skck->getSize();
+        }
+
         $application = Application::create([
             "job_id" => $job->id,
             "user_id" => Auth::id(),
-            "cover_letter" => str_replace(['\\r\\n', '\\n', '\\r'], "\n", $request->cover_letter ?? ''),
+            // teks lama dikosongkan untuk data baru (file jadi sumber utama)
+            "cover_letter" => $request->filled('cover_letter')
+                ? str_replace(['\\r\\n', '\\n', '\\r'], "\n", $request->cover_letter)
+                : null,
+            "cover_letter_path" => $coverPath,
+            "cover_letter_name" => $coverName,
+            "cover_letter_mime" => $coverMime,
+            "cover_letter_size" => $coverSize,
             "attachment_path" => $attachmentPath,
             "attachment_name" => $attachmentName,
             "attachment_mime" => $attachmentMime,
             "attachment_size" => $attachmentSize,
+            "skck_path" => $skckPath,
+            "skck_name" => $skckName,
+            "skck_mime" => $skckMime,
+            "skck_size" => $skckSize,
             "status" => "submitted",
         ]);
 

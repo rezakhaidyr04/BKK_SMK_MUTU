@@ -193,15 +193,4 @@ class ApplicationAuthorizationTest extends TestCase
         $this->get(route('applications.show', $app))->assertRedirect();
     }
 
-    public function test_surapengantar_requires_authorization(): void
-    {
-        $owner = $this->verifiedUmum();
-        $other = $this->verifiedUmum();
-        $app = Application::factory()->create(['user_id' => $owner->id]);
-
-        $this->actingAs($other)->get(route('applications.surat-pengantar', $app))->assertForbidden();
-        // owner passes authorization (will attempt pdf generation, assert not forbidden)
-        $resp = $this->actingAs($owner)->get(route('applications.surat-pengantar', $app));
-        $this->assertNotEquals(403, $resp->getStatusCode());
-    }
 }

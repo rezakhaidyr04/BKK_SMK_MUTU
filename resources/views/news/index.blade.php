@@ -25,10 +25,11 @@
                 <div class="mb-12">
                     <article class="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 group">
                         <div class="grid md:grid-cols-2 gap-0">
-                            <div class="relative h-64 md:h-auto bg-gradient-to-br from-blue-500 via-blue-600 to-blue-600 overflow-hidden">
+                            <div class="relative h-64 md:h-auto md:min-h-[320px] poster-frame overflow-hidden">
                                 @php $featThumb = $featured->thumbnail ?? $featured->image ?? null; @endphp
                                 @if($featThumb)
-                                <img src="{{ asset('storage/' . $featThumb) }}" alt="{{ $featured->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="{{ asset('storage/' . $featThumb) }}" alt="" aria-hidden="true" class="poster-bg">
+                                <img src="{{ asset('storage/' . $featThumb) }}" alt="{{ $featured->title }}" class="poster-main group-hover:scale-105 transition-transform duration-500">
                                 @else
                                 <div class="w-full h-full flex items-center justify-center">
                                     <svg class="w-24 h-24 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,10 +73,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($remaining as $article)
                         <article class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100">
-                            <div class="relative h-48 bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden">
+                            <div class="relative h-48 poster-frame overflow-hidden">
                                 @php $artThumb = $article->thumbnail ?? $article->image ?? null; @endphp
                                 @if($artThumb)
-                                <img src="{{ asset('storage/' . $artThumb) }}" alt="{{ $article->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="{{ asset('storage/' . $artThumb) }}" alt="" aria-hidden="true" class="poster-bg">
+                                <img src="{{ asset('storage/' . $artThumb) }}" alt="{{ $article->title }}" class="poster-main group-hover:scale-105 transition-transform duration-500">
                                 @else
                                 <div class="w-full h-full flex items-center justify-center">
                                     <svg class="w-16 h-16 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

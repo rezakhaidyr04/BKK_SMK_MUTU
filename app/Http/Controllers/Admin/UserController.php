@@ -43,12 +43,27 @@ class UserController extends Controller
     public function show(User $user)
     {
         $user->load(
+            "company",
             "applications.job",
             "certificates",
             "cvFiles",
+            "skills",
+            "documents",
+            "bookmarks.job",
+            "eventRegistrations.event",
         );
 
-        return view("admin.users.show", compact("user"));
+        // Ringkasan lamaran per status untuk stat cards.
+        $applicationStats = $user->applications
+            ->groupBy("status")
+            ->map(fn ($group) => $group->count());
+
+        // Lowongan milik perusahaan + jumlah pelamar per lowongan.
+        $companyJobs = $user->company
+            ? $user->company->jobs()->withCount("applications")->latest()->take(10)->get()
+            : collect();
+
+        return view("admin.users.show", compact("user", "applicationStats", "companyJobs"));
     }
 
     public function edit(User $user)

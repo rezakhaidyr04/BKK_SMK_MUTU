@@ -53,11 +53,12 @@
                 <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col {{ $isPast ? 'opacity-75' : '' }}">
                     <!-- Thumbnail / Poster -->
                     @if($event->poster)
-                    <div class="relative">
+                    <div class="relative poster-frame h-44">
+                        <img src="{{ asset('storage/' . $event->poster) }}" alt="" aria-hidden="true" class="poster-bg">
                         <img src="{{ asset('storage/' . $event->poster) }}" alt="{{ $event->title }}"
-                             class="w-full h-44 object-cover">
+                             class="poster-main">
                         @if($isPast)
-                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <div class="poster-overlay bg-black/40 flex items-center justify-center">
                             <span class="bg-white/90 text-gray-700 text-xs font-bold px-3 py-1 rounded-full">Sudah Selesai</span>
                         </div>
                         @endif

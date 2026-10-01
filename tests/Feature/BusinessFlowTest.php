@@ -9,7 +9,9 @@ use App\Models\Event;
 use App\Models\Job;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 /**
@@ -209,24 +211,26 @@ class BusinessFlowTest extends TestCase
     // ---------- 2. JOB LIFECYCLE ----------
     public function test_pending_job_not_viewable_and_cannot_be_applied(): void
     {
+        Storage::fake('private');
         $pending = Job::factory()->create(['status' => 'pending', 'deadline' => now()->addWeek()]);
         $this->get(route('jobs.show', $pending))->assertNotFound();
 
         $umum = $this->verifiedUmum();
         $cover = str_repeat('Saya sangat tertarik dengan posisi ini dan memenuhi kualifikasi. ', 3);
-        $this->actingAs($umum)->post(route('jobs.apply', $pending), ['cover_letter' => $cover])->assertSessionHas('error');
+        $this->actingAs($umum)->post(route('jobs.apply', $pending), ['cover_letter' => $cover, 'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf')])->assertSessionHas('error');
         $this->assertDatabaseMissing('applications', ['job_id' => $pending->id]);
     }
 
     public function test_expired_and_closed_job_cannot_be_applied_via_business_flow(): void
     {
+        Storage::fake('private');
         $expired = Job::factory()->create(['status' => 'active', 'deadline' => now()->subDay()]);
         $closed = Job::factory()->create(['status' => 'closed', 'deadline' => now()->addWeek()]);
         $umum = $this->verifiedUmum();
         $cover = str_repeat('Saya sangat tertarik dengan posisi ini dan memenuhi kualifikasi. ', 3);
 
-        $this->actingAs($umum)->post(route('jobs.apply', $expired), ['cover_letter' => $cover])->assertSessionHas('error');
-        $this->actingAs($umum)->post(route('jobs.apply', $closed), ['cover_letter' => $cover])->assertSessionHas('error');
+        $this->actingAs($umum)->post(route('jobs.apply', $expired), ['cover_letter' => $cover, 'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf')])->assertSessionHas('error');
+        $this->actingAs($umum)->post(route('jobs.apply', $closed), ['cover_letter' => $cover, 'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf')])->assertSessionHas('error');
     }
 
     // ---------- 3. BOOKMARK TOGGLE ----------

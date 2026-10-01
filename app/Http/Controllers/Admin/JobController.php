@@ -45,7 +45,12 @@ class JobController extends Controller
     {
         $validated = $request->validated();
 
-        Job::create($validated);
+        $job = Job::create($validated);
+
+        // Admin membuat lowongan yang langsung aktif → beritahu pencari kerja.
+        if (($validated['status'] ?? null) === 'active') {
+            $this->notifyJobSeekers($job);
+        }
 
         return redirect()->route('admin.jobs.index')
             ->with('success', 'Lowongan berhasil dibuat.');
@@ -111,7 +116,15 @@ class JobController extends Controller
 
     public function approve(Job $job)
     {
+        $wasActive = $job->status === 'active';
         $job->update(['status' => 'active']);
+
+        // Otomatis: beritahu pencari kerja di dalam aplikasi saat lowongan
+        // baru dipublikasikan (pending/draft -> active). Sinkron + try/catch
+        // agar approval tidak pernah gagal gara-gara notifikasi.
+        if (! $wasActive) {
+            $this->notifyJobSeekers($job);
+        }
 
         return redirect()->route('admin.jobs.index')
             ->with('success', 'Lowongan disetujui dan dipublikasikan.');
@@ -123,5 +136,13 @@ class JobController extends Controller
 
         return redirect()->route('admin.jobs.index')
             ->with('success', 'Lowongan ditolak.');
+    }
+
+    /**
+     * Kirim notifikasi database "lowongan baru" ke semua pencari kerja.
+     */
+    protected function notifyJobSeekers(Job $job): void
+    {
+        \App\Services\NewJobNotifier::notifySeekers($job);
     }
 }

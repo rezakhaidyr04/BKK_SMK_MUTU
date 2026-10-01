@@ -67,4 +67,62 @@ class NotificationTest extends TestCase
 
         $this->assertStringContainsString($job->title, $mail->subject);
     }
+
+    public function test_application_status_updated_uses_mail_and_database(): void
+    {
+        $applicant = User::factory()->create();
+        $companyUser = User::factory()->create();
+        $company = Company::factory()->create(['user_id' => $companyUser->id]);
+        $job = Job::factory()->create(['company_id' => $company->id]);
+        $application = Application::factory()->create([
+            'job_id' => $job->id,
+            'user_id' => $applicant->id,
+            'status' => 'accepted',
+        ]);
+
+        $notification = new \App\Notifications\ApplicationStatusUpdated($application);
+
+        $this->assertEquals(['mail', 'database'], $notification->via($applicant));
+    }
+
+    public function test_application_status_updated_mail_and_payload(): void
+    {
+        $applicant = User::factory()->create();
+        $companyUser = User::factory()->create();
+        $company = Company::factory()->create(['user_id' => $companyUser->id]);
+        $job = Job::factory()->create(['company_id' => $company->id]);
+        $application = Application::factory()->create([
+            'job_id' => $job->id,
+            'user_id' => $applicant->id,
+            'status' => 'interviewed',
+        ]);
+
+        $notification = new \App\Notifications\ApplicationStatusUpdated($application);
+        $mail = $notification->toMail($applicant);
+
+        $this->assertStringContainsString($job->title, $mail->subject);
+
+        $db = $notification->toArray($applicant);
+        $this->assertEquals('application_status', $db['type']);
+        $this->assertEquals($application->id, $db['application_id']);
+        $this->assertArrayHasKey('url', $db);
+    }
+
+    public function test_new_job_posted_database_payload_is_correct(): void
+    {
+        $user = User::factory()->create(['role' => 'umum']);
+        $companyUser = User::factory()->create(['role' => 'company']);
+        $company = Company::factory()->create(['user_id' => $companyUser->id]);
+        $job = Job::factory()->create(['company_id' => $company->id, 'status' => 'active']);
+
+        $notification = new \App\Notifications\NewJobPosted($job);
+
+        $this->assertEquals(['database'], $notification->via($user));
+
+        $db = $notification->toArray($user);
+        $this->assertEquals('new_job', $db['type']);
+        $this->assertEquals($job->id, $db['job_id']);
+        $this->assertStringContainsString($job->title, $db['message']);
+        $this->assertArrayHasKey('url', $db);
+    }
 }

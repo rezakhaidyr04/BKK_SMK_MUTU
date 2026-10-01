@@ -105,16 +105,6 @@ class SecurityPrivacyMasterTest extends TestCase
         $this->actingAs($companyUser)->get(route('applications.show', $app))->assertNotFound();
     }
 
-    public function test_surat_pengantar_returns_404_when_applicant_deleted(): void
-    {
-        [$companyUser, $job] = $this->companyWithJob();
-        $applicant = $this->verifiedUmum();
-        $app = Application::factory()->create(['job_id' => $job->id, 'user_id' => $applicant->id]);
-        $applicant->delete();
-
-        $this->actingAs($companyUser)->get(route('applications.surat-pengantar', $app))->assertNotFound();
-    }
-
     // ---------- Account deletion cleans private files ----------
 
     public function test_profile_destroy_deletes_private_files(): void

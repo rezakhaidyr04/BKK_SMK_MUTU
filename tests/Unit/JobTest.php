@@ -60,6 +60,33 @@ class JobTest extends TestCase
         $this->assertSame([$visible->id], $ids);
     }
 
+    public function test_benefits_comma_separated_becomes_numbered_list(): void
+    {
+        $job = new Job();
+        $job->benefits = 'gaji pokok, tunjangan transport, BPJS, pelatihan, jenjang karier';
+
+        $this->assertSame(
+            "1. gaji pokok\n2. tunjangan transport\n3. BPJS\n4. pelatihan\n5. jenjang karier",
+            $job->benefits
+        );
+    }
+
+    public function test_benefits_single_item_stays_plain(): void
+    {
+        $job = new Job();
+        $job->benefits = 'Asuransi kesehatan';
+
+        $this->assertSame('Asuransi kesehatan', $job->benefits);
+    }
+
+    public function test_benefits_already_numbered_is_not_doubled(): void
+    {
+        $job = new Job();
+        $job->benefits = "1. Gaji pokok\n2. Tunjangan transport";
+
+        $this->assertSame("1. Gaji pokok\n2. Tunjangan transport", $job->benefits);
+    }
+
     public function test_scope_expired_returns_only_past_deadline(): void
     {
         $expired = Job::factory()->create(['status' => 'active', 'deadline' => now()->subDay()]);

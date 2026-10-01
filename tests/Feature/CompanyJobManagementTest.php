@@ -7,12 +7,16 @@ use App\Models\Company;
 use App\Models\Job;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 /**
  * P1 H-09/H-11/H-12: verification consistency, ownership, management, history.
  *
- * Workflow dipertahankan: verified -> create -> pending -> admin approval -> active.
+ * Workflow: perusahaan terverifikasi -> create -> active (langsung tayang
+ * tanpa approval admin; Gate::create + JobPolicy sudah memastikan hanya
+ * perusahaan terverifikasi yang bisa sampai ke store).
  */
 class CompanyJobManagementTest extends TestCase
 {
@@ -60,9 +64,10 @@ class CompanyJobManagementTest extends TestCase
 
     // ── H-09: verification consistency ──────────────────────────
 
-    public function test_verified_company_create_job_goes_pending_not_active(): void
+    public function test_verified_company_create_job_goes_active_immediately(): void
     {
         $user = $this->verifiedCompanyUser();
+        $seeker = User::factory()->create(['role' => 'umum', 'email_verified_at' => now()]);
 
         $response = $this->actingAs($user)->post(
             route('company.jobs.store'),
@@ -73,8 +78,15 @@ class CompanyJobManagementTest extends TestCase
         $this->assertDatabaseHas('jobs', [
             'title' => 'Backend Developer',
             'company_id' => $user->company->id,
-            'status' => 'pending',
+            'status' => 'active',
         ]);
+
+        // Pencari kerja otomatis dapat notifikasi lowongan baru di aplikasi.
+        $this->assertTrue(
+            $seeker->fresh()->notifications()
+                ->where('type', \App\Notifications\NewJobPosted::class)
+                ->exists()
+        );
     }
 
     public function test_unverified_company_create_job_rejected(): void
@@ -185,9 +197,63 @@ class CompanyJobManagementTest extends TestCase
         $response->assertRedirect(route('company.jobs.index'));
         $fresh = $job->fresh();
         $this->assertSame('Judul Baru', $fresh->title);
-        // Status tidak boleh berubah via update (tetap pending, tidak bypass approval).
+        // Status tidak boleh berubah via update (tetap pending).
         $this->assertSame('pending', $fresh->status);
         $this->assertSame($user->company->id, $fresh->company_id);
+    }
+
+    public function test_verified_company_can_publish_own_draft(): void
+    {
+        $user = $this->verifiedCompanyUser();
+        $seeker = User::factory()->create(['role' => 'umum', 'email_verified_at' => now()]);
+        $job = Job::factory()->create([
+            'company_id' => $user->company->id,
+            'company_name' => $user->company->name,
+            'status' => 'draft',
+        ]);
+
+        $response = $this->actingAs($user)->post(route('company.jobs.publish', $job));
+
+        $response->assertRedirect(route('company.jobs.index'));
+        $this->assertSame('active', $job->fresh()->status);
+        $this->assertTrue(
+            $seeker->fresh()->notifications()
+                ->where('type', \App\Notifications\NewJobPosted::class)
+                ->exists()
+        );
+    }
+
+    public function test_cross_company_publish_is_rejected(): void
+    {
+        $owner = $this->verifiedCompanyUser();
+        $attacker = $this->otherVerifiedCompanyUser();
+        $job = Job::factory()->create([
+            'company_id' => $owner->company->id,
+            'company_name' => $owner->company->name,
+            'status' => 'draft',
+        ]);
+
+        $this->actingAs($attacker)
+            ->post(route('company.jobs.publish', $job))
+            ->assertForbidden();
+
+        $this->assertSame('draft', $job->fresh()->status);
+    }
+
+    public function test_publish_closed_job_is_rejected(): void
+    {
+        $user = $this->verifiedCompanyUser();
+        $job = Job::factory()->create([
+            'company_id' => $user->company->id,
+            'company_name' => $user->company->name,
+            'status' => 'closed',
+        ]);
+
+        $this->actingAs($user)
+            ->post(route('company.jobs.publish', $job))
+            ->assertSessionHas('error');
+
+        $this->assertSame('closed', $job->fresh()->status);
     }
 
     public function test_company_can_close_own_active_job(): void
@@ -220,8 +286,10 @@ class CompanyJobManagementTest extends TestCase
         $this->assertSame('closed', $job->fresh()->status);
 
         $applicant = User::factory()->create(['role' => 'umum']);
+        Storage::fake('private');
         $response = $this->actingAs($applicant)->post(route('jobs.apply', $job->fresh()), [
             'cover_letter' => str_repeat('Saya sangat tertarik dengan posisi ini. ', 5),
+            'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf'),
         ]);
 
         $response->assertSessionHas('error');

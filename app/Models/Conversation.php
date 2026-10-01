@@ -12,8 +12,9 @@ class Conversation extends Model
     /**
      * P1 H-07: allowlist eksplisit. Tabel conversations hanya id+timestamps,
      * tidak ada atribut mass-assignable. $fillable=[] mengizinkan
-     * Conversation::create() kosong (dipakai MessageController, MessageFactory,
-     * tests) tanpa membuka field internal. JANGAN ganti ke guarded=[].
+     * Conversation::create() kosong tanpa membuka field internal.
+     * JANGAN ganti ke guarded=[].
+     * Catatan: fitur chat dinonaktifkan — model dipertahankan agar migrasi/DB lama tetap kompatibel.
      */
     protected $fillable = [];
 

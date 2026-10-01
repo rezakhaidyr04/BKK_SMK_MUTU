@@ -334,9 +334,13 @@
                             </div>
                             <p class="testimonial-text">"{{ Str::limit($review->comment, 180) }}"</p>
                             <div class="testimonial-author">
-                                <div class="testimonial-avatar" style="background: linear-gradient(135deg, {{ ['#3b82f6', '#16a34a', '#f59e0b', '#8b5cf6', '#ec4899'][$loop->index % 5] }}, {{ ['#2563eb', '#10b981', '#d97706', '#7c3aed', '#db2777'][$loop->index % 5] }});">
-                                    {{ strtoupper(substr($review->display_name, 0, 2)) }}
-                                </div>
+                                @if($review->user?->avatar)
+                                    <img src="{{ asset('storage/' . $review->user->avatar) }}" alt="{{ $review->display_name }}" class="testimonial-avatar-img" loading="lazy">
+                                @else
+                                    <div class="testimonial-avatar" style="background: linear-gradient(135deg, {{ ['#3b82f6', '#16a34a', '#f59e0b', '#8b5cf6', '#ec4899'][$loop->index % 5] }}, {{ ['#2563eb', '#10b981', '#d97706', '#7c3aed', '#db2777'][$loop->index % 5] }});">
+                                        {{ strtoupper(substr($review->display_name, 0, 2)) }}
+                                    </div>
+                                @endif
                                 <div>
                                     <span class="testimonial-name">{{ $review->display_name }}</span>
                                     <span class="testimonial-role">

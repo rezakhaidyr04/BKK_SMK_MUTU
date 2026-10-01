@@ -90,13 +90,19 @@
                 </div>
                 <div>
                     <label for="company_name" class="block text-sm font-semibold text-gray-900 mb-2">Nama Perusahaan</label>
-                    <input type="text" name="company_name" id="company_name" 
+                    <input type="text" name="company_name" id="company_name" list="company-list"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Contoh: PT Teknologi Nusantara"
-                        value="{{ old('company_name') }}">
+                        placeholder="Ketik lalu pilih dari daftar"
+                        value="{{ old('company_name', $selectedCompany->name ?? '') }}">
+                    <datalist id="company-list">
+                        @foreach($companyNames ?? [] as $companyName)
+                            <option value="{{ $companyName }}"></option>
+                        @endforeach
+                    </datalist>
                     @error('company_name')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
+                    <p class="mt-1 text-xs text-gray-500">Pilih dari daftar agar ulasan tampil di profil perusahaan.</p>
                 </div>
             </div>
 

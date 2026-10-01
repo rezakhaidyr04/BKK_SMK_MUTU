@@ -31,6 +31,18 @@ class CompanyController extends Controller
             'active_jobs' => $activeJobs->total(),
         ];
 
-        return view('companies.show', compact('company', 'activeJobs', 'stats'));
+        // Ulasan yang sudah disetujui dan ditujukan ke perusahaan ini (cocok nama persis,
+        // case-insensitive mengikuti collation DB) + rata-rata & jumlah.
+        $reviews = \App\Models\Review::approved()
+            ->where('company_name', $company->name)
+            ->latest()
+            ->take(10)
+            ->get();
+        $reviewStats = [
+            'count' => $reviews->count(),
+            'average' => $reviews->count() > 0 ? round($reviews->avg('rating'), 1) : 0,
+        ];
+
+        return view('companies.show', compact('company', 'activeJobs', 'stats', 'reviews', 'reviewStats'));
     }
 }

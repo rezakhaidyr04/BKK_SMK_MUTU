@@ -6,7 +6,6 @@ use App\Models\Application;
 use App\Models\Bookmark;
 use App\Models\Event;
 use App\Models\Job;
-use App\Models\Message;
 use App\Models\User;
 use App\Services\JobMatchingService;
 use App\Services\ProfileCompletionService;
@@ -81,17 +80,8 @@ class UmumDashboardQuery
         // Activity timeline
         $activities = $this->getUserActivityTimeline($user);
 
-        // Unread messages count
-        $unreadMessages = Message::whereHas("conversation.users", function (
-            $query,
-        ) use ($user) {
-            $query->where("user_id", $user->id);
-        })
-            ->where("sender_id", "!=", $user->id)
-            ->where("is_read", false)
-            ->count();
-
-        $stats["unread_messages"] = $unreadMessages;
+        // Fitur Pesan/Chat dihapus — kunci 0 untuk kompatibilitas view lama.
+        $stats["unread_messages"] = 0;
 
         return compact(
             "stats",

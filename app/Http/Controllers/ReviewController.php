@@ -23,7 +23,17 @@ class ReviewController extends Controller
             return redirect()->route('dashboard')->with('error', 'Halaman ulasan khusus untuk pengguna umum.');
         }
 
-        return view('reviews.create');
+        // Prefill dari tombol "Beri Ulasan" di profil perusahaan (?company=id).
+        $selectedCompany = null;
+        if (request()->filled('company')) {
+            $selectedCompany = \App\Models\Company::find(request()->query('company'));
+        }
+
+        // Daftar nama perusahaan untuk datalist agar ejaan selalu cocok
+        // dengan profil (ulasan tampil di profil yang namanya sama persis).
+        $companyNames = \App\Models\Company::orderBy('name')->pluck('name');
+
+        return view('reviews.create', compact('selectedCompany', 'companyNames'));
     }
 
     /**
@@ -37,16 +47,26 @@ class ReviewController extends Controller
 
         $validated = $request->validated();
 
+        // Samakan ejaan ke nama perusahaan yang terdaftar (case-insensitive)
+        // agar ulasan otomatis tampil di profil perusahaan tersebut.
+        $companyName = isset($validated['company_name']) ? trim($validated['company_name']) : null;
+        if ($companyName) {
+            $matched = \App\Models\Company::where('name', $companyName)->first(['name']);
+            if ($matched) {
+                $companyName = $matched->name;
+            }
+        }
+
         try {
             Review::create([
                 'user_id' => auth()->id(),
                 'rating' => $validated['rating'],
                 'comment' => $validated['comment'],
-                'job_title' => $validated['job_title'],
-                'company_name' => $validated['company_name'],
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'phone' => $validated['phone'],
+                'job_title' => $validated['job_title'] ?? null,
+                'company_name' => $companyName,
+                'name' => $validated['name'] ?? null,
+                'email' => $validated['email'] ?? null,
+                'phone' => $validated['phone'] ?? null,
                 'status' => 'approved', // Langsung tampil tanpa ijin admin
             ]);
 

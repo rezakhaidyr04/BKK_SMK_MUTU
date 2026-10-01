@@ -1,6 +1,6 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Ubah Perusahaan" subtitle="{{ $company->name }}" eyebrow="Admin › Perusahaan">
+        <x-ui.page-banner title="Ubah Perusahaan" :subtitle="$company->name" eyebrow="Admin › Perusahaan">
                         <x-slot:chips>
                 <span class="page-banner__chip">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
@@ -106,11 +106,11 @@
                                     <svg class="mx-auto w-8 h-8 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                                     </svg>
-                                    <p class="text-sm text-gray-500">Klik untuk upload — PDF, JPG, PNG (maks. 10 MB)</p>
+                                    <p class="text-sm text-gray-500">Klik untuk upload — Wajib PDF (maks. 10 MB)</p>
                                     <p id="mou_file_name" class="mt-2 text-sm font-medium text-green-600 hidden"></p>
                                 </div>
                                 <input type="file" id="mou_path" name="mou_path"
-                                       accept=".pdf,.jpg,.jpeg,.png"
+                                       accept=".pdf,application/pdf"
                                        class="absolute inset-0 opacity-0 cursor-pointer"
                                        onchange="showFileName(this, 'mou_file_name')">
                             </div>

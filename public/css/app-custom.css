@@ -3042,7 +3042,18 @@ div:has(> .ui-error) > .ui-textarea { border-color: #fca5a5; background-color: #
    ============================================================ */
 footer {
     position: relative;
-    z-index: 50;
+    /* z-index sengaja rendah agar tidak menutupi modal (modal pakai z-100+).
+       Sebelumnya 50 = sama dengan modal/nav sehingga footer yang muncul
+       belakangan di DOM menimpa backdrop modal. */
+    z-index: 10;
+}
+
+/* Safety: semua modal fixed harus selalu di atas footer/nav/sidebar.
+   Mencegah kasus seperti #uploadModal ketutup footer saat di-scroll. */
+.ui-modal,
+div[id$="Modal"].fixed,
+div[id$="modal"].fixed {
+    z-index: 100 !important;
 }
 
 /* -------------------------------------------------------
@@ -3195,6 +3206,46 @@ aside.sidebar-container { z-index: 40; }
 .auth-btn:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(37,99,235,.34)!important}
 .job-form-panel{border-radius:1.25rem!important;box-shadow:0 8px 24px rgba(15,23,42,.06)!important}
 .border-dashed:hover{border-color:#3b82f6!important;background:#f8fbff!important}
+
+/* ============================================================
+   39b. INPUT + IKON ABSOLUTE (search icon dsb.)
+   app-custom.css diload SETELAH bundle Vite, sehingga padding
+   `.ui-input` (0.875rem kiri) menimpa utility Tailwind `pl-8/pl-9/pl-10`.
+   Akibatnya ikon lup (pl-2.5 + 16px = berakhir ~26px) menimpa teks
+   "Judul pekerjaan..." (mulai 14px) → "J" terbaca "Q".
+   Override ini mengembalikan padding kiri yang benar.
+   ============================================================ */
+.ui-input.pl-8, .ui-select.pl-8, .ui-textarea.pl-8 { padding-left: 2rem !important; }
+.ui-input.pl-9, .ui-select.pl-9, .ui-textarea.pl-9 { padding-left: 2.25rem !important; }
+.ui-input.pl-10, .ui-select.pl-10, .ui-textarea.pl-10 { padding-left: 2.5rem !important; }
+.ui-input.pr-8, .ui-select.pr-8 { padding-right: 2rem !important; }
+.ui-input.pr-9, .ui-select.pr-9 { padding-right: 2.25rem !important; }
+.ui-input.pr-10, .ui-select.pr-10 { padding-right: 2.5rem !important; }
+
+/* ============================================================
+   39c. POSTER ADAPTIF (berita & acara)
+   Poster bisa landscape / portrait / kotak — selalu tampil UTUH
+   tanpa terpotong: gambar contain di depan + versi blur sebagai
+   latar agar frame tetap penuh dan rapi di grid mana pun.
+   Pakai: <div class="poster-frame [tinggi/aspek]">
+             <img class="poster-bg" src="...">
+             <img class="poster-main" src="...">
+           </div>
+   ============================================================ */
+.poster-frame { position: relative; overflow: hidden; background: #eef2f7; }
+.poster-frame > img.poster-bg {
+    position: absolute; inset: -1.25rem;
+    width: calc(100% + 2.5rem); height: calc(100% + 2.5rem);
+    object-fit: cover; filter: blur(18px) saturate(1.25) brightness(.96);
+}
+.poster-frame > img.poster-main {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%; object-fit: contain;
+}
+/* Overlay (mis. badge "Sudah Selesai") harus di atas gambar */
+.poster-frame > .poster-overlay { position: absolute; inset: 0; z-index: 2; }
+/* Thumb kecil: cukup contain polos tanpa blur */
+.poster-thumb { object-fit: contain !important; background: #f1f5f9; }
 
 /* ============================================================
    40. PREFERS-REDUCED-MOTION

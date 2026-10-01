@@ -135,7 +135,10 @@
                                     <div class="input-icon-wrap">
                                         <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                                         <input type="password" id="password" name="password" required minlength="8" placeholder="Min. 8 karakter" class="ui-input has-icon has-eye">
-                                        <button type="button" class="eye-btn" data-toggle="password" title="Tampilkan">👁</button>
+                                        <button type="button" class="eye-btn" data-toggle="password" title="Tampilkan" aria-label="Tampilkan sandi">
+                                            <svg class="eye-open w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                            <svg class="eye-shut w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"/></svg>
+                                        </button>
                                     </div>
                                     <div class="pw-meter"><i id="pwBar"></i></div>
                                     <p class="form-hint" id="pwHint">Gunakan kombinasi huruf, angka & simbol.</p>
@@ -146,7 +149,10 @@
                                     <div class="input-icon-wrap">
                                         <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                         <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Ulangi sandi" class="ui-input has-icon has-eye">
-                                        <button type="button" class="eye-btn" data-toggle="password_confirmation" title="Tampilkan">👁</button>
+                                        <button type="button" class="eye-btn" data-toggle="password_confirmation" title="Tampilkan" aria-label="Tampilkan sandi">
+                                            <svg class="eye-open w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                            <svg class="eye-shut w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"/></svg>
+                                        </button>
                                     </div>
                                     <p class="form-hint" id="matchHint">Pastikan kedua sandi sama.</p>
                                 </div>
@@ -229,7 +235,7 @@
         .role-check{position:absolute;top:.6rem;right:.6rem;width:1.4rem;height:1.4rem;border-radius:9999px;background:#2563eb;color:#fff;font-size:.75rem;display:none;align-items:center;justify-content:center;font-weight:800}
         .role-card.selected .role-check{display:flex}
         .pw-meter{height:6px;background:#f1f5f9;border-radius:9999px;margin-top:.6rem;overflow:hidden}
-        .pw-meter i{display:block;height:100%;width:0;border-radius:9999px;background:linear-gradient(90deg,#ef4444,#f59e0b,#22c55e);transition:width .25s}
+        .pw-meter i{display:block;height:100%;width:0;border-radius:9999px;background:#cbd5e1;transition:width .25s,background-color .25s}
         .status-row{display:flex;align-items:center;gap:.9rem;padding:1.2rem 1.5rem;background:#fbfdff}
         .status-row strong{font-size:.88rem;color:#0f172a}
         .status-row p{font-size:.76rem;color:#64748b}
@@ -282,15 +288,20 @@
         document.querySelectorAll('.eye-btn').forEach(b=>b.addEventListener('click',()=>{
             const inp=document.getElementById(b.dataset.toggle); if(!inp) return;
             inp.type = inp.type==='password' ? 'text' : 'password';
-            b.textContent = inp.type==='password' ? '👁' : '🙈';
+            const hidden = inp.type==='password';
+            b.querySelector('.eye-open')?.classList.toggle('hidden', !hidden);
+            b.querySelector('.eye-shut')?.classList.toggle('hidden', hidden);
+            b.setAttribute('title', hidden ? 'Tampilkan' : 'Sembunyikan');
         }));
         const pw=document.getElementById('password'), bar=document.getElementById('pwBar'), hint=document.getElementById('pwHint');
         const conf=document.getElementById('password_confirmation'), mHint=document.getElementById('matchHint');
-        function strength(v){ let s=0; if(v.length>=8)s+=25; if(v.length>=12)s+=15; if(/[A-Z]/.test(v)&&/[a-z]/.test(v))s+=20; if(/\d/.test(v))s+=20; if(/[^A-Za-z0-9]/.test(v))s+=20; return Math.min(s,100); }
         pw?.addEventListener('input',()=>{
-            const sc=strength(pw.value); bar.style.width=sc+'%';
-            hint.textContent = !pw.value ? 'Gunakan kombinasi huruf, angka & simbol.' : sc<50 ? 'Lemah — tambah panjang & variasi.' : sc<80 ? 'Sedang — sudah bagus, tambah simbol.' : 'Kuat — password aman! 💪';
-            hint.style.color = sc<50 ? '#dc2626' : sc<80 ? '#d97706' : '#16a34a';
+            const v=pw.value, ok=v.length>=8;
+            const sc=!v?0:(ok?100:Math.min(Math.round(v.length/8*60),60));
+            bar.style.width=sc+'%';
+            bar.style.background=!v?'#cbd5e1':(ok?'#16a34a':'#dc2626');
+            hint.textContent=!v?'Gunakan minimal 8 karakter.':(ok?'Bagus — sandi memenuhi syarat.':'Kurang — minimal 8 karakter ('+v.length+'/8).');
+            hint.style.color=!v?'':(ok?'#16a34a':'#dc2626');
             checkMatch();
         });
         function checkMatch(){ if(!conf.value) return; const ok = pw.value===conf.value; mHint.textContent = ok ? '✅ Sandi cocok!' : '❌ Sandi belum sama.'; mHint.style.color = ok ? '#16a34a' : '#dc2626'; }

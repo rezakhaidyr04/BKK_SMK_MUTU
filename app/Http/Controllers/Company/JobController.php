@@ -35,6 +35,8 @@ class JobController extends Controller
             'total'      => Job::where('company_id', $companyId)->count(),
             'active'     => Job::where('company_id', $companyId)->where('status', 'active')->count(),
             'closed'     => Job::where('company_id', $companyId)->where('status', 'closed')->count(),
+            'draft'      => Job::where('company_id', $companyId)->where('status', 'draft')->count(),
+            'pending'    => Job::where('company_id', $companyId)->where('status', 'pending')->count(),
             'applicants' => \App\Models\Application::whereHas('job', fn ($q) => $q->where('company_id', $companyId))->count(),
         ];
 
@@ -65,14 +67,19 @@ class JobController extends Controller
         $validated = $request->validated();
 
         // P1 H-09B: ownership selalu dari authenticated company.
+        // Perusahaan yang lolos Gate::create PASTI sudah terverifikasi
+        // (JobPolicy::create mensyaratkan isApproved), sehingga lowongan
+        // langsung tayang (active) tanpa persetujuan admin.
         $company = $request->user()->company;
         $validated['company_id'] = $company->id;
         $validated['company_name'] = $company->name;
-        $validated['status'] = 'pending';
+        $validated['status'] = 'active';
 
-        Job::create($validated);
+        $job = Job::create($validated);
 
-        return redirect()->route('company.jobs.index')->with('success', 'Lowongan berhasil dibuat dan menunggu persetujuan admin.');
+        \App\Services\NewJobNotifier::notifySeekers($job);
+
+        return redirect()->route('company.jobs.index')->with('success', 'Lowongan berhasil dipublikasikan dan langsung tayang.');
     }
 
     /**
@@ -100,6 +107,28 @@ class JobController extends Controller
         $job->update($validated);
 
         return redirect()->route('company.jobs.index')->with('success', 'Lowongan berhasil diperbarui.');
+    }
+
+    /**
+     * Publish — draft/pending -> active oleh perusahaan terverifikasi
+     * sendiri (tanpa admin). Langsung tayang + notifikasi pencari kerja.
+     */
+    public function publish(Request $request, Job $job)
+    {
+        $this->authorize('publish', $job);
+
+        if ($job->status === 'active') {
+            return back()->with('info', 'Lowongan sudah tayang.');
+        }
+
+        if (! in_array($job->status, ['draft', 'pending'], true)) {
+            return back()->with('error', 'Hanya draf atau lowongan menunggu yang dapat dipublikasikan.');
+        }
+
+        $job->update(['status' => 'active']);
+        \App\Services\NewJobNotifier::notifySeekers($job);
+
+        return redirect()->route('company.jobs.index')->with('success', 'Lowongan berhasil dipublikasikan dan langsung tayang.');
     }
 
     /**

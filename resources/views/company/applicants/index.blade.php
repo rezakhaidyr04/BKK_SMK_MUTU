@@ -83,6 +83,26 @@
 
 
         {{-- =========================================================
+            FILTER PER LOWONGAN
+        ========================================================== --}}
+        <form method="GET" action="{{ route('company.applicants.index') }}" class="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+            <select name="job_id" onchange="this.form.submit()" class="ui-select sm:max-w-xs">
+                <option value="">Semua lowongan</option>
+                @foreach($jobs as $job)
+                    <option value="{{ $job->id }}" {{ (int) request('job_id') === $job->id ? 'selected' : '' }}>
+                        {{ Str::limit($job->title, 50) }}
+                    </option>
+                @endforeach
+            </select>
+            @if(request()->filled('job_id'))
+                <a href="{{ route('company.applicants.index') }}" class="text-sm font-semibold text-slate-500 hover:text-slate-800">
+                    Reset filter
+                </a>
+            @endif
+        </form>
+
+
+        {{-- =========================================================
             TABLE
         ========================================================== --}}
         <div class="ui-table-wrap -mx-6">
@@ -100,7 +120,7 @@
 
                         <th>Status</th>
 
-                        <th>Lampiran</th>
+                        <th>Surat Lamaran / CV</th>
 
                         <th class="text-right">
                             Aksi
@@ -268,50 +288,30 @@
                                 LAMPIRAN
                             ================================================== --}}
                             <td>
-
-                                @if($application->attachment_name)
-
-                                    <a href="{{ route('applications.attachment.download', $application) }}" class="flex max-w-[180px] items-center gap-2 rounded-lg px-1 py-0.5 transition hover:bg-blue-50" title="Unduh {{ $application->attachment_name }}">
-
-                                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
-                                            <svg
-                                                class="h-4 w-4"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="1.8"
-                                                    d="M7 3h7l5 5v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"
-                                                />
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="1.8"
-                                                    d="M14 3v6h6"
-                                                />
-                                            </svg>
+                                <div class="flex flex-col gap-1">
+                                @if($application->cover_letter_name || $application->cover_letter_path)
+                                    <a href="{{ route('applications.cover-letter.download', $application) }}" class="flex max-w-[180px] items-center gap-2 rounded-lg px-1 py-0.5 transition hover:bg-red-50" title="Unduh Surat Lamaran {{ $application->cover_letter_name }}">
+                                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-50 text-red-500">
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 3h7l5 5v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M14 3v6h6"/></svg>
                                         </div>
-
-                                        <span
-                                            class="truncate text-sm text-blue-700 underline-offset-2 hover:underline"
-                                            title="{{ $application->attachment_name }}"
-                                        >
+                                        <span class="truncate text-sm text-red-700 underline-offset-2 hover:underline" title="{{ $application->cover_letter_name }}">
+                                            {{ $application->cover_letter_name ?? 'Surat Lamaran' }}
+                                        </span>
+                                    </a>
+                                @endif
+                                @if($application->attachment_name)
+                                    <a href="{{ route('applications.attachment.download', $application) }}" class="flex max-w-[180px] items-center gap-2 rounded-lg px-1 py-0.5 transition hover:bg-blue-50" title="Unduh {{ $application->attachment_name }}">
+                                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 3h7l5 5v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M14 3v6h6"/></svg>
+                                        </div>
+                                        <span class="truncate text-sm text-blue-700 underline-offset-2 hover:underline" title="{{ $application->attachment_name }}">
                                             {{ $application->attachment_name }}
                                         </span>
-
                                     </a>
-
-                                @else
-
-                                    <span class="text-sm text-slate-400">
-                                        Tidak ada
-                                    </span>
-
+                                @elseif(!($application->cover_letter_name || $application->cover_letter_path))
+                                    <span class="text-sm text-slate-400">Tidak ada</span>
                                 @endif
-
+                                </div>
                             </td>
 
 
@@ -321,24 +321,6 @@
                             <td class="text-right">
 
                                 <div class="flex items-center justify-end gap-2">
-
-                                    {{-- CHAT KANDIDAT --}}
-                                    @if($application->user)
-                                    <form action="{{ route('messages.start') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="recipient_id" value="{{ $application->user_id }}">
-                                        <button
-                                            type="submit"
-                                            title="Chat kandidat"
-                                            aria-label="Chat dengan {{ $application->user->name }}"
-                                            class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-green-200 hover:bg-green-50 hover:text-green-700"
-                                        >
-                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
-                                            </svg>
-                                        </button>
-                                    </form>
-                                    @endif
 
                                     {{-- DETAIL --}}
                                     <a

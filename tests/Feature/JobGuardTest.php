@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Models\Job;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 /**
@@ -27,11 +29,13 @@ class JobGuardTest extends TestCase
 
     public function test_cannot_apply_to_draft_job(): void
     {
+        Storage::fake('private');
         $user = $this->umum();
         $job = Job::factory()->create(['status' => 'draft', 'deadline' => now()->addWeek()]);
 
         $response = $this->actingAs($user)->post(route('jobs.apply', $job), [
             'cover_letter' => $this->coverLetter(),
+            'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf'),
         ]);
 
         $response->assertSessionHas('error');
@@ -43,11 +47,13 @@ class JobGuardTest extends TestCase
 
     public function test_cannot_apply_to_closed_job(): void
     {
+        Storage::fake('private');
         $user = $this->umum();
         $job = Job::factory()->create(['status' => 'closed', 'deadline' => now()->addWeek()]);
 
         $response = $this->actingAs($user)->post(route('jobs.apply', $job), [
             'cover_letter' => $this->coverLetter(),
+            'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf'),
         ]);
 
         $response->assertSessionHas('error');
@@ -59,11 +65,13 @@ class JobGuardTest extends TestCase
 
     public function test_cannot_apply_to_expired_job(): void
     {
+        Storage::fake('private');
         $user = $this->umum();
         $job = Job::factory()->create(['status' => 'active', 'deadline' => now()->subDay()]);
 
         $response = $this->actingAs($user)->post(route('jobs.apply', $job), [
             'cover_letter' => $this->coverLetter(),
+            'cover_letter_file' => UploadedFile::fake()->create('surat-lamaran.pdf', 400, 'application/pdf'),
         ]);
 
         $response->assertSessionHas('error');

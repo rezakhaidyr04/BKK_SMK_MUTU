@@ -1,8 +1,8 @@
 <x-app-layout :full-bleed="true" :hide-sidebar="!auth()->check()">
     <div class="page-shell">
         <x-ui.page-banner 
-            title="{{ $job->title }}" 
-            subtitle="{{ $job->company_name ?? 'Detail lowongan pekerjaan' }}"
+            :title="$job->title"
+            :subtitle="$job->company_name ?? 'Detail lowongan pekerjaan'"
             :back-url="(auth()->check() && auth()->user()->isCompany()) ? route('company.jobs.index') : route('jobs.index')"
             back-label="Kembali ke Lowongan" eyebrow="Beranda › Lowongan">
             <x-slot:chips>
@@ -256,7 +256,14 @@
                                                 <div class="text-sm text-gray-600 mt-1">{{ $job->location }}</div>
                                             </div>
                                         </div>
-                                        <button class="px-3 py-1.5 text-blue-600 border border-blue-600 rounded-lg text-xs font-semibold hover:bg-blue-50 transition-colors whitespace-nowrap">Lihat di Peta</button>
+                                        @php
+                                            $lokasiMapLink = $job->company?->maps_url ?? (($job->company?->address ?? $job->location) ? 'https://www.google.com/maps/search/?api=1&query='.urlencode($job->company?->address ?? $job->location) : null);
+                                        @endphp
+                                        @if($lokasiMapLink)
+                                        <a href="{{ $lokasiMapLink }}" target="_blank" rel="noopener" class="px-3 py-1.5 text-blue-600 border border-blue-600 rounded-lg text-xs font-semibold hover:bg-blue-50 transition-colors whitespace-nowrap">Lihat di Peta</a>
+                                        @else
+                                        <button disabled class="px-3 py-1.5 text-gray-400 border border-gray-200 rounded-lg text-xs font-semibold whitespace-nowrap cursor-not-allowed">Lihat di Peta</button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -289,6 +296,15 @@
                                 <div class="text-sm text-gray-700 leading-relaxed">
                                     {{ $job->company?->address ?? $job->location ?? 'Lokasi belum diisi perusahaan.' }}
                                 </div>
+                                @php
+                                    $jobMapLink = $job->company?->maps_url ?? (($job->company?->address ?? $job->location) ? 'https://www.google.com/maps/search/?api=1&query='.urlencode($job->company?->address ?? $job->location) : null);
+                                @endphp
+                                @if($jobMapLink)
+                                <a href="{{ $jobMapLink }}" target="_blank" rel="noopener" class="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:underline">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                    Buka Rute di Google Maps
+                                </a>
+                                @endif
                                 @if($job->work_hours)
                                 <h3 class="font-bold text-gray-900 mt-4 mb-2">Jam Kerja</h3>
                                 <div class="text-sm text-gray-700 leading-relaxed">
@@ -351,19 +367,9 @@
                                      </div>
                                      <h3 class="text-lg font-bold text-gray-900 mb-2">Lamaran Terkirim</h3>
                                      <p class="text-sm text-gray-500 mb-6">Anda sudah melamar posisi ini. Silakan cek status lamaran Anda.</p>
-                                     <a href="{{ route('applications.index') }}" class="block w-full px-4 py-3 bg-blue-600 text-white font-semibold text-center rounded-xl hover:bg-blue-700 transition-colors">
-                                         Lihat Lamaran Saya
-                                     </a>
-                                     @if($job->company?->user_id)
-                                     <form action="{{ route('messages.start') }}" method="POST" class="mt-2">
-                                         @csrf
-                                         <input type="hidden" name="recipient_id" value="{{ $job->company->user_id }}">
-                                         <input type="hidden" name="job_id" value="{{ $job->id }}">
-                                         <button type="submit" class="block w-full px-4 py-2.5 border border-blue-600 text-blue-600 font-semibold text-center rounded-xl hover:bg-blue-50 transition-colors text-sm">
-                                             Chat Perusahaan
-                                         </button>
-                                     </form>
-                                     @endif
+                                      <a href="{{ route('applications.index') }}" class="block w-full px-4 py-3 bg-blue-600 text-white font-semibold text-center rounded-xl hover:bg-blue-700 transition-colors">
+                                          Lihat Lamaran Saya
+                                      </a>
                                  </div>
                             @else
                                 <h3 class="text-lg font-bold text-gray-900 mb-6">Lamar Posisi Ini</h3>
@@ -454,17 +460,59 @@
                                             </ul>
                                         </div>
                                         @endif
-                                        <div class="mb-4 mt-2">
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Surat Lamaran <span class="text-gray-400 font-normal">(minimal 100 karakter)</span></label>
-                                            <textarea name="cover_letter" rows="4" required minlength="100" class="w-full text-sm px-3 py-2 border-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 @error('cover_letter') border-red-300 @enderror" placeholder="Ceritakan kenapa Anda cocok...">{{ old('cover_letter') }}</textarea>
-                                            @error('cover_letter')
+                                        <div class="mb-4 mt-2 overflow-hidden rounded-2xl bg-blue-700 p-4 text-white shadow-lg shadow-blue-600/30 ring-1 ring-blue-800">
+                                            <div class="flex items-start gap-3">
+                                                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-blue-700">
+                                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 3h7l5 5v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 3v6h6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6M9 17h4"/></svg>
+                                                </div>
+                                                <div class="min-w-0 flex-1">
+                                                    <p class="text-sm font-bold leading-tight text-white">Template Surat Lamaran BKKMU</p>
+                                                    <p class="mt-0.5 text-xs font-medium text-white">Resmi • .docx • Tinggal isi 2 menit</p>
+                                                </div>
+                                                <span class="shrink-0 rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold tracking-wide text-blue-950">GRATIS</span>
+                                            </div>
+                                            <div class="mt-3 flex items-center gap-2 text-[11px] font-semibold text-white">
+                                                <span class="flex items-center gap-1"><span class="flex h-5 w-5 items-center justify-center rounded-full bg-white text-[11px] font-bold text-blue-700">1</span> Download</span>
+                                                <span class="font-bold text-white">→</span>
+                                                <span class="flex items-center gap-1"><span class="flex h-5 w-5 items-center justify-center rounded-full bg-white text-[11px] font-bold text-blue-700">2</span> Isi data</span>
+                                                <span class="font-bold text-white">→</span>
+                                                <span class="flex items-center gap-1"><span class="flex h-5 w-5 items-center justify-center rounded-full bg-white text-[11px] font-bold text-blue-700">3</span> Export PDF</span>
+                                            </div>
+                                            <a href="{{ asset('templates/surat-lamaran-template.docx') }}" download class="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-blue-800 shadow-sm transition hover:bg-amber-300 hover:text-blue-950 active:scale-[.99]">
+                                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"/></svg>
+                                                Download Template
+                                            </a>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Surat Lamaran (PDF) <span class="text-red-500">*</span> <span class="text-gray-400 font-normal">(Wajib PDF, maks 5MB)</span></label>
+                                            <input type="file" name="cover_letter_file" required accept=".pdf,application/pdf" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 @error('cover_letter_file') ring-1 ring-red-300 @enderror">
+                                            @error('cover_letter_file')
+                                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-4 rounded-xl border border-emerald-100 bg-emerald-50/60 p-3">
+                                            @if($hasCv)
+                                            <p class="text-sm font-semibold text-emerald-900">CV kamu sudah otomatis terlampir dari profil.</p>
+                                            <p class="mt-0.5 text-xs text-emerald-700">Upload di bawah hanya jika mau pakai CV khusus untuk lowongan ini. Kalau dikosongkan, perusahaan tetap bisa lihat CV di profilmu.</p>
+                                            @else
+                                            <p class="text-sm font-semibold text-emerald-900">Belum punya CV?</p>
+                                            <p class="mt-0.5 text-xs text-emerald-700">Buat dulu di CV Builder (otomatis ATS-friendly), lalu upload hasilnya di bawah.</p>
+                                            <a href="{{ route('cv.builder') }}" class="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-white px-3 py-2 text-xs font-semibold text-emerald-700 shadow-sm ring-1 ring-emerald-200 transition hover:bg-emerald-600 hover:text-white">
+                                                Buat CV di CV Builder
+                                            </a>
+                                            @endif
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">File CV (Opsional) <span class="text-gray-400 font-normal">(PDF, maks 5MB — khusus lamaran ini)</span></label>
+                                            <input type="file" name="attachment" accept=".pdf,application/pdf" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                            @error('attachment')
                                             <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
                                         <div class="mb-4">
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Lampiran Pendukung (Opsional)</label>
-                                            <input type="file" name="attachment" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                                            @error('attachment')
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">SKCK (Opsional) <span class="text-gray-400 font-normal">(PDF, maks 5MB — boleh dikosongkan)</span></label>
+                                            <input type="file" name="skck_file" accept=".pdf,application/pdf" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                                            @error('skck_file')
                                             <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
@@ -480,19 +528,7 @@
                                         Data Anda aman dan hanya dapat dilihat oleh perusahaan terkait.
                                     </p>
                                 </div>
-                                @if($job->company?->user_id)
-                                <div class="mt-3 border-t border-slate-100 pt-3">
-                                    <p class="text-xs text-slate-500 text-center mb-2">Belum yakin? Tanya perusahaan dulu tanpa harus melamar.</p>
-                                    <form action="{{ route('messages.start') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="recipient_id" value="{{ $job->company->user_id }}">
-                                        <input type="hidden" name="job_id" value="{{ $job->id }}">
-                                        <button type="submit" class="block w-full px-4 py-2.5 border border-slate-200 text-slate-700 font-semibold text-center rounded-xl hover:border-blue-300 hover:text-blue-700 hover:bg-blue-50 transition-colors text-sm">
-                                            Tanya via Chat
-                                        </button>
-                                    </form>
-                                </div>
-                                @endif
+
                             @endif
                         @else
                             <div class="text-center py-4">
@@ -524,9 +560,17 @@
                                     </div>
                                 <div>
                                     <h4 class="font-bold text-gray-900 leading-tight mb-1">{{ $job->company->name ?? 'Perusahaan' }}</h4>
+                                    @if(($companyRating['count'] ?? 0) > 0)
+                                        <a href="{{ $job->company_id ? route('companies.show', $job->company_id) : '#' }}" class="flex items-center gap-1 text-[11px] text-gray-500 mb-2 hover:text-blue-600">
+                                            <svg class="w-3.5 h-3.5 fill-amber-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                            <span class="font-bold text-gray-700">{{ number_format($companyRating['average'], 1) }}</span>
+                                            <span>({{ $companyRating['count'] }} ulasan)</span>
+                                        </a>
+                                    @else
                                         <div class="flex items-center gap-1 text-[11px] text-gray-500 mb-2">
-                                        Data ulasan belum tersedia
-                                    </div>
+                                            Data ulasan belum tersedia
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                             
@@ -540,26 +584,7 @@
                                 @endif
                             </div>
                         </div>
-                        {{-- Kontak perusahaan tersedia sebelum melamar: pelamar ↔ perusahaan dapat chat langsung dari halaman lowongan. --}}
-                        @if(auth()->check() && auth()->user()->isUmum() && $job->company)
-                        @if($job->company->user_id)
-                        <form action="{{ route('messages.start') }}" method="POST" class="mb-2">
-                            @csrf
-                            <input type="hidden" name="recipient_id" value="{{ $job->company->user_id }}">
-                            <input type="hidden" name="job_id" value="{{ $job->id }}">
-                            <button type="submit" class="w-full px-4 py-2 border border-blue-600 text-blue-600 text-sm font-semibold rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-                                Hubungi Perusahaan
-                            </button>
-                            <p class="mt-1.5 text-[11px] text-slate-500 text-center leading-snug">Bisa dihubungi sebelum melamar — tanya detail lowongan dulu.</p>
-                        </form>
-                        @else
-                        <div class="mb-2 rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-center">
-                            <p class="text-xs font-semibold text-slate-600">Chat perusahaan belum tersedia</p>
-                            <p class="mt-0.5 text-[11px] text-slate-500">Perusahaan ini belum mengaktifkan akun chat.</p>
-                        </div>
-                        @endif
-                        @endif
+
                         @if($job->company_id && $job->company && !$job->company->trashed())
                         <a href="{{ route('companies.show', $job->company_id) }}" class="w-full px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>

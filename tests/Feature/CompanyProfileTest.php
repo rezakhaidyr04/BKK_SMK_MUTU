@@ -84,7 +84,6 @@ class CompanyProfileTest extends TestCase
             ->assertSee('hr@contoh-perusahaan.test')
             ->assertSee('081234567890')
             ->assertSee('Kontak Perusahaan')
-            ->assertSee('Hubungi Perusahaan')
             ->assertSee('Tentang Perusahaan')
             ->assertSee('Lowongan di Perusahaan Ini')
             // Data internal tidak boleh bocor ke publik
@@ -136,6 +135,23 @@ class CompanyProfileTest extends TestCase
     public function test_company_profile_404_for_missing_company(): void
     {
         $this->get(route('companies.show', 999999))->assertNotFound();
+    }
+
+    public function test_company_name_with_special_chars_renders_single_escaped(): void
+    {
+        $user = User::factory()->create(['role' => 'company']);
+        $company = Company::factory()->create([
+            'user_id' => $user->id,
+            'name' => "O'Reilly & Sons <Ltd>",
+            'verification_status' => 'verified',
+            'is_verified' => true,
+        ]);
+
+        $content = $this->get(route('companies.show', $company))->assertOk()->getContent();
+
+        // Judul tab + banner single-escape, TIDAK double-escape.
+        $this->assertStringNotContainsString('O&amp;#039;', $content);
+        $this->assertStringNotContainsString('&amp;amp;', $content);
     }
 
     public function test_job_detail_links_to_company_profile(): void

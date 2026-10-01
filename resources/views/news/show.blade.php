@@ -6,8 +6,8 @@
     @endphp
     <div class="page-shell">
         <x-ui.page-banner
-            title="{{ $news->title }}"
-            subtitle="{{ $excerpt }}"
+            :title="$news->title"
+            :subtitle="$excerpt"
             :back-url="route('news.index')"
             back-label="Kembali ke Berita"
             eyebrow="Berita › {{ \App\Support\Label::newsCategory($news->category) }}">
@@ -43,9 +43,9 @@
                     <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
                         {{-- Hero image --}}
                         @if($thumb)
-                            <div class="relative overflow-hidden">
-                                <img src="{{ asset('storage/' . $thumb) }}" alt="{{ $news->title }}" class="w-full h-[280px] sm:h-[360px] object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+                            <div class="relative overflow-hidden poster-frame h-[280px] sm:h-[360px]">
+                                <img src="{{ asset('storage/' . $thumb) }}" alt="" aria-hidden="true" class="poster-bg">
+                                <img src="{{ asset('storage/' . $thumb) }}" alt="{{ $news->title }}" class="poster-main">
                             </div>
                         @else
                             <div class="relative h-[220px] sm:h-[260px] bg-gradient-to-br from-blue-600 via-blue-600 to-violet-600 flex items-center justify-center overflow-hidden">
@@ -170,7 +170,7 @@
                                     <a href="{{ route('news.show', $related) }}" class="group flex gap-3 p-4 hover:bg-slate-50 transition">
                                         <div class="w-16 h-16 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-100">
                                             @if($rThumb)
-                                                <img src="{{ asset('storage/' . $rThumb) }}" alt="{{ $related->title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                                <img src="{{ asset('storage/' . $rThumb) }}" alt="{{ $related->title }}" class="w-full h-full poster-thumb group-hover:scale-105 transition duration-300">
                                             @else
                                                 <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
                                                     <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>

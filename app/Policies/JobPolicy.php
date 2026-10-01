@@ -65,6 +65,20 @@ class JobPolicy
     }
 
     /**
+     * Perusahaan terverifikasi boleh mempublikasikan draf/menunggu
+     * miliknya sendiri (draft/pending -> active) tanpa admin.
+     */
+    public function publish(User $user, Job $job)
+    {
+        if ($user->role === 'company' && $user->company) {
+            return (int) $user->company->id === (int) $job->company_id
+                && (bool) $user->company->isApproved();
+        }
+
+        return false;
+    }
+
+    /**
      * P1 H-11: close = active -> closed, milik sendiri saja.
      */
     public function close(User $user, Job $job)

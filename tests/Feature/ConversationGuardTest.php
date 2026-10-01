@@ -49,16 +49,4 @@ class ConversationGuardTest extends TestCase
         Conversation::create(['id' => 999999]);
     }
 
-    public function test_messaging_existing_flow_still_works(): void
-    {
-        $umum = User::factory()->create(['role' => 'umum', 'email_verified_at' => now()]);
-        $companyUser = User::factory()->create(['role' => 'company', 'email_verified_at' => now()]);
-
-        $response = $this->actingAs($umum)->post(route('messages.start'), [
-            'recipient_id' => $companyUser->id,
-        ]);
-
-        $response->assertRedirect();
-        $this->assertSame(1, Conversation::count());
-    }
 }

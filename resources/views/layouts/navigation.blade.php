@@ -28,18 +28,18 @@
                 <div class="flex items-center gap-3">
                     @auth
                     <!-- Notifications -->
-                    <div class="relative" x-data="{ notifOpen: false }">
-                        <button @click="notifOpen = !notifOpen" class="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors relative" aria-label="Notifikasi" :aria-expanded="notifOpen.toString()">
+                    <div class="relative" x-data="{ notifOpen: false }" @notif-popup-open.window="notifOpen = true" @notif-popup-close.window="notifOpen = false">
+                        <button id="notif-bell-btn" @click="notifOpen = !notifOpen" class="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors relative" aria-label="Notifikasi" :aria-expanded="notifOpen.toString()">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
                             </svg>
                             @if(Auth::user()->unreadNotifications->count() > 0)
-                            <span class="absolute top-1.5 right-1.5 ui-notification-badge animate-pulse"></span>
+                            <span id="notif-dot" class="absolute top-1.5 right-1.5 ui-notification-badge animate-pulse"></span>
                             @endif
                         </button>
 
                         <!-- Notifications Dropdown — ringkas agar tidak mengganggu area utama -->
-                        <div x-show="notifOpen" x-cloak @click.away="notifOpen = false" x-transition class="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-gray-200 py-1.5 z-50 max-h-80 overflow-y-auto">
+                        <div x-show="notifOpen" x-cloak @click.away="notifOpen = false" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 -translate-y-3 scale-95" x-transition:enter-end="opacity-100 translate-y-0 scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 scale-100" x-transition:leave-end="opacity-0 -translate-y-2 scale-95" class="absolute right-0 mt-2 w-72 origin-top-right bg-white rounded-xl shadow-xl border border-gray-200 py-1.5 z-50 max-h-80 overflow-y-auto">
                             <div class="px-3 py-2 border-b border-gray-100 flex justify-between items-center">
                                 <p class="text-[13px] font-semibold text-gray-900">Notifikasi</p>
                                 @if(Auth::user()->unreadNotifications->count() > 0)
@@ -47,16 +47,19 @@
                                 @endif
                             </div>
 
-                            @forelse(Auth::user()->notifications()->take(5)->get() as $notification)
-                                <div class="px-3 py-2 border-b border-gray-50 last:border-0 {{ $notification->unread() ? 'bg-blue-50/50' : '' }}">
+                            @forelse(Auth::user()->notifications()->latest()->take(5)->get() as $notification)
+                                <a href="{{ route('notifications.go', $notification->id) }}" class="block px-3 py-2 border-b border-gray-50 last:border-0 transition hover:bg-slate-50 {{ $notification->unread() ? 'bg-blue-50/50' : '' }}">
                                     <p class="text-[12px] leading-snug text-gray-800 line-clamp-2">{{ $notification->data['message'] ?? 'Ada pembaruan status lamaran Anda.' }}</p>
                                     <p class="text-[10px] text-gray-500 mt-0.5">{{ $notification->created_at->diffForHumans() }}</p>
-                                </div>
+                                </a>
                             @empty
                                 <div class="px-3 py-4 text-center text-xs text-gray-500">
                                     Belum ada notifikasi
                                 </div>
                             @endforelse
+                            <a href="{{ route('notifications.index') }}" class="block px-3 py-2 text-center text-[11px] font-semibold text-blue-600 hover:bg-blue-50 transition">
+                                Lihat semua notifikasi →
+                            </a>
                         </div>
                     </div>
 

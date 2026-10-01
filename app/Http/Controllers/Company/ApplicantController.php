@@ -17,14 +17,29 @@ class ApplicantController extends Controller
             abort(404, 'Profil perusahaan tidak ditemukan.');
         }
 
+        // Daftar lowongan milik sendiri untuk filter (id => judul).
+        $jobs = \App\Models\Job::where('company_id', $company->id)
+            ->orderByDesc('created_at')
+            ->get(['id', 'title']);
+
+        // Filter pelamar per lowongan (mis. dari badge angka di Lowongan Saya).
+        // Paksa integer + pastikan lowongan milik sendiri (cegah IDOR).
+        $selectedJobId = $request->filled('job_id') && $jobs->contains('id', (int) $request->query('job_id'))
+            ? (int) $request->query('job_id')
+            : null;
+
         $applications = Application::with(['job', 'user'])
-            ->whereHas('job', function ($query) use ($company) {
+            ->whereHas('job', function ($query) use ($company, $selectedJobId) {
                 $query->where('company_id', $company->id);
+                if ($selectedJobId) {
+                    $query->where('id', $selectedJobId);
+                }
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
-        return view('company.applicants.index', compact('applications', 'company'));
+        return view('company.applicants.index', compact('applications', 'company', 'jobs'));
     }
 
     public function show(Application $application)

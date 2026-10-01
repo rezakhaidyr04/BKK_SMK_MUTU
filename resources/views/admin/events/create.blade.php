@@ -105,7 +105,7 @@
                     <p class="text-xs text-slate-400">JPG, PNG, WebP · maks. 3MB</p>
                     <input type="file" name="poster" id="posterInput" accept="image/jpeg,image/png,image/webp" class="mt-3 block mx-auto text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-700 file:font-medium cursor-pointer">
                 </div>
-                <img id="posterPreview" src="" alt="Preview" class="hidden mt-3 w-40 h-28 object-cover rounded-xl border border-slate-200">
+                <img id="posterPreview" src="" alt="Preview" class="hidden mt-3 w-40 h-28 object-contain bg-slate-50 rounded-xl border border-slate-200">
             </div>
 
             <div class="ui-form-actions mt-6 pt-4 border-t border-slate-100">
