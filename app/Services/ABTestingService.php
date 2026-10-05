@@ -38,6 +38,10 @@ class ABTestingService
             return $existing;
         }
 
+        if (empty($config['variations']) || !is_array($config['variations'])) {
+            return 'control';
+        }
+
         $variation = $this->weightedRandom($config['variations']);
         Session::put($sessionKey, $variation);
 
@@ -52,8 +56,11 @@ class ABTestingService
         $variation = $variation ?? $this->getVariation($ctaName);
         $config = Config::get("ab_testing.cta_copy.{$ctaName}");
 
-        if (!$config || !isset($config['variations'][$variation])) {
-            return $config['variations'][$config['default']] ?? ['label' => 'CTA'];
+        if (empty($config['variations'][$variation])) {
+            $default = is_array($config ?? null) ? ($config['default'] ?? null) : null;
+            return (is_array($config ?? null) && isset($config['variations'][$default]))
+                ? $config['variations'][$default]
+                : ['label' => 'CTA'];
         }
 
         return $config['variations'][$variation];
@@ -67,8 +74,11 @@ class ABTestingService
         $variation = $variation ?? $this->getVariation('hero_heading');
         $config = Config::get('ab_testing.hero_heading');
 
-        if (!$config || !isset($config['variations'][$variation])) {
-            return $config['variations'][$config['default']]['text'] ?? '';
+        if (empty($config['variations'][$variation]['text'])) {
+            $default = is_array($config ?? null) ? ($config['default'] ?? null) : null;
+            return (is_array($config ?? null) && isset($config['variations'][$default]['text']))
+                ? (string) $config['variations'][$default]['text']
+                : '';
         }
 
         return $config['variations'][$variation]['text'];
@@ -161,18 +171,30 @@ class ABTestingService
      */
     protected function weightedRandom(array $variations): string
     {
-        $totalWeight = array_sum(array_column($variations, 'weight'));
+        if (empty($variations)) {
+            return 'control';
+        }
+
+        $weights = [];
+        foreach ($variations as $key => $config) {
+            $weights[$key] = max(0, (int) ($config['weight'] ?? 0));
+        }
+        $totalWeight = array_sum($weights);
+        if ($totalWeight <= 0) {
+            return (string) array_key_first($variations);
+        }
+
         $random = mt_rand(1, $totalWeight);
         $current = 0;
 
-        foreach ($variations as $key => $config) {
-            $current += $config['weight'];
+        foreach ($weights as $key => $weight) {
+            $current += $weight;
             if ($random <= $current) {
-                return $key;
+                return (string) $key;
             }
         }
 
-        return array_key_first($variations);
+        return (string) array_key_first($variations);
     }
 
     /**

@@ -99,9 +99,9 @@
         <div class="profile-strip">
             <table>
                 <tr>
-                    <td><strong>Posisi Target</strong>{{ $target_position ?: ($user->preferred_position ?: 'Frontend Developer') }}</td>
-                    <td><strong>Domisili</strong>{{ $user->address ?: 'Blanakan, Subang, Jawa Barat' }}</td>
-                    <td><strong>Tempat, Tanggal Lahir</strong>{{ $user->birth_place ?: 'Subang' }}, {{ $user->birth_date ? $user->birth_date->format('d M Y') : '15 Des 2004' }}</td>
+                    <td><strong>Posisi Target</strong>{{ $target_position ?: ($user->preferred_position ?: '-') }}</td>
+                    <td><strong>Domisili</strong>{{ $user->address ?: '-' }}</td>
+                    <td><strong>Tempat, Tanggal Lahir</strong>{{ $user->birth_place ?: '-' }}, {{ $user->birth_date ? $user->birth_date->format('d M Y') : '-' }}</td>
                 </tr>
             </table>
         </div>

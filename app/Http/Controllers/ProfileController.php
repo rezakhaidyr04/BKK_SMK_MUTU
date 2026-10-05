@@ -140,13 +140,19 @@ class ProfileController extends Controller
         }
 
         // P5.7: hapus file private milik akun (sertifikat, CV, dokumen,
-        // lampiran lamaran) agar tidak yatim di disk setelah forceDelete
-        // me-cascade baris DB-nya. Pola sama seperti destroy per-resource.
+        // surat lamaran, lampiran, SKCK) agar tidak yatim di disk setelah
+        // forceDelete me-cascade baris DB-nya. Pola sama seperti destroy per-resource.
         $privatePaths = $user->certificates()->pluck('file_path')
             ->merge($user->cvFiles()->pluck('file_path'))
             ->merge($user->documents()->pluck('file_path'))
             ->merge(
                 $user->applications()->whereNotNull('attachment_path')->pluck('attachment_path')
+            )
+            ->merge(
+                $user->applications()->whereNotNull('cover_letter_path')->pluck('cover_letter_path')
+            )
+            ->merge(
+                $user->applications()->whereNotNull('skck_path')->pluck('skck_path')
             )
             ->filter()
             ->unique();

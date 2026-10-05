@@ -59,11 +59,7 @@
                             <input type="text" name="position" value="{{ old('position', $job->position) }}" class="ui-input">
                             @error('position')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
-                        <div>
-                            <label class="ui-label">Lokasi</label>
-                            <input type="text" name="location" value="{{ old('location', $job->location) }}" class="ui-input">
-                            @error('location')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
-                        </div>
+                        <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-5"><x-job-location-fields :province="old('province', $job->province)" :city="old('city', $job->city)" :district="old('district', $job->district)" /></div>
                         <div>
                             <label class="ui-label">Tipe Kerja</label>
                             <select name="job_type" class="ui-select">
@@ -231,3 +227,5 @@
     </script>
     @endpush
 </x-app-layout>
+
+

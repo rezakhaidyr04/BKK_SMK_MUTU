@@ -69,18 +69,7 @@
                             <input type="text" name="position" value="{{ old('position') }}" class="ui-input">
                             @error('position')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
-                        <div>
-                            <label class="ui-label">Lokasi</label>
-                            <select name="location" class="ui-select">
-                                <option value="">Pilih Lokasi</option>
-                                @foreach(config('locations.locations') as $location)
-                                <option value="{{ $location }}" {{ old('location') == $location ? 'selected' : '' }}>
-                                    {{ $location }}
-                                </option>
-                                @endforeach
-                            </select>
-                            @error('location')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
-                        </div>
+                        <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-5"><x-job-location-fields :province="old('province')" :city="old('city')" :district="old('district')" /></div>
                         <div>
                             <label class="ui-label">Tipe Kerja</label>
                             <select name="job_type" class="ui-select">
@@ -252,3 +241,4 @@
     </script>
     @endpush
 </x-app-layout>
+

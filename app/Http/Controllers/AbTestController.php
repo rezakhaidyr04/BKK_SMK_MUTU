@@ -11,9 +11,9 @@ class AbTestController extends Controller
     public function track(Request $request, ABTestingService $abTest): JsonResponse
     {
         $validated = $request->validate([
-            'event' => 'required|string',
-            'variations' => 'array',
-            'variant' => 'string',
+            'event' => 'required|string|max:100',
+            'variations' => 'array|max:20',
+            'variant' => 'nullable|string|max:50',
         ]);
 
         $referer = $request->header('referer');

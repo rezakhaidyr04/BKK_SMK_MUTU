@@ -57,9 +57,19 @@ class ReviewController extends Controller
             }
         }
 
+        // Anti-spam: satu pengguna hanya satu ulasan per perusahaan
+        // (desain: ulasan langsung tampil, jadi flood harus dicegah di depan).
+        if ($companyName && Review::where('user_id', auth()->id())->where('company_name', $companyName)->exists()) {
+            return back()->with('error', 'Anda sudah memberikan ulasan untuk perusahaan ini.')->withInput();
+        }
+
         try {
+            $companyId = $companyName
+                ? \App\Models\Company::where('name', $companyName)->value('id')
+                : null;
             Review::create([
                 'user_id' => auth()->id(),
+                'company_id' => $companyId,
                 'rating' => $validated['rating'],
                 'comment' => $validated['comment'],
                 'job_title' => $validated['job_title'] ?? null,
@@ -78,16 +88,4 @@ class ReviewController extends Controller
         }
     }
 
-    /**
-     * Get stats for dashboard
-     */
-    public function getStats()
-    {
-        return [
-            'average_rating' => Review::getAverageRating(),
-            'total_reviews' => Review::getTotalReviews(),
-            'satisfaction_percentage' => Review::getSatisfactionPercentage(),
-            'rating_distribution' => Review::getRatingDistribution(),
-        ];
-    }
 }

@@ -97,7 +97,7 @@
                             @elseif($reg->payment_status === 'pending')
                                 <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-xs font-semibold">Menunggu</span>
                                 @if($reg->payment_proof)
-                                    <a href="{{ asset('storage/' . $reg->payment_proof) }}" target="_blank" class="block text-xs text-blue-600 underline mt-1">Lihat bukti</a>
+                                    <a href="{{ route('events.payment-proof.download', $reg) }}?preview=1" target="_blank" class="block text-xs text-blue-600 underline mt-1">Lihat bukti</a>
                                 @endif
                             @elseif($reg->payment_status === 'rejected')
                                 <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold">Ditolak</span>

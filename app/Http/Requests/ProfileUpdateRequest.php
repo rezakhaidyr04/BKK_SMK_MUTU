@@ -41,8 +41,8 @@ class ProfileUpdateRequest extends FormRequest
                 "nullable",
                 "image",
                 "max:3072",
-                "mimes:jpg,jpeg,png,webp,gif",
-                "mimetypes:image/jpeg,image/png,image/webp,image/gif",
+                "mimes:jpg,jpeg,png,webp",
+                "mimetypes:image/jpeg,image/png,image/webp",
             ],
             // P0 H-03: batasi skills agar tidak pollution/DoS/XSS tersimpan.
             "skills" => ["nullable", "array", "max:20"],

@@ -55,7 +55,7 @@ class EventController extends Controller
     public function register(Request $request, Event $event)
     {
         $request->validate([
-            'notes' => ['nullable', 'string'],
+            'notes' => ['nullable', 'string', 'max:1000'],
         ]);
 
         if ($event->start_time->isPast()) {
@@ -109,7 +109,10 @@ class EventController extends Controller
     public function uploadPaymentProof(Request $request, Event $event)
     {
         $request->validate([
-            'payment_proof' => ['required', 'image', 'max:4096', 'mimes:jpg,jpeg,png,webp'],
+            'payment_proof' => ['required', 'image', 'max:4096', 'mimes:jpg,jpeg,png,webp', 'mimetypes:image/jpeg,image/png,image/webp'],
+        ], [
+            'payment_proof.mimes' => 'Bukti pembayaran wajib berformat JPG, PNG, atau WebP.',
+            'payment_proof.mimetypes' => 'Bukti pembayaran wajib berformat JPG, PNG, atau WebP.',
         ]);
 
         $registration = EventRegistration::where('event_id', $event->id)
@@ -126,10 +129,13 @@ class EventController extends Controller
         }
 
         if ($registration->payment_proof) {
+            // Hapus file lama milik sendiri (termasuk sisa era public-disk).
+            Storage::disk('private')->delete($registration->payment_proof);
             Storage::disk('public')->delete($registration->payment_proof);
         }
 
-        $path = $request->file('payment_proof')->store('event-payments', 'public');
+        // Dokumen finansial wajib di private disk — diakses via controller berotorisasi.
+        $path = $request->file('payment_proof')->store('event-payments', 'private');
 
         $registration->update([
             'payment_proof' => $path,
@@ -137,6 +143,36 @@ class EventController extends Controller
         ]);
 
         return back()->with('success', 'Bukti pembayaran berhasil diupload! Menunggu verifikasi admin (1-2 jam kerja).');
+    }
+
+    public function downloadPaymentProof(Request $request, \App\Models\EventRegistration $registration)
+    {
+        $user = Auth::user();
+        abort_unless(
+            $user->id === $registration->user_id || $user->role === 'admin',
+            403,
+            'Anda tidak berhak melihat bukti pembayaran ini.'
+        );
+
+        abort_unless($registration->payment_proof, 404, 'Bukti pembayaran tidak ditemukan.');
+        abort_unless(Storage::disk('private')->exists($registration->payment_proof), 404, 'File bukti pembayaran tidak ditemukan.');
+
+        $filename = 'bukti-pembayaran-' . $registration->id . '.' . pathinfo($registration->payment_proof, PATHINFO_EXTENSION);
+
+        if ($request->query('preview')) {
+            $mime = Storage::disk('private')->mimeType($registration->payment_proof);
+
+            return Storage::disk('private')->response(
+                $registration->payment_proof,
+                $filename,
+                [
+                    'Content-Type' => $mime,
+                    'Content-Disposition' => 'inline; filename="' . addslashes($filename) . '"',
+                ]
+            );
+        }
+
+        return Storage::disk('private')->download($registration->payment_proof, $filename);
     }
 
     public function cancel(Event $event)

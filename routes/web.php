@@ -59,6 +59,7 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
     Route::post("/events/{event}/payment-proof", [EventController::class, "uploadPaymentProof"])->middleware('verified')->name("events.payment-proof");
     Route::delete("/events/{event}/register", [EventController::class, "cancel"])->name("events.cancel");
     Route::get("/my-events", [EventController::class, "myEvents"])->name("events.my");
+    Route::get("/event-payments/{registration}", [EventController::class, "downloadPaymentProof"])->name("events.payment-proof.download");
 
     // Profile
     Route::get("/profile", [ProfileController::class, "edit"])->name(
@@ -312,8 +313,12 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
         });
 });
 
-// A/B Testing Tracking
-Route::post('/ab-test/track', [\App\Http\Controllers\AbTestController::class, 'track'])->name('ab-test.track');
+// A/B Testing Tracking (public by design, tapi di-throttle anti log-spam)
+Route::post('/ab-test/track', [\App\Http\Controllers\AbTestController::class, 'track'])->middleware('throttle:30,1')->name('ab-test.track');
+
+// Master wilayah nasional (dependent dropdown province → city, publik read-only)
+Route::get('/wilayah/kota', [\App\Http\Controllers\WilayahController::class, 'cities'])->name('wilayah.cities');
+Route::get('/wilayah/kecamatan', [\App\Http\Controllers\WilayahController::class, 'districts'])->name('wilayah.districts');
 
 // Debug playground: preview status badges for different status values
 // Only registered in local environment — not accessible in production or staging

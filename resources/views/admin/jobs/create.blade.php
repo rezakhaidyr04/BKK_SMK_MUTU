@@ -45,18 +45,9 @@
                                 <input type="text" name="position" value="{{ old('position') }}" placeholder="Contoh: Senior Developer"
                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                             </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Lokasi</label>
-                                <select name="location"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                                    <option value="">Pilih Lokasi</option>
-                                    @foreach(config('locations.locations') as $location)
-                                    <option value="{{ $location }}" {{ old('location') == $location ? 'selected' : '' }}>
-                                        {{ $location }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4"><x-job-location-fields :province="old('province')" :city="old('city')" :district="old('district')"
+                                label-class="block text-sm font-semibold text-gray-700 mb-2"
+                                select-class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" /></div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Tipe Kerja</label>
                                 <select name="job_type" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
@@ -144,3 +135,4 @@
         </div>
     </div>
 </x-app-layout>
+

@@ -7,6 +7,8 @@ use Illuminate\Validation\Rule;
 
 class AdminJobStoreRequest extends FormRequest
 {
+    use Concerns\HasJobLocationRules;
+
     public function authorize(): bool
     {
         return true;
@@ -14,7 +16,7 @@ class AdminJobStoreRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        return array_merge([
             'company_name' => ['required', 'string', 'max:255'],
             'title' => ['required', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
@@ -32,6 +34,11 @@ class AdminJobStoreRequest extends FormRequest
             'benefits' => ['nullable', 'string'],
             'deadline' => ['nullable', 'date'],
             'status' => ['required', Rule::in(['active', 'closed', 'draft', 'pending', 'rejected', 'inactive'])],
-        ];
+        ], self::jobLocationRules());
+    }
+
+    public function withValidator($validator): void
+    {
+        $this->validateJobLocation($validator);
     }
 }

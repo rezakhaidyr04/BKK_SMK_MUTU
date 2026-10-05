@@ -226,7 +226,7 @@
                                         <p class="text-amber-700 font-bold">Menunggu Verifikasi</p>
                                         <p class="text-gray-500 text-xs mt-1">Bukti sudah dikirim, admin akan verifikasi 1–2 jam kerja.</p>
                                         @if($registration->payment_proof)
-                                            <a href="{{ asset('storage/' . $registration->payment_proof) }}" target="_blank" class="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-blue-600 hover:underline">Lihat bukti terkirim →</a>
+                                            <a href="{{ route('events.payment-proof.download', $registration) }}?preview=1" target="_blank" class="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-blue-600 hover:underline">Lihat bukti terkirim →</a>
                                         @endif
                                     </div>
                                     <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-800 mb-3">Jika ada kendala hubungi panitia via kontak yang tertera atau email bkksmkmutu3@gmail.com.</div>

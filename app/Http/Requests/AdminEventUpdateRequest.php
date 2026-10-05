@@ -20,7 +20,7 @@ class AdminEventUpdateRequest extends FormRequest
             'start_time' => ['required', 'date'],
             'end_time' => ['nullable', 'date', 'after:start_time'],
             'location' => ['required', 'string', 'max:255'],
-            'poster' => ['nullable', 'image', 'max:3072', 'mimes:jpg,jpeg,png,webp'],
+            'poster' => ['nullable', 'image', 'max:3072', 'mimes:jpg,jpeg,png,webp', 'mimetypes:image/jpeg,image/png,image/webp'],
             'is_paid' => ['nullable', 'boolean'],
             'price' => ['nullable', 'required_if:is_paid,1', 'numeric', 'min:1000', 'max:10000000'],
             'quota' => ['nullable', 'integer', 'min:1', 'max:10000'],

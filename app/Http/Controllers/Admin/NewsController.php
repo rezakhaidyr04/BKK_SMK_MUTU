@@ -93,11 +93,16 @@ class NewsController extends Controller
                 Storage::disk('public')->delete($news->thumbnail);
             }
             $processor = new ImageProcessor(quality: 82, maxWidth: 1200, maxHeight: 800);
-            $validated['thumbnail'] = $processor->store(
+            $stored = $processor->store(
                 $request->file('thumbnail'),
                 'news-thumbnails',
                 'thumb-' . Str::slug($validated['title']) . '-' . time()
             );
+            if ($stored) {
+                $validated['thumbnail'] = $stored;
+            } else {
+                unset($validated['thumbnail']);
+            }
         } else {
             unset($validated['thumbnail']);
         }

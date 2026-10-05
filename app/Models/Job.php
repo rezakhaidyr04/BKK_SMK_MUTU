@@ -22,6 +22,9 @@ class Job extends Model
         'title',
         'position',
         'location',
+        'province',
+        'city',
+        'district',
         'job_type',
         'salary_min',
         'salary_max',
@@ -76,6 +79,21 @@ class Job extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    /**
+     * Label lokasi nasional: "Kabupaten X, Provinsi Y" bila struktur
+     * province/city tersedia, fallback ke kolom location legacy.
+     */
+    public function locationLabel(): string
+    {
+        if ($this->city && $this->province) {
+            $label = $this->city.', '.$this->province;
+
+            return $this->district ? $this->district.', '.$label : $label;
+        }
+
+        return $this->location ?? '-';
     }
 
     /**

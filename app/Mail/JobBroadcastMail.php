@@ -12,9 +12,10 @@ use Illuminate\Mail\Mailables\Headers;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Email broadcast lowongan — dikirim sinkron langsung ke Gmail.
- * Dilengkapi header List-Unsubscribe agar Gmail tidak menganggapnya
- * spam massal dan penerima punya opsi berhenti selain tombol spam.
+ * Email broadcast lowongan — dikirim dari queue worker lewat
+ * SendJobBroadcastChunk (±100 penerima/job) agar tidak hang saat
+ * penerima 10.000+. Mailable memakai Queueable + header
+ * List-Unsubscribe agar Gmail tidak menganggapnya spam massal.
  */
 class JobBroadcastMail extends Mailable
 {

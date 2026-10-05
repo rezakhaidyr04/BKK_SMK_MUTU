@@ -200,14 +200,10 @@
                                 <div class="group sm:col-span-2">
                                     <label for="company-maps-url" class="flex items-center gap-1.5 text-xs font-bold tracking-wide uppercase text-slate-600 mb-1.5">
                                         <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                                        Link Google Maps <span class="font-normal normal-case text-slate-400">(opsional)</span>
+                                        Link Google Maps <span class="text-red-500">*</span>
                                     </label>
-                                    <div class="flex gap-2">
-                                        <input type="url" name="maps_url" id="company-maps-url" value="{{ old('maps_url', $company->maps_url ?? '') }}" placeholder="Tempel link Share dari Google Maps…" class="flex-1 px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 shadow-sm hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition" />
-                                        <a id="gmaps-link" href="{{ $company->maps_url ?? ($company->address ? 'https://www.google.com/maps/search/?api=1&query='.urlencode($company->address) : '#') }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-blue-200 bg-blue-50 text-xs font-bold text-blue-700 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition whitespace-nowrap {{ ($company->maps_url ?? $company->address) ? '' : 'hidden' }}">
-                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                                            Buka
-                                        </a>
+                                    <div>
+                                        <input type="url" name="maps_url" id="company-maps-url" required value="{{ old('maps_url', $company->maps_url ?? '') }}" placeholder="Tempel link Share dari Google Maps…" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 shadow-sm hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition" />
                                     </div>
                                     <p class="text-[11px] text-slate-400 mt-1.5">Buka Google Maps → cari kantor → tombol <span class="font-semibold">Share/Bagikan</span> → salin link → tempel di sini.</p>
                                     @error('maps_url')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
@@ -343,20 +339,6 @@
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <script>
-// Tombol "Buka" link Google Maps mengikuti isi kolom
-(function () {
-    var mapsUrlInput = document.getElementById('company-maps-url');
-    var gmapsLink = document.getElementById('gmaps-link');
-    if (!mapsUrlInput || !gmapsLink) return;
-    mapsUrlInput.addEventListener('input', function () {
-        var v = mapsUrlInput.value.trim();
-        if (!v) { gmapsLink.classList.add('hidden'); return; }
-        gmapsLink.href = v;
-        gmapsLink.classList.remove('hidden');
-    });
-})();
-</script>
-<script>
 let logoCropper = null;
 function previewLogoWithCrop(event) {
     const file = event.target.files[0];
@@ -446,3 +428,4 @@ function logoReset(){ if(logoCropper) logoCropper.reset(); }
     </div>
 </div>
 </x-app-layout>
+

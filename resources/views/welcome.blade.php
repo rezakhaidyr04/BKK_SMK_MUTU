@@ -121,7 +121,7 @@
                             </div>
                             <div class="hero-stat">
                                 <span class="hero-stat-number" data-counter="{{ $usersCount ?? 13 }}" data-suffix="+">0</span>
-                                <span class="hero-stat-label">Ribu Pencari Kerja</span>
+                                <span class="hero-stat-label">Pencari Kerja</span>
                             </div>
                             <div class="hero-stat">
                                 <span class="hero-stat-number" data-counter="{{ $successRate ?? 31 }}" data-suffix="%">0</span>
@@ -318,7 +318,7 @@
             <div class="container">
                 <div class="section-header">
                     <span class="section-badge">Kata Mereka</span>
-                    <h2 class="section-title">Dipercaya oleh Ribu Pencari Kerja</h2>
+                    <h2 class="section-title">Dipercaya oleh {{ $usersCount ?? 0 }}+ Pencari Kerja</h2>
                     <p class="section-subtitle">Cerita nyata dari mereka yang telah berhasil menemukan karir impian</p>
                 </div>
                 <div class="testimonials-grid">

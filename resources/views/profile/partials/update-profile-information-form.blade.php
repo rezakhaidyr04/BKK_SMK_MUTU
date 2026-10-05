@@ -61,9 +61,9 @@
                 <label for="avatar" class="mt-3 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-blue-300 hover:text-blue-700">
                     Pilih Foto Baru
                 </label>
-                <input id="avatar" name="avatar" type="file" class="sr-only" accept="image/jpeg,image/png,image/webp,image/gif"
+                <input id="avatar" name="avatar" type="file" class="sr-only" accept="image/jpeg,image/png,image/webp"
                        onchange="previewAvatar(event)">
-                <p class="mt-2 text-[11px] leading-relaxed text-slate-400">JPG, PNG, WebP, GIF · Maksimal 3MB.</p>
+                <p class="mt-2 text-[11px] leading-relaxed text-slate-400">JPG, PNG, WebP · Maksimal 3MB.</p>
 
                 @if($avatarPreviewUrl)
                     <img id="avatar-preview" src="{{ $avatarPreviewUrl }}" alt="" class="hidden">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanyJobStoreRequest;
 use App\Http\Requests\CompanyJobUpdateRequest;
 use App\Models\Job;
+use App\Support\IndonesiaRegions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -75,6 +76,14 @@ class JobController extends Controller
         $validated['company_name'] = $company->name;
         $validated['status'] = 'active';
 
+        // Lokasi nasional: province/city tervalidasi → location "Kota X, Prov Y".
+        // Request lama (hanya location) tetap didukung via normalize.
+        $loc = IndonesiaRegions::normalizeJobLocation($validated);
+        $validated['province'] = $loc['province'];
+        $validated['city'] = $loc['city'];
+        $validated['district'] = $loc['district'];
+        $validated['location'] = $loc['location'];
+
         $job = Job::create($validated);
 
         \App\Services\NewJobNotifier::notifySeekers($job);
@@ -103,6 +112,12 @@ class JobController extends Controller
         $this->authorize('update', $job);
 
         $validated = $request->validated();
+
+        $loc = IndonesiaRegions::normalizeJobLocation($validated);
+        $validated['province'] = $loc['province'];
+        $validated['city'] = $loc['city'];
+        $validated['district'] = $loc['district'];
+        $validated['location'] = $loc['location'];
 
         $job->update($validated);
 
@@ -170,3 +185,5 @@ class JobController extends Controller
         return redirect()->route('company.jobs.index')->with('success', 'Lowongan berhasil dihapus.');
     }
 }
+
+

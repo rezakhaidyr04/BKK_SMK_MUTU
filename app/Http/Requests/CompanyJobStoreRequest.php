@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CompanyJobStoreRequest extends FormRequest
 {
+    use Concerns\HasJobLocationRules;
+
     public function authorize(): bool
     {
         return true;
@@ -13,7 +15,7 @@ class CompanyJobStoreRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        return array_merge([
             'title' => ['required', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
             'location' => ['nullable', 'string', 'max:255'],
@@ -29,6 +31,11 @@ class CompanyJobStoreRequest extends FormRequest
             'work_hours' => ['nullable', 'string', 'max:255'],
             'benefits' => ['nullable', 'string'],
             'deadline' => ['nullable', 'date'],
-        ];
+        ], self::jobLocationRules());
+    }
+
+    public function withValidator($validator): void
+    {
+        $this->validateJobLocation($validator);
     }
 }

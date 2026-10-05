@@ -253,7 +253,7 @@
                                             </div>
                                             <div>
                                                 <div class="text-sm font-bold text-gray-900">Lokasi Kerja</div>
-                                                <div class="text-sm text-gray-600 mt-1">{{ $job->location }}</div>
+                                                <div class="text-sm text-gray-600 mt-1">📍 {{ $job->locationLabel() }}</div>
                                             </div>
                                         </div>
                                         @php

@@ -403,6 +403,7 @@ class FileStorageEdgeCaseTest extends TestCase
 
         $resp = $this->actingAs($admin)->put(route('admin.companies.update', $company), [
             'name' => 'PT Replace MoU',
+            'maps_url' => 'https://maps.google.com/?q=PT+Replace+MoU',
             'mou_path' => UploadedFile::fake()->create('new-mou.pdf', 200, 'application/pdf'),
         ]);
 
@@ -518,3 +519,4 @@ class FileStorageEdgeCaseTest extends TestCase
         $this->assertDatabaseMissing('cv_files', ['id' => $cv->id]);
     }
 }
+

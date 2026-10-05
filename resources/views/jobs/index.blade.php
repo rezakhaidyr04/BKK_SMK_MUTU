@@ -37,7 +37,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <!-- Search Input -->
                             <div class="md:col-span-2">
                                 <label class="ui-label text-slate-700">Kata Kunci</label>
@@ -53,17 +53,15 @@
                                 </div>
                             </div>
 
-                            <!-- Location -->
-                            <div>
-                                <label class="ui-label text-slate-700">Lokasi</label>
-                                <select name="location" class="ui-select border-slate-300 focus:border-blue-500 focus:ring-blue-500">
-                                    <option value="">Semua Lokasi</option>
-                                    @foreach($locations as $location)
-                                    <option value="{{ $location }}" {{ request('location') == $location ? 'selected' : '' }}>
-                                        {{ $location }}
-                                    </option>
-                                    @endforeach
-                                </select>
+                            <!-- Location: Provinsi → Kabupaten/Kota → Kecamatan (nasional) -->
+                            <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <x-job-location-fields :province="request('province')" :city="request('city')" :district="request('district')"
+                                    label-class="ui-label text-slate-700"
+                                    select-class="ui-select border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+                                    province-placeholder="Semua Provinsi"
+                                    city-placeholder="Semua Kabupaten/Kota"
+                                    district-placeholder="Semua Kecamatan"
+                                    :show-errors="false" />
                             </div>
 
                             <!-- Job Type -->
@@ -93,21 +91,6 @@
                         </div>
                     </div>
                 </form>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-                <div class="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl px-5 py-4 text-white shadow-md">
-                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue-200">Lowongan Aktif</p>
-                    <p class="mt-1 text-3xl font-bold">{{ $activeJobsCount }}</p>
-                </div>
-                <div class="bg-gradient-to-br from-cyan-600 to-cyan-700 rounded-2xl px-5 py-4 text-white shadow-md">
-                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-100">Lokasi</p>
-                    <p class="mt-1 text-3xl font-bold">{{ $locationsCount }}</p>
-                </div>
-                <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl px-5 py-4 text-white shadow-md">
-                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200">Perusahaan</p>
-                    <p class="mt-1 text-3xl font-bold">{{ $companiesCount }}</p>
-                </div>
-            </div>
 
             <!-- Results Header -->
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -147,7 +130,7 @@
                                         };
                                     @endphp
                                     <span class="inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide {{ $jobTypeClasses }}">{{ \App\Support\Label::jobType($job->job_type) }}</span>
-                                    <span class="inline-flex items-center rounded-full bg-slate-50 px-2.5 py-1 text-[11px] font-medium text-slate-600 border border-slate-200">{{ $job->location }}</span>
+                                    <span class="inline-flex items-center rounded-full bg-slate-50 px-2.5 py-1 text-[11px] font-medium text-slate-600 border border-slate-200">📍 {{ $job->locationLabel() }}</span>
                                     @if($job->created_at->gte(now()->subDays(7)))
                                         <span class="inline-flex items-center rounded-full bg-green-50 px-2.5 py-1 text-[11px] font-medium text-green-700 border border-green-100">Baru</span>
                                     @endif

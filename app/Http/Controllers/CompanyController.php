@@ -34,7 +34,12 @@ class CompanyController extends Controller
         // Ulasan yang sudah disetujui dan ditujukan ke perusahaan ini (cocok nama persis,
         // case-insensitive mengikuti collation DB) + rata-rata & jumlah.
         $reviews = \App\Models\Review::approved()
-            ->where('company_name', $company->name)
+            ->with('user:id,name')
+            ->where(function ($q) use ($company) {
+                // company_id kanonis; company_name fallback data lama.
+                $q->where('company_id', $company->id)
+                    ->orWhere('company_name', $company->name);
+            })
             ->latest()
             ->take(10)
             ->get();

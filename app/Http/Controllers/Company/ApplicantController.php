@@ -88,6 +88,7 @@ class ApplicantController extends Controller
 
         $application->save();
 
+        $notifyFailed = false;
         if ($oldStatus !== $application->status) {
             // P5.7: null-safe — lewati notifikasi bila akun pelamar sudah
             // dihapus (relasi user null), status tetap diperbarui.
@@ -100,10 +101,17 @@ class ApplicantController extends Controller
                     $application->user?->notify(new \App\Notifications\ApplicationStatusUpdated($application));
                 }
             } catch (\Throwable $e) {
+                $notifyFailed = true;
                 \Illuminate\Support\Facades\Log::warning('Notifikasi status lamaran #' . $application->id . ' gagal dikirim: ' . $e->getMessage());
             }
         }
 
-        return redirect()->back()->with('success', 'Status lamaran berhasil diperbarui.');
+        $redirect = redirect()->back()->with('success', 'Status lamaran berhasil diperbarui. Notifikasi web + email terkirim ke pelamar.');
+
+        if ($notifyFailed) {
+            $redirect->with('warning', 'Status tersimpan, tetapi email notifikasi gagal terkirim (cek konfigurasi email). Notifikasi web tetap masuk.');
+        }
+
+        return $redirect;
     }
 }

@@ -12,10 +12,11 @@ class Review extends Model
 
     /**
      * P0 H-14: status/featured/rejection_reason hanya moderasi server-side.
-     * ReviewController@store memaksa status=pending, user_id=auth()->id().
+     * ReviewController@store memaksa status=approved + user_id=auth()->id().
      */
     protected $fillable = [
         'user_id',
+        'company_id',
         'rating',
         'comment',
         'job_title',
@@ -39,6 +40,15 @@ class Review extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Relasi kanonis ke perusahaan (nullable; company_name tetap
+     * dipertahankan sebagai fallback display data lama).
+     */
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 
     /**

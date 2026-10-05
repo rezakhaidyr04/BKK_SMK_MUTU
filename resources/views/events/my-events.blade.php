@@ -69,7 +69,7 @@
                                 {{ $event->start_time->format('d M Y, H:i') }} &nbsp;·&nbsp;
                                 {{ $event->location }}
                             </p>
-                            <p class="text-xs text-gray-400 mt-1">Didaftarkan: {{ $reg->registered_at->format('d M Y') }} @if($event->is_paid && $reg->payment_proof)· <a href="{{ asset('storage/'.$reg->payment_proof) }}" target="_blank" class="text-blue-600 underline">Bukti</a>@endif</p>
+                            <p class="text-xs text-gray-400 mt-1">Didaftarkan: {{ $reg->registered_at->format('d M Y') }} @if($event->is_paid && $reg->payment_proof)· <a href="{{ route('events.payment-proof.download', $reg) }}?preview=1" target="_blank" class="text-blue-600 underline">Bukti</a>@endif</p>
                         </div>
                         <div class="flex items-center gap-2 flex-shrink-0">
                             <a href="{{ route('events.show', $event) }}"

@@ -43,7 +43,7 @@
 | 🔖 **Bookmark Jobs** | Simpan lowongan untuk dilamar nanti |
 | 📅 **Career Events** | Info seminar, workshop, job fair + pendaftaran |
 | 📰 **Career News** | Tips karir & info industri |
-| 💬 **Direct Messaging** | Chat langsung dengan HR perusahaan dari halaman lowongan |
+| 🔔 **Notifikasi** | Notifikasi email + dalam aplikasi untuk update status lamaran |
 | 📈 **Profile Completion** | Progress tracker kelengkapan profil |
 
 ### 🏢 Untuk Perusahaan
@@ -52,7 +52,7 @@
 |-------|-----------|
 | 📢 **Job Posting** | Post lowongan dengan mudah (setelah terverifikasi) |
 | 👥 **Applicant Management** | Kelola status pelamar + jadwal wawancara |
-| 💬 **Direct Contact** | Chat langsung dengan kandidat dari daftar pelamar |
+| 🔔 **Notifikasi Pelamar** | Kandidat otomatis dapat notifikasi email + dalam aplikasi |
 | 🛡️ **Company Verification** | Submit dokumen legal untuk diverifikasi admin |
 | 📊 **Recruitment Dashboard** | Ringkasan lowongan, lamaran, progres rekrutmen |
 
@@ -142,7 +142,7 @@ php artisan test
 | Role | Akses |
 |------|-------|
 | **Admin** | Full access ke seluruh sistem |
-| **Umum** | Cari lowongan, lamar kerja, CV builder, chat |
+| **Umum** | Cari lowongan, lamar kerja, CV builder, notifikasi |
 | **Perusahaan** | Post lowongan & kelola pelamar |
 
 > Catatan: role lama `siswa`, `alumni`, dan `guru` sudah digabung/dihapus.

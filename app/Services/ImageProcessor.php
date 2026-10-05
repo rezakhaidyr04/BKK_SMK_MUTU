@@ -68,12 +68,10 @@ class ImageProcessor
         $src       = @imagecreatefromstring($imageData);
 
         if ($src === false) {
-            // Fallback: simpan file asli tanpa konversi (pertahankan ekstensi asli)
-            $originalExtension = strtolower($file->getClientOriginalExtension() ?: $file->extension() ?: 'bin');
-            $baseName = $filename ? pathinfo($filename, PATHINFO_FILENAME) : Str::uuid()->toString();
-            $fallbackFilename = $baseName . '.' . $originalExtension;
-            $stored = $file->storeAs($directory, $fallbackFilename, 'public');
-            return $stored ?: null;
+            // Fail-closed: file lolos validasi `image` tapi tidak bisa
+            // di-decode GD (potensi polyglot) — tolak, jangan simpan mentah
+            // ke public. Caller memperlakukan null sebagai kegagalan aman.
+            return null;
         }
 
         // Konversi palette ke truecolor

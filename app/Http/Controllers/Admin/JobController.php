@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminJobStoreRequest;
 use App\Http\Requests\AdminJobUpdateRequest;
 use App\Models\Job;
+use App\Support\IndonesiaRegions;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -45,6 +46,12 @@ class JobController extends Controller
     {
         $validated = $request->validated();
 
+        $loc = IndonesiaRegions::normalizeJobLocation($validated);
+        $validated['province'] = $loc['province'];
+        $validated['city'] = $loc['city'];
+        $validated['district'] = $loc['district'];
+        $validated['location'] = $loc['location'];
+
         $job = Job::create($validated);
 
         // Admin membuat lowongan yang langsung aktif → beritahu pencari kerja.
@@ -72,6 +79,12 @@ class JobController extends Controller
     {
         $validated = $request->validated();
 
+        $loc = IndonesiaRegions::normalizeJobLocation($validated);
+        $validated['province'] = $loc['province'];
+        $validated['city'] = $loc['city'];
+        $validated['district'] = $loc['district'];
+        $validated['location'] = $loc['location'];
+
         $job->update($validated);
 
         return redirect()->route('admin.jobs.index')
@@ -88,30 +101,30 @@ class JobController extends Controller
 
     public function broadcast(Job $job)
     {
-        $jobseekers = \App\Models\User::where('role', 'umum')->get();
+        // Skala 10.000+ pencari kerja: JANGAN load semua user + kirim sinkron
+        // di request HTTP (hang berjam-jam + limit Gmail). Pecah jadi
+        // chunk-job antrean (±100 email/job) agar request langsung kembali
+        // dan pengiriman berjalan bertahap di queue worker.
+        $total = \App\Models\User::where('role', 'umum')->count();
 
-        // Kirim sinkron langsung via Mailable (bukan antrean database) agar
-        // langsung sampai ke email pencari kerja tanpa tergantung worker.
-        // Mailable membawa header List-Unsubscribe agar tidak dianggap spam.
-        $sent = 0;
-        $failed = 0;
-        foreach ($jobseekers as $user) {
-            try {
-                \Illuminate\Support\Facades\Mail::to($user->email)
-                    ->send(new \App\Mail\JobBroadcastMail($job, $user));
-                $sent++;
-            } catch (\Throwable $e) {
-                $failed++;
-                \Illuminate\Support\Facades\Log::warning('Broadcast lowongan #' . $job->id . ' gagal ke ' . $user->email . ': ' . $e->getMessage());
-            }
+        if ($total === 0) {
+            return redirect()->back()->with('error', 'Belum ada pencari kerja untuk di-broadcast.');
         }
 
-        $message = 'Notifikasi lowongan kerja berhasil di-broadcast ke ' . $sent . ' pencari kerja melalui email.';
-        if ($failed > 0) {
-            $message .= ' (' . $failed . ' gagal — periksa log/email penerima.)';
+        $minId = (int) \App\Models\User::where('role', 'umum')->min('id');
+        $maxId = (int) \App\Models\User::where('role', 'umum')->max('id');
+        $perJob = 100;
+        $dispatched = 0;
+
+        for ($start = $minId; $start <= $maxId; $start += $perJob) {
+            \App\Jobs\SendJobBroadcastChunk::dispatch($job->id, $start, min($start + $perJob - 1, $maxId));
+            $dispatched++;
         }
 
-        return redirect()->back()->with('success', $message);
+        return redirect()->back()->with(
+            'success',
+            'Broadcast dijadwalkan ke ' . number_format($total, 0, ',', '.') . ' pencari kerja via antrean (' . $dispatched . ' batch). Pastikan queue worker berjalan: php artisan queue:work.'
+        );
     }
 
     public function approve(Job $job)
@@ -146,3 +159,6 @@ class JobController extends Controller
         \App\Services\NewJobNotifier::notifySeekers($job);
     }
 }
+
+
+

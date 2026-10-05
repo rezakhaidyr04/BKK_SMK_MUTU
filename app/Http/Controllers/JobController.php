@@ -36,9 +36,47 @@ class JobController extends Controller
             $query->where("job_type", $request->job_type);
         }
 
-        // Filter by location
+        // Filter by location (legacy: substring pada kolom location).
         if ($request->filled("location")) {
             $query->where("location", "like", "%{$request->location}%");
+        }
+
+        // Filter nasional: province dan/atau city. Baris legacy
+        // (province/city NULL) tetap terjangkau via fallback location.
+        if ($request->filled("province")) {
+            $province = $request->province;
+            $query->where(function ($q) use ($province) {
+                $q->where("province", $province)
+                    ->orWhere(function ($qq) use ($province) {
+                        $qq->whereNull("province")->where("location", "like", "%{$province}%");
+                    });
+            });
+        }
+
+        if ($request->filled("city")) {
+            $city = $request->city;
+            $short = \App\Support\IndonesiaRegions::shortName($city);
+            $query->where(function ($q) use ($city, $short) {
+                $q->where("city", $city)
+                    ->orWhere(function ($qq) use ($city, $short) {
+                        $qq->whereNull("city")->where(function ($qqq) use ($city, $short) {
+                            $qqq->where("location", "like", "%{$city}%");
+                            if ($short !== $city) {
+                                $qqq->orWhere("location", "like", "%{$short}%");
+                            }
+                        });
+                    });
+            });
+        }
+
+        if ($request->filled("district")) {
+            $district = $request->district;
+            $query->where(function ($q) use ($district) {
+                $q->where("district", $district)
+                    ->orWhere(function ($qq) use ($district) {
+                        $qq->whereNull("district")->where("location", "like", "%{$district}%");
+                    });
+            });
         }
 
         // Filter by salary range
@@ -72,6 +110,9 @@ class JobController extends Controller
         // Use predefined locations from config
         $locations = collect(config('locations.locations', []));
 
+        // Master wilayah nasional untuk filter province → city.
+        $provinces = \App\Support\IndonesiaRegions::provinces();
+
         $activeJobsCount = Job::where("status", "active")
             ->where("deadline", ">=", now())
             ->count();
@@ -84,7 +125,7 @@ class JobController extends Controller
             ->distinct("company_name")
             ->count("company_name");
 
-        return view("jobs.index", compact("jobs", "jobTypes", "locations", "activeJobsCount", "locationsCount", "companiesCount"));
+        return view("jobs.index", compact("jobs", "jobTypes", "locations", "provinces", "activeJobsCount", "locationsCount", "companiesCount"));
     }
 
     public function show(Job $job)
@@ -101,6 +142,8 @@ class JobController extends Controller
 
         // P0 C-04: JANGAN load seluruh applications di halaman publik.
         // Hanya hitung + cek existence milik user login.
+        // Eager company (+user pemilik) karena blade memakai $job->company->... berulang.
+        $job->loadMissing(['company.user']);
         $job->loadCount(['applications']);
         $applicationsCount = $job->applications_count ?? 0;
 
@@ -140,11 +183,14 @@ class JobController extends Controller
                 ->count();
         }
 
-        // Ringkasan ulasan perusahaan (publik, disetujui, cocok nama).
+        // Ringkasan ulasan perusahaan (publik, disetujui; company_id kanonis + fallback nama).
         $companyRating = ['count' => 0, 'average' => 0];
         if ($job->company) {
             $companyReviews = \App\Models\Review::approved()
-                ->where('company_name', $job->company->name)
+                ->where(function ($q) use ($job) {
+                    $q->where('company_id', $job->company->id)
+                        ->orWhere('company_name', $job->company->name);
+                })
                 ->get(['rating']);
             $companyRating['count'] = $companyReviews->count();
             $companyRating['average'] = $companyReviews->count() > 0
@@ -152,13 +198,19 @@ class JobController extends Controller
                 : 0;
         }
 
-        // Similar jobs
-        $similarJobs = Job::where("id", "!=", $job->id)
+        // Similar jobs (eager company: blade memakai logo/nama perusahaan).
+        // Lokasi nasional: samakan city dulu, lalu location legacy, lalu job_type.
+        $similarJobs = Job::with('company')
+            ->where("id", "!=", $job->id)
             ->where("status", "active")
             ->where(function ($query) use ($job) {
                 $query
                     ->where("job_type", $job->job_type)
                     ->orWhere("location", $job->location);
+
+                if ($job->city) {
+                    $query->orWhere("city", $job->city);
+                }
             })
             ->take(4)
             ->get();
@@ -265,6 +317,9 @@ class JobController extends Controller
 
     public function bookmark(Job $job)
     {
+        // Bookmark adalah fitur pencari kerja — selaras dengan apply().
+        abort_unless(Auth::user()?->role === "umum", 403);
+
         $bookmark = Bookmark::where("job_id", $job->id)
             ->where("user_id", Auth::id())
             ->first();

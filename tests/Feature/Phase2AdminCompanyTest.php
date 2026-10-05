@@ -73,6 +73,7 @@ class Phase2AdminCompanyTest extends TestCase
             'industry' => 'Manufaktur',
             'email'    => 'hrd@majubersama.com',
             'address'  => 'Jl. Industri No. 1',
+            'maps_url' => 'https://maps.google.com/?q=Jl+Industri+No+1',
         ]);
 
         $response->assertRedirect(route('admin.companies.index'));
@@ -108,6 +109,7 @@ class Phase2AdminCompanyTest extends TestCase
             'mou_number'     => 'MOU/BKK/2024/001',
             'mou_signed_at'  => '2024-01-15',
             'mou_expires_at' => '2025-01-15',
+            'maps_url'        => 'https://maps.google.com/?q=PT+Test+MoU',
         ]);
 
         $response->assertRedirect(route('admin.companies.index'));
@@ -252,6 +254,7 @@ class Phase2AdminCompanyTest extends TestCase
         $response = $this->actingAs($this->admin)->put(route('admin.companies.update', $company), [
             'name'    => 'PT Baru Sekali',
             'industry' => 'Teknologi',
+            'maps_url' => 'https://maps.google.com/?q=PT+Baru+Sekali',
         ]);
 
         $response->assertRedirect(route('admin.companies.index'));
@@ -261,3 +264,4 @@ class Phase2AdminCompanyTest extends TestCase
         $this->assertEquals('Teknologi', $company->industry);
     }
 }
+
