@@ -36,7 +36,6 @@
         </x-ui.page-banner>
 
         <div x-data="{
-            headline: @js($previewData['headline']),
             summary: @js(old('custom_summary', '')),
             experience: @js(old('custom_experience', '')),
             achievement: @js(old('custom_achievement', ''))
@@ -79,14 +78,6 @@
 
                             <div class="grid grid-cols-1 gap-3.5">
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-800 mb-2">Headline CV</label>
-                                    <input type="text" name="custom_headline" maxlength="120" x-model="headline" placeholder="Contoh: Admin Office, Operator Produksi, Junior Web Developer" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-semibold text-gray-800 mb-2">Posisi yang dituju</label>
-                                    <input type="text" name="target_position" maxlength="120" value="{{ old('target_position', $previewData['target_position'] ?? '') }}" placeholder="Contoh: Staff Administrasi, Operator Produksi, Junior Web Developer" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">
-                                </div>
-                                <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Kata kunci ATS</label>
                                     <input type="text" name="ats_keywords" maxlength="300" value="{{ old('ats_keywords', '') }}" placeholder="Contoh: administrasi, microsoft excel, komunikasi, kantor" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">
                                 </div>
@@ -126,7 +117,7 @@
                         <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
                             <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold mb-3">1</div>
                             <h3 class="font-semibold text-gray-900">Lengkapi isi CV</h3>
-                            <p class="text-sm text-gray-600 mt-2">Isi bagian penting seperti headline, ringkasan, pengalaman, dan posisi yang dituju.</p>
+                            <p class="text-sm text-gray-600 mt-2">Isi bagian penting seperti ringkasan, pengalaman, pendidikan, dan kemampuan.</p>
                         </div>
                         <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
                             <div class="w-10 h-10 rounded-xl bg-green-100 text-green-700 flex items-center justify-center font-bold mb-3">2</div>
@@ -206,7 +197,6 @@
                         <div class="preview-sheet bg-white text-black scale-[0.96] origin-top" style="font-family:Georgia,'Times New Roman',serif;">
                             <div style="text-align:center;margin-bottom:10px;">
                                 <p style="font-size:1rem;font-weight:800;text-transform:uppercase;color:#111;">{{ $previewData['name'] }}</p>
-                                <p style="font-size:.78rem;font-weight:700;color:#111;" x-text="headline"></p>
                                 <p style="font-size:.62rem;color:#111;">{{ $previewData['address'] }} | HP: {{ $previewData['phone'] }} | Email: {{ $previewData['email'] }}</p>
                             </div>
                             <div style="margin-top:10px;">

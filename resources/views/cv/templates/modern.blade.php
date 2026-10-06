@@ -11,7 +11,6 @@
 
         .header { text-align: center; margin-bottom: 14px; }
         .name { font-size: 20pt; font-weight: bold; text-transform: uppercase; }
-        .position { font-size: 13.5pt; font-weight: bold; margin-top: 2px; }
         .contact { font-size: 10.5pt; margin-top: 4px; }
 
         .section { margin-top: 15px; }
@@ -28,7 +27,6 @@
     <div class="page">
     <div class="header">
         <div class="name">{{ $user->name }}</div>
-        <div class="position">{{ $custom_headline ?: ($target_position ?: ($user->preferred_position ?: 'Pencari Kerja')) }}</div>
         <div class="contact">{{ $user->address ?: 'Indonesia' }} | HP: {{ $user->phone ?: '-' }} | Email: {{ $user->email }}</div>
     </div>
 
