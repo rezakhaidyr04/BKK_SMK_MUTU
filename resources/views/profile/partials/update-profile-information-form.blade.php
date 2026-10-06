@@ -147,23 +147,23 @@
                         <x-input-label for="birth_place" value="Tempat Lahir" class="font-semibold text-slate-700" />
                     </span>
                     <x-text-input id="birth_place" name="birth_place" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
-                                  :value="old('birth_place', $user->birth_place ?? '')"
-                                  placeholder="Contoh: Cikampek" />
+                                   :value="old('birth_place', $user->birth_place ?? '')"
+                                   placeholder="Contoh: Cikampek" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('birth_place')" />
                 </div>
-            </div>
 
-            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                     <span class="mb-1 flex items-center gap-1.5">
                         <svg class="h-3.5 w-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         <x-input-label for="birth_date" value="Tanggal Lahir" class="font-semibold text-slate-700" />
                     </span>
                     <x-text-input id="birth_date" name="birth_date" type="date" style="color-scheme: light;" class="mt-1 block w-full rounded-xl border-slate-200 bg-white text-slate-900 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
-                                  :value="old('birth_date', $user->birth_date?->format('Y-m-d') ?? '')" />
+                                   :value="old('birth_date', $user->birth_date?->format('Y-m-d') ?? '')" />
                     <x-input-error class="mt-1.5" :messages="$errors->get('birth_date')" />
                 </div>
+            </div>
 
+            <div class="mt-5">
                 <div>
                     <span class="mb-1 flex items-center gap-1.5">
                         <svg class="h-3.5 w-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
