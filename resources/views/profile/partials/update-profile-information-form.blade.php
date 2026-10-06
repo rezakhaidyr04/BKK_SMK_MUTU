@@ -135,12 +135,6 @@
             </div>
         </div>
 
-            <template x-for="skill in skills" :key="skill">
-                <input type="hidden" name="skills[]" :value="skill">
-            </template>
-        </div>
-        @endif
-
         @if(Auth::user()->role === 'umum')
         <div class="border-t border-slate-100 pt-6">
             <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-1">Data Diri</h3>
