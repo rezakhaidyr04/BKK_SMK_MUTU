@@ -35,11 +35,7 @@
             </x-slot:actions>
         </x-ui.page-banner>
 
-        <div x-data="{
-            summary: @js(old('custom_summary', '')),
-            experience: @js(old('custom_experience', '')),
-            achievement: @js(old('custom_achievement', ''))
-        }" class="page-container page-section">
+        <div x-data="{}" class="page-container page-section">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div class="lg:col-span-8 xl:col-span-9 space-y-6">
                     <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
@@ -83,18 +79,9 @@
                                     <p class="text-xs text-gray-500 mt-1.5">Tulis keahlian yang kamu kuasai, pisahkan dengan koma. Ini membantu CV kamu ditemukan perusahaan.</p>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-800 mb-2">Ringkasan singkat <span class="font-normal text-gray-400">(opsional)</span></label>
-                                    <textarea name="custom_summary" rows="3" maxlength="1200" x-model="summary" placeholder="Tulis 2-4 kalimat yang menjelaskan siapa kamu, keahlian utama, dan target kerja." class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
-                                    <p class="text-xs text-gray-500 mt-1.5">Kosongkan untuk memakai bio dari profil. Isi hanya jika ingin ringkasan khusus untuk lamaran ini.</p>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-semibold text-gray-800 mb-2">Pengalaman / proyek / organisasi paling relevan <span class="font-normal text-gray-400">(opsional)</span></label>
-                                    <textarea name="custom_experience" rows="4" maxlength="2000" placeholder="Contoh:\n- Magang di toko retail selama 3 bulan\n- Membantu administrasi OSIS\n- Membuat website sekolah sederhana" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">{{ old('custom_experience') }}</textarea>
-                                    <p class="text-xs text-gray-500 mt-1.5">Kosongkan untuk memakai pengalaman dari profil. Isi hanya jika ingin menonjolkan pengalaman tertentu.</p>
-                                </div>
-                                <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Pencapaian utama <span class="font-normal text-gray-400">(opsional)</span></label>
-                                    <textarea name="custom_achievement" rows="2" maxlength="500" x-model="achievement" placeholder="Contoh: Juara 2 lomba desain poster, lulus PKL dengan predikat baik, memimpin proyek kelas." class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">{{ old('custom_achievement') }}</textarea>
+                                    <textarea name="custom_achievement" rows="2" maxlength="500" placeholder="Contoh: Juara 2 lomba desain poster, lulus PKL dengan predikat baik, memimpin proyek kelas." class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">{{ old('custom_achievement') }}</textarea>
+                                    <p class="text-xs text-gray-500 mt-1.5">Tidak punya? Kosongkan saja — bagian ini tidak akan tampil di CV.</p>
                                 </div>
                             </div>
 
@@ -204,7 +191,7 @@
                             </div>
                             <div style="margin-top:10px;">
                                 <div style="font-size:.78rem;font-weight:800;text-transform:uppercase;color:#111;border-bottom:1.5px solid #111;padding-bottom:2px;margin-bottom:6px;">Ringkasan</div>
-                                <div style="font-size:.66rem;line-height:1.55;color:#222;" x-text="summary"></div>
+                                <div style="font-size:.66rem;line-height:1.55;color:#222;">{{ $previewData['summary'] }}</div>
                             </div>
                             <div style="margin-top:10px;">
                                 <div style="font-size:.78rem;font-weight:800;text-transform:uppercase;color:#111;border-bottom:1.5px solid #111;padding-bottom:2px;margin-bottom:6px;">Pengalaman</div>
