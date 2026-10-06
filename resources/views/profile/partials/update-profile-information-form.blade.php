@@ -203,8 +203,9 @@
                         <x-input-label for="preferred_position" value="Posisi yang Diinginkan" class="font-semibold text-slate-700" />
                     </span>
                     <x-text-input id="preferred_position" name="preferred_position" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
-                                  :value="old('preferred_position', $user->preferred_position ?? '')"
-                                  placeholder="Contoh: Frontend Developer" />
+                                    :value="old('preferred_position', $user->preferred_position ?? '')"
+                                   placeholder="Contoh: Frontend Developer" />
+                    <p class="text-xs text-slate-400 mt-1">Dipakai untuk rekomendasi lowongan yang cocok untukmu.</p>
                     <x-input-error class="mt-1.5" :messages="$errors->get('preferred_position')" />
                 </div>
 
