@@ -1,4 +1,4 @@
-<x-app-layout title="Token API — BKKMU" description="Buat personal access token (Sanctum) untuk mengakses API BKKMU." :full-bleed="true">
+<x-app-layout title="Token API — BKKMu" description="Buat personal access token (Sanctum) untuk mengakses API BKKMu." :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-banner title="Token API" subtitle="Buat personal access token untuk mengakses API dari aplikasi eksternal." eyebrow="Admin › API">
                         <x-slot:chips>

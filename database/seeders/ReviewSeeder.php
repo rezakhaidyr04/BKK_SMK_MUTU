@@ -33,14 +33,14 @@ class ReviewSeeder extends Seeder
         $companyList = $companyNames->values()->all();
 
         $templates = [
-            [5, 'Platform BKKMU sangat membantu saya menemukan pekerjaan yang sesuai. Proses lamar sampai interview terpantau jelas di satu tempat.'],
+            [5, 'Platform BKKMu sangat membantu saya menemukan pekerjaan yang sesuai. Proses lamar sampai interview terpantau jelas di satu tempat.'],
             [5, 'Fitur pembuat CV-nya luar biasa! CV saya jadi ramah ATS dan beberapa perusahaan langsung menghubungi saya.', true],
             [5, 'Proses pencarian kerja jadi jauh lebih mudah. Lowongannya relevan untuk lulusan SMK dan update setiap hari.'],
             [4, 'Interface mudah dipakai, fitur lengkap. Proses rekrutmen transparan dan ada feedback yang membangun.'],
             [5, 'Tips interview dan info lowongannya sangat bermanfaat untuk persiapan karir saya sebagai fresh graduate.'],
             [5, 'Pelayanan admin responsif, setiap pertanyaan dijawab cepat dan profesional. Sangat terbantu!'],
             [4, 'Lowongan beragam dan sesuai skill. Sudah coba lamar 2 perusahaan, satu langsung panggilan interview.'],
-            [5, 'Alhamdulillah diterima kerja lewat BKKMU. Pelacakan lamaran real-time-nya bikin tenang.'],
+            [5, 'Alhamdulillah diterima kerja lewat BKKMu. Pelacakan lamaran real-time-nya bikin tenang.'],
         ];
 
         // Cap: maksimal 1 review per user, dan maksimal sejumlah template.

@@ -1,7 +1,7 @@
-<x-app-layout :full-bleed="true" :hide-sidebar="!auth()->check()" :title="$company->name . ' — Profil Perusahaan BKKMU'" :description="'Profil ' . $company->name . ' beserta lowongan aktif di BKKMU.'">
+<x-app-layout :full-bleed="true" :hide-sidebar="!auth()->check()" :title="$company->name . ' — Profil Perusahaan BKKMu'" :description="'Profil ' . $company->name . ' beserta lowongan aktif di BKKMu.'">
     <div class="page-shell">
         @php
-            $heroSubtitle = $company->industry ?? 'Perusahaan mitra BKKMU';
+            $heroSubtitle = $company->industry ?? 'Perusahaan mitra BKKMu';
             if ($company->address) $heroSubtitle .= ' • ' . Str::limit($company->address, 60);
         @endphp
         <x-ui.page-banner

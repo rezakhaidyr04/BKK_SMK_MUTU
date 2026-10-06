@@ -51,11 +51,7 @@
 
                         <form action="{{ route('cv.generate') }}" method="POST" class="p-6 sm:p-8 pb-28 sm:pb-8 space-y-5">
                             @csrf
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                <label class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm">
-                                    <input type="checkbox" name="include_photo" value="1" checked class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
-                                    Foto profil
-                                </label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <label class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm">
                                     <input type="checkbox" name="include_skills" value="1" checked class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
                                     Tampilkan skill
@@ -207,54 +203,31 @@
                             <h3 class="text-sm font-bold text-gray-900">Preview CV</h3>
                             <span class="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-[10px] font-semibold text-blue-700 border border-blue-100">Standar</span>
                         </div>
-                        <div class="preview-sheet preview-modern scale-[0.96] origin-top">
-                            <div class="preview-hero">
-                                <div class="preview-header">
-                                    @if($previewData['name'])
-                                        @if($previewData['name'])
-                                            <div class="preview-avatar">{{ strtoupper(substr($previewData['name'], 0, 1)) }}</div>
-                                        @endif
-                                    @endif
-                                    <div>
-                                        <p class="preview-name">{{ $previewData['name'] }}</p>
-                                        <p class="preview-headline" x-text="headline"></p>
-                                    </div>
-                                </div>
-                                <div class="mt-3">
-                                    <span class="preview-pill">ATS Friendly</span>
-                                    <span class="preview-pill" style="margin-left:6px">Ringkas</span>
-                                </div>
+                        <div class="preview-sheet bg-white text-black scale-[0.96] origin-top" style="font-family:Georgia,'Times New Roman',serif;">
+                            <div style="text-align:center;margin-bottom:10px;">
+                                <p style="font-size:1rem;font-weight:800;text-transform:uppercase;color:#111;">{{ $previewData['name'] }}</p>
+                                <p style="font-size:.78rem;font-weight:700;color:#111;" x-text="headline"></p>
+                                <p style="font-size:.62rem;color:#111;">{{ $previewData['address'] }} | HP: {{ $previewData['phone'] }} | Email: {{ $previewData['email'] }}</p>
                             </div>
-                            <div class="p-4">
-                                <div class="preview-section">
-                                    <div class="preview-section-title">Ringkasan</div>
-                                    <div class="preview-section-body" x-text="summary"></div>
-                                </div>
-                                <div class="preview-section" style="margin-top:10px">
-                                    <div class="preview-section-title">Data CV</div>
-                                    <div class="preview-section-body">
-                                        @if($previewData['linkedin_url']) LinkedIn · @endif
-                                        @if($previewData['portfolio_url']) Portofolio · @endif
-                                        <span x-text="headline"></span>
-                                        @if(!empty($previewData['target_position']))
-                                            <div class="mt-1 text-blue-700 font-semibold">Posisi: {{ $previewData['target_position'] }}</div>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="preview-section" style="margin-top:10px">
-                                    <div class="preview-section-title">Skill</div>
-                                    <div>
-                                        @foreach(array_slice($previewData['skills'], 0, 4) as $skill)
-                                            <span class="preview-skill">{{ $skill }}</span>
-                                        @endforeach
-                                    </div>
-                                    @if(!empty($previewData['target_position']))
-                                        <div class="preview-section-body mt-3">
-                                            <div class="preview-section-title">Kata Kunci ATS</div>
-                                            <div class="text-xs text-gray-600">{{ $previewData['target_position'] }}, administrasi, komunikasi, microsoft excel</div>
-                                        </div>
-                                    @endif
-                                </div>
+                            <div style="margin-top:10px;">
+                                <div style="font-size:.78rem;font-weight:800;text-transform:uppercase;color:#111;border-bottom:1.5px solid #111;padding-bottom:2px;margin-bottom:6px;">Ringkasan</div>
+                                <div style="font-size:.66rem;line-height:1.55;color:#222;" x-text="summary"></div>
+                            </div>
+                            <div style="margin-top:10px;">
+                                <div style="font-size:.78rem;font-weight:800;text-transform:uppercase;color:#111;border-bottom:1.5px solid #111;padding-bottom:2px;margin-bottom:6px;">Pengalaman</div>
+                                <div style="font-size:.66rem;line-height:1.55;color:#222;white-space:pre-line;">{{ $previewData['experience'] }}</div>
+                            </div>
+                            <div style="margin-top:10px;">
+                                <div style="font-size:.78rem;font-weight:800;text-transform:uppercase;color:#111;border-bottom:1.5px solid #111;padding-bottom:2px;margin-bottom:6px;">Pendidikan</div>
+                                <div style="font-size:.66rem;line-height:1.55;color:#222;white-space:pre-line;">{{ $previewData['education']['history'] }}</div>
+                            </div>
+                            <div style="margin-top:10px;">
+                                <div style="font-size:.78rem;font-weight:800;text-transform:uppercase;color:#111;border-bottom:1.5px solid #111;padding-bottom:2px;margin-bottom:6px;">Kemampuan</div>
+                                <ul style="font-size:.66rem;line-height:1.55;color:#222;margin:0;padding-left:18px;list-style:disc;">
+                                    @foreach(array_slice($previewData['skills'], 0, 6) as $skill)
+                                        <li>{{ $skill }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
 

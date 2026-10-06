@@ -1,4 +1,4 @@
-<x-app-layout :full-bleed="true" title="Berita Karir — BKKMU" description="Informasi terbaru seputar dunia kerja, tips karir, dan pengumuman dari BKKMU.">
+<x-app-layout :full-bleed="true" title="Berita Karir — BKKMu" description="Informasi terbaru seputar dunia kerja, tips karir, dan pengumuman dari BKKMu.">
     <div class="page-shell">
         <x-ui.page-banner
             title="Berita Karir Terbaru"
@@ -10,7 +10,7 @@
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
                     {{ $news->total() ?? $news->count() }} Artikel · Tips & Info Karir
                 </span>
-                <span class="page-banner__chip">BKKMU</span>
+                <span class="page-banner__chip">BKKMu</span>
             </x-slot:chips>
         </x-ui.page-banner>
 
@@ -120,7 +120,7 @@
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold text-gray-900 mb-2">Belum Ada Berita</h3>
-                    <p class="text-gray-600 max-w-md mx-auto">Berita karir dan artikel akan ditampilkan di sini setelah dipublikasikan oleh tim BKKMU.</p>
+                    <p class="text-gray-600 max-w-md mx-auto">Berita karir dan artikel akan ditampilkan di sini setelah dipublikasikan oleh tim BKKMu.</p>
                 </div>
             @endif
         </div>

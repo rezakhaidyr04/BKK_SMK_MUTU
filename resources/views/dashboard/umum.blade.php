@@ -89,8 +89,8 @@
                 </div>
             </div>
 
-            {{-- Stats Grid (Refactored using reusable component) --}}
-            <div class="dashboard-stats-grid grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+            {{-- Stats Grid (Refactored using reusable component) — disembunyikan di HP --}}
+            <div class="dashboard-stats-grid hidden sm:grid sm:grid-cols-2 gap-3 mb-6">
                 <x-ui.dashboard-stat-card
                     label="Lamaran Aktif"
                     :value="$stats['active_applications']"

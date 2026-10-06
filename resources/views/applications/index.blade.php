@@ -99,8 +99,8 @@
                 </div>
             </div>
 
-            {{-- STATISTIK — gaya dashboard-stat-card (putih, ikon bg-*-100) --}}
-            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3 mb-4" data-stagger>
+            {{-- STATISTIK — gaya dashboard-stat-card (putih, ikon bg-*-100). Disembunyikan di HP. --}}
+            <div class="hidden sm:grid sm:grid-cols-3 xl:grid-cols-6 gap-3 mb-4" data-stagger>
                 @foreach($cards as $c)
                     @php
                         $isActive = $activeFilter === $c['key'];

@@ -466,7 +466,7 @@
                                                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 3h7l5 5v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 3v6h6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6M9 17h4"/></svg>
                                                 </div>
                                                 <div class="min-w-0 flex-1">
-                                                    <p class="text-sm font-bold leading-tight text-white">Template Surat Lamaran BKKMU</p>
+                                                    <p class="text-sm font-bold leading-tight text-white">Template Surat Lamaran BKKMu</p>
                                                     <p class="mt-0.5 text-xs font-medium text-white">Resmi • .docx • Tinggal isi 2 menit</p>
                                                 </div>
                                                 <span class="shrink-0 rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold tracking-wide text-blue-950">GRATIS</span>

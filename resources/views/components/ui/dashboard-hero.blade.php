@@ -19,7 +19,7 @@
                     </div>
                 @endisset
                 <div>
-                    <p class="mb-2"><span class="page-banner__eyebrow">BKKMU</span></p>
+                    <p class="mb-2"><span class="page-banner__eyebrow">BKKMu</span></p>
                     <h1 class="text-[1.75rem] font-bold leading-[1.2] text-white sm:text-[2rem] lg:text-[2.5rem]">{{ $title }}</h1>
                     @if($subtitle)
                         <p class="mt-2 max-w-2xl text-sm font-medium leading-6 text-blue-100 sm:text-base">{{ $subtitle }}</p>

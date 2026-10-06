@@ -113,7 +113,7 @@
                         </div>
                         <div class="min-w-0">
                             <p class="text-sm font-bold">{{ $news->author->name ?? 'Super Admin BKK' }}</p>
-                            <p class="text-xs text-white/70 mt-0.5">Tim BKKMU · Penulis berita karir & informasi dunia kerja</p>
+                            <p class="text-xs text-white/70 mt-0.5">Tim BKKMu · Penulis berita karir & informasi dunia kerja</p>
                             <p class="text-xs text-white/60 mt-2 leading-relaxed">Membantu siswa dan alumni mendapatkan informasi karir terpercaya, tips persiapan kerja, dan peluang industri terbaru.</p>
                         </div>
                     </div>
@@ -198,7 +198,7 @@
                                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                             </div>
                             <h4 class="font-bold text-white">Siap cari kerja?</h4>
-                            <p class="text-sm text-blue-100 mt-1 leading-relaxed">Temukan lowongan terbaru dari perusahaan mitra BKKMU.</p>
+                            <p class="text-sm text-blue-100 mt-1 leading-relaxed">Temukan lowongan terbaru dari perusahaan mitra BKKMu.</p>
                             <a href="{{ route('jobs.index') }}" class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white text-blue-700 text-sm font-bold py-2.5 hover:bg-blue-50 transition">
                                 Cari Lowongan
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>

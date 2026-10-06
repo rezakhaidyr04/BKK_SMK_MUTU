@@ -4,10 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', config('app.name', 'BKKMU'))</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logos/mutu_logo.png') }}">
+    <title>@yield('title', config('app.name', 'BKKMu'))</title>
     <meta name="description" content="@yield('description', 'Bursa Kerja Khusus (BKK) SMK MUTU — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.')">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="@yield('title', config('app.name', 'BKKMU'))">
+    <meta property="og:title" content="@yield('title', config('app.name', 'BKKMu'))">
     <meta property="og:description" content="@yield('description', 'Bursa Kerja Khusus (BKK) SMK MUTU — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.')">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta name="twitter:card" content="summary">
@@ -19,7 +21,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
         {{-- ?v= bertambah setiap app-custom.css diubah agar browser tidak memakai cache lama --}}
-        <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}?v=20260924a">
+        <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}?v=20261006c">
 
 </head>
 <body class="font-sans antialiased">
@@ -34,9 +36,9 @@
             {{-- Header --}}
             <div class="auth-sidebar-header">
                 <div class="auth-sidebar-logo">
-                    <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKKMU">
+                    <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKKMu">
                     <div>
-                        <div class="auth-sidebar-brand">BKKMU</div>
+                        <div class="auth-sidebar-brand">BKKMu</div>
                         <div class="auth-sidebar-subbrand">Pusat Pengembangan Karir</div>
                     </div>
                 </div>
@@ -54,9 +56,9 @@
 
             {{-- Logo mobile --}}
             <div class="auth-mobile-logo">
-                <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKKMU">
+                <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKKMu">
                 <div>
-                    <span class="auth-mobile-title">BKKMU</span>
+                    <span class="auth-mobile-title">BKKMu</span>
                     <span class="auth-mobile-subtitle">Pusat Pengembangan Karir</span>
                 </div>
             </div>

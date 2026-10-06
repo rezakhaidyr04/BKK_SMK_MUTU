@@ -279,6 +279,8 @@ function initCharts() {
     const appData   = @json($applicationChart->pluck('count'));
     const jobLabels = @json($jobChart->pluck('month'));
     const jobData   = @json($jobChart->pluck('count'));
+    const statusRaw = @json($applicationStatusChart);
+    const roleRaw   = @json($userRoleChart);
 
     function formatMonth(ym) {
         if (!ym) return '';
@@ -287,7 +289,40 @@ function initCharts() {
         return names[parseInt(m)] + ' ' + y;
     }
 
-    new Chart(document.getElementById('applicationChart'), {
+    const statusLabelMap = {
+        submitted: 'Terkirim',
+        under_review: 'Sedang Ditinjau',
+        interviewed: 'Wawancara',
+        accepted: 'Diterima',
+        rejected: 'Ditolak',
+    };
+    const statusColorMap = {
+        submitted: '#3b82f6',
+        under_review: '#f59e0b',
+        interviewed: '#8b5cf6',
+        accepted: '#16a34a',
+        rejected: '#ef4444',
+    };
+    const roleLabelMap = {
+        admin: 'Admin',
+        umum: 'Pengguna Umum',
+        company: 'Perusahaan',
+    };
+    const roleColorMap = {
+        admin: '#8b5cf6',
+        umum: '#3b82f6',
+        company: '#f59e0b',
+    };
+
+    function makeChart(id, config) {
+        const el = document.getElementById(id);
+        if (!el || typeof Chart === 'undefined') return;
+        const existing = Chart.getChart(el);
+        if (existing) existing.destroy();
+        new Chart(el, config);
+    }
+
+    makeChart('applicationChart', {
         type: 'bar',
         data: {
             labels: appLabels.map(formatMonth),
@@ -311,7 +346,7 @@ function initCharts() {
         }
     });
 
-    new Chart(document.getElementById('jobChart'), {
+    makeChart('jobChart', {
         type: 'line',
         data: {
             labels: jobLabels.map(formatMonth),
@@ -333,6 +368,82 @@ function initCharts() {
             scales: {
                 y: { beginAtZero: true, ticks: { stepSize: 1, color: textColor }, grid: { color: gridColor } },
                 x: { ticks: { color: textColor }, grid: { color: gridColor } }
+            }
+        }
+    });
+
+    const statusLabels = (statusRaw || []).map(r => statusLabelMap[r.status] || r.status);
+    const statusData = (statusRaw || []).map(r => Number(r.count));
+    const statusColors = (statusRaw || []).map(r => statusColorMap[r.status] || '#64748b');
+    const statusTotal = statusData.reduce((a, b) => a + b, 0);
+    const statusPct = statusData.map(v => statusTotal ? (v / statusTotal * 100) : 0);
+    const statusLegendLabels = statusLabels.map((l, i) => `${l} (${statusData[i]} • ${statusPct[i].toFixed(1)}%)`);
+
+    makeChart('statusChart', {
+        type: 'doughnut',
+        data: {
+            labels: statusLegendLabels.length ? statusLegendLabels : ['Belum ada data'],
+            datasets: [{
+                data: statusData.length ? statusData : [1],
+                backgroundColor: statusColors.length ? statusColors : ['#e2e8f0'],
+                borderWidth: 2,
+                borderColor: '#fff',
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '62%',
+            plugins: {
+                legend: { position: 'bottom', labels: { color: textColor, boxWidth: 12, padding: 12 } },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => {
+                            if (!statusTotal) return ' Belum ada data';
+                            const v = ctx.parsed || 0;
+                            const p = (v / statusTotal * 100).toFixed(1);
+                            return ` ${v} lamaran (${p}%)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const roleLabels = (roleRaw || []).map(r => roleLabelMap[r.role] || r.role);
+    const roleData = (roleRaw || []).map(r => Number(r.count));
+    const roleColors = (roleRaw || []).map(r => roleColorMap[r.role] || '#64748b');
+    const roleTotal = roleData.reduce((a, b) => a + b, 0);
+    const rolePct = roleData.map(v => roleTotal ? (v / roleTotal * 100) : 0);
+    const roleLegendLabels = roleLabels.map((l, i) => `${l} (${roleData[i]} • ${rolePct[i].toFixed(1)}%)`);
+
+    makeChart('userRoleChart', {
+        type: 'doughnut',
+        data: {
+            labels: roleLegendLabels.length ? roleLegendLabels : ['Belum ada data'],
+            datasets: [{
+                data: roleData.length ? roleData : [1],
+                backgroundColor: roleColors.length ? roleColors : ['#e2e8f0'],
+                borderWidth: 2,
+                borderColor: '#fff',
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '62%',
+            plugins: {
+                legend: { position: 'bottom', labels: { color: textColor, boxWidth: 12, padding: 12 } },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => {
+                            if (!roleTotal) return ' Belum ada data';
+                            const v = ctx.parsed || 0;
+                            const p = (v / roleTotal * 100).toFixed(1);
+                            return ` ${v} pengguna (${p}%)`;
+                        }
+                    }
+                }
             }
         }
     });

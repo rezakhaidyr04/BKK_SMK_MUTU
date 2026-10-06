@@ -1,4 +1,4 @@
-/* BKKMU branded mail theme (menggantikan abu-abu bawaan Laravel) */
+/* BKKMu branded mail theme (menggantikan abu-abu bawaan Laravel) */
 
 body,
 body *:not(html):not(style):not(br):not(tr):not(code) {
@@ -97,7 +97,7 @@ img {
     width: 100%;
 }
 
-/* Header — bar biru BKKMU */
+/* Header — bar biru BKKMu */
 
 .header {
     background-color: #1d4ed8;

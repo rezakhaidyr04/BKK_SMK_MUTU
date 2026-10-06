@@ -3,10 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BKKMU - Platform Pengembangan Karir</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logos/mutu_logo.png') }}">
+    <title>BKKMu - Platform Pengembangan Karir</title>
     <meta name="description" content="Bursa Kerja Khusus (BKK) SMK MUTU — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="BKKMU - Platform Pengembangan Karir">
+    <meta property="og:title" content="BKKMu - Platform Pengembangan Karir">
     <meta property="og:description" content="Bursa Kerja Khusus (BKK) SMK MUTU — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta name="twitter:card" content="summary">
@@ -28,8 +30,8 @@
                 <div class="navbar-inner">
                     <!-- Logo -->
                     <a href="{{ route('home') }}" class="navbar-brand">
-                        <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKKMU" width="36" height="36">
-                        <span>BKKMU</span>
+                        <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKKMu" width="36" height="36">
+                        <span>BKKMu</span>
                     </a>
 
                     <!-- Actions -->
@@ -84,12 +86,12 @@
                     <div class="hero-content">
                         <!-- Greeting Badge -->
                         <div id="js-hero-greeting" class="hero-badge">
-                            <span aria-hidden="true">👋</span> Selamat Datang di BKKMU
+                            <span aria-hidden="true">👋</span> Selamat Datang di BKKMu
                         </div>
 
                         <!-- Heading -->
                         <h1 class="hero-title">
-                            Temukan Karier Impian Anda<br>Bersama <span class="highlight">BKKMU</span>
+                            Temukan Karier Impian Anda<br>Bersama <span class="highlight">BKKMu</span>
                         </h1>
 
                         <!-- Description -->
@@ -151,7 +153,7 @@
                         <div class="hero-image">
                             <picture>
                                 <source srcset="{{ asset('images/foto_siswa/siswa.webp') }}" type="image/webp">
-                                <img src="{{ asset('images/foto_siswa/siswa.webp') }}" alt="Ilustrasi pencari kerja BKKMU" loading="eager" fetchpriority="high">
+                                <img src="{{ asset('images/foto_siswa/siswa.webp') }}" alt="Ilustrasi pencari kerja BKKMu" loading="eager" fetchpriority="high">
                             </picture>
 
                             <!-- Floating Card 1 -->
@@ -239,7 +241,7 @@
                 <div class="partner-image-wrap">
                     <img
                         src="{{ asset('images/perusahaan/perusahaan.webp') }}"
-                        alt="Perusahaan mitra BKKMU"
+                        alt="Perusahaan mitra BKKMu"
                         class="partner-image"
                         loading="lazy"
                     >
@@ -251,7 +253,7 @@
         <section class="features-section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Mengapa Memilih BKKMU?</h2>
+                    <h2 class="section-title">Mengapa Memilih BKKMu?</h2>
                     <p class="section-subtitle">Platform lengkap untuk pengembangan karier Anda</p>
                 </div>
                 <div class="features-grid">
@@ -262,7 +264,7 @@
                             <svg width="24" height="24" fill="none" stroke="#ffffff" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                         </div>
                         <h3 class="feature-title">Pencocokan Cerdas</h3>
-                        <p class="feature-desc">Sistem AI mencocokkan pekerjaan berdasarkan keahlian dan minat Anda</p>
+                        <p class="feature-desc">Sistem mencocokkan pekerjaan berdasarkan keahlian dan minat Anda</p>
                     </article>
                     <!-- Feature 2 -->
                     <article class="feature-card" data-reveal>
@@ -288,7 +290,7 @@
                         <div class="feature-icon gradient-amber">
                             <svg width="24" height="24" fill="none" stroke="#ffffff" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                         </div>
-                        <h3 class="feature-title">Rekomendasi AI</h3>
+                        <h3 class="feature-title">Rekomendasi Karier</h3>
                         <p class="feature-desc">Dapatkan rekomendasi karir dan pelatihan sesuai profil Anda</p>
                     </article>
                     <!-- Feature 5 -->
@@ -347,7 +349,7 @@
                                         @if($review->job_title && $review->company_name)
                                             {{ $review->job_title }} @ {{ $review->company_name }}
                                         @else
-                                            Pengguna BKKMU
+                                            Pengguna BKKMu
                                         @endif
                                     </span>
                                 </div>
@@ -733,7 +735,7 @@
                     <div class="cta-deco"></div>
                     <div class="cta-content">
                         <h2 class="cta-title">Siap Memulai Karier Anda?</h2>
-                        <p class="cta-desc">Bergabunglah bersama para pencari kerja yang telah menemukan pekerjaan impian melalui BKKMU.</p>
+                        <p class="cta-desc">Bergabunglah bersama para pencari kerja yang telah menemukan pekerjaan impian melalui BKKMu.</p>
                         @php
                             $abTest = app(\App\Services\ABTestingService::class);
                             $ctaBanner = $abTest->getCtaCopy('cta_banner');
@@ -775,22 +777,16 @@
                 <!-- Brand -->
                 <div>
                     <div class="footer-brand-name">
-                        <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKKMU" width="40" height="40">
-                        <span>BKKMU</span>
+                        <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKKMu" width="40" height="40">
+                        <span>BKKMu</span>
                     </div>
                     <p class="footer-brand-desc">Platform karir untuk para pencari kerja.<br>Menghubungkan talenta muda dengan perusahaan terpercaya.</p>
                     <div class="footer-socials">
-                        <a href="https://www.instagram.com/smkmutu_cikampek?stkn=cW91cXNueHpncGJq" target="_blank" rel="noopener" class="footer-social-link" aria-label="Instagram">
+                        <a href="https://www.instagram.com/hubinmasmutucikampek.official/" target="_blank" rel="noopener" class="footer-social-link" aria-label="Instagram">
                             <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                         </a>
-                        <a href="javascript:void(0)" class="footer-social-link" aria-label="Facebook">
-                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                        </a>
-                        <a href="javascript:void(0)" class="footer-social-link" aria-label="LinkedIn">
-                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                        </a>
-                        <a href="javascript:void(0)" class="footer-social-link" aria-label="YouTube">
-                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        <a href="https://whatsapp.com/channel/0029Vb6IdSh8V0tolT7nA61H" target="_blank" rel="noopener" class="footer-social-link" aria-label="WhatsApp">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                         </a>
                     </div>
                 </div>
@@ -826,7 +822,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; {{ date('Y') }} BKKMU. Hak cipta dilindungi.</p>
+                <p>&copy; {{ date('Y') }} BKKMu. Hak cipta dilindungi.</p>
                 <div class="footer-bottom-links">
                     <a href="javascript:void(0)">Privacy Policy</a>
                     <a href="javascript:void(0)">Terms of Service</a>
@@ -853,12 +849,12 @@
             var greetingEl = document.getElementById('js-hero-greeting');
             if (greetingEl) {
                 var hour = new Date().getHours();
-                var greet = 'Selamat Datang di BKKMU';
+                var greet = 'Selamat Datang di BKKMu';
                 var emoji = '\u{1F44B}';
-                if (hour >= 4 && hour < 11) { greet = 'Selamat Pagi di BKKMU'; emoji = '\u{1F305}'; }
-                else if (hour >= 11 && hour < 15) { greet = 'Selamat Siang di BKKMU'; emoji = '\u2600\u{FE0F}'; }
-                else if (hour >= 15 && hour < 18) { greet = 'Selamat Sore di BKKMU'; emoji = '\u{1F324}\u{FE0F}'; }
-                else { greet = 'Selamat Malam di BKKMU'; emoji = '\u{1F319}'; }
+                if (hour >= 4 && hour < 11) { greet = 'Selamat Pagi di BKKMu'; emoji = '\u{1F305}'; }
+                else if (hour >= 11 && hour < 15) { greet = 'Selamat Siang di BKKMu'; emoji = '\u2600\u{FE0F}'; }
+                else if (hour >= 15 && hour < 18) { greet = 'Selamat Sore di BKKMu'; emoji = '\u{1F324}\u{FE0F}'; }
+                else { greet = 'Selamat Malam di BKKMu'; emoji = '\u{1F319}'; }
                 greetingEl.innerHTML = '<span aria-hidden="true">' + emoji + '</span> ' + greet;
                 window.requestAnimationFrame(function () { greetingEl.classList.add('is-visible'); });
             }

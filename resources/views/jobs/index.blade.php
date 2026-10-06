@@ -1,4 +1,4 @@
-<x-app-layout :full-bleed="true" :hide-sidebar="!auth()->check()" title="Lowongan Kerja — BKKMU" description="Daftar lowongan kerja terbaru dari perusahaan mitra BKKMU. Temukan peluang karier untuk siswa dan alumni.">
+<x-app-layout :full-bleed="true" :hide-sidebar="!auth()->check()" title="Lowongan Kerja — BKKMu" description="Daftar lowongan kerja terbaru dari perusahaan mitra BKKMu. Temukan peluang karier untuk siswa dan alumni.">
     <div class="page-shell">
     <x-ui.page-banner title="Temukan Pekerjaan Impian Anda" subtitle="Temukan peluang kerja dan saring sesuai minat Anda." eyebrow="Beranda › Lowongan">
         <x-slot:chips>

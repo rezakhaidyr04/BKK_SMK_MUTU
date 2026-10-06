@@ -247,11 +247,6 @@
                 </div>
             </div>
         </div>
-    </div>{{-- /tab Data Perusahaan --}}
-
-    <div x-show="currentTab === 'password'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-        @include('profile.partials.update-password-form')
-    </div>
 
         {{-- KANAN: Status --}}
         <div class="lg:col-span-1">
@@ -339,15 +334,20 @@
                                 </g>
                             </svg>
                         </div>
-                        <p class="text-sm font-handwriting text-blue-600 italic">Terima kasih telah bergabung<br>dengan BKKMU</p>
+                        <p class="text-sm font-handwriting text-blue-600 italic">Terima kasih telah bergabung<br>dengan BKKMu</p>
                         <div class="mt-1 w-12 h-0.5 bg-blue-600 rounded-full"></div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    </div>{{-- /tab Data Perusahaan --}}
+
+    <div x-show="currentTab === 'password'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        @include('profile.partials.update-password-form')
+    </div>
 
     </div>
-        </div>
     </div>
 
 @push('styles')

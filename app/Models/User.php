@@ -101,7 +101,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Pakai template email branded BKKMU (bukan bawaan Laravel).
+     * Pakai template email branded BKKMu (bukan bawaan Laravel).
      */
     public function sendEmailVerificationNotification()
     {
@@ -109,7 +109,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Pakai template email branded BKKMU (bukan bawaan Laravel).
+     * Pakai template email branded BKKMu (bukan bawaan Laravel).
      */
     public function sendPasswordResetNotification($token)
     {

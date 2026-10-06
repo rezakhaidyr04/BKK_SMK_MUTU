@@ -100,7 +100,6 @@ class AdminDashboardQuery
             "role",
             DB::raw("COUNT(*) as count"),
         )
-            ->where("role", "umum")
             ->groupBy("role")
             ->get();
 

@@ -38,6 +38,8 @@ class RegistrationTest extends TestCase
             'email' => 'test@example.com',
             'role' => 'umum',
         ]);
+        // Tanpa verifikasi email: akun langsung aktif.
+        $this->assertTrue(User::where('email', 'test@example.com')->first()->hasVerifiedEmail());
     }
 
     public function test_public_registration_ignores_role_tampering_and_always_creates_umum(): void
