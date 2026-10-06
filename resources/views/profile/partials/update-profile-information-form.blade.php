@@ -135,56 +135,6 @@
             </div>
         </div>
 
-        @if(Auth::user()->role === 'umum')
-        <div>
-            <span class="mb-1 flex items-center gap-1.5">
-                <svg class="h-3.5 w-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
-                <x-input-label for="bio" value="Bio / Ringkasan Singkat" class="font-semibold text-slate-700" />
-            </span>
-            <textarea id="bio" name="bio" rows="3"
-                      class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm text-slate-900 bg-white"
-                      placeholder="Ceritakan singkat mengenai latar belakang, minat, dan tujuan karir Anda..."
-                      maxlength="500">{{ old('bio', isset($user->bio) ? str_replace(['\\r\\n', '\\n', '\\r'], "\n", $user->bio) : '') }}</textarea>
-            <div class="flex justify-between mt-1.5">
-                <span class="text-xs text-slate-400">Digunakan untuk profil CV lamaran kerja Anda.</span>
-                <span class="text-xs text-slate-400">Maks. 500 karakter</span>
-            </div>
-            <x-input-error class="mt-1.5" :messages="$errors->get('bio')" />
-        </div>
-
-        <div x-data="skillsManager({{ Js::from($user->skills->pluck('name')->toArray()) }})">
-            <div class="mb-2 flex items-center justify-between gap-3">
-                <span class="flex items-center gap-1.5">
-                    <svg class="h-3.5 w-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-                    <x-input-label value="Keahlian & Kompetensi" class="font-semibold text-slate-700" />
-                </span>
-                <button type="button" @click="$refs.skillInput.focus()" class="shrink-0 rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700 transition hover:bg-blue-100">
-                    + Tambah Keahlian
-                </button>
-            </div>
-            <p class="text-xs text-slate-400 mb-2">Tulis keahlian lalu tekan <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] font-mono">Enter</kbd> atau tanda koma <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] font-mono">,</kbd></p>
-
-            <div class="flex flex-wrap gap-2 p-3 border border-slate-200 rounded-xl min-h-[48px] bg-white focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all cursor-text"
-                 @click="$refs.skillInput.focus()">
-                <template x-for="(skill, i) in skills" :key="i">
-                    <span class="inline-flex items-center gap-1.5 pl-3 pr-1.5 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-lg border border-blue-100">
-                        <span x-text="skill"></span>
-                        <button type="button" @click.stop="remove(i)"
-                                class="w-4 h-4 rounded-md hover:bg-blue-100 flex items-center justify-center text-blue-500 hover:text-blue-700 transition">
-                            &times;
-                        </button>
-                    </span>
-                </template>
-                <input x-ref="skillInput"
-                       x-model="input"
-                       @keydown.enter.prevent="add()"
-                       @keydown.188.prevent="add()"
-                       @keydown.backspace="backspace()"
-                       type="text"
-                       placeholder="Tambah keahlian (misal: Excel, Laravel)..."
-                       class="flex-1 min-w-[200px] outline-none border-none text-sm text-slate-900 bg-transparent py-0.5 focus:ring-0">
-            </div>
-
             <template x-for="skill in skills" :key="skill">
                 <input type="hidden" name="skills[]" :value="skill">
             </template>
@@ -194,21 +144,9 @@
         @if(Auth::user()->role === 'umum')
         <div class="border-t border-slate-100 pt-6">
             <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-1">Data Diri</h3>
-            <p class="text-xs text-slate-400 mb-4">Data ini dipakai otomatis saat membuat CV.</p>
+            <p class="text-xs text-slate-400 mb-4">Identitas diri Anda.</p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                    <span class="mb-1 flex items-center gap-1.5">
-                        <svg class="h-3.5 w-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                        <x-input-label for="preferred_position" value="Posisi yang Diinginkan" class="font-semibold text-slate-700" />
-                    </span>
-                    <x-text-input id="preferred_position" name="preferred_position" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
-                                    :value="old('preferred_position', $user->preferred_position ?? '')"
-                                   placeholder="Contoh: Frontend Developer" />
-                    <p class="text-xs text-slate-400 mt-1">Dipakai untuk rekomendasi lowongan yang cocok untukmu.</p>
-                    <x-input-error class="mt-1.5" :messages="$errors->get('preferred_position')" />
-                </div>
-
                 <div>
                     <span class="mb-1 flex items-center gap-1.5">
                         <svg class="h-3.5 w-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -242,6 +180,79 @@
                               placeholder="Masukkan alamat domisili lengkap Anda...">{{ old('address', isset($user->address) ? str_replace(['\\r\\n', '\\n', '\\r'], "\n", $user->address) : '') }}</textarea>
                     <x-input-error class="mt-1.5" :messages="$errors->get('address')" />
                 </div>
+            </div>
+        </div>
+
+        <div class="border-t border-slate-100 pt-6 mt-6">
+            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-1">Data Karier</h3>
+            <p class="text-xs text-slate-400 mb-4">Data ini dipakai otomatis saat membuat CV.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                    <span class="mb-1 flex items-center gap-1.5">
+                        <svg class="h-3.5 w-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        <x-input-label for="preferred_position" value="Posisi yang Diinginkan" class="font-semibold text-slate-700" />
+                    </span>
+                    <x-text-input id="preferred_position" name="preferred_position" type="text" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                                   :value="old('preferred_position', $user->preferred_position ?? '')"
+                                   placeholder="Contoh: Frontend Developer" />
+                    <p class="text-xs text-slate-400 mt-1">Dipakai untuk rekomendasi lowongan yang cocok untukmu.</p>
+                    <x-input-error class="mt-1.5" :messages="$errors->get('preferred_position')" />
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <span class="mb-1 flex items-center gap-1.5">
+                    <svg class="h-3.5 w-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
+                    <x-input-label for="bio" value="Bio / Ringkasan Singkat" class="font-semibold text-slate-700" />
+                </span>
+                <textarea id="bio" name="bio" rows="3"
+                          class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm text-slate-900 bg-white"
+                          placeholder="Ceritakan singkat mengenai latar belakang, minat, dan tujuan karir Anda..."
+                          maxlength="500">{{ old('bio', isset($user->bio) ? str_replace(['\\r\\n', '\\n', '\\r'], "\n", $user->bio) : '') }}</textarea>
+                <div class="flex justify-between mt-1.5">
+                    <span class="text-xs text-slate-400">Dipakai untuk profil CV lamaran kerja Anda.</span>
+                    <span class="text-xs text-slate-400">Maks. 500 karakter</span>
+                </div>
+                <x-input-error class="mt-1.5" :messages="$errors->get('bio')" />
+            </div>
+
+            <div class="mt-5" x-data="skillsManager({{ Js::from($user->skills->pluck('name')->toArray()) }})">
+                <div class="mb-2 flex items-center justify-between gap-3">
+                    <span class="flex items-center gap-1.5">
+                        <svg class="h-3.5 w-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                        <x-input-label value="Keahlian & Kompetensi" class="font-semibold text-slate-700" />
+                    </span>
+                    <button type="button" @click="$refs.skillInput.focus()" class="shrink-0 rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700 transition hover:bg-blue-100">
+                        + Tambah Keahlian
+                    </button>
+                </div>
+                <p class="text-xs text-slate-400 mb-2">Tulis keahlian lalu tekan <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] font-mono">Enter</kbd> atau tanda koma <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-[10px] font-mono">,</kbd></p>
+
+                <div class="flex flex-wrap gap-2 p-3 border border-slate-200 rounded-xl min-h-[48px] bg-white focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all cursor-text"
+                     @click="$refs.skillInput.focus()">
+                    <template x-for="(skill, i) in skills" :key="i">
+                        <span class="inline-flex items-center gap-1.5 pl-3 pr-1.5 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-lg border border-blue-100">
+                            <span x-text="skill"></span>
+                            <button type="button" @click.stop="remove(i)"
+                                    class="w-4 h-4 rounded-md hover:bg-blue-100 flex items-center justify-center text-blue-500 hover:text-blue-700 transition">
+                                &times;
+                            </button>
+                        </span>
+                    </template>
+                    <input x-ref="skillInput"
+                           x-model="input"
+                           @keydown.enter.prevent="add()"
+                           @keydown.188.prevent="add()"
+                           @keydown.backspace="backspace()"
+                           type="text"
+                           placeholder="Tambah keahlian (misal: Excel, Laravel)..."
+                           class="flex-1 min-w-[200px] outline-none border-none text-sm text-slate-900 bg-transparent py-0.5 focus:ring-0">
+                </div>
+
+                <template x-for="skill in skills" :key="skill">
+                    <input type="hidden" name="skills[]" :value="skill">
+                </template>
             </div>
 
             <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
