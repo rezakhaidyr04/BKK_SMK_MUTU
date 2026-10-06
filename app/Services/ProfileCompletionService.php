@@ -9,8 +9,10 @@ class ProfileCompletionService
     /**
      * P4.1: pindahan verbatim DashboardController::calculateProfileCompletion().
      * Field, bobot, dan rumus IDENTIK.
+     * M2: $hasSkills opsional — pemanggil yang sudah memuat skills boleh
+     * mengoper hasilnya agar tidak ada query skills()->count() tambahan.
      */
-    public function for(User $user): int
+    public function for(User $user, ?bool $hasSkills = null): int
     {
         $completed = 0;
         $total = 0;
@@ -44,7 +46,8 @@ class ProfileCompletionService
 
         // --- Bagian 3: Keahlian (2 poin jika ada minimal 1 skill) ---
         $total += 2;
-        if ($user->skills()->count() > 0) {
+        $hasSkills ??= $user->skills()->count() > 0;
+        if ($hasSkills) {
             $completed += 2;
         }
 

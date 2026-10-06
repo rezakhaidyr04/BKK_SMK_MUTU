@@ -30,7 +30,7 @@ class CompanyJobUpdateRequest extends FormRequest
             'age_range' => ['nullable', 'string', 'max:255'],
             'work_hours' => ['nullable', 'string', 'max:255'],
             'benefits' => ['nullable', 'string'],
-            'deadline' => ['nullable', 'date'],
+            'deadline' => ['nullable', 'date', 'after_or_equal:today'],
         ], self::jobLocationRules());
     }
 

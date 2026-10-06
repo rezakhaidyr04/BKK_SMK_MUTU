@@ -78,9 +78,11 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
     Route::delete("/documents/{document}", [\App\Http\Controllers\UserDocumentController::class, "destroy"])->name("documents.destroy");
 
     Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
-    Route::get('/notifications/mark-read', [\App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.markAllRead');
+    // L1: mutasi via POST + CSRF (GET dikecualikan CSRF & bisa terpicu
+    // prefetch/crawler). poll tetap GET (read-only).
+    Route::post('/notifications/mark-read', [\App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.markAllRead');
     Route::get('/notifications/poll', [\App\Http\Controllers\NotificationController::class, 'poll'])->name('notifications.poll');
-    Route::get('/notifications/{id}/go', [\App\Http\Controllers\NotificationController::class, 'go'])->name('notifications.go');
+    Route::post('/notifications/{id}/go', [\App\Http\Controllers\NotificationController::class, 'go'])->name('notifications.go');
 
     // Job Applications — P0 H-02: melamar wajib verified.
     Route::post("/jobs/{job}/apply", [JobController::class, "apply"])->middleware('verified')->name(
@@ -235,7 +237,7 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
             Route::post("jobs/{job}/broadcast", [
                 App\Http\Controllers\Admin\JobController::class,
                 "broadcast",
-            ])->name("jobs.broadcast");
+            ])->name("jobs.broadcast")->middleware("throttle:broadcast");
             Route::post("jobs/{job}/approve", [
                 App\Http\Controllers\Admin\JobController::class,
                 "approve",
@@ -325,3 +327,5 @@ Route::get('/wilayah/kecamatan', [\App\Http\Controllers\WilayahController::class
 if (app()->environment('local')) {
     Route::get('/_debug/status-playground', [\App\Http\Controllers\DebugController::class, 'statusPlayground']);
 }
+
+if (app()->environment('local')) { Route::get('/_dbg-prof', function () { auth()->login(App\Models\User::where('role', 'company')->firstOrFail()); return redirect()->route('company.profile.edit'); }); }

@@ -38,6 +38,15 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perDay(3)->by($request->user()?->id ?: $request->ip());
         });
 
+        // H6: named limiter (kunci independen) untuk broadcast lowongan.
+        // JANGAN pakai throttle:3,10 numerik di route ini: route sudah berada
+        // dalam grup throttle:60,1 dan limiter numerik berbagi kunci signature
+        // yang sama sehingga 1 request memakan 2 hit (uji: limit 3 habis
+        // dalam 2 request). Named limiter punya kunci sendiri.
+        RateLimiter::for('broadcast', function (Request $request) {
+            return Limit::perMinutes(10, 3)->by($request->user()?->id ?: $request->ip());
+        });
+
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')

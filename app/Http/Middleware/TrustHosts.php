@@ -13,9 +13,23 @@ class TrustHosts extends Middleware
      */
     public function hosts(): array
     {
+        // M10: tunnel testing (ngrok/CF) HANYA di non-production.
+        // Production: hanya domain aplikasi sendiri.
+        if (app()->environment('production')) {
+            return [$this->allSubdomainsOfApplicationUrl()];
+        }
+
+        return array_merge([$this->allSubdomainsOfApplicationUrl()], $this->tunnelHosts());
+    }
+
+    /**
+     * M10: pola host tunnel untuk testing lokal (terpisah agar bisa dites).
+     *
+     * @return array<int, string>
+     */
+    public function tunnelHosts(): array
+    {
         return [
-            $this->allSubdomainsOfApplicationUrl(),
-            // Testing dari laptop via Cloudflare Tunnel / LAN:
             '.*\.trycloudflare\.com',
             '.*\.cfargotunnel\.com',
             '.*\.ngrok\.io',

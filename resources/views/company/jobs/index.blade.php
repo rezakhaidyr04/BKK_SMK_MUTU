@@ -96,12 +96,12 @@
                 <div class="ui-table-wrap -mx-6 -mt-6">
                     <table class="ui-table bal-table">
                         <colgroup>
-                            <col style="width:30%">
-                            <col style="width:14%">
-                            <col style="width:10%">
-                            <col style="width:17%">
-                            <col style="width:11%">
-                            <col style="width:18%">
+                            <col style="width:27%">
+                            <col style="width:12%">
+                            <col style="width:9%">
+                            <col style="width:15%">
+                            <col style="width:9%">
+                            <col style="width:310px">
                         </colgroup>
                         <thead>
                             <tr>
@@ -160,10 +160,12 @@
                                     <div class="bal-actions">
                                         <a href="{{ route('jobs.show', $job->id) }}" class="bal-act" title="Lihat">
                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                            <span>Lihat</span>
                                         </a>
                                         @can('update', $job)
                                             <a href="{{ route('company.jobs.edit', $job->id) }}" class="bal-act blue" title="Ubah">
                                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                                <span>Ubah</span>
                                             </a>
                                         @endcan
                                         @can('publish', $job)
@@ -183,6 +185,7 @@
                                                 @csrf
                                                 <button type="submit" class="bal-act amber" title="Tutup">
                                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+                                                    <span>Tutup</span>
                                                 </button>
                                             </form>
                                             @endif
@@ -193,6 +196,7 @@
                                             @method('DELETE')
                                             <button type="submit" class="bal-act red" title="Hapus">
                                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                                <span>Hapus</span>
                                             </button>
                                         </form>
                                         @endcan
@@ -262,6 +266,11 @@
         .bal-publish svg{width:.9rem;height:.9rem}
         .bal-publish:hover{background:#15803d;box-shadow:0 4px 12px rgba(22,163,74,.3)}
         .bal-table{table-layout:fixed;width:100%;min-width:880px;border-collapse:collapse}
+        /* Wrapper -mx-6 hanya bisa meregang kanan bila width:auto
+           (width:100% bawaan .ui-table-wrap mengunci lebar sehingga
+           margin kanan negatif tidak berefek → header tampak kurang). */
+        .ui-table-wrap{width:auto}
+        .bal-table thead{background:#eff6ff}
         .bal-table thead th{background:#eff6ff;text-align:left;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#1d4ed8;padding:.75rem 1rem;border-bottom:1px solid #bfdbfe;white-space:nowrap;vertical-align:middle}
         .bal-table thead th.text-right{text-align:right}
         .bal-table tbody td{padding:.9rem 1rem;border-bottom:1px solid #f1f5f9;vertical-align:middle;text-align:left}
@@ -291,9 +300,9 @@
         .bal-status.red{background:#fef2f2;border-color:#fecaca;color:#b91c1c}
         .bal-status.gray{background:#f8fafc;border-color:#e2e8f0;color:#475569}
         .bal-status.amber{background:#fffbeb;border-color:#fde68a;color:#92400e}
-        .bal-actions{display:flex;gap:.375rem;justify-content:flex-end;align-items:center}
-        .bal-act{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:.55rem;border:1px solid #e2e8f0;background:#fff;color:#64748b;cursor:pointer;transition:.15s;flex-shrink:0}
-        .bal-act svg{width:1rem;height:1rem}
+        .bal-actions{display:flex;gap:.375rem;justify-content:flex-end;align-items:center;flex-wrap:nowrap}
+        .bal-act{display:inline-flex;align-items:center;justify-content:center;gap:.3rem;min-width:2rem;height:2rem;padding:0 .55rem;border-radius:.55rem;border:1px solid #e2e8f0;background:#fff;color:#64748b;cursor:pointer;transition:.15s;flex-shrink:0;font-size:.72rem;font-weight:600;white-space:nowrap;text-decoration:none}
+        .bal-act svg{width:1rem;height:1rem;flex-shrink:0}
         .bal-act:hover{background:#f8fafc;color:#0f172a;border-color:#cbd5e1}
         .bal-act.blue:hover{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
         .bal-act.amber:hover{background:#fffbeb;color:#92400e;border-color:#fde68a}

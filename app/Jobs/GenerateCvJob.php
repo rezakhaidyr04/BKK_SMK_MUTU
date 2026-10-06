@@ -49,6 +49,7 @@ class GenerateCvJob implements ShouldQueue
             ->where('file_path', $this->fileName)
             ->exists();
         if ($exists) {
+            \Illuminate\Support\Facades\Cache::forget(\App\Services\CvBuilderService::generatingKey($this->userId));
             return;
         }
 
@@ -61,10 +62,22 @@ class GenerateCvJob implements ShouldQueue
             ['user_id' => $this->userId, 'file_path' => $this->fileName],
             ['is_ats_friendly' => true]
         );
+
+        // M9: sukses — flag proses dicabut (file lama TIDAK dihapus).
+        \Illuminate\Support\Facades\Cache::forget(\App\Services\CvBuilderService::generatingKey($this->userId));
     }
 
     public function failed(\Throwable $exception): void
     {
+        // M9: gagal permanen — cabut flag proses, tandai gagal agar user
+        // diberi tahu (CV existing tidak disentuh).
+        \Illuminate\Support\Facades\Cache::forget(\App\Services\CvBuilderService::generatingKey($this->userId));
+        \Illuminate\Support\Facades\Cache::put(
+            \App\Services\CvBuilderService::failedKey($this->userId),
+            $this->fileName,
+            \App\Services\CvBuilderService::GENERATING_TTL
+        );
+
         \Illuminate\Support\Facades\Log::warning('GenerateCvJob failed', [
             'user_id' => $this->userId,
             'file' => $this->fileName,

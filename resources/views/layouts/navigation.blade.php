@@ -43,15 +43,21 @@
                             <div class="px-3 py-2 border-b border-gray-100 flex justify-between items-center">
                                 <p class="text-[13px] font-semibold text-gray-900">Notifikasi</p>
                                 @if(Auth::user()->unreadNotifications->count() > 0)
-                                <a href="{{ route('notifications.markAllRead') }}" class="text-[11px] text-blue-600 hover:underline">Tandai sudah dibaca</a>
+                                <form action="{{ route('notifications.markAllRead') }}" method="POST" class="inline">
+                                    @csrf
+                                    <button type="submit" class="text-[11px] text-blue-600 hover:underline">Tandai sudah dibaca</button>
+                                </form>
                                 @endif
                             </div>
 
                             @forelse(Auth::user()->notifications()->latest()->take(5)->get() as $notification)
-                                <a href="{{ route('notifications.go', $notification->id) }}" class="block px-3 py-2 border-b border-gray-50 last:border-0 transition hover:bg-slate-50 {{ $notification->unread() ? 'bg-blue-50/50' : '' }}">
-                                    <p class="text-[12px] leading-snug text-gray-800 line-clamp-2">{{ $notification->data['message'] ?? 'Ada pembaruan status lamaran Anda.' }}</p>
-                                    <p class="text-[10px] text-gray-500 mt-0.5">{{ $notification->created_at->diffForHumans() }}</p>
-                                </a>
+                                <form action="{{ route('notifications.go', $notification->id) }}" method="POST" class="block border-b border-gray-50 last:border-0">
+                                    @csrf
+                                    <button type="submit" class="block w-full text-left px-3 py-2 transition hover:bg-slate-50 {{ $notification->unread() ? 'bg-blue-50/50' : '' }}">
+                                        <p class="text-[12px] leading-snug text-gray-800 line-clamp-2">{{ $notification->data['message'] ?? 'Ada pembaruan status lamaran Anda.' }}</p>
+                                        <p class="text-[10px] text-gray-500 mt-0.5">{{ $notification->created_at->diffForHumans() }}</p>
+                                    </button>
+                                </form>
                             @empty
                                 <div class="px-3 py-4 text-center text-xs text-gray-500">
                                     Belum ada notifikasi

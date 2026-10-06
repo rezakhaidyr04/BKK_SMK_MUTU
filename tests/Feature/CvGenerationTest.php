@@ -25,7 +25,9 @@ class CvGenerationTest extends TestCase
             ]);
 
         $response->assertRedirect();
-        $response->assertSessionHas('success', 'CV berhasil dibuat dan tersimpan.');
+        // M9: async — response langsung kembali (pesan proses), worker
+        // (sync driver di test) menyelesaikan PDF dalam request yang sama.
+        $response->assertSessionHas('success', 'CV sedang diproses di background. Halaman akan dimuat ulang otomatis.');
         $this->assertDatabaseHas('cv_files', ['user_id' => $user->id]);
     }
 

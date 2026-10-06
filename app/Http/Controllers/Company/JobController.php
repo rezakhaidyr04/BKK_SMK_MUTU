@@ -34,7 +34,8 @@ class JobController extends Controller
         $companyId = $company?->id;
         $stats = [
             'total'      => Job::where('company_id', $companyId)->count(),
-            'active'     => Job::where('company_id', $companyId)->where('status', 'active')->count(),
+            // H1: "aktif" = scopeActive (status + deadline), konsisten dgn publik.
+            'active'     => Job::where('company_id', $companyId)->active()->count(),
             'closed'     => Job::where('company_id', $companyId)->where('status', 'closed')->count(),
             'draft'      => Job::where('company_id', $companyId)->where('status', 'draft')->count(),
             'pending'    => Job::where('company_id', $companyId)->where('status', 'pending')->count(),

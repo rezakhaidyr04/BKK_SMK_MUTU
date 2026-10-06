@@ -69,7 +69,9 @@
                             <input type="text" name="position" value="{{ old('position') }}" class="ui-input">
                             @error('position')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
+                        <div class="md:col-span-2 job-subgroup"><span>Lokasi Penempatan</span></div>
                         <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-5"><x-job-location-fields :province="old('province')" :city="old('city')" :district="old('district')" /></div>
+                        <div class="md:col-span-2 job-subgroup"><span>Kompensasi & Waktu</span></div>
                         <div>
                             <label class="ui-label">Tipe Kerja</label>
                             <select name="job_type" class="ui-select">
@@ -81,29 +83,29 @@
                             @error('job_type')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>
+                            <label class="ui-label">Deadline Lowongan</label>
+                            <input type="date" name="deadline" value="{{ old('deadline') }}" class="ui-input">
+                            @error('deadline')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
+                        </div>
+                        <div>
                             <label class="ui-label">Gaji Minimum</label>
-                            <div class="group flex">
+                            <div class="group flex relative">
                                 <span class="inline-flex items-center px-3.5 rounded-l-xl border-[1.5px] border-r-0 border-slate-200 bg-slate-50 text-sm font-bold text-slate-500 transition-colors group-focus-within:border-blue-500 group-focus-within:bg-blue-50 group-focus-within:text-blue-600">Rp</span>
                                 <input type="number" name="salary_min" value="{{ old('salary_min') }}" min="0" placeholder="3000000" class="ui-input salary-rupiah" data-salary-input="salary_min" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                                <span class="salary-live" data-salary-preview="salary_min" style="display:none">–</span>
                             </div>
-                            <p class="mt-1.5 text-xs text-slate-400">Pratinjau: <span class="font-semibold text-slate-600" data-salary-preview="salary_min">–</span></p>
                             @error('salary_min')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>
                             <label class="ui-label">Gaji Maksimum</label>
-                            <div class="group flex">
+                            <div class="group flex relative">
                                 <span class="inline-flex items-center px-3.5 rounded-l-xl border-[1.5px] border-r-0 border-slate-200 bg-slate-50 text-sm font-bold text-slate-500 transition-colors group-focus-within:border-blue-500 group-focus-within:bg-blue-50 group-focus-within:text-blue-600">Rp</span>
                                 <input type="number" name="salary_max" value="{{ old('salary_max') }}" min="0" placeholder="5000000" class="ui-input salary-rupiah" data-salary-input="salary_max" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                                <span class="salary-live" data-salary-preview="salary_max" style="display:none">–</span>
                             </div>
-                            <p class="mt-1.5 text-xs text-slate-400">Pratinjau: <span class="font-semibold text-slate-600" data-salary-preview="salary_max">–</span></p>
                             @error('salary_max')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
-                        <div>
-                            <label class="ui-label">Deadline</label>
-                            <input type="date" name="deadline" value="{{ old('deadline') }}" class="ui-input">
-                            @error('deadline')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
-                        </div>
-                        <div class="rounded-xl bg-green-50 border border-green-100 p-4">
+                        <div class="md:col-span-2 rounded-xl bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 border-l-4 border-l-green-500 p-4 shadow-sm">
                             <div class="flex items-start gap-2.5">
                                 <svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 <p class="text-sm leading-relaxed text-green-800">Perusahaan Anda sudah <strong>terverifikasi</strong>, lowongan yang dibuat akan <strong>langsung dipublikasikan</strong> tanpa menunggu persetujuan admin.</p>
@@ -146,7 +148,8 @@
                         </div>
                         <div>
                             <label class="ui-label">Kualifikasi</label>
-                            <textarea name="qualifications" rows="3" placeholder="cth: Pendidikan min. SMK, mampu bekerja dalam tim…" class="ui-textarea">{{ old('qualifications') }}</textarea>
+                            <textarea name="qualifications" rows="4" data-autonumber placeholder="cth:&#10;1. Pendidikan min. SMK&#10;2. Mampu bekerja dalam tim&#10;3. Bersedia kerja shift" class="ui-textarea">{{ old('qualifications') }}</textarea>
+                            <p class="mt-1.5 text-xs text-slate-400">Ketik biasa pakai koma/enter — nomor muncul sendiri saat field ditinggalkan.</p>
                             @error('qualifications')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>
@@ -183,12 +186,24 @@
             -moz-appearance: textfield;
             appearance: textfield;
         }
+        /* Pratinjau rupiah di DALAM box input (badge kanan, hanya saat ada nilai) */
+        .salary-live{position:absolute;right:.65rem;top:50%;transform:translateY(-50%);font-size:.72rem;font-weight:700;color:#1d4ed8;background:#eff6ff;border:1px solid #bfdbfe;padding:.15rem .55rem;border-radius:9999px;pointer-events:none;white-space:nowrap;max-width:55%;overflow:hidden;text-overflow:ellipsis;z-index:1}
+        /* Sub-grup mini heading di dalam panel form */
+        .job-subgroup{display:flex;align-items:center;gap:.75rem;margin-top:.25rem}
+        .job-subgroup span{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1d4ed8;background:#eff6ff;border:1px solid #bfdbfe;padding:.25rem .7rem;border-radius:9999px;white-space:nowrap}
+        .job-subgroup::after{content:"";flex:1;height:1px;background:linear-gradient(to right,#bfdbfe,transparent)}
+        /* Polish input khusus panel form lowongan */
+        .job-form-panel .ui-input:hover,.job-form-panel .ui-select:hover,.job-form-panel .ui-textarea:hover{border-color:#94a3b8}
+        .job-form-panel .ui-input:focus,.job-form-panel .ui-select:focus,.job-form-panel .ui-textarea:focus{border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.12);outline:none}
+        .job-form-panel select.ui-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8rem center;background-size:.9rem;padding-right:2.4rem;cursor:pointer}
+        .job-form-section-icon{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:.7rem;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;font-weight:800;box-shadow:0 4px 10px rgba(37,99,235,.35)}
     </style>
     @endpush
 
     @push('scripts')
     <script>
-        // Pratinjau nominal gaji ala Rupiah saat mengetik (tampilan saja, nilai asli tetap angka)
+        // Pratinjau nominal gaji ala Rupiah DI DALAM box input (badge kanan).
+        // Kosong → badge sembunyi + padding normal (nilai asli tetap angka).
         (function () {
             function formatRp(v) {
                 if (v === '' || v === null || isNaN(Number(v))) return '–';
@@ -198,7 +213,12 @@
                 var key = input.getAttribute('data-salary-input');
                 var out = document.querySelector('[data-salary-preview="' + key + '"]');
                 if (!out) return;
-                var update = function () { out.textContent = formatRp(input.value); };
+                var update = function () {
+                    var empty = input.value === '' || input.value === null;
+                    out.textContent = formatRp(input.value);
+                    out.style.display = empty ? 'none' : '';
+                    input.style.paddingRight = empty ? '' : '7.5rem';
+                };
                 input.addEventListener('input', update);
                 update();
             });
@@ -217,7 +237,16 @@
                 return items[0] || '';
             }
             document.querySelectorAll('textarea[data-autonumber]').forEach(function (ta) {
-                // Tekan Enter → baris baru langsung diawali nomor berikutnya.
+                // Penomoran live: hanya saat mengetik di AKHIR teks agar
+                // caret tidak meloncat saat mengedit tengah kalimat.
+                ta.addEventListener('input', function () {
+                    if (ta.selectionStart !== ta.value.length) return;
+                    var numbered = autonumber(ta.value);
+                    if (numbered !== ta.value) {
+                        ta.value = numbered;
+                        ta.setSelectionRange(ta.value.length, ta.value.length);
+                    }
+                });
                 ta.addEventListener('keydown', function (e) {
                     if (e.key !== 'Enter') return;
                     e.preventDefault();

@@ -90,14 +90,20 @@ class EventController extends Controller
 
         $paymentStatus = $event->isPaid() ? 'unpaid' : 'verified';
 
-        EventRegistration::create([
-            'event_id'       => $event->id,
-            'user_id'        => Auth::id(),
-            'status'         => 'registered',
-            'payment_status' => $paymentStatus,
-            'notes'          => $request->notes,
-            'registered_at'  => now(),
-        ]);
+        // L4: race double-submit bisa menabrak unique(event_id,user_id) —
+        // tangkap 23000 menjadi pesan ramah, bukan HTTP 500.
+        try {
+            EventRegistration::create([
+                'event_id'       => $event->id,
+                'user_id'        => Auth::id(),
+                'status'         => 'registered',
+                'payment_status' => $paymentStatus,
+                'notes'          => $request->notes,
+                'registered_at'  => now(),
+            ]);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return back()->with('error', 'Kamu sudah terdaftar di acara ini.');
+        }
 
         if ($event->isPaid()) {
             return back()->with('success', 'Pendaftaran awal berhasil! Silakan lakukan pembayaran ' . $event->formattedPrice() . ' lalu upload bukti transfer di bawah.');

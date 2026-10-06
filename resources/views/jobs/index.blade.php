@@ -134,7 +134,7 @@
                                     @if($job->created_at->gte(now()->subDays(7)))
                                         <span class="inline-flex items-center rounded-full bg-green-50 px-2.5 py-1 text-[11px] font-medium text-green-700 border border-green-100">Baru</span>
                                     @endif
-                                    @if($job->deadline->lte(now()->addDays(3)))
+                                    @if($job->deadline && $job->deadline->lte(now()->addDays(3)))
                                         <span class="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-medium text-amber-700 border border-amber-100">Deadline dekat</span>
                                     @endif
                                 </div>
@@ -157,7 +157,7 @@
                                 <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                Deadline {{ $job->deadline->diffForHumans() }}
+                                Deadline {{ $job->deadline ? $job->deadline->diffForHumans() : 'tanpa batas waktu' }}
                             </span>
                         </div>
 

@@ -17,7 +17,8 @@ class AdminDashboardQuery
     {
         $stats = [
             "total_umum" => User::where("role", "umum")->count(),
-            "total_jobs" => Job::where("status", "active")->count(),
+            // H1: konsisten dgn definisi publik (status + deadline).
+            "total_jobs" => Job::active()->count(),
             "total_applications" => Application::count(),
             "pending_applications" => Application::where(
                 "status",

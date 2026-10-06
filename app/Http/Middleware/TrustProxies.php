@@ -8,14 +8,19 @@ use Illuminate\Http\Request;
 class TrustProxies extends Middleware
 {
     /**
-     * The trusted proxies for this application.
-     *
-     * '*' = percaya Cloudflare Tunnel / ngrok untuk testing dari laptop.
-     * Aman untuk testing. Untuk production dengan IP tetap, ganti ke IP spesifik.
+     * H5: JANGAN hardcode '*' untuk production. Nilai diambil dari
+     * config('app.trusted_proxies'): production = env TRUSTED_PROXIES
+     * (kosong = tolak semua proxy, fail-closed), non-production = '*'
+     * untuk ngrok/Cloudflare Tunnel saat testing.
      *
      * @var array<int, string>|string|null
      */
-    protected $proxies = '*';
+    protected $proxies;
+
+    public function __construct()
+    {
+        $this->proxies = config('app.trusted_proxies', '*');
+    }
 
     /**
      * The headers that should be used to detect proxies.

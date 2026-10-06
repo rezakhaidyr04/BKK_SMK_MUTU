@@ -109,4 +109,35 @@ class Application extends Model
     {
         return $this->status === 'rejected';
     }
+
+    /**
+     * H3: SATU-SATUNYA peta transisi status lamaran (server-side).
+     * submitted → under_review / interviewed / rejected
+     * under_review → interviewed / accepted / rejected
+     * interviewed → accepted / rejected
+     * accepted & rejected = final (tidak bisa berubah lagi).
+     * Status yang sama selalu boleh (idempoten, mis. reschedule).
+     */
+    public static function allowedTransitions(): array
+    {
+        return [
+            'submitted' => ['under_review', 'interviewed', 'rejected'],
+            'under_review' => ['interviewed', 'accepted', 'rejected'],
+            'interviewed' => ['accepted', 'rejected'],
+            'accepted' => [],
+            'rejected' => [],
+        ];
+    }
+
+    /**
+     * H3: bolehkah pindah dari $from ke $to?
+     */
+    public static function canTransition(string $from, string $to): bool
+    {
+        if ($from === $to) {
+            return true;
+        }
+
+        return in_array($to, self::allowedTransitions()[$from] ?? [], true);
+    }
 }

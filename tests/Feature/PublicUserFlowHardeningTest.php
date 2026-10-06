@@ -30,6 +30,10 @@ class PublicUserFlowHardeningTest extends TestCase
         $user = User::where('email', 'public-umum@example.com')->firstOrFail();
         $this->assertSame('umum', $user->role);
 
+        // L7: middleware `verified` kini aktif (User = MustVerifyEmail).
+        // Alur nyata: user klik tautan verifikasi email sebelum melamar.
+        $user->markEmailAsVerified();
+
         $this->actingAs($user)
             ->get('/dashboard')
             ->assertOk();

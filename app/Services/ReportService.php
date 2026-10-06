@@ -18,7 +18,8 @@ class ReportService
         return [
             'total_umum'            => User::where('role', 'umum')->count(),
             'total_jobs'            => Job::count(),
-            'active_jobs'           => Job::where('status', 'active')->count(),
+            // H1: konsisten dgn definisi publik (status + deadline).
+            'active_jobs'           => Job::active()->count(),
             'closed_jobs'           => Job::where('status', 'closed')->count(),
             'total_applications'    => Application::count(),
             'submitted_applications'  => Application::submitted()->count(),

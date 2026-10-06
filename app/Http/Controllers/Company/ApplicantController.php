@@ -69,6 +69,11 @@ class ApplicantController extends Controller
 
         $validated = $request->validated();
 
+        // H3: tolak transisi tak valid (final immutable, tanpa lompatan).
+        if (! \App\Models\Application::canTransition($application->status, $validated['status'])) {
+            return back()->with('error', 'Transisi status dari "' . $application->status . '" ke "' . $validated['status'] . '" tidak diperbolehkan.');
+        }
+
         $oldStatus = $application->status;
         $application->status = $validated['status'];
 

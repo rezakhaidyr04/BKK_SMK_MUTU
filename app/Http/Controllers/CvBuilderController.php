@@ -16,19 +16,32 @@ class CvBuilderController extends Controller
         $user->load(['skills', 'certificates']);
 
         $previewData = $this->buildPreviewData($user);
-        
+
         $cvFiles = CvFile::where('user_id', Auth::id())
             ->latest()
             ->get();
 
-        return view('cv.builder', compact('user', 'cvFiles', 'previewData'));
+        // M9: status async untuk banner persistent (bukan hanya session flash).
+        $cvGenerating = (bool) \Illuminate\Support\Facades\Cache::get(
+            \App\Services\CvBuilderService::generatingKey(Auth::id())
+        );
+        $cvFailed = (bool) \Illuminate\Support\Facades\Cache::get(
+            \App\Services\CvBuilderService::failedKey(Auth::id())
+        );
+
+        return view('cv.builder', compact('user', 'cvFiles', 'previewData', 'cvGenerating', 'cvFailed'));
     }
 
     public function generate(\App\Http\Requests\CvGenerateRequest $request, \App\Services\CvBuilderService $cvService)
     {
-        $cvService->generateCv($request->validated());
+        // M9: async — request hanya dispatch, DomPDF jalan di worker.
+        $status = $cvService->generateCv($request->validated());
 
-        return back()->with('success', 'CV berhasil dibuat dan tersimpan.');
+        if ($status === 'duplicate') {
+            return back()->with('info', 'CV Anda sedang diproses. Tunggu sebentar lalu refresh halaman ini.');
+        }
+
+        return back()->with('success', 'CV sedang diproses di background. Halaman akan dimuat ulang otomatis.');
     }
 
     public function download(CvFile $cvFile, \Illuminate\Http\Request $request)
@@ -71,7 +84,8 @@ class CvBuilderController extends Controller
     private function buildPreviewData($user): array
     {
         $skills = $user->skills->pluck('name')->filter()->values()->all();
-        $certificates = $user->certificates->pluck('name')->filter()->values()->all();
+        // L3: kolom sertifikat adalah `title` (bukan `name`).
+        $certificates = $user->certificates->pluck('title')->filter()->values()->all();
 
         return [
             'name' => $user->name,

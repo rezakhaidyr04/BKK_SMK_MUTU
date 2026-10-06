@@ -148,7 +148,13 @@
                 <aside class="space-y-5 lg:col-span-4 xl:col-span-3 lg:sticky lg:top-24 self-start">
                     <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-5">
                         <h3 class="text-lg font-bold text-gray-900 mb-4">CV Anda</h3>
-                        @if(session('success') && str_contains(session('success'), 'CV sedang diproses'))
+                        @if(($cvFailed ?? false) && !($cvGenerating ?? false))
+                            <div class="rounded-2xl border border-red-200 bg-red-50 p-4 mb-3">
+                                <p class="text-sm font-semibold text-red-800">Pembuatan CV gagal.</p>
+                                <p class="text-sm text-red-600 mt-1">CV Anda yang lama tetap aman. Silakan coba buat lagi.</p>
+                            </div>
+                        @endif
+                        @if(($cvGenerating ?? false) || (session('success') && str_contains(session('success'), 'CV sedang diproses')))
                             {{-- CV sedang dibuat di queue: tampilkan skeleton + auto refresh --}}
                             <div x-data="{ seconds: 5 }" x-init="setInterval(() => { if (seconds > 0) seconds--; else window.location.reload(); }, 1000)">
                                 <x-ui.skeleton-loader type="list" :count="1" />

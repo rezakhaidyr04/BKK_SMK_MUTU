@@ -14,14 +14,15 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 /**
- * Satu potong broadcast email lowongan (±100 penerima).
+ * Satu potong broadcast email lowongan (±50 penerima).
  *
  * Dipakai Admin\JobController::broadcast() yang memecah 10.000+ pencari
  * kerja menjadi banyak chunk-job agar:
  * - request HTTP langsung kembali (tidak hang berjam-jam),
- * - memori kecil (hanya 100 user per job),
+ * - memori kecil (hanya ±50 user per job),
  * - satu chunk gagal tidak menggagalkan sisanya (retry per-chunk),
- * - aman terhadap worker --timeout (satu chunk ±2 menit).
+ * - durasi chunk (±50 SMTP ≈ 1-3 menit) selalu di bawah retry_after
+ *   antrean database (400 dtk) sehingga tidak ada eksekusi ganda.
  */
 class SendJobBroadcastChunk implements ShouldQueue
 {

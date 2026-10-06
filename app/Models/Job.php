@@ -52,10 +52,22 @@ class Job extends Model
      */
     public function setBenefitsAttribute($value): void
     {
-        if ($value === null || trim((string) $value) === '') {
-            $this->attributes['benefits'] = $value;
+        $this->attributes['benefits'] = self::normalizeNumberedList($value);
+    }
 
-            return;
+    /**
+     * Kualifikasi diperlakukan sama seperti benefit (ketik biasa di form,
+     * otomatis dinomori; konsisten dengan JS data-autonumber).
+     */
+    public function setQualificationsAttribute($value): void
+    {
+        $this->attributes['qualifications'] = self::normalizeNumberedList($value);
+    }
+
+    private static function normalizeNumberedList($value): mixed
+    {
+        if ($value === null || trim((string) $value) === '') {
+            return $value;
         }
 
         $items = collect(preg_split('/[\r\n,;]+/', (string) $value))
@@ -66,7 +78,7 @@ class Job extends Model
             ->map(fn ($b) => preg_replace('/^(\d+[.)\-:]|[-•*])\s*/u', '', $b))
             ->values();
 
-        $this->attributes['benefits'] = $items->count() > 1
+        return $items->count() > 1
             ? $items->map(fn ($b, $i) => ($i + 1) . '. ' . $b)->implode("\n")
             : $items->first();
     }
@@ -97,13 +109,16 @@ class Job extends Model
     }
 
     /**
-     * P2.6: query-level "active" — mirror pola listing publik
-     * (JobController@index, HomeController): status active DAN
-     * deadline belum lewat.
+     * H1: SATU-SATUNYA definisi "lowongan aktif" query-level.
+     * status=active DAN (tanpa deadline ATAU deadline >= awal hari ini).
+     * Deadline HARI INI tetap tampil & bisa dilamar; kemarin expired.
+     * Dipakai listing web/API, dashboard, statistik, similarJobs.
      */
     public function scopeActive($query)
     {
-        return $query->where('status', 'active')->where('deadline', '>=', now());
+        return $query->where('status', 'active')->where(function ($q) {
+            $q->whereNull('deadline')->orWhere('deadline', '>=', today());
+        });
     }
 
     /**

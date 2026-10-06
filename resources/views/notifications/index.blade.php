@@ -8,10 +8,13 @@
             </x-slot:chips>
             <x-slot:actions>
                 @if(auth()->user()->unreadNotifications->count() > 0)
-                    <a href="{{ route('notifications.markAllRead') }}"
-                       class="inline-flex items-center gap-2 rounded-xl bg-white/15 px-5 py-2.5 text-sm font-semibold text-white ring-1 ring-white/25 transition hover:bg-white/25">
-                        Tandai semua dibaca
-                    </a>
+                    <form action="{{ route('notifications.markAllRead') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit"
+                           class="inline-flex items-center gap-2 rounded-xl bg-white/15 px-5 py-2.5 text-sm font-semibold text-white ring-1 ring-white/25 transition hover:bg-white/25">
+                            Tandai semua dibaca
+                        </button>
+                    </form>
                 @endif
             </x-slot:actions>
         </x-ui.page-banner>
@@ -30,7 +33,9 @@
                         };
                         $target = route('notifications.go', $notification->id);
                     @endphp
-                    <a href="{{ $target }}" class="flex items-start gap-3 px-5 py-4 border-b border-slate-100 last:border-0 transition hover:bg-slate-50 {{ $notification->unread() ? 'bg-blue-50/50' : '' }}">
+                    <form action="{{ $target }}" method="POST" class="flex items-start gap-3 px-5 py-4 border-b border-slate-100 last:border-0">
+                        @csrf
+                        <button type="submit" class="flex items-start gap-3 w-full text-left transition hover:bg-slate-50 {{ $notification->unread() ? 'bg-blue-50/50' : '' }}">
                         <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl {{ $notification->unread() ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500' }}">
                             @if($icon === 'briefcase')
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
@@ -55,7 +60,8 @@
                                 @endif
                             </span>
                         </span>
-                    </a>
+                    </button>
+                    </form>
                 @empty
                     <x-ui.empty-state
                         icon="bell"

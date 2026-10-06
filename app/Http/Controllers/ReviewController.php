@@ -47,26 +47,21 @@ class ReviewController extends Controller
 
         $validated = $request->validated();
 
-        // Samakan ejaan ke nama perusahaan yang terdaftar (case-insensitive)
-        // agar ulasan otomatis tampil di profil perusahaan tersebut.
-        $companyName = isset($validated['company_name']) ? trim($validated['company_name']) : null;
-        if ($companyName) {
-            $matched = \App\Models\Company::where('name', $companyName)->first(['name']);
-            if ($matched) {
-                $companyName = $matched->name;
-            }
-        }
+        // M5: company_name sudah divalidasi exists:companies,name.
+        // Samakan ejaan ke nama terdaftar (case-insensitive, collation ci).
+        $companyName = trim($validated['company_name']);
+        $company = \App\Models\Company::where('name', $companyName)->first(['id', 'name']);
+        $companyName = $company->name;
+        $companyId = $company->id;
 
-        // Anti-spam: satu pengguna hanya satu ulasan per perusahaan
-        // (desain: ulasan langsung tampil, jadi flood harus dicegah di depan).
-        if ($companyName && Review::where('user_id', auth()->id())->where('company_name', $companyName)->exists()) {
+        // Anti-spam M5: satu pengguna satu ulasan per company_id kanonis
+        // (bukan per string nama) agar perusahaan bernama sama tetap
+        // menjadi entitas berbeda.
+        if (Review::where('user_id', auth()->id())->where('company_id', $companyId)->exists()) {
             return back()->with('error', 'Anda sudah memberikan ulasan untuk perusahaan ini.')->withInput();
         }
 
         try {
-            $companyId = $companyName
-                ? \App\Models\Company::where('name', $companyName)->value('id')
-                : null;
             Review::create([
                 'user_id' => auth()->id(),
                 'company_id' => $companyId,
@@ -81,6 +76,16 @@ class ReviewController extends Controller
             ]);
 
             return back()->with('success', 'Terima kasih! Ulasan Anda langsung ditampilkan.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            // L5: race (dua submit paralel lolos cek) menabrak
+            // unique(user_id,company_name) → pesan duplikat yang jelas.
+            if (($e->errorInfo[1] ?? null) === 1062) {
+                return back()->with('error', 'Anda sudah memberikan ulasan untuk perusahaan ini.')->withInput();
+            }
+
+            \Illuminate\Support\Facades\Log::error('Review store failed: '.$e->getMessage(), ['exception' => $e]);
+
+            return back()->with('error', 'Terjadi kesalahan saat menyimpan review. Silakan coba lagi.')->withInput();
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Review store failed: '.$e->getMessage(), ['exception' => $e]);
 

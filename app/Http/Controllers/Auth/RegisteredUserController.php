@@ -54,7 +54,22 @@ class RegisteredUserController extends Controller
 
         $user->syncRoles(['umum']);
 
-        event(new Registered($user));
+        // L7: SMTP down JANGAN menyebabkan 500 setelah user tercatat.
+        // Akun tetap jadi + login; user diminta kirim ulang verifikasi
+        // (route verification.send). Timeout SMTP dibatasi MAIL_TIMEOUT.
+        try {
+            event(new Registered($user));
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Email verifikasi registrasi gagal: ' . $e->getMessage(), [
+                'user_id' => $user->id,
+            ]);
+            Auth::login($user);
+
+            return redirect(RouteServiceProvider::HOME)->with(
+                'warning',
+                'Akun berhasil dibuat, tetapi email verifikasi gagal dikirim. Silakan minta tautan baru dari halaman verifikasi.'
+            );
+        }
 
         Auth::login($user);
 

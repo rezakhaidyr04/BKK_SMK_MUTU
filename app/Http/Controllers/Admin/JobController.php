@@ -103,7 +103,7 @@ class JobController extends Controller
     {
         // Skala 10.000+ pencari kerja: JANGAN load semua user + kirim sinkron
         // di request HTTP (hang berjam-jam + limit Gmail). Pecah jadi
-        // chunk-job antrean (±100 email/job) agar request langsung kembali
+        // chunk-job antrean (±50 email/job) agar request langsung kembali
         // dan pengiriman berjalan bertahap di queue worker.
         $total = \App\Models\User::where('role', 'umum')->count();
 
@@ -111,9 +111,21 @@ class JobController extends Controller
             return redirect()->back()->with('error', 'Belum ada pencari kerja untuk di-broadcast.');
         }
 
+        // H6: idempoten server-side — jika batch job ini masih antre di
+        // queued_jobs, jangan dispatch lagi (double-click / retry aman).
+        // Pengecekan via unserialize payload (presisi jobId), BUKAN LIKE
+        // string mentah: payload tersimpan sebagai JSON sehingga kutipnya
+        // ter-escape dan LIKE `"jobId";i:N;` tidak pernah cocok.
+        if ($this->broadcastAlreadyScheduled($job)) {
+            return redirect()->back()->with(
+                'success',
+                'Broadcast lowongan ini sudah dijadwalkan sebelumnya dan sedang diproses worker. Tunggu hingga selesai sebelum broadcast ulang.'
+            );
+        }
+
         $minId = (int) \App\Models\User::where('role', 'umum')->min('id');
         $maxId = (int) \App\Models\User::where('role', 'umum')->max('id');
-        $perJob = 100;
+        $perJob = 50;
         $dispatched = 0;
 
         for ($start = $minId; $start <= $maxId; $start += $perJob) {
@@ -125,6 +137,37 @@ class JobController extends Controller
             'success',
             'Broadcast dijadwalkan ke ' . number_format($total, 0, ',', '.') . ' pencari kerja via antrean (' . $dispatched . ' batch). Pastikan queue worker berjalan: php artisan queue:work.'
         );
+    }
+
+    /**
+     * H6: true bila masih ada chunk broadcast job ini yang antre di
+     * queued_jobs (database driver). Gagal-baca = false (fail-open:
+     * dispatch tetap jalan, duplikat dicegah throttle + retry_after).
+     */
+    protected function broadcastAlreadyScheduled(Job $job): bool
+    {
+        try {
+            $payloads = \Illuminate\Support\Facades\DB::table('queued_jobs')
+                ->where('payload', 'like', '%SendJobBroadcastChunk%')
+                ->pluck('payload');
+
+            foreach ($payloads as $payload) {
+                $data = json_decode((string) $payload, true);
+                $command = $data['data']['command'] ?? null;
+                if (! is_string($command)) {
+                    continue;
+                }
+                $instance = @unserialize($command);
+                if ($instance instanceof \App\Jobs\SendJobBroadcastChunk
+                    && $instance->jobId === (int) $job->id) {
+                    return true;
+                }
+            }
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Cek idempotensi broadcast gagal: ' . $e->getMessage());
+        }
+
+        return false;
     }
 
     public function approve(Job $job)

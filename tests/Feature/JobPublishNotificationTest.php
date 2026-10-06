@@ -79,8 +79,9 @@ class JobPublishNotificationTest extends TestCase
     {
         [$companyUser, , $job] = $this->companyWithPendingJob();
         $applicant = User::factory()->create(['role' => 'umum', 'email_verified_at' => now()]);
+        // H3: submitted → accepted langsung DILARANG; via under_review dulu.
         $app = Application::factory()->create([
-            'job_id' => $job->id, 'user_id' => $applicant->id, 'status' => 'submitted',
+            'job_id' => $job->id, 'user_id' => $applicant->id, 'status' => 'under_review',
         ]);
 
         Notification::fake();

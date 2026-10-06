@@ -61,6 +61,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Trusted Proxies (H5)
+    |--------------------------------------------------------------------------
+    | Production: hanya proxy/LB yang dipakai (env TRUSTED_PROXIES, pisah
+    | koma; kosong = tidak percaya proxy mana pun). Non-production: '*'
+    | untuk ngrok/Cloudflare Tunnel saat testing. Dibaca dari config
+    | (bukan env() langsung) agar tetap benar saat config:cache.
+    */
+
+    'trusted_proxies' => env('APP_ENV') === 'production'
+        ? array_values(array_filter(array_map('trim', explode(',', (string) env('TRUSTED_PROXIES', '')))))
+        : '*',
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
@@ -70,7 +84,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Jakarta',
 
     /*
     |--------------------------------------------------------------------------

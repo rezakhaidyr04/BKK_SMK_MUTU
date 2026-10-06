@@ -9,9 +9,10 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\URL;
 
-// Sinkron (tanpa ShouldQueue): konsisten dengan notifikasi lain agar
-// langsung terkirim tanpa tergantung queue worker.
-class VerifyEmailAddress extends Notification
+// L7: queued (ShouldQueue) agar SMTP down/lambat TIDAK pernah membuat
+// request registrasi 500/gantung. Worker mengirim via antrean database
+// (retry/backoff standar); batas SMTP via MAIL_TIMEOUT.
+class VerifyEmailAddress extends Notification implements \Illuminate\Contracts\Queue\ShouldQueue
 {
     use Queueable;
 

@@ -141,13 +141,10 @@ class ApiPrivacyTest extends TestCase
         $response->assertJsonFragment(['title' => 'API Show Aktif']);
     }
 
-    public function test_public_jobs_expiry_boundary_uses_deadline_gte_now(): void
+    public function test_public_jobs_expiry_boundary_today_is_still_public(): void
     {
-        // Pin the clock so the boundary is deterministic (no sleep()).
-        // Evidence: jobs.deadline is a DATE column, so the effective
-        // boundary is day-granularity: a deadline date of today is already
-        // past (>= now() fails past midnight), tomorrow is still public.
-        // This mirrors the web index predicate exactly.
+        // H1: business rule baru — deadline HARI INI masih aktif & publik,
+        // kemarin expired. Pin the clock so the boundary is deterministic.
         $frozen = \Carbon\Carbon::parse('2026-06-15 12:00:00');
         $this->travelTo($frozen);
 
@@ -162,14 +159,21 @@ class ApiPrivacyTest extends TestCase
                 'deadline' => $frozen->copy()->toDateString(),
                 'title' => 'API Boundary Hari Ini',
             ]);
+            $yesterday = Job::factory()->create([
+                'status' => 'active',
+                'deadline' => $frozen->copy()->subDay()->toDateString(),
+                'title' => 'API Boundary Kemarin',
+            ]);
 
             $index = $this->getJson('/api/jobs');
             $index->assertOk();
             $index->assertJsonFragment(['title' => 'API Boundary Besok']);
-            $index->assertJsonMissing(['title' => 'API Boundary Hari Ini']);
+            $index->assertJsonFragment(['title' => 'API Boundary Hari Ini']);
+            $index->assertJsonMissing(['title' => 'API Boundary Kemarin']);
 
-            $this->getJson('/api/jobs/'.$tomorrow->id)->assertOk();
-            $this->getJson('/api/jobs/'.$today->id)->assertNotFound();
+            $this->getJson('/api/jobs/' . $tomorrow->id)->assertOk();
+            $this->getJson('/api/jobs/' . $today->id)->assertOk();
+            $this->getJson('/api/jobs/' . $yesterday->id)->assertNotFound();
         } finally {
             $this->travelBack();
         }

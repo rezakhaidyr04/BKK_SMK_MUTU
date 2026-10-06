@@ -10,8 +10,12 @@ class JobMatchingService
     /**
      * Hitung persentase kecocokan antara user dan job (0-100)
      * Lebih robust: normalisasi, tokenisasi, Jaccard untuk skills.
+     *
+     * M2: $userSkillNames opsional — pemanggil yang men-skor banyak job
+     * (dashboard) WAJIB menghitungnya SEKALI via userSkillNames() lalu
+     * reuse, agar tidak ada N query pluck per job. Hasil identik.
      */
-    public function score(Job $job, User $user): int
+    public function score(Job $job, User $user, ?array $userSkillNames = null): int
     {
         $weights = [
             'skills' => 0.6,      // lebih menekankan skills
@@ -26,8 +30,8 @@ class JobMatchingService
         // Prepare text sources
         $jobText = strtolower(($job->title ?? '') . ' ' . ($job->qualifications ?? '') . ' ' . ($job->description ?? '') . ' ' . ($job->requirements ?? ''));
 
-        // 1) Skills dari relasi user_skills.
-        $userSkillNames = $user->skills()->pluck('name')->map(fn($s) => $this->normalize($s))->filter()->unique()->values()->toArray();
+        // 1) Skills dari relasi user_skills (sekali per user bila di-inject).
+        $userSkillNames ??= $this->userSkillNames($user);
 
         $jobSkillTokens = [];
         if (isset($job->skills) && !empty($job->skills)) {
@@ -100,6 +104,15 @@ class JobMatchingService
         $score += $indScore * $weights['industry'];
 
         return (int) round(min(1, $score) * 100);
+    }
+
+    /**
+     * M2: nama skill user ternormalisasi — panggil SEKALI per user lalu
+     * oper ke score() untuk tiap job.
+     */
+    public function userSkillNames(User $user): array
+    {
+        return $user->skills()->pluck('name')->map(fn($s) => $this->normalize($s))->filter()->unique()->values()->toArray();
     }
 
     private function normalize(string $text): string

@@ -3,10 +3,13 @@
 ## 📋 PREREQUISITES
 
 ### System Requirements
-- PHP 8.2 atau lebih tinggi
+- PHP 8.1 atau lebih tinggi (disarankan 8.2+)
+- Ekstensi PHP wajib: `pdo_mysql openssl mbstring tokenizer ctype fileinfo gd dom zip`
+  (cek: `php -m`). Tanpa `gd` = upload logo/payment gagal; tanpa `fileinfo` =
+  validasi MIME gagal; tanpa `dom/zip` = export PDF bisa 500.
 - MySQL 8.0 atau lebih tinggi
 - Composer 2.x
-- Node.js 18.x atau lebih tinggi (opsional, untuk build assets)
+- Node.js 18.x atau lebih tinggi (WAJIB untuk `npm run build` — blade memakai `@vite`)
 - Web Server (Apache/Nginx)
 
 ## 🔧 INSTALLATION STEPS
@@ -17,8 +20,16 @@
 git clone [repository-url]
 cd "Mutu Career Center"
 
-# Copy environment file
-copy .env.example .env
+# Production: salin dari template production (BUKAN .env development)
+copy .env.production.example .env
+# Lalu isi: APP_KEY (via key:generate), DB_*, MAIL_*, APP_URL=https://domain
+```
+
+### 1b. Build Frontend (WAJIB — halaman memakai @vite)
+```bash
+npm ci
+npm run build
+# Hasil: public/build/manifest.json + assets. Tanpa ini halaman 500/Vite error.
 ```
 
 ### 2. Install Dependencies
@@ -49,10 +60,13 @@ CREATE DATABASE bkk_smk_mutu;
 exit;
 
 # Run migrations
-php artisan migrate
+php artisan migrate --force
 
-# Run seeders (untuk data awal)
-php artisan db:seed
+# Seed production: HANYA role + akun admin (aman di production).
+# DILARANG: db:seed penuh / DummyDataSeeder / BulkUmumSeeder / migrate:fresh
+# di production — data dummy akan mencemari data asli.
+php artisan db:seed --class=RoleAndAdminSeeder --force
+php artisan db:seed --class=CompanyRolePermissionSeeder --force
 ```
 
 ### 5. Storage Setup
@@ -133,25 +147,32 @@ php artisan view:cache
 composer dump-autoload --optimize
 ```
 
-### 8. Queue Worker & Scheduler
+### 8. Queue Worker & Scheduler — WAJIB (bukan opsional)
 
-Semua email (broadcast via `JobBroadcastMail`, lamaran, interview, verifikasi,
-reset password) dikirim **sinkron** — tidak butuh queue worker.
-Scheduler harian pembersih file CV (`App\Console\Kernel`) tetap butuh cron
-agar file CV lama terhapus.
+Broadcast email (`SendJobBroadcastChunk`, ±50/job, timeout 300 dtk),
+notifikasi massal publish (`SendJobNotificationsChunk`, ±200/job, timeout
+300 dtk), dan generate CV (`GenerateCvJob`, timeout 120 dtk) berjalan di
+antrean database. Tanpa worker, dispatch menumpuk dan tidak terkirim.
+
+Aturan timeout (jangan dilanggar):
+- `config/queue.php` database `retry_after = 400` HARUS > timeout job
+  terpanjang (300). Menurunkan retry_after = email/notifikasi GANDA.
+- Worker `--timeout` HARUS > 300 (disarankan 330).
+- Setiap deploy: `php artisan queue:restart` (worker lama memakai kode lama).
 
 ```bash
-# Jalankan queue worker (pilih salah satu, JANGAN hanya mengandalkan web request)
-php artisan queue:work --tries=3 --timeout=120
-
 # Supervisor (Linux, direkomendasikan) — /etc/supervisor/conf.d/bkk-worker.conf
 # [program:bkk-worker]
-# command=php /path/to/app/artisan queue:work --sleep=3 --tries=3 --timeout=120
+# command=php /path/to/app/artisan queue:work --sleep=3 --tries=3 --timeout=330
 # autostart=true
 # autorestart=true
 # numprocs=1
+# user=www-data
 
-# Scheduler — tambahkan SATU cron entry (menjalankan schedule:run tiap menit)
+# Alternatif sementara (jangan untuk production tetap):
+php artisan queue:work --tries=3 --timeout=330
+
+# Scheduler — SATU cron entry (cleanup file CV >24 jam di Kernel):
 * * * * * cd /path/to/app && php artisan schedule:run >> /dev/null 2>&1
 ```
 
@@ -165,55 +186,20 @@ php artisan queue:restart       # WAJIB setelah tiap deploy/update kode
 
 ## 👤 DEFAULT USER ACCOUNTS
 
-### Create Admin Account
+### Create Admin Account (production-safe)
 ```bash
-php artisan tinker
+# Seeder resmi (idempotent, aman di production):
+php artisan db:seed --class=RoleAndAdminSeeder --force
 ```
-```php
-$user = \App\Models\User::create([
-    'name' => 'Admin BKK',
-    'email' => 'admin@bkk.smk.id',
-    'password' => bcrypt('password123'),
-    'role' => 'admin',
-    'is_active' => true,
-]);
-```
+Kredensial default ada di `database/seeders/RoleAndAdminSeeder.php` —
+SEGERA ganti password setelah login pertama. JANGAN membuat akun via
+tinker dengan `role` manual tanpa `syncRoles` (menyebabkan desync
+kolom role vs Spatie; middleware hanya membaca kolom `role`).
 
-### Create Test Accounts
-```php
-// Student
-$student = \App\Models\User::create([
-    'name' => 'Budi Santoso',
-    'email' => 'budi@student.smk.id',
-    'password' => bcrypt('password123'),
-    'role' => 'student',
-    'is_active' => true,
-]);
-
-\App\Models\Student::create([
-    'user_id' => $student->id,
-    'nisn' => '0012345678',
-    'major' => 'Teknik Komputer dan Jaringan',
-    'graduation_year' => 2024,
-]);
-
-// Company
-$company = \App\Models\User::create([
-    'name' => 'PT Teknologi Maju',
-    'email' => 'hr@teknologimaju.com',
-    'password' => bcrypt('password123'),
-    'role' => 'company',
-    'is_active' => true,
-]);
-
-\App\Models\Company::create([
-    'user_id' => $company->id,
-    'name' => 'PT Teknologi Maju',
-    'industry' => 'Technology',
-    'description' => 'Leading technology company in Indonesia',
-    'is_verified' => true,
-]);
-```
+### DILARANG di production
+- `php artisan db:seed` penuh (membuat perusahaan/lowongan/user/review dummy)
+- `BulkUmumSeeder` / `DummyDataSeeder` (data testing 10.000+ akun)
+- Role selain `admin/company/umum` (sudah dikonsolidasi; `student` tidak ada)
 
 ## 🔐 SECURITY CHECKLIST
 
@@ -231,9 +217,15 @@ $company = \App\Models\User::create([
 - [ ] Test file upload security
 - [ ] Review database user permissions
 - [ ] Set proper file permissions
-- [ ] Queue worker berjalan (`queue:work` via Supervisor/systemd)
+- [ ] Queue worker berjalan (`queue:work --timeout=330` via Supervisor/systemd)
 - [ ] Scheduler cron aktif (`schedule:run` tiap menit)
 - [ ] `queue:restart` dijalankan setiap selesai deploy
+- [ ] Tabel `queued_jobs` + `failed_jobs` termigrate; `retry_after(400) > timeout job(300)`
+- [ ] `TRUSTED_PROXIES` diisi (atau kosong = fail-closed); JANGAN `*` di production
+- [ ] `MAIL_TIMEOUT=10`; `APP_URL=https` (bukan localhost); timezone app = Asia/Jakarta
+- [ ] `php artisan storage:link` OK + TIDAK ada PDF/dokumen sensitif di `public/storage`
+  (hanya logo/avatar/poster/webp yang boleh public)
+- [ ] Ekstensi PHP: gd, fileinfo, mbstring, dom, zip, pdo_mysql, openssl
 
 ### .env Production Settings
 ```env
@@ -263,6 +255,15 @@ MAIL_FROM_NAME="${APP_NAME}"
 SESSION_DRIVER=database
 CACHE_DRIVER=file
 QUEUE_CONNECTION=database
+
+# Proxy (kosong = jangan percaya proxy mana pun; isi IP LB/Cloudflare bila ada)
+TRUSTED_PROXIES=
+
+# SPA cookie (isi domain bila frontend pakai Sanctum cookie)
+SANCTUM_STATEFUL_DOMAINS=
+
+# SMTP: batas detik agar worker tidak gantung (jangan null)
+MAIL_TIMEOUT=10
 ```
 
 ## 📝 MAINTENANCE MODE

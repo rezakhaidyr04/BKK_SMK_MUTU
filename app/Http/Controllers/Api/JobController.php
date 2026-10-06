@@ -12,8 +12,8 @@ class JobController extends Controller
     /**
      * P0 C-01: kolom company dibatasi (select) + serialisasi via Resource
      * agar field sensitif tidak pernah keluar API.
-     * P5.6: gunakan scopeActive() (status active + deadline >= now())
-     * agar konsisten dengan business rule web: hanya job aktif yang
+     * P5.6: gunakan scopeActive() (H1: status active + deadline
+     * hari-inklusif/NULL) agar konsisten dengan business rule web.
      * belum expired yang publik. Filter di query/database level.
      */
     public function index(Request $request)

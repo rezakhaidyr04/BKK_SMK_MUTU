@@ -104,17 +104,10 @@ class ApplicationController extends Controller
             return back()->with('error', 'Lamaran ini tidak dapat ditarik.');
         }
 
-        // Hapus file surat lamaran + attachment + SKCK jika ada
-        if ($application->cover_letter_path && Storage::disk('private')->exists($application->cover_letter_path)) {
-            Storage::disk('private')->delete($application->cover_letter_path);
-        }
-        if ($application->attachment_path && Storage::disk('private')->exists($application->attachment_path)) {
-            Storage::disk('private')->delete($application->attachment_path);
-        }
-        if ($application->skck_path && Storage::disk('private')->exists($application->skck_path)) {
-            Storage::disk('private')->delete($application->skck_path);
-        }
-
+        // H2: file DIPERTAHANKAN (soft-delete hanya menandai deleted_at).
+        // Alasan: re-apply memakai restore() + riwayat created_at utuh;
+        // hapus permanen hanya saat baris benar-benar forceDelete.
+        // File lama diganti/dibersihkan secara aman saat re-apply sukses.
         $application->delete();
 
         return redirect()->route('applications.index')

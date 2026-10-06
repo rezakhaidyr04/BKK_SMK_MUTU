@@ -13,13 +13,10 @@ class CompanyController extends Controller
      */
     public function show(Request $request, Company $company)
     {
-        // Lowongan aktif milik perusahaan (tayang + belum kedaluwarsa)
+        // H1: satu definisi aktif via scopeActive(). Jangan tulis ulang
+        // logika deadline di sini.
         $activeJobs = $company->jobs()
-            ->where('status', 'active')
-            ->where(function ($q) {
-                $q->whereNull('deadline')
-                    ->orWhere('deadline', '>=', now()->startOfDay());
-            })
+            ->active()
             ->withCount('applications')
             ->latest()
             ->paginate(6)
@@ -31,21 +28,26 @@ class CompanyController extends Controller
             'active_jobs' => $activeJobs->total(),
         ];
 
-        // Ulasan yang sudah disetujui dan ditujukan ke perusahaan ini (cocok nama persis,
-        // case-insensitive mengikuti collation DB) + rata-rata & jumlah.
-        $reviews = \App\Models\Review::approved()
+        // M5: company_id kanonis; fallback nama HANYA untuk data lama
+        // tanpa company_id (perusahaan bernama sama tidak tercampur).
+        // M8: statistik dari agregat database TANPA limit (bukan dari 10
+        // sampel tampilan) — mencakup seluruh review valid.
+        $reviewBase = \App\Models\Review::approved()->where(function ($q) use ($company) {
+            // company_id kanonis; company_name fallback data lama.
+            $q->where('company_id', $company->id)
+                ->orWhere(function ($qq) use ($company) {
+                    $qq->whereNull('company_id')->where('company_name', $company->name);
+                });
+        });
+        $reviewAgg = (clone $reviewBase)->selectRaw('COUNT(*) as c, AVG(rating) as a')->first();
+        $reviews = (clone $reviewBase)
             ->with('user:id,name')
-            ->where(function ($q) use ($company) {
-                // company_id kanonis; company_name fallback data lama.
-                $q->where('company_id', $company->id)
-                    ->orWhere('company_name', $company->name);
-            })
             ->latest()
             ->take(10)
             ->get();
         $reviewStats = [
-            'count' => $reviews->count(),
-            'average' => $reviews->count() > 0 ? round($reviews->avg('rating'), 1) : 0,
+            'count' => (int) ($reviewAgg->c ?? 0),
+            'average' => ((int) ($reviewAgg->c ?? 0)) > 0 ? round((float) $reviewAgg->a, 1) : 0,
         ];
 
         return view('companies.show', compact('company', 'activeJobs', 'stats', 'reviews', 'reviewStats'));

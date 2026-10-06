@@ -28,6 +28,10 @@ class UmumDashboardQuery
      */
     public function get(User $user): array
     {
+        // M2: skills dihitung SEKALI di awal lalu reuse untuk scoring semua
+        // job + profile completion (sebelumnya: ±30 pluck + 1 count per load).
+        $userSkillNames = $this->matchingService->userSkillNames($user);
+
         $stats = [
             "active_applications" => Application::where("user_id", $user->id)
                 ->whereIn("status", ["submitted", "under_review"])
@@ -39,13 +43,12 @@ class UmumDashboardQuery
                 ->where("status", "accepted")
                 ->count(),
             "bookmarked_jobs" => Bookmark::where("user_id", $user->id)->count(),
-            "profile_completion" => $this->profileCompletion->for($user),
+            "profile_completion" => $this->profileCompletion->for($user, ! empty($userSkillNames)),
         ];
 
-        // Job recommendations based on user skills
+        // H1: satu definisi aktif via scopeActive().
         $recommendedJobs = Job::with("company")
-            ->where("status", "active")
-            ->where("deadline", ">=", now())
+            ->active()
             ->whereDoesntHave("applications", function ($query) use ($user) {
                 $query->where("user_id", $user->id);
             })
@@ -53,9 +56,9 @@ class UmumDashboardQuery
             ->take(30)
             ->get();
 
-        // Hitung match score untuk setiap job menggunakan JobMatchingService
+        // Hitung match score untuk setiap job (reuse skills di atas).
         foreach ($recommendedJobs as $job) {
-            $job->match_score = $this->matchingService->score($job, $user);
+            $job->match_score = $this->matchingService->score($job, $user, $userSkillNames);
         }
 
         // Urutkan berdasarkan match_score desc dan ambil top 6

@@ -314,6 +314,8 @@ class BusinessFlowTest extends TestCase
     public function test_review_success_creates_pending_and_stores_optional_fields(): void
     {
         $user = $this->verifiedUmum();
+        // M5: company_name wajib perusahaan terdaftar.
+        \App\Models\Company::factory()->create(['name' => 'PT Maju']);
         $resp = $this->actingAs($user)->post(route('reviews.store'), [
             'rating' => 5,
             'comment' => str_repeat('Layanan BKK sangat membantu saya mendapatkan pekerjaan. ', 3),

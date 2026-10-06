@@ -137,8 +137,11 @@ class ApplicationAuthorizationTest extends TestCase
         $this->assertDatabaseHas('applications', ['id' => $app->id]);
     }
 
-    public function test_owner_can_destroy_submitted_application_and_file_is_deleted(): void
+    public function test_owner_can_destroy_submitted_application_and_file_is_retained(): void
     {
+        // H2: business rule baru — withdraw = soft-delete, file DIPERTAHANKAN
+        // agar re-apply (restore) dan riwayat tetap utuh. File lama hanya
+        // dibersihkan aman saat re-apply sukses (diganti file baru).
         Storage::fake('private');
         $owner = $this->verifiedUmum();
         $path = 'applications/to-delete.pdf';
@@ -154,7 +157,7 @@ class ApplicationAuthorizationTest extends TestCase
         $response->assertRedirect(route('applications.index'));
         $response->assertSessionHas('success');
         $this->assertSoftDeleted('applications', ['id' => $app->id]);
-        Storage::disk('private')->assertMissing($path);
+        Storage::disk('private')->assertExists($path);
     }
 
     public function test_company_can_view_application_for_own_job_but_not_others(): void

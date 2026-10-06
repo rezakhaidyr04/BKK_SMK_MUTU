@@ -33,7 +33,7 @@
                 </span>
             </x-slot:chips>
         </x-ui.page-banner>
-        <div class="page-container page-section">
+        <div class="page-container page-section" x-data="{ currentTab: '{{ $errors->updatePassword->any() ? 'password' : 'profile' }}' }">
 
     @if (session('success'))
         <div class="ui-alert ui-alert-success mb-4">Berhasil: {{ session('success') }}</div>
@@ -42,6 +42,23 @@
         <div class="ui-alert ui-alert-error mb-4">Gagal: {{ session('error') }}</div>
     @endif
 
+    {{-- Navigasi tab ala profil pengguna --}}
+    <div class="mb-5 flex gap-2 overflow-x-auto rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+        <button type="button" @click="currentTab = 'profile'"
+                :class="currentTab === 'profile' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'"
+                class="flex shrink-0 items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-semibold outline-none transition-all">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+            Data Perusahaan
+        </button>
+        <button type="button" @click="currentTab = 'password'"
+                :class="currentTab === 'password' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'"
+                class="flex shrink-0 items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-semibold outline-none transition-all">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            Keamanan Sandi
+        </button>
+    </div>
+
+    <div x-show="currentTab === 'profile'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {{-- KIRI: Data Perusahaan --}}
@@ -230,6 +247,11 @@
                 </div>
             </div>
         </div>
+    </div>{{-- /tab Data Perusahaan --}}
+
+    <div x-show="currentTab === 'password'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        @include('profile.partials.update-password-form')
+    </div>
 
         {{-- KANAN: Status --}}
         <div class="lg:col-span-1">

@@ -42,8 +42,9 @@ class CompanyDashboardQuery
             : 0;
 
         $stats = [
+            // H1: "aktif" = scopeActive (status + deadline), konsisten dgn publik.
             "active_jobs" => (clone $companyJobsQuery)
-                ->where("status", "active")
+                ->active()
                 ->count(),
             "total_applications" => $totalApplications,
             "pending_applications" => (clone $companyApplicationsQuery)->whereIn("status", ["submitted", "under_review"])->count(),

@@ -13,7 +13,10 @@ return [
     |
     */
 
-    'default' => env('QUEUE_CONNECTION', 'sync'),
+    // M10: fallback 'database' (BUKAN sync) agar lupa-set env di production
+    // tidak diam-diam mengubah semua dispatch menjadi sinkron (= hang/timeout
+    // massal). Tabel queued_jobs tersedia via migration bawaan.
+    'default' => env('QUEUE_CONNECTION', 'database'),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +41,10 @@ return [
             'driver' => 'database',
             'table' => 'queued_jobs',
             'queue' => 'default',
-            'retry_after' => 90,
+            // H6: HARUS > timeout job terpanjang (SendJobBroadcastChunk=300).
+            // retry_after <= timeout = job dijalankan ulang padahal masih
+            // berjalan = email ganda massal. Jangan turunkan tanpa audit.
+            'retry_after' => 400,
             'after_commit' => true,
         ],
 
