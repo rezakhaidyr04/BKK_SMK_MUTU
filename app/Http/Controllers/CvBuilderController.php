@@ -52,20 +52,26 @@ class CvBuilderController extends Controller
             return back()->with('error', 'File CV tidak ditemukan.');
         }
 
+        // Nama file ramah: "CV Nama Pelamar.pdf" (bukan generated-cv-hash).
+        $ownerName = trim((string) ($cvFile->user->name ?? 'Pelamar'));
+        $ownerName = preg_replace('/[^\pL\pN\s\-_.]+/u', '', $ownerName);
+        $ownerName = trim(preg_replace('/\s+/', ' ', $ownerName)) ?: 'Pelamar';
+        $prettyName = 'CV ' . $ownerName . '.pdf';
+
         if ($request->query('preview')) {
             $mime = Storage::disk('private')->mimeType($cvFile->file_path);
 
             return Storage::disk('private')->response(
                 $cvFile->file_path,
-                basename($cvFile->file_path),
+                $prettyName,
                 [
                     'Content-Type' => $mime,
-                    'Content-Disposition' => 'inline; filename="' . addslashes(basename($cvFile->file_path)) . '"',
+                    'Content-Disposition' => 'inline; filename="' . addslashes($prettyName) . '"',
                 ]
             );
         }
 
-        return Storage::disk('private')->download($cvFile->file_path);
+        return Storage::disk('private')->download($cvFile->file_path, $prettyName);
     }
 
     public function destroy(CvFile $cvFile)
