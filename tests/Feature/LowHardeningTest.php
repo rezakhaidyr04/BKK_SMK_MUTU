@@ -132,11 +132,12 @@ class LowHardeningTest extends TestCase
 
     public function test_l7_register_succeeds_when_mail_fails(): void
     {
-        // Gagalkan pengiriman notifikasi (SMTP down) di level dispatcher.
+        // Registrasi auto-verifikasi: tidak ada email yang dikirim saat daftar,
+        // sehingga SMTP down tidak mungkin menggagalkan registrasi.
         $this->mock(
             \Illuminate\Contracts\Notifications\Dispatcher::class,
             function ($mock) {
-                $mock->shouldReceive('send')->once()->andThrow(new \RuntimeException('smtp down'));
+                $mock->shouldReceive('send')->zeroOrMoreTimes()->andThrow(new \RuntimeException('smtp down'));
             }
         );
 
@@ -150,7 +151,7 @@ class LowHardeningTest extends TestCase
         $resp->assertRedirect(route('dashboard', absolute: false) ?? '/dashboard');
         $this->assertAuthenticated();
         $this->assertDatabaseHas('users', ['email' => 'l7user@example.com']);
-        $resp->assertSessionHas('warning');
+        $this->assertTrue(\App\Models\User::where('email', 'l7user@example.com')->first()->hasVerifiedEmail());
     }
 
     // ================= L8: indeks read_at =================
