@@ -1,8 +1,8 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
         <x-ui.page-banner
-            title="CV Profesional"
-            subtitle="Susun CV yang rapi, konsisten, dan siap dikirim ke perekrut."
+            title="Buat CV"
+            subtitle="CV dibuat otomatis dari data profil Anda — rapi, konsisten, siap dikirim ke perekrut."
             eyebrow="ATS Ready · PDF Export · 1 Template"
         >
                         <x-slot:chips>
@@ -67,7 +67,7 @@
                                     <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shrink-0">CV</div>
                                     <div class="text-left">
                                         <p class="font-semibold text-gray-900">Template standar aktif</p>
-                                        <p class="text-sm text-gray-600 mt-1">Template ini dipakai otomatis untuk semua CV agar hasilnya konsisten, bersih, dan mudah dibaca perekrut.</p>
+                                        <p class="text-sm text-gray-600 mt-1">Template ini dipakai otomatis untuk semua CV agar hasilnya konsisten, bersih, dan mudah dibaca perekrut. Data diambil dari <a href="{{ route('profile.edit') }}" class="font-semibold text-blue-700 underline hover:text-blue-800">profil Anda</a> — lengkapi dulu di sana bila ada yang kurang.</p>
                                     </div>
                                 </div>
                             </div>

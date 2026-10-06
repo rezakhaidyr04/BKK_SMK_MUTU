@@ -193,7 +193,8 @@
 
         @if(Auth::user()->role === 'umum')
         <div class="border-t border-slate-100 pt-6">
-            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4">Data Diri & CV</h3>
+            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-1">Data Diri</h3>
+            <p class="text-xs text-slate-400 mb-4">Data ini dipakai otomatis saat membuat CV.</p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
@@ -302,9 +303,17 @@
                 </span>
                 <textarea id="experience_organization" name="experience_organization" rows="4"
                           class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm text-slate-900 bg-white"
-                          placeholder="Contoh: Magang di toko online&#10;Ketua OSIS&#10;Anggota Pramuka">{{ old('experience_organization', isset($user->experience_organization) ? str_replace(['\\r\\n', '\\n', '\\r'], "\n", $user->experience_organization) : '') }}</textarea>
+                           placeholder="Contoh: Magang di toko online&#10;Ketua OSIS&#10;Anggota Pramuka">{{ old('experience_organization', isset($user->experience_organization) ? str_replace(['\\r\\n', '\\n', '\\r'], "\n", $user->experience_organization) : '') }}</textarea>
                 <x-input-error class="mt-1.5" :messages="$errors->get('experience_organization')" />
             </div>
+
+            <a href="{{ route('cv.builder') }}" class="mt-5 flex items-center gap-3 rounded-2xl border border-blue-100 bg-blue-50/70 p-4 transition hover:border-blue-300 hover:bg-blue-50">
+                <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center text-sm font-bold shrink-0">CV</div>
+                <div class="text-left">
+                    <p class="font-semibold text-gray-900 text-sm">Data sudah lengkap? Buat CV sekarang</p>
+                    <p class="text-xs text-gray-600 mt-0.5">CV dibuat otomatis dari data diri di atas, tinggal unduh PDF-nya.</p>
+                </div>
+            </a>
         </div>
         @endif
 
