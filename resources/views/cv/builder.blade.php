@@ -78,8 +78,9 @@
 
                             <div class="grid grid-cols-1 gap-3.5">
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-800 mb-2">Kata kunci ATS</label>
-                                    <input type="text" name="ats_keywords" maxlength="300" value="{{ old('ats_keywords', '') }}" placeholder="Contoh: administrasi, microsoft excel, komunikasi, kantor" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">
+                                    <label class="block text-sm font-semibold text-gray-800 mb-2">Keahlian tambahan</label>
+                                    <input type="text" name="ats_keywords" maxlength="300" value="{{ old('ats_keywords', '') }}" placeholder="Contoh: administrasi, microsoft excel, komunikasi" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">
+                                    <p class="text-xs text-gray-500 mt-1.5">Tulis keahlian yang kamu kuasai, pisahkan dengan koma. Ini membantu CV kamu ditemukan perusahaan.</p>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Ringkasan singkat</label>

@@ -57,10 +57,21 @@
 
     <div class="section">
         <div class="section-title">Kemampuan</div>
-        @if($include_skills && $user->skills->isNotEmpty())
+        @php
+            $extraKeywords = collect(explode(',', $ats_keywords ?? ''))
+                ->map(fn($k) => trim($k))->filter()->values();
+            $existingSkills = $user->skills->pluck('name')
+                ->map(fn($n) => mb_strtolower(trim($n)));
+            $extraKeywords = $extraKeywords
+                ->reject(fn($k) => $existingSkills->contains(mb_strtolower($k)))->values();
+        @endphp
+        @if($include_skills && ($user->skills->isNotEmpty() || $extraKeywords->isNotEmpty()))
             <ul class="dots">
                 @foreach($user->skills as $skill)
                     <li>{{ $skill->name }}</li>
+                @endforeach
+                @foreach($extraKeywords as $kw)
+                    <li>{{ $kw }}</li>
                 @endforeach
             </ul>
         @else
