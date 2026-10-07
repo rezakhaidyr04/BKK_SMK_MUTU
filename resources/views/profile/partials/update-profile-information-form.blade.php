@@ -43,6 +43,10 @@
         @csrf
     </form>
 
+    <form id="avatar-form" method="post" action="{{ route('profile.avatar.update') }}" enctype="multipart/form-data">
+        @csrf
+    </form>
+
     <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="profile-form space-y-6">
         @csrf
         @method('patch')
@@ -61,9 +65,16 @@
                 <label for="avatar" class="mt-3 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-blue-300 hover:text-blue-700">
                     Pilih Foto Baru
                 </label>
-                <input id="avatar" name="avatar" type="file" class="sr-only" accept="image/jpeg,image/png,image/webp"
+                <input id="avatar" name="avatar" type="file" form="avatar-form" class="sr-only" accept="image/jpeg,image/png,image/webp"
                        onchange="previewAvatar(event)">
+                <button type="submit" form="avatar-form" class="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
+                    Simpan Foto
+                </button>
                 <p class="mt-2 text-[11px] leading-relaxed text-slate-400">JPG, PNG, WebP · Maksimal 3MB.</p>
+
+                @if (session('status') === 'avatar-updated')
+                    <p class="mt-2 text-xs font-semibold text-green-600">Foto profil tersimpan.</p>
+                @endif
 
                 @if($avatarPreviewUrl)
                     <img id="avatar-preview" src="{{ $avatarPreviewUrl }}" alt="" class="hidden">
@@ -369,8 +380,22 @@
 let cropper = null;
 
 function previewAvatar(event) {
-    const file = event.target.files[0];
+    const input = event.target;
+    const file = input.files[0];
     if (!file) return;
+    // Kalau CropperJS gagal dimuat (offline/CDN), tetap pakai file asli + preview langsung.
+    if (typeof Cropper === 'undefined') {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imgPreview = document.getElementById('avatar-preview');
+            const placeholder = document.getElementById('avatar-preview-placeholder');
+            imgPreview.src = e.target.result;
+            imgPreview.classList.remove('hidden');
+            if (placeholder) placeholder.classList.add('hidden');
+        };
+        reader.readAsDataURL(file);
+        return;
+    }
     const reader = new FileReader();
     reader.onload = function(e) {
         const modal = document.getElementById('cropperModal');
@@ -398,8 +423,8 @@ function previewAvatar(event) {
         });
     };
     reader.readAsDataURL(file);
-    // Reset file input so picking the same file again triggers change event
-    event.target.value = '';
+    // JANGAN reset input di sini — file asli dipertahankan supaya tetap
+    // terupload kalau user langsung klik Simpan tanpa crop.
 }
 
 function closeCropper() {

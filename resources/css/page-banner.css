@@ -28,16 +28,16 @@
    tempat tanpa menyesuaikan yang lain.
    ============================================================ */
 :root {
-    --banner-title-desktop: 2.5rem;
-    --banner-title-tablet: 2rem;
-    --banner-title-mobile: 1.75rem;
-    --banner-title-small: 1.5rem;
-    --banner-pad-desktop: 48px;
-    --banner-pad-x-desktop: 56px;
-    --banner-pad-mobile: 32px;
-    --banner-pad-x-mobile: 24px;
-    --banner-radius: 20px;
-    --banner-min-h: 180px;
+    --banner-title-desktop: 1.6rem;
+    --banner-title-tablet: 1.4rem;
+    --banner-title-mobile: 1.25rem;
+    --banner-title-small: 1.1rem;
+    --banner-pad-desktop: 22px;
+    --banner-pad-x-desktop: 28px;
+    --banner-pad-mobile: 18px;
+    --banner-pad-x-mobile: 16px;
+    --banner-radius: 16px;
+    --banner-min-h: 110px;
 }
 
 /* ============================================================
@@ -52,9 +52,9 @@
                 0 2px 8px rgba(7, 23, 51, 0.12);
     background: #0a1633;
     margin-top: 0;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
     padding: var(--banner-pad-desktop);
-    min-height: 160px;
+    min-height: 90px;
     display: flex;
     align-items: stretch;
     isolation: isolate;
@@ -177,13 +177,13 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 16px;
+    gap: 10px;
 }
 
 .page-banner__header {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     flex: 1;
 }
 
@@ -209,7 +209,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 .page-banner__chip {
@@ -267,7 +267,7 @@
     flex-wrap: wrap;
     gap: 12px;
     align-items: center;
-    margin-top: 12px;
+    margin-top: 8px;
     flex-shrink: 0;
 }
 
@@ -303,7 +303,7 @@
 
 @media (max-width: 1024px) {
     .page-banner {
-        padding: 40px 36px;
+        padding: 24px;
     }
 
     .page-banner__title {
@@ -318,10 +318,10 @@
 @media (max-width: 768px) {
     .page-banner {
         grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 32px 24px;
-        margin-bottom: 24px;
-        border-radius: 16px;
+        gap: 16px;
+        padding: 20px 16px;
+        margin-bottom: 16px;
+        border-radius: 14px;
     }
 
     .page-banner__title {
@@ -344,7 +344,7 @@
 
 @media (max-width: 480px) {
     .page-banner {
-        padding: 24px 16px;
+        padding: 16px 14px;
         margin-top: 0;
     }
 
@@ -372,25 +372,25 @@
    ============================================================ */
 
 .page-banner--compact {
-    padding: 32px 40px;
-    min-height: 120px;
+    padding: 18px 22px;
+    min-height: 80px;
 }
 
 .page-banner--compact .page-banner__title {
-    font-size: 1.875rem;
+    font-size: 1.35rem;
 }
 
 .page-banner--compact .page-banner__subtitle {
-    font-size: 0.95rem;
+    font-size: 0.875rem;
 }
 
 @media (max-width: 768px) {
     .page-banner--compact {
-        padding: 24px 20px;
+        padding: 14px 16px;
     }
 
     .page-banner--compact .page-banner__title {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 }
 
@@ -441,11 +441,11 @@
     background: #0a1633;
     position: relative;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 16px;
     box-shadow: 0 8px 32px rgba(16, 42, 114, 0.12), 
                 0 2px 8px rgba(7, 23, 51, 0.08);
-    min-height: 130px;
-    padding: 48px;
+    min-height: 90px;
+    padding: 24px;
 }
 
 .ui-page-hero-inner {
@@ -457,7 +457,7 @@
 }
 
 .ui-page-hero-title {
-    font-size: 2.5rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: #ffffff;
     margin: 0;

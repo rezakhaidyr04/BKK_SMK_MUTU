@@ -1,6 +1,6 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Profil Perusahaan" subtitle="Kelola data dan verifikasi perusahaan Anda." eyebrow="Dasbor › Profil Perusahaan">
+        <x-ui.page-banner title="Profil Perusahaan" subtitle="Kelola data dan verifikasi perusahaan Anda." eyebrow="Dashboard › Profil Perusahaan">
             <x-slot:chips>
                 @php
                     $vs = $company->verification_status ?? 'not_submitted';

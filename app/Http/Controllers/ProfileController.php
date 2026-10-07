@@ -71,7 +71,9 @@ class ProfileController extends Controller
             if ($path) {
                 $validated["avatar"] = $path;
             } else {
-                unset($validated["avatar"]);
+                return Redirect::route("profile.edit")->withErrors([
+                    "avatar" => "Foto gagal diproses. Coba file JPG/PNG/WebP lain.",
+                ])->withInput();
             }
         } else {
             unset($validated["avatar"]); // Jangan overwrite jika tidak ada upload
@@ -123,6 +125,51 @@ class ProfileController extends Controller
             "status",
             "profile-updated",
         );
+    }
+
+    public function updateAvatar(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+
+        if ($user->isCompany()) {
+            return Redirect::route('company.profile.edit')->with('error', 'Silakan kelola profil perusahaan melalui halaman profil perusahaan.');
+        }
+
+        $request->validate(
+            [
+                'avatar' => [
+                    'required',
+                    'image',
+                    'max:3072',
+                    'mimes:jpg,jpeg,png,webp',
+                    'mimetypes:image/jpeg,image/png,image/webp',
+                ],
+            ],
+            [
+                'avatar.required' => 'Pilih foto dulu.',
+                'avatar.image' => 'File harus berupa gambar.',
+                'avatar.max' => 'Ukuran foto maksimal 3MB.',
+                'avatar.mimes' => 'Format foto harus JPG, PNG, atau WebP.',
+            ]
+        );
+
+        if ($user->avatar) {
+            Storage::disk('public')->delete($user->avatar);
+        }
+
+        $processor = new ImageProcessor(quality: 82, maxWidth: 320, maxHeight: 320);
+        $path = $processor->store($request->file('avatar'), 'profile-photos', 'avatar-' . $user->id . '-' . time());
+
+        if (! $path) {
+            return Redirect::route('profile.edit')->withErrors([
+                'avatar' => 'Foto gagal diproses. Coba file JPG/PNG/WebP lain.',
+            ]);
+        }
+
+        $user->avatar = $path;
+        $user->save();
+
+        return Redirect::route('profile.edit')->with('status', 'avatar-updated');
     }
 
     public function destroy(Request $request): RedirectResponse

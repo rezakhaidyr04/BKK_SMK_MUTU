@@ -37,7 +37,7 @@
                     <!-- Actions -->
                     <div class="navbar-actions">
                         @if(auth()->check())
-                            <a href="{{ route('dashboard') }}" class="btn-dashboard">Dasbor</a>
+                            <a href="{{ route('dashboard') }}" class="btn-dashboard">Dashboard</a>
                             <form method="POST" action="{{ route('logout') }}" class="inline-form">
                                 @csrf
                                 <button type="submit" class="btn-logout">Keluar</button>
@@ -59,7 +59,7 @@
             <!-- Mobile Menu -->
             <div class="mobile-menu" :class="{ 'is-open': mobileMenuOpen }">
                 @if(auth()->check())
-                    <a href="{{ route('dashboard') }}">Dasbor</a>
+                    <a href="{{ route('dashboard') }}">Dashboard</a>
                 @else
                     <a href="{{ route('login') }}">Masuk</a>
                     <a href="{{ route('register') }}">Daftar</a>

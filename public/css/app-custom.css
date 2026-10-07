@@ -203,7 +203,7 @@ main.main-content {
 .jobs-search-hero {
     position: relative;
     overflow: hidden;
-    padding: 2rem 0 2.5rem;
+    padding: 1.1rem 0 1.25rem;
     background: #0a1633;
 }
 
@@ -224,8 +224,8 @@ main.main-content {
 
 @media (max-width: 639px) {
     .jobs-search-hero {
-        padding-top: 1.5rem;
-        padding-bottom: 2rem;
+        padding-top: 1rem;
+        padding-bottom: 1.1rem;
     }
 }
 
@@ -239,10 +239,10 @@ main.main-content {
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 24px rgba(7,23,51,0.25);
-    min-height: 130px;
+    min-height: 90px;
     display: flex;
     align-items: flex-start;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 /* Shared page-level banner treatment — UKURAN DISAMAKAN dengan page-banner
@@ -251,8 +251,8 @@ main.main-content {
 .dashboard-hero {
     position: relative;
     overflow: hidden;
-    min-height: var(--banner-min-h, 180px);
-    margin-bottom: 2rem;
+    min-height: 110px;
+    margin-bottom: 1.25rem;
     background: #0a1633;
     border-radius: var(--banner-radius, var(--radius-lg));
     box-shadow: 0 8px 32px rgba(16, 42, 114, 0.12), 0 2px 8px rgba(7, 23, 51, 0.08);
@@ -273,8 +273,8 @@ main.main-content {
 .app-page-header .page-container {
     position: relative;
     z-index: 1;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    padding-top: 1.4rem;
+    padding-bottom: 1.4rem;
 }
 
 .app-page-header h2,
@@ -298,8 +298,8 @@ main.main-content {
 .dashboard-hero > div {
     position: relative;
     z-index: 1;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    padding-top: 1.4rem;
+    padding-bottom: 1.4rem;
 }
 
 /* Aturan dots dashboard-hero PINDAH ke resources/css/page-banner.css

@@ -51,7 +51,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         {{-- ?v= bertambah setiap app-custom.css diubah agar browser tidak memakai cache lama --}}
-        <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}?v=20261006c">
+        <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}?v=20261007a">
         
         @stack('styles')
     </head>
@@ -73,7 +73,7 @@
             <!-- Content area: .app-main-wrapper TIDAK memiliki spacing agar konsisten -->
             <div :class="['app-main-wrapper transition-all duration-300', sidebarOpen ? 'lg:ml-64' : 'lg:ml-0']">
                 <!-- Kompensasi Navbar hanya SEKALI di sini -->
-                <main class="main-content">@isset($header)<header class="app-page-header relative overflow-hidden shadow-sm"><div class="pointer-events-none absolute inset-0"></div><div class="page-container py-6 relative">{{ $header }}</div></header>@elseif(View::hasSection('header'))<header class="app-page-header relative overflow-hidden shadow-sm"><div class="pointer-events-none absolute inset-0"></div><div class="page-container py-6 relative">@yield('header')</div></header>@endif
+                <main class="main-content">@isset($header)<header class="app-page-header relative overflow-hidden shadow-sm"><div class="pointer-events-none absolute inset-0"></div><div class="page-container py-4 relative">{{ $header }}</div></header>@elseif(View::hasSection('header'))<header class="app-page-header relative overflow-hidden shadow-sm"><div class="pointer-events-none absolute inset-0"></div><div class="page-container py-4 relative">@yield('header')</div></header>@endif
 
                     <!-- PAGE CONTENT -->
                     <div>

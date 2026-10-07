@@ -68,6 +68,9 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
     Route::patch("/profile", [ProfileController::class, "update"])->name(
         "profile.update",
     );
+    Route::post("/profile/avatar", [ProfileController::class, "updateAvatar"])->name(
+        "profile.avatar.update",
+    );
     Route::delete("/profile", [ProfileController::class, "destroy"])->name(
         "profile.destroy",
     );

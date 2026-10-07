@@ -17,7 +17,7 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
-                Kembali ke Dasbor
+                Kembali ke Dashboard
             </x-ui.btn>
             @endauth
         </x-slot:actions>
@@ -220,7 +220,7 @@
                     <x-slot:action>
                         <div class="flex flex-wrap items-center justify-center gap-3">
                             <x-ui.btn href="{{ route('jobs.index') }}">Hapus Semua Filter</x-ui.btn>
-                            <x-ui.btn variant="secondary" href="{{ route('dashboard') }}">Kembali ke Dasbor</x-ui.btn>
+                            <x-ui.btn variant="secondary" href="{{ route('dashboard') }}">Kembali ke Dashboard</x-ui.btn>
                         </div>
                     </x-slot:action>
                 </x-ui.empty-state>
