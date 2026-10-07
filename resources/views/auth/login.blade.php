@@ -6,7 +6,7 @@
     </div>
     <div class="auth-card-header">
         <h2 class="auth-section-title">Selamat Datang Kembali!</h2>
-        <p class="auth-section-subtitle">Masuk untuk mengakses dashboard karir Anda.</p>
+        <p class="auth-section-subtitle">Masuk untuk mengakses dasbor karir Anda.</p>
     </div>
     <div class="auth-card-body">
         <x-auth-session-status class="mb-4" :status="session('status')" />

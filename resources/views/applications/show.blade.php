@@ -4,7 +4,7 @@
             title="Detail Lamaran" 
             :subtitle="$application->job->title . ' - ' . ($application->job->company_name ?? 'Perusahaan')" 
             :back-url="auth()->user()->role === 'company' ? route('company.applicants.index') : route('applications.index')"
-            back-label="Kembali ke Daftar Lamaran" eyebrow="Dashboard › Lamaran">
+            back-label="Kembali ke Daftar Lamaran" eyebrow="Dasbor › Lamaran">
             <x-slot:chips>
                 <span class="page-banner__chip">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>

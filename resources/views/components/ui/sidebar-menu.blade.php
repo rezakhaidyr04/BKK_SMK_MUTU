@@ -164,7 +164,7 @@
         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10l9-7 9 7v10a1 1 0 01-1 1h-5a1 1 0 01-1-1v-5H10v5a1 1 0 01-1 1H4a1 1 0 01-1-1V10z"/>
         </svg>
-        <span class="font-medium">Dashboard Perusahaan</span>
+        <span class="font-medium">Dasbor Perusahaan</span>
         <span class="nav-badge orange ml-auto">Utama</span>
     </a>
 
