@@ -44,7 +44,7 @@
                             <p class="text-sm text-gray-600 mt-1">Gunakan satu template CV yang rapi, konsisten, dan siap untuk perekrut.</p>
                         </div>
 
-                        <form action="{{ route('cv.generate') }}" method="POST" class="p-6 sm:p-8 pb-28 sm:pb-8 space-y-5">
+                        <form action="{{ route('cv.generate') }}" method="POST" class="cv-form-card p-6 sm:p-8 pb-28 sm:pb-8 space-y-5">
                             @csrf
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <label class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm">
@@ -92,8 +92,8 @@
                                  Buat CV PDF
                              </button>
 
-                            <div class="sm:hidden fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur px-4 py-3 shadow-[0_-8px_24px_rgba(15,23,42,0.08)]">
-                                <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+                            <div class="sm:hidden fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur px-4 pt-3 shadow-[0_-8px_24px_rgba(15,23,42,0.08)]" style="padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));">
+                                <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 min-h-[50px] bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 active:scale-[0.98] transition shadow-lg shadow-blue-200">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m0 0l-3-3m3 3l3-3M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1"/>
                                     </svg>
@@ -103,7 +103,7 @@
                         </form>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="cv-grid-3 grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
                             <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold mb-3">1</div>
                             <h3 class="font-semibold text-gray-900">Lengkapi isi CV</h3>

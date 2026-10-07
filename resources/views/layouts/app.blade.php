@@ -2,7 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <meta name="theme-color" content="#0a1633">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
         <link rel="apple-touch-icon" href="{{ asset('images/logos/mutu_logo.png') }}">
@@ -52,6 +53,8 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         {{-- ?v= bertambah setiap app-custom.css diubah agar browser tidak memakai cache lama --}}
         <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}?v=20261007a">
+        {{-- Mobile experience layer (HP-first untuk pelamar) --}}
+        <link rel="stylesheet" href="{{ asset('css/mobile.css') }}?v=20261007b">
         
         @stack('styles')
     </head>

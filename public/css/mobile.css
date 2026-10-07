@@ -1,0 +1,691 @@
+/* ============================================================
+   BKKMu — Mobile Experience Layer (HP-first, pelamar)
+   Dimuat SETELAH app-custom.css. Semua aturan di bawah
+   hanya aktif di layar kecil agar desktop tidak berubah.
+   Fokus: anti-overflow, target sentuh 44px, bottom-nav,
+   kartu lowongan, filter, form profil, berita, job detail.
+   ============================================================ */
+
+/* ---- 0. Fondasi sentuh & anti scroll horizontal ---- */
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: clip;
+  overscroll-behavior-y: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a, button, [role="button"], input, select, textarea, summary {
+  touch-action: manipulation;
+}
+
+/* Cegah gambar / dekorasi banner melebar melebihi layar */
+img, svg, video {
+  max-width: 100%;
+}
+.page-shell, .app-main-wrapper, main.main-content {
+  min-width: 0;
+  overflow-x: clip;
+}
+
+/* Tap feedback yang terasa "interaktif" di HP */
+@media (hover: none) and (pointer: coarse) {
+  a:active, button:active {
+    transform: scale(0.98);
+  }
+}
+
+/* ============================================================
+   2. ATURAN UMUM HP (max 768px)
+   ============================================================ */
+@media (max-width: 767.98px) {
+  /* ---- Banner COMPACT di HP (berlaku SEMUA banner project) ----
+     .page-banner, .dashboard-hero, .app-page-header,
+     .jobs-search-hero, .ui-page-hero */
+  .page-banner,
+  .dashboard-hero,
+  .app-page-header,
+  .jobs-search-hero,
+  .ui-page-hero {
+    min-height: 0 !important;
+    padding: 8px 12px !important;
+    margin-bottom: 10px !important;
+    border-radius: 10px !important;
+  }
+  .app-page-header .page-container,
+  .dashboard-hero > div,
+  .ui-page-hero-inner {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .page-banner__content {
+    gap: 5px !important;
+  }
+  .page-banner__header {
+    gap: 3px !important;
+  }
+  .page-banner__eyebrow {
+    font-size: 0.55rem !important;
+    padding: 2px 7px !important;
+    margin-bottom: 1px !important;
+    border-radius: 7px !important;
+  }
+  .page-banner__title,
+  .dashboard-hero h1,
+  .app-page-header h2,
+  .ui-page-hero-title {
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
+  }
+  .page-banner__subtitle,
+  .dashboard-hero p,
+  .app-page-header p,
+  .ui-page-hero-subtitle {
+    font-size: 0.7rem !important;
+    line-height: 1.4 !important;
+  }
+  .page-banner__back {
+    margin-bottom: 2px !important;
+    font-size: 0.75rem !important;
+  }
+  .page-banner__chips {
+    gap: 3px !important;
+    margin-top: 4px !important;
+  }
+  .page-banner__chip {
+    font-size: 9px !important;
+    padding: 3px 7px !important;
+    max-width: 100%;
+  }
+  .page-banner__chip svg {
+    width: 10px !important;
+    height: 10px !important;
+    flex-shrink: 0;
+  }
+  .page-banner__actions {
+    margin-top: 5px !important;
+    gap: 5px !important;
+  }
+  .page-banner .ui-btn {
+    padding: 6px 12px !important;
+    font-size: 0.72rem !important;
+    border-radius: 8px !important;
+  }
+  /* Matikan dekorasi berat di HP agar banner terlihat ramping */
+  .page-banner__decor,
+  .page-banner__orb,
+  .page-banner__ring {
+    display: none !important;
+  }
+  /* Struktur banner di HP: tumpuk vertikal (konten lalu aksi full-width).
+     Tanpa ini banner tetap flex-row sehingga judul terjepit di kiri
+     dan tombol mendesak dari kanan (kasus halaman Lamaran Saya). */
+  .page-banner,
+  .page-banner--with-logo {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 6px !important;
+  }
+  .page-banner__content,
+  .page-banner__side {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .page-banner__side {
+    justify-content: flex-start !important;
+  }
+  .page-banner__actions {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+  }
+  .page-banner__actions .ui-btn,
+  .page-banner__actions > a {
+    width: 100% !important;
+    justify-content: center !important;
+    min-height: 40px !important;
+  }
+  .page-banner__actions > a.page-banner__back {
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  /* ---- Panel dashboard: header tidak lagi terjepit ---- */
+  .dashboard-panel-header {
+    padding: 14px 14px !important;
+  }
+  .dashboard-panel-header > div,
+  .dashboard-content-panel .flex.items-center.justify-between {
+    gap: 10px;
+  }
+  /* Judul + link "Lihat Semua" ditumpuk vertikal di HP */
+  .dashboard-panel-header .flex.items-center.justify-between {
+    flex-wrap: wrap;
+  }
+  .dashboard-user-page .dashboard-panel-header h3 {
+    font-size: 15px;
+    line-height: 1.3;
+  }
+  .dashboard-user-page .dashboard-panel-header p {
+    font-size: 12px;
+  }
+  .dashboard-panel-header a {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 4px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  /* ---- Kartu rekomendasi lowongan: lega & full-tap ---- */
+  .dashboard-content-panel .p-5 {
+    padding: 14px !important;
+  }
+  .dashboard-content-panel .group.relative {
+    padding: 14px !important;
+    border-radius: 16px !important;
+  }
+  .dashboard-content-panel .flex.items-start.gap-4 {
+    gap: 12px !important;
+  }
+  .dashboard-content-panel .w-14.h-14 {
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+    border-radius: 14px !important;
+  }
+  .dashboard-content-panel h4 {
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+    overflow-wrap: anywhere;
+  }
+  /* Badge lokasi/tipe/gaji: bungkus rapi, gaji tidak terpotong */
+  .dashboard-content-panel .flex.flex-wrap.items-center.gap-2 {
+    gap: 6px !important;
+  }
+  .dashboard-content-panel .rounded-full.text-xs {
+    font-size: 11px !important;
+    padding: 5px 10px !important;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  /* Tombol aksi: full-width, tinggi jempol */
+  .dashboard-content-panel .flex.items-center.gap-2:last-child,
+  .job-card-actions {
+    display: grid !important;
+    grid-template-columns: 1fr auto;
+    gap: 8px !important;
+    width: 100%;
+  }
+  .dashboard-content-panel a.inline-flex {
+    min-height: 44px;
+    justify-content: center;
+    border-radius: 12px !important;
+    font-size: 14px !important;
+  }
+  .dashboard-content-panel button.p-2 {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+  }
+
+  /* ---- Quick actions: 2 kolom rapat tapi lega disentuh ---- */
+  .dashboard-user-page .grid.grid-cols-2 {
+    gap: 10px !important;
+  }
+  .dashboard-user-page .grid.grid-cols-2 > a {
+    padding: 14px 10px !important;
+    min-height: 104px;
+    justify-content: center;
+  }
+  .dashboard-user-page .grid.grid-cols-2 .w-12.h-12 {
+    width: 44px;
+    height: 44px;
+  }
+  .dashboard-user-page .grid.grid-cols-2 svg.w-7.h-7 {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* ---- Jobs index: filter jadi akordeon hemat layar ---- */
+  .jobs-filter-toggle {
+    display: inline-flex !important;
+  }
+  .jobs-filter-body.collapsed {
+    display: none;
+  }
+  .page-container .bg-white.rounded-2xl.p-5 {
+    padding: 16px !important;
+  }
+  /* Header hasil: tumpuk, sort full-width */
+  .jobs-result-header {
+    align-items: stretch !important;
+  }
+  .jobs-result-header select {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  /* ---- Kartu lowongan (jobs/index): anti overflow ---- */
+  .jobs-grid-card h3 {
+    font-size: 16px !important;
+    overflow-wrap: anywhere;
+  }
+  .jobs-grid-card .rounded-full.text-\[11px\] {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .jobs-grid-card .rounded-xl.bg-slate-50 {
+    gap: 4px !important;
+  }
+  .jobs-grid-card .rounded-xl.bg-slate-50 span:last-child {
+    font-size: 15px !important;
+    overflow-wrap: anywhere;
+  }
+  .jobs-grid-card a.flex-1 {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px !important;
+  }
+  .jobs-grid-card button[aria-label="Simpan lowongan"] {
+    min-width: 46px;
+    min-height: 46px;
+  }
+  .jobs-grid-card p.line-clamp-2 {
+    font-size: 13px !important;
+  }
+
+  /* ---- Job detail: header ditumpuk, tab bisa digeser ---- */
+  .job-show-head {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .job-show-logo {
+    width: 64px !important;
+    height: 64px !important;
+    font-size: 22px !important;
+  }
+  .job-show-title {
+    font-size: 20px !important;
+    line-height: 1.3 !important;
+    overflow-wrap: anywhere;
+  }
+  .job-tabs-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    margin-inline: -4px;
+    padding-inline: 4px;
+  }
+  .job-tabs-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .job-tabs-scroll > button {
+    scroll-snap-align: start;
+    min-height: 40px;
+    flex-shrink: 0;
+  }
+  /* Stat boxes tetap 2 kolom tapi lebih ramping */
+  .job-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+  .job-stat-grid > div {
+    padding: 12px !important;
+    gap: 10px !important;
+  }
+  .job-stat-grid .text-xl {
+    font-size: 16px !important;
+    overflow-wrap: anywhere;
+  }
+  .job-stat-grid .w-12.h-12 {
+    width: 40px;
+    height: 40px;
+  }
+  /* Info pills boleh wrap penuh */
+  .job-pill-row {
+    gap: 8px !important;
+  }
+  .job-pill-row > span {
+    font-size: 12px !important;
+    max-width: 100%;
+  }
+  /* Ruang bawah untuk sticky CTA agar tidak menutupi konten */
+  .job-show-page {
+    padding-bottom: 92px;
+  }
+  .job-sticky-cta {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 54;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid #e2e8f0;
+    box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.10);
+    padding: 10px 14px calc(10px + var(--sab));
+    display: grid !important;
+    grid-template-columns: auto 1fr auto;
+    gap: 8px;
+    align-items: center;
+  }
+  .job-sticky-cta a, .job-sticky-cta button {
+    min-height: 46px;
+  }
+  .job-sticky-cta .cta-main {
+    min-height: 46px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .job-sticky-cta .cta-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+  }
+
+  /* ---- Berita: featured tidak gepeng / kepotong ---- */
+  .news-featured .grid {
+    grid-template-columns: 1fr !important;
+  }
+  .news-featured .poster-frame {
+    height: 200px !important;
+    min-height: 0 !important;
+  }
+  .news-featured .p-8 {
+    padding: 18px !important;
+  }
+  .news-featured h2 {
+    font-size: 19px !important;
+    line-height: 1.35 !important;
+  }
+  .news-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .news-grid .p-6 {
+    padding: 16px !important;
+  }
+
+  /* ---- Profil: input 16px (cegah zoom iOS), tab sticky ---- */
+  .profile-tabs {
+    position: sticky;
+    top: 64px;
+    z-index: 30;
+    background: #fff;
+  }
+  .profile-tabs button {
+    min-height: 44px;
+  }
+  .profile-form input,
+  .profile-form select,
+  .profile-form textarea,
+  .profile-form .ui-input {
+    font-size: 16px !important;
+    min-height: 46px;
+  }
+  .profile-form textarea {
+    min-height: 96px;
+  }
+  .profile-form .grid.gap-5 {
+    gap: 14px !important;
+  }
+  .profile-summary-card {
+    padding: 16px !important;
+  }
+  .profile-summary-card h2 {
+    font-size: 17px !important;
+  }
+  /* Sticky save bar */
+  .profile-savebar {
+    bottom: 12px !important;
+    left: 12px;
+    right: 12px;
+  }
+  .profile-savebar .ui-btn,
+  .profile-savebar button[type="submit"] {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  /* ---- CV builder: tombol & preview aman di HP ---- */
+  .cv-form-card {
+    padding-bottom: 96px !important;
+  }
+  .cv-grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ---- Form umum: semua input lega disentuh ---- */
+  input[type="text"], input[type="email"], input[type="tel"],
+  input[type="url"], input[type="number"], input[type="date"],
+  select, textarea {
+    font-size: 16px;
+  }
+  .ui-input, .ui-select, .ui-textarea {
+    min-height: 44px;
+  }
+  select.ui-select, select {
+    padding-right: 2.25rem;
+  }
+
+  /* ---- Tabel: scroll horizontal dengan hint ---- */
+  .ui-table-wrap {
+    border-radius: 12px;
+    border: 1px solid #f1f5f9;
+  }
+
+  /* ---- Pagination: tombol lebih besar ---- */
+  nav[role="navigation"] a, nav[role="navigation"] button, nav[role="navigation"] span {
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  /* ---- Footer HP: grid rapat ---- */
+  .app-footer-grid {
+    gap: 1rem !important;
+  }
+
+  /* ---- Hilangkan dekorasi berat yang bikin lag di HP ---- */
+  .page-banner__ring {
+    display: none !important;
+  }
+  .page-banner::after {
+    width: 70%;
+    opacity: 0.7;
+  }
+}
+
+/* ============================================================
+   3. HP KECIL (max 380px) — penyesuaian ekstra
+   ============================================================ */
+@media (max-width: 379.98px) {
+  .page-container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  /* Banner makin ramping di HP sangat kecil */
+  .page-banner,
+  .dashboard-hero,
+  .app-page-header,
+  .jobs-search-hero,
+  .ui-page-hero {
+    padding: 7px 10px !important;
+    margin-bottom: 8px !important;
+  }
+  .page-banner__title,
+  .dashboard-hero h1,
+  .app-page-header h2,
+  .ui-page-hero-title {
+    font-size: 0.85rem !important;
+  }
+  .dashboard-panel-header .w-10.h-10 {
+    width: 36px;
+    height: 36px;
+  }
+  .dashboard-content-panel .rounded-full.text-xs {
+    font-size: 10.5px !important;
+  }
+  .job-stat-grid {
+    gap: 8px !important;
+  }
+}
+
+/* ============================================================
+   4. Utilitas mobile (dipakai blade via class)
+   ============================================================ */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.mobile-scroll-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.mobile-scroll-x::-webkit-scrollbar {
+  display: none;
+}
+.mobile-scroll-x > * {
+  scroll-snap-align: start;
+}
+
+/* Tombol filter HP */
+.jobs-filter-toggle {
+  display: none;
+}
+
+/* Sticky CTA job disembunyikan di desktop */
+.job-sticky-cta {
+  display: none;
+}
+
+/* Hormati pengguna yang mengurangi gerak */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================================================
+   5. MODE 2 KOLOM RINGKAS — halaman Cari Lowongan di HP kecil
+   Aktif bila grid punya class .jobs-grid-2col (toggle Alpine).
+   Kartu dipadatkan: logo di atas, info penting saja,
+   deadline/deskripsi/footer disembunyikan (ada di detail).
+   Tablet (≥640px) tetap tampil kartu lengkap 2 kolom.
+   ============================================================ */
+@media (max-width: 639.98px) {
+  .jobs-grid-2col .jobs-grid-card > div {
+    padding: 12px !important;
+  }
+  /* Susun vertikal: logo dulu, lalu teks */
+  .jobs-grid-2col .jobs-grid-card .jobs-card-top {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    margin-bottom: 8px !important;
+  }
+  .jobs-grid-2col .jobs-grid-card .jobs-card-top > img,
+  .jobs-grid-2col .jobs-grid-card .jobs-card-top > div:last-child {
+    order: -1;
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 14px !important;
+    border-radius: 12px !important;
+  }
+  .jobs-grid-2col .jobs-grid-card .jobs-card-top > img {
+    border-radius: 9999px !important;
+  }
+  /* Badge kecil + lokasi dipotong 1 baris */
+  .jobs-grid-2col .jobs-grid-card .jobs-card-top .rounded-full {
+    font-size: 10px !important;
+    padding: 3px 8px !important;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .jobs-grid-2col .jobs-grid-card h3.jobs-card-title {
+    font-size: 13.5px !important;
+    line-height: 1.35 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.7em;
+  }
+  .jobs-grid-2col .jobs-grid-card .jobs-card-top p {
+    font-size: 11px !important;
+    margin-top: 2px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  /* Sembunyikan yang tidak muat — cek di halaman detail */
+  .jobs-grid-2col .jobs-grid-card .jobs-card-deadline,
+  .jobs-grid-2col .jobs-grid-card .jobs-card-desc,
+  .jobs-grid-2col .jobs-grid-card .jobs-card-foot {
+    display: none !important;
+  }
+  /* Gaji ringkas: angka saja */
+  .jobs-grid-2col .jobs-grid-card .jobs-card-salary {
+    padding: 8px 10px !important;
+    gap: 0 !important;
+    margin-bottom: 10px !important;
+  }
+  .jobs-grid-2col .jobs-grid-card .jobs-card-salary > div:first-child {
+    display: none !important;
+  }
+  .jobs-grid-2col .jobs-grid-card .jobs-card-salary span.jobs-salary-value {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+    overflow-wrap: anywhere;
+  }
+  /* Tombol: Detail + simpan berdampingan */
+  .jobs-grid-2col .jobs-grid-card .jobs-card-actions {
+    gap: 6px !important;
+  }
+  .jobs-grid-2col .jobs-grid-card .jobs-card-actions > a {
+    min-height: 40px !important;
+    min-width: 0;
+    font-size: 12px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    border-radius: 10px !important;
+  }
+  .jobs-grid-2col .jobs-grid-card .jobs-card-actions > button {
+    min-width: 40px !important;
+    min-height: 40px !important;
+    border-radius: 10px !important;
+  }
+}

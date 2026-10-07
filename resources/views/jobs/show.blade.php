@@ -16,31 +16,31 @@
                 </span>
             </x-slot:chips>
         </x-ui.page-banner>
-        <div class="page-container page-section" x-data="{ activeTab: 'deskripsi' }">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="page-container page-section job-show-page" x-data="{ activeTab: 'deskripsi' }">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-8">
                 <!-- Main Content (Left Column) -->
-                <div class="lg:col-span-2 space-y-6">
+                <div class="lg:col-span-2 space-y-5 sm:space-y-6 min-w-0">
                     <!-- ONE BIG CARD FOR EVERYTHING -->
-                    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                         
                         <!-- Header Section -->
-                        <div class="p-6 sm:p-8 pb-0">
-                            <div class="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-6">
-                                <div class="flex gap-6 items-start">
+                        <div class="p-4 sm:p-8 pb-0">
+                            <div class="job-show-head flex flex-col md:flex-row md:items-start justify-between gap-4 sm:gap-6 mb-5 sm:mb-6">
+                                <div class="flex gap-3.5 sm:gap-6 items-start min-w-0">
                                     <!-- Company Logo -->
                                     <div class="relative flex-shrink-0">
                                         @if($job->company?->logo)
-                                        <img src="{{ asset('storage/' . $job->company->logo) }}" alt="Logo {{ $job->company->name }}" class="w-24 h-24 rounded-full object-cover border border-blue-200 shadow-sm bg-white">
+                                        <img src="{{ asset('storage/' . $job->company->logo) }}" alt="Logo {{ $job->company->name }}" class="job-show-logo w-24 h-24 rounded-full object-cover border border-blue-200 shadow-sm bg-white">
                                         @else
-                                        <div class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 flex items-center justify-center font-bold text-3xl border border-blue-200 shadow-sm">
+                                        <div class="job-show-logo w-24 h-24 rounded-full bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 flex items-center justify-center font-bold text-3xl border border-blue-200 shadow-sm">
                                             {{ strtoupper(substr($job->company_name ?? $job->company->name ?? 'C', 0, 1)) }}
                                         </div>
                                         @endif
                                     </div>
 
                                     <!-- Title & Company Info -->
-                                    <div>
-                                        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{{ $job->title }}</h1>
+                                    <div class="min-w-0">
+                                        <h1 class="job-show-title text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{{ $job->title }}</h1>
                                         <div class="flex flex-wrap items-center gap-2 mb-3 text-sm">
                                             <span class="font-bold text-gray-800 text-base">{{ $job->company_name ?? 'Perusahaan' }}</span>
                                         </div>
@@ -64,7 +64,7 @@
                             </div>
 
                             <!-- Info Tags (Pills) -->
-                            <div class="flex flex-wrap items-center gap-3 mb-8">
+                            <div class="job-pill-row flex flex-wrap items-center gap-2.5 sm:gap-3 mb-6 sm:mb-8">
                                 <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
                                     {{ $job->location }}
@@ -86,7 +86,7 @@
                             </div>
 
                             <!-- Stat Boxes -->
-                            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                            <div class="job-stat-grid grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
                                 <div class="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-center gap-4 hover:shadow-md transition-shadow">
                                     <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center">
                                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
@@ -127,8 +127,8 @@
                         </div>
 
                         <!-- Tabs Header -->
-                        <div class="px-6 sm:px-8 pt-2">
-                            <div class="flex gap-2 overflow-x-auto no-scrollbar rounded-2xl bg-slate-50 p-2 border border-slate-200">
+                        <div class="px-4 sm:px-8 pt-2">
+                            <div class="job-tabs-scroll flex gap-2 overflow-x-auto no-scrollbar rounded-2xl bg-slate-50 p-2 border border-slate-200">
                             <button @click="activeTab = 'deskripsi'" :class="activeTab === 'deskripsi' ? 'bg-white text-blue-600 shadow-sm border-blue-200' : 'text-slate-600 hover:text-slate-900 hover:bg-white/70 border-transparent'" class="shrink-0 px-4 py-2 rounded-xl border text-sm font-semibold whitespace-nowrap outline-none transition-all">
                                 Deskripsi
                             </button>
@@ -443,7 +443,7 @@
                                 </div>
 
                                 <div x-data="{ showForm: {{ $errors->any() ? 'true' : 'false' }} }">
-                                    <button @click="showForm = !showForm" x-show="!showForm" class="w-full px-4 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 shadow-sm transition-all flex items-center justify-center gap-2">
+                                    <button id="lamar-sekarang" @click="showForm = !showForm" x-show="!showForm" class="w-full px-4 py-3 min-h-[50px] bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 shadow-sm transition-all flex items-center justify-center gap-2 scroll-mt-32">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                                         Lamar Sekarang
                                     </button>
@@ -638,6 +638,29 @@
                 </div>
             </div>
         </div>
+
+        {{-- Sticky CTA khusus HP: Lamar / Simpan / Bagikan selalu terjangkau jempol --}}
+        @if(auth()->check() && auth()->user()->isUmum())
+            @if(!($hasApplied ?? false))
+            <div class="job-sticky-cta md:hidden">
+                <button onclick="toggleBookmark({{ $job->id }})" aria-label="Simpan lowongan" class="cta-icon bookmark-btn text-gray-600">
+                    <svg class="w-5 h-5" fill="{{ ($isBookmarked ?? false) ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                </button>
+                <a href="#lamar-sekarang" onclick="document.getElementById('lamar-sekarang')?.scrollIntoView({behavior:'smooth',block:'center'});return false;" class="cta-main bg-blue-600 text-white inline-flex items-center justify-center gap-2 hover:bg-blue-700 active:scale-[0.98] transition">
+                    Lamar Sekarang
+                </a>
+                <button onclick="shareJob()" aria-label="Bagikan lowongan" class="cta-icon text-gray-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                </button>
+            </div>
+            @endif
+        @elseif(!auth()->check())
+            <div class="job-sticky-cta md:hidden">
+                <a href="{{ route('login') }}" class="cta-main col-span-3 bg-blue-600 text-white inline-flex items-center justify-center gap-2 hover:bg-blue-700 active:scale-[0.98] transition">
+                    Masuk untuk Melamar
+                </a>
+            </div>
+        @endif
 
     @push('scripts')
     <script>

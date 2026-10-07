@@ -334,13 +334,13 @@
         </div>
         @endif
 
-        <div class="sticky bottom-4 z-10 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 shadow-lg backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+        <div class="profile-savebar sticky bottom-4 z-10 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 shadow-lg backdrop-blur sm:flex-row sm:items-center sm:justify-between">
             <p class="hidden items-center gap-1.5 text-xs text-slate-400 sm:flex">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 Pastikan data sudah benar sebelum menyimpan perubahan.
             </p>
             <div class="flex items-center gap-3">
-            <x-ui.btn type="submit">
+            <x-ui.btn type="submit" class="w-full sm:w-auto min-h-[48px] justify-center">
                 {{ __('Simpan Perubahan') }}
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </x-ui.btn>

@@ -22,10 +22,10 @@
                     $remaining = $news->slice(1);
                 @endphp
                 @if($featured)
-                <div class="mb-12">
-                    <article class="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 group">
+                <div class="news-featured mb-8 sm:mb-12">
+                    <article class="bg-white rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 group">
                         <div class="grid md:grid-cols-2 gap-0">
-                            <div class="relative h-64 md:h-auto md:min-h-[320px] poster-frame overflow-hidden">
+                            <div class="relative h-52 sm:h-64 md:h-auto md:min-h-[320px] poster-frame overflow-hidden">
                                 @php $featThumb = $featured->thumbnail ?? $featured->image ?? null; @endphp
                                 @if($featThumb)
                                 <img src="{{ asset('storage/' . $featThumb) }}" alt="" aria-hidden="true" class="poster-bg">
@@ -43,18 +43,18 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="p-8 flex flex-col justify-center">
+                            <div class="p-5 sm:p-8 flex flex-col justify-center">
                                 <div class="flex items-center gap-3 mb-4">
                                     <span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">
                                         {{ \App\Support\Label::newsCategory($featured->category) }}
                                     </span>
                                     <span class="text-sm text-gray-500">{{ $featured->created_at->format('d M Y') }}</span>
                                 </div>
-                                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 line-clamp-2 group-hover:text-blue-600 transition-colors leading-snug">
                                     <a href="{{ route('news.show', $featured) }}">{{ $featured->title }}</a>
                                 </h2>
-                                <p class="text-gray-600 mb-6 line-clamp-3">{{ Str::limit(strip_tags($featured->content), 180) }}</p>
-                                <a href="{{ route('news.show', $featured) }}" class="inline-flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors">
+                                <p class="text-[14px] sm:text-base text-gray-600 mb-4 sm:mb-6 line-clamp-3">{{ Str::limit(strip_tags($featured->content), 180) }}</p>
+                                <a href="{{ route('news.show', $featured) }}" class="inline-flex items-center gap-2 min-h-[44px] text-blue-600 font-semibold hover:text-blue-700 transition-colors">
                                     Baca Selengkapnya
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -69,8 +69,8 @@
                 <!-- Remaining Articles Grid -->
                 @if($remaining->count() > 0)
                 <div class="mb-8">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Artikel Lainnya</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Artikel Lainnya</h2>
+                    <div class="news-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6">
                         @foreach($remaining as $article)
                         <article class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100">
                             <div class="relative h-48 poster-frame overflow-hidden">

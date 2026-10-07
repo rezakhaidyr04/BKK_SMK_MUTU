@@ -22,6 +22,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
         {{-- ?v= bertambah setiap app-custom.css diubah agar browser tidak memakai cache lama --}}
         <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}?v=20261007a">
+        <link rel="stylesheet" href="{{ asset('css/mobile.css') }}?v=20261007b">
 
 </head>
 <body class="font-sans antialiased">

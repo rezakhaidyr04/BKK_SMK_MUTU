@@ -157,11 +157,11 @@
                     </div>
                     @else
                     <!-- Guest Navigation -->
-                    <div class="flex items-center gap-3">
-                        <a href="{{ route('login') }}" class="ui-btn ui-btn-secondary ui-btn-sm">
+                    <div class="flex items-center gap-2 sm:gap-3">
+                        <a href="{{ route('login') }}" class="ui-btn ui-btn-secondary ui-btn-sm min-h-[40px]">
                             Masuk
                         </a>
-                        <a href="{{ route('register') }}" class="ui-btn ui-btn-primary ui-btn-sm">
+                        <a href="{{ route('register') }}" class="ui-btn ui-btn-primary ui-btn-sm min-h-[40px]">
                             Daftar
                         </a>
                     </div>

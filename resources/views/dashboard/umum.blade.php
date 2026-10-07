@@ -89,8 +89,8 @@
                 </div>
             </div>
 
-            {{-- Stats Grid (Refactored using reusable component) — disembunyikan di HP --}}
-            <div class="dashboard-stats-grid hidden sm:grid sm:grid-cols-2 gap-3 mb-6">
+            {{-- Stats Grid (Refactored using reusable component) — 2 kolom compact di HP --}}
+            <div class="dashboard-stats-grid grid grid-cols-2 gap-2.5 sm:gap-3 mb-6">
                 <x-ui.dashboard-stat-card
                     label="Lamaran Aktif"
                     :value="$stats['active_applications']"
@@ -165,20 +165,20 @@
                     {{-- Job Recommendations Section --}}
                     <div class="dashboard-content-panel bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                         <div class="dashboard-panel-header px-5 py-4 border-b border-gray-100 bg-slate-50 cursor-pointer" @click="recommendationsOpen = !recommendationsOpen">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+                            <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+                                <div class="flex items-center gap-3 min-w-0 flex-1">
+                                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shrink-0">
                                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                         </svg>
                                     </div>
-                                    <div>
-                                        <h3 class="text-lg font-bold text-gray-900">Rekomendasi Lowongan</h3>
-                                        <p class="text-sm text-gray-600">Disesuaikan dengan keahlian dan profil Anda</p>
+                                    <div class="min-w-0">
+                                        <h3 class="text-lg font-bold text-gray-900 leading-tight">Rekomendasi Lowongan</h3>
+                                        <p class="text-sm text-gray-600 leading-snug">Disesuaikan dengan keahlian dan profil Anda</p>
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <a href="{{ route('jobs.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 group" @click.stop>
+                                <div class="flex items-center gap-1 shrink-0 ml-auto">
+                                    <a href="{{ route('jobs.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 group min-h-[40px] px-1" @click.stop>
                                         Lihat Semua
                                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -237,12 +237,12 @@
                                                     @endif
                                                 </div>
                                                 
-                                                <div class="flex items-center gap-2">
-                                                    <a href="{{ route('jobs.show', $job->id) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                                                <div class="flex items-center gap-2 job-card-actions">
+                                                    <a href="{{ route('jobs.show', $job->id) }}" class="inline-flex items-center justify-center px-4 py-2 min-h-[44px] flex-1 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 active:scale-[0.98] transition">
                                                         Lihat Detail
                                                     </a>
-                                                    <button class="p-2 text-gray-400 hover:text-red-500 transition-colors" aria-label="Simpan Lowongan">
-                                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <button class="min-w-[44px] min-h-[44px] p-2 text-gray-400 hover:text-red-500 active:scale-95 transition-colors rounded-xl border border-transparent hover:border-red-100" aria-label="Simpan Lowongan">
+                                                        <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                                                         </svg>
                                                     </button>
@@ -269,20 +269,20 @@
                     <!-- My Applications Section -->
                     <div class="dashboard-content-panel bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                         <div class="dashboard-panel-header px-5 py-4 border-b border-gray-100 bg-slate-50 cursor-pointer" @click="applicationsOpen = !applicationsOpen">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+                            <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+                                <div class="flex items-center gap-3 min-w-0 flex-1">
+                                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shrink-0">
                                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
                                     </div>
-                                    <div>
-                                        <h3 class="text-lg font-bold text-gray-900">Lamaran Saya</h3>
-                                        <p class="text-sm text-gray-600">Lacak status lamaran Anda</p>
+                                    <div class="min-w-0">
+                                        <h3 class="text-lg font-bold text-gray-900 leading-tight">Lamaran Saya</h3>
+                                        <p class="text-sm text-gray-600 leading-snug">Lacak status lamaran Anda</p>
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <a href="{{ route('applications.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 group" @click.stop>
+                                <div class="flex items-center gap-1 shrink-0 ml-auto">
+                                    <a href="{{ route('applications.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 group min-h-[40px] px-1" @click.stop>
                                         Lihat Semua
                                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>

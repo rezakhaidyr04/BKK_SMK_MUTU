@@ -52,7 +52,7 @@
         <div class="page-container page-section" x-data="{ currentTab: 'profile' }">
 
             {{-- Ringkasan akun --}}
-            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+            <div class="profile-summary-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
                 <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
                     <div class="flex items-center gap-4">
                         @if($avatarUrl)
@@ -138,8 +138,8 @@
                 @endif
             </div>
 
-            {{-- Navigasi tab --}}
-            <div class="mt-5 flex gap-2 overflow-x-auto rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+            {{-- Navigasi tab — sticky di HP agar gampang pindah --}}
+            <div class="profile-tabs mt-5 flex gap-2 overflow-x-auto no-scrollbar rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
                 <button type="button" @click="currentTab = 'profile'"
                         :class="currentTab === 'profile' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'"
                         class="flex shrink-0 items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-semibold outline-none transition-all">
