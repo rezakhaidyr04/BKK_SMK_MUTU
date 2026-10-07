@@ -16,16 +16,16 @@
                     @endif
 
                     <!-- Logo -->
-                    <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="flex items-center ml-4">
-                        <div class="flex items-center gap-3">
-                            <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Logo BKKMu" class="w-10 h-10 rounded-xl object-cover">
-                            <span class="text-xl font-bold text-gray-900 hidden sm:block">BKKMu</span>
+                    <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="flex items-center ml-2 sm:ml-4 min-w-0">
+                        <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                            <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Logo BKKMu" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl object-cover flex-shrink-0">
+                            <span class="text-lg sm:text-xl font-bold text-gray-900 whitespace-nowrap">BKKMu</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- Right Side Navigation -->
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-1 sm:gap-3 flex-shrink-0">
                     @auth
                     <!-- Notifications -->
                     <div class="relative" x-data="{ notifOpen: false }" @notif-popup-open.window="notifOpen = true" @notif-popup-close.window="notifOpen = false">
@@ -71,14 +71,24 @@
 
                     <!-- User Dropdown -->
                     <div class="relative" x-data="{ userOpen: false }">
-                        <button @click="userOpen = !userOpen" class="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu pengguna" :aria-expanded="userOpen.toString()">
-                        @php $navCompany = Auth::user()->role === 'company' ? Auth::user()->company : null; @endphp
-                        @if($navCompany?->logo)
-                        <img src="{{ asset('storage/' . $navCompany->logo) }}" alt="Logo {{ $navCompany->name }}" class="w-8 h-8 rounded-full object-cover border border-gray-200 bg-white">
-                        @elseif(Auth::user()->avatar)
-                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 rounded-full object-cover">
+                        <button @click="userOpen = !userOpen" class="flex items-center gap-1 sm:gap-2 p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu pengguna" :aria-expanded="userOpen.toString()">
+                        @php
+                            $navCompany = Auth::user()->role === 'company' ? Auth::user()->company : null;
+                            $navCompanyLogoExists = $navCompany?->logo && \Illuminate\Support\Facades\Storage::disk('public')->exists($navCompany->logo);
+                            $navAvatarExists = Auth::user()->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists(Auth::user()->avatar);
+                        @endphp
+                        @if($navCompanyLogoExists)
+                        <img src="{{ asset('storage/' . $navCompany->logo) }}" alt="Logo {{ $navCompany->name }}" class="w-8 h-8 rounded-full object-cover border border-gray-200 bg-white flex-shrink-0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 items-center justify-center text-white font-semibold text-sm flex-shrink-0" style="display:none" aria-hidden="true">
+                            {{ strtoupper(substr($navCompany->name ?? Auth::user()->name, 0, 1)) }}
+                        </div>
+                        @elseif($navAvatarExists)
+                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 rounded-full object-cover border border-gray-200 bg-white flex-shrink-0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 items-center justify-center text-white font-semibold text-sm flex-shrink-0" style="display:none" aria-hidden="true">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </div>
                         @else
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-semibold text-sm" aria-hidden="true">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0" aria-hidden="true">
                             {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                         </div>
                         @endif
@@ -190,11 +200,21 @@
             <!-- Mobile Header -->
             <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-slate-50">
                 <div class="flex items-center gap-3 overflow-hidden">
-                    @php $navCompanyMobile = Auth::user()->role === 'company' ? Auth::user()->company : null; @endphp
-                    @if($navCompanyMobile?->logo)
-                        <img src="{{ asset('storage/' . $navCompanyMobile->logo) }}" alt="Logo {{ $navCompanyMobile->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm flex-shrink-0 bg-white">
-                    @elseif(Auth::user()->avatar)
-                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm flex-shrink-0">
+                    @php
+                        $navCompanyMobile = Auth::user()->role === 'company' ? Auth::user()->company : null;
+                        $navCompanyMobileLogoExists = $navCompanyMobile?->logo && \Illuminate\Support\Facades\Storage::disk('public')->exists($navCompanyMobile->logo);
+                        $navAvatarMobileExists = Auth::user()->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists(Auth::user()->avatar);
+                    @endphp
+                    @if($navCompanyMobileLogoExists)
+                        <img src="{{ asset('storage/' . $navCompanyMobile->logo) }}" alt="Logo {{ $navCompanyMobile->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm flex-shrink-0 bg-white" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 items-center justify-center text-white font-bold text-lg shadow-sm flex-shrink-0" style="display:none" aria-hidden="true">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </div>
+                    @elseif($navAvatarMobileExists)
+                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm flex-shrink-0 bg-white" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 items-center justify-center text-white font-bold text-lg shadow-sm flex-shrink-0" style="display:none" aria-hidden="true">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </div>
                     @else
                         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-sm flex-shrink-0" aria-hidden="true">
                             {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
