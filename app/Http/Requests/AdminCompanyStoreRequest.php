@@ -23,7 +23,7 @@ class AdminCompanyStoreRequest extends FormRequest
             'address' => ['nullable', 'string', 'max:500'],
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
-            'maps_url' => ['required', 'url', 'max:500'],
+            'maps_url' => ['nullable', 'url', 'max:500'],
             'tax_number' => ['nullable', 'string', 'max:100'],
             'mou_path' => ['nullable', 'file', 'mimes:pdf', 'mimetypes:application/pdf', 'max:10240'],
             'mou_number' => ['nullable', 'string', 'max:255'],

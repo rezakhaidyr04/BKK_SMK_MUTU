@@ -23,7 +23,7 @@ class UpdateCompanyProfileRequest extends FormRequest
             'address' => ['nullable', 'string', 'max:255'],
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
-            'maps_url' => ['required', 'url', 'max:500'],
+            'maps_url' => ['nullable', 'url', 'max:500'],
             'logo' => ['nullable', 'image', 'max:2048', 'mimes:jpg,jpeg,png,webp', 'mimetypes:image/jpeg,image/png,image/webp'],
         ];
     }

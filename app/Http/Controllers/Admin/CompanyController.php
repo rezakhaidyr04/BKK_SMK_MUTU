@@ -136,6 +136,12 @@ class CompanyController extends Controller
             unset($validated['mou_path']); // Jangan overwrite jika tidak upload baru
         }
 
+        // Form admin edit hanya kirim name/is_verified/mou_path (tanpa maps_url).
+        // Jangan timpa maps_url yang sudah ada dengan null saat field tidak dikirim.
+        if (empty($validated['maps_url'])) {
+            unset($validated['maps_url']);
+        }
+
         // P1 H-09A: cegah desync verified+false. Jika admin mencabut centang
         // verified padahal status masih verified, kembalikan ke pending
         // (perlu review ulang), bukan mempertahankan verified.
