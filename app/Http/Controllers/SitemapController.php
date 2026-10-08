@@ -27,7 +27,7 @@ class SitemapController extends Controller
                     $urls->push(route('jobs.show', $job));
                 }
             });
-            News::where('is_published', true)->select('id')->latest('created_at')->chunk(500, function ($items) use ($urls) {
+            News::where('is_published', true)->select('id', 'slug')->latest('created_at')->chunk(500, function ($items) use ($urls) {
                 foreach ($items as $news) {
                     $urls->push(route('news.show', $news));
                 }

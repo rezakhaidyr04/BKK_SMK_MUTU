@@ -33,9 +33,11 @@ class NewsController extends Controller
 
     public function show(News $news)
     {
-        // Check if published
+        // Draft hanya bisa dipratinjau admin (tombol "Lihat" di admin).
+        // Publik tetap 404 agar tidak membocorkan konten belum terbit.
         if (!$news->is_published) {
-            abort(404);
+            $isAdmin = auth()->check() && auth()->user()->role === 'admin';
+            abort_unless($isAdmin, 404);
         }
 
         $news->load('author');

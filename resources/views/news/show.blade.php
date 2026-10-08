@@ -91,7 +91,7 @@
                             <div class="mt-8 pt-6 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
                                 <div class="flex items-center gap-2">
                                     <span class="text-xs font-semibold text-slate-500">Bagikan:</span>
-                                    <button onclick="navigator.clipboard.writeText(window.location.href); window.dispatchEvent(new CustomEvent('toast', {detail:{message:'Link disalin!', type:'success'}}))" class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center hover:bg-black transition" title="Salin link">
+                                    <button type="button" onclick="copyNewsLink()" class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center hover:bg-black transition" title="Salin link">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                                     </button>
                                     <a href="https://wa.me/?text={{ urlencode($news->title . ' - ' . url()->current()) }}" target="_blank" class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center hover:bg-green-600 transition" title="WhatsApp">
@@ -209,6 +209,38 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+    <script>
+    function copyNewsLink() {
+        var url = window.location.href;
+        function done(ok) {
+            if (window.toast) {
+                if (ok) window.toast.success('Link berita disalin!');
+                else window.toast.error('Gagal menyalin link.');
+            }
+        }
+        if (navigator.clipboard && window.isSecureContext !== false) {
+            navigator.clipboard.writeText(url).then(function () { done(true); }, function () { fallbackCopy(url); });
+        } else {
+            fallbackCopy(url);
+        }
+        function fallbackCopy(text) {
+            try {
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                var ok = document.execCommand('copy');
+                document.body.removeChild(ta);
+                done(!!ok);
+            } catch (e) { done(false); }
+        }
+    }
+    </script>
+    @endpush
 
     @push('styles')
     <style>

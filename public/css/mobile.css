@@ -689,3 +689,54 @@ img, svg, video {
     border-radius: 10px !important;
   }
 }
+
+/* ============================================================
+   6. NAVBAR BRAND — BKKMu / SMK MUTU CIKAMPEK tetap rapi di HP
+   Masalah: tulisan "BKKMu" naik / tidak sejajar logo di layar kecil
+   karena konflik leading + flex. Aturan ini berlaku semua ukuran
+   agar konsisten, dengan penyesuaian ekstra untuk HP kecil.
+   ============================================================ */
+.nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  line-height: 1;
+  text-decoration: none;
+}
+.nav-brand-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+  margin: 0;
+}
+.nav-brand-title {
+  display: inline-flex;
+  align-items: center;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  color: #0f172a;
+  white-space: nowrap;
+}
+@media (min-width: 640px) {
+  .nav-brand-logo {
+    width: 40px;
+    height: 40px;
+  }
+}
+@media (max-width: 639.98px) {
+  .nav-brand {
+    gap: 7px;
+    max-width: calc(100vw - 130px);
+  }
+  .nav-brand-title {
+    font-size: 16px;
+  }
+}

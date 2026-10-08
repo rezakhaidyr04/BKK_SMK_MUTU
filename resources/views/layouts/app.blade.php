@@ -54,7 +54,7 @@
         {{-- ?v= bertambah setiap app-custom.css diubah agar browser tidak memakai cache lama --}}
         <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}?v=20261007a">
         {{-- Mobile experience layer (HP-first untuk pelamar) --}}
-        <link rel="stylesheet" href="{{ asset('css/mobile.css') }}?v=20261007b">
+        <link rel="stylesheet" href="{{ asset('css/mobile.css') }}?v=20261007e">
         
         @stack('styles')
     </head>
