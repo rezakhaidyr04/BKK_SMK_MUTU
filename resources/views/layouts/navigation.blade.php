@@ -17,9 +17,12 @@
 
                     <!-- Logo -->
                     <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="flex items-center ml-2 sm:ml-4 min-w-0">
-                        <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-                            <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Logo BKKMu" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl object-cover flex-shrink-0">
-                            <span class="text-lg sm:text-xl font-bold text-gray-900 whitespace-nowrap">BKKMu</span>
+                        <div class="flex items-center gap-2 sm:gap-2.5 min-w-0">
+                            <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Logo BKKMu" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover flex-shrink-0">
+                            <span class="flex flex-col min-w-0" style="line-height:1.2">
+                                <span class="font-extrabold text-slate-900 whitespace-nowrap" style="font-size:17px;letter-spacing:-.02em">BKKMu</span>
+                                <span class="font-bold text-slate-400 whitespace-nowrap" style="font-size:8px;letter-spacing:.18em">SMK MUTU CIKAMPEK</span>
+                            </span>
                         </div>
                     </a>
                 </div>

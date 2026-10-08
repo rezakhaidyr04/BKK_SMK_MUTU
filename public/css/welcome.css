@@ -281,16 +281,6 @@ a:focus-visible { outline: 2px solid #60a5fa; outline-offset: 3px; }
     object-fit: cover;
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
 }
-.navbar-brand span { 
-    color: #fff; 
-    font-size: 1rem; 
-    font-weight: 800; 
-    letter-spacing: -.02em;
-    background: linear-gradient(135deg, #ffffff, #e0f2fe);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
 
 /* Nav links */
 .navbar-links {
@@ -2554,4 +2544,130 @@ footer.footer,
     .blue-banner-grid { gap: 12px; }
     .blue-stat-card { padding: 14px; gap: 10px; }
     .blue-stat-number { font-size: 1.3rem; }
+}
+
+/* ============================================================
+   34. HERO COMPACT HP — satu kolom rapi & pendek
+   Judul proporsional rata tengah, 2 tombol sejajar hemat
+   tempat, foto ukuran pas, tanpa kartu melayang (angkanya
+   sudah ada di stats-section tepat di bawah hero).
+   ============================================================ */
+@media (max-width: 768px) {
+    section.hero { padding-top: calc(66px + 10px); padding-bottom: 0 !important; min-height: 0 !important; }
+
+    .hero-inner {
+        grid-template-columns: 1fr !important;
+        text-align: center !important;
+        gap: 8px !important;
+        align-items: center !important;
+        min-height: 0 !important;
+    }
+    .hero-content {
+        align-items: center !important;
+        justify-content: flex-start !important;
+        padding-bottom: 0 !important;
+        max-width: 100% !important;
+    }
+    .hero-badge {
+        margin: 0 auto 8px !important;
+        font-size: .65rem !important;
+        padding: 5px 12px !important;
+    }
+    .hero-title {
+        font-size: 1.55rem !important;
+        line-height: 1.22 !important;
+        letter-spacing: -.02em !important;
+        text-align: center !important;
+        margin: 0 auto 8px !important;
+        max-width: 340px !important;
+        text-wrap: balance;
+    }
+    .hero-desc {
+        font-size: .82rem !important;
+        line-height: 1.6 !important;
+        text-align: center !important;
+        margin: 0 auto 12px !important;
+        max-width: 330px !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    /* Dua tombol sejajar — hemat ruang vertikal */
+    .hero-cta {
+        flex-direction: row !important;
+        align-items: stretch !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        margin: 0 auto 2px !important;
+        width: 100% !important;
+        max-width: 340px !important;
+    }
+    .hero-cta .btn {
+        flex: 1 1 0 !important;
+        width: auto !important;
+        justify-content: center !important;
+        padding: 11px 6px !important;
+        font-size: .76rem !important;
+        border-radius: 11px !important;
+        white-space: nowrap !important;
+    }
+    .hero-cta .btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .hero-visual {
+        padding-right: 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        justify-content: center !important;
+    }
+    .hero-image {
+        padding: 0 16px 0 !important;
+        gap: 0 !important;
+        min-height: 0 !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+    }
+    .hero-image picture {
+        display: block !important;
+        width: auto !important;
+        max-width: 100% !important;
+    }
+    .hero-image img {
+        width: auto !important;
+        height: auto !important;
+        max-width: 260px !important;
+        max-height: 300px !important;
+        object-fit: contain;
+    }
+    /* Kartu melayang disembunyikan di HP — angkanya sudah ada di stats-section */
+    .hero-image .floating-card { display: none !important; }
+}
+@media (max-width: 380px) {
+    .hero-title { font-size: 1.38rem !important; }
+    .hero-desc { font-size: .78rem !important; }
+    .hero-cta .btn { font-size: .7rem !important; }
+    .hero-image img { max-width: 225px !important; max-height: 260px !important; }
+}
+
+/* ============================================================
+   35. NAVBAR BRAND BERTINGKAT — logo + BKKMu / SMK MUTU CIKAMPEK
+   ============================================================ */
+.navbar-brand .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+.navbar-brand .brand-text strong {
+    font-size: .98rem;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    background: linear-gradient(135deg, #ffffff, #e0f2fe);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.navbar-brand .brand-text small {
+    font-size: .55rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    color: rgba(255, 255, 255, .6);
 }
