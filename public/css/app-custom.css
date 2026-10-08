@@ -108,7 +108,7 @@ body {
 /* Specificity dinaikkan (main.main-content) agar offset navbar fixed
    tidak bisa tertimpa aturan generik lain — semua halaman butuh ini. */
 main.main-content {
-    padding-top: var(--navbar-h);
+    padding-top: calc(var(--navbar-h) + env(safe-area-inset-top, 0px));
     min-width: 0;
 }
 

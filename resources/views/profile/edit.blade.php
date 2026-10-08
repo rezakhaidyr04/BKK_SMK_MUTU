@@ -1,5 +1,6 @@
         @php
-                $avatarUrl = $user->avatar ? asset('storage/' . ltrim($user->avatar, '/')) : null;
+                $avatarExists = $user->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->avatar);
+                $avatarUrl = $avatarExists ? asset('storage/' . ltrim($user->avatar, '/')) : null;
                 $roleLabel = match ($user->role) {
                     'company' => 'Perusahaan',
                     'admin' => 'Administrator',
@@ -56,11 +57,15 @@
                 <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
                     <div class="flex items-center gap-4">
                         @if($avatarUrl)
-                            <img src="{{ $avatarUrl }}" alt="{{ $user->name }}"
-                                 class="h-16 w-16 rounded-2xl bg-white object-cover ring-1 ring-slate-200">
+                            <img src="{{ $avatarUrl }}" alt="Foto profil"
+                                 class="h-16 w-16 rounded-2xl bg-white object-cover ring-1 ring-slate-200"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <div class="hidden h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 text-2xl font-extrabold text-white">
+                                {{ strtoupper(substr($user->name, 0, 1)) }}
+                            </div>
                         @else
                             <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 text-2xl font-extrabold text-white">
-                                {{ substr($user->name, 0, 1) }}
+                                {{ strtoupper(substr($user->name, 0, 1)) }}
                             </div>
                         @endif
                         <div class="min-w-0">

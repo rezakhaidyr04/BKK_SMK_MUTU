@@ -2,9 +2,9 @@
 <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 
 <!-- Top Navigation Bar -->
-<nav class="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 z-50 shadow-sm" role="navigation" aria-label="Navigasi utama">
+<nav class="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 z-50 shadow-sm" role="navigation" aria-label="Navigasi utama" style="padding-top:env(safe-area-inset-top,0px)">
         <div class="mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
+            <div class="flex justify-between items-center min-h-[4rem] py-1">
                 <div class="flex items-center">
                     <!-- Sidebar Toggle -->
                     @if(!($hideSidebar ?? false))
@@ -19,9 +19,9 @@
                     <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="flex items-center ml-2 sm:ml-4 min-w-0">
                         <div class="flex items-center gap-2 sm:gap-2.5 min-w-0">
                             <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="Logo BKKMu" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover flex-shrink-0">
-                            <span class="flex flex-col min-w-0" style="line-height:1.2">
-                                <span class="font-extrabold text-slate-900 whitespace-nowrap" style="font-size:17px;letter-spacing:-.02em">BKKMu</span>
-                                <span class="font-bold text-slate-400 whitespace-nowrap" style="font-size:8px;letter-spacing:.18em">SMK MUTU CIKAMPEK</span>
+                            <span class="flex flex-col justify-center min-w-0 leading-none" style="line-height:1.15">
+                                <span class="font-extrabold text-slate-900 whitespace-nowrap leading-tight" style="font-size:17px;letter-spacing:-.02em">BKKMu</span>
+                                <span class="font-bold text-slate-400 whitespace-nowrap leading-tight" style="font-size:8px;letter-spacing:.18em">SMK MUTU CIKAMPEK</span>
                             </span>
                         </div>
                     </a>

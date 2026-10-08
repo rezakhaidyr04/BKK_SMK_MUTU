@@ -43,49 +43,51 @@
         @csrf
     </form>
 
-    <form id="avatar-form" method="post" action="{{ route('profile.avatar.update') }}" enctype="multipart/form-data">
+    <form id="avatar-form" method="post" action="{{ route('profile.avatar.update') }}" enctype="multipart/form-data" class="contents">
         @csrf
-    </form>
-
-    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="profile-form space-y-6">
-        @csrf
-        @method('patch')
-
-        {{-- Foto + Kontak --}}
-        <div class="grid gap-5 lg:grid-cols-[230px_minmax(0,1fr)]">
-            <div class="rounded-2xl border border-slate-100 bg-slate-50/60 p-4 text-center">
-                @php
-                    $avatarPreviewUrl = $user->avatar ? asset('storage/' . ltrim($user->avatar, '/')) : null;
-                @endphp
+        @php
+            $avatarPreviewExists = $user->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->avatar);
+            $avatarPreviewUrl = $avatarPreviewExists ? asset('storage/' . ltrim($user->avatar, '/')) : null;
+        @endphp
+        <div class="rounded-2xl border border-slate-100 bg-slate-50/60 p-4 text-center">
                 @if($avatarPreviewUrl)
-                    <img src="{{ $avatarPreviewUrl }}" alt="" class="mx-auto h-24 w-24 rounded-2xl object-cover ring-1 ring-slate-200">
+                    <img src="{{ $avatarPreviewUrl }}" alt="Foto profil" class="mx-auto h-24 w-24 rounded-2xl object-cover ring-1 ring-slate-200"
+                         onerror="this.style.display='none';document.getElementById('avatar-fallback-initial').style.display='flex'">
+                    <div id="avatar-fallback-initial" style="display:none" class="mx-auto h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 text-3xl font-extrabold text-white">{{ strtoupper(substr($user->name, 0, 1)) }}</div>
                 @else
-                    <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 text-3xl font-extrabold text-white">{{ substr($user->name, 0, 1) }}</div>
+                    <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 text-3xl font-extrabold text-white">{{ strtoupper(substr($user->name, 0, 1)) }}</div>
                 @endif
                 <label for="avatar" class="mt-3 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-blue-300 hover:text-blue-700">
                     Pilih Foto Baru
                 </label>
-                <input id="avatar" name="avatar" type="file" form="avatar-form" class="sr-only" accept="image/jpeg,image/png,image/webp"
+                <input id="avatar" name="avatar" type="file" class="sr-only" accept="image/jpeg,image/png,image/webp"
                        onchange="previewAvatar(event)">
-                <button type="submit" form="avatar-form" class="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
+                <button type="submit" class="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
                     Simpan Foto
                 </button>
-                <p class="mt-2 text-[11px] leading-relaxed text-slate-400">JPG, PNG, WebP · Maksimal 3MB.</p>
+                <p class="mt-2 text-[11px] leading-relaxed text-slate-400">JPG, PNG, WebP · Maksimal 3MB.<br>Pilih foto lalu klik <b>Simpan Foto</b> (tombol <b>Simpan Perubahan</b> di bawah tidak ikut menyimpan foto).</p>
 
                 @if (session('status') === 'avatar-updated')
                     <p class="mt-2 text-xs font-semibold text-green-600">Foto profil tersimpan.</p>
                 @endif
 
                 @if($avatarPreviewUrl)
-                    <img id="avatar-preview" src="{{ $avatarPreviewUrl }}" alt="" class="hidden">
+                    <img id="avatar-preview" src="{{ $avatarPreviewUrl }}" alt="Pratinjau foto" class="hidden mx-auto mt-3 h-24 w-24 rounded-full object-cover ring-2 ring-blue-200">
                 @else
-                    <div id="avatar-preview-placeholder" class="hidden">{{ substr($user->name, 0, 1) }}</div>
-                    <img id="avatar-preview" src="" alt="" class="hidden">
+                    <div id="avatar-preview-placeholder" class="hidden mx-auto mt-3 h-24 w-24 items-center justify-center rounded-full bg-slate-200 text-xl font-bold text-slate-500">{{ strtoupper(substr($user->name, 0, 1)) }}</div>
+                    <img id="avatar-preview" src="" alt="Pratinjau foto" class="hidden mx-auto mt-3 h-24 w-24 rounded-full object-cover ring-2 ring-blue-200">
                 @endif
 
                 <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
-            </div>
+        </div>
+    </form>
 
+    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="profile-form space-y-6">
+        @csrf
+        @method('patch')
+
+        {{-- Kontak --}}
+        <div class="rounded-2xl border border-slate-100 bg-white p-1">
             <div class="grid content-start gap-5 sm:grid-cols-2">
                 <div>
                     <span class="mb-1 flex items-center gap-1.5">
