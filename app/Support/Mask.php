@@ -41,4 +41,32 @@ class Mask
 
         return 'https://wa.me/'.$digits;
     }
+
+    /**
+     * Samarkan email: 1 huruf depan + *** + domain ("budi@mail.com" → "b***@mail.com").
+     */
+    public static function email(?string $email): string
+    {
+        if ($email === null || trim($email) === '') {
+            return '-';
+        }
+
+        $email = trim($email);
+        $at = strrpos($email, '@');
+
+        if ($at === false || $at < 1) {
+            return '***';
+        }
+
+        return substr($email, 0, 1).'***'.substr($email, $at);
+    }
+
+    /**
+     * Amankan nama file untuk header Content-Disposition: buang CR/LF
+     * agar tidak bisa injeksi header (addslashes saja tidak cukup).
+     */
+    public static function filename(string $name): string
+    {
+        return trim(preg_replace('/[\r\n\x00-\x1F\x7F]+/', '', $name) ?? '');
+    }
 }

@@ -288,7 +288,7 @@ class JobController extends Controller
                 "user_id" => Auth::id(),
                 // teks lama dikosongkan untuk data baru (file jadi sumber utama)
                 "cover_letter" => $request->filled('cover_letter')
-                    ? str_replace(['\\r\\n', '\\n', '\\r'], "\n", $request->cover_letter)
+                    ? str_replace(["\r\n", "\n", "\r"], "\n", $request->cover_letter)
                     : null,
                 "cover_letter_path" => $coverPath,
                 "cover_letter_name" => $coverName,

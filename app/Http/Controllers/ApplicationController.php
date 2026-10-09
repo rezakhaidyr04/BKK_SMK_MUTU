@@ -176,7 +176,7 @@ class ApplicationController extends Controller
                 $filename,
                 [
                     'Content-Type' => $mime,
-                    'Content-Disposition' => 'inline; filename="' . addslashes($filename) . '"',
+                    'Content-Disposition' => 'inline; filename="' . \App\Support\Mask::filename($filename) . '"',
                 ]
             );
         }
@@ -206,7 +206,7 @@ class ApplicationController extends Controller
                 $filename,
                 [
                     'Content-Type' => $mime,
-                    'Content-Disposition' => 'inline; filename="' . addslashes($filename) . '"',
+                    'Content-Disposition' => 'inline; filename="' . \App\Support\Mask::filename($filename) . '"',
                 ]
             );
         }
@@ -236,7 +236,7 @@ class ApplicationController extends Controller
                 $filename,
                 [
                     'Content-Type' => $mime,
-                    'Content-Disposition' => 'inline; filename="' . addslashes($filename) . '"',
+                    'Content-Disposition' => 'inline; filename="' . \App\Support\Mask::filename($filename) . '"',
                 ]
             );
         }

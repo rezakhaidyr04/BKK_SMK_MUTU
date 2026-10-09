@@ -73,9 +73,6 @@ class EventController extends Controller
         }
 
         if ($request->hasFile('poster')) {
-            if ($event->poster) {
-                Storage::disk('public')->delete($event->poster);
-            }
             $processor = new ImageProcessor(quality: 82, maxWidth: 1200, maxHeight: 900);
             $stored = $processor->store(
                 $request->file('poster'),
@@ -83,6 +80,9 @@ class EventController extends Controller
                 'poster-' . time()
             );
             if ($stored) {
+                if ($event->poster) {
+                    Storage::disk('public')->delete($event->poster);
+                }
                 $validated['poster'] = $stored;
             } else {
                 unset($validated['poster']);

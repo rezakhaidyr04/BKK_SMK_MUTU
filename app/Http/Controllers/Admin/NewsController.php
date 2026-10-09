@@ -89,9 +89,6 @@ class NewsController extends Controller
         $validated = $request->validated();
 
         if ($request->hasFile('thumbnail')) {
-            if ($news->thumbnail) {
-                Storage::disk('public')->delete($news->thumbnail);
-            }
             $processor = new ImageProcessor(quality: 82, maxWidth: 1200, maxHeight: 800);
             $stored = $processor->store(
                 $request->file('thumbnail'),
@@ -99,6 +96,9 @@ class NewsController extends Controller
                 'thumb-' . Str::slug($validated['title']) . '-' . time()
             );
             if ($stored) {
+                if ($news->thumbnail) {
+                    Storage::disk('public')->delete($news->thumbnail);
+                }
                 $validated['thumbnail'] = $stored;
             } else {
                 unset($validated['thumbnail']);

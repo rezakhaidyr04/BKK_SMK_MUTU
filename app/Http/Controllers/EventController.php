@@ -54,6 +54,9 @@ class EventController extends Controller
 
     public function register(Request $request, Event $event)
     {
+        // Hanya pencari kerja (umum) yang boleh mendaftar — selaras jobs.apply.
+        abort_unless($request->user()->role === 'umum', 403);
+
         $request->validate([
             'notes' => ['nullable', 'string', 'max:1000'],
         ]);
@@ -62,54 +65,72 @@ class EventController extends Controller
             return back()->with('error', 'Acara ini sudah selesai, pendaftaran ditutup.');
         }
 
-        // Kuota
-        if ($event->quota && $event->registrations()->where('status', 'registered')->count() >= $event->quota) {
-            return back()->with('error', 'Kuota peserta sudah penuh.');
-        }
-
-        $existing = EventRegistration::where('event_id', $event->id)
-            ->where('user_id', Auth::id())
-            ->first();
-
-        if ($existing) {
-            if ($existing->status === 'cancelled') {
-                $paymentStatus = $event->isPaid() ? 'unpaid' : 'verified';
-                $existing->update([
-                    'status' => 'registered',
-                    'registered_at' => now(),
-                    'payment_status' => $paymentStatus,
-                    'notes' => $request->notes,
-                ]);
-                if ($event->isPaid()) {
-                    return back()->with('success', 'Berhasil mendaftar ulang! Silakan lakukan pembayaran ' . $event->formattedPrice() . ' dan upload bukti di halaman ini.');
-                }
-                return back()->with('success', 'Kamu berhasil mendaftar ulang untuk acara ini!');
-            }
-            return back()->with('error', 'Kamu sudah terdaftar di acara ini.');
-        }
-
-        $paymentStatus = $event->isPaid() ? 'unpaid' : 'verified';
-
-        // L4: race double-submit bisa menabrak unique(event_id,user_id) —
-        // tangkap 23000 menjadi pesan ramah, bukan HTTP 500.
+        // Transaksi + kunci baris event: cek kuota dan insert atomik agar
+        // request paralel tidak overbook.
         try {
-            EventRegistration::create([
-                'event_id'       => $event->id,
-                'user_id'        => Auth::id(),
-                'status'         => 'registered',
-                'payment_status' => $paymentStatus,
-                'notes'          => $request->notes,
-                'registered_at'  => now(),
-            ]);
+            $outcome = \Illuminate\Support\Facades\DB::transaction(function () use ($request, $event) {
+                $locked = \App\Models\Event::whereKey($event->id)->lockForUpdate()->firstOrFail();
+
+                if ($locked->quota && $locked->registrations()->where('status', 'registered')->count() >= $locked->quota) {
+                    return 'full';
+                }
+
+                $existing = EventRegistration::where('event_id', $locked->id)
+                    ->where('user_id', Auth::id())
+                    ->first();
+
+                if ($existing) {
+                    if ($existing->status === 'cancelled') {
+                        $paymentStatus = $locked->isPaid() ? 'unpaid' : 'verified';
+                        $data = [
+                            'status' => 'registered',
+                            'registered_at' => now(),
+                            'payment_status' => $paymentStatus,
+                            'notes' => $request->notes,
+                        ];
+                        // Daftar ulang acara berbayar = bukti lama tidak berlaku.
+                        if ($locked->isPaid()) {
+                            if ($existing->payment_proof) {
+                                Storage::disk('private')->delete($existing->payment_proof);
+                                Storage::disk('public')->delete($existing->payment_proof);
+                            }
+                            $data['payment_proof'] = null;
+                            $data['paid_at'] = null;
+                        }
+                        $existing->update($data);
+
+                        return $locked->isPaid() ? 're-registered-paid' : 're-registered';
+                    }
+
+                    return 'already';
+                }
+
+                $paymentStatus = $locked->isPaid() ? 'unpaid' : 'verified';
+
+                EventRegistration::create([
+                    'event_id'       => $locked->id,
+                    'user_id'        => Auth::id(),
+                    'status'         => 'registered',
+                    'payment_status' => $paymentStatus,
+                    'notes'          => $request->notes,
+                    'registered_at'  => now(),
+                ]);
+
+                return $locked->isPaid() ? 'registered-paid' : 'registered';
+            });
         } catch (\Illuminate\Database\QueryException $e) {
+            // L4: race double-submit menabrak unique(event_id,user_id) → pesan ramah.
             return back()->with('error', 'Kamu sudah terdaftar di acara ini.');
         }
 
-        if ($event->isPaid()) {
-            return back()->with('success', 'Pendaftaran awal berhasil! Silakan lakukan pembayaran ' . $event->formattedPrice() . ' lalu upload bukti transfer di bawah.');
-        }
-
-        return back()->with('success', 'Pendaftaran berhasil! Sampai jumpa di acara "' . $event->title . '".');
+        return match ($outcome) {
+            'full' => back()->with('error', 'Kuota peserta sudah penuh.'),
+            'already' => back()->with('error', 'Kamu sudah terdaftar di acara ini.'),
+            're-registered-paid' => back()->with('success', 'Berhasil mendaftar ulang! Silakan lakukan pembayaran ' . $event->formattedPrice() . ' dan upload bukti di halaman ini.'),
+            're-registered' => back()->with('success', 'Kamu berhasil mendaftar ulang untuk acara ini!'),
+            'registered-paid' => back()->with('success', 'Pendaftaran awal berhasil! Silakan lakukan pembayaran ' . $event->formattedPrice() . ' lalu upload bukti transfer di bawah.'),
+            default => back()->with('success', 'Pendaftaran berhasil! Sampai jumpa di acara "' . $event->title . '".'),
+        };
     }
 
     public function uploadPaymentProof(Request $request, Event $event)
@@ -173,7 +194,7 @@ class EventController extends Controller
                 $filename,
                 [
                     'Content-Type' => $mime,
-                    'Content-Disposition' => 'inline; filename="' . addslashes($filename) . '"',
+                    'Content-Disposition' => 'inline; filename="' . \App\Support\Mask::filename($filename) . '"',
                 ]
             );
         }

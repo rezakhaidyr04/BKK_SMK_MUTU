@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
         $schedule->call(function () {
-            // Hapus file CV generated yang berumur lebih dari 24 jam di storage/app/private/cv-files
+            // Hapus file CV generated yang berumur lebih dari 24 jam di storage/app/private/cv-files.
+            // Baris DB CvFile ikut dihapus agar tidak jadi tautan unduh 404 permanen.
             $files = \Illuminate\Support\Facades\Storage::disk('private')->files('cv-files');
             $now = now()->timestamp;
 
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
 
                     if ($now - $lastModified > 86400) { // 24 jam dalam detik
                         \Illuminate\Support\Facades\Storage::disk('private')->delete($file);
+                        \App\Models\CvFile::where('file_path', $file)->delete();
                     }
                 }
             }

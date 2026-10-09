@@ -45,20 +45,26 @@ class CvBuilderService
         $template = 'modern';
         // M9: nama file deterministik dari isi — refresh/double-click dengan
         // input sama = nama sama = cek idempotency job menolak duplikat.
+        // Signature mencakup SEMUA yang dirender template (opsi + relasi +
+        // kolom profil user) agar ubah bio/pendidikan/pengalaman/HP tidak
+        // menghasilkan PDF basi.
         $signature = md5($template . '|' . json_encode([
             $data['include_photo'], $data['include_skills'], $data['include_certificates'],
             $data['custom_headline'], $data['custom_summary'], $data['custom_experience'],
             $data['custom_achievement'], $data['target_position'], $data['ats_keywords'],
             $user->skills->pluck('name')->sort()->values()->all(),
             $user->certificates->pluck('title')->sort()->values()->all(),
+            $user->name, $user->phone, $user->address, $user->bio,
+            $user->preferred_position, $user->education_history,
+            $user->experience_organization, $user->portfolio_url,
+            $user->portfolio_type, $user->linkedin_url,
         ]));
         $fileName = 'cv-files/generated-cv-' . $user->id . '-' . $signature . '.pdf';
 
-        if (Cache::has(self::generatingKey($user->id))) {
+        // Atomik: klaim sekali jalan (double-click/paralel tidak dispatch ganda).
+        if (! Cache::add(self::generatingKey($user->id), $fileName, self::GENERATING_TTL)) {
             return 'duplicate';
         }
-
-        Cache::put(self::generatingKey($user->id), $fileName, self::GENERATING_TTL);
         Cache::forget(self::failedKey($user->id));
 
         // Async: worker yang menjalankan DomPDF (bukan HTTP request).

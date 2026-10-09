@@ -24,4 +24,13 @@ class CvFilePolicy
 
         return false;
     }
+
+    /**
+     * Hapus = pemilik sendiri atau admin. Perusahaan yang boleh MELIHAT
+     * (view) TIDAK boleh menghapus CV pelamar.
+     */
+    public function delete(User $user, CvFile $cvFile): bool
+    {
+        return $user->role === 'admin' || $user->id === $cvFile->user_id;
+    }
 }

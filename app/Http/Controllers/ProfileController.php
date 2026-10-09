@@ -53,22 +53,22 @@ class ProfileController extends Controller
         // Terjadi kalau data lama / input API menyimpan "\n" sebagai teks.
         foreach (["bio", "address", "education_history", "experience_organization"] as $multilineField) {
             if (! empty($validated[$multilineField]) && is_string($validated[$multilineField])) {
-                $validated[$multilineField] = str_replace(['\\r\\n', '\\n', '\\r'], "\n", $validated[$multilineField]);
+                $validated[$multilineField] = str_replace(["\r\n", "\n", "\r"], "\n", $validated[$multilineField]);
             }
         }
 
-        // Handle avatar upload
+        // Handle avatar upload: simpan file BARU dulu, hapus yang lama
+        // hanya jika penyimpanan berhasil (agar foto tidak hilang saat gagal).
         if ($request->hasFile("avatar")) {
-            // Hapus avatar lama jika ada
-            if ($user->avatar) {
-                Storage::disk("public")->delete($user->avatar);
-            }
-
             $processor = new ImageProcessor(quality: 82, maxWidth: 320, maxHeight: 320);
             $avatarName = 'avatar-' . $user->id . '-' . time();
             $path = $processor->store($request->file("avatar"), 'profile-photos', $avatarName);
 
             if ($path) {
+                // Hapus avatar lama jika ada
+                if ($user->avatar) {
+                    Storage::disk("public")->delete($user->avatar);
+                }
                 $validated["avatar"] = $path;
             } else {
                 return Redirect::route("profile.edit")->withErrors([
@@ -134,10 +134,6 @@ class ProfileController extends Controller
             ]
         );
 
-        if ($user->avatar) {
-            Storage::disk('public')->delete($user->avatar);
-        }
-
         $processor = new ImageProcessor(quality: 82, maxWidth: 320, maxHeight: 320);
         $path = $processor->store($request->file('avatar'), 'profile-photos', 'avatar-' . $user->id . '-' . time());
 
@@ -145,6 +141,10 @@ class ProfileController extends Controller
             return Redirect::route('profile.edit')->withErrors([
                 'avatar' => 'Foto gagal diproses. Coba file JPG/PNG/WebP lain.',
             ]);
+        }
+
+        if ($user->avatar) {
+            Storage::disk('public')->delete($user->avatar);
         }
 
         $user->avatar = $path;

@@ -62,7 +62,7 @@ class UserDocumentController extends Controller
                 $filename,
                 [
                     'Content-Type' => $mime,
-                    'Content-Disposition' => 'inline; filename="' . addslashes($filename) . '"',
+                    'Content-Disposition' => 'inline; filename="' . \App\Support\Mask::filename($filename) . '"',
                 ]
             );
         }

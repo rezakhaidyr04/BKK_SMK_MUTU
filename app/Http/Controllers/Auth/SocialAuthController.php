@@ -49,6 +49,14 @@ class SocialAuthController extends Controller
             ]);
         }
 
+        // Jangan tautkan akun atas email yang belum diverifikasi Google.
+        $googleRaw = $google->getRaw() ?: [];
+        if (! is_array($googleRaw) || ($googleRaw['email_verified'] ?? false) !== true) {
+            return redirect()->route('login')->withErrors([
+                'email' => 'Email Google Anda belum terverifikasi. Verifikasi dulu di akun Google Anda.',
+            ]);
+        }
+
         // 1. Sudah pernah taut → langsung masuk (tolak akun nonaktif).
         $user = User::where('google_id', $google->getId())->first();
 

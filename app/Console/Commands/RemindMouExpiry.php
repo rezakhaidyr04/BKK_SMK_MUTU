@@ -27,11 +27,13 @@ class RemindMouExpiry extends Command
 
         $this->info("Mencari MoU kedaluwarsa dalam {$days} hari (termasuk yang baru lewat)...");
 
-        // Verified + punya tanggal + (expired ATAU ≤ ambang). Tanpa user = lewati.
+        // Verified + punya tanggal + kedaluwarsa ≤ ambang ATAU baru lewat ≤ ambang.
+        // Batas bawah simetris: yang mati lebih lama dari ambang tidak di-spam tiap minggu.
         $companies = Company::with('user')
             ->where('verification_status', 'verified')
             ->whereNotNull('mou_expires_at')
             ->where('mou_expires_at', '<=', now()->addDays($days))
+            ->where('mou_expires_at', '>=', now()->subDays($days))
             ->whereHas('user')
             ->get();
 

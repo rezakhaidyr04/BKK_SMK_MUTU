@@ -123,15 +123,15 @@ class CompanyController extends Controller
     {
         $validated = $request->validated();
 
-        // Handle MoU file upload
+        // Handle MoU file upload: simpan BARU dulu, hapus lama hanya jika berhasil.
         if ($request->hasFile('mou_path')) {
+            $validated['mou_path'] = $request->file('mou_path')->store('company_mou', 'private');
             // Hapus file MoU lama jika ada
             if ($company->mou_path && Storage::disk('private')->exists($company->mou_path)) {
                 Storage::disk('private')->delete($company->mou_path);
             } elseif ($company->mou_path && Storage::disk('local')->exists($company->mou_path)) {
                 Storage::disk('local')->delete($company->mou_path);
             }
-            $validated['mou_path'] = $request->file('mou_path')->store('company_mou', 'private');
         } else {
             unset($validated['mou_path']); // Jangan overwrite jika tidak upload baru
         }

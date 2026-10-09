@@ -60,6 +60,7 @@ class SendJobNotificationsChunk implements ShouldQueue
             ->all();
 
         User::where('role', 'umum')
+            ->where('is_active', true)
             ->whereBetween('id', [$this->minId, $this->maxId])
             ->when(! empty($already), fn ($q) => $q->whereNotIn('id', $already))
             ->select(['id'])

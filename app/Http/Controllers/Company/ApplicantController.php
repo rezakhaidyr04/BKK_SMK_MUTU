@@ -77,10 +77,13 @@ class ApplicantController extends Controller
         $rows[] = ['Nama', 'Email', 'Telepon', 'Lowongan', 'Status', 'Konfirmasi Wawancara', 'Tanggal Melamar', 'Jadwal Interview', 'Tipe', 'Lokasi/Link', 'Pendidikan'];
 
         foreach ($applications as $app) {
+            // WA-masking berlaku juga di export: kontak mentah hanya untuk
+            // status interviewed/accepted, sisanya tersamarkan.
+            $revealed = $app->contactRevealable();
             $rows[] = [
                 $app->user?->name ?? '(akun dihapus)',
-                $app->user?->email ?? '-',
-                $app->user?->phone ?? '-',
+                $revealed ? ($app->user?->email ?? '-') : \App\Support\Mask::email($app->user?->email),
+                $revealed ? ($app->user?->phone ?? '-') : \App\Support\Mask::phone($app->user?->phone),
                 $app->job?->title ?? '(lowongan dihapus)',
                 \App\Support\Label::applicationStatus($app->status),
                 Application::interviewStatusLabel($app->interview_status),

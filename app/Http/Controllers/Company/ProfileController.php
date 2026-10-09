@@ -35,11 +35,8 @@ class ProfileController extends Controller
 
         $validated = $request->validated();
 
-        // Handle logo upload
+        // Handle logo upload: simpan BARU dulu, hapus lama hanya jika berhasil.
         if ($request->hasFile('logo')) {
-            if ($company->logo) {
-                Storage::disk('public')->delete($company->logo);
-            }
             $processor = new ImageProcessor(quality: 85, maxWidth: 400, maxHeight: 400);
             $logoPath = $processor->store(
                 $request->file('logo'),
@@ -47,6 +44,9 @@ class ProfileController extends Controller
                 'logo-' . $company->id . '-' . time()
             );
             if ($logoPath) {
+                if ($company->logo) {
+                    Storage::disk('public')->delete($company->logo);
+                }
                 $validated['logo'] = $logoPath;
             }
         } else {
@@ -73,28 +73,28 @@ class ProfileController extends Controller
         }
 
         if ($request->hasFile('business_license')) {
-            if ($company->business_license_path && Storage::disk('private')->exists($company->business_license_path)) {
-                Storage::disk('private')->delete($company->business_license_path);
-            }
             $file = $request->file('business_license');
             $ext = $file->extension() ?: strtolower($file->getClientOriginalExtension());
             $path = $file->storeAs(
                 "company_verifications/{$company->id}", 'business_license_' . time() . '.' . $ext,
                 'private'
             );
+            if ($company->business_license_path && Storage::disk('private')->exists($company->business_license_path)) {
+                Storage::disk('private')->delete($company->business_license_path);
+            }
             $company->business_license_path = $path;
         }
 
         if ($request->hasFile('operating_license')) {
-            if ($company->operating_license_path && Storage::disk('private')->exists($company->operating_license_path)) {
-                Storage::disk('private')->delete($company->operating_license_path);
-            }
             $file2 = $request->file('operating_license');
             $ext2 = $file2->extension() ?: strtolower($file2->getClientOriginalExtension());
             $path2 = $file2->storeAs(
                 "company_verifications/{$company->id}", 'operating_license_' . time() . '.' . $ext2,
                 'private'
             );
+            if ($company->operating_license_path && Storage::disk('private')->exists($company->operating_license_path)) {
+                Storage::disk('private')->delete($company->operating_license_path);
+            }
             $company->operating_license_path = $path2;
         }
 

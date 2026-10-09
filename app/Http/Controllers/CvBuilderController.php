@@ -34,6 +34,9 @@ class CvBuilderController extends Controller
 
     public function generate(\App\Http\Requests\CvGenerateRequest $request, \App\Services\CvBuilderService $cvService)
     {
+        // Hanya pencari kerja — selaras build().
+        abort_unless($request->user()->role === 'umum', 403);
+
         // M9: async — request hanya dispatch, DomPDF jalan di worker.
         $status = $cvService->generateCv($request->validated());
 
@@ -92,7 +95,7 @@ class CvBuilderController extends Controller
                 $prettyName,
                 [
                     'Content-Type' => $mime,
-                    'Content-Disposition' => 'inline; filename="' . addslashes($prettyName) . '"',
+                    'Content-Disposition' => 'inline; filename="' . \App\Support\Mask::filename($prettyName) . '"',
                 ]
             );
         }
@@ -102,7 +105,8 @@ class CvBuilderController extends Controller
 
     public function destroy(CvFile $cvFile)
     {
-        $this->authorize('view', $cvFile);
+        // Hapus = pemilik/admin saja (policy delete) — view saja tidak cukup.
+        $this->authorize('delete', $cvFile);
 
         if (Storage::disk('private')->exists($cvFile->file_path)) {
             Storage::disk('private')->delete($cvFile->file_path);

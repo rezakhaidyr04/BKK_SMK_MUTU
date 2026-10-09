@@ -51,6 +51,7 @@ class SendJobBroadcastChunk implements ShouldQueue
         }
 
         User::where('role', 'umum')
+            ->where('is_active', true)
             ->whereBetween('id', [$this->minId, $this->maxId])
             ->select(['id', 'name', 'email'])
             ->orderBy('id')
