@@ -36,7 +36,7 @@ class SocialAuthController extends Controller
         try {
             $google = Socialite::driver('google')->user();
         } catch (\Throwable $e) {
-            Log::warning('Google callback gagal: '.$e->getMessage());
+            Log::warning('Google callback gagal: '.get_class($e).': '.$e->getMessage());
 
             return redirect()->route('login')->withErrors([
                 'email' => 'Login Google gagal. Coba lagi atau masuk dengan email & kata sandi.',
