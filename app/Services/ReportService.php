@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Application;
 use App\Models\Job;
+use App\Models\TracerStudy;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
@@ -16,15 +17,15 @@ class ReportService
     public function summary(): array
     {
         return [
-            'total_umum'            => User::where('role', 'umum')->count(),
-            'total_jobs'            => Job::count(),
+            'total_umum' => User::where('role', 'umum')->count(),
+            'total_jobs' => Job::count(),
             // H1: konsisten dgn definisi publik (status + deadline).
-            'active_jobs'           => Job::active()->count(),
-            'closed_jobs'           => Job::where('status', 'closed')->count(),
-            'total_applications'    => Application::count(),
-            'submitted_applications'  => Application::submitted()->count(),
-            'accepted_applications'   => Application::accepted()->count(),
-            'rejected_applications'   => Application::rejected()->count(),
+            'active_jobs' => Job::active()->count(),
+            'closed_jobs' => Job::where('status', 'closed')->count(),
+            'total_applications' => Application::count(),
+            'submitted_applications' => Application::submitted()->count(),
+            'accepted_applications' => Application::accepted()->count(),
+            'rejected_applications' => Application::rejected()->count(),
             'interviewed_applications' => Application::interviewed()->count(),
         ];
     }
@@ -83,5 +84,66 @@ class ReportService
     public function recentJobs()
     {
         return Job::withCount('applications')->latest()->take(6)->get();
+    }
+
+    /**
+     * A3 Tracer Study — ringkasan KPI BKK.
+     * Satu query agregat per breakdown agar murah, agnostik database.
+     */
+    public function tracerSummary(): array
+    {
+        $totalUmum = User::where('role', 'umum')->count();
+        $filled = TracerStudy::filled()->count();
+
+        $byStatus = TracerStudy::filled()
+            ->selectRaw('status_kerja, COUNT(*) as c')
+            ->groupBy('status_kerja')
+            ->pluck('c', 'status_kerja')
+            ->toArray();
+
+        $relevant = TracerStudy::filled()->where('is_relevant', true)->count();
+        $relevantBase = TracerStudy::filled()->whereNotNull('is_relevant')->count();
+
+        $bySalary = TracerStudy::filled()
+            ->whereNotNull('salary_range')
+            ->selectRaw('salary_range, COUNT(*) as c')
+            ->groupBy('salary_range')
+            ->pluck('c', 'salary_range')
+            ->toArray();
+
+        return [
+            'total_umum' => $totalUmum,
+            'filled' => $filled,
+            'fill_rate' => $totalUmum > 0 ? round(($filled / $totalUmum) * 100, 1) : 0,
+            'bekerja' => $byStatus['bekerja'] ?? 0,
+            'kuliah' => $byStatus['kuliah'] ?? 0,
+            'wirausaha' => $byStatus['wirausaha'] ?? 0,
+            'menganggur' => $byStatus['menganggur'] ?? 0,
+            'relevant' => $relevant,
+            'relevance_rate' => $relevantBase > 0 ? round(($relevant / $relevantBase) * 100, 1) : 0,
+            'by_salary' => $bySalary,
+        ];
+    }
+
+    /**
+     * Baris [label, nilai] tracer untuk export CSV/PDF — konsisten dengan index().
+     */
+    public function tracerRows(): array
+    {
+        $t = $this->tracerSummary();
+
+        return [
+            ['Tracer terisi', $t['filled'].' dari '.$t['total_umum'].' ('.$t['fill_rate'].'%)'],
+            ['Bekerja', $t['bekerja']],
+            ['Kuliah', $t['kuliah']],
+            ['Wirausaha', $t['wirausaha']],
+            ['Menganggur', $t['menganggur']],
+            ['Sesuai jurusan', $t['relevant'].' ('.$t['relevance_rate'].'%)'],
+        ];
+    }
+
+    public function recentTracers()
+    {
+        return TracerStudy::with('user')->latest()->take(6)->get();
     }
 }

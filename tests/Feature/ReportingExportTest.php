@@ -35,19 +35,10 @@ class ReportingExportTest extends TestCase
         $response->assertStatus(200);
         $response->assertHeader('content-type', 'text/csv; charset=utf-8');
         $response->assertSee('Total Pencari Kerja');
-    }
-
-    public function test_excel_export_returns_real_spreadsheetml(): void
-    {
-        Job::factory()->count(2)->create();
-
-        $response = $this->actingAs($this->admin())
-            ->get(route('admin.reports.export-excel'));
-
-        $response->assertStatus(200);
-        $response->assertHeader('content-type', 'application/vnd.ms-excel; charset=utf-8');
-        $response->assertSee('xml', false);
-        $response->assertSee('Workbook', false);
+        $response->assertSee('RINGKASAN');
+        $response->assertSee('TREN LAMARAN');
+        $response->assertSee('PENGGUNA TERBARU');
+        $response->assertSee('LOWONGAN TERBARU');
     }
 
     public function test_pdf_export_returns_pdf_download(): void
@@ -62,5 +53,6 @@ class ReportingExportTest extends TestCase
         $disposition = $response->headers->get('content-disposition');
         $this->assertStringContainsString('pdf', strtolower((string) $contentType));
         $this->assertStringContainsString('attachment', strtolower((string) $disposition));
+        $this->assertStringStartsWith('%PDF', (string) $response->getContent());
     }
 }

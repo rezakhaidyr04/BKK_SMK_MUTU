@@ -169,6 +169,12 @@
                                         MoU ✓
                                     </a>
                                     @endif
+                                    {{-- F3: flag kedaluwarsa MoU --}}
+                                    @if($company->mou_expires_at && $company->mouExpired())
+                                    <span class="mou-link" style="color:#b91c1c;background:#fef2f2;border-color:#fecaca;" title="MoU kedaluwarsa {{ $company->mou_expires_at->format('d M Y') }}">MoU kedaluwarsa!</span>
+                                    @elseif($company->mou_expires_at && $company->mouExpiresSoon())
+                                    <span class="mou-link" style="color:#92400e;background:#fffbeb;border-color:#fde68a;" title="MoU berakhir {{ $company->mou_expires_at->format('d M Y') }}">MoU ≤30 hari</span>
+                                    @endif
                                     @if($company->verification_status === 'rejected' && $company->rejection_reason)
                                     <p class="reject-reason" title="{{ $company->rejection_reason }}">{{ Str::limit($company->rejection_reason, 45) }}</p>
                                     @endif

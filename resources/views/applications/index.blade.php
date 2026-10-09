@@ -316,6 +316,14 @@
                                                 <p class="text-xs text-slate-700">
                                                     <span class="font-semibold text-slate-900">Interview {{ $application->interview_date->format('d M Y, H:i') }} WIB</span>
                                                     @if($application->interview_location)<span class="text-slate-400"> • </span>{{ $application->interview_location }}@endif
+                                                    {{-- D2: status konfirmasi sekilas --}}
+                                                    @if($application->interview_status === 'dikonfirmasi')
+                                                    <span class="ml-1 inline-flex items-center rounded-full bg-green-100 px-2 py-0.5 text-[11px] font-semibold text-green-700">✓ Hadir</span>
+                                                    @elseif($application->interview_status === 'ditolak')
+                                                    <span class="ml-1 inline-flex items-center rounded-full bg-red-100 px-2 py-0.5 text-[11px] font-semibold text-red-700">Berhalangan</span>
+                                                    @else
+                                                    <a href="{{ route('applications.show', $application) }}" class="ml-1 inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-700 hover:bg-amber-200">Konfirmasi →</a>
+                                                    @endif
                                                 </p>
                                                 <div class="mt-1 flex flex-wrap items-center gap-2">
                                                     @if($application->interview_type === 'online' && $application->interview_link)

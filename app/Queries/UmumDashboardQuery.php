@@ -86,12 +86,23 @@ class UmumDashboardQuery
         // Fitur Pesan/Chat dihapus — kunci 0 untuk kompatibilitas view lama.
         $stats["unread_messages"] = 0;
 
+        // Tracer Study — untuk banner pengingat di dashboard umum.
+        // A4: overdue = belum isi + akun 30+ hari (selaras tracer:remind --days=30).
+        $tracer = $user->tracerStudy;
+        $tracerFilled = $tracer?->filled_at !== null;
+        $tracerOverdue = ! $tracerFilled
+            && $user->created_at
+            && $user->created_at->lte(now()->subDays(30));
+
         return compact(
             "stats",
             "recommendedJobs",
             "myApplications",
             "upcomingEvents",
             "activities",
+            "tracer",
+            "tracerFilled",
+            "tracerOverdue",
         );
     }
 

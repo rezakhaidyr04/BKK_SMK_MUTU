@@ -18,6 +18,12 @@ class SitemapController extends Controller
                 route('jobs.index'),
                 route('events.index'),
                 route('news.index'),
+                // B1: halaman statis + kontak.
+                url('/tentang'),
+                url('/faq'),
+                url('/kontak'),
+                url('/privasi'),
+                url('/syarat-ketentuan'),
             ]);
 
             // P5.7: hanya job publik (scopeActive: active + belum expired),
@@ -38,10 +44,10 @@ class SitemapController extends Controller
                 }
             });
 
-            $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-            $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+            $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
+            $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
             foreach ($urls->unique() as $url) {
-                $xml .= '  <url><loc>' . e($url) . '</loc></url>' . "\n";
+                $xml .= '  <url><loc>'.e($url).'</loc></url>'."\n";
             }
             $xml .= '</urlset>';
 

@@ -36,6 +36,7 @@ class Application extends Model
         'interview_type',
         'interview_link',
         'interview_notes',
+        'interview_status',
     ];
 
     protected $casts = [
@@ -108,6 +109,63 @@ class Application extends Model
     public function isRejected(): bool
     {
         return $this->status === 'rejected';
+    }
+
+    /**
+     * D2: status konfirmasi kehadiran wawancara.
+     * menunggu/dikonfirmasi/ditolak hidup selama status=interviewed;
+     * selesai = riwayat (kolom interview lain di-null seperti existing).
+     */
+    public const INTERVIEW_STATUSES = ['menunggu', 'dikonfirmasi', 'ditolak', 'selesai'];
+
+    public static function interviewStatusLabel(?string $status): string
+    {
+        return match ($status) {
+            'menunggu' => 'Menunggu konfirmasi',
+            'dikonfirmasi' => 'Hadir — dikonfirmasi',
+            'ditolak' => 'Berhalangan',
+            'selesai' => 'Selesai',
+            default => '—',
+        };
+    }
+
+    public function isInterviewPending(): bool
+    {
+        return $this->interview_status === 'menunggu';
+    }
+
+    public function isInterviewConfirmed(): bool
+    {
+        return $this->interview_status === 'dikonfirmasi';
+    }
+
+    public function isInterviewDeclined(): bool
+    {
+        return $this->interview_status === 'ditolak';
+    }
+
+    /**
+     * WA-masking: nomor HP boleh diungkap ke perusahaan pemilik hanya saat
+     * wawancara/keputusan (interviewed/accepted). Status lain = tersamarkan.
+     */
+    public function contactRevealable(): bool
+    {
+        return in_array($this->status, ['interviewed', 'accepted'], true);
+    }
+
+    /**
+     * D2: bolehkah pelamar mengubah konfirmasi ke $to?
+     * Selama status=interviewed, pelamar boleh ganti pikiran bebas
+     * (menunggu/dikonfirmasi/ditolak → mana pun). Idempoten: sama = boleh.
+     */    public static function canConfirmInterview(?string $from, string $to): bool
+    {
+        if ($from === $to) {
+            return true;
+        }
+
+        // null = data lama sebelum kolom ada → perlakukan seperti menunggu.
+        return in_array($from, ['menunggu', 'dikonfirmasi', 'ditolak', null], true)
+            && in_array($to, ['dikonfirmasi', 'ditolak'], true);
     }
 
     /**

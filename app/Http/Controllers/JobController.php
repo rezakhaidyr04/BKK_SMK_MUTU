@@ -142,6 +142,7 @@ class JobController extends Controller
         // Check if user has already applied
         $hasApplied = false;
         $isBookmarked = false;
+        $hasReported = false;
 
         if (Auth::check()) {
             $hasApplied = Application::where("job_id", $job->id)
@@ -149,6 +150,11 @@ class JobController extends Controller
                 ->exists();
 
             $isBookmarked = Bookmark::where("job_id", $job->id)
+                ->where("user_id", Auth::id())
+                ->exists();
+
+            // C1: status laporan milik user login (1 query exists, murah).
+            $hasReported = \App\Models\JobReport::where("job_id", $job->id)
                 ->where("user_id", Auth::id())
                 ->exists();
         }
@@ -214,7 +220,7 @@ class JobController extends Controller
 
         return view(
             "jobs.show",
-            compact("job", "hasApplied", "isBookmarked", "savedCount", "similarJobs", "applicationsCount", "reviewedCount", "acceptedCount", "ownerApplicationsCount", "isOwner", "companyRating"),
+            compact("job", "hasApplied", "isBookmarked", "hasReported", "savedCount", "similarJobs", "applicationsCount", "reviewedCount", "acceptedCount", "ownerApplicationsCount", "isOwner", "companyRating"),
         );
     }
 

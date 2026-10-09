@@ -38,6 +38,21 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perDay(3)->by($request->user()?->id ?: $request->ip());
         });
 
+        // Rate limiter for tracer study (sama seperti review: cegah spam update).
+        RateLimiter::for('submit-tracer', function (Request $request) {
+            return Limit::perDay(3)->by($request->user()?->id ?: $request->ip());
+        });
+
+        // B2: kontak publik — longgar tapi anti spam bot.
+        RateLimiter::for('contact', function (Request $request) {
+            return Limit::perHour(5)->by($request->ip());
+        });
+
+        // C1: laporan lowongan — cegah spam massal, pola sama seperti review.
+        RateLimiter::for('submit-report', function (Request $request) {
+            return Limit::perDay(5)->by($request->user()?->id ?: $request->ip());
+        });
+
         // H6: named limiter (kunci independen) untuk broadcast lowongan.
         // JANGAN pakai throttle:3,10 numerik di route ini: route sudah berada
         // dalam grup throttle:60,1 dan limiter numerik berbagi kunci signature

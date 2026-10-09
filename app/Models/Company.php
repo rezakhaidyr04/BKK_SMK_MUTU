@@ -118,4 +118,22 @@ class Company extends Model
     {
         return (bool) $this->mou_path;
     }
+
+    /**
+     * F3: status kedaluwarsa MoU (kolom sudah ada, tinggal dipakai).
+     * Null = tidak ada tanggal → dianggap tidak kedaluwarsa.
+     */
+    public function mouExpired(): bool
+    {
+        return $this->mou_expires_at && $this->mou_expires_at->isPast();
+    }
+
+    public function mouExpiresSoon(int $days = 30): bool
+    {
+        if (! $this->mou_expires_at || $this->mouExpired()) {
+            return false;
+        }
+
+        return $this->mou_expires_at->diffInDays(now()) < $days;
+    }
 }

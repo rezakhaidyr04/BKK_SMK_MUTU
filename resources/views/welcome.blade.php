@@ -821,8 +821,9 @@
                     <h4 class="footer-col-title">Quick Links</h4>
                     <ul class="footer-links">
                         <li><a href="{{ route('jobs.index') }}">Lowongan</a></li>
-                        <li><a href="javascript:void(0)">Perusahaan</a></li>
-                        <li><a href="javascript:void(0)">Artikel</a></li>
+                        <li><a href="{{ url('/tentang') }}">Tentang Kami</a></li>
+                        <li><a href="{{ url('/faq') }}">FAQ</a></li>
+                        <li><a href="{{ route('news.index') }}">Artikel</a></li>
                         <li><a href="{{ route('home') }}">Beranda</a></li>
                     </ul>
                 </div>
@@ -850,8 +851,8 @@
             <div class="footer-bottom">
                 <p>&copy; {{ date('Y') }} BKKMu. Hak cipta dilindungi.</p>
                 <div class="footer-bottom-links">
-                    <a href="javascript:void(0)">Privacy Policy</a>
-                    <a href="javascript:void(0)">Terms of Service</a>
+                    <a href="{{ url('/privasi') }}">Privacy Policy</a>
+                    <a href="{{ url('/syarat-ketentuan') }}">Terms of Service</a>
                 </div>
             </div>
         </div>

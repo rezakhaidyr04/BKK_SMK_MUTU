@@ -22,12 +22,6 @@
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                         Ekspor CSV
                     </a>
-                    <a href="{{ route('admin.reports.export-excel') }}"
-                       style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:#16a34a;border:1px solid #047857;color:#fff;border-radius:12px;font-size:14px;font-weight:600;text-decoration:none;box-shadow:0 4px 20px rgba(5,150,105,0.4);transition:background 0.2s;"
-                       onmouseover="this.style.background='#047857'" onmouseout="this.style.background='#16a34a'">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                        Ekspor Excel
-                    </a>
                     <a href="{{ route('admin.reports.export-pdf') }}"
                        style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:#e11d48;border:1px solid #be123c;color:#fff;border-radius:12px;font-size:14px;font-weight:600;text-decoration:none;box-shadow:0 4px 20px rgba(225,29,72,0.4);transition:background 0.2s;"
                        onmouseover="this.style.background='#be123c'" onmouseout="this.style.background='#e11d48'">
@@ -196,6 +190,54 @@
                         </div>
                     </div>
                     @endforeach
+                </div>
+            </div>
+        </div>
+
+        {{-- ===== ROW 2b: Tracer Study Alumni (A3) ===== --}}
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <div style="background:var(--white);border-radius:20px;border:1px solid var(--border);box-shadow:0 1px 8px rgba(15,23,42,0.06);padding:24px;" class="lg:col-span-3">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                    <div>
+                        <h3 style="font-weight:700;font-size:15px;color:var(--text);">Tracer Study Alumni</h3>
+                        <p style="font-size:12px;color:var(--text-3);margin-top:2px;">{{ number_format($tracer['filled']) }} terisi dari {{ number_format($tracer['total_umum']) }} pencari kerja ({{ $tracer['fill_rate'] }}%)</p>
+                    </div>
+                    <span style="font-size:11px;font-weight:600;padding:4px 10px;background:#fef3c7;color:#92400e;border-radius:99px;">KPI BKK</span>
+                </div>
+                @php
+                    $tracerTotal = max($tracer['filled'], 1);
+                    $tracerStatuses = [
+                        ['label'=>'Bekerja','value'=>$tracer['bekerja'],'color'=>'#16a34a'],
+                        ['label'=>'Kuliah','value'=>$tracer['kuliah'],'color'=>'#3b82f6'],
+                        ['label'=>'Wirausaha','value'=>$tracer['wirausaha'],'color'=>'#8b5cf6'],
+                        ['label'=>'Menganggur','value'=>$tracer['menganggur'],'color'=>'#ef4444'],
+                    ];
+                @endphp
+                <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px;">
+                    @foreach($tracerStatuses as $st)
+                    @php $w = round(($st['value'] / $tracerTotal) * 100); @endphp
+                    <div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                            <span style="font-size:13px;font-weight:500;color:var(--text-2);">{{ $st['label'] }}</span>
+                            <span style="font-size:14px;font-weight:700;color:{{ $st['color'] }};">{{ number_format($st['value']) }} ({{ $w }}%)</span>
+                        </div>
+                        <div style="height:8px;background:#f1f5f9;border-radius:99px;overflow:hidden;">
+                            <div style="height:100%;width:{{ $w }}%;background:{{ $st['color'] }};border-radius:99px;min-width:{{ $st['value']>0?'6px':'0' }};"></div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            <div style="background:linear-gradient(145deg,#0a1633,#1e3a8a);border-radius:20px;box-shadow:0 8px 32px rgba(23,61,145,0.35);padding:24px;color:#fff;display:flex;flex-direction:column;justify-content:space-between;" class="lg:col-span-2">
+                <div>
+                    <p style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(165,180,252,0.9);margin-bottom:8px;">Keselarasan Jurusan</p>
+                    <p style="font-size:56px;font-weight:900;line-height:1;color:#fff;">{{ $tracer['relevance_rate'] }}<span style="font-size:28px;">%</span></p>
+                    <p style="font-size:13px;color:rgba(203,213,225,0.8);margin-top:8px;">
+                        <strong style="color:#fff;">{{ number_format($tracer['relevant']) }}</strong> alumni bekerja/kuliah/usaha sesuai jurusan
+                    </p>
+                </div>
+                <div style="margin-top:16px;font-size:12px;color:rgba(203,213,225,0.85);">
+                    <p>Tingkat pengisian: <strong style="color:#fff;">{{ $tracer['fill_rate'] }}%</strong></p>
                 </div>
             </div>
         </div>

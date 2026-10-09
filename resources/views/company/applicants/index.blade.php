@@ -56,6 +56,7 @@
                 </div>
 
 
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
                 <a
                     href="{{ route('company.jobs.index') }}"
                     class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
@@ -76,6 +77,29 @@
 
                     Kelola Lowongan
                 </a>
+
+                <a
+                    href="{{ route('company.applicants.export', request()->only('job_id')) }}"
+                    class="inline-flex items-center justify-center gap-2 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-green-700"
+                    title="Unduh rekap pelamar (CSV, mengikuti filter lowongan)"
+                >
+                    <svg
+                        class="h-4 w-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="1.8"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                        />
+                    </svg>
+
+                    Export Excel
+                </a>
+                </div>
 
             </div>
 

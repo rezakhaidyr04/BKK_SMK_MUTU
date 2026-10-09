@@ -288,6 +288,26 @@
                         <p class="text-xs text-slate-500 px-1">No: {{ $company->mou_number }}</p>
                     @endif
 
+                    {{-- F3: status kedaluwarsa MoU agar tidak mati diam-diam --}}
+                    @if($company->mou_expires_at)
+                        @if($company->mouExpired())
+                        <div class="bg-red-50 border border-red-200 rounded-xl p-3 flex gap-2.5">
+                            <svg class="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                            <div>
+                                <p class="text-xs font-bold text-red-700">MoU kedaluwarsa {{ $company->mou_expires_at->format('d M Y') }}.</p>
+                                <p class="text-[11px] text-red-600/80">Hubungi admin BKK untuk perpanjangan: bkksmkmutu3@gmail.com</p>
+                            </div>
+                        </div>
+                        @elseif($company->mouExpiresSoon())
+                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 flex gap-2.5">
+                            <svg class="w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <p class="text-xs font-semibold text-amber-700">MoU berakhir {{ $company->mou_expires_at->format('d M Y') }} — segera hubungi admin untuk perpanjangan.</p>
+                        </div>
+                        @else
+                        <p class="text-xs text-slate-500 px-1">Berlaku s.d. {{ $company->mou_expires_at->format('d M Y') }}</p>
+                        @endif
+                    @endif
+
                     @if($company->is_verified ?? false)
                         <div class="bg-green-50 border border-green-200 rounded-xl p-3 flex gap-2.5">
                             <div class="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">

@@ -130,6 +130,7 @@
                     </span>
                     <x-text-input id="phone" name="phone" type="tel" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                   :value="old('phone', $user->phone)" autocomplete="tel" placeholder="Contoh: 08123456789" />
+                    <p class="mt-1 text-xs text-slate-400">Disamarkan untuk perusahaan; dibuka via WhatsApp hanya setelah wawancara dijadwalkan.</p>
                     <x-input-error class="mt-1.5" :messages="$errors->get('phone')" />
                 </div>
 

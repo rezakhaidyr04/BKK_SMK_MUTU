@@ -64,7 +64,7 @@
 | 👥 **User Management** | Kelola semua pengguna (admin, umum, perusahaan) |
 | 🏢 **Company Verification** | Verifikasi & approve/reject perusahaan + MoA |
 | 📢 **Job Broadcast** | Kirim notifikasi lowongan ke seluruh pengguna |
-| 📈 **Placement Reports** | Laporan penyaluran kerja (CSV/Excel) |
+| 📈 **Placement Reports** | Laporan penyaluran kerja (CSV/PDF) |
 | 📰 **News & Events CRUD** | Kelola berita karir & acara |
 
 ---

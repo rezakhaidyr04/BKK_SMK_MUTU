@@ -58,6 +58,12 @@ class ApplicationController extends Controller
         // sudah dihapus (relasi null, mis. dilihat company/admin), 404 bukan 500.
         abort_unless($application->user, 404, 'Data pelamar tidak tersedia.');
 
+        // D2: tempel status konfirmasi ke label wawancara agar langsung terbaca.
+        $interviewSuffix = '';
+        if ($application->status === 'interviewed') {
+            $interviewSuffix = ' · ' . \App\Models\Application::interviewStatusLabel($application->interview_status);
+        }
+
         // Timeline for status tracking
         $timeline = [
             [
@@ -76,7 +82,7 @@ class ApplicationController extends Controller
             ],
             [
                 'status'    => 'interviewed',
-                'label'     => 'Wawancara' . ($application->interview_date ? ' — ' . $application->interview_date->format('d M Y, H:i') : ''),
+                'label'     => 'Wawancara' . ($application->interview_date ? ' — ' . $application->interview_date->format('d M Y, H:i') : '') . $interviewSuffix,
                 'icon'      => 'calendar',
                 'completed' => in_array($application->status, ['interviewed', 'accepted']),
                 'date'      => $application->interview_date,
@@ -95,10 +101,45 @@ class ApplicationController extends Controller
         return view('applications.show', compact('application', 'timeline'));
     }
 
+        /**
+     * D2: konfirmasi kehadiran wawancara oleh pelamar pemilik.
+     * Hanya saat status=interviewed; boleh ganti pikiran (hadir ↔ berhalangan).
+     */
+    public function confirmInterview(Request $request, Application $application)
+    {
+        abort_unless($application->user_id === Auth::id() && Auth::user()->role === 'umum', 403);
+        abort_unless($application->status === 'interviewed', 403, 'Hanya wawancara aktif yang bisa dikonfirmasi.');
+
+        $validated = $request->validate([
+            'response' => ['required', 'in:hadir,berhalangan'],
+        ]);
+
+        $to = $validated['response'] === 'hadir' ? 'dikonfirmasi' : 'ditolak';
+
+        if (! Application::canConfirmInterview($application->interview_status, $to)) {
+            return back()->with('error', 'Konfirmasi tidak valid untuk status saat ini.');
+        }
+
+        $application->interview_status = $to;
+        $application->save();
+
+        // Beri tahu perusahaan pemilik (sinkron + try/catch: notifikasi
+        // gagal tidak boleh menggagalkan konfirmasi yang sudah tersimpan).
+        try {
+            $application->loadMissing('job.company.user');
+            $application->job?->company?->user?->notify(new \App\Notifications\InterviewResponded($application));
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Notifikasi konfirmasi wawancara #' . $application->id . ' gagal dikirim: ' . $e->getMessage());
+        }
+
+        return back()->with('success', $to === 'dikonfirmasi'
+            ? 'Kehadiran dikonfirmasi. Sampai jumpa di wawancara!'
+            : 'Jawaban tercatat. Perusahaan akan dihubungi untuk penjadwalan ulang bila memungkinkan.');
+    }
+
     public function destroy(Application $application)
     {
         abort_unless($application->user_id === Auth::id(), 403);
-
         // Can only withdraw if not yet accepted/rejected
         if (in_array($application->status, ['accepted', 'rejected'])) {
             return back()->with('error', 'Lamaran ini tidak dapat ditarik.');

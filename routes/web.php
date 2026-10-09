@@ -41,8 +41,24 @@ Route::get("/news/{news}", [NewsController::class, "show"])->name("news.show");
 Route::get("/reviews/create", [ReviewController::class, "create"])->name("reviews.create");
 Route::post("/reviews", [ReviewController::class, "store"])->middleware(['auth', 'throttle:submit-review'])->name("reviews.store");
 
+// Tracer Study — khusus umum, store wajib verified + throttle (sama seperti review).
+Route::get("/tracer", [\App\Http\Controllers\TracerStudyController::class, "index"])->middleware('auth')->name("tracer.index");
+Route::post("/tracer", [\App\Http\Controllers\TracerStudyController::class, "store"])->middleware(['auth', 'verified', 'throttle:submit-tracer'])->name("tracer.store");
+
 // SEO: Sitemap (cached 1 hour, chunked + select id only)
 Route::get("/sitemap.xml", [\App\Http\Controllers\SitemapController::class, "index"])->name("sitemap");
+
+// Halaman statis publik (B1) — constraint ketat agar tidak menelan route lain.
+Route::get("/{slug}", [\App\Http\Controllers\PageController::class, "show"])
+    ->where("slug", "tentang|faq|privasi|syarat-ketentuan")
+    ->name("pages.show");
+
+// Kontak publik (B2) — form + throttle anti spam.
+Route::get("/kontak", [\App\Http\Controllers\ContactController::class, "index"])->name("contact.index");
+Route::post("/kontak", [\App\Http\Controllers\ContactController::class, "store"])->middleware("throttle:contact")->name("contact.store");
+
+// Lapor lowongan (C1) — khusus umum, auth + throttle (defense-in-depth: route + controller).
+Route::post("/jobs/{job}/report", [\App\Http\Controllers\JobReportController::class, "store"])->middleware(['auth', 'throttle:submit-report'])->name("jobs.report");
 
 // Auth Routes
 require __DIR__ . "/auth.php";
@@ -108,6 +124,10 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
         Route::post("/jobs/{job}/publish", [App\Http\Controllers\Company\JobController::class, "publish"])->name("jobs.publish");
         Route::delete("/jobs/{job}", [App\Http\Controllers\Company\JobController::class, "destroy"])->name("jobs.destroy");
         Route::get("/applicants", [App\Http\Controllers\Company\ApplicantController::class, "index"])->name("applicants.index");
+        // Export WAJIB di atas /applicants/{application} agar "export" tidak ditangkap binding.
+        Route::get("/applicants/export", [App\Http\Controllers\Company\ApplicantController::class, "export"])->name("applicants.export");
+        // WA-masking: di atas show agar "contact" tidak ditangkap binding.
+        Route::get("/applicants/{application}/contact", [App\Http\Controllers\Company\ApplicantController::class, "contact"])->name("applicants.contact");
         Route::get("/applicants/{application}", [App\Http\Controllers\Company\ApplicantController::class, "show"])->name("applicants.show");
         Route::patch("/applications/{application}", [App\Http\Controllers\Company\ApplicantController::class, "update"])->name("applications.update");
         Route::get("/profile", [App\Http\Controllers\Company\ProfileController::class, "edit"])->name("profile.edit");
@@ -139,6 +159,12 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
             "downloadSkck",
         ])->name("applications.skck.download");
 
+        // D2: konfirmasi kehadiran wawancara oleh pelamar pemilik.
+        Route::post("/applications/{application}/interview-confirm", [
+            ApplicationController::class,
+            "confirmInterview",
+        ])->name("applications.interview-confirm");
+
         Route::delete("/applications/{application}", [
             ApplicationController::class,
             "destroy",
@@ -153,6 +179,12 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
         BookmarkController::class,
         "destroy",
     ])->name("bookmarks.destroy");
+
+    // E1: Job Alert — preferensi pencari kerja (pola bookmarks: auth saja).
+    Route::get("/job-alerts", [\App\Http\Controllers\JobAlertController::class, "index"])->name("job-alerts.index");
+    Route::post("/job-alerts", [\App\Http\Controllers\JobAlertController::class, "store"])->name("job-alerts.store");
+    Route::patch("/job-alerts/{jobAlert}", [\App\Http\Controllers\JobAlertController::class, "toggle"])->name("job-alerts.toggle");
+    Route::delete("/job-alerts/{jobAlert}", [\App\Http\Controllers\JobAlertController::class, "destroy"])->name("job-alerts.destroy");
 
     // CV Builder — P0 H-02: generate wajib verified.
     Route::get("/cv/builder", [CvBuilderController::class, "index"])->name(
@@ -281,10 +313,6 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
                 App\Http\Controllers\Admin\ReportController::class,
                 "export",
             ])->name("reports.export");
-            Route::get("/reports/export-excel", [
-                App\Http\Controllers\Admin\ReportController::class,
-                "exportExcel",
-            ])->name("reports.export-excel");
             Route::get("/reports/export-pdf", [
                 App\Http\Controllers\Admin\ReportController::class,
                 "exportPdf",
@@ -301,6 +329,46 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
                 App\Http\Controllers\Admin\ReviewController::class,
                 "index",
             ])->name("reviews.index");
+
+            // B2: inbox kontak/helpdesk.
+            Route::get("/contacts", [
+                App\Http\Controllers\Admin\ContactController::class,
+                "index",
+            ])->name("contacts.index");
+            Route::get("/contacts/{contact}", [
+                App\Http\Controllers\Admin\ContactController::class,
+                "show",
+            ])->name("contacts.show");
+            Route::post("/contacts/{contact}/replied", [
+                App\Http\Controllers\Admin\ContactController::class,
+                "markReplied",
+            ])->name("contacts.replied");
+            Route::delete("/contacts/{contact}", [
+                App\Http\Controllers\Admin\ContactController::class,
+                "destroy",
+            ])->name("contacts.destroy");
+
+            // C1: moderasi laporan lowongan.
+            Route::get("/job-reports", [
+                App\Http\Controllers\Admin\JobReportController::class,
+                "index",
+            ])->name("job-reports.index");
+            Route::get("/job-reports/{jobReport}", [
+                App\Http\Controllers\Admin\JobReportController::class,
+                "show",
+            ])->name("job-reports.show");
+            Route::post("/job-reports/{jobReport}/close", [
+                App\Http\Controllers\Admin\JobReportController::class,
+                "close",
+            ])->name("job-reports.close");
+            Route::post("/job-reports/{jobReport}/dismiss", [
+                App\Http\Controllers\Admin\JobReportController::class,
+                "dismiss",
+            ])->name("job-reports.dismiss");
+            Route::delete("/job-reports/{jobReport}", [
+                App\Http\Controllers\Admin\JobReportController::class,
+                "destroy",
+            ])->name("job-reports.destroy");
 
             // Personal Access Token (Sanctum) untuk admin — P0 H-08: + revoke.
             Route::get("/api-tokens", [

@@ -27,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         "phone",
         "bio",
         "role",
+        "google_id",
         "is_active",
         "must_change_password",
         "password_changed_at",
@@ -98,6 +99,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function conversations()
     {
         return $this->belongsToMany(Conversation::class, 'conversation_user')->withTimestamps();
+    }
+
+    public function tracerStudy()
+    {
+        return $this->hasOne(TracerStudy::class);
     }
 
     /**

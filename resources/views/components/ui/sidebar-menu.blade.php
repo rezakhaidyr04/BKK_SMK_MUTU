@@ -40,6 +40,17 @@
         </svg>
         <span class="font-medium">Lowongan Tersimpan</span>
     </a>
+
+    <a href="{{ route('job-alerts.index') }}" @click="sidebarOpen = false" class="nav-link {{ request()->routeIs('job-alerts.*') ? 'active' : '' }} flex items-center gap-3">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+        </svg>
+        <span class="font-medium">Job Alert</span>
+        @php $alertCount = \App\Models\JobAlert::where('user_id', Auth::id())->where('is_active', true)->count(); @endphp
+        @if($alertCount > 0)
+        <span class="ml-auto nav-badge blue">{{ $alertCount }}</span>
+        @endif
+    </a>
 </div>
 
 <div class="mt-6">
@@ -58,6 +69,13 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
         </svg>
         <span class="font-medium">Sertifikat</span>
+    </a>
+
+    <a href="{{ route('tracer.index') }}" @click="sidebarOpen = false" class="nav-link {{ request()->routeIs('tracer.*') ? 'active' : '' }} flex items-center gap-3">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+        </svg>
+        <span class="font-medium">Tracer Study</span>
     </a>
 </div>
 
@@ -151,6 +169,28 @@
         </svg>
         <span class="font-medium">Ulasan Pengguna</span>
         <span class="nav-badge amber ml-auto">Lihat</span>
+    </a>
+
+    <a href="{{ route('admin.contacts.index') }}" @click="sidebarOpen = false" class="nav-link {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }} flex items-center gap-3">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        <span class="font-medium">Pesan Kontak</span>
+        @php $unreadContacts = \App\Models\ContactMessage::where('status', 'baru')->count(); @endphp
+        @if($unreadContacts > 0)
+        <span class="ml-auto nav-badge red">{{ $unreadContacts }}</span>
+        @endif
+    </a>
+
+    <a href="{{ route('admin.job-reports.index') }}" @click="sidebarOpen = false" class="nav-link {{ request()->routeIs('admin.job-reports.*') ? 'active' : '' }} flex items-center gap-3">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
+        <span class="font-medium">Laporan Lowongan</span>
+        @php $pendingReports = \App\Models\JobReport::where('status', 'menunggu')->count(); @endphp
+        @if($pendingReports > 0)
+        <span class="ml-auto nav-badge red">{{ $pendingReports }}</span>
+        @endif
     </a>
 </div>
 @endif

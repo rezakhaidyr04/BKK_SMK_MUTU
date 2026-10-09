@@ -31,6 +31,18 @@
         </div>
 
         <div class="page-container pb-6">
+            @if(empty($tracerFilled))
+            @php $isOverdue = !empty($tracerOverdue); @endphp
+            <div class="mb-4 rounded-2xl border {{ $isOverdue ? 'border-red-200 bg-gradient-to-r from-red-50 to-white' : 'border-amber-200 bg-gradient-to-r from-amber-50 to-white' }} px-5 py-4 shadow-sm flex flex-col md:flex-row md:items-center gap-3 md:justify-between">
+                <div>
+                    <p class="text-sm font-bold {{ $isOverdue ? 'text-red-900' : 'text-amber-900' }}">{{ $isOverdue ? 'Segera isi Tracer Study ⏰' : 'Belum isi Tracer Study 📋' }}</p>
+                    <p class="text-sm {{ $isOverdue ? 'text-red-700' : 'text-amber-700' }} mt-0.5">{{ $isOverdue ? 'Akun Anda 30+ hari belum mengisi. Bantu BKK melengkapi data penyaluran kerja.' : 'Bantu BKK memetakan kabar alumni — cukup 1 menit, bisa diubah kapan saja.' }}</p>
+                </div>
+                <a href="{{ route('tracer.index') }}" class="inline-flex items-center justify-center px-5 py-2.5 min-h-[44px] rounded-xl {{ $isOverdue ? 'bg-red-600 hover:bg-red-700' : 'bg-amber-500 hover:bg-amber-600' }} text-white text-sm font-semibold active:scale-[0.98] transition shrink-0">
+                    Isi Tracer Study →
+                </a>
+            </div>
+            @endif
             <div class="rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50/80 to-white px-5 py-4 shadow-sm backdrop-blur-sm">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>

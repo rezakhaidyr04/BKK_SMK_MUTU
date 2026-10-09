@@ -123,6 +123,9 @@
                                     <li><a href="{{ route('jobs.index') }}" class="transition hover:text-white">Lowongan</a></li>
                                     <li><a href="{{ route('events.index') }}" class="transition hover:text-white">Acara</a></li>
                                     <li><a href="{{ route('news.index') }}" class="transition hover:text-white">Berita</a></li>
+                                    <li><a href="{{ url('/tentang') }}" class="transition hover:text-white">Tentang Kami</a></li>
+                                    <li><a href="{{ url('/faq') }}" class="transition hover:text-white">FAQ</a></li>
+                                    <li><a href="{{ url('/kontak') }}" class="transition hover:text-white">Kontak</a></li>
                                     <li><a href="{{ route('home') }}" class="transition hover:text-white">Beranda</a></li>
                                 </ul>
                             </div>
@@ -154,8 +157,8 @@
                         <div class="app-footer-copy mt-8 border-t border-white/10 pt-4 text-xs text-gray-500 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                             <p>© {{ date('Y') }} BKKMu. Hak cipta dilindungi.</p>
                             <div class="flex flex-wrap gap-3">
-                                <span class="opacity-70">Kebijakan Privasi</span>
-                                <span class="opacity-70">Syarat & Ketentuan</span>
+                                <a href="{{ url('/privasi') }}" class="opacity-70 transition hover:text-white hover:opacity-100">Kebijakan Privasi</a>
+                                <a href="{{ url('/syarat-ketentuan') }}" class="opacity-70 transition hover:text-white hover:opacity-100">Syarat & Ketentuan</a>
                             </div>
                         </div>
                     </div>
