@@ -44,7 +44,7 @@
             <tr>
                 <td style="border:none;vertical-align:top;">
                     <p class="title">Laporan &amp; Analitik BKKMu</p>
-                    <p class="subtitle">BKK SMK Mutu &mdash; Ringkasan performa sistem</p>
+                    <p class="subtitle">BKK SMK TI Muhammadiyah Cikampek &mdash; Ringkasan performa sistem</p>
                 </td>
                 <td style="border:none;text-align:right;vertical-align:top;">
                     <p style="font-size:11px;color:#0a1633;font-weight:bold;margin:0;">{{ $generatedAt }}</p>

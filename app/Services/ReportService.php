@@ -104,6 +104,10 @@ class ReportService
         $relevant = TracerStudy::filled()->where('is_relevant', true)->count();
         $relevantBase = TracerStudy::filled()->whereNotNull('is_relevant')->count();
 
+        // Alumni vs umum: KPI sekolah dihitung dari alumni saja.
+        $alumniFilled = TracerStudy::filled()->alumni()->count();
+        $alumniBekerja = TracerStudy::filled()->alumni()->byStatus('bekerja')->count();
+
         $bySalary = TracerStudy::filled()
             ->whereNotNull('salary_range')
             ->selectRaw('salary_range, COUNT(*) as c')
@@ -115,6 +119,10 @@ class ReportService
             'total_umum' => $totalUmum,
             'filled' => $filled,
             'fill_rate' => $totalUmum > 0 ? round(($filled / $totalUmum) * 100, 1) : 0,
+            'alumni' => $alumniFilled,
+            'non_alumni' => $filled - $alumniFilled,
+            'alumni_bekerja' => $alumniBekerja,
+            'alumni_work_rate' => $alumniFilled > 0 ? round(($alumniBekerja / $alumniFilled) * 100, 1) : 0,
             'bekerja' => $byStatus['bekerja'] ?? 0,
             'kuliah' => $byStatus['kuliah'] ?? 0,
             'wirausaha' => $byStatus['wirausaha'] ?? 0,
@@ -134,6 +142,9 @@ class ReportService
 
         return [
             ['Tracer terisi', $t['filled'].' dari '.$t['total_umum'].' ('.$t['fill_rate'].'%)'],
+            ['— Alumni SMK TI Muhammadiyah Cikampek', $t['alumni']],
+            ['— Umum non-alumni', $t['non_alumni']],
+            ['Alumni bekerja', $t['alumni_bekerja'].' ('.$t['alumni_work_rate'].'% dari alumni)'],
             ['Bekerja', $t['bekerja']],
             ['Kuliah', $t['kuliah']],
             ['Wirausaha', $t['wirausaha']],

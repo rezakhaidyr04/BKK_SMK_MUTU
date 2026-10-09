@@ -2744,8 +2744,10 @@ div:has(> .ui-error) > .ui-textarea { border-color: #fca5a5; background-color: #
 .auth-input-wrapper .auth-input-icon {
     position: absolute;
     left: 1rem;
-    top: calc(2rem + 26px);
-    transform: translateY(-50%);
+    /* Jangkar ke BAWAH wrapper (input selalu anak terakhir, tinggi tetap)
+       agar ikon selalu tengah input apa pun tinggi label —Submit + HP aman. */
+    top: auto;
+    bottom: 17px;
     width: 18px;
     height: 18px;
     color: #94a3b8;
@@ -3002,6 +3004,10 @@ div:has(> .ui-error) > .ui-textarea { border-color: #fca5a5; background-color: #
     .auth-input-wrapper .ui-input {
         height: 48px;
         font-size: 0.9rem;
+    }
+    /* Input HP 48px → ikon 18px butuh bottom 15px agar tetap tengah. */
+    .auth-input-wrapper .auth-input-icon {
+        bottom: 15px;
     }
     .auth-btn {
         height: 48px;

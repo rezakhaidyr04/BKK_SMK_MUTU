@@ -200,7 +200,7 @@
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
                     <div>
                         <h3 style="font-weight:700;font-size:15px;color:var(--text);">Tracer Study Alumni</h3>
-                        <p style="font-size:12px;color:var(--text-3);margin-top:2px;">{{ number_format($tracer['filled']) }} terisi dari {{ number_format($tracer['total_umum']) }} pencari kerja ({{ $tracer['fill_rate'] }}%)</p>
+                        <p style="font-size:12px;color:var(--text-3);margin-top:2px;">{{ number_format($tracer['filled']) }} terisi dari {{ number_format($tracer['total_umum']) }} pencari kerja ({{ $tracer['fill_rate'] }}%) · Alumni: {{ number_format($tracer['alumni']) }} (bekerja {{ $tracer['alumni_work_rate'] }}%) · Umum: {{ number_format($tracer['non_alumni']) }}</p>
                     </div>
                     <span style="font-size:11px;font-weight:600;padding:4px 10px;background:#fef3c7;color:#92400e;border-radius:99px;">KPI BKK</span>
                 </div>

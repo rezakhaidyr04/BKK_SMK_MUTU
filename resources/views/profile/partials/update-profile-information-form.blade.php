@@ -308,11 +308,11 @@
                     <x-input-label for="education_history" value="Riwayat Pendidikan (SD s.d. sekarang)" class="font-semibold text-slate-700" />
                 </span>
                 <div class="mb-2 rounded-xl border border-blue-100 bg-blue-50 px-3 py-2 text-sm text-blue-700">
-                    Isi riwayat pendidikan Anda dari tingkat paling rendah sampai saat ini. Jika Anda bukan dari SMK MUTU, Anda tetap dapat mengisi sekolah atau lembaga pendidikan terakhir Anda.
+                    Isi riwayat pendidikan Anda dari tingkat paling rendah sampai saat ini. Jika Anda bukan dari SMK TI Muhammadiyah Cikampek, Anda tetap dapat mengisi sekolah atau lembaga pendidikan terakhir Anda.
                 </div>
                 <textarea id="education_history" name="education_history" rows="4"
                           class="mt-1 block w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 shadow-sm text-sm text-slate-900 bg-white"
-                          placeholder="Contoh:&#10;SD Negeri 1 Cikampek (2016-2022)&#10;SMP Negeri 2 Cikampek (2022-2025)&#10;SMK MUTU Cikampek (2025-sekarang)&#10;Jurusan: Akuntansi">{{ old('education_history', isset($user->education_history) ? str_replace(['\\r\\n', '\\n', '\\r'], "\n", $user->education_history) : '') }}</textarea>
+                          placeholder="Contoh:&#10;SD Negeri 1 Cikampek (2016-2022)&#10;SMP Negeri 2 Cikampek (2022-2025)&#10;SMK TI Muhammadiyah Cikampek (2025-sekarang)&#10;Jurusan: Akuntansi">{{ old('education_history', isset($user->education_history) ? str_replace(['\\r\\n', '\\n', '\\r'], "\n", $user->education_history) : '') }}</textarea>
                 <x-input-error class="mt-1.5" :messages="$errors->get('education_history')" />
             </div>
 

@@ -25,8 +25,30 @@
                     </div>
                 @endif
 
-                <form action="{{ route('tracer.store') }}" method="POST" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-8">
+                <form action="{{ route('tracer.store') }}" method="POST" x-data="{ alumni: @js((string) old('is_alumni', isset($tracer->is_alumni) ? (int) $tracer->is_alumni : '1')) }" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-8">
                     @csrf
+
+                    <div class="mb-5">
+                        <span class="block text-sm font-semibold text-gray-900 mb-2">Apakah Anda alumni SMK TI Muhammadiyah Cikampek? <span class="text-red-500">*</span></span>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="flex items-center gap-2 rounded-xl border px-4 py-3 text-sm cursor-pointer transition" :class="alumni === '1' ? 'border-blue-500 bg-blue-50 font-semibold text-blue-800' : 'border-gray-300 text-gray-600'">
+                                <input type="radio" name="is_alumni" value="1" x-model="alumni" class="accent-blue-600"> Ya, alumni
+                            </label>
+                            <label class="flex items-center gap-2 rounded-xl border px-4 py-3 text-sm cursor-pointer transition" :class="alumni === '0' ? 'border-blue-500 bg-blue-50 font-semibold text-blue-800' : 'border-gray-300 text-gray-600'">
+                                <input type="radio" name="is_alumni" value="0" x-model="alumni" class="accent-blue-600"> Bukan (umum)
+                            </label>
+                        </div>
+                        @error('is_alumni')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                    </div>
+
+                    <div class="mb-5" x-show="alumni === '0'" x-cloak>
+                        <label for="asal_sekolah" class="block text-sm font-semibold text-gray-900 mb-2">Asal sekolah <span class="text-red-500">*</span></label>
+                        <input type="text" name="asal_sekolah" id="asal_sekolah" maxlength="150"
+                            value="{{ old('asal_sekolah', $tracer->asal_sekolah ?? '') }}"
+                            placeholder="cth: SMAN 1 Karawang"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 @error('asal_sekolah') border-red-500 @enderror">
+                        @error('asal_sekolah')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                    </div>
 
                     <div class="mb-5">
                         <label for="status_kerja" class="block text-sm font-semibold text-gray-900 mb-2">Status Anda saat ini <span class="text-red-500">*</span></label>
@@ -71,7 +93,7 @@
                             </select>
                             @error('salary_range')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
-                        <div>
+                        <div x-show="alumni === '1'">
                             <label for="is_relevant" class="block text-sm font-semibold text-gray-900 mb-2">Sesuai jurusan SMK?</label>
                             <select name="is_relevant" id="is_relevant"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 @error('is_relevant') border-red-500 @enderror">
@@ -83,9 +105,9 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5" x-show="alumni === '1'">
                         <div>
-                            <label for="tahun_lulus" class="block text-sm font-semibold text-gray-900 mb-2">Tahun lulus</label>
+                            <label for="tahun_lulus" class="block text-sm font-semibold text-gray-900 mb-2">Tahun lulus <span class="text-red-500">*</span></label>
                             <input type="number" name="tahun_lulus" id="tahun_lulus" min="2000" max="{{ date('Y') }}"
                                 value="{{ old('tahun_lulus', $tracer->tahun_lulus ?? '') }}"
                                 placeholder="{{ date('Y') - 1 }}"
@@ -93,17 +115,18 @@
                             @error('tahun_lulus')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                         <div>
-                            <label for="jurusan" class="block text-sm font-semibold text-gray-900 mb-2">Jurusan</label>
+                            <label for="jurusan" class="block text-sm font-semibold text-gray-900 mb-2">Jurusan <span class="text-red-500">*</span></label>
                             <input type="text" name="jurusan" id="jurusan" maxlength="100" list="jurusan-list"
                                 value="{{ old('jurusan', $tracer->jurusan ?? '') }}"
-                                placeholder="cth: RPL"
+                                placeholder="cth: Rekayasa Perangkat Lunak"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 @error('jurusan') border-red-500 @enderror">
                             <datalist id="jurusan-list">
-                                <option value="RPL"></option>
-                                <option value="TKJ"></option>
-                                <option value="TBSM"></option>
-                                <option value="OTKP"></option>
-                                <option value="AKL"></option>
+                                <option value="Manajemen Perkantoran"></option>
+                                <option value="Rekayasa Perangkat Lunak"></option>
+                                <option value="Teknik Bisnis Sepeda Motor"></option>
+                                <option value="Teknik Komputer Dan Jaringan"></option>
+                                <option value="Teknik Kendaraan Ringan"></option>
+                                <option value="Teknik Pemesinan"></option>
                             </datalist>
                             @error('jurusan')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>

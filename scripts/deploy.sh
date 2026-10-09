@@ -1,9 +1,9 @@
 #!/bin/bash
-# Deploy script untuk BKK SMK MUTU - Production
+# Deploy script untuk BKK SMK TI Muhammadiyah Cikampek - Production
 # Usage: bash scripts/deploy.sh  atau  ./scripts/deploy.sh
 set -e
 
-echo "=== BKK SMK MUTU Deploy ==="
+echo "=== BKK SMK TI Muhammadiyah Cikampek Deploy ==="
 
 if [ ! -f .env ]; then
   echo "[!] .env tidak ditemukan. Copy dari .env.production.example"

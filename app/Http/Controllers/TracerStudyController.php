@@ -31,12 +31,21 @@ class TracerStudyController extends Controller
     public function store(StoreTracerStudyRequest $request)
     {
         $validated = $request->validated();
+        $validated['is_alumni'] = $request->boolean('is_alumni');
 
         // Normalisasi boolean dari select "1"/"0"/"".
         if (array_key_exists('is_relevant', $validated)) {
             $validated['is_relevant'] = $validated['is_relevant'] === null || $validated['is_relevant'] === ''
                 ? null
                 : (bool) $validated['is_relevant'];
+        }
+
+        // Bersihkan kolom yang tidak relevan agar rekap alumni steril.
+        if ($validated['is_alumni']) {
+            $validated['asal_sekolah'] = null;
+        } else {
+            $validated['tahun_lulus'] = null;
+            $validated['jurusan'] = null;
         }
 
         auth()->user()->tracerStudy()->updateOrCreate(

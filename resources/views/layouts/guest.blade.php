@@ -7,10 +7,10 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="apple-touch-icon" href="{{ asset('images/logos/mutu_logo.png') }}">
     <title>@yield('title', config('app.name', 'BKKMu'))</title>
-    <meta name="description" content="@yield('description', 'Bursa Kerja Khusus (BKK) SMK MUTU — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.')">
+    <meta name="description" content="@yield('description', 'Bursa Kerja Khusus (BKK) SMK TI Muhammadiyah Cikampek — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.')">
     <meta property="og:type" content="website">
     <meta property="og:title" content="@yield('title', config('app.name', 'BKKMu'))">
-    <meta property="og:description" content="@yield('description', 'Bursa Kerja Khusus (BKK) SMK MUTU — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.')">
+    <meta property="og:description" content="@yield('description', 'Bursa Kerja Khusus (BKK) SMK TI Muhammadiyah Cikampek — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.')">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta name="twitter:card" content="summary">
     <link rel="canonical" href="{{ url()->current() }}">
@@ -21,7 +21,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
         {{-- ?v= bertambah setiap app-custom.css diubah agar browser tidak memakai cache lama --}}
-        <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}?v=20261007a">
+        <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}?v=20261009b">
         <link rel="stylesheet" href="{{ asset('css/mobile.css') }}?v=20261007b">
 
 </head>

@@ -16,6 +16,7 @@ class StoreTracerStudyRequest extends FormRequest
         $year = (int) now()->format('Y');
 
         return [
+            'is_alumni' => ['required', 'boolean'],
             'status_kerja' => ['required', 'in:bekerja,kuliah,wirausaha,menganggur'],
             // Wajib saat sudah ada kegiatan, opsional saat menganggur.
             'company_name' => ['nullable', 'string', 'max:150', 'required_unless:status_kerja,menganggur'],
@@ -24,8 +25,27 @@ class StoreTracerStudyRequest extends FormRequest
             'is_relevant' => ['nullable', 'boolean'],
             'tahun_lulus' => ['nullable', 'integer', 'min:2000', "max:{$year}"],
             'jurusan' => ['nullable', 'string', 'max:100'],
+            'asal_sekolah' => ['nullable', 'string', 'max:150'],
             'no_wa' => ['nullable', 'string', 'max:20', 'regex:/^[0-9+\-\s]+$/'],
         ];
+    }
+
+    public function withValidator($validator): void
+    {
+        // Alumni wajib isi tahun lulus + jurusan (KPI sekolah);
+        // non-alumni wajib isi asal sekolah sebagai gantinya.
+        $validator->after(function ($validator) {
+            if ($this->boolean('is_alumni')) {
+                if (! $this->filled('tahun_lulus')) {
+                    $validator->errors()->add('tahun_lulus', 'Tahun lulus wajib diisi untuk alumni.');
+                }
+                if (! $this->filled('jurusan')) {
+                    $validator->errors()->add('jurusan', 'Jurusan wajib diisi untuk alumni.');
+                }
+            } elseif (! $this->filled('asal_sekolah')) {
+                $validator->errors()->add('asal_sekolah', 'Asal sekolah wajib diisi bila bukan alumni SMK TI Muhammadiyah Cikampek.');
+            }
+        });
     }
 
     public function messages(): array

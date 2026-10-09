@@ -14,6 +14,7 @@ class TracerStudy extends Model
      */
     protected $fillable = [
         'user_id',
+        'is_alumni',
         'status_kerja',
         'company_name',
         'position',
@@ -21,11 +22,13 @@ class TracerStudy extends Model
         'is_relevant',
         'tahun_lulus',
         'jurusan',
+        'asal_sekolah',
         'no_wa',
         'filled_at',
     ];
 
     protected $casts = [
+        'is_alumni' => 'boolean',
         'is_relevant' => 'boolean',
         'tahun_lulus' => 'integer',
         'filled_at' => 'datetime',
@@ -43,6 +46,11 @@ class TracerStudy extends Model
     public function scopeFilled($query)
     {
         return $query->whereNotNull('filled_at');
+    }
+
+    public function scopeAlumni($query)
+    {
+        return $query->where('is_alumni', true);
     }
 
     public function scopeByStatus($query, string $status)

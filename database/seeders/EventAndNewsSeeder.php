@@ -35,18 +35,18 @@ class EventAndNewsSeeder extends Seeder
     {
         $events = [
             [
-                'title'       => 'Job Fair SMK MUTU 2025',
+                'title'       => 'Job Fair SMK TI Muhammadiyah Cikampek 2025',
                 'type'        => 'job_fair',
                 'description' => "Job Fair terbesar yang diselenggarakan oleh BKKMu Cikampek!\n\nEvent ini menghadirkan lebih dari 20 perusahaan ternama dari berbagai industri yang siap merekrut lulusan SMK terbaik. Setiap peserta berkesempatan langsung mengirimkan CV dan mengikuti wawancara di tempat.\n\nApa yang bisa kamu dapatkan:\n- Bertemu langsung dengan HRD puluhan perusahaan\n- Wawancara langsung di hari yang sama\n- Informasi lowongan kerja terkini\n- Konsultasi karir gratis\n- Door prize menarik\n\nDaftarkan dirimu sekarang dan raih peluang karir impianmu!",
-                'location'    => 'Aula Utama SMK MUTU Cikampek',
+                'location'    => 'Aula Utama SMK TI Muhammadiyah Cikampek Cikampek',
                 'start_time'  => Carbon::now()->addDays(14)->setHour(8)->setMinute(0),
                 'end_time'    => Carbon::now()->addDays(14)->setHour(16)->setMinute(0),
             ],
             [
                 'title'       => 'Seminar Karir: Persiapan Memasuki Dunia Kerja',
                 'type'        => 'seminar',
-                'description' => "Seminar karir spesial untuk siswa dan alumni SMK MUTU!\n\nNarasumber:\n- Bpk. Hendra Wijaya (HRD Manager PT Maju Bersama)\n- Ibu Rini Susanti (Career Coach berpengalaman 10 tahun)\n- Bpk. Dodi Pratama (Alumni sukses yang kini menjadi entrepreneur)\n\nMateri yang akan dibahas:\n1. Cara membuat CV yang menarik dan ATS-friendly\n2. Tips sukses wawancara kerja\n3. Etika profesional di dunia kerja\n4. Cara membangun personal branding di LinkedIn\n5. Sesi tanya jawab interaktif\n\nGratis untuk siswa dan alumni SMK MUTU. Tempat terbatas!",
-                'location'    => 'Ruang Multimedia SMK MUTU Cikampek',
+                'description' => "Seminar karir spesial untuk siswa dan alumni SMK TI Muhammadiyah Cikampek!\n\nNarasumber:\n- Bpk. Hendra Wijaya (HRD Manager PT Maju Bersama)\n- Ibu Rini Susanti (Career Coach berpengalaman 10 tahun)\n- Bpk. Dodi Pratama (Alumni sukses yang kini menjadi entrepreneur)\n\nMateri yang akan dibahas:\n1. Cara membuat CV yang menarik dan ATS-friendly\n2. Tips sukses wawancara kerja\n3. Etika profesional di dunia kerja\n4. Cara membangun personal branding di LinkedIn\n5. Sesi tanya jawab interaktif\n\nGratis untuk siswa dan alumni SMK TI Muhammadiyah Cikampek. Tempat terbatas!",
+                'location'    => 'Ruang Multimedia SMK TI Muhammadiyah Cikampek Cikampek',
                 'start_time'  => Carbon::now()->addDays(7)->setHour(9)->setMinute(0),
                 'end_time'    => Carbon::now()->addDays(7)->setHour(12)->setMinute(0),
             ],
@@ -54,7 +54,7 @@ class EventAndNewsSeeder extends Seeder
                 'title'       => 'Workshop Pembuatan CV & Portfolio Profesional',
                 'type'        => 'workshop',
                 'description' => "Workshop praktis membuat CV dan portfolio yang membuat HRD melirik lamaranmu!\n\nDalam workshop ini kamu akan belajar:\n- Struktur CV yang benar dan modern\n- Cara menulis pengalaman dan skill yang menarik\n- Membuat portfolio digital di Canva dan Notion\n- Optimasi profil LinkedIn untuk pencarian kerja\n- Praktik langsung membuat CV kamu sendiri\n\nFasilitas:\n✅ Modul materi lengkap\n✅ Template CV premium gratis\n✅ Sesi review CV personal\n✅ Sertifikat keikutsertaan\n\nPeserta wajib membawa laptop. Kuota terbatas 30 orang.",
-                'location'    => 'Lab Komputer SMK MUTU Cikampek',
+                'location'    => 'Lab Komputer SMK TI Muhammadiyah Cikampek Cikampek',
                 'start_time'  => Carbon::now()->addDays(21)->setHour(13)->setMinute(0),
                 'end_time'    => Carbon::now()->addDays(21)->setHour(17)->setMinute(0),
             ],
@@ -62,15 +62,15 @@ class EventAndNewsSeeder extends Seeder
                 'title'       => 'Pelatihan Microsoft Office untuk Dunia Kerja',
                 'type'        => 'pelatihan',
                 'description' => "Kuasai Microsoft Office dan tingkatkan nilai jualmu di dunia kerja!\n\nMicrosoft Office (Word, Excel, PowerPoint) adalah skill wajib yang diminta hampir semua perusahaan. Dalam pelatihan intensif 2 hari ini, kamu akan:\n\nHari 1 - Microsoft Word & Excel:\n- Membuat surat resmi dan laporan profesional\n- Rumus Excel untuk administrasi dan keuangan\n- Pivot table dan visualisasi data\n\nHari 2 - PowerPoint & Praktik:\n- Desain presentasi yang menarik dan profesional\n- Simulasi tes Office untuk seleksi kerja\n- Studi kasus nyata dari dunia kerja\n\nSetelah lulus akan mendapat sertifikat dari BKKMu.",
-                'location'    => 'Lab Komputer SMK MUTU Cikampek',
+                'location'    => 'Lab Komputer SMK TI Muhammadiyah Cikampek Cikampek',
                 'start_time'  => Carbon::now()->addDays(28)->setHour(8)->setMinute(0),
                 'end_time'    => Carbon::now()->addDays(29)->setHour(16)->setMinute(0),
             ],
             [
                 'title'       => 'Temu Alumni: Berbagi Pengalaman Karir',
                 'type'        => 'seminar',
-                'description' => "Acara spesial temu alumni SMK MUTU yang kini sudah sukses berkarir!\n\nDengarkan kisah inspiratif dari alumni yang telah berhasil membangun karir di berbagai bidang. Mereka akan berbagi:\n- Pengalaman pertama melamar kerja\n- Tantangan dan cara mengatasinya\n- Tips bertahan dan berkembang di perusahaan\n- Bagaimana ilmu SMK diterapkan di dunia nyata\n\nAcara ini terbuka untuk semua siswa, alumni, dan orang tua.\nAkan ada sesi networking dan konsultasi pribadi dengan alumni.",
-                'location'    => 'Aula SMK MUTU Cikampek',
+                'description' => "Acara spesial temu alumni SMK TI Muhammadiyah Cikampek yang kini sudah sukses berkarir!\n\nDengarkan kisah inspiratif dari alumni yang telah berhasil membangun karir di berbagai bidang. Mereka akan berbagi:\n- Pengalaman pertama melamar kerja\n- Tantangan dan cara mengatasinya\n- Tips bertahan dan berkembang di perusahaan\n- Bagaimana ilmu SMK diterapkan di dunia nyata\n\nAcara ini terbuka untuk semua siswa, alumni, dan orang tua.\nAkan ada sesi networking dan konsultasi pribadi dengan alumni.",
+                'location'    => 'Aula SMK TI Muhammadiyah Cikampek Cikampek',
                 'start_time'  => Carbon::now()->addDays(35)->setHour(9)->setMinute(0),
                 'end_time'    => Carbon::now()->addDays(35)->setHour(13)->setMinute(0),
             ],
@@ -86,7 +86,7 @@ class EventAndNewsSeeder extends Seeder
                 'title'       => 'Workshop Kewirausahaan untuk Generasi Muda',
                 'type'        => 'workshop',
                 'description' => "Tidak hanya jadi karyawan, kamu juga bisa jadi pengusaha sukses!\n\nWorkshop kewirausahaan ini dirancang khusus untuk siswa dan alumni SMK yang tertarik memulai usaha sendiri.\n\nMateri:\n1. Ide bisnis dari hobi dan keahlian SMK\n2. Cara membuat rencana bisnis sederhana\n3. Modal usaha: cara mendapatkan modal awal\n4. Digital marketing untuk UMKM\n5. Kisah sukses pengusaha muda asal Cikampek\n\nPembicara: Ibu Fitri Handayani - Founder UMKM Batik Cikampek yang kini sudah ekspor ke 5 negara.\n\nGratis! Daftar sekarang sebelum penuh.",
-                'location'    => 'Aula SMK MUTU Cikampek',
+                'location'    => 'Aula SMK TI Muhammadiyah Cikampek Cikampek',
                 'start_time'  => Carbon::now()->addDays(42)->setHour(9)->setMinute(0),
                 'end_time'    => Carbon::now()->addDays(42)->setHour(15)->setMinute(0),
             ],
@@ -95,7 +95,7 @@ class EventAndNewsSeeder extends Seeder
                 'title'       => 'Pelatihan K3 (Keselamatan & Kesehatan Kerja)',
                 'type'        => 'pelatihan',
                 'description' => "Pelatihan wajib K3 untuk calon tenaga kerja industri.\n\nMemahami prosedur keselamatan kerja adalah kewajiban setiap tenaga kerja di industri. Pelatihan ini membekali peserta dengan:\n- Dasar-dasar K3 di tempat kerja\n- Penggunaan APD (Alat Pelindung Diri) yang benar\n- Prosedur darurat dan pertolongan pertama\n- Simulasi evakuasi\n\nPeserta mendapat sertifikat K3 yang diakui industri.",
-                'location'    => 'Ruang Praktik SMK MUTU Cikampek',
+                'location'    => 'Ruang Praktik SMK TI Muhammadiyah Cikampek Cikampek',
                 'start_time'  => Carbon::now()->subDays(10)->setHour(8)->setMinute(0),
                 'end_time'    => Carbon::now()->subDays(10)->setHour(16)->setMinute(0),
             ],
@@ -229,15 +229,15 @@ class EventAndNewsSeeder extends Seeder
 <p>Gunakan fitur Sertifikat di platform BKKMu untuk mencatat dan menampilkan sertifikat yang kamu miliki di profil lamaranmu!</p>",
             ],
             [
-                'title'        => 'Kisah Sukses: Alumni SMK MUTU yang Kini Jadi Software Engineer',
+                'title'        => 'Kisah Sukses: Alumni SMK TI Muhammadiyah Cikampek yang Kini Jadi Software Engineer',
                 'category'     => 'Inspirasi',
                 'is_published' => true,
                 'content'      => "<h2>Dari Bangku SMK ke Software Engineer: Perjalanan Rizky</h2>
-<p>Rizky Firmansyah, alumni jurusan Rekayasa Perangkat Lunak SMK MUTU angkatan 2022, kini bekerja sebagai Software Engineer di perusahaan startup teknologi di Jakarta dengan gaji yang kompetitif. Ini kisah perjalanannya.</p>
+<p>Rizky Firmansyah, alumni jurusan Rekayasa Perangkat Lunak SMK TI Muhammadiyah Cikampek angkatan 2022, kini bekerja sebagai Software Engineer di perusahaan startup teknologi di Jakarta dengan gaji yang kompetitif. Ini kisah perjalanannya.</p>
 <h3>Awal yang Penuh Keraguan</h3>
 <p>\"Dulu saya ragu, apakah lulusan SMK bisa bersaing dengan lulusan S1?\" cerita Rizky. \"Banyak yang meremehkan kami. Tapi saya membuktikan bahwa skill dan kerja keras lebih penting dari gelar.\"</p>
 <h3>Masa SMK yang Produktif</h3>
-<p>Selama di SMK MUTU, Rizky tidak hanya belajar di kelas. Ia aktif mengembangkan diri dengan:</p>
+<p>Selama di SMK TI Muhammadiyah Cikampek, Rizky tidak hanya belajar di kelas. Ia aktif mengembangkan diri dengan:</p>
 <ul>
 <li>Belajar Laravel dan React secara mandiri di YouTube</li>
 <li>Membuat 3 proyek pribadi yang diupload di GitHub</li>

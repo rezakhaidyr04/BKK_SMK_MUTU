@@ -72,7 +72,7 @@ class RestoreAdminAccounts extends Command
             'profile' => [
                 'preferred_position' => 'Teknisi Mesin',
                 'address' => 'Jl. Melati No. 5, Cikampek Barat',
-                'education_history' => "SMK MUTU Cikampek (Teknik Mesin)",
+                'education_history' => "SMK TI Muhammadiyah Cikampek (Teknik Pemesinan)",
             ],
         ],
         [
@@ -81,9 +81,9 @@ class RestoreAdminAccounts extends Command
             'password' => 'password123',
             'role' => 'umum',
             'profile' => [
-                'preferred_position' => 'Staf Akuntansi',
+                'preferred_position' => 'Staf Administrasi',
                 'address' => 'Jl. Anggrek No. 12, Cikampek',
-                'education_history' => "SMK MUTU Cikampek (Akuntansi)",
+                'education_history' => "SMK TI Muhammadiyah Cikampek (Manajemen Perkantoran)",
             ],
         ],
         [
@@ -94,7 +94,7 @@ class RestoreAdminAccounts extends Command
             'profile' => [
                 'preferred_position' => 'Programmer / Web Developer',
                 'address' => 'Perumahan Cikampek Baru Blok C No. 8',
-                'education_history' => "SMK MUTU Cikampek (Rekayasa Perangkat Lunak)",
+                'education_history' => "SMK TI Muhammadiyah Cikampek (Rekayasa Perangkat Lunak)",
             ],
         ],
         [
@@ -103,9 +103,9 @@ class RestoreAdminAccounts extends Command
             'password' => 'password123',
             'role' => 'umum',
             'profile' => [
-                'preferred_position' => 'Staf Housekeeping / Front Office',
+                'preferred_position' => 'Sales Dealer / Mekanik Motor',
                 'address' => 'Jl. Pramuka No. 33, Cikampek Timur',
-                'education_history' => "SMK MUTU Cikampek (Perhotelan)",
+                'education_history' => "SMK TI Muhammadiyah Cikampek (Teknik Bisnis Sepeda Motor)",
             ],
         ],
     ];

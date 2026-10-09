@@ -14,7 +14,7 @@ class ContactController extends Controller
     {
         return view('contact.index', [
             'seoTitle' => 'Kontak — BKKMu',
-            'seoDescription' => 'Hubungi tim BKK SMK MUTU: pertanyaan akun, kemitraan perusahaan, atau laporan lowongan mencurigakan.',
+            'seoDescription' => 'Hubungi tim BKK SMK TI Muhammadiyah Cikampek: pertanyaan akun, kemitraan perusahaan, atau laporan lowongan mencurigakan.',
         ]);
     }
 

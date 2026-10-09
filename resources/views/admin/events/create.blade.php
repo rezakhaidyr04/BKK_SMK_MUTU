@@ -24,7 +24,7 @@
 
             <div>
                 <label class="ui-label">Nama Acara <span class="text-red-500">*</span></label>
-                <input type="text" name="title" value="{{ old('title') }}" required class="ui-input" placeholder="Contoh: Job Fair SMK MUTU 2025">
+                <input type="text" name="title" value="{{ old('title') }}" required class="ui-input" placeholder="Contoh: Job Fair SMK TI Muhammadiyah Cikampek 2025">
             </div>
 
             <div>
@@ -52,7 +52,7 @@
 
             <div>
                 <label class="ui-label">Lokasi <span class="text-red-500">*</span></label>
-                <input type="text" name="location" value="{{ old('location') }}" required class="ui-input" placeholder="Contoh: Aula SMK MUTU / Online via Zoom">
+                <input type="text" name="location" value="{{ old('location') }}" required class="ui-input" placeholder="Contoh: Aula SMK TI Muhammadiyah Cikampek / Online via Zoom">
             </div>
 
             <div>
@@ -90,7 +90,7 @@
                     </div>
                     <div>
                         <label class="ui-label">Instruksi Pembayaran <span class="text-slate-400 font-normal ml-1">(opsional)</span></label>
-                        <textarea name="payment_instructions" rows="3" class="ui-textarea" placeholder="Transfer ke BCA 1234567890 a.n. SMK MUTU. Kirim bukti di halaman acara.">{{ old('payment_instructions') }}</textarea>
+                        <textarea name="payment_instructions" rows="3" class="ui-textarea" placeholder="Transfer ke BCA 1234567890 a.n. SMK TI Muhammadiyah Cikampek. Kirim bukti di halaman acara.">{{ old('payment_instructions') }}</textarea>
                     </div>
                 </div>
             </div>

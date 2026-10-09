@@ -12,7 +12,7 @@ class PageController extends Controller
         'tentang' => [
             'view' => 'pages.tentang',
             'title' => 'Tentang BKKMu',
-            'description' => 'Mengenal Bursa Kerja Khusus SMK MUTU Cikampek dan misi platform BKKMu.',
+            'description' => 'Mengenal Bursa Kerja Khusus SMK TI Muhammadiyah Cikampek dan misi platform BKKMu.',
         ],
         'faq' => [
             'view' => 'pages.faq',

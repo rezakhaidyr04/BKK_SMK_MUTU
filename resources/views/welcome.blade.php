@@ -6,10 +6,10 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="apple-touch-icon" href="{{ asset('images/logos/mutu_logo.png') }}">
     <title>BKKMu - Platform Pengembangan Karir</title>
-    <meta name="description" content="Bursa Kerja Khusus (BKK) SMK MUTU — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.">
+    <meta name="description" content="Bursa Kerja Khusus (BKK) SMK TI Muhammadiyah Cikampek — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.">
     <meta property="og:type" content="website">
     <meta property="og:title" content="BKKMu - Platform Pengembangan Karir">
-    <meta property="og:description" content="Bursa Kerja Khusus (BKK) SMK MUTU — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.">
+    <meta property="og:description" content="Bursa Kerja Khusus (BKK) SMK TI Muhammadiyah Cikampek — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta name="twitter:card" content="summary">
 
@@ -20,15 +20,15 @@
     <link rel="stylesheet" href="{{ asset('css/welcome.css') }}?v={{ filemtime(public_path('css/welcome.css')) }}">
 
     <style>
-    /* Hero HP — inline di HTML agar langsung berlaku tanpa tergantung cache welcome.css */
+    /* Hero HP — rata kiri agar judul lega, tidak terpotong sempit di tengah */
     @media (max-width: 768px) {
         section.hero { padding-top: calc(66px + 10px) !important; padding-bottom: 0 !important; min-height: 0 !important; }
-        .hero-inner { grid-template-columns: 1fr !important; text-align: center !important; gap: 8px !important; align-items: center !important; min-height: 0 !important; }
-        .hero-content { align-items: center !important; padding-bottom: 0 !important; max-width: 100% !important; }
-        .hero-badge { margin: 0 auto 8px !important; font-size: .65rem !important; padding: 5px 12px !important; }
-        .hero-title { font-size: 1.55rem !important; line-height: 1.22 !important; text-align: center !important; margin: 0 auto 8px !important; max-width: 340px !important; text-wrap: balance !important; }
-        .hero-desc { font-size: .82rem !important; line-height: 1.6 !important; text-align: center !important; margin: 0 auto 12px !important; max-width: 330px !important; display: -webkit-box !important; -webkit-line-clamp: 3 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; }
-        .hero-cta { flex-direction: row !important; align-items: stretch !important; justify-content: center !important; gap: 8px !important; margin: 0 auto 2px !important; width: 100% !important; max-width: 340px !important; }
+        .hero-inner { grid-template-columns: 1fr !important; text-align: left !important; gap: 8px !important; align-items: center !important; min-height: 0 !important; }
+        .hero-content { align-items: flex-start !important; padding-bottom: 0 !important; max-width: 100% !important; }
+        .hero-badge { margin: 0 0 8px !important; font-size: .65rem !important; padding: 5px 12px !important; }
+        .hero-title { font-size: 1.7rem !important; line-height: 1.25 !important; text-align: left !important; margin: 0 0 8px !important; max-width: 100% !important; }
+        .hero-desc { font-size: .85rem !important; line-height: 1.6 !important; text-align: left !important; margin: 0 0 12px !important; max-width: 100% !important; display: block !important; overflow: visible !important; }
+        .hero-cta { flex-direction: row !important; align-items: stretch !important; justify-content: flex-start !important; gap: 8px !important; margin: 0 0 2px !important; width: 100% !important; max-width: 100% !important; }
         .hero-cta .btn { flex: 1 1 0 !important; width: auto !important; justify-content: center !important; padding: 11px 6px !important; font-size: .76rem !important; border-radius: 11px !important; white-space: nowrap !important; }
         .hero-cta .btn svg { width: 13px !important; height: 13px !important; flex-shrink: 0 !important; }
         .hero-visual { padding-right: 0 !important; min-height: 0 !important; height: auto !important; justify-content: center !important; }
@@ -57,7 +57,7 @@
                     <!-- Logo -->
                     <a href="{{ route('home') }}" class="navbar-brand">
                         <img src="{{ asset('images/logos/mutu_logo.png') }}" alt="BKKMu" width="36" height="36">
-                        <span class="brand-text"><strong>BKKMu</strong><small>SMK MUTU CIKAMPEK</small></span>
+                        <span class="brand-text"><strong>BKKMu</strong><small>SMK TI MUHAMMADIYAH CIKAMPEK</small></span>
                     </a>
 
                     <!-- Actions -->
@@ -841,7 +841,7 @@
                 <div>
                     <h4 class="footer-col-title">Contact</h4>
                     <ul class="footer-links">
-                        <li>SMK MUTU Cikampek</li>
+                        <li>SMK TI Muhammadiyah Cikampek</li>
                         <li>Cikampek, Jawa Barat</li>
                         <li><a href="mailto:bkksmkmutu3@gmail.com">bkksmkmutu3@gmail.com</a></li>
                         <li><a href="tel:+62267123456">(0267) 123-456</a></li>

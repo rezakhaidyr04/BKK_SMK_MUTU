@@ -21,7 +21,7 @@ class TracerReminder extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject('Pengingat: Isi Tracer Study BKKMu')
             ->greeting('Halo '.$notifiable->name.'!')
-            ->line('Kami belum menerima data Tracer Study Anda. Data ini penting untuk pemetaan alumni dan laporan penyaluran kerja BKK SMK MUTU.')
+            ->line('Kami belum menerima data Tracer Study Anda. Data ini penting untuk pemetaan alumni dan laporan penyaluran kerja BKK SMK TI Muhammadiyah Cikampek.')
             ->line('Pengisian cukup 1 menit dan bisa diperbarui kapan saja saat status berubah.')
             ->action('Isi Tracer Study', route('tracer.index'))
             ->line('Terima kasih atas partisipasi Anda!');

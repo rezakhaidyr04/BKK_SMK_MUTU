@@ -1,4 +1,4 @@
-# 🎓 BKK SMK MUTU Cikampek
+# 🎓 BKK SMK TI Muhammadiyah Cikampek
 
 <div align="center">
 
@@ -17,7 +17,7 @@
 
 ## 📖 Tentang Project
 
-**BKK SMK MUTU** adalah platform digital modern yang menghubungkan para pencari kerja (pengguna umum — bukan hanya siswa atau alumni) dengan peluang karir terbaik. Dibangun dengan teknologi terkini dan desain UI/UX setara platform profesional seperti LinkedIn, Glints, dan JobStreet.
+**BKK SMK TI Muhammadiyah Cikampek** adalah platform digital modern yang menghubungkan para pencari kerja (pengguna umum — bukan hanya siswa atau alumni) dengan peluang karir terbaik. Dibangun dengan teknologi terkini dan desain UI/UX setara platform profesional seperti LinkedIn, Glints, dan JobStreet.
 
 ### 🎯 Tujuan
 
@@ -191,7 +191,7 @@ php artisan test
 
 ## 👥 Tim
 
-**BKK SMK MUTU Cikampek**
+**BKK SMK TI Muhammadiyah Cikampek**
 
 - 🌐 Website: https://bkksmkmutu.sch.id
 - 📧 Email: bkk@smkmutu.sch.id
@@ -207,7 +207,7 @@ php artisan test
 
 <div align="center">
 
-**Dibuat dengan ❤️ untuk para pencari kerja SMK MUTU Cikampek**
+**Dibuat dengan ❤️ untuk para pencari kerja SMK TI Muhammadiyah Cikampek**
 
 **v1.1.0 • 2026**
 

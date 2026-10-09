@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
                 'linkedin_url' => 'https://linkedin.com/in/ahmadnurharry',
                 'portfolio_url' => 'https://ahmad-harry.example.com',
                 'preferred_position' => 'Akuntan Junior / Admin Keuangan',
-                'education_history' => "SD Negeri 1 Cikampek\nSMP Negeri 2 Cikampek\nSMK MUTU Cikampek (Akuntansi)",
+                'education_history' => "SD Negeri 1 Cikampek\nSMP Negeri 2 Cikampek\nSMK TI Muhammadiyah Cikampek (Akuntansi)",
                 'experience_organization' => "Magang di Toko ABC sebagai admin keuangan (3 bulan)\nBendahara OSIS (1 tahun)",
                 'birth_place' => 'Karawang',
                 'birth_date' => '2004-06-15',

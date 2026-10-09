@@ -1,7 +1,7 @@
-# Deploy script untuk BKK SMK MUTU - Windows PowerShell
+# Deploy script untuk BKK SMK TI Muhammadiyah Cikampek - Windows PowerShell
 # Usage: powershell -ExecutionPolicy Bypass -File scripts/deploy.ps1
 $ErrorActionPreference = "Stop"
-Write-Host "=== BKK SMK MUTU Deploy (Windows) ===" -ForegroundColor Cyan
+Write-Host "=== BKK SMK TI Muhammadiyah Cikampek Deploy (Windows) ===" -ForegroundColor Cyan
 
 if (-not (Test-Path ".env")) {
   Write-Host "[!] .env tidak ditemukan. Copy dari .env.production.example" -ForegroundColor Red

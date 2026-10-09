@@ -54,10 +54,8 @@
                         </svg>
                     </button>
                 </div>
-                <div class="flex items-center justify-between mb-2">
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                </div>
             </div>
+            <x-input-error :messages="$errors->get('password')" class="mt-2 mb-2" />
 
             <div class="flex items-center justify-between mb-5">
                 <label for="remember_me" class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer">

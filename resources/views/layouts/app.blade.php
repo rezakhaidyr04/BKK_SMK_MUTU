@@ -9,10 +9,10 @@
         <link rel="apple-touch-icon" href="{{ asset('images/logos/mutu_logo.png') }}">
 
         <title>{{ $seoTitle ?? config('app.name', 'BKKMu') }}</title>
-        <meta name="description" content="{{ $seoDescription ?? 'Bursa Kerja Khusus (BKK) SMK MUTU — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.' }}">
+        <meta name="description" content="{{ $seoDescription ?? 'Bursa Kerja Khusus (BKK) SMK TI Muhammadiyah Cikampek — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.' }}">
         <meta property="og:type" content="website">
         <meta property="og:title" content="{{ $seoTitle ?? config('app.name', 'BKKMu') }}">
-        <meta property="og:description" content="{{ $seoDescription ?? 'Bursa Kerja Khusus (BKK) SMK MUTU — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.' }}">
+        <meta property="og:description" content="{{ $seoDescription ?? 'Bursa Kerja Khusus (BKK) SMK TI Muhammadiyah Cikampek — informasi lowongan kerja, pelatihan, dan pendampingan karier bagi siswa dan alumni.' }}">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta name="twitter:card" content="summary">
         <link rel="canonical" href="{{ url()->current() }}">
@@ -52,7 +52,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         {{-- ?v= bertambah setiap app-custom.css diubah agar browser tidak memakai cache lama --}}
-        <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}?v=20261007a">
+        <link rel="stylesheet" href="{{ asset('css/app-custom.css') }}?v=20261009b">
         {{-- Mobile experience layer (HP-first untuk pelamar) --}}
         <link rel="stylesheet" href="{{ asset('css/mobile.css') }}?v=20261007e">
         
@@ -134,7 +134,7 @@
                                 <ul class="space-y-2.5 text-xs text-gray-400">
                                     <li class="flex items-start gap-2">
                                         <svg class="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-blue-300/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                        <a href="https://www.google.com/maps/search/SMK%20Muhammadiyah%202%20Cikampek%20Karawang/" target="_blank" rel="noopener" class="transition hover:text-white">SMK MUTU Cikampek<br>Cikampek, Jawa Barat</a>
+                                        <a href="https://www.google.com/maps/search/SMK%20Muhammadiyah%202%20Cikampek%20Karawang/" target="_blank" rel="noopener" class="transition hover:text-white">SMK TI Muhammadiyah Cikampek<br>Cikampek, Jawa Barat</a>
                                     </li>
                                     <li>
                                         <a href="mailto:bkksmkmutu3@gmail.com" class="flex items-center gap-2 transition hover:text-white">

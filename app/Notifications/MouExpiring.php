@@ -31,7 +31,7 @@ class MouExpiring extends Notification implements ShouldQueue
             ->line($expired
                 ? "MoU kerja sama {$this->company->name} (No: ".($this->company->mou_number ?? '-').") telah kedaluwarsa pada {$date}."
                 : "MoU kerja sama {$this->company->name} (No: ".($this->company->mou_number ?? '-').") kedaluwarsa pada {$date}.")
-            ->line('Segera hubungi tim BKK SMK MUTU untuk perpanjangan agar lowongan tetap tayang tanpa gangguan.')
+            ->line('Segera hubungi tim BKK SMK TI Muhammadiyah Cikampek untuk perpanjangan agar lowongan tetap tayang tanpa gangguan.')
             ->action('Buka Profil Perusahaan', route('company.profile.edit'))
             ->line('Terima kasih atas kerja sama Anda!');
     }

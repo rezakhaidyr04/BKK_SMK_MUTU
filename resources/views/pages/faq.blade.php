@@ -10,7 +10,7 @@
             @php
                 $faqs = [
                     ['q' => 'Apakah BKKMu gratis?', 'a' => 'Ya. Mendaftar, mencari lowongan, melamar, membuat CV, dan mengikuti sebagian besar acara tidak dipungut biaya.'],
-                    ['q' => 'Siapa saja yang bisa mendaftar?', 'a' => 'Masyarakat umum. Anda tidak harus siswa/alumni SMK MUTU. Pilih peran pencari kerja saat registrasi; perusahaan mendaftar lewat jalur verifikasi perusahaan.'],
+                    ['q' => 'Siapa saja yang bisa mendaftar?', 'a' => 'Masyarakat umum. Anda tidak harus siswa/alumni SMK TI Muhammadiyah Cikampek. Pilih peran pencari kerja saat registrasi; perusahaan mendaftar lewat jalur verifikasi perusahaan.'],
                     ['q' => 'Bagaimana cara melamar lowongan?', 'a' => 'Buka halaman lowongan, pastikan email sudah terverifikasi, unggah surat lamaran (PDF wajib) lalu klik Lamar. Status bisa dipantau di menu Lamaran Saya.'],
                     ['q' => 'Mengapa tombol Lamar tidak aktif?', 'a' => 'Biasanya karena email belum diverifikasi, lowongan sudah kedaluwarsa/ditutup, atau Anda sudah pernah melamar posisi tersebut.'],
                     ['q' => 'Bagaimana perusahaan memposting lowongan?', 'a' => 'Perusahaan mendaftar, melengkapi profil + dokumen legal, menunggu verifikasi admin, lalu bisa memposting dan mengelola pelamar dari dashboard perusahaan.'],

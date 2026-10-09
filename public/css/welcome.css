@@ -2700,7 +2700,11 @@ footer.footer,
     .navbar-brand .brand-text strong {
         font-size: .92rem;
     }
+    /* Nama sekolah terlalu panjang untuk bar HP — sembunyikan, cukup logo + BKKMu. */
     .navbar-brand .brand-text small {
-        font-size: .52rem;
+        display: none;
+    }
+    .navbar-actions {
+        flex-shrink: 0;
     }
 }
