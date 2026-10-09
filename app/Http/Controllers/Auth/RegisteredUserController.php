@@ -40,9 +40,6 @@ class RegisteredUserController extends Controller
                 "unique:" . User::class,
             ],
             "password" => ["required", "confirmed", Rules\Password::defaults()],
-            // G1: captcha (nullable agar widget-absent di local lolos via rule;
-            // rule menolak token kosong saat kunci terisi).
-            "cf-turnstile-response" => ["nullable", new \App\Rules\Turnstile],
         ]);
 
         $user = User::create([

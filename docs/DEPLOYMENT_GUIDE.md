@@ -270,11 +270,6 @@ MAIL_TIMEOUT=10
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 GOOGLE_REDIRECT_URL="https://bkk.smkmutu.sch.id/auth/google/callback"
-
-# G1: Captcha — dash.cloudflare.com → Turnstile → Add site (domain production)
-# WAJIB diisi: tanpa ini register & login DITOLAK di production (fail-closed)
-TURNSTILE_SITE_KEY=
-TURNSTILE_SECRET_KEY=
 ```
 
 ## 📝 MAINTENANCE MODE

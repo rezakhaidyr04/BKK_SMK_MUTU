@@ -190,9 +190,16 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
     Route::get("/cv/builder", [CvBuilderController::class, "index"])->name(
         "cv.builder",
     );
-    Route::post("/cv/generate", [CvBuilderController::class, "generate"])
+    // Data karier diedit dari halaman CV (satu sumber dengan profil).
+    Route::patch("/profile/career", [\App\Http\Controllers\CareerController::class, "update"])->name(
+        "career.update",
+    );    Route::post("/cv/generate", [CvBuilderController::class, "generate"])
         ->middleware(['verified', 'throttle:cv-generate'])
         ->name("cv.generate");
+    // Satu tombol: simpan karier + generate PDF (proteksi sama seperti generate).
+    Route::post("/cv/build", [CvBuilderController::class, "build"])
+        ->middleware(['verified', 'throttle:cv-generate'])
+        ->name("cv.build");
     Route::get("/cv/download/{cvFile}", [
         CvBuilderController::class,
         "download",

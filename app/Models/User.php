@@ -107,6 +107,52 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Sinkron keahlian dari array nama (dipakai ProfileController +
+     * CareerController — satu implementasi agar aturan identik).
+     * P0 H-03: max 20, tiap item max 50, non-string/kosong diabaikan.
+     */
+    public function syncSkillsFromNames(mixed $submittedSkills): void
+    {
+        if (! is_array($submittedSkills)) {
+            $submittedSkills = [];
+        }
+        $submittedSkills = array_slice($submittedSkills, 0, 20);
+        $skillIds = [];
+        foreach ($submittedSkills as $skillName) {
+            if (! is_string($skillName)) {
+                continue;
+            }
+            $skillName = trim($skillName);
+            if ($skillName === '' || strlen($skillName) > 50) {
+                continue;
+            }
+            $skill = Skill::firstOrCreate(['name' => $skillName]);
+            $skillIds[$skill->id] = ['proficiency' => 3];
+        }
+        $this->skills()->sync($skillIds);
+    }
+
+    /**
+     * Simpan data karier (sumber tunggal untuk form profil, form CV,
+     * dan gabungan CV-build). Normalisasi newline + fill + save + skills.
+     */
+    public function updateCareer(array $validated, mixed $skillsInput): void
+    {
+        foreach (["bio", "education_history", "experience_organization"] as $multilineField) {
+            if (! empty($validated[$multilineField]) && is_string($validated[$multilineField])) {
+                $validated[$multilineField] = str_replace(['\\r\\n', '\\n', '\\r'], "\n", $validated[$multilineField]);
+            }
+        }
+
+        foreach (["preferred_position", "bio", "education_history", "experience_organization", "linkedin_url", "portfolio_url", "portfolio_type"] as $field) {
+            $this->$field = $validated[$field] ?? null;
+        }
+        $this->save();
+
+        $this->syncSkillsFromNames($skillsInput);
+    }
+
+    /**
      * Pakai template email branded BKKMu (bukan bawaan Laravel).
      */
     public function sendEmailVerificationNotification()

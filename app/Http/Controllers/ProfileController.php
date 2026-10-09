@@ -98,28 +98,9 @@ class ProfileController extends Controller
 
         $user->save();
 
-        // Sync skills — P0 H-03: validated berupa array max 20, tiap item max 50.
-        // Defense-in-depth: potong berlebih + abaikan non-string/kosong.
-        $submittedSkills = $request->input("skills", []);
-        if (! is_array($submittedSkills)) {
-            $submittedSkills = [];
-        }
-        $submittedSkills = array_slice($submittedSkills, 0, 20);
-        $skillIds = [];
-        foreach ($submittedSkills as $skillName) {
-            if (! is_string($skillName)) {
-                continue;
-            }
-            $skillName = trim($skillName);
-            if ($skillName === '' || strlen($skillName) > 50) {
-                continue;
-            }
-            $skill = \App\Models\Skill::firstOrCreate([
-                "name" => $skillName,
-            ]);
-            $skillIds[$skill->id] = ["proficiency" => 3];
-        }
-        $user->skills()->sync($skillIds);
+        // Sync skills — implementasi tunggal di User::syncSkillsFromNames
+        // (dipakai juga CareerController; aturan identik).
+        $user->syncSkillsFromNames($request->input("skills", []));
 
         return Redirect::route("profile.edit")->with(
             "status",

@@ -38,10 +38,4 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URL'),
     ],
 
-    // G1: Cloudflare Turnstile (captcha register + login).
-    'turnstile' => [
-        'site_key' => env('TURNSTILE_SITE_KEY'),
-        'secret_key' => env('TURNSTILE_SECRET_KEY'),
-    ],
-
 ];

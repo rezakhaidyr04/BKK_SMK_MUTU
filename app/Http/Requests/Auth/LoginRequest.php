@@ -29,8 +29,6 @@ class LoginRequest extends FormRequest
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
-            // G1: captcha (nullable agar widget-absent di local lolos via rule).
-            'cf-turnstile-response' => ['nullable', new \App\Rules\Turnstile],
         ];
     }
 

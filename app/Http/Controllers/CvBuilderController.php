@@ -44,6 +44,32 @@ class CvBuilderController extends Controller
         return back()->with('success', 'CV sedang diproses di background. Halaman akan dimuat ulang otomatis.');
     }
 
+    /**
+     * Satu tombol: simpan data karier DULU (agar PDF memakai data terbaru),
+     * lalu dispatch generate. Proteksi verified + throttle sama seperti generate.
+     */
+    public function build(\App\Http\Requests\BuildCvRequest $request, \App\Services\CvBuilderService $cvService)
+    {
+        abort_unless($request->user()->role === 'umum', 403);
+
+        $request->user()->updateCareer($request->validated(), $request->input('skills', []));
+
+        // Checkbox tak dicentang = tidak terkirim = false (jangan pakai default true).
+        $generateData = array_merge($request->generateData(), [
+            'include_photo' => $request->boolean('include_photo'),
+            'include_skills' => $request->boolean('include_skills'),
+            'include_certificates' => $request->boolean('include_certificates'),
+        ]);
+
+        $status = $cvService->generateCv($generateData);
+
+        if ($status === 'duplicate') {
+            return back()->with('info', 'Data karier tersimpan. CV Anda sedang diproses — tunggu sebentar lalu refresh.');
+        }
+
+        return back()->with('success', 'Data karier tersimpan. CV sedang diproses di background. Halaman akan dimuat ulang otomatis.');
+    }
+
     public function download(CvFile $cvFile, \Illuminate\Http\Request $request)
     {
         $this->authorize('view', $cvFile);

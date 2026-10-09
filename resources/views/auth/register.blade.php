@@ -108,13 +108,6 @@
             </div>
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
 
-            @if(config('services.turnstile.site_key'))
-            <div class="mt-4 flex justify-center">
-                <div class="cf-turnstile" data-sitekey="{{ config('services.turnstile.site_key') }}" data-theme="light"></div>
-            </div>
-            <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-            @endif
-
             <button type="submit" class="auth-btn mt-2">
                 Buat Akun
             </button>

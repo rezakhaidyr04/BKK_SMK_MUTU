@@ -37,47 +37,39 @@
 
         <div x-data="{}" class="page-container page-section">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                <div class="lg:col-span-8 xl:col-span-9 space-y-6">
+                <form action="{{ route('cv.build') }}" method="POST" class="lg:col-span-8 xl:col-span-9 space-y-6">
+                    @csrf
                     <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
                         <div class="px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-blue-50">
-                            <h2 class="text-xl font-bold text-gray-900">Template CV Standar</h2>
-                            <p class="text-sm text-gray-600 mt-1">Gunakan satu template CV yang rapi, konsisten, dan siap untuk perekrut.</p>
+                            <h2 class="text-xl font-bold text-gray-900">Buat CV</h2>
+                            <p class="text-sm text-gray-600 mt-1">Isi data di bawah sekali — otomatis tersimpan ke profil — lalu buat PDF siap ATS.</p>
                         </div>
 
-                        <form action="{{ route('cv.generate') }}" method="POST" class="cv-form-card p-6 sm:p-8 pb-28 sm:pb-8 space-y-5">
-                            @csrf
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                <label class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm">
-                                    <input type="checkbox" name="include_skills" value="1" checked class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
-                                    Tampilkan skill
-                                </label>
-                                <label class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm">
-                                    <input type="checkbox" name="include_certificates" value="1" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
-                                    Tampilkan sertifikat
-                                </label>
-                            </div>
-                            <input type="hidden" name="template" value="modern">
-
-                            <div class="rounded-2xl border border-blue-100 bg-blue-50/70 p-4">
+                        <div class="p-6 sm:p-8">
+                            <div class="rounded-2xl border border-blue-100 bg-blue-50/70 p-4 mb-6">
                                 <div class="flex items-start gap-3">
                                     <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shrink-0">CV</div>
                                     <div class="text-left">
                                         <p class="font-semibold text-gray-900">Template standar aktif</p>
-                                        <p class="text-sm text-gray-600 mt-1">Template ini dipakai otomatis untuk semua CV agar hasilnya konsisten, bersih, dan mudah dibaca perekrut. Data diambil dari <a href="{{ route('profile.edit') }}" class="font-semibold text-blue-700 underline hover:text-blue-800">profil Anda</a> — lengkapi dulu di sana bila ada yang kurang.</p>
+                                        <p class="text-sm text-gray-600 mt-1">Satu template rapi dan konsisten untuk semua CV — datanya diambil dari isian karier di kartu ini juga.</p>
                                     </div>
                                 </div>
                             </div>
 
+                            @include('profile.partials.career-fields', ['user' => $user])
+
+                            <hr class="my-6 border-gray-100">
+
+                            <div class="cv-form-card pb-28 sm:pb-8 space-y-5">
+                            <input type="hidden" name="template" value="modern">
+                            <input type="hidden" name="include_skills" value="1">
+                            <input type="hidden" name="include_certificates" value="1">
+
                             <div class="rounded-2xl bg-amber-50 border border-amber-100 px-4 py-3 text-sm text-amber-900">
-                                Tip: hasil terbaik muncul kalau profil kamu sudah lengkap. Isi nama, bio, pengalaman, skill, dan sertifikat terlebih dahulu.
+                                Tip: bio, pengalaman, dan skill yang kosong bikin CV tipis — isi sekalian di kartu ini.
                             </div>
 
                             <div class="grid grid-cols-1 gap-3.5">
-                                <div>
-                                    <label class="block text-sm font-semibold text-gray-800 mb-2">Keahlian tambahan</label>
-                                    <input type="text" name="ats_keywords" maxlength="300" value="{{ old('ats_keywords', '') }}" placeholder="Contoh: administrasi, microsoft excel, komunikasi" class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">
-                                    <p class="text-xs text-gray-500 mt-1.5">Tulis keahlian yang kamu kuasai, pisahkan dengan koma. Ini membantu CV kamu ditemukan perusahaan.</p>
-                                </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-800 mb-2">Pencapaian utama <span class="font-normal text-gray-400">(opsional)</span></label>
                                     <textarea name="custom_achievement" rows="2" maxlength="500" placeholder="Contoh: Juara 2 lomba desain poster, lulus PKL dengan predikat baik, memimpin proyek kelas." class="w-full rounded-2xl border-gray-200 bg-white px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500">{{ old('custom_achievement') }}</textarea>
@@ -89,7 +81,7 @@
                                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m0 0l-3-3m3 3l3-3M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1"/>
                                  </svg>
-                                 Buat CV PDF
+                                 Simpan & Buat CV PDF
                              </button>
 
                             <div class="sm:hidden fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur px-4 pt-3 shadow-[0_-8px_24px_rgba(15,23,42,0.08)]" style="padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));">
@@ -97,30 +89,14 @@
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m0 0l-3-3m3 3l3-3M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1"/>
                                     </svg>
-                                    Buat CV PDF
+                                    Simpan & Buat CV PDF
                                 </button>
                             </div>
-                        </form>
+                        </div>
+                    </div>
                     </div>
 
-                    <div class="cv-grid-3 grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
-                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold mb-3">1</div>
-                            <h3 class="font-semibold text-gray-900">Lengkapi isi CV</h3>
-                            <p class="text-sm text-gray-600 mt-2">Isi bagian penting seperti ringkasan, pengalaman, pendidikan, dan kemampuan.</p>
-                        </div>
-                        <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
-                            <div class="w-10 h-10 rounded-xl bg-green-100 text-green-700 flex items-center justify-center font-bold mb-3">2</div>
-                            <h3 class="font-semibold text-gray-900">Buat PDF</h3>
-                            <p class="text-sm text-gray-600 mt-2">Sistem akan memakai satu template standar yang rapi dan konsisten.</p>
-                        </div>
-                        <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
-                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold mb-3">3</div>
-                            <h3 class="font-semibold text-gray-900">Unduh kapan saja</h3>
-                            <p class="text-sm text-gray-600 mt-2">CV yang sudah dibuat tersimpan dan bisa diunduh ulang saat dibutuhkan.</p>
-                        </div>
-                    </div>
-                </div>
+                </form>
 
                 <aside class="space-y-5 lg:col-span-4 xl:col-span-3 lg:sticky lg:top-24 self-start">
                     <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-5">
