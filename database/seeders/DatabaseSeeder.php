@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             RoleAndAdminSeeder::class,
             CompanyRolePermissionSeeder::class,
             DummyDataSeeder::class,
+            DummyCompanyMouSeeder::class,
             EventAndNewsSeeder::class,
             ReviewSeeder::class,
         ]);
