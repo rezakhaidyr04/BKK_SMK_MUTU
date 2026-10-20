@@ -86,10 +86,14 @@ class UserController extends Controller
             "role" => $validated["role"],
             "password" => bcrypt($validated["password"]),
             "is_active" => $validated["is_active"] ?? true,
-            "email_verified_at" => in_array($validated["role"], ["admin", "company"])
-                ? now()
-                : null,
         ]);
+
+        // email_verified_at tidak termasuk User::$fillable, jadi harus lewat
+        // markEmailAsVerified() (forceFill) — kalau lewat User::create()
+        // nilainya dibuang diam-diam oleh Eloquent.
+        if (in_array($validated["role"], ["admin", "company"])) {
+            $user->markEmailAsVerified();
+        }
 
         $user->syncRoles([$validated['role']]);
 

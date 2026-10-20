@@ -285,9 +285,12 @@ class CompanyController extends Controller
                 'password'            => Hash::make($plainPassword),   // NEVER store plaintext
                 'role'                => 'company',
                 'is_active'           => true,
-                'email_verified_at'   => now(),
                 'must_change_password' => true,
             ]);
+
+            // email_verified_at tidak termasuk User::$fillable → harus lewat
+            // markEmailAsVerified() (forceFill), bukan array create().
+            $created->markEmailAsVerified();
 
             // 6. Sync Spatie role = 'company'
             $created->syncRoles(['company']);

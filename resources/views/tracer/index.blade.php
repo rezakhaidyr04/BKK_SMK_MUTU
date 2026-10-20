@@ -51,6 +51,37 @@
                     </div>
 
                     <div class="mb-5">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3">Identitas &amp; Kontak</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div x-show="alumni === '1'" x-cloak>
+                                <label for="nisn" class="block text-sm font-semibold text-gray-900 mb-2">NISN <span class="text-red-500">*</span></label>
+                                <input type="text" name="nisn" id="nisn" maxlength="20" inputmode="numeric" pattern="[0-9]*"
+                                    value="{{ old('nisn', $tracer->nisn ?? '') }}"
+                                    placeholder="10 digit NISN"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 @error('nisn') border-red-500 @enderror">
+                                <p class="mt-1 text-xs text-gray-500">Nomor Induk Siswa Nasional — kunci pencocokan data alumni.</p>
+                                @error('nisn')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-semibold text-gray-900 mb-2">Email</label>
+                                <input type="email" name="email" id="email" maxlength="255" autocomplete="email"
+                                    value="{{ old('email', $tracer->email ?? auth()->user()->email ?? '') }}"
+                                    placeholder="nama@email.com"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 @error('email') border-red-500 @enderror">
+                                @error('email')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="no_wa" class="block text-sm font-semibold text-gray-900 mb-2">No. HP / WhatsApp</label>
+                            <input type="text" name="no_wa" id="no_wa" maxlength="20" inputmode="tel"
+                                value="{{ old('no_wa', $tracer->no_wa ?? auth()->user()->phone ?? '') }}"
+                                placeholder="08xxxxxxxxxx"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 @error('no_wa') border-red-500 @enderror">
+                            @error('no_wa')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
                         <label for="status_kerja" class="block text-sm font-semibold text-gray-900 mb-2">Status Anda saat ini <span class="text-red-500">*</span></label>
                         <select name="status_kerja" id="status_kerja" required
                             class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 @error('status_kerja') border-red-500 @enderror">
@@ -105,7 +136,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5" x-show="alumni === '1'">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5" x-show="alumni === '1'">
                         <div>
                             <label for="tahun_lulus" class="block text-sm font-semibold text-gray-900 mb-2">Tahun lulus <span class="text-red-500">*</span></label>
                             <input type="number" name="tahun_lulus" id="tahun_lulus" min="2000" max="{{ date('Y') }}"
@@ -129,14 +160,6 @@
                                 <option value="Teknik Pemesinan"></option>
                             </datalist>
                             @error('jurusan')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
-                        </div>
-                        <div>
-                            <label for="no_wa" class="block text-sm font-semibold text-gray-900 mb-2">No. WA aktif</label>
-                            <input type="text" name="no_wa" id="no_wa" maxlength="20" inputmode="tel"
-                                value="{{ old('no_wa', $tracer->no_wa ?? auth()->user()->phone ?? '') }}"
-                                placeholder="08xxxxxxxxxx"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 @error('no_wa') border-red-500 @enderror">
-                            @error('no_wa')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
                     </div>
 

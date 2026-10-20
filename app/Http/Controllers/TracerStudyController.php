@@ -46,6 +46,8 @@ class TracerStudyController extends Controller
         } else {
             $validated['tahun_lulus'] = null;
             $validated['jurusan'] = null;
+            // NISN hanya untuk alumni SMK — jangan sampai ikut terisi buat non-alumni.
+            $validated['nisn'] = null;
         }
 
         auth()->user()->tracerStudy()->updateOrCreate(

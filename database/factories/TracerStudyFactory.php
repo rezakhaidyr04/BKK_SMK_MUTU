@@ -18,6 +18,7 @@ class TracerStudyFactory extends Factory
         return [
             'user_id' => User::factory(),
             'is_alumni' => true,
+            'nisn' => fake()->unique()->numerify('##########'),
             'status_kerja' => fake()->randomElement(TracerStudy::STATUSES),
             'company_name' => fake()->company(),
             'position' => fake()->jobTitle(),
@@ -26,6 +27,7 @@ class TracerStudyFactory extends Factory
             'tahun_lulus' => fake()->numberBetween(2020, (int) now()->format('Y')),
             'jurusan' => fake()->randomElement(['Manajemen Perkantoran', 'Rekayasa Perangkat Lunak', 'Teknik Bisnis Sepeda Motor', 'Teknik Komputer Dan Jaringan', 'Teknik Kendaraan Ringan', 'Teknik Pemesinan']),
             'asal_sekolah' => null,
+            'email' => fake()->unique()->safeEmail(),
             'no_wa' => '08'.fake()->numerify('##########'),
             'filled_at' => now(),
         ];

@@ -99,6 +99,19 @@ class EventAndNewsSeeder extends Seeder
                 'start_time'  => Carbon::now()->subDays(10)->setHour(8)->setMinute(0),
                 'end_time'    => Carbon::now()->subDays(10)->setHour(16)->setMinute(0),
             ],
+            // ✅ ACARA BERBAYAR
+            [
+                'title'       => 'Job Fair Premium Industri Teknologi dan Startup 2025',
+                'type'        => 'job_fair',
+                'description' => "Job Fair eksklusif khusus sektor teknologi dan startup terkemuka!\n\nEvent premium ini menghadirkan lebih dari 25 perusahaan teknologi bergengsi yang siap merekrut talenta terbaik.\n\nFasilitas peserta:\n- Akses lounge eksklusif peserta terdaftar\n- Sesi speed interview langsung dengan HRD\n- Konsultasi karir 1-on-1 bersama career coach profesional\n- Makan siang dan snack selama event\n- Sertifikat partisipasi resmi\n- Goodie bag eksklusif dari sponsor\n\nPerusahaan yang hadir:\n- Startup teknologi Series A dan B\n- Perusahaan SaaS lokal dan multinasional\n- Fintech dan e-commerce terkemuka\n- Perusahaan outsourcing IT\n\nPosisi yang dibuka:\n- Software Developer (Frontend, Backend, Fullstack)\n- UI/UX Designer\n- Data Analyst dan Data Scientist\n- Digital Marketing Specialist\n- Quality Assurance Engineer\n- IT Support dan Network Engineer\n\nKuota terbatas hanya 100 peserta. Daftar segera sebelum kehabisan!",
+                'location'    => 'Hotel Grand Cikampek, Jl. Ahmad Yani No. 88, Cikampek',
+                'start_time'  => Carbon::now()->addDays(20)->setHour(8)->setMinute(0),
+                'end_time'    => Carbon::now()->addDays(20)->setHour(17)->setMinute(0),
+                'is_paid'     => true,
+                'price'       => 75000,
+                'quota'       => 100,
+                'payment_instructions' => "Pembayaran dapat dilakukan melalui:\n\nTransfer Bank:\n- BCA  : 1234567890 a.n. BKKMu SMK TI Muhammadiyah\n- BRI  : 0987654321 a.n. BKKMu SMK TI Muhammadiyah\n- Mandiri: 1122334455 a.n. BKKMu SMK TI Muhammadiyah\n\nE-Wallet (GoPay / OVO / DANA): 081234567890\n\nTata Cara Pembayaran:\n1. Transfer sesuai nominal Rp 75.000\n2. Simpan bukti transfer / screenshot\n3. Upload bukti bayar di halaman pendaftaran acara\n4. Tunggu konfirmasi dari admin (maks. 1x24 jam kerja)\n5. Setelah dikonfirmasi, tiket digital dikirim ke email kamu\n\nInfo lebih lanjut hubungi WhatsApp: 081234567890",
+            ],
         ];
 
         foreach ($events as $data) {

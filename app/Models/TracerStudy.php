@@ -15,6 +15,7 @@ class TracerStudy extends Model
     protected $fillable = [
         'user_id',
         'is_alumni',
+        'nisn',
         'status_kerja',
         'company_name',
         'position',
@@ -23,6 +24,7 @@ class TracerStudy extends Model
         'tahun_lulus',
         'jurusan',
         'asal_sekolah',
+        'email',
         'no_wa',
         'filled_at',
     ];

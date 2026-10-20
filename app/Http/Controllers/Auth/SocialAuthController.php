@@ -89,9 +89,17 @@ class SocialAuthController extends Controller
                 'role' => 'umum',
                 'is_active' => true,
                 'google_id' => $google->getId(),
-                'email_verified_at' => now(),
             ]);
             $user->syncRoles(['umum']);
+        }
+
+        // 4. Google sudah menjamin email-nya terverifikasi (dicek di atas via
+        // email_verified), jadi tandai akun terverifikasi tanpa perlu kirim
+        // email verifikasi lagi. WAJIB pakai markEmailAsVerified()/forceFill:
+        // email_verified_at TIDAK ada di User::$fillable sehingga nilai yang
+        // dikirim lewat User::create() akan dibuang diam-diam oleh Eloquent.
+        if (! $user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
         }
 
         Auth::login($user, true);

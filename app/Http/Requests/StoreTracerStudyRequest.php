@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\TracerStudy;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTracerStudyRequest extends FormRequest
@@ -26,6 +27,9 @@ class StoreTracerStudyRequest extends FormRequest
             'tahun_lulus' => ['nullable', 'integer', 'min:2000', "max:{$year}"],
             'jurusan' => ['nullable', 'string', 'max:100'],
             'asal_sekolah' => ['nullable', 'string', 'max:150'],
+            // Identitas alumni + kontak (dipakai untuk rekap & follow-up).
+            'nisn' => ['nullable', 'string', 'max:20', 'regex:/^[0-9]+$/'],
+            'email' => ['nullable', 'string', 'email', 'max:255'],
             'no_wa' => ['nullable', 'string', 'max:20', 'regex:/^[0-9+\-\s]+$/'],
         ];
     }
@@ -42,6 +46,11 @@ class StoreTracerStudyRequest extends FormRequest
                 if (! $this->filled('jurusan')) {
                     $validator->errors()->add('jurusan', 'Jurusan wajib diisi untuk alumni.');
                 }
+                if (! $this->filled('nisn')) {
+                    $validator->errors()->add('nisn', 'NISN wajib diisi untuk alumni.');
+                } elseif ($this->nisnDipakaiAkunLain()) {
+                    $validator->errors()->add('nisn', 'NISN ini sudah tercatat pada akun lain. Mohon periksa kembali.');
+                }
             } elseif (! $this->filled('asal_sekolah')) {
                 $validator->errors()->add('asal_sekolah', 'Asal sekolah wajib diisi bila bukan alumni SMK TI Muhammadiyah Cikampek.');
             }
@@ -53,7 +62,27 @@ class StoreTracerStudyRequest extends FormRequest
         return [
             'status_kerja.required' => 'Pilih status Anda saat ini.',
             'company_name.required_unless' => 'Nama perusahaan/kampus/usaha wajib diisi.',
-            'no_wa.regex' => 'Nomor WA hanya boleh berisi angka, +, - dan spasi.',
+            'nisn.regex' => 'NISN hanya boleh berisi angka.',
+            'email.email' => 'Format email tidak valid.',
+            'no_wa.regex' => 'Nomor HP/WA hanya boleh berisi angka, +, - dan spasi.',
         ];
+    }
+
+    /**
+     * NISN dipakai akun lain? (akun sendiri tidak dihitung, jadi aman saat
+     * pengguna memperbarui form).
+     */
+    private function nisnDipakaiAkunLain(): bool
+    {
+        $nisn = trim((string) $this->input('nisn'));
+
+        if ($nisn === '' || ! $this->user()) {
+            return false;
+        }
+
+        return TracerStudy::query()
+            ->where('nisn', $nisn)
+            ->where('user_id', '!=', $this->user()->id)
+            ->exists();
     }
 }
