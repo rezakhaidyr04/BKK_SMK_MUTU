@@ -22,7 +22,7 @@ class ApplicationReceived extends Notification
 
     public function via($notifiable)
     {
-        return ['database'];
+        return ['mail', 'database'];
     }
 
     public function toDatabase($notifiable)

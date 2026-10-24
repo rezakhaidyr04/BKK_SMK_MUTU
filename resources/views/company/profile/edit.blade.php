@@ -33,7 +33,14 @@
                 </span>
             </x-slot:chips>
         </x-ui.page-banner>
-        <div class="page-container page-section" x-data="{ currentTab: '{{ $errors->updatePassword->any() ? 'password' : 'profile' }}' }">
+        <div class="page-container page-section" x-data="{
+            currentTab: @js($errors->updatePassword->any() ? 'password' : 'profile'),
+            init() {
+                if (window.location.hash === '#verification' || @js($errors->hasAny(['tax_number', 'business_license', 'operating_license']))) {
+                    this.currentTab = 'verifikasi';
+                }
+            }
+        }">
 
     @if (session('success'))
         <div class="ui-alert ui-alert-success mb-4">Berhasil: {{ session('success') }}</div>
@@ -55,6 +62,12 @@
                 class="flex shrink-0 items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-semibold outline-none transition-all">
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
             Keamanan Sandi
+        </button>
+        <button type="button" @click="currentTab = 'verifikasi'"
+                :class="currentTab === 'verifikasi' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'"
+                class="flex shrink-0 items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-semibold outline-none transition-all">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            Verifikasi
         </button>
     </div>
 
@@ -362,6 +375,130 @@
         </div>
     </div>
     </div>{{-- /tab Data Perusahaan --}}
+
+    {{-- TAB: Verifikasi — ajukan / ajukan ulang dokumen legalitas --}}
+    <div id="verification" x-show="currentTab === 'verifikasi'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
+        @php
+            $vStatus = $company->verification_status ?? 'not_submitted';
+            $vLabel = match($vStatus) {
+                'verified' => 'Terverifikasi',
+                'pending' => 'Menunggu Review',
+                'rejected' => 'Perlu Perbaikan',
+                default => 'Belum Diajukan',
+            };
+            $vDot = match($vStatus) {
+                'verified' => 'bg-emerald-400',
+                'pending' => 'bg-amber-400',
+                'rejected' => 'bg-red-400',
+                default => 'bg-slate-400',
+            };
+            // MoU dari admin sudah jadi dasar kepercayaan → yang dicek hanya
+            // kelengkapan data profil (bukan dokumen legal).
+            $profileChecks = [
+                ['label' => 'Nama & bidang industri', 'done' => filled($company->name) && filled($company->industry)],
+                ['label' => 'Deskripsi perusahaan', 'done' => filled($company->description)],
+                ['label' => 'Website perusahaan', 'done' => filled($company->website)],
+                ['label' => 'Email & telepon', 'done' => filled($company->email) && filled($company->phone)],
+                ['label' => 'Alamat perusahaan', 'done' => filled($company->address)],
+                ['label' => 'Logo perusahaan', 'done' => filled($company->logo)],
+            ];
+            $profileDone = collect($profileChecks)->filter(fn ($c) => $c['done'])->count();
+            $profileTotal = count($profileChecks);
+        @endphp
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            {{-- Header --}}
+            <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between gap-3 flex-wrap">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 flex-shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-sm font-bold text-slate-900">Verifikasi Perusahaan</h2>
+                        <p class="text-xs text-slate-400 mt-0.5">MoU dari admin sudah menjadi dasar kepercayaan — cukup lengkapi data profil lalu ajukan verifikasi.</p>
+                    </div>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold border border-slate-200 bg-slate-50 text-slate-600">
+                    <span class="w-1.5 h-1.5 rounded-full {{ $vDot }}"></span>
+                    {{ $vLabel }}
+                </span>
+            </div>
+
+            <div class="p-6 space-y-4">
+                @if(($company->is_verified ?? false) || $vStatus === 'verified')
+                    {{-- Sudah terverifikasi: tidak ada form --}}
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex gap-2.5">
+                        <div class="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-emerald-700">Perusahaan Anda sudah terverifikasi.</p>
+                            <p class="text-[11px] text-emerald-600/80">Semua fitur perekrutan telah aktif. Tidak ada yang perlu diajukan.</p>
+                        </div>
+                    </div>
+                @else
+                    @if($vStatus === 'pending')
+                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 flex gap-2.5">
+                            <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <p class="text-xs font-semibold text-amber-700">Permintaan verifikasi sedang ditinjau admin.</p>
+                        </div>
+                    @endif
+
+                    @if($vStatus === 'rejected')
+                        <div class="bg-red-50 border border-red-200 rounded-xl p-3">
+                            <p class="text-xs font-bold text-red-700">Verifikasi ditolak.</p>
+                            @if($company->rejection_reason)
+                                <p class="text-[11px] text-red-600 mt-1">Alasan: {{ $company->rejection_reason }}</p>
+                            @endif
+                            <p class="text-[11px] text-red-600 mt-1">Silakan lengkapi data profil Anda di tab Data Perusahaan, lalu ajukan kembali verifikasi di bawah.</p>
+                        </div>
+                    @endif
+
+                    {{-- Info: kenapa tidak perlu dokumen legal --}}
+                    <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-3.5 flex gap-2.5">
+                        <svg class="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <div>
+                            <p class="text-xs font-bold text-blue-700">Tidak perlu mengunggah dokumen legal di sini.</p>
+                            <p class="text-[11px] text-blue-600/80 mt-0.5">MoU kerja sama sudah ditangani admin, jadi perusahaan dianggap terpercaya. Cukup lengkapi data profil, lalu ajukan verifikasi.</p>
+                        </div>
+                    </div>
+
+                    {{-- Checklist kelengkapan data profil --}}
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                        <div class="flex items-center justify-between mb-2.5">
+                            <p class="text-[10px] font-bold uppercase tracking-wide text-slate-400">Kelengkapan Data Perusahaan</p>
+                            <span class="text-[11px] font-bold {{ $profileDone === $profileTotal ? 'text-emerald-600' : 'text-amber-600' }}">{{ $profileDone }}/{{ $profileTotal }} lengkap</span>
+                        </div>
+                        <ul class="space-y-1.5">
+                            @foreach($profileChecks as $check)
+                            <li class="flex items-center gap-2 text-xs {{ $check['done'] ? 'text-slate-500' : 'text-slate-800 font-semibold' }}">
+                                @if($check['done'])
+                                    <svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                @else
+                                    <svg class="w-4 h-4 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                                @endif
+                                <span>{{ $check['label'] }}{{ $check['done'] ? '' : ' — belum diisi' }}</span>
+                            </li>
+                            @endforeach
+                        </ul>
+                        <button type="button" @click="currentTab = 'profile'"
+                            class="mt-3 w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-slate-300 bg-white text-xs font-bold text-slate-700 hover:border-blue-400 hover:text-blue-600 transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                            Buka Data Perusahaan
+                        </button>
+                    </div>
+
+                    {{-- Form ajukan / ajukan ulang verifikasi (tanpa dokumen) --}}
+                    <form method="POST" action="{{ route('company.profile.verify') }}" class="flex justify-end pt-3 border-t border-slate-100">
+                        @csrf
+                        <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-sm font-bold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-600/30 hover:-translate-y-0.5 active:translate-y-0 transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            {{ $vStatus === 'rejected' ? 'Ajukan Kembali Verifikasi' : ($vStatus === 'pending' ? 'Ajukan Ulang Verifikasi' : 'Ajukan Verifikasi') }}
+                        </button>
+                    </form>
+                @endif
+            </div>
+        </div>
+    </div>{{-- /tab Verifikasi --}}
 
     <div x-show="currentTab === 'password'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
         @include('profile.partials.update-password-form')

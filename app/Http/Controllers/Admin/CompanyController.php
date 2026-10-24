@@ -9,10 +9,12 @@ use App\Http\Requests\AdminCompanyStoreRequest;
 use App\Http\Requests\AdminCompanyUpdateRequest;
 use App\Models\Company;
 use App\Models\User;
+use App\Notifications\CompanyVerificationResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -178,6 +180,8 @@ class CompanyController extends Controller
             'reviewed_at'         => now(),
         ]);
 
+        $this->notifyCompanyOwner($company, approved: true);
+
         return redirect()
             ->route('admin.companies.index')
             ->with('success', "Perusahaan \"{$company->name}\" berhasil diverifikasi.");
@@ -198,9 +202,28 @@ class CompanyController extends Controller
             'reviewed_at'         => now(),
         ]);
 
+        $this->notifyCompanyOwner($company, approved: false);
+
         return redirect()
             ->route('admin.companies.index')
             ->with('success', "Verifikasi perusahaan \"{$company->name}\" ditolak.");
+    }
+
+    /**
+     * Kirim notifikasi hasil verifikasi ke akun pemilik perusahaan.
+     * Gagal kirim notifikasi tidak boleh membatalkan approve/reject.
+     */
+    private function notifyCompanyOwner(Company $company, bool $approved): void
+    {
+        try {
+            $company->user?->notify(new CompanyVerificationResult($company, $approved));
+        } catch (\Throwable $e) {
+            Log::warning('Company verification notification failed', [
+                'company_id' => $company->id,
+                'approved'   => $approved,
+                'error'      => $e->getMessage(),
+            ]);
+        }
     }
 
     // ─────────────────────────────────────────────────────────────

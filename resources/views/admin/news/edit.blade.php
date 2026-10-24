@@ -1,6 +1,6 @@
 <x-app-layout :full-bleed="true">
     <div class="page-shell">
-        <x-ui.page-banner title="Edit Berita" subtitle="Perbarui artikel berita karir." eyebrow="Admin › Berita">
+        <x-ui.page-banner title="Edit Berita" subtitle="Perbarui informasi artikel karir." eyebrow="Admin › Berita">
                         <x-slot:chips>
                 <span class="page-banner__chip">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
@@ -18,185 +18,97 @@
 
     <x-ui.form-errors />
 
-    <form method="POST" action="{{ route('admin.news.update', $news) }}" enctype="multipart/form-data" id="newsForm" class="ui-form-stack">
-        @csrf
-        @method('PUT')
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Konten Utama -->
-            <div class="lg:col-span-2">
-                <x-ui.panel class="mx-0 h-full">
-                    <div class="space-y-6">
-                        <div>
-                            <label class="ui-label">Judul Berita <span class="text-red-500">*</span></label>
-                            <input type="text" name="title" value="{{ old('title', $news->title) }}" required class="ui-input">
-                        </div>
-                        <div>
-                            <label class="ui-label">Isi Berita <span class="text-red-500">*</span></label>
-                            <!-- Toolbar Editor -->
-                            <div class="border border-slate-200 rounded-t-xl bg-slate-50 px-3 py-2 flex flex-wrap gap-1 items-center">
-                                <button type="button" onclick="execCmd('bold')" title="Bold" class="p-1.5 rounded hover:bg-slate-200 transition text-slate-700 font-bold text-sm w-8 h-8">B</button>
-                                <button type="button" onclick="execCmd('italic')" title="Italic" class="p-1.5 rounded hover:bg-slate-200 transition text-slate-700 italic text-sm w-8 h-8">I</button>
-                                <button type="button" onclick="execCmd('underline')" title="Underline" class="p-1.5 rounded hover:bg-slate-200 transition text-slate-700 underline text-sm w-8 h-8">U</button>
-                                <div class="w-px bg-slate-300 mx-1 h-5"></div>
-                                <button type="button" onclick="execCmd('insertUnorderedList')" title="Bullet List" class="p-1.5 rounded hover:bg-slate-200 transition text-slate-600 w-8 h-8">
-                                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
-                                </button>
-                                <button type="button" onclick="execCmd('insertOrderedList')" title="Numbered List" class="p-1.5 rounded hover:bg-slate-200 transition text-slate-600 w-8 h-8">
-                                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7m0 0H5m2 0v2m0-2V3M9 19H7m0 0H5m2 0v2m0-2v-2M9 12H5m14-7h-4m4 7h-4m4 7h-4"/></svg>
-                                </button>
-                                <div class="w-px bg-slate-300 mx-1 h-5"></div>
-                                <button type="button" onclick="execCmd('justifyLeft')" title="Rata Kiri" class="p-1.5 rounded hover:bg-slate-200 transition text-slate-600 w-8 h-8 text-xs">≡</button>
-                                <button type="button" onclick="execCmd('justifyCenter')" title="Rata Tengah" class="p-1.5 rounded hover:bg-slate-200 transition text-slate-600 w-8 h-8 text-xs">☰</button>
-                                <div class="w-px bg-slate-300 mx-1 h-5"></div>
-                                <select onchange="execCmdValue('formatBlock', this.value); this.value=''" class="px-2 py-1 text-xs border border-slate-200 rounded text-slate-600 bg-white h-8">
-                                    <option value="">Format</option>
-                                    <option value="h2">Judul 2</option>
-                                    <option value="h3">Judul 3</option>
-                                    <option value="p">Paragraf</option>
-                                </select>
-                                <div class="w-px bg-slate-300 mx-1 h-5"></div>
-                                <button type="button" onclick="document.getElementById('inlineImageInput').click()" title="Sisipkan Gambar" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition text-slate-600 text-xs font-medium h-8">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                    Gambar
-                                </button>
-                                <input type="file" id="inlineImageInput" accept="image/jpeg,image/png,image/webp,image/gif" class="hidden">
-                                <span id="uploadStatus" class="text-xs text-blue-600 hidden">Mengupload...</span>
-                            </div>
-                            <div id="editor" contenteditable="true" class="min-h-[300px] w-full px-4 py-3 border border-slate-200 border-t-0 rounded-b-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition prose max-w-none">
-                                {!! \App\Support\HtmlSanitizer::cleanNews(old('content', $news->content)) !!}
-                            </div>
-                            <textarea name="content" id="contentInput" class="hidden" required>{{ old('content', $news->content) }}</textarea>
-                        </div>
-                    </div>
-                </x-ui.panel>
-            </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2">
+            <x-ui.panel class="ui-form-narrow mx-0">
+                <form method="POST" action="{{ route('admin.news.update', $news) }}" enctype="multipart/form-data" class="ui-form-stack">
+                    @csrf
+                    @method('PUT')
 
-            <!-- Sidebar Kanan -->
-            <div class="space-y-6">
-                <!-- Publikasi -->
-                <x-ui.panel title="Publikasi" class="mx-0">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
-                            <div>
-                                <p class="text-sm font-semibold text-slate-700">Status</p>
-                                <p class="text-xs text-slate-500" id="statusText">{{ $news->is_published ? 'Dipublikasikan' : 'Draft' }}</p>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" id="is_published" name="is_published" value="1" class="sr-only peer" {{ $news->is_published ? 'checked' : '' }} onchange="document.getElementById('statusText').textContent = this.checked ? 'Dipublikasikan' : 'Draft'">
-                                <div class="w-11 h-6 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+                    <div>
+                        <label class="ui-label">Judul Berita <span class="text-red-500">*</span></label>
+                        <input type="text" name="title" value="{{ old('title', $news->title) }}" required class="ui-input">
+                    </div>
+
+                    <div>
+                        <label class="ui-label">Kategori <span class="text-red-500">*</span></label>
+                        <select name="category" required class="ui-select">
+                            @foreach(['career_tips' => 'Tips Karir', 'work_world' => 'Dunia Kerja', 'industry_info' => 'Informasi Industri'] as $val => $label)
+                            <option value="{{ $val }}" {{ old('category', $news->category) === $val ? 'selected' : '' }}>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="ui-label">Status Publish <span class="text-slate-400 font-normal ml-1">(opsional)</span></label>
+                            <label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+                                <input type="checkbox" name="is_published" value="1" id="isPublishedToggle" class="sr-only peer" {{ old('is_published', $news->is_published) ? 'checked' : '' }}>
+                                <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                             </label>
+                            <p class="text-xs text-slate-500 mt-1">Nonaktifkan jika ingin simpan sebagai draft.</p>
                         </div>
-                        <x-ui.btn type="submit" class="w-full justify-center">Perbarui Berita</x-ui.btn>
-                        <x-ui.btn variant="secondary" href="{{ route('admin.news.index') }}" class="w-full justify-center">Batal</x-ui.btn>
-                    </div>
-                </x-ui.panel>
-
-                <!-- Meta -->
-                <x-ui.panel title="Detail Berita" class="mx-0">
-                    <div class="space-y-4">
-                        <div>
-                            <label class="ui-label">Kategori</label>
-                            <input type="text" name="category" value="{{ old('category', $news->category) }}" class="ui-input" placeholder="Contoh: Tips Karir...">
-                        </div>
-                        <div>
-                            <label class="ui-label">Thumbnail</label>
-                            @if($news->thumbnail)
-                            <img id="thumbPreview" src="{{ asset('storage/' . $news->thumbnail) }}" alt="Thumbnail saat ini" class="w-full h-32 object-contain bg-slate-50 rounded-xl mb-2 border border-slate-200">
-                            @else
-                            <img id="thumbPreview" src="" alt="" class="hidden w-full h-32 object-contain bg-slate-50 rounded-xl mb-2 border border-slate-200">
-                            @endif
-                            <div class="border-2 border-dashed border-slate-200 rounded-xl p-3 text-center hover:border-blue-400 transition">
-                                <input type="file" name="thumbnail" id="thumbInput" accept="image/jpeg,image/png,image/webp" class="block mx-auto text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-700 file:text-xs cursor-pointer">
-                                <p class="text-xs text-slate-400 mt-1">Upload baru untuk mengganti · maks. 2MB</p>
+                        <div id="publishFields" class="{{ old('is_published', $news->is_published) ? '' : 'hidden' }} space-y-2">
+                            <div>
+                                <label class="ui-label">Tanggal Terbit <span class="text-slate-400 font-normal ml-1">(opsional)</span></label>
+                                <input type="datetime-local" name="published_at"
+                                       value="{{ old('published_at', optional($news->published_at)?->format('Y-m-d\TH:i')) }}"
+                                       class="ui-input">
+                                <p class="text-xs text-slate-400 mt-1">Kosongkan untuk publish segera saat disimpan.</p>
                             </div>
                         </div>
                     </div>
-                </x-ui.panel>
-            </div>
-        </div>
-    </form>
-    
-    <div class="mt-6 lg:w-2/3">
-        <x-ui.panel>
-            <div class="px-6 py-5 border-b border-red-100 bg-red-50 -mx-6 -mt-6 mb-6 rounded-t-xl">
-                <h3 class="font-bold text-red-700">Zona Berbahaya</h3>
-            </div>
-            <div>
-                <p class="font-semibold text-slate-900 mb-1">Hapus Berita</p>
-                <p class="text-sm text-slate-500 mb-4">Berita akan dihapus secara permanen.</p>
-                <form method="POST" action="{{ route('admin.news.destroy', $news) }}" data-confirm="Yakin ingin menghapus berita ini?" data-confirm-title="Hapus" data-confirm-ok="Hapus" data-confirm-variant="danger">
-                    @csrf @method('DELETE')
-                    <x-ui.btn variant="danger" type="submit">Hapus Berita</x-ui.btn>
+
+                    <div>
+                        <label class="ui-label">Isi Berita <span class="text-red-500">*</span></label>
+                        <textarea name="content" rows="10" required class="ui-textarea">{{ old('content', $news->content) }}</textarea>
+                    </div>
+
+                    <div>
+                        <label class="ui-label">Thumbnail Berita</label>
+                        @if($news->thumbnail)
+                        <div class="mb-3">
+                            <img src="{{ asset('storage/' . $news->thumbnail) }}" alt="Thumbnail saat ini" class="w-40 h-28 object-contain bg-slate-50 rounded-xl border border-slate-200">
+                            <p class="text-xs text-slate-400 mt-1">Upload gambar baru untuk mengganti thumbnail.</p>
+                        </div>
+                        @endif
+                        <div class="border-2 border-dashed border-slate-200 rounded-xl p-6 text-center hover:border-blue-400 transition">
+                            <input type="file" name="thumbnail" id="thumbnailInput" accept="image/jpeg,image/png,image/webp"
+                                   class="block mx-auto text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-700 file:font-medium cursor-pointer">
+                            <p class="text-xs text-slate-400 mt-2">JPG, PNG, WebP · maks. 3MB</p>
+                        </div>
+                        <img id="thumbPreview" src="" alt="Preview" class="hidden mt-3 w-40 h-28 object-contain bg-slate-50 rounded-xl border border-slate-200">
+                    </div>
+
+                    <div class="ui-form-actions mt-6 pt-4 border-t border-slate-100">
+                        <x-ui.btn type="submit">Perbarui Berita</x-ui.btn>
+                        <x-ui.btn variant="secondary" href="{{ route('admin.news.index') }}">Batal</x-ui.btn>
+                    </div>
                 </form>
-            </div>
-        </x-ui.panel>
+            </x-ui.panel>
+        </div>
+
+        <div>
+            <x-ui.panel>
+                <div class="px-6 py-5 border-b border-red-100 bg-red-50 -mx-6 -mt-6 mb-6 rounded-t-xl">
+                    <h3 class="font-bold text-red-700">Zona Berbahaya</h3>
+                    <p class="text-sm text-red-500 mt-0.5">Tindakan ini tidak dapat dibatalkan.</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-slate-900 mb-1">Hapus Berita</p>
+                    <p class="text-sm text-slate-500 mb-4">Berita akan dihapus secara permanen dari sistem.</p>
+                    <form method="POST" action="{{ route('admin.news.destroy', $news) }}" data-confirm="Yakin ingin menghapus berita ini? Tindakan tidak dapat dibatalkan." data-confirm-title="Hapus" data-confirm-ok="Hapus" data-confirm-variant="danger">
+                        @csrf @method('DELETE')
+                        <x-ui.btn variant="danger" type="submit" class="w-full justify-center">Hapus Berita</x-ui.btn>
+                    </form>
+                </div>
+            </x-ui.panel>
+        </div>
     </div>
 
     @push('scripts')
     <script>
-    const uploadUrl = "{{ route('admin.news.upload-image') }}";
-    const csrfToken = "{{ csrf_token() }}";
-    
-    function execCmd(cmd) { document.getElementById('editor').focus(); document.execCommand(cmd, false, null); }
-    function execCmdValue(cmd, val) { if (!val) return; document.getElementById('editor').focus(); document.execCommand(cmd, false, val); }
-    
-    function sanitizeUrl(url) {
-        if (!url || typeof url !== 'string') return '';
-        const decoded = url.replace(/&amp;/g, '&').replace(/&#039;/g, "'").replace(/&quot;/g, '"');
-        if (!decoded.match(/^https?:\/\/|^\/storage\/|^\/images\//)) return '';
-        const div = document.createElement('div');
-        div.textContent = decoded;
-        return div.innerHTML;
-    }
-    
-    let savedRange = null;
-    document.getElementById('editor').addEventListener('keyup mouseup', function() {
-        const sel = window.getSelection();
-        if (sel.rangeCount) savedRange = sel.getRangeAt(0).cloneRange();
-    });
-    
-    function restoreSelection() {
-        if (savedRange) {
-            const sel = window.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(savedRange);
-        }
-    }
-    
-    document.getElementById('inlineImageInput').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        const status = document.getElementById('uploadStatus');
-        status.classList.remove('hidden');
-        const formData = new FormData();
-        formData.append('image', file);
-        formData.append('_token', csrfToken);
-        fetch(uploadUrl, { method: 'POST', body: formData })
-        .then(res => res.json())
-        .then(data => {
-            if (data.url) {
-                restoreSelection();
-                document.getElementById('editor').focus();
-                const safeUrl = sanitizeUrl(data.url);
-                if (safeUrl) {
-                    document.execCommand('insertHTML', false, `<img src="${safeUrl}" alt="Gambar" class="inline-rich-img" />`);
-                }
-            }
-            status.classList.add('hidden');
-            e.target.value = '';
-        })
-        .catch(() => {
-            status.textContent = 'Gagal upload!';
-            setTimeout(() => { status.classList.add('hidden'); status.textContent = 'Mengupload...'; }, 2000);
-            e.target.value = '';
-        });
-    });
-    
-    document.getElementById('newsForm').addEventListener('submit', function() {
-        document.getElementById('contentInput').value = document.getElementById('editor').innerHTML;
-    });
-    
-    document.getElementById('thumbInput').addEventListener('change', function(e) {
+    document.getElementById('thumbnailInput').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
@@ -208,6 +120,13 @@
             reader.readAsDataURL(file);
         }
     });
+    const isPublishedToggle = document.getElementById('isPublishedToggle');
+    const publishFields = document.getElementById('publishFields');
+    if (isPublishedToggle && publishFields) {
+        isPublishedToggle.addEventListener('change', function() {
+            publishFields.classList.toggle('hidden', !this.checked);
+        });
+    }
     </script>
     @endpush
         </div>

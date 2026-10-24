@@ -9,7 +9,6 @@ use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\CvBuilderController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,8 +33,8 @@ Route::get("/events", [EventController::class, "index"])->name("events.index");
 Route::get("/events/{event}", [EventController::class, "show"])->name("events.show");
 
 // News (Public)
-Route::get("/news", [NewsController::class, "index"])->name("news.index");
-Route::get("/news/{news}", [NewsController::class, "show"])->name("news.show");
+Route::get("/news", [\App\Http\Controllers\NewsController::class, "index"])->name("news.index");
+Route::get("/news/{news}", [\App\Http\Controllers\NewsController::class, "show"])->name("news.show");
 
 // Reviews — P0 H-01: store wajib auth (defense-in-depth: route + controller).
 Route::get("/reviews/create", [ReviewController::class, "create"])->name("reviews.create");
@@ -289,16 +288,25 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
                 "reject",
             ])->name("jobs.reject");
             Route::resource(
-                "news",
-                App\Http\Controllers\Admin\NewsController::class,
-            )->except(["show"]);
-            Route::post("/news/upload-image", [
-                App\Http\Controllers\Admin\NewsController::class,
-                "uploadImage",
-            ])->name("news.upload-image");
-            Route::resource(
                 "events",
                 App\Http\Controllers\Admin\EventController::class,
+            )->except(["show"]);
+            Route::get("events/{event}/registrants", [
+                App\Http\Controllers\Admin\EventController::class,
+                "registrants",
+            ])->name("events.registrants");
+            Route::post("events/{event}/registrants/{registration}/verify", [
+                App\Http\Controllers\Admin\EventController::class,
+                "verifyPayment",
+            ])->name("events.verify-payment");
+            Route::post("events/{event}/registrants/{registration}/reject", [
+                App\Http\Controllers\Admin\EventController::class,
+                "rejectPayment",
+            ])->name("events.reject-payment");
+
+            Route::resource(
+                "news",
+                App\Http\Controllers\Admin\AdminNewsController::class,
             )->except(["show"]);
             Route::get("events/{event}/registrants", [
                 App\Http\Controllers\Admin\EventController::class,
@@ -376,6 +384,12 @@ Route::middleware(["auth", "throttle:60,1"])->group(function () {
                 App\Http\Controllers\Admin\JobReportController::class,
                 "destroy",
             ])->name("job-reports.destroy");
+
+            // Pengaturan akun admin (foto profil, data akun, keamanan sandi).
+            Route::get("/settings", [
+                App\Http\Controllers\Admin\ProfileController::class,
+                "edit",
+            ])->name("settings");
 
             // Personal Access Token (Sanctum) untuk admin — P0 H-08: + revoke.
             Route::get("/api-tokens", [

@@ -104,9 +104,11 @@
                             </div>
 
                             @php
-                                $profileRoute = Auth::user()->role === 'company'
-                                    ? route('company.profile.edit')
-                                    : route('profile.edit');
+                                $profileRoute = match (Auth::user()->role) {
+                                    'company' => route('company.profile.edit'),
+                                    'admin' => route('admin.settings'),
+                                    default => route('profile.edit'),
+                                };
 
                                 $profileLabel = match (Auth::user()->role) {
                                     'company' => 'Profil Perusahaan',

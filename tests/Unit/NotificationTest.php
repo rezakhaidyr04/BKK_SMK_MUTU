@@ -14,7 +14,7 @@ class NotificationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_application_received_uses_database_channel_only(): void
+    public function test_application_received_uses_mail_and_database(): void
     {
         $companyUser = User::factory()->create();
         $company = Company::factory()->create(['user_id' => $companyUser->id]);
@@ -28,7 +28,7 @@ class NotificationTest extends TestCase
 
         $notification = new ApplicationReceived($application);
 
-        $this->assertEquals(['database'], $notification->via($companyUser));
+        $this->assertEquals(['mail', 'database'], $notification->via($companyUser));
     }
 
     public function test_application_received_database_payload_is_correct(): void

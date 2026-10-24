@@ -116,6 +116,10 @@
     .co-warn-ico svg{width:1.3rem;height:1.3rem}
     .co-warn strong{display:block;font-size:.9rem;color:#7c2d12}
     .co-warn p{font-size:.8rem;color:#92400e;margin:.15rem 0 0}
+    .co-warn--reject{background:linear-gradient(180deg,#fef2f2,#fff7f7);border-color:#fecaca;border-left-color:#dc2626;box-shadow:0 8px 20px -10px rgba(220,38,38,.4)}
+    .co-warn--reject .co-warn-ico{background:linear-gradient(135deg,#dc2626,#991b1b);box-shadow:0 6px 14px -4px rgba(220,38,38,.5)}
+    .co-warn--reject strong{color:#7f1d1d}
+    .co-warn--reject p{color:#991b1b}
     .co-main-grid{grid-template-columns:1fr}
     @media(min-width:1024px){
         .co-main-grid{grid-template-columns:1.65fr 1fr;align-items:start}
@@ -150,7 +154,26 @@
 
     <div class="page-container py-6">
         <section class="space-y-5">
-            @if($company && !($company->is_verified ?? false))
+            @if($company && ($company->verification_status ?? '') === 'rejected')
+                <div class="co-warn co-warn--reject">
+                    <div class="co-warn-main">
+                        <div class="co-warn-ico">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
+                        </div>
+                        <div>
+                            <strong>Verifikasi Ditolak</strong>
+                            @if($company->rejection_reason)
+                                <p>Alasan: {{ $company->rejection_reason }}</p>
+                            @endif
+                            <p>Perbarui profil dan dokumen legal, lalu ajukan kembali verifikasi.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <a href="{{ route('company.profile.edit') }}#verification" class="co-btn co-btn-primary">Perbarui Profil</a>
+                        <a href="{{ route('company.jobs.index') }}" class="co-btn">Lihat Lowongan</a>
+                    </div>
+                </div>
+            @elseif($company && !($company->is_verified ?? false))
                 <div class="co-warn">
                     <div class="co-warn-main">
                         <div class="co-warn-ico">

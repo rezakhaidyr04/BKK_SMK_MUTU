@@ -139,7 +139,7 @@ class BusinessFlowTest extends TestCase
         $this->assertEquals('Kantor BKK SMK MUTU', $app2->fresh()->interview_location);
     }
 
-    public function test_interviewed_stores_datetime_and_triggers_interview_notification_only_on_change(): void
+    public function test_interviewed_stores_datetime_and_resends_interview_notification_on_reschedule(): void
     {
         [$companyUser, , $job] = $this->companyWithJob();
         $applicant = $this->verifiedUmum();
@@ -161,7 +161,8 @@ class BusinessFlowTest extends TestCase
         $this->assertEquals($date . ' 10:30:00', $fresh->interview_date->format('Y-m-d H:i:s'));
         Notification::assertSentTo($applicant, \App\Notifications\InterviewScheduled::class);
 
-        // same status again should not send notification (oldStatus === newStatus)
+        // A reschedule must notify the applicant even though the status is
+        // still "interviewed".
         Notification::fake();
         $this->actingAs($companyUser)->patch(route('company.applications.update', $fresh), [
             'status' => 'interviewed',
@@ -170,7 +171,7 @@ class BusinessFlowTest extends TestCase
             'interview_type' => 'offline',
             'interview_location' => 'Ruang Interview',
         ])->assertRedirect();
-        Notification::assertNothingSent();
+        Notification::assertSentTo($applicant, \App\Notifications\InterviewScheduled::class);
     }
 
     public function test_invalid_status_rejected_by_validation(): void

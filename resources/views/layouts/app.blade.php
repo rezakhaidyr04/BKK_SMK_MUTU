@@ -121,9 +121,9 @@
                                 <h4 class="mb-3 font-semibold text-white text-sm">Tautan Cepat</h4>
                                 <ul class="space-y-2 text-xs text-gray-400">
                                     <li><a href="{{ route('jobs.index') }}" class="transition hover:text-white">Lowongan</a></li>
-                                    <li><a href="{{ route('events.index') }}" class="transition hover:text-white">Acara</a></li>
-                                    <li><a href="{{ route('news.index') }}" class="transition hover:text-white">Berita</a></li>
-                                    <li><a href="{{ url('/tentang') }}" class="transition hover:text-white">Tentang Kami</a></li>
+<li><a href="{{ route('events.index') }}" class="transition hover:text-white">Acara</a></li>
+<li><a href="{{ route('news.index') }}" class="transition hover:text-white">Berita</a></li>
+<li><a href="{{ url('/tentang') }}" class="transition hover:text-white">Tentang Kami</a></li>
                                     <li><a href="{{ url('/faq') }}" class="transition hover:text-white">FAQ</a></li>
                                     <li><a href="{{ url('/kontak') }}" class="transition hover:text-white">Kontak</a></li>
                                     <li><a href="{{ route('home') }}" class="transition hover:text-white">Beranda</a></li>

@@ -16,7 +16,7 @@
                 </span>
             </x-slot:chips>
         </x-ui.page-banner>
-        <div class="page-container page-section job-show-page" x-data="{ activeTab: 'deskripsi', reportOpen: false }">
+        <div class="page-container page-section job-show-page" x-data="{ activeTab: 'deskripsi' }">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-8">
                 <!-- Main Content (Left Column) -->
                 <div class="lg:col-span-2 space-y-5 sm:space-y-6 min-w-0">
@@ -68,7 +68,7 @@
                                             <span>Dilaporkan</span>
                                         </span>
                                         @elseif(auth()->check())
-                                        <button @click="reportOpen = true" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-semibold text-gray-500 hover:text-red-600 hover:border-red-200 hover:bg-red-50 flex items-center gap-2 transition-colors" title="Laporkan lowongan mencurigakan">
+                                        <button @click="$dispatch('open-job-report')" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-semibold text-gray-500 hover:text-red-600 hover:border-red-200 hover:bg-red-50 flex items-center gap-2 transition-colors" title="Laporkan lowongan mencurigakan">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
                                             <span>Laporkan</span>
                                         </button>
@@ -461,7 +461,8 @@
                                     </ul>
                                 </div>
 
-                                <div x-data="{ showForm: {{ $errors->any() ? 'true' : 'false' }} }">
+                                @php($applyErrorKeys = ['cover_letter', 'cover_letter_file', 'attachment', 'skck_file'])
+                                <div x-data="{ showForm: {{ $errors->hasAny($applyErrorKeys) ? 'true' : 'false' }} }">
                                     <button id="lamar-sekarang" @click="showForm = !showForm" x-show="!showForm" class="w-full px-4 py-3 min-h-[50px] bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 shadow-sm transition-all flex items-center justify-center gap-2 scroll-mt-32">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                                         Lamar Sekarang
@@ -469,11 +470,11 @@
 
                                     <form action="{{ route('jobs.apply', $job->id) }}" method="POST" enctype="multipart/form-data" x-show="showForm" x-cloak x-transition>
                                         @csrf
-                                        @if ($errors->any())
+                                        @if ($errors->hasAny($applyErrorKeys))
                                         <div class="mb-4 mt-2 p-3 bg-red-50 border border-red-200 rounded-lg">
                                             <p class="text-sm font-semibold text-red-700 mb-1">Lamaran belum terkirim, mohon perbaiki dulu:</p>
                                             <ul class="list-disc list-inside text-xs text-red-600 space-y-0.5">
-                                                @foreach ($errors->all() as $error)
+                                                @foreach (collect($applyErrorKeys)->flatMap(fn ($key) => $errors->get($key))->all() as $error)
                                                 <li>{{ $error }}</li>
                                                 @endforeach
                                             </ul>
@@ -687,43 +688,57 @@
             @if(($hasReported ?? false))
             <span class="text-xs text-gray-400">✓ Lowongan ini sudah Anda laporkan.</span>
             @elseif(auth()->check())
-            <button @click="reportOpen = true" class="text-xs font-semibold text-gray-400 underline hover:text-red-600">Laporkan lowongan mencurigakan</button>
+            <button @click="$dispatch('open-job-report')" class="text-xs font-semibold text-gray-400 underline hover:text-red-600">Laporkan lowongan mencurigakan</button>
             @else
             <a href="{{ route('login') }}" class="text-xs font-semibold text-gray-400 underline hover:text-red-600">Laporkan lowongan mencurigakan</a>
             @endif
         </div>
         @endif
 
-        {{-- C1: modal form laporan --}}
-        <div x-show="reportOpen" x-cloak class="fixed inset-0 z-[60] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Laporkan lowongan">
-            <div class="absolute inset-0 bg-gray-900/60" @click="reportOpen = false"></div>
-            <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6" @click.away="reportOpen = false">
+        {{-- C1: modal form laporan (scope sendiri: dibuka via event window agar menembus x-data lain) --}}
+        <div x-data="{ open: {{ $errors->hasAny(['reason', 'detail']) ? 'true' : 'false' }} }"
+             x-show="open" x-cloak x-transition.opacity
+             @open-job-report.window="open = true"
+             class="fixed inset-0 z-[60] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Laporkan lowongan">
+            <div class="absolute inset-0 bg-gray-900/60" @click="open = false"></div>
+            <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6" @click.away="open = false">
                 <div class="flex items-start justify-between mb-4">
                     <div>
                         <h3 class="text-lg font-bold text-gray-900">Laporkan Lowongan</h3>
                         <p class="text-sm text-gray-500 mt-0.5">{{ Str::limit($job->title, 50) }}</p>
                     </div>
-                    <button @click="reportOpen = false" class="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-700" aria-label="Tutup">
+                    <button @click="open = false" class="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-700" aria-label="Tutup">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                 </div>
                 <form action="{{ route('jobs.report', $job) }}" method="POST">
                     @csrf
+                    @php($reportErrors = collect($errors->get('reason'))->merge($errors->get('detail'))->values())
+                    @if($reportErrors->isNotEmpty())
+                    <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                        <p class="text-xs font-semibold text-red-700 mb-1">Laporan belum terkirim:</p>
+                        <ul class="list-disc list-inside text-xs text-red-600 space-y-0.5">
+                            @foreach($reportErrors as $reportError)
+                            <li>{{ $reportError }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     <label for="report-reason" class="block text-sm font-semibold text-gray-900 mb-2">Alasan <span class="text-red-500">*</span></label>
                     <select name="reason" id="report-reason" required class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 mb-4">
                         <option value="">— Pilih alasan —</option>
-                        <option value="penipuan">Penipuan / lowongan fiktif</option>
-                        <option value="pungutan">Meminta uang / pungutan</option>
-                        <option value="info_palsu">Informasi palsu / menyesatkan</option>
-                        <option value="diskriminasi">Diskriminasi SARA</option>
-                        <option value="lainnya">Lainnya</option>
+                        <option value="penipuan" @selected(old('reason') === 'penipuan')>Penipuan / lowongan fiktif</option>
+                        <option value="pungutan" @selected(old('reason') === 'pungutan')>Meminta uang / pungutan</option>
+                        <option value="info_palsu" @selected(old('reason') === 'info_palsu')>Informasi palsu / menyesatkan</option>
+                        <option value="diskriminasi" @selected(old('reason') === 'diskriminasi')>Diskriminasi SARA</option>
+                        <option value="lainnya" @selected(old('reason') === 'lainnya')>Lainnya</option>
                     </select>
                     <label for="report-detail" class="block text-sm font-semibold text-gray-900 mb-2">Detail (opsional)</label>
                     <textarea name="detail" id="report-detail" rows="3" maxlength="1000" placeholder="cth: diminta transfer Rp 500rb untuk seragam… (min. 10 karakter)"
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500">{{ old('detail') }}</textarea>
                     <p class="text-xs text-gray-400 mt-2 mb-4">Jangan transfer uang ke pihak mana pun. Laporan Anda anonim bagi perusahaan.</p>
                     <div class="flex gap-2">
-                        <button type="button" @click="reportOpen = false" class="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-gray-50">Batal</button>
+                        <button type="button" @click="open = false" class="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-gray-50">Batal</button>
                         <button type="submit" class="flex-1 px-4 py-2.5 rounded-xl bg-red-600 text-sm font-semibold text-white hover:bg-red-700">Kirim Laporan</button>
                     </div>
                 </form>

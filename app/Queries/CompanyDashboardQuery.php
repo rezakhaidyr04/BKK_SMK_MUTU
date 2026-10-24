@@ -51,10 +51,16 @@ class CompanyDashboardQuery
             "accepted_applications" => (clone $companyApplicationsQuery)->where("status", "accepted")->count(),
             "recruitment_progress" => $recruitmentProgress,
             "verification_percent" => $verificationPercent,
-            "company_status" => $company && $company->is_verified ? "Terverifikasi" : "Menunggu verifikasi",
-            "verification_note" => $company && $company->is_verified
-                ? "Akun perusahaan sudah aktif untuk rekrutmen."
-                : "Lengkapi verifikasi agar lebih dipercaya kandidat.",
+            "company_status" => match (true) {
+                $company && $company->is_verified => "Terverifikasi",
+                $company && $company->verification_status === "rejected" => "Verifikasi Ditolak",
+                default => "Menunggu verifikasi",
+            },
+            "verification_note" => match (true) {
+                $company && $company->is_verified => "Akun perusahaan sudah aktif untuk rekrutmen.",
+                $company && $company->verification_status === "rejected" => "Verifikasi ditolak. Perbarui profil dan dokumen, lalu ajukan kembali.",
+                default => "Lengkapi verifikasi agar lebih dipercaya kandidat.",
+            },
         ];
 
         $recentApplications = Application::with(["user", "job"])

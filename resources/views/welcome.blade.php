@@ -822,9 +822,9 @@
                     <ul class="footer-links">
                         <li><a href="{{ route('jobs.index') }}">Lowongan</a></li>
                         <li><a href="{{ url('/tentang') }}">Tentang Kami</a></li>
-                        <li><a href="{{ url('/faq') }}">FAQ</a></li>
-                        <li><a href="{{ route('news.index') }}">Artikel</a></li>
-                        <li><a href="{{ route('home') }}">Beranda</a></li>
+<li><a href="{{ url('/faq') }}">FAQ</a></li>
+<li><a href="{{ route('news.index') }}">Artikel</a></li>
+<li><a href="{{ route('home') }}">Beranda</a></li>
                     </ul>
                 </div>
                 <!-- Job Seeker -->

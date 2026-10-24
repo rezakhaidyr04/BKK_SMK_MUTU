@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use App\Services\ImageProcessor;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -34,9 +35,23 @@ class ProfileController extends Controller
             return Redirect::route('company.profile.edit');
         }
 
+        // Admin punya halaman pengaturan sendiri (foto profil, data akun, keamanan).
+        if ($user->isAdmin()) {
+            return Redirect::route('admin.settings');
+        }
+
         return view("profile.edit", [
             "user" => $user->load("skills", "cvFiles", "documents"),
         ]);
+    }
+
+    /**
+     * Nama route halaman pengaturan aktif untuk user:
+     * admin -> admin.settings, selain itu -> profil umum.
+     */
+    private function settingsRouteName(User $user): string
+    {
+        return $user->isAdmin() ? 'admin.settings' : 'profile.edit';
     }
 
     public function update(ProfileUpdateRequest $request): RedirectResponse
@@ -71,7 +86,7 @@ class ProfileController extends Controller
                 }
                 $validated["avatar"] = $path;
             } else {
-                return Redirect::route("profile.edit")->withErrors([
+                return Redirect::route($this->settingsRouteName($user))->withErrors([
                     "avatar" => "Foto gagal diproses. Coba file JPG/PNG/WebP lain.",
                 ])->withInput();
             }
@@ -102,7 +117,7 @@ class ProfileController extends Controller
         // (dipakai juga CareerController; aturan identik).
         $user->syncSkillsFromNames($request->input("skills", []));
 
-        return Redirect::route("profile.edit")->with(
+        return Redirect::route($this->settingsRouteName($user))->with(
             "status",
             "profile-updated",
         );
@@ -138,7 +153,7 @@ class ProfileController extends Controller
         $path = $processor->store($request->file('avatar'), 'profile-photos', 'avatar-' . $user->id . '-' . time());
 
         if (! $path) {
-            return Redirect::route('profile.edit')->withErrors([
+            return Redirect::route($this->settingsRouteName($user))->withErrors([
                 'avatar' => 'Foto gagal diproses. Coba file JPG/PNG/WebP lain.',
             ]);
         }
@@ -150,7 +165,7 @@ class ProfileController extends Controller
         $user->avatar = $path;
         $user->save();
 
-        return Redirect::route('profile.edit')->with('status', 'avatar-updated');
+        return Redirect::route($this->settingsRouteName($user))->with('status', 'avatar-updated');
     }
 
     public function destroy(Request $request): RedirectResponse

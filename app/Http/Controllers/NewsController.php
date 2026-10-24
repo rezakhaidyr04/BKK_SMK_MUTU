@@ -9,12 +9,12 @@ class NewsController extends Controller
 {
     public function index(Request $request)
     {
-        $query = News::with('author')
-            ->where('is_published', true);
+        // published(): is_published + published_at (berita terjadwal tidak muncul sebelum waktunya).
+        $query = News::query()->published();
 
         // Filter by category
         if ($request->filled('category')) {
-            $query->where('category', $request->category);
+            $query->category($request->category);
         }
 
         // Search
@@ -26,24 +26,23 @@ class NewsController extends Controller
             });
         }
 
-        $news = $query->latest()->paginate(9);
+        $news = $query->latest()->paginate(9)->withQueryString();
 
         return view('news.index', compact('news'));
     }
 
     public function show(News $news)
     {
-        // Draft hanya bisa dipratinjau admin (tombol "Lihat" di admin).
+        // Draft / terjadwal hanya bisa dipratinjau admin.
         // Publik tetap 404 agar tidak membocorkan konten belum terbit.
-        if (!$news->is_published) {
+        $isScheduled = $news->published_at !== null && $news->published_at->isFuture();
+        if (!$news->is_published || $isScheduled) {
             $isAdmin = auth()->check() && auth()->user()->role === 'admin';
             abort_unless($isAdmin, 404);
         }
 
-        $news->load('author');
-
         // Get related news
-        $relatedNews = News::where('is_published', true)
+        $relatedNews = News::query()->published()
             ->where('category', $news->category)
             ->where('id', '!=', $news->id)
             ->take(3)

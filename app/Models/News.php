@@ -4,34 +4,53 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class News extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'title',
         'slug',
         'category',
         'content',
         'thumbnail',
         'is_published',
+        'published_at',
     ];
 
     protected $casts = [
         'is_published' => 'boolean',
+        'published_at' => 'datetime',
     ];
 
-    public function author()
+    protected static function booted(): void
     {
-        return $this->belongsTo(User::class, 'user_id');
+        static::creating(function ($news) {
+            if (blank($news->slug)) {
+                $news->slug = Str::slug($news->title);
+            }
+        });
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('is_published', true)
+            ->where(function ($q) {
+                $q->whereNull('published_at')
+                    ->orWhere('published_at', '<=', now());
+            });
+    }
+
+    public function scopeCategory($query, string $category)
+    {
+        return $query->where('category', $category);
     }
 
     /**
      * URL publik memakai slug yang ramah SEO (/news/{slug}).
-     * Tanpa ini, route('news.show', $model) menghasilkan /news/{id}
-     * tapi link admin memakai slug sehingga selalu 404.
+     * Tanpa ini, route('news.show', $model) menghasilkan /news/{id}.
      */
     public function getRouteKeyName(): string
     {
@@ -51,5 +70,15 @@ class News extends Model
         return $this->where('slug', $value)
             ->orWhere('id', $value)
             ->firstOrFail();
+    }
+
+    public function getExcerptAttribute(): string
+    {
+        return Str::limit(strip_tags($this->content), 160);
+    }
+
+    public function getUrlAttribute(): string
+    {
+        return route('news.show', $this->slug);
     }
 }

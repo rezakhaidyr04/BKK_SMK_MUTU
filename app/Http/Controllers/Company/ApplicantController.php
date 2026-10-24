@@ -188,7 +188,13 @@ class ApplicantController extends Controller
         $application->save();
 
         $notifyFailed = false;
-        if ($oldStatus !== $application->status) {
+        // Kirim ulang undangan saat jadwal wawancara diubah, meskipun status
+        // tetap "interviewed". Status lain hanya mengirim notifikasi ketika
+        // benar-benar berubah.
+        $shouldNotify = $application->status === 'interviewed'
+            || $oldStatus !== $application->status;
+
+        if ($shouldNotify) {
             // P5.7: null-safe — lewati notifikasi bila akun pelamar sudah
             // dihapus (relasi user null), status tetap diperbarui.
             // Sinkron + try/catch: kegagalan email tidak boleh

@@ -69,6 +69,7 @@
         <template x-for="skill in skills" :key="skill">
             <input type="hidden" name="skills[]" :value="skill">
         </template>
+        <x-input-error class="mt-1.5" :messages="collect($errors->get('skills.*'))->flatten()->merge($errors->get('skills'))->unique()->values()->all()" />
     </div>
 
     <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">

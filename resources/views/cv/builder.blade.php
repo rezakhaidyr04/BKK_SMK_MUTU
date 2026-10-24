@@ -46,6 +46,16 @@
                         </div>
 
                         <div class="p-6 sm:p-8">
+                            @if ($errors->any())
+                                <div class="rounded-2xl border border-red-200 bg-red-50 p-4 mb-6">
+                                    <p class="text-sm font-semibold text-red-800">Data belum tersimpan — ada isian yang belum valid.</p>
+                                    <ul class="mt-2 list-disc pl-5 text-sm text-red-600 space-y-1">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <div class="rounded-2xl border border-blue-100 bg-blue-50/70 p-4 mb-6">
                                 <div class="flex items-start gap-3">
                                     <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shrink-0">CV</div>

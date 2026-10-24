@@ -93,7 +93,7 @@ class InterviewNotificationTest extends TestCase
         $this->assertContains('database', $channels);
     }
 
-    public function test_resave_without_status_change_does_not_resend(): void
+    public function test_reschedule_without_status_change_resends_notification(): void
     {
         Notification::fake();
         [$companyUser, $umum, $job, $app] = $this->setupCase();
@@ -107,7 +107,7 @@ class InterviewNotificationTest extends TestCase
         $this->actingAs($companyUser)
             ->patch(route('company.applications.update', $app->fresh()), $this->interviewPayload())
             ->assertSessionHas('success');
-        Notification::assertNothingSent();
+        Notification::assertSentTo($umum, InterviewScheduled::class);
     }
 
     public function test_umum_cannot_trigger_interview_notification(): void

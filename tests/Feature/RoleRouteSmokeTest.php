@@ -57,14 +57,13 @@ class RoleRouteSmokeTest extends TestCase
 
     public function test_public_news_and_event_detail_pages_render(): void
     {
-        $author = User::factory()->create(['role' => 'admin']);
         $news = News::create([
-            'user_id' => $author->id,
             'title' => 'Tips Karir',
             'slug' => 'tips-karir',
-            'category' => 'tips',
+            'category' => 'career_tips',
             'content' => 'Konten berita karir.',
             'is_published' => true,
+            'published_at' => now(),
         ]);
         $event = Event::create([
             'title' => 'Job Fair',
@@ -74,7 +73,30 @@ class RoleRouteSmokeTest extends TestCase
             'location' => 'Aula Sekolah',
         ]);
 
+        // Pelamar/tamu tanpa auth harus bisa baca berita & acara publik.
+        $this->get(route('news.index'))->assertStatus(200);
         $this->get(route('news.show', $news))->assertStatus(200);
         $this->get(route('events.show', $event))->assertStatus(200);
+    }
+
+    public function test_public_news_draft_and_scheduled_are_hidden_from_guests(): void
+    {
+        $draft = News::create([
+            'title' => 'Draf',
+            'category' => 'career_tips',
+            'content' => 'Belum terbit.',
+            'is_published' => false,
+        ]);
+        $scheduled = News::create([
+            'title' => 'Terjadwal',
+            'category' => 'work_world',
+            'content' => 'Nanti terbit.',
+            'is_published' => true,
+            'published_at' => now()->addDay(),
+        ]);
+
+        $this->get(route('news.show', $draft))->assertStatus(404);
+        $this->get(route('news.show', $scheduled))->assertStatus(404);
+        $this->get(route('news.index'))->assertStatus(200)->assertDontSee('Belum terbit.');
     }
 }

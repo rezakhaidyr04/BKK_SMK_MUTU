@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateCompanyProfileRequest;
 use App\Http\Requests\VerifyCompanyRequest;
+use App\Models\User;
+use App\Notifications\CompanyVerificationSubmitted;
 use App\Services\ImageProcessor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -68,6 +72,8 @@ class ProfileController extends Controller
 
         $validated = $request->validated();
 
+        $previousStatus = $company->verification_status;
+
         if (isset($validated['tax_number'])) {
             $company->tax_number = $validated['tax_number'];
         }
@@ -103,7 +109,32 @@ class ProfileController extends Controller
         $company->is_verified = false;
         $company->save();
 
+        // Perusahaan yang pernah ditolak baru saja memperbaiki & mengajukan
+        // ulang → beri tahu semua admin agar segera ditinjau ulang.
+        if ($previousStatus === 'rejected') {
+            $this->notifyAdminsOfResubmission($company);
+        }
+
         return redirect()->route('company.profile.edit')->with('success', 'Permintaan verifikasi telah dikirim. Tim admin akan meninjaunya.');
+    }
+
+    /**
+     * Kirim notifikasi pengajuan ulang ke semua admin.
+     * Gagal kirim tidak boleh membatalkan pengajuan verifikasi perusahaan.
+     */
+    private function notifyAdminsOfResubmission(\App\Models\Company $company): void
+    {
+        try {
+            Notification::send(
+                User::where('role', 'admin')->get(),
+                new CompanyVerificationSubmitted($company)
+            );
+        } catch (\Throwable $e) {
+            Log::warning('Company resubmission notification failed', [
+                'company_id' => $company->id,
+                'error'      => $e->getMessage(),
+            ]);
+        }
     }
 
     public function downloadMou(Request $request)

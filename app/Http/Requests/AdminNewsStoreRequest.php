@@ -15,10 +15,18 @@ class AdminNewsStoreRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'category' => ['nullable', 'string', 'max:100'],
+            'category' => ['required', 'string', 'in:career_tips,work_world,industry_info'],
             'content' => ['required', 'string'],
-            'thumbnail' => ['nullable', 'image', 'max:2048', 'mimes:jpg,jpeg,png,webp', 'mimetypes:image/jpeg,image/png,image/webp'],
+            'thumbnail' => ['nullable', 'image', 'max:3072', 'mimes:jpg,jpeg,png,webp', 'mimetypes:image/jpeg,image/png,image/webp'],
             'is_published' => ['nullable', 'boolean'],
+            'published_at' => ['nullable', 'date'],
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'is_published' => $this->boolean('is_published'),
+        ]);
     }
 }

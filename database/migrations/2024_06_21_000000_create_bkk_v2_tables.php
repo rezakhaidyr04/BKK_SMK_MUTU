@@ -119,19 +119,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // 9. news
-        Schema::create('news', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // Author
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->string('category')->default('tips'); // tips, industry, info
-            $table->text('content');
-            $table->string('thumbnail')->nullable();
-            $table->boolean('is_published')->default(false);
-            $table->timestamps();
-        });
-
         // 10. events
         Schema::create('events', function (Blueprint $table) {
             $table->id();
@@ -227,7 +214,6 @@ return new class extends Migration
         Schema::dropIfExists('conversations');
         Schema::dropIfExists('notifications');
         Schema::dropIfExists('events');
-        Schema::dropIfExists('news');
         Schema::dropIfExists('cv_files');
         Schema::dropIfExists('certificates');
         Schema::dropIfExists('applications');

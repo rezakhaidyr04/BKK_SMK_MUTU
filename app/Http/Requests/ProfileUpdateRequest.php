@@ -46,7 +46,8 @@ class ProfileUpdateRequest extends FormRequest
             ],
             // P0 H-03: batasi skills agar tidak pollution/DoS/XSS tersimpan.
             "skills" => ["nullable", "array", "max:20"],
-            "skills.*" => ["string", "max:50", "regex:/^[a-zA-Z0-9 .+#\\-]+$/"],
+            // Izinkan karakter umum pada nama skill: "UI/UX", "HTML & CSS", "Ms. Office (Excel)", dll.
+            "skills.*" => ["string", "max:50", "regex:/^[\\p{L}\\p{N} .+#\\-\\/\\&\\(\\)\\',]+$/u"],
         ];
     }
 
@@ -62,7 +63,7 @@ class ProfileUpdateRequest extends FormRequest
             "portfolio_url.url" => "Format URL portofolio tidak valid.",
             "skills.max" => "Maksimal 20 keahlian.",
             "skills.*.max" => "Setiap keahlian maksimal 50 karakter.",
-            "skills.*.regex" => "Format keahlian tidak valid.",
+            "skills.*.regex" => "Keahlian hanya boleh berisi huruf, angka, spasi, dan tanda umum (./&#-+ dll).",
         ];
     }
 }
