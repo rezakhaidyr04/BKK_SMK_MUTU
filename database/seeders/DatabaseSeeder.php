@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             CompanyRolePermissionSeeder::class,
             DummyDataSeeder::class,
             DummyCompanyMouSeeder::class,
+            DummyApplicantSeeder::class,
             EventAndNewsSeeder::class,
             ReviewSeeder::class,
         ]);
