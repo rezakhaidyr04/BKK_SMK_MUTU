@@ -100,7 +100,6 @@ class Phase1DatabaseTest extends TestCase
         $legacyColumns = [
             'business_license_path',
             'operating_license_path',
-            'npwp_path',
             'tax_number',
             'is_verified',
             'verification_status',

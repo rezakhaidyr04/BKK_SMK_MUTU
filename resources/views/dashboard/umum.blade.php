@@ -24,7 +24,7 @@
                     </div>
                     @if($stats['profile_completion'] < 100)
                     <a href="{{ route('profile.edit') }}" class="mt-3 inline-block text-sm text-primary-700 hover:text-primary-900 underline">
-                        Lengkapi profil Anda ?
+                        Lengkapi profil Anda
                     </a>
                     @endif
                 </div>
@@ -339,7 +339,7 @@
                                         <div class="flex items-center justify-between text-sm">
                                             <span class="text-gray-500">Melamar {{ $application->created_at->diffForHumans() }}</span>
                                             <a href="{{ route('applications.show', $application->id) }}" class="text-blue-600 hover:text-blue-700 font-medium">
-                                                Lihat Detail ?
+                                                Lihat Detail
                                             </a>
                                         </div>
                                     </div>
@@ -362,8 +362,8 @@
                 <!-- Right Column (1/3) -->
                 <div class="space-y-6">
                     <!-- Activity Timeline -->
-                    <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
-                        <div class="px-6 py-5 border-b border-slate-200 cursor-pointer" @click="activitiesOpen = !activitiesOpen">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="px-5 py-4 border-b border-slate-200 cursor-pointer" @click="activitiesOpen = !activitiesOpen">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
@@ -385,7 +385,7 @@
                             </div>
                         </div>
 
-                        <div x-show="activitiesOpen" class="p-6">
+                        <div x-show="activitiesOpen" class="p-5">
                             @if(count($activities) > 0)
                                 <div class="relative space-y-4">
                                     @foreach($activities as $activity)
@@ -438,8 +438,8 @@
                     </div>
 
                     <!-- Upcoming Events -->
-                    <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
-                        <div class="px-6 py-5 border-b border-slate-200 cursor-pointer" @click="eventsOpen = !eventsOpen">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="px-5 py-4 border-b border-slate-200 cursor-pointer" @click="eventsOpen = !eventsOpen">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
@@ -461,7 +461,7 @@
                             </div>
                         </div>
 
-                        <div x-show="eventsOpen" class="p-6">
+                        <div x-show="eventsOpen" class="p-5">
                             @if($upcomingEvents->count() > 0)
                                 <div class="space-y-4">
                                     @foreach($upcomingEvents as $event)
@@ -501,40 +501,7 @@
                         </div>
                     </div>
 
-                    <!-- Quick Actions -->
-                    <div class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
-                        <div class="p-6">
-                            <h3 class="text-lg font-bold text-slate-900 mb-4">Aksi Cepat</h3>
-                            <div class="space-y-2">
-                                <a href="{{ route('jobs.index') }}" class="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 hover:border-slate-300 transition-all duration-300 text-slate-700 group/link">
-                                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center group-hover/link:scale-110 transition-transform" aria-hidden="true">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                                        </svg>
-                                    </div>
-                                    <span class="font-medium group-hover/link:translate-x-1 transition-transform">Jelajahi Lowongan</span>
-                                </a>
-                                
-                                <a href="{{ route('cv.builder') }}" class="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 hover:border-slate-300 transition-all duration-300 text-slate-700 group/link">
-                                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center group-hover/link:scale-110 transition-transform" aria-hidden="true">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                        </svg>
-                                    </div>
-                                    <span class="font-medium group-hover/link:translate-x-1 transition-transform">Buat CV</span>
-                                </a>
-                                
-                                <a href="{{ route('events.index') }}" class="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 hover:border-slate-300 transition-all duration-300 text-slate-700 group/link">
-                                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center group-hover/link:scale-110 transition-transform" aria-hidden="true">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                    </div>
-                                    <span class="font-medium group-hover/link:translate-x-1 transition-transform">Lihat Acara</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

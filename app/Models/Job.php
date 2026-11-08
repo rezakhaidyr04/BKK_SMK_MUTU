@@ -36,6 +36,7 @@ class Job extends Model
         'age_range',
         'work_hours',
         'benefits',
+        'flyer_path',
         'deadline',
         'status',
     ];

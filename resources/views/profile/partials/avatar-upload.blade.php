@@ -2,7 +2,7 @@
      Action: route('profile.avatar.update') (POST /profile/avatar). --}}
 @php
     $avatarPreviewExists = $user->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->avatar);
-    $avatarPreviewUrl = $avatarPreviewExists ? asset('storage/' . ltrim($user->avatar, '/')) : null;
+    $avatarPreviewUrl = $avatarPreviewExists ? \Illuminate\Support\Facades\Storage::disk('public')->url($user->avatar) : null;
     $avatarInitial = strtoupper(substr($user->name, 0, 1));
 @endphp
 

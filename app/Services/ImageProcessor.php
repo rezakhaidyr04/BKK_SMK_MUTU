@@ -34,7 +34,7 @@ class ImageProcessor
      * Upload dan kompresi gambar ke disk "public".
      *
      * @param  UploadedFile  $file       File gambar yang diupload
-     * @param  string        $directory  Direktori tujuan (relatif ke storage/app/public/)
+     * @param  string        $directory  Direktori tujuan (relatif ke root disk public)
      * @param  string|null   $filename   Nama file tanpa ekstensi. Jika null, UUID otomatis.
      * @param  int|null      $maxWidth   Override lebar maks untuk upload ini.
      * @param  int|null      $maxHeight  Override tinggi maks untuk upload ini.
@@ -55,7 +55,8 @@ class ImageProcessor
 
         $filename = ($filename ?? Str::uuid()->toString()) . '.webp';
         $subPath  = trim($directory, '/') . '/' . $filename;
-        $fullPath = storage_path('app/public/' . $subPath);
+        $disk = Storage::disk('public');
+        $fullPath = $disk->path($subPath);
 
         // Pastikan direktori ada
         $dir = dirname($fullPath);

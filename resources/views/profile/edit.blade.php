@@ -1,6 +1,6 @@
         @php
                 $avatarExists = $user->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->avatar);
-                $avatarUrl = $avatarExists ? asset('storage/' . ltrim($user->avatar, '/')) : null;
+                $avatarUrl = $avatarExists ? \Illuminate\Support\Facades\Storage::disk('public')->url($user->avatar) : null;
                 $roleLabel = match ($user->role) {
                     'company' => 'Perusahaan',
                     'admin' => 'Administrator',

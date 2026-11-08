@@ -224,6 +224,37 @@ class JobController extends Controller
         );
     }
 
+    public function flyer(Job $job)
+    {
+        abort_unless($job->isActive(), 404);
+
+        $job->loadMissing('company.user');
+
+        return view('jobs.flyer', compact('job'));
+    }
+
+    public function flyerImage(Job $job)
+    {
+        abort_unless($job->isActive() && $job->flyer_path, 404);
+
+        $disk = Storage::disk('public');
+        abort_unless($disk->exists($job->flyer_path), 404);
+
+        return response()->file($disk->path($job->flyer_path), [
+            'Cache-Control' => 'public, max-age=3600',
+        ]);
+    }
+
+    public function downloadFlyerImage(Job $job)
+    {
+        abort_unless($job->isActive() && $job->flyer_path, 404);
+
+        $disk = Storage::disk('public');
+        abort_unless($disk->exists($job->flyer_path), 404);
+
+        return response()->download($disk->path($job->flyer_path), 'flyer-' . $job->id . '.webp');
+    }
+
     public function apply(ApplicationRequest $request, Job $job)
     {
         abort_unless(Auth::user()?->role === "umum", 403);

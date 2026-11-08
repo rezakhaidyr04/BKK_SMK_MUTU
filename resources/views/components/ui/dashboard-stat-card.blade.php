@@ -11,11 +11,11 @@
 @php
 $palette = match($color) {
     'green'  => ['iconBg' => 'bg-green-100',  'iconClr' => 'text-green-600',  'linkClr' => 'text-green-600'],
-    'purple' => ['iconBg' => 'bg-blue-100', 'iconClr' => 'text-blue-600', 'linkClr' => 'text-blue-600'],
+    'purple' => ['iconBg' => 'bg-purple-100', 'iconClr' => 'text-purple-600', 'linkClr' => 'text-purple-600'],
     'orange' => ['iconBg' => 'bg-amber-100',  'iconClr' => 'text-amber-600',  'linkClr' => 'text-amber-600'],
     'red'    => ['iconBg' => 'bg-red-100',    'iconClr' => 'text-red-500',    'linkClr' => 'text-red-500'],
     'yellow' => ['iconBg' => 'bg-yellow-100', 'iconClr' => 'text-yellow-600', 'linkClr' => 'text-yellow-600'],
-    'indigo' => ['iconBg' => 'bg-blue-100',   'iconClr' => 'text-blue-600',   'linkClr' => 'text-blue-600'],
+    'indigo' => ['iconBg' => 'bg-indigo-100', 'iconClr' => 'text-indigo-600', 'linkClr' => 'text-indigo-600'],
     default  => ['iconBg' => 'bg-blue-100',   'iconClr' => 'text-blue-600',   'linkClr' => 'text-blue-600'],
 };
 

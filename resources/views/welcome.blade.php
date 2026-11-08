@@ -19,31 +19,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/welcome.css') }}?v={{ filemtime(public_path('css/welcome.css')) }}">
 
-    <style>
-    /* Hero HP — rata kiri agar judul lega, tidak terpotong sempit di tengah */
-    @media (max-width: 768px) {
-        section.hero { padding-top: calc(66px + 10px) !important; padding-bottom: 0 !important; min-height: 0 !important; }
-        .hero-inner { grid-template-columns: 1fr !important; text-align: left !important; gap: 8px !important; align-items: center !important; min-height: 0 !important; }
-        .hero-content { align-items: flex-start !important; padding-bottom: 0 !important; max-width: 100% !important; }
-        .hero-badge { margin: 0 0 8px !important; font-size: .65rem !important; padding: 5px 12px !important; }
-        .hero-title { font-size: 1.7rem !important; line-height: 1.25 !important; text-align: left !important; margin: 0 0 8px !important; max-width: 100% !important; }
-        .hero-desc { font-size: .85rem !important; line-height: 1.6 !important; text-align: left !important; margin: 0 0 12px !important; max-width: 100% !important; display: block !important; overflow: visible !important; }
-        .hero-cta { flex-direction: row !important; align-items: stretch !important; justify-content: flex-start !important; gap: 8px !important; margin: 0 0 2px !important; width: 100% !important; max-width: 100% !important; }
-        .hero-cta .btn { flex: 1 1 0 !important; width: auto !important; justify-content: center !important; padding: 11px 6px !important; font-size: .76rem !important; border-radius: 11px !important; white-space: nowrap !important; }
-        .hero-cta .btn svg { width: 13px !important; height: 13px !important; flex-shrink: 0 !important; }
-        .hero-visual { padding-right: 0 !important; min-height: 0 !important; height: auto !important; justify-content: center !important; }
-        .hero-image { padding: 0 16px 0 !important; gap: 0 !important; min-height: 0 !important; align-items: center !important; justify-content: flex-end !important; }
-        .hero-image picture { display: block !important; width: auto !important; max-width: 100% !important; }
-        .hero-image img { width: auto !important; height: auto !important; max-width: 260px !important; max-height: 300px !important; object-fit: contain !important; }
-        .hero-image .floating-card { display: none !important; }
-    }
-    @media (max-width: 380px) {
-        .hero-title { font-size: 1.38rem !important; }
-        .hero-desc { font-size: .78rem !important; }
-        .hero-cta .btn { font-size: .7rem !important; }
-        .hero-image img { max-width: 225px !important; max-height: 260px !important; }
-    }
-    </style>
+
 
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>

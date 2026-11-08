@@ -81,7 +81,7 @@
                             {{ strtoupper(substr($navCompany->name ?? Auth::user()->name, 0, 1)) }}
                         </div>
                         @elseif($navAvatarExists)
-                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 rounded-full object-cover border border-gray-200 bg-white flex-shrink-0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url(Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 rounded-full object-cover border border-gray-200 bg-white flex-shrink-0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                         <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 items-center justify-center text-white font-semibold text-sm flex-shrink-0" style="display:none" aria-hidden="true">
                             {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                         </div>
@@ -125,7 +125,7 @@
                             </a>
 
                             @if(Auth::user()->role === 'company')
-                                     <a href="{{ $profileRoute }}#verification" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                <a href="{{ $profileRoute }}#verification" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m1-3h.01M12 20v-6m-6 6h12"/>
                                     </svg>
@@ -211,7 +211,7 @@
                             {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                         </div>
                     @elseif($navAvatarMobileExists)
-                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm flex-shrink-0 bg-white" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url(Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm flex-shrink-0 bg-white" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 items-center justify-center text-white font-bold text-lg shadow-sm flex-shrink-0" style="display:none" aria-hidden="true">
                             {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                         </div>

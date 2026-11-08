@@ -9,6 +9,7 @@ use App\Models\Job;
 use App\Support\IndonesiaRegions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class JobController extends Controller
 {
@@ -85,7 +86,12 @@ class JobController extends Controller
         $validated['district'] = $loc['district'];
         $validated['location'] = $loc['location'];
 
+        $flyer = $request->file('flyer');
+        unset($validated['flyer']);
         $job = Job::create($validated);
+        if ($flyer) {
+            $job->update(['flyer_path' => (new \App\Services\ImageProcessor(quality: 86, maxWidth: 1600, maxHeight: 1600))->store($flyer, 'job-flyers', 'job-'.$job->id)]);
+        }
 
         \App\Services\NewJobNotifier::notifySeekers($job);
 
@@ -113,6 +119,8 @@ class JobController extends Controller
         $this->authorize('update', $job);
 
         $validated = $request->validated();
+        $flyer = $request->file('flyer');
+        unset($validated['flyer']);
 
         $loc = IndonesiaRegions::normalizeJobLocation($validated);
         $validated['province'] = $loc['province'];
@@ -121,6 +129,12 @@ class JobController extends Controller
         $validated['location'] = $loc['location'];
 
         $job->update($validated);
+        if ($flyer) {
+            if ($job->flyer_path) {
+                Storage::disk('public')->delete($job->flyer_path);
+            }
+            $job->update(['flyer_path' => (new \App\Services\ImageProcessor(quality: 86, maxWidth: 1600, maxHeight: 1600))->store($flyer, 'job-flyers', 'job-'.$job->id.'-'.time())]);
+        }
 
         return redirect()->route('company.jobs.index')->with('success', 'Lowongan berhasil diperbarui.');
     }
@@ -186,5 +200,4 @@ class JobController extends Controller
         return redirect()->route('company.jobs.index')->with('success', 'Lowongan berhasil dihapus.');
     }
 }
-
 

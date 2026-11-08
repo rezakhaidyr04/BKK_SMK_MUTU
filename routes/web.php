@@ -23,6 +23,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Job Routes (Public)
 Route::get("/jobs", [JobController::class, "index"])->name("jobs.index");
+Route::get("/jobs/{job}/flyer", [JobController::class, "flyer"])->name("jobs.flyer");
+Route::get("/jobs/{job}/flyer-image", [JobController::class, "flyerImage"])->name("jobs.flyer.image");
+Route::get("/jobs/{job}/flyer-download", [JobController::class, "downloadFlyerImage"])->name("jobs.flyer.download");
 Route::get("/jobs/{job}", [JobController::class, "show"])->name("jobs.show");
 
 // Company Profile (Public — bisa diakses semua role termasuk tamu)

@@ -19,7 +19,7 @@
                 </x-ui.alert>
             @endif
 
-            <form method="POST" action="{{ route('company.jobs.update', $job) }}" class="grid gap-6">
+            <form method="POST" action="{{ route('company.jobs.update', $job) }}" enctype="multipart/form-data" class="grid gap-6">
                 @csrf
                 @method('PUT')
 
@@ -149,6 +149,15 @@
                             <textarea name="description" rows="6" class="ui-textarea">{{ old('description', $job->description) }}</textarea>
                             @error('description')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
+                        <div>
+                            <label class="ui-label">Desain Flyer (opsional)</label>
+                            @if($job->flyer_path)
+                                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($job->flyer_path) }}" alt="Flyer saat ini" class="mb-3 max-h-48 rounded-lg object-contain">
+                            @endif
+                            <input type="file" name="flyer" accept=".jpg,.jpeg,.png,.webp" class="ui-input">
+                            <p class="mt-1 text-xs text-slate-500">Upload desain baru untuk mengganti flyer. Kosongkan untuk mempertahankan yang lama.</p>
+                            @error('flyer')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
+                        </div>
                     </div>
                 </x-ui.panel>
 
@@ -257,5 +266,4 @@
     </script>
     @endpush
 </x-app-layout>
-
 

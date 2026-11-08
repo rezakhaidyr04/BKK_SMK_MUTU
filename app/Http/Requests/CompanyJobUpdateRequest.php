@@ -31,6 +31,7 @@ class CompanyJobUpdateRequest extends FormRequest
             'work_hours' => ['nullable', 'string', 'max:255'],
             'benefits' => ['nullable', 'string'],
             'deadline' => ['nullable', 'date', 'after_or_equal:today'],
+            'flyer' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ], self::jobLocationRules());
     }
 

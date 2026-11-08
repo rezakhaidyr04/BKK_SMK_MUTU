@@ -29,7 +29,7 @@
                 </x-ui.alert>
             @endif
 
-            <form method="POST" action="{{ route('company.jobs.store') }}" class="grid gap-6">
+            <form method="POST" action="{{ route('company.jobs.store') }}" enctype="multipart/form-data" class="grid gap-6">
                 @csrf
                 <input type="hidden" name="company_name" value="{{ auth()->user()->company?->name ?? '' }}">
 
@@ -163,6 +163,12 @@
                             <textarea name="description" rows="6" placeholder="Jelaskan tugas dan tanggung jawab pekerjaan…" class="ui-textarea">{{ old('description') }}</textarea>
                             @error('description')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
+                        <div>
+                            <label class="ui-label">Desain Flyer (opsional)</label>
+                            <input type="file" name="flyer" accept=".jpg,.jpeg,.png,.webp" class="ui-input">
+                            <p class="mt-1 text-xs text-slate-500">Upload desain flyer jadi. Maksimal 5 MB. Kosongkan untuk memakai template otomatis.</p>
+                            @error('flyer')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
+                        </div>
                     </div>
                 </x-ui.panel>
 
@@ -270,4 +276,3 @@
     </script>
     @endpush
 </x-app-layout>
-

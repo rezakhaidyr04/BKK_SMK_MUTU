@@ -260,7 +260,6 @@ class CompanyController extends Controller
         $column = match ($document) {
             'business-license' => 'business_license_path',
             'operating-license' => 'operating_license_path',
-            'npwp' => 'npwp_path',
             default => abort(404),
         };
 

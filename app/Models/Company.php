@@ -29,7 +29,6 @@ class Company extends Model
         "longitude",
         "maps_url",
         "tax_number",
-        "npwp_path",
         "business_license_path",
         "operating_license_path",
         "mou_path",
@@ -58,7 +57,7 @@ class Company extends Model
      */
     protected $hidden = [
         "tax_number",
-        "npwp_path",
+
         "business_license_path",
         "operating_license_path",
         "mou_path",

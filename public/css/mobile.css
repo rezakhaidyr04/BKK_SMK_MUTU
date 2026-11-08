@@ -360,8 +360,12 @@ img, svg, video {
     overflow-wrap: anywhere;
   }
   .job-stat-grid .w-12.h-12 {
-    width: 40px;
-    height: 40px;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    flex-shrink: 0 !important;
+    aspect-ratio: 1 / 1 !important;
   }
   /* Info pills boleh wrap penuh */
   .job-pill-row {

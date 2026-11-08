@@ -65,23 +65,23 @@
                 }
             @endphp
             @if($displayPassword)
-            <div class="mb-6 bg-blue-50 border-2 border-blue-400 rounded-2xl overflow-hidden shadow-lg initial-password-panel">
-                <div class="px-5 py-3 bg-blue-400 flex items-center justify-between">
+            <div class="mb-6 bg-blue-50 border-2 border-blue-300 rounded-2xl overflow-hidden shadow-lg initial-password-panel">
+                <div class="px-5 py-3 bg-blue-600 flex items-center justify-between text-white">
                     <div class="flex items-center gap-2">
-                        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2m4 0a4 4 0 11-8 0 4 4 0 018 0z"/>
                         </svg>
-                        <span class="font-semibold text-blue-500">PASSWORD AWAL AKUN</span>
+                        <span class="font-semibold text-white">PASSWORD AWAL AKUN</span>
                     </div>
-                        <button type="button" onclick="this.closest('.initial-password-panel').remove()"
-                            class="text-blue-500 hover:text-blue-900 transition text-lg font-bold">&times;</button>
+                    <button type="button" onclick="this.closest('.initial-password-panel').remove()"
+                        class="text-blue-100 hover:text-white transition text-lg font-bold">&times;</button>
                 </div>
                 <div class="p-5">
-                    <p class="text-sm text-blue-500 mb-3">Password ini hanya ditampilkan <strong>satu kali</strong> setelah pembuatan akun. Jangan muat ulang halaman ini jika sudah mencatatnya.</p>
-                    <div class="bg-white rounded-xl p-4 mb-4">
-                        <code class="text-sm font-mono text-blue-500 block word-break" id="initialPass">{{ $displayPassword }}</code>
+                    <p class="text-sm text-slate-700 mb-3">Password ini hanya ditampilkan <strong>satu kali</strong> setelah pembuatan akun. Jangan muat ulang halaman ini jika sudah mencatatnya.</p>
+                    <div class="bg-white rounded-xl p-4 mb-4 border border-blue-200">
+                        <code class="text-sm font-mono text-blue-700 font-bold block word-break" id="initialPass">{{ $displayPassword }}</code>
                     </div>
-                    <p class="text-sm text-blue-600">
+                    <p class="text-sm text-slate-600">
                         <strong>Disarankan:</strong> Ganti password setelah login pertama untuk keamanan maksimal.
                     </p>
                 </div>

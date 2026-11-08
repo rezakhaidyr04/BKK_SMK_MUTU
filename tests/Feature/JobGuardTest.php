@@ -120,7 +120,7 @@ class JobGuardTest extends TestCase
         $this->assertNotEmpty($company);
 
         foreach ([
-            'tax_number', 'npwp_path', 'business_license_path',
+            'tax_number', 'business_license_path',
             'operating_license_path', 'mou_path', 'mou_number',
             'mou_signed_at', 'mou_expires_at', 'is_verified',
             'verification_status', 'rejection_reason', 'reviewed_by', 'reviewed_at',

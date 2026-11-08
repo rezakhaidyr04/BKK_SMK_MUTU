@@ -12,6 +12,9 @@
                 </span>
             </x-slot:chips>
             <x-slot:actions>
+                @if($job->isActive())
+                    <x-ui.btn href="{{ route('jobs.flyer', $job) }}" variant="white" size="sm">Bagikan Flyer</x-ui.btn>
+                @endif
                 <x-ui.btn href="{{ route('admin.jobs.edit', $job) }}" variant="white" size="sm">Edit</x-ui.btn>
                 <x-ui.btn href="{{ route('admin.jobs.index') }}" variant="white" size="sm">← Kembali</x-ui.btn>
             </x-slot:actions>

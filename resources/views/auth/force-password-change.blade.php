@@ -63,8 +63,11 @@
         </form>
     </div>
     <div class="auth-card-footer">
-        <p class="auth-footer-text">
-            <a href="{{ route('logout') }}" class="auth-link-strong">Keluar</a>
-        </p>
+        <form method="POST" action="{{ route('logout') }}" class="inline">
+            @csrf
+            <button type="submit" class="auth-footer-text auth-link-strong hover:underline bg-transparent border-0 cursor-pointer p-0 font-inherit text-sm">
+                Keluar
+            </button>
+        </form>
     </div>
 </x-guest-layout>
